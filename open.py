@@ -33,6 +33,7 @@ def open_document(browser, document_number):
     if verify_result(document_number):
         first_result = get_first_result(browser)
         first_result.click()
+        f'Document number {document_number} matches the search result, moving forward.'
         open_document_description(browser, first_result)
     else:
         print(f'Document number {document_number} not found -- document number {result_number(browser)} returned as top search result.')

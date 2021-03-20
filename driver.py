@@ -1,7 +1,7 @@
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 
-def chrome_webdriver(document_directory):
+def chrome_webdriver(target_directory):
     chromedriver = ChromeDriverManager().install()
     options = webdriver.ChromeOptions()
 
@@ -9,7 +9,7 @@ def chrome_webdriver(document_directory):
     options.add_argument('--no-sandbox') # Bypass OS Security Model
 
     preferences = {
-        "download.default_directory": document_directory,
+        "download.default_directory": target_directory,
         "download.prompt_for_download": False,
         "plugins.always_open_pdf_externally": True
     }

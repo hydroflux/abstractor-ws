@@ -35,6 +35,7 @@ def enter_credentials(browser):
         print("Browser timed out while trying to enter login credentials.")
 
 def account_login(browser):
+    print("Initialized.")
     open_site(browser)
     open_login_prompt(browser)
     enter_credentials(browser)
