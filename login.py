@@ -32,7 +32,7 @@ def enter_credentials(browser):
         login_prompt = browser.find_element_by_id(user_id)
         login_prompt.send_keys(credentials[0] + Keys.TAB + credentials[1] + Keys.RETURN)
     except TimeoutException:
-        print("Browser timed out while trying to enter login credentials")
+        print("Browser timed out while trying to enter login credentials.")
 
 def account_login(browser):
     open_site(browser)
