@@ -11,10 +11,6 @@ def open_site(browser):
     assert webpage_title in browser.title
     input("Press enter to login...")
 
-# def accept_conditions(browser):
-#     try:
-#         accept_conditions_present = EC.element_to_be_clickable()
-
 def open_login_prompt(browser):
     try:
         login_button_present = EC.element_to_be_clickable((By.CLASS_NAME, login_button_class))
