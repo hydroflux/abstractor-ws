@@ -7,7 +7,7 @@ abstract_dataframe = {
     "Document Type": [],
     "Recording Date": [],
     "Legal": [],
-    "Notes": [],
+    # "Notes": [],
     "Related Documents": [],
     "Comments": []
 }

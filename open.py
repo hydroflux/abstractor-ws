@@ -13,11 +13,9 @@ def get_first_result(browser):
     except TimeoutException:
         print("Browser timed out while trying to retrieve the first result of the search.")
 
-def first_result_number_field(browser):
-    return get_first_result(browser).find_element_by_tag_name("h1")
-
 def first_result_number(browser):
-    return first_result_number_field(browser).text.split(" ")[0]
+    first_result = get_first_result(browser).find_element_by_tag_name("h1")
+    return first_result.text.split(" ")[0]
 
 def verify_result(browser, document_number):
     return first_result_number(browser) == document_number
@@ -37,7 +35,6 @@ def open_document_description(browser, first_result):
 
 def open_document(browser, document_number):
     if verify_result(browser, document_number):
-        first_result_number_field(browser).click()
         f'Document number {document_number} matches the search result, moving forward.'
         open_document_description(browser, get_first_result(browser))
         return True

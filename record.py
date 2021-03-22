@@ -22,8 +22,8 @@ def display_all_information(browser):
             link.click()
 
 def drop_superfluous_information(string):
-    if string.endwith(less_info):
-        return string[:less_info]
+    if string.endswith(less_info):
+        return string[:-len(less_info)]
 
 def access_table_body(document_table):
     return document_table.find_element_by_tag_name(index_table_tags[0])
@@ -104,6 +104,5 @@ def record_bad_search(dataframe, document_number):
     dataframe["Document Type"].append(search_errors[0])
     dataframe["Recording Date"].append(search_errors[1])
     dataframe["Legal"].append(search_errors[2])
-    # dataframe["Notes"].append(search_errors[2])
     dataframe["Related Documents"].append(search_errors[2])
     dataframe["Comments"].append(bad_search_message)
