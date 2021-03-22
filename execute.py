@@ -5,11 +5,13 @@ from record import record_document, record_bad_search
 from download import download_document
 from dataframe import abstract_dataframe
 
+from variables import search_wait
 from time import sleep
 
 def search_documents_from_list(browser, document_list):
     for document_number in document_list:
         document_number_search(browser, document_number)
+        search_wait
         if open_document(browser, document_number):
             record_document(browser, abstract_dataframe, document_number)
             download_document(browser)

@@ -3,7 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-from variables import timeout, first_result_class_name, search_actions_class_name
+from variables import timeout, first_result_class_name, first_result_tag, search_actions_class_name, search_action_tag
 
 def get_first_result(browser):
     try:
@@ -14,7 +14,7 @@ def get_first_result(browser):
         print("Browser timed out while trying to retrieve the first result of the search.")
 
 def first_result_number(browser):
-    first_result = get_first_result(browser).find_element_by_tag_name("h1")
+    first_result = get_first_result(browser).find_element_by_tag_name(first_result_tag)
     return first_result.text.split(" ")[0]
 
 def verify_result(browser, document_number):
@@ -25,7 +25,7 @@ def view_search_actions(browser, first_result):
         search_actions_list_present = EC.presence_of_element_located((By.CLASS_NAME, search_actions_class_name))
         WebDriverWait(browser, timeout).until(search_actions_list_present)
         search_actions_list = first_result.find_element_by_class_name(search_actions_class_name)
-        return search_actions_list.find_elements_by_tag_name("a")
+        return search_actions_list.find_elements_by_tag_name(search_action_tag)
     except TimeoutException:
         print("Browser timed out while trying to access search actions.")
 
