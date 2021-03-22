@@ -8,12 +8,12 @@ def chrome_webdriver(target_directory):
     options.add_argument('start-maximized') # Maximize Viewport
     options.add_argument('--no-sandbox') # Bypass OS Security Model
 
-    preferences = {
+    prefs = {
         "download.default_directory": target_directory,
         "download.prompt_for_download": False,
         "plugins.always_open_pdf_externally": True
     }
 
-    options.add_experimental_option("preferences", preferences)
+    options.add_experimental_option("prefs", prefs)
 
     return webdriver.Chrome(chromedriver, options=options)

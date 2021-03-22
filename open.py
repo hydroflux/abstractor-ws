@@ -17,11 +17,11 @@ def get_first_result(browser):
 def result_number(browser):
     first_result = get_first_result(browser)
     first_result_head = first_result.find_element_by_tag_name("h1").text
-    result_number = first_result_head_text.split(" ")[0]
+    result_number = first_result_head.split(" ")[0]
     return result_number
 
-def verify_result(document_number):
-    result_number(browser) == document_number
+def verify_result(browser, document_number):
+    return result_number(browser) == document_number
 
 def open_document_description(browser, first_result):
     search_actions_list = first_result.find_element_by_class_name(search_actions_class_name)
@@ -30,7 +30,7 @@ def open_document_description(browser, first_result):
     view_document.click()
 
 def open_document(browser, document_number):
-    if verify_result(document_number):
+    if verify_result(browser, document_number):
         first_result = get_first_result(browser)
         first_result.click()
         f'Document number {document_number} matches the search result, moving forward.'

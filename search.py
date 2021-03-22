@@ -3,7 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-from variables import search_title, instrument_search_id, search_button_id, search_url
+from variables import timeout, search_title, instrument_search_id, search_button_id, search_url
 
 def open_search(browser):
     browser.get(search_url)

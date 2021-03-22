@@ -1,4 +1,3 @@
-
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -20,17 +19,20 @@ def open_login_prompt(browser):
     try:
         login_button_present = EC.element_to_be_clickable((By.CLASS_NAME, login_button_class))
         WebDriverWait(browser, timeout).until(login_button_present)
-        login_button = browser.find_element_by_class(login_button_class)
+        login_button = browser.find_element_by_class_name(login_button_class)
         login_button.click()
     except TimeoutException:
         print("Browser timed out while trying to click login prompt.")
 
 def enter_credentials(browser):
     try:
-        login_prompt_open = EC.presence_of_element_located((By.ID, user_id))
+        login_prompt_open = EC.presence_of_element_located((By.ID, credentials[1]))
         WebDriverWait(browser, timeout).until(login_prompt_open)
-        login_prompt = browser.find_element_by_id(user_id)
-        login_prompt.send_keys(credentials[0] + Keys.TAB + credentials[1] + Keys.RETURN)
+        print("1")
+        login_prompt = browser.find_element_by_id(credentials[1])
+        print("2")
+        login_prompt.send_keys(credentials[0] + Keys.TAB + credentials[2] + Keys.RETURN)
+        print("3")
     except TimeoutException:
         print("Browser timed out while trying to enter login credentials.")
 
