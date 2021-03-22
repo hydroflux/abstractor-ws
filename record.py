@@ -3,7 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-from variables import document_information_id, document_table_class, index_table_tags, related_table_class, bad_search_messages
+from variables import timeout, document_information_id, document_table_class, information_links_class, more_info, less_info, index_table_tags, related_table_class, search_errors
 
 def access_document_information(browser, document_number):
     try:
@@ -13,6 +13,17 @@ def access_document_information(browser, document_number):
         return document_info.find_elements_by_class_name(document_table_class)
     except TimeoutException:
         print(f'Browser timed out while trying to access document information for document number {document_number}.')
+
+def display_all_information(browser):
+    document_info = browser.find_element_by_id(document_information_id)
+    information_links = document_info.find_elements_by_class_name(information_links_class)
+    for link in information_links:
+        if link.text == more_info:
+            link.click()
+
+def drop_superfluous_information(string):
+    if string.endwith(less_info):
+        return string[:less_info]
 
 def access_table_body(document_table):
     return document_table.find_element_by_tag_name(index_table_tags[0])
@@ -24,7 +35,7 @@ def access_title_case_text(data):
     return data.text.title()
 
 def access_field_body(field_info):
-    return field_info.text.split("\n")[1].title()
+    return "\n".join(field_info.text.split("\n")[1:]).title()
 
 def access_indexing_information(document_table):
     table_body = access_table_body(document_table)
@@ -38,22 +49,25 @@ def record_document_type(document_table, dataframe):
 def record_indexing_data(document_table, dataframe):
     reception_number, recording_date = access_indexing_information(document_table)
     dataframe["Reception Number"].append(reception_number)
-    dataframe["Recording Date"].append(recording_date)
+    dataframe["Recording Date"].append(recording_date[:10])
 
 def record_name_data(document_table, dataframe):
-    grantor, grantee = access_indexing_information(document_tables[2])
-    dataframe["Grantor"].append(grantor)
-    dataframe["Grantee"].append(grantee)
+    grantor, grantee = access_indexing_information(document_table)
+    dataframe["Grantor"].append(drop_superfluous_information(grantor))
+    dataframe["Grantee"].append(drop_superfluous_information(grantee))
 
 def record_legal_data(document_table, dataframe):
     table_rows = access_table_rows(document_table)
     legal_data = table_rows[0].find_elements_by_tag_name(index_table_tags[2])
-    legal = legal_data[-1].text
-    dataframe["Legal"].append(legal)
+    if legal_data == []:
+        dataframe["Legal"].append(search_errors[2])
+    else: 
+        legal = legal_data[-1].text
+        dataframe["Legal"].append(legal)
 
-def record_notes(document_table, dataframe):
-    notes = access_field_body(document_tables[5])
-    dataframe["Notes"].append(notes)
+# def record_notes(document_table, dataframe):
+#     notes = access_field_body(document_table)
+#     dataframe["Notes"].append(notes)
 
 def record_related_documents(document_table, dataframe):
     related_table_rows = document_table.find_elements_by_class_name(related_table_class)
@@ -67,26 +81,29 @@ def aggregate_document_information(document_tables, dataframe):
     record_indexing_data(document_tables[1], dataframe)
     record_name_data(document_tables[2], dataframe)
     record_legal_data(document_tables[4], dataframe)
-    record_notes(document_tables[5], dataframe)
-    record_related_documents(document_tables[6], dataframe)
-    book, page = "N/A"
+    # record_notes(document_tables[5], dataframe)
+    record_related_documents(document_tables[-2], dataframe)
+    book = search_errors[2]
     dataframe["Book"].append(book)
+    page = search_errors[2]
     dataframe["Page"].append(page)
     dataframe["Comments"].append("")
 
 def record_document(browser, dataframe, document_number):
     document_tables = access_document_information(browser, document_number)
+    display_all_information(browser)
     aggregate_document_information(document_tables, dataframe)
 
 def record_bad_search(dataframe, document_number):
-    dataframe["Grantor"].append(bad_search_messages[0])
-    dataframe["Grantee"].append(bad_search_messages[0])
-    dataframe["Book"].append(bad_search_messages[2])
-    dataframe["Page"].append(bad_search_messages[2])
+    bad_search_message = f'No document found at reception number {document_number}'
+    dataframe["Grantor"].append(search_errors[0])
+    dataframe["Grantee"].append(search_errors[0])
+    dataframe["Book"].append(search_errors[2])
+    dataframe["Page"].append(search_errors[2])
     dataframe["Reception Number"].append(document_number)
-    dataframe["Document Type"].append(bad_search_messages[0])
-    dataframe["Recording Date"].append(bad_search_messages[1])
-    dataframe["Legal"].append(bad_search_messages[2])
-    dataframe["Notes"].append(bad_search_messages[2])
-    dataframe["Related Documents"].append(bad_search_messages[2])
-    dataframe["Comments"].append(bad_search_messages[3])
+    dataframe["Document Type"].append(search_errors[0])
+    dataframe["Recording Date"].append(search_errors[1])
+    dataframe["Legal"].append(search_errors[2])
+    # dataframe["Notes"].append(search_errors[2])
+    dataframe["Related Documents"].append(search_errors[2])
+    dataframe["Comments"].append(bad_search_message)
