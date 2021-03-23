@@ -15,7 +15,7 @@ def create_download_directory(target_directory):
 
 
 def remaining_downloads(document_list, document_number):
-    return len(document_list) - document_list.index(document_number)
+    return len(document_list) - document_list.index(document_number) - 1
 
 
 def search_documents_from_list(browser, document_list, download=True):
