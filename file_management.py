@@ -1,5 +1,6 @@
 import os
 from pandas import DataFrame
+import classes.counties as county_data
 
 
 def create_folder(directory):
@@ -15,14 +16,13 @@ def create_dataframe(dictionary):
     print(dataframe)
 
 
-def identify_county_information(county):
+def get_county_data(county):
     return county_data.county_dictionary.get(county)
 
 
 def rename_documents_in_directory(county, directory):
     os.chdir(directory)
     for pdf in os.listdir(directory):
-        # Remove .DS_Store
         if pdf == '.DS_Store':
             full_path = os.path.join(directory, pdf)
             os.remove(full_path)
@@ -30,9 +30,9 @@ def rename_documents_in_directory(county, directory):
             continue
         else:
             new_document_name = county.prefix + '-' + pdf
-            full_path = os.path.join(document_directory, pdf)
-            os.rename(full_path, new_pdf_name)
-            size = os.stat(new_pdf_name) == 0
+            full_path = os.path.join(directory, pdf)
+            os.rename(full_path, new_document_name)
+            size = os.stat(new_document_name) == 0
             if size is True:
-                os.remove(new_pdf_name)
+                os.remove(new_document_name)
                 print('Failed to download reception number ' + pdf)

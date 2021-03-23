@@ -2,7 +2,7 @@ from driver import chrome_webdriver
 from execute import execute_script
 from import_list import generate_document_list
 from login import account_login
-from variables import download_documents, file_name, sheet_name, target_directory
+from variables import download_documents, file_name, sheet_name, target_directory, county
 
 
 document_list = generate_document_list(target_directory, file_name, sheet_name)

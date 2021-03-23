@@ -75,7 +75,8 @@ def record_name_data(document_table, dataframe):
 
 def record_legal_data(document_table, dataframe):
     table_rows = access_table_rows(document_table)
-    legal_data = table_rows[0].find_elements_by_tag_name(index_table_tags[2])
+    print(table_rows[0].text)
+    legal_data = table_rows[1].find_elements_by_tag_name(index_table_tags[2])
     if legal_data == []:
         dataframe["Legal"].append(search_errors[2])
     else: 
