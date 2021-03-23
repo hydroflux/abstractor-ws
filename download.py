@@ -9,10 +9,10 @@ from variables import long_timeout, pdf_viewer_load_id, loading_status, pdf_view
 
 def pdf_load_status(browser):
     try:
-        pdf_viewer_loaded = browser.presence_of_element_located((By.ID, pdf_viewer_load_id))
+        pdf_viewer_loaded = EC.presence_of_element_located((By.ID, pdf_viewer_load_id))
         WebDriverWait(browser, long_timeout).until(pdf_viewer_loaded)
         return browser.find_element_by_id(pdf_viewer_load_id).text
-    except:
+    except TimeoutException:
         print("Browser timed out while waiting for the PDF Viewer to load.")
 
 def wait_for_pdf_load(browser):
@@ -35,6 +35,7 @@ def execute_download(browser):
         download_button_present = EC.presence_of_element_located((By.ID, download_button_id))
         WebDriverWait(browser, long_timeout).until(download_button_present)
         download_button = browser.find_element_by_id(download_button_id)
+        browser.execute_script("arguments[0].scrollIntoView();", download_button)
         download_button.click()
         print("Executed download.")
     except TimeoutException:

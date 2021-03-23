@@ -1,13 +1,28 @@
+from time import sleep
+
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-from variables import timeout, search_title, instrument_search_id, search_button_id, search_url
+from variables import (clear_search_id, instrument_search_id, no_results,
+                       search_button_id, search_confirmation, search_title,
+                       search_url, timeout)
+
 
 def open_search(browser):
     browser.get(search_url)
     assert search_title
+
+def clear_search(browser):
+    try:
+        clear_search_present = EC.presence_of_element_located((By.ID, clear_search_id))
+        WebDriverWait(browser, timeout).until(clear_search_present)
+        clear_search = browser.find_element_by_id(clear_search_id)
+        browser.execute_script("arguments[0].scrollIntoView();", clear_search)
+        clear_search.click()
+    except TimeoutException:
+        print("Browser timed out while trying to clear the search form.")
 
 def enter_document_number(browser, document_number):
     try:
@@ -30,5 +45,7 @@ def execute_search(browser):
 
 def document_number_search(browser, document_number):
     open_search(browser)
+    clear_search(browser)
+    browser.refresh()
     enter_document_number(browser, document_number)
     execute_search(browser)

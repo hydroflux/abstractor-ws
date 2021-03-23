@@ -7,17 +7,22 @@ from variables import timeout, first_result_class_name, first_result_tag, search
 
 def get_first_result(browser):
     try:
+        print("the")
         first_result_present = EC.presence_of_element_located((By.CLASS_NAME, first_result_class_name))
         WebDriverWait(browser, timeout).until(first_result_present)
+        print("motions")
         return browser.find_element_by_class_name(first_result_class_name)
     except TimeoutException:
         print("Browser timed out while trying to retrieve the first result of the search.")
 
 def first_result_number(browser):
+    print("through")
     first_result = get_first_result(browser).find_element_by_tag_name(first_result_tag)
+    browser.execute_script("arguments[0].scrollIntoView();", first_result)
     return first_result.text.split(" ")[0]
 
 def verify_result(browser, document_number):
+    print("moving")
     return first_result_number(browser) == document_number
 
 def view_search_actions(browser, first_result):
@@ -34,8 +39,9 @@ def open_document_description(browser, first_result):
     browser.get(search_actions[1].get_attribute("href"))
 
 def open_document(browser, document_number):
+    print("anywhere")
     if verify_result(browser, document_number):
-        f'Document number {document_number} matches the search result, moving forward.'
+        print(f'Document number {document_number} matches the search result, moving forward.')
         open_document_description(browser, get_first_result(browser))
         return True
     else:

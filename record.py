@@ -19,6 +19,7 @@ def display_all_information(browser):
     information_links = document_info.find_elements_by_class_name(information_links_class)
     for link in information_links:
         if link.text == more_info:
+            browser.execute_script("arguments[0].scrollIntoView();", link)
             link.click()
 
 def drop_superfluous_information(string):
