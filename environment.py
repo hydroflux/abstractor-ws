@@ -7,4 +7,4 @@ from variables import file_name, sheet_name, target_directory
 document_list = generate_document_list(target_directory, file_name, sheet_name)
 browser = chrome_webdriver(target_directory)
 account_login(browser)
-abstract_dataframe = execute_script(browser, document_list)
+abstract_dataframe = execute_script(browser, target_directory, document_list, download=True)
