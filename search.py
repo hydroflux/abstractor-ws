@@ -14,6 +14,7 @@ def open_search(browser):
     browser.get(search_url)
     assert search_title
 
+
 def clear_search(browser):
     try:
         clear_search_present = EC.presence_of_element_located((By.ID, clear_search_id))
@@ -23,6 +24,7 @@ def clear_search(browser):
         clear_search.click()
     except TimeoutException:
         print("Browser timed out while trying to clear the search form.")
+
 
 def enter_document_number(browser, document_number):
     try:
@@ -34,6 +36,7 @@ def enter_document_number(browser, document_number):
     except TimeoutException:
         print(f'Browser timed out while trying to fill document field for document number {document_number}.')
 
+
 def execute_search(browser):
     try:
         search_button_present = EC.element_to_be_clickable((By.ID, search_button_id))
@@ -42,6 +45,7 @@ def execute_search(browser):
         search_button.click()
     except TimeoutException:
         print("Browser timed out while trying to execute search.")
+
 
 def document_number_search(browser, document_number):
     open_search(browser)

@@ -15,15 +15,18 @@ def get_first_result(browser):
     except TimeoutException:
         print("Browser timed out while trying to retrieve the first result of the search.")
 
+
 def first_result_number(browser):
     print("through")
     first_result = get_first_result(browser).find_element_by_tag_name(first_result_tag)
     browser.execute_script("arguments[0].scrollIntoView();", first_result)
     return first_result.text.split(" ")[0]
 
+
 def verify_result(browser, document_number):
     print("moving")
     return first_result_number(browser) == document_number
+
 
 def view_search_actions(browser, first_result):
     try:
@@ -34,9 +37,11 @@ def view_search_actions(browser, first_result):
     except TimeoutException:
         print("Browser timed out while trying to access search actions.")
 
+
 def open_document_description(browser, first_result):
     search_actions = view_search_actions(browser, first_result)
     browser.get(search_actions[1].get_attribute("href"))
+
 
 def open_document(browser, document_number):
     print("anywhere")

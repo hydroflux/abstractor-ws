@@ -1,9 +1,8 @@
 from driver import chrome_webdriver
+from execute import execute_script
 from import_list import generate_document_list
 from login import account_login
-from execute import execute_script
-
-from variables import target_directory, file_name, sheet_name
+from variables import file_name, sheet_name, target_directory
 
 document_list = generate_document_list(target_directory, file_name, sheet_name)
 browser = chrome_webdriver(target_directory)

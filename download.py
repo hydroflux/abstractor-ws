@@ -1,11 +1,13 @@
+from time import sleep
+
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-from time import sleep
+from variables import (download_button_id, loading_status, long_timeout,
+                       pdf_viewer_class_name, pdf_viewer_load_id)
 
-from variables import long_timeout, pdf_viewer_load_id, loading_status, pdf_viewer_class_name, download_button_id
 
 def pdf_load_status(browser):
     try:
@@ -15,10 +17,12 @@ def pdf_load_status(browser):
     except TimeoutException:
         print("Browser timed out while waiting for the PDF Viewer to load.")
 
+
 def wait_for_pdf_load(browser):
     while pdf_load_status(browser) == loading_status:
         sleep(0.5)
         pdf_load_status(browser)
+
 
 def access_pdf_viewer(browser):
     try:
@@ -29,6 +33,7 @@ def access_pdf_viewer(browser):
         print("Accessed pdf viewer.")
     except TimeoutException:
         print("Browser timed out while trying to access the pdf viewer.")
+
 
 def execute_download(browser):
     try:
@@ -41,8 +46,10 @@ def execute_download(browser):
     except TimeoutException:
         print("Browser timed out while trying to click the download button.")
 
+
 def switch_to_browser_window(browser):
     browser.switch_to.default_content()
+
 
 def download_document(browser):
     wait_for_pdf_load(browser)

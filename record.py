@@ -3,7 +3,10 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-from variables import timeout, document_information_id, document_table_class, information_links_class, more_info, less_info, index_table_tags, related_table_class, search_errors
+from variables import (document_information_id, document_table_class,
+                       index_table_tags, information_links_class, less_info,
+                       more_info, related_table_class, search_errors, timeout)
+
 
 def access_document_information(browser, document_number):
     try:
@@ -14,6 +17,7 @@ def access_document_information(browser, document_number):
     except TimeoutException:
         print(f'Browser timed out while trying to access document information for document number {document_number}.')
 
+
 def display_all_information(browser):
     document_info = browser.find_element_by_id(document_information_id)
     information_links = document_info.find_elements_by_class_name(information_links_class)
@@ -22,40 +26,50 @@ def display_all_information(browser):
             browser.execute_script("arguments[0].scrollIntoView();", link)
             link.click()
 
+
 def drop_superfluous_information(string):
     if string.endswith(less_info):
         return string[:-len(less_info)]
 
+
 def access_table_body(document_table):
     return document_table.find_element_by_tag_name(index_table_tags[0])
+
 
 def access_table_rows(table_body):
     return table_body.find_elements_by_tag_name(index_table_tags[1])
 
+
 def access_title_case_text(data):
     return data.text.title()
 
+
 def access_field_body(field_info):
     return "\n".join(field_info.text.split("\n")[1:]).title()
+
 
 def access_indexing_information(document_table):
     table_body = access_table_body(document_table)
     table_rows = access_table_rows(table_body)
     return map(access_field_body, table_rows)
 
+
 def record_document_type(document_table, dataframe):
     document_type = document_table.text.title()
     dataframe["Document Type"].append(document_type)
+
 
 def record_indexing_data(document_table, dataframe):
     reception_number, recording_date = access_indexing_information(document_table)
     dataframe["Reception Number"].append(reception_number)
     dataframe["Recording Date"].append(recording_date[:10])
 
+
 def record_name_data(document_table, dataframe):
     grantor, grantee = access_indexing_information(document_table)
     dataframe["Grantor"].append(drop_superfluous_information(grantor))
     dataframe["Grantee"].append(drop_superfluous_information(grantee))
+
 
 def record_legal_data(document_table, dataframe):
     table_rows = access_table_rows(document_table)
@@ -70,12 +84,14 @@ def record_legal_data(document_table, dataframe):
 #     notes = access_field_body(document_table)
 #     dataframe["Notes"].append(notes)
 
+
 def record_related_documents(document_table, dataframe):
     related_table_rows = document_table.find_elements_by_class_name(related_table_class)
     related_documents_info = list(map(access_table_body, related_table_rows))
     related_document_list = list(map(access_title_case_text, related_documents_info))
     related_documents = "\n".join(related_document_list)
     dataframe["Related Documents"].append(related_documents)
+
 
 def aggregate_document_information(document_tables, dataframe):
     record_document_type(document_tables[0], dataframe)
@@ -90,10 +106,12 @@ def aggregate_document_information(document_tables, dataframe):
     dataframe["Page"].append(page)
     dataframe["Comments"].append("")
 
+
 def record_document(browser, dataframe, document_number):
     document_tables = access_document_information(browser, document_number)
     display_all_information(browser)
     aggregate_document_information(document_tables, dataframe)
+
 
 def record_bad_search(dataframe, document_number):
     bad_search_message = f'No document found at reception number {document_number}'
