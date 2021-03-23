@@ -107,10 +107,21 @@ def aggregate_document_information(document_tables, dataframe):
     dataframe["Comments"].append("")
 
 
+def scroll_to_top(browser):
+    try:
+        head_element_present = EC.presence_of_element_located((By.TAG_NAME, "body"))
+        WebDriverWait(browser, timeout).until(head_element_present)
+        head_element = browser.find_element_by_tag_name("body")
+        browser.execute_script("arguments[0].scrollIntoView();", head_element)
+    except TimeoutException:
+        print("Timed out while trying to scroll to the top of the page.")
+
+
 def record_document(browser, dataframe, document_number):
     document_tables = access_document_information(browser, document_number)
     display_all_information(browser)
     aggregate_document_information(document_tables, dataframe)
+    scroll_to_top(browser)
 
 
 def record_bad_search(dataframe, document_number):
