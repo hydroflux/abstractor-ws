@@ -8,5 +8,3 @@ document_list = generate_document_list(target_directory, file_name, sheet_name)
 browser = chrome_webdriver(target_directory)
 account_login(browser)
 abstract_dataframe = execute_script(browser, document_list)
-
-document_number = "4467371"

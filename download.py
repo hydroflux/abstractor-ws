@@ -30,7 +30,6 @@ def access_pdf_viewer(browser):
         WebDriverWait(browser, long_timeout).until(pdf_viewer_present)
         pdf_viewer = browser.find_element_by_class_name(pdf_viewer_class_name)
         browser.switch_to.frame(pdf_viewer)
-        print("Accessed pdf viewer.")
     except TimeoutException:
         print("Browser timed out while trying to access the pdf viewer.")
 
@@ -40,7 +39,6 @@ def execute_download(browser):
         download_button_present = EC.presence_of_element_located((By.ID, download_button_id))
         WebDriverWait(browser, long_timeout).until(download_button_present)
         download_button = browser.find_element_by_id(download_button_id)
-        browser.execute_script("arguments[0].scrollIntoView();", download_button)
         download_button.click()
         print("Executed download.")
     except TimeoutException:
