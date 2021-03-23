@@ -17,9 +17,10 @@ def pdf_load_status(browser):
     except TimeoutException:
         print("Browser timed out while waiting for the PDF Viewer to load.")
 
-
+# Script not waiting for PDF to load before continuing --- may need to change check to "startswith"
 def wait_for_pdf_load(browser):
     while pdf_load_status(browser) == loading_status:
+        print(pdf_load_status(browser))
         sleep(0.5)
         pdf_load_status(browser)
 
