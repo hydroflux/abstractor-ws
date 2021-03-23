@@ -1,9 +1,12 @@
-from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import (StaleElementReferenceException,
+                                        TimeoutException)
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-from variables import timeout, first_result_class_name, first_result_tag, search_actions_class_name, search_action_tag
+from variables import (first_result_class_name, first_result_tag,
+                       search_action_tag, search_actions_class_name, timeout)
+
 
 def get_first_result(browser):
     try:
@@ -18,9 +21,10 @@ def get_first_result(browser):
 
 def first_result_number(browser):
     print("through")
-    first_result = get_first_result(browser).find_element_by_tag_name(first_result_tag)
-    browser.execute_script("arguments[0].scrollIntoView();", first_result)
-    return first_result.text.split(" ")[0]
+    first_result = get_first_result(browser)
+    first_result_info = first_result.find_element_by_tag_name(first_result_tag)
+    browser.execute_script("arguments[0].scrollIntoView();", first_result_info)
+    return first_result_info.text.split(" ")[0]
 
 
 def verify_result(browser, document_number):
@@ -43,12 +47,22 @@ def open_document_description(browser, first_result):
     browser.get(search_actions[1].get_attribute("href"))
 
 
-def open_document(browser, document_number):
-    print("anywhere")
+def determine_document_status(browser, document_number):
     if verify_result(browser, document_number):
-        print(f'Document number {document_number} matches the search result, moving forward.')
-        open_document_description(browser, get_first_result(browser))
-        return True
+            print(f'Document number {document_number} matches the search result, moving forward.')
+            open_document_description(browser, get_first_result(browser))
+            return True
     else:
         print(f'Document number {document_number} not found -- document number {first_result_number(browser)} returned as top search result.')
         return False
+
+
+def open_document(browser, document_number):
+    try:
+        determine_document_status(browser, document_number)
+    except StaleElementReferenceException:
+        print(f'Encountered a stale element exception while trying to open {document_number}, trying again.')
+        browser.refresh()
+        determine_document_status(browser, document_number)
+
+    
