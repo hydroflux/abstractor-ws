@@ -5,7 +5,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 
 from variables import (document_information_id, document_table_class,
                        index_table_tags, information_links_class, less_info,
-                       more_info, related_table_class, search_errors, timeout)
+                       more_info, related_table_class, search_errors, timeout, missing_values)
 
 
 def access_document_information(browser, document_number):
@@ -107,6 +107,19 @@ def aggregate_document_information(document_tables, dataframe):
     dataframe["Comments"].append("")
 
 
+def drop_last_entry(dataframe):
+    dataframe["Grantor"].pop()
+    dataframe["Grantee"].pop()
+    dataframe["Book"].pop()
+    dataframe["Page"].pop()
+    dataframe["Reception Number"].pop()
+    dataframe["Document Type"].pop()
+    dataframe["Recording Date"].pop()
+    dataframe["Legal"].pop()
+    dataframe["Related Documents"].pop()
+    dataframe["Comments"].pop()
+
+
 def scroll_to_top(browser):
     try:
         head_element_present = EC.presence_of_element_located((By.TAG_NAME, "body"))
@@ -117,11 +130,27 @@ def scroll_to_top(browser):
         print("Timed out while trying to scroll to the top of the page.")
 
 
-def record_document(browser, dataframe, document_number):
+def record_document_fields(browser, dataframe, document_number):
     document_tables = access_document_information(browser, document_number)
     display_all_information(browser)
     aggregate_document_information(document_tables, dataframe)
     scroll_to_top(browser)
+
+
+def review_entry(browser, dataframe, document_number):
+    while dataframe["Grantor"][-1] == missing_values[0] and dataframe["Grantee"][-1] == missing_values[0] and dataframe["Related Documents"][-1] == missing_values[1]:
+        print("Recording of last document was processed incorrectly, attempting to record again.")
+        re_record_document_fields(browser, dataframe, document_number)    
+
+
+def re_record_document_fields(browser, dataframe, document_number):
+    drop_last_entry(dataframe)
+    record_document_fields(browser, dataframe, document_number)
+
+
+def record_document(browser, dataframe, document_number):
+    record_document_fields(browser, dataframe, document_number)
+    review_entry(browser, dataframe, document_number)
 
 
 def record_bad_search(dataframe, document_number):

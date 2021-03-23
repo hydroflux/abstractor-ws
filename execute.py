@@ -5,12 +5,13 @@ from record import record_bad_search, record_document
 from search import document_number_search
 
 
-def search_documents_from_list(browser, document_list):
+def search_documents_from_list(browser, document_list, download=True):
     for document_number in document_list:
         document_number_search(browser, document_number)
         if open_document(browser, document_number):
             record_document(browser, abstract_dataframe, document_number)
-            download_document(browser)
+            if download:
+                download_document(browser)
             print(f'Document located at reception number {document_number} recorded, {len(document_list) - document_list.index(document_number)} documents remaining.')
         else:
             record_bad_search(abstract_dataframe, document_number)

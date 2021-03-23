@@ -4,7 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-from variables import (first_result_class_name, first_result_tag,
+from variables import (first_result_class_name, first_result_tag, naptime,
                        search_action_tag, search_actions_class_name, timeout)
 
 
@@ -47,6 +47,7 @@ def determine_document_status(browser, document_number):
     if verify_result(browser, document_number):
         print(f'Document number {document_number} matches the search result, moving forward.')
         open_document_description(browser, get_first_result(browser))
+        naptime()
         return True
     else:
         print(f'Document number {document_number} not found -- document number {first_result_number(browser)} returned as top search result.')
