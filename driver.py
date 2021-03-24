@@ -7,7 +7,7 @@ def chrome_webdriver(target_directory):
     options = webdriver.ChromeOptions()
 
     # options.add_argument('start-maximized') # Maximize Viewport
-    options.add_argument('--no-sandbox') # Bypass OS Security Model
+    options.add_argument('--no-sandbox')  # Bypass OS Security Model
 
     prefs = {
         "download.default_directory": target_directory,

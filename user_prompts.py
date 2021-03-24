@@ -19,6 +19,10 @@ def request_yes_or_no(prompt):
         return False
 
 
+def continue_prompt(current_target_directory, current_file_name, current_sheet_name):
+    return request_yes_or_no('Would you like to create another abstraction?')
+
+
 def target_directory_prompt(current_target_directory):
     print(f'Current Directory: {current_target_directory}')
     if request_yes_or_no('Has the target directory changed?'):
@@ -56,7 +60,6 @@ def sheet_name_prompt(current_sheet_name):
 
 
 # Add an additional prompt for request for download
-
 def request_more_information(current_target_directory, current_file_name, current_sheet_name):
     target_directory = target_directory_prompt(current_target_directory)
     available_file_names(target_directory)
@@ -64,10 +67,3 @@ def request_more_information(current_target_directory, current_file_name, curren
     available_sheet_names()
     sheet_name = sheet_name_prompt(current_sheet_name)
     return generate_document_list(target_directory, file_name, sheet_name)
-
-
-def continue_prompt(current_target_directory, current_file_name, current_sheet_name):
-    if request_yes_or_no('Would you like to create another abstraction?'):
-        return request_more_information(current_target_directory, current_file_name, current_sheet_name)
-    else:
-        return False
