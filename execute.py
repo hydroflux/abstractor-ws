@@ -22,7 +22,7 @@ def remaining_downloads(document_list, document_number):
     return len(document_list) - document_list.index(document_number) - 1
 
 
-def search_documents_from_list(browser, document_list):
+def search_documents_from_list(browser, document_list, download):
     for document_number in document_list:
         document_number_search(browser, document_number)
         if open_document(browser, document_number):
@@ -52,7 +52,7 @@ def create_abstraction(browser, target_directory, file_name, sheet_name, downloa
 
 def execute_program(browser, target_directory, file_name, sheet_name, download):
     account_login(browser)
-    create_abstraction()
+    create_abstraction(browser, target_directory, file_name, sheet_name, download)
     while continue_prompt(target_directory, file_name, sheet_name):
         target_directory, file_name, sheet_name = \
             request_more_information(target_directory, file_name, sheet_name)

@@ -26,7 +26,7 @@ def continue_prompt(current_target_directory, current_file_name, current_sheet_n
 def target_directory_prompt(current_target_directory):
     print(f'Current Directory: {current_target_directory}')
     if request_yes_or_no('Has the target directory changed?'):
-        target_directory_input = "Please enter the new target directory: \n"
+        target_directory_input = input("Please enter the new target directory: \n")
         return f'{root}/{target_directory_input}'
     else:
         return current_target_directory
@@ -39,7 +39,7 @@ def available_file_names(target_directory):
 def file_name_prompt(current_file_name):
     print(f'Current File Name: {current_file_name}')
     if request_yes_or_no('Has the file name changed?'):
-        file_name_input = "Please enter the new file name: \n"
+        file_name_input = input("Please enter the new file name: \n")
         return f'{file_name_input}'
     else:
         return current_file_name
@@ -53,7 +53,7 @@ def available_sheet_names():
 def sheet_name_prompt(current_sheet_name):
     print(f'Current Sheet Name: {current_sheet_name}')
     if request_yes_or_no('Has the sheet name changed?'):
-        sheet_name_input = "Please enter the new sheet name: \n"
+        sheet_name_input = input("Please enter the new sheet name: \n")
         return f'{sheet_name_input}'
     else:
         return current_sheet_name
