@@ -15,7 +15,7 @@ def request_yes_or_no(prompt):
         clear_terminal()
         print(f'You entered {user_input} Please enter "Y" or "N"')
         user_input = input(f'{prompt} (Y/N) \n')
-    if user_input in ["Y", "YES"]:
+    if user_input.upper() in ["Y", "YES"]:
         return True
     else:
         return False
