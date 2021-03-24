@@ -3,16 +3,22 @@ import os
 import pandas as pd
 import xlsxwriter
 
-from variables import abstraction_type, authorship, worksheet_properties, text_formats, header_content
+from variables import abstraction_type, authorship, worksheet_properties, text_formats
 
 
 def prepare_output_environment(target_directory):
     os.chdir(target_directory)
 
 
+def transform_dictionary(dictionary):
+    dataframe = pd.DataFrame(dictionary)
+    dataframe.rename({"Legal": "Legal Description"}, axis=1)
+    return dataframe
+
+
 def create_output_file(file_name):
     abstraction_export = '-'.join(abstraction_type.upper().split(' '))
-    return f'{file_name}-{abstraction_export}'
+    return f'{file_name}-{abstraction_export}.xlsx'
 
 
 def create_excel_writer(output_file):
@@ -28,7 +34,7 @@ def add_column(dataframe, current_position, column):
 
 
 def add_breakpoints(dataframe):
-    current_position = dataframe.columns.get_loc(worksheet_properties['breakpoint_start']) - 1
+    current_position = dataframe.columns.get_loc(worksheet_properties['breakpoint_start'])
     for column in worksheet_properties['breakpoints']:
         add_column(dataframe, current_position, column)
         current_position = current_position + column.position
@@ -48,7 +54,7 @@ def create_excel_object(writer, dataframe, sheet_name):
 def create_xlsx_document(file_name, dataframe):
     output_file = create_output_file(file_name)
     writer = create_excel_writer(output_file)
-    create_excel_object(writer, dataframe, abstraction_type)
+    create_excel_object(writer, dataframe, abstraction_type.upper())
     return writer
 
 
@@ -57,7 +63,7 @@ def access_workbook_object(writer):
 
 
 def access_worksheet_object(writer):
-    return writer.sheets
+    return writer.sheets[(abstraction_type.upper())]
 
 
 def set_workbook_properties(workbook):
@@ -71,7 +77,7 @@ def set_font_formats(workbook):
         'header': workbook.add_format(text_formats['header']),
         'datatype': workbook.add_format(text_formats['datatype']),
         'body': workbook.add_format(text_formats['body']),
-        # 'border': workbook.add_format(text_formats['border'])
+        'border': workbook.add_format(text_formats['border']),
         'footer_title': workbook.add_format(text_formats['footer_title']),
         'footer': workbook.add_format(text_formats['footer']),
     }
@@ -80,18 +86,34 @@ def set_font_formats(workbook):
 def format_workbook(writer):
     workbook = access_workbook_object(writer)
     set_workbook_properties(workbook)
-    return set_font_formats(workbook)
+    return set_font_formats(workbook), workbook
 
 
 def set_page_format(worksheet):
     worksheet.set_landscape()
-    worksheet.set_paper(worksheet_properties['paper_type'])
+    worksheet.set_paper(worksheet_properties['paper_size'])
     worksheet.set_margins(left=0.25, right=0.25, top=0.75, bottom=0.75)
     worksheet.hide_gridlines(worksheet_properties['gridlines'])
+    worksheet.freeze_panes(f'A{worksheet_properties["startrow"] + 1}')
 
 
-def set_title_format(worksheet):
+def format_worksheet(writer):
+    worksheet = access_worksheet_object(writer)
+    set_page_format(worksheet)
+    return worksheet
+
+
+def count_columns(dataframe):
+    return len(dataframe.columns)
+
+
+def number_to_letter(number):
+    return chr(ord('@') + (number))
+
+
+def set_title_format(dataframe, worksheet, font_format):
     worksheet.set_row(0, worksheet_properties['header_height'])
+    worksheet.merge_range(f'A1:{number_to_letter(count_columns(dataframe))}1', '', font_format)
 
 
 def create_range_message(dataframe, content):
@@ -114,12 +136,8 @@ def write_title_content(dataframe, worksheet, font_formats):
 
 
 def add_title_row(dataframe, worksheet, font_formats):
-    set_title_format(worksheet)
+    set_title_format(dataframe, worksheet, font_formats['header'])
     write_title_content(dataframe, worksheet, font_formats)
-
-
-def number_to_letter(number):
-    return chr(ord('@') + (number))
 
 
 def merge_primary_datatype_ranges(dataframe, worksheet, font_format):
@@ -136,12 +154,11 @@ def merge_primary_datatype_ranges(dataframe, worksheet, font_format):
 
 def merge_custom_column(dataframe, worksheet, font_format):
     column = worksheet_properties['datatype_content']['custom_datatype_column']
-    column_name = dataframe.columns[column]
     column_position_start = number_to_letter((column + 1))
     column_position_end = number_to_letter((column + 4))
     worksheet.merge_range(
         f'{column_position_start}2:{column_position_end}2',
-        column_name,
+        worksheet_properties['custom_column_name'],
         font_format
     )
 
@@ -151,7 +168,7 @@ def merge_secondary_datatype_ranges(dataframe, worksheet, font_format):
     for column in primary_range:
         column_name = dataframe.columns[column]
         column_position = number_to_letter((column + 1))
-        worksheet.merge_range(
+        worksheet.write(
             f'{column_position}3',
             column_name,
             font_format
@@ -164,17 +181,24 @@ def add_dataframe_headers(dataframe, worksheet, font_format):
     merge_secondary_datatype_ranges(dataframe, worksheet, font_format)
 
 
-def set_column_formats(worksheet, font_format):
-    for column in worksheet_properties['column_formats']:
-        worksheet.set_column(column.column_range, column.width, font_format)
-
-
-def count_columns(dataframe):
-    return len(dataframe.columns)
-
-
 def access_last_row(dataframe):
     return len(dataframe.index) + worksheet_properties['startrow']
+
+
+def set_worksheet_border(dataframe, worksheet, font_format):
+    number_columns = count_columns(dataframe)
+    worksheet_range = f'A{worksheet_properties["startrow"]}:{number_to_letter(number_columns)}{access_last_row(dataframe)}'
+    border_format_1 = worksheet_properties['conditional_formats']['border_format_1']
+    border_format_2 = worksheet_properties['conditional_formats']['border_format_2']
+    border_format_1['format'] = font_format
+    border_format_2['format'] = font_format
+    worksheet.conditional_format(worksheet_range, border_format_1)
+    worksheet.conditional_format(worksheet_range, border_format_2)
+
+
+def set_dataframe_format(worksheet, font_format):
+    for column in worksheet_properties['column_formats']:
+        worksheet.set_column(column.column_range, column.width, font_format)
 
 
 def set_footer_title(worksheet, last_column, last_row, font_format):
@@ -187,8 +211,8 @@ def set_footer_title(worksheet, last_column, last_row, font_format):
 def set_footer(worksheet, last_column, last_row, font_format):
     footer_row = last_row + 2
     footer_range = f'A{footer_row}:{last_column}{footer_row}'
-    worksheet.set_row((footer_row - 1), worksheet_properties['footer-height'])
-    worksheet.merge_range(footer_range, worksheet_properties['footer-content'], font_format)
+    worksheet.set_row((footer_row - 1), worksheet_properties['footer_height'])
+    worksheet.merge_range(footer_range, worksheet_properties['footer_content'], font_format)
 
 
 def add_footer_row(dataframe, worksheet, font_formats):
@@ -198,23 +222,19 @@ def add_footer_row(dataframe, worksheet, font_formats):
     set_footer(worksheet, last_column, last_row, font_formats['footer'])
 
 
-def format_worksheet(dataframe, worksheet, font_formats):
-    set_page_format(worksheet)
+def add_content(dataframe, worksheet, font_formats):
     add_title_row(dataframe, worksheet, font_formats)
-    add_dataframe_headers(dataframe, font_formats['datatype'])
-    set_column_formats(worksheet, font_formats['body'])
-    # set_worksheet_border(dataframe)
+    add_dataframe_headers(dataframe, worksheet, font_formats['datatype'])
+    set_worksheet_border(dataframe, worksheet, font_formats['border'])
     add_footer_row(dataframe, worksheet, font_formats)
 
 
-def format_xlsx_worksheet(writer, dataframe, font_formats):
-    worksheet = access_worksheet_object(writer)
-    format_worksheet(dataframe, worksheet, font_formats)
-
-
 def format_xlsx_document(writer, dataframe):
-    font_formats = format_workbook(writer)
-    format_worksheet(writer, dataframe, font_formats)
+    font_formats, workbook = format_workbook(writer)
+    worksheet = format_worksheet(writer)
+    set_dataframe_format(worksheet, font_formats['body'])
+    add_content(dataframe, worksheet, font_formats)
+    return workbook
 
 
 def close_workbook(workbook):
@@ -226,11 +246,13 @@ def save_xlsx_document(writer):
 
 
 def finalize_xlsx_document(writer, dataframe):
-    format_xlsx_document(writer, dataframe)
-    save_xlsx_document(writer)
+    workbook = format_xlsx_document(writer, dataframe)
+    # save_xlsx_document(writer)
+    close_workbook(workbook)
 
 
-def export_document(target_directory, file_name, dataframe):
+def export_document(target_directory, file_name, dictionary):
     prepare_output_environment(target_directory)
+    dataframe = transform_dictionary(dictionary)
     writer = create_xlsx_document(file_name, dataframe)
     finalize_xlsx_document(writer, dataframe)
