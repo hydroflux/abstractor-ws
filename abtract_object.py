@@ -1,4 +1,4 @@
-abstract_dataframe = {
+abstract_dict = {
     "Grantor": [],
     "Grantee": [],
     "Book": [],
