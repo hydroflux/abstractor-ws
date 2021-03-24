@@ -65,7 +65,11 @@ def set_font_formats(workbook):
         'large': workbook.add_format(text_formats['large']),
         'small': workbook.add_format(text_formats['small']),
         'header': workbook.add_format(text_formats['header']),
-        'datatype': workbook.add_format(text_formats['datatype'])
+        'datatype': workbook.add_format(text_formats['datatype']),
+        'body': workbook.add_format(text_formats['body']),
+        # 'border': workbook.add_format(text_formats['border'])
+        'footer_title': workbook.add_format(text_formats['footer_title']),
+        'footer': workbook.add_format(text_formats['footer']),
     }
     
 
@@ -109,21 +113,17 @@ def write_title_content(dataframe, worksheet, font_formats):
 def add_title_row(dataframe, worksheet, font_formats):
     set_title_format(worksheet)
     write_title_content(dataframe, worksheet, font_formats)
-    
-
-# def count_columns(dataframe):
-#     return len(dataframe.columns)
 
 
-# def access_last_row(dataframe):
-#     return len(dataframe.index) + worksheet_properties['startrow']
+def number_to_letter(number):
+    return chr(ord('@')+(number))
 
 
 def merge_primary_datatype_ranges(dataframe, font_format):
     primary_range = worksheet_properties['datatype_content']['primary_datatype_columns']
     for column in primary_range:
         column_name = dataframe.columns[column] 
-        column_position = chr(ord('@')+(column+1))
+        column_position = number_to_letter((column + 1))
         worksheet.merge_range(
             f'{column_position}2:{column_position}3',
             column_name,
@@ -134,8 +134,8 @@ def merge_primary_datatype_ranges(dataframe, font_format):
 def merge_custom_column(dataframe, font_format):
     custom_column = worksheet_properties['datatype_content']['custom_datatype_column']
     column_name = dataframe.columns[custom_column] 
-    column_position_start = chr(ord('@')+(column+1))
-    column_position_end = chr(ord('@')+(column+4))
+    column_position_start = number_to_letter((column + 1))
+    column_position_end = number_to_letter((column + 4))
     worksheet.merge_range(
         f'{column_position_start}2:{column_position_end}2',
         column_name,
@@ -147,7 +147,7 @@ def merge_secondary_datatype_ranges(dataframe, font_format):
     primary_range = worksheet_properties['datatype_content']['secondary_datatype_columns']
     for column in primary_range:
         column_name = dataframe.columns[column] 
-        column_position = chr(ord('@')+(column+1))
+        column_position = number_to_letter((column + 1))
         worksheet.merge_range(
             f'{column_position}3',
             column_name,
@@ -156,17 +156,55 @@ def merge_secondary_datatype_ranges(dataframe, font_format):
 
 
 def add_dataframe_headers(dataframe, worksheet, font_format):
-    # merge_header_ranges(dataframe, worksheet, font_format)
     merge_primary_datatype_ranges(dataframe, font_format)
     merge_custom_datatype_range(dataframe, font_format)
     merge_secondary_datatype_ranges(dataframe, font_format)
+
+
+def set_column_formats(worksheet, font_format):
+    for column in worksheet_properties['column_formats']:
+        worksheet.set_column(column.column_range, column.width, font_format)
+
+
+def count_columns(dataframe):
+    return len(dataframe.columns)
+
+def access_last_row(dataframe):
+    return len(dataframe.index) + worksheet_properties['startrow']
+
+# def set_worksheet_border(dataframe):
+#     number_columns = count_columns(dataframe)
+#     last_row = access_last_row(dataframe)
+#     main_content_range = f'A3:{number_to_letter(number_columns)}{last_row}'
+
+def set_footer_title(worksheet, last_column, last_row, font_format):
+    footer_title_row = last_row + 1
+    footer_title_range = f'A{footer_title_row}:{last_column}{footer_title_row}'
+    worksheet.set_row(last_row, worksheet_properties['footer_title_height'])
+    worksheet.merge_range(footer_title_range, worksheet_properties['footer_title_content'], font_format)
+
+
+def set_footer(worksheet, last_column, last_row, font_format):
+    footer_row = last_row + 2
+    footer_range = f'A{footer_row}:{last_column}{footer_row}'
+    worksheet.set_row((footer_row - 1), worksheet_properties['footer-height'])
+    worksheet.merge_range(footer_title_range, worksheet_properties['footer-content'], font_format)
+
+
+def add_footer_row(dataframe, worksheet, font_formats):
+    last_column = number_to_letter(count_columns(dataframe))
+    last_row = access_last_row(dataframe)
+    set_footer_title(worksheet, last_column, last_row, font_formats['footer'])
+    set_footer(worksheet, last_column, last_row, font_format)
 
 
 def format_worksheet(dataframe, worksheet, font_formats):
     set_page_format(worksheet)
     add_title_row(dataframe, worksheet, font_formats)
     add_dataframe_headers(dataframe, font_formats['datatype'])
-    # last_row = access_last_row(dataframe)
+    set_column_formats(worksheet, font_formats['body'])
+    # set_worksheet_border(dataframe)
+    add_footer_row(dataframe, worksheet, font_formats)
 
 
 def format_xlsx_worksheet(writer, dataframe, font_formats):
