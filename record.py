@@ -5,7 +5,8 @@ from selenium.webdriver.support.wait import WebDriverWait
 
 from variables import (document_information_id, document_table_class,
                        index_table_tags, information_links_class, less_info,
-                       more_info, related_table_class, search_errors, timeout, missing_values)
+                       missing_values, more_info, related_table_class,
+                       search_errors, timeout)
 
 
 def access_document_information(browser, document_number):
@@ -79,7 +80,7 @@ def record_legal_data(document_table, dataframe):
     legal_data = table_rows[1].find_elements_by_tag_name(index_table_tags[2])
     if legal_data == []:
         dataframe["Legal"].append(search_errors[2])
-    else: 
+    else:
         legal = legal_data[-1].text
         dataframe["Legal"].append(legal)
 
@@ -141,9 +142,10 @@ def record_document_fields(browser, dataframe, document_number):
 
 # This series of functions may be unnecessary, continue to test
 def review_entry(browser, dataframe, document_number):
-    while dataframe["Grantor"][-1] == missing_values[0] and dataframe["Grantee"][-1] == missing_values[0] and dataframe["Related Documents"][-1] == missing_values[1]:
+    while dataframe["Grantor"][-1] == missing_values[0] and dataframe["Grantee"][-1] == missing_values[0]\
+            and dataframe["Related Documents"][-1] == missing_values[1]:
         print("Recording of last document was processed incorrectly, attempting to record again.")
-        re_record_document_fields(browser, dataframe, document_number)    
+        re_record_document_fields(browser, dataframe, document_number)
 
 
 def re_record_document_fields(browser, dataframe, document_number):
