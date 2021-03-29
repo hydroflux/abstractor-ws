@@ -1,7 +1,7 @@
 import os
 
-from import_list import generate_document_list
-from variables import root
+from .import_list import generate_document_list
+from .variables import root
 
 
 def clear_terminal():

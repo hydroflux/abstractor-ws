@@ -2,7 +2,7 @@ import os
 
 from pandas import DataFrame
 
-import classes.counties as county_data
+import script.classes.counties as county_data
 
 
 def create_folder(directory):

@@ -2,6 +2,8 @@ import os
 
 import pandas as pd
 
+from .variables import web_directory
+
 
 def import_excel_document(file_path, sheet_name):
     excel = pd.read_excel(file_path, sheet_name)
@@ -11,4 +13,9 @@ def import_excel_document(file_path, sheet_name):
 
 def generate_document_list(target_directory, file_name, sheet_name):
     file_path = f'{target_directory}/{file_name}.xlsx'
+    return import_excel_document(file_path, sheet_name)
+
+
+def generate_list_from_file(file_name, sheet_name):
+    file_path = f'{web_directory}/{file_name}'
     return import_excel_document(file_path, sheet_name)

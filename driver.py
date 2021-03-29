@@ -10,7 +10,7 @@ def chrome_webdriver(target_directory):
     options.add_argument('--no-sandbox')  # Bypass OS Security Model
 
     prefs = {
-        "download.default_directory": f'{target_directory}/Documents',
+        # "download.default_directory": f'{target_directory}/Documents',
         "download.prompt_for_download": False,
         "plugins.always_open_pdf_externally": True
     }

@@ -4,7 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-from variables import (first_result_class_name, first_result_tag, naptime,
+from .variables import (first_result_class_name, first_result_tag, naptime,
                        search_action_tag, search_actions_class_name, timeout)
 
 

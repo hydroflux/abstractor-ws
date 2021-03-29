@@ -1,15 +1,18 @@
 import os
 
-from abstract_object import abstract_dict
-from download import download_document
-from export import export_document
-from file_management import create_folder
-from import_list import generate_document_list
-from login import account_login
-from open import open_document
-from record import record_bad_search, record_document
-from search import document_number_search
-from user_prompts import continue_prompt, request_more_information
+from .abstract_object import abstract_dict
+from .download import download_document
+from .driver import chrome_webdriver
+from .export import export_document
+from .file_management import create_folder
+from .import_list import generate_document_list
+from .login import account_login
+from .open import open_document
+from .record import record_bad_search, record_document
+from .search import document_number_search
+from .user_prompts import continue_prompt, request_more_information
+
+from .variables import web_directory
 
 
 def create_download_directory(target_directory):
@@ -46,9 +49,11 @@ def create_abstraction(browser, target_directory, file_name, sheet_name, downloa
     document_list = generate_document_list(target_directory, file_name, sheet_name)
     abstract_dict = create_abstraction_dictionary(browser, target_directory, document_list, download)
     export_document(target_directory, file_name, abstract_dict)
+    return abstract_dict
 
 
-def execute_program(browser, target_directory, file_name, sheet_name, download):
+def execute_program(target_directory, file_name, sheet_name, download):
+    browser = chrome_webdriver(target_directory)
     account_login(browser)
     create_abstraction(browser, target_directory, file_name, sheet_name, download)
     while continue_prompt(target_directory, file_name, sheet_name):
@@ -57,3 +62,15 @@ def execute_program(browser, target_directory, file_name, sheet_name, download):
         create_abstraction(target_directory, file_name, sheet_name, download)
     browser.close()
     quit()
+
+
+def execute_web_program(client, legal, upload_file):
+    sheet_name = 'Documents'
+    download = False
+    file_name = upload_file
+    target_directory = web_directory
+    browser = chrome_webdriver(target_directory)
+    account_login(browser)
+    abstract_dict = create_abstraction(browser, target_directory, file_name, sheet_name, download)
+    browser.close()
+    return abstract_dict

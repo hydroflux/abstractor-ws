@@ -3,7 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-from variables import (document_information_id, document_table_class,
+from .variables import (document_information_id, document_table_class,
                        index_table_tags, information_links_class, less_info,
                        missing_values, more_info, related_table_class,
                        search_errors, timeout)
