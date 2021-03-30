@@ -10,6 +10,5 @@ class County:
 
         County.number_counties += 1
 
-
     def __str__(self):
         return f'{self.county_name} County, {self.state}'
