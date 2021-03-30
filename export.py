@@ -4,7 +4,7 @@ import pandas as pd
 import xlsxwriter
 
 from .variables import (abstraction_type, authorship, text_formats,
-                       worksheet_properties)
+                        worksheet_properties)
 
 
 def prepare_output_environment(target_directory):

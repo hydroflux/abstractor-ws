@@ -1,4 +1,6 @@
 variables.py
+tiger/variables.py
+formatting/excel_export_format.py
 .vscode
 __pycache__
 counties.py
