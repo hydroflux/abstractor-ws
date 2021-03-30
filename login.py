@@ -7,7 +7,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
 from .variables import (credentials, login_button_class, timeout, webpage_title,
-                       website)
+                        website)
 
 
 def open_site(browser):

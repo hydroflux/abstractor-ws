@@ -1,4 +1,4 @@
-abstract_dict = {
+abstract_dictionary = {
     "Grantor": [],
     "Grantee": [],
     "Book": [],

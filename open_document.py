@@ -5,7 +5,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
 from .variables import (first_result_class_name, first_result_tag, naptime,
-                       search_action_tag, search_actions_class_name, timeout)
+                        search_action_tag, search_actions_class_name, timeout)
 
 
 def get_first_result(browser):
