@@ -48,3 +48,8 @@ def check_result(browser, document_number):
     first_result_cells = first_result.find_elements_by_tag_name(result_cell_tag)
     if document_number in map(get_element_text, first_result_cells):
         return True
+
+
+def open_document_result(browser, document_number):
+    if check_result(browser, document_number):
+        identify_first_result(browser, document_number).click()
