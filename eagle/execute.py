@@ -1,20 +1,20 @@
 import os
 
-from .abstract_object import abstract_dictionary
-from .download import download_document
-from .driver import create_webdriver
-from .export import export_document
-from .file_management import create_folder
-from .import_list import generate_document_list
-from .login import account_login
-from .open import open_document
-from .record import record_document
-from .search import document_number_search
-from .bad_search import record_bad_search
-from .user_prompts import continue_prompt, request_more_information
-from .file_management import create_document_directory, remaining_downloads
+from settings.abstract_object import abstract_dictionary
+from settings.bad_search import record_bad_search
+from settings.driver import create_webdriver
+from settings.export import export_document
+from settings.file_management import (create_document_directory, create_folder,
+                                      remaining_downloads)
+from settings.import_list import generate_document_list
+from settings.settings import web_directory
+from settings.user_prompts import continue_prompt, request_more_information
 
-from .variables import web_directory
+from eagle.download import download_document
+from eagle.login import account_login
+from eagle.open import open_document
+from eagle.record import record_document
+from eagle.search import document_number_search
 
 
 def search_documents_from_list(browser, document_list, download):

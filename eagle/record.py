@@ -2,11 +2,13 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+from settings.settings import search_errors, timeout
 
-from .variables import (document_information_id, document_table_class,
-                        index_table_tags, information_links_class, less_info,
-                        missing_values, more_info, related_table_class,
-                        search_errors, timeout)
+from eagle.eagle_variables import (document_information_id,
+                                   document_table_class, index_table_tags,
+                                   information_links_class, less_info,
+                                   missing_values, more_info,
+                                   related_table_class)
 
 
 def access_document_information(browser, document_number):

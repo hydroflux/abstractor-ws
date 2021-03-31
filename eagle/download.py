@@ -4,9 +4,10 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+from settings.settings import long_timeout
 
-from .variables import (download_button_id, loading_status, long_timeout,
-                        pdf_viewer_class_name, pdf_viewer_load_id)
+from eagle.eagle_variables import (download_button_id, loading_status,
+                                   pdf_viewer_class_name, pdf_viewer_load_id)
 
 
 def pdf_load_status(browser):
