@@ -3,10 +3,12 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+from settings.settings import timeout
 
-from .search import open_search
+from tiger.search import open_search
+from tiger.tiger_variables import (credentials, handle_disclaimer_id, website,
+                                   website_title)
 
-from .variables import website, website_title, credentials, timeout, handle_disclaimer_id
 
 def open_site(browser):
     browser.get(website)

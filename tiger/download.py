@@ -5,9 +5,11 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+from settings.file_management import create_document_directory
+from settings.settings import timeout
 
-from ..file_management import create_document_directory
-from .variables import view_panel_id, view_group_id, download_button_id, stock_download, timeout
+from .variables import (download_button_id, stock_download, view_group_id,
+                        view_panel_id)
 
 
 def open_document_submenu(browser, document_number):

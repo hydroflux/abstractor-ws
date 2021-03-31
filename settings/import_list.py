@@ -2,7 +2,7 @@ import os
 
 import pandas as pd
 
-from .variables import web_directory
+from settings.settings import web_directory
 
 
 def import_excel_document(file_path, sheet_name):

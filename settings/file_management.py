@@ -2,8 +2,6 @@ import os
 
 from pandas import DataFrame
 
-import script.classes.counties as county_data
-
 
 def create_folder(directory):
     try:
@@ -26,10 +24,6 @@ def remaining_downloads(document_list, document_number):
 def create_dataframe(dictionary):
     dataframe = DataFrame(dictionary)
     print(dataframe)
-
-
-def get_county_data(county):
-    return county_data.county_dictionary.get(county)
 
 
 def rename_documents_in_directory(county, directory):

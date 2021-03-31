@@ -1,17 +1,18 @@
-from .search import search
-from .open_document import open_document
-from .record import record_document
-from .download import download_document
-from ..file_management import create_download_directory, remaining_downloads
-from ..import_list import generate_document_list
-from .login import account_login
-from ..bad_search import record_bad_search
-from ..abstract_object import abstract_dictionary as dictionary
-from ..driver import create_webdriver
-from ..export import export_document
-from .file_management import get_county_data
+from settings.abstract_object import abstract_dictionary as dictionary
+from settings.bad_search import record_bad_search
+from settings.driver import create_webdriver
+from settings.export import export_document
+from settings.file_management import (create_download_directory,
+                                      remaining_downloads)
+from settings.general_functions import get_county_data
+from settings.import_list import generate_document_list
+from settings.settings import web_directory
 
-from .variables import web_directory
+from tiger.download import download_document
+from tiger.login import account_login
+from tiger.open_document import open_document
+from tiger.record import record_document
+from tiger.search import search
 
 
 def search_documents_from_list(browser, county, target_directory, document_list, download):

@@ -3,8 +3,12 @@ from selenium.common.exceptions import (StaleElementReferenceException,
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+from settings.settings import not_applicable, timeout
 
-from .variables import timeout, document_image_id, document_information_id, document_tag, table_row_tag, row_data_tag, row_titles, empty_values, book_page_abbreviation, empty_value
+from tiger.tiger_variables import (book_page_abbreviation, document_image_id,
+                                   document_information_id, document_tag,
+                                   empty_value, empty_values, row_data_tag,
+                                   row_titles, table_row_tag)
 
 
 def document_image_loaded(browser, document_number):
@@ -72,8 +76,8 @@ def record_book_and_page(dictionary, row):
         book = book.strip()
         page = page.strip()
         if book == '0' and page == '0':
-            book = empty_value
-            page = empty_value
+            book = not_applicable
+            page = not_applicable
         dictionary["Book"].append(book)
         dictionary["Page"].append(page)
     else:

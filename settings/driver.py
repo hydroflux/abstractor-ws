@@ -1,6 +1,7 @@
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 
+
 # Look into how to change driver preferences mid script -- for download directories
 def chrome_webdriver(target_directory, headless):
     chromedriver = ChromeDriverManager().install()
