@@ -54,7 +54,8 @@ def enter_document_number(browser, document_number):
         instrument_search_field.clear()
         instrument_search_field.send_keys(document_number)
     except TimeoutException:
-        print(f'Browser timed out while trying to fill document field for document number {document_number}, trying again.')
+        print(f'Browser timed out while trying to fill document field for document number '
+              f'{document_number}, trying again.')
 
 
 def execute_search(browser):
