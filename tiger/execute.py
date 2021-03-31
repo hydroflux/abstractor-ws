@@ -9,6 +9,7 @@ from ..bad_search import record_bad_search
 from ..abstract_object import abstract_dictionary as dictionary
 from ..driver import create_webdriver
 from ..export import export_document
+from .file_management import get_county_data
 
 from .variables import web_directory
 
@@ -26,20 +27,21 @@ def search_documents_from_list(browser, county, target_directory, document_list,
             print(f'No document found at reception number {document_number}, {remaining_downloads(document_list, document_number)} documents remaining.')
 
 
-def create_abstraction(browser, target_directory, file_name, sheet_name, download):
+def create_abstraction(browser, county, target_directory, file_name, sheet_name, download):
     document_list = generate_document_list(target_directory, file_name, sheet_name)
-    search_documents_from_list(browser, document_list, download)
+    search_documents_from_list(browser, county, target_directory, document_list, download)
     return dictionary
 
 
-def execute_web_program(client, legal, upload_file):
+def execute_web_program(county, client, legal, upload_file):
+    county = get_county_data(county)
     sheet_name = 'Documents'
     download = True
     file_name = upload_file
     target_directory = web_directory
     browser = create_webdriver(target_directory, False)
     account_login(browser)
-    dictionary = create_abstraction(browser, target_directory, file_name, sheet_name, download)
+    dictionary = create_abstraction(browser, county, target_directory, file_name, sheet_name, download)
     export_document(target_directory, file_name, dictionary, client, legal)
     browser.close()
     return dictionary

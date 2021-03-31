@@ -56,14 +56,14 @@ def execute_program(headless, target_directory, file_name, sheet_name, download)
     quit()
 
 
-def execute_web_program(client, legal, upload_file):
-    sheet_name = 'Documents'
-    download = False
-    file_name = upload_file
-    target_directory = web_directory
-    headless = False
-    browser = create_webdriver(target_directory, headless)
-    account_login(browser)
-    abstract_dictionary = create_abstraction(browser, target_directory, file_name, sheet_name, download)
-    browser.close()
-    return abstract_dictionary
+# def execute_web_program(client, legal, upload_file):
+#     sheet_name = 'Documents'
+#     download = False
+#     file_name = upload_file
+#     target_directory = web_directory
+#     headless = False
+#     browser = create_webdriver(target_directory, headless)
+#     account_login(browser)
+#     abstract_dictionary = create_abstraction(browser, target_directory, file_name, sheet_name, download)
+#     browser.close()
+#     return abstract_dictionary
