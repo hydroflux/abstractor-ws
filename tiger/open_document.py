@@ -53,3 +53,4 @@ def check_result(browser, document_number):
 def open_document(browser, document_number):
     if check_result(browser, document_number):
         identify_first_result(browser, document_number).click()
+        return True

@@ -12,18 +12,9 @@ from .record import record_document
 from .search import document_number_search
 from .bad_search import record_bad_search
 from .user_prompts import continue_prompt, request_more_information
+from .file_management import create_download_directory, remaining_downloads
 
 from .variables import web_directory
-
-
-def create_download_directory(target_directory):
-    download_directory = f'{target_directory}/Documents'
-    create_folder(download_directory)
-    os.chdir(download_directory)
-
-
-def remaining_downloads(document_list, document_number):
-    return len(document_list) - document_list.index(document_number) - 1
 
 
 def search_documents_from_list(browser, document_list, download):

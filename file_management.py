@@ -13,6 +13,16 @@ def create_folder(directory):
         print('Error: Creating directory ' + directory)
 
 
+def create_download_directory(target_directory):
+    download_directory = f'{target_directory}/Documents'
+    create_folder(download_directory)
+    os.chdir(download_directory)
+
+
+def remaining_downloads(document_list, document_number):
+    return len(document_list) - document_list.index(document_number) - 1
+
+
 def create_dataframe(dictionary):
     dataframe = DataFrame(dictionary)
     print(dataframe)
