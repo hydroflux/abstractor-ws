@@ -4,21 +4,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-from .variables import timeout
+from .variables import timeout, document_image_id, document_information_id, document_tag, table_row_tag, row_data_tag, row_titles, empty_values, book_page_abbreviation, empty_value
 
-
-def record_bad_search(dataframe, document_number):
-    bad_search_message = f'No document found at reception number {document_number}'
-    dataframe["Grantor"].append(search_errors[0])
-    dataframe["Grantee"].append(search_errors[0])
-    dataframe["Book"].append(search_errors[2])
-    dataframe["Page"].append(search_errors[2])
-    dataframe["Reception Number"].append(document_number)
-    dataframe["Document Type"].append(search_errors[0])
-    dataframe["Recording Date"].append(search_errors[1])
-    dataframe["Legal"].append(search_errors[2])
-    dataframe["Related Documents"].append(search_errors[2])
-    dataframe["Comments"].append(bad_search_message)
 
 def document_image_loaded(browser, document_number):
     try:
@@ -51,12 +38,16 @@ def get_table_rows(document_table):
     return document_table.find_elements_by_tag_name(table_row_tag)
 
 
+def get_element_text(element):
+    return element.text.strip()
+
+
 def get_row_data(row):
     row_data = row.find_elements_by_tag_name(row_data_tag)
-    return row_data[0].strip(), row_data[1].strip()
+    return get_element_text(row_data[0]), get_element_text(row_data[1])
 
 
-def record_value(row, title):
+def get_row_value(row, title):
     row_title, row_content = get_row_data(row)
     if row_title == title:
         return row_content
@@ -64,7 +55,64 @@ def record_value(row, title):
         print(f'Encountered "{row_title}:{row_content}" when looking for {title}.')
 
 
-def record_document(browser, document_number):
+def check_for_value(content, value_type):
+    if content != empty_values[value_type]:
+        return True
+
+
+def record_instrument_number(dictionary, row):
+    instrument_number = get_row_value(row, row_titles["instrument_number"])
+    dictionary["Instrument Number"].append(instrument_number)
+
+
+def record_book_and_page(dictionary, row):
+    book_page_value = get_row_value(row, row_titles["book_and_page"])
+    if book_page_value.starts_with(book_page_abbreviation):
+        book, page = book_page_value[book_page_abbreviation:].split("/")
+        if book == '0' and page == '0':
+            book = empty_value
+            page = empty_value
+        dictionary["Book"].append(book)
+        dictionary["Page"].append(page)
+    else:
+        print(f'Encountered unexpected value "{book_page_value}" when trying to record book & page.')
+
+
+def record_recording_date(dictionary, row):
+    recording_date = get_row_value(row, row_titles["recording_date"])
+    dictionary["Recording Date"].append(recording_date[:10])
+
+
+def record_document_type(dictionary, row):
+    document_type = get_row_value(row, row_titles["document_type"])
+    dictionary["Document Type"].append(document_type.title())
+
+
+def record_grantor(dictionary, row):
+    grantor = get_row_value(row, row_titles["grantor"])
+    dictionary["Grantor"].append(grantor.title())
+
+
+def record_grantee(dictionary, row):
+    grantee = get_row_value(row, row_titles["grantee"])
+    dictionary["Grantee"].append(grantee.title())
+
+
+def record_related_documents(dictionary, row):
+    related_documents = get_row_value(row, row_titles["related_documents"])
+    dictionary["Related Documents"].append(related_documents)
+
+
+# Record Legal & Compare legale with doc legals
+
+# Write a function to check additional information for rows 4, 7
+def record_document(browser, dictionary, document_number):
     document_table = document_table_data(browser, document_number)
     rows = get_table_rows(document_table)
-    instrument_number = record_value(rows[0], "Instrument #")
+    record_instrument_number(dictionary, rows[0])
+    record_book_and_page(dictionary, rows[1])
+    record_recording_date(dictionary, rows[2])
+    record_document_type(dictionary, rows[5])
+    record_grantor(dictionary, rows[7])
+    record_grantee(dictionary, rows[8])
+    record_related_documents(dictionary, rows[9])
