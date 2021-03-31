@@ -11,6 +11,16 @@ def open_search(browser):
     assert search_title
 
 
+def open_search_tab(browser):
+    try:
+        search_tab_present = EC.element_to_be_clickable((By.ID, search_tab_id))
+        WebDriverWait(browser, timeout).until(search_tab_present)
+        search_tab = browser.find_element_by_id(search_tab_id)
+        search_tab.click()
+    except TimeoutException:
+        print("Browser timed out while trying to access the search tab.")
+
+
 def enter_document_number(browser, document_number):
     try:
         instrument_search_field_present = EC.presence_of_element_located((By.ID, instrument_search_id))
@@ -30,3 +40,9 @@ def execute_search(browser):
         search_button.click()
     except TimeoutException:
         print("Browser timed out while trying to execute search.")
+
+
+def search(browser, document_number):
+    open_search(browser)
+    enter_document_number(browser, document_number)
+    execute_search(browser)

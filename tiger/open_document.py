@@ -46,4 +46,4 @@ def identify_first_result(browser, document_number):
 def check_result(browser, document_number):
     first_result = identify_first_result(browser, document_number)
     first_result_cells = first_result.find_elements_by_tag_name(result_cell_tag)
-    if document_number in first_result_cells
+    for cell in 

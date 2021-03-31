@@ -4,6 +4,8 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
+from .search import open_search
+
 from .variables import website, website_title, credentials, timeout, handle_disclaimer_id
 
 def open_site(browser):
@@ -34,4 +36,5 @@ def handle_disclaimer(browser):
 def login(browser):
     open_site(browser)
     enter_credentials(browser)
+    open_search(browser)
     handle_disclaimer(browser)
