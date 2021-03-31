@@ -10,12 +10,6 @@ from ..file_management import create_document_directory
 from .variables import view_panel_id, view_group_id, download_button_id, stock_download, timeout
 
 
-def create_document_directory(target_directory):
-    document_directory = create_folder(f'{target_directory}/Documents')
-    os.chdir(document_directory)
-    return document_directory
-
-
 def open_document_submenu(browser, document_number):
     try:
         view_panel_present = EC.element_to_be_clickable((By.ID, view_panel_id))
