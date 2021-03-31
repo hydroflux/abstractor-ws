@@ -1,3 +1,17 @@
+# File types #
+##############
+*.pyc
+*.swo
+*.swp
+*.swn
+
+# Directories #
+###############
+logs/
+**src/script
+
+# Specific files #
+##################
 variables.py
 tiger/tiger_variables.py
 eagle/eagle_variables.py
