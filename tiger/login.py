@@ -8,7 +8,7 @@ from .variables import website, website_title, credentials, timeout
 
 def open_site(browser):
     browser.get(website)
-    assert webpage_title in browser.title
+    assert website_title in browser.title
 
 
 def enter_credentials(browser):
