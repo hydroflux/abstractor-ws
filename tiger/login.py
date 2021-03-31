@@ -35,7 +35,7 @@ def handle_disclaimer(browser):
         print("Browser timed out while trying to handle the website disclaimer.")
 
 
-def login(browser):
+def account_login(browser):
     open_site(browser)
     enter_credentials(browser)
     open_search(browser)

@@ -13,7 +13,7 @@ def chrome_webdriver(target_directory, headless):
     options.add_argument('--no-sandbox')  # Bypass OS Security Model
 
     prefs = {
-        # "download.default_directory": f'{target_directory}/Documents',
+        "download.default_directory": f'{target_directory}/Documents',
         "download.prompt_for_download": False,
         "plugins.always_open_pdf_externally": True
     }
@@ -27,7 +27,7 @@ def chrome_webdriver(target_directory, headless):
 
 
 def enable_download_in_headless_chrome(browser, target_directory):
-    document_directory = f'{target_directory}/Downloads'
+    document_directory = f'{target_directory}/Documents'
 
     browser.command_executor._commands["send_command"] = (
         "POST",

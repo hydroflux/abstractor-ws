@@ -12,7 +12,7 @@ from settings.user_prompts import continue_prompt, request_more_information
 
 from eagle.download import download_document
 from eagle.login import account_login
-from eagle.open import open_document
+from eagle.open_document import open_document
 from eagle.record import record_document
 from eagle.search import document_number_search
 

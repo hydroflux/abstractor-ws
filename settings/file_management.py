@@ -1,6 +1,9 @@
 import os
+import shutil
 
 from pandas import DataFrame
+
+from settings.settings import abstraction_type
 
 
 def create_folder(directory):
@@ -12,7 +15,8 @@ def create_folder(directory):
 
 
 def create_document_directory(target_directory):
-    document_directory = create_folder(f'{target_directory}/Documents')
+    document_directory = f'{target_directory}/Documents'
+    create_folder(document_directory)
     os.chdir(document_directory)
     return document_directory
 
@@ -42,3 +46,12 @@ def rename_documents_in_directory(county, directory):
             if size is True:
                 os.remove(new_document_name)
                 print('Failed to download reception number ' + pdf)
+
+
+def bundle_project(target_directory, file_name):
+    os.chdir(target_directory)
+    project_folder = f'{target_directory}/{file_name}'
+    create_folder(project_folder)
+    shutil.move(f'{target_directory}/Documents', project_folder)
+    # shutil.move(f'{target_directory}/{file_name}.xlsx', project_folder)
+    shutil.move(f'{target_directory}/{file_name}-{abstraction_type.upper()}.xlsx', project_folder)

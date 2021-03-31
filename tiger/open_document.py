@@ -3,6 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from settings.settings import timeout
+from time import sleep
 
 from tiger.tiger_variables import (first_result_tag, result_cell_tag,
                                    result_count_button_id, result_count_id,
@@ -34,6 +35,7 @@ def identify_first_result(browser, document_number):
         results_present = EC.presence_of_element_located((By.ID, results_id))
         WebDriverWait(browser, timeout).until(results_present)
         results = browser.find_element_by_id(results_id)
+        browser.execute_script("arguments[0].scrollIntoView();", results)
         results_body = results.find_element_by_tag_name(results_body_tag)
         return results_body.find_element_by_tag_name(first_result_tag)
     except TimeoutException:
@@ -52,6 +54,7 @@ def check_result(browser, document_number):
 
 
 def open_document(browser, document_number):
+    count_results(browser, document_number)
     if check_result(browser, document_number):
         identify_first_result(browser, document_number).click()
         return True

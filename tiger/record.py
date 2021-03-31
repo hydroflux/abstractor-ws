@@ -3,12 +3,12 @@ from selenium.common.exceptions import (StaleElementReferenceException,
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-from settings.settings import not_applicable, timeout
+from settings.settings import empty_value, not_applicable, timeout
 
 from tiger.tiger_variables import (book_page_abbreviation, document_image_id,
                                    document_information_id, document_tag,
-                                   empty_value, empty_values, row_data_tag,
-                                   row_titles, table_row_tag)
+                                   empty_values, row_data_tag, row_titles,
+                                   table_row_tag)
 
 
 def document_image_loaded(browser, document_number):
@@ -51,17 +51,17 @@ def get_row_data(row):
     return get_element_text(row_data[0]), get_element_text(row_data[1])
 
 
+# def check_for_value(content, value_type):
+#     if content != empty_values[value_type]:
+#         return True
+
+
 def get_row_value(row, title):
     row_title, row_content = get_row_data(row)
     if row_title == title:
         return row_content
     else:
         print(f'Encountered "{row_title}:{row_content}" when looking for {title}.')
-
-
-def check_for_value(content, value_type):
-    if content != empty_values[value_type]:
-        return True
 
 
 def record_instrument_number(dictionary, row):
@@ -80,6 +80,9 @@ def record_book_and_page(dictionary, row):
             page = not_applicable
         dictionary["Book"].append(book)
         dictionary["Page"].append(page)
+    elif book_page_value == '':
+        dictionary["Book"].append(empty_value)
+        dictionary["Page"].append(empty_value)
     else:
         print(f'Encountered unexpected value "{book_page_value}" when trying to record book & page.')
 
@@ -109,13 +112,13 @@ def record_related_documents(dictionary, row):
     dictionary["Related Documents"].append(related_documents)
 
 
-def record_legal(dictionary, row_1, row_2):
+def record_legal(dictionary, row_1):
     legal = get_row_value(row_1, row_titles["legal"])
-    additional_legal = get_row_value(row_2, row_titles["additional_legal"])
-    if legal != additional_legal:
-        dictionary["Legal"].append(f'{legal}\n{additional_legal}')
-    else:
-        dictionary["Legal"].append(legal)
+    # additional_legal = get_row_value(row_2, row_titles["additional_legal"])
+    # if legal != additional_legal:
+    #     dictionary["Legal"].append(f'{legal}\n{additional_legal}')
+    # else:
+    dictionary["Legal"].append(legal)
 
 
 # Write a function to check additional information for rows 4, 7
@@ -129,5 +132,5 @@ def record_document(browser, dictionary, document_number):
     record_grantor(dictionary, rows[7])
     record_grantee(dictionary, rows[8])
     record_related_documents(dictionary, rows[9])
-    record_legal(dictionary, rows[10], rows[11])
+    record_legal(dictionary, rows[10])
     dictionary["Comments"].append(empty_value)

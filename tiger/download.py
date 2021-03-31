@@ -56,7 +56,7 @@ def wait_for_download(browser, download_path):
 
 
 def check_download_size(new_download_name, document_number):
-    size = os.state(new_download_name) == 0
+    size = os.stat(new_download_name) == 0
     if size:
         os.remove(new_download_name)
         print(f'Failed to download document number {document_number}.')
@@ -66,7 +66,7 @@ def rename_download(document_directory, document_number, download_path, new_down
     if os.path.isfile(download_path):
         os.rename(stock_download, new_download_name)
         os.chdir(document_directory)
-        check_download_size(document_number, new_download_name)
+        check_download_size(new_download_name, document_number)
     else:
         raise ValueError("%s isn't a file!" % download_path)
 
@@ -84,5 +84,5 @@ def download_document(browser, county, target_directory, document_number):
     document_directory = create_document_directory(target_directory)
     open_document_submenu(browser, document_number)
     execute_download(browser, document_number)
-    if update_download(county, document_directory, document_number):
+    if update_download(browser, county, document_directory, document_number):
         return True

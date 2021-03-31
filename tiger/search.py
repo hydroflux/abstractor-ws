@@ -38,6 +38,7 @@ def open_search_tab(browser):
         search_tab_present = EC.element_to_be_clickable((By.ID, search_tab_id))
         WebDriverWait(browser, timeout).until(search_tab_present)
         search_tab = browser.find_element_by_id(search_tab_id)
+        browser.execute_script("arguments[0].scrollIntoView();", search_tab)
         if check_active_class(get_parent_element(search_tab)):
             return
         search_tab.click()
@@ -53,7 +54,7 @@ def enter_document_number(browser, document_number):
         instrument_search_field.clear()
         instrument_search_field.send_keys(document_number)
     except TimeoutException:
-        print(f'Browser timed out while trying to fill document field for document number {document_number}.')
+        print(f'Browser timed out while trying to fill document field for document number {document_number}, trying again.')
 
 
 def execute_search(browser):

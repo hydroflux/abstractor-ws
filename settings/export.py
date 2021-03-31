@@ -126,8 +126,8 @@ def write_title_content(dataframe, worksheet, font_formats, client=None, legal=N
     content = worksheet_properties['header_content']
     range_message = create_range_message(dataframe, content)
     if client is not None and legal is not None:
-        content['user'] = client
-        content['scope'] = legal
+        content['user'] = f'{client}\n'
+        content['scope'] = f'{legal}\n'
     worksheet.write_rich_string(
         'A1',
         font_formats['large'], content['type'],
