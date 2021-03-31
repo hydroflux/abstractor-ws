@@ -103,7 +103,14 @@ def record_related_documents(dictionary, row):
     dictionary["Related Documents"].append(related_documents)
 
 
-# Record Legal & Compare legale with doc legals
+def record_legal(dictionary, row_1, row_2):
+    legal = get_row_value(row_1, row_titles["legal"])
+    additional_legal = get_row_value(row_2, row_titles["additional_legal"])
+    if legal != additional_legal:
+        dictionary["Legal"].append(f'{legal}\n{additional_legal}')
+    else:
+        dictionary["Legal"].append(legal)
+
 
 # Write a function to check additional information for rows 4, 7
 def record_document(browser, dictionary, document_number):
@@ -116,3 +123,4 @@ def record_document(browser, dictionary, document_number):
     record_grantor(dictionary, rows[7])
     record_grantee(dictionary, rows[8])
     record_related_documents(dictionary, rows[9])
+    record_legal(dictionary, rows[10], rows[11])
