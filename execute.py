@@ -8,8 +8,9 @@ from .file_management import create_folder
 from .import_list import generate_document_list
 from .login import account_login
 from .open import open_document
-from .record import record_bad_search, record_document
+from .record import record_document
 from .search import document_number_search
+from .bad_search import record_bad_search
 from .user_prompts import continue_prompt, request_more_information
 
 from .variables import web_directory
