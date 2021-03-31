@@ -1,20 +1,37 @@
 import os
 
-from settings.abstract_object import abstract_dictionary
-from settings.bad_search import record_bad_search
-from settings.driver import create_webdriver
-from settings.export import export_document
-from settings.file_management import (create_document_directory, create_folder,
-                                      remaining_downloads)
-from settings.import_list import generate_document_list
-from settings.settings import web_directory
-from settings.user_prompts import continue_prompt, request_more_information
+if __name__ == '__main__':
+    from settings.abstract_object import abstract_dictionary
+    from settings.bad_search import record_bad_search
+    from settings.driver import create_webdriver
+    from settings.export import export_document
+    from settings.file_management import (create_document_directory,
+                                          create_folder, remaining_downloads)
+    from settings.import_list import generate_document_list
+    from settings.settings import web_directory
+    from settings.user_prompts import continue_prompt, request_more_information
 
-from eagle.download import download_document
-from eagle.login import account_login
-from eagle.open_document import open_document
-from eagle.record import record_document
-from eagle.search import document_number_search
+    from eagle.download import download_document
+    from eagle.login import account_login
+    from eagle.open_document import open_document
+    from eagle.record import record_document
+    from eagle.search import document_number_search
+else:
+    from .eagle.download import download_document
+    from .eagle.login import account_login
+    from .eagle.open_document import open_document
+    from .eagle.record import record_document
+    from .eagle.search import document_number_search
+    from .settings.abstract_object import abstract_dictionary
+    from .settings.bad_search import record_bad_search
+    from .settings.driver import create_webdriver
+    from .settings.export import export_document
+    from .settings.file_management import (create_document_directory,
+                                           create_folder, remaining_downloads)
+    from .settings.import_list import generate_document_list
+    from .settings.settings import web_directory
+    from .settings.user_prompts import (continue_prompt,
+                                        request_more_information)
 
 
 def search_documents_from_list(browser, document_list, download):
