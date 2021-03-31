@@ -61,14 +61,16 @@ def check_for_value(content, value_type):
 
 
 def record_instrument_number(dictionary, row):
-    instrument_number = get_row_value(row, row_titles["instrument_number"])
-    dictionary["Instrument Number"].append(instrument_number)
+    instrument_number = get_row_value(row, row_titles["reception_number"])
+    dictionary["Reception Number"].append(instrument_number)
 
 
 def record_book_and_page(dictionary, row):
     book_page_value = get_row_value(row, row_titles["book_and_page"])
-    if book_page_value.starts_with(book_page_abbreviation):
-        book, page = book_page_value[book_page_abbreviation:].split("/")
+    if book_page_value.startswith(book_page_abbreviation):
+        book, page = book_page_value[len(book_page_abbreviation):].split("/")
+        book = book.strip()
+        page = page.strip()
         if book == '0' and page == '0':
             book = empty_value
             page = empty_value
@@ -124,3 +126,4 @@ def record_document(browser, dictionary, document_number):
     record_grantee(dictionary, rows[8])
     record_related_documents(dictionary, rows[9])
     record_legal(dictionary, rows[10], rows[11])
+    dictionary["Comments"].append(empty_value)
