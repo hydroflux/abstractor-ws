@@ -53,7 +53,8 @@ def determine_document_status(browser, document_number):
         naptime()
         return True
     else:
-        print(f'Document number {document_number} not found -- document number {first_result_number(browser)} returned as top search result.')
+        print(f'Document number {document_number} not found -- document number '
+              f'{first_result_number(browser)} returned as top search result.')
         return False
 
 

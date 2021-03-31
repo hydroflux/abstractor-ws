@@ -8,8 +8,8 @@ from selenium.webdriver.support.wait import WebDriverWait
 from settings.file_management import create_document_directory
 from settings.settings import timeout
 
-from .variables import (download_button_id, stock_download, view_group_id,
-                        view_panel_id)
+from tiger.tiger_variables import (download_button_id, stock_download,
+                                   view_group_id, view_panel_id)
 
 
 def open_document_submenu(browser, document_number):

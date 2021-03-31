@@ -1,4 +1,4 @@
-from eagle.execute import execute_program
+from .eagle.execute import execute_program
 from settings.variables import (download, file_name, sheet_name,
                                 target_directory, web_directory)
 from tiger.execute import execute_web_program

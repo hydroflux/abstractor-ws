@@ -25,7 +25,8 @@ def search_documents_from_list(browser, county, target_directory, document_list,
                     dictionary["Comments"][-1] = f'No document image located at reception number {document_number}.'
         else:
             record_bad_search(dictionary, document_number)
-            print(f'No document found at reception number {document_number}, {remaining_downloads(document_list, document_number)} documents remaining.')
+            print('No document found at reception number {document_number}, '
+                  f'{remaining_downloads(document_list, document_number)} documents remaining.')
 
 
 def create_abstraction(browser, county, target_directory, file_name, sheet_name, download):

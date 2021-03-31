@@ -24,10 +24,12 @@ def search_documents_from_list(browser, document_list, download):
             record_document(browser, abstract_dictionary, document_number)
             if download:
                 download_document(browser)
-            print(f'Document located at reception number {document_number} recorded, {remaining_downloads(document_list, document_number)} documents remaining.')
+            print(f'Document located at reception number {document_number} recorded, '
+                  f'{remaining_downloads(document_list, document_number)} documents remaining.')
         else:
             record_bad_search(abstract_dictionary, document_number)
-            print(f'No document found at reception number {document_number}, {remaining_downloads(document_list, document_number)} documents remaining.')
+            print(f'No document found at reception number {document_number}, '
+                  f'{remaining_downloads(document_list, document_number)} documents remaining.')
 
 
 def create_abstraction_dictionary(browser, target_directory, document_list, download):
