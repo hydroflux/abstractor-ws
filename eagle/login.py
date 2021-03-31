@@ -5,10 +5,17 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-from settings.settings import timeout
 
-from eagle.eagle_variables import (credentials, login_button_class,
-                                   webpage_title, website)
+if __name__ == '__main__':
+    from settings.settings import timeout
+
+    from eagle.eagle_variables import (credentials, login_button_class,
+                                       webpage_title, website)
+else:
+    from .eagle.eagle_variables import (credentials, login_button_class,
+                                        webpage_title, website)
+
+    from .settings.settings import timeout
 
 
 def open_site(browser):

@@ -2,11 +2,21 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-from settings.general_functions import naptime
-from settings.settings import timeout
 
-from eagle.eagle_variables import (clear_search_id, instrument_search_id,
-                                   search_button_id, search_title, search_url)
+if __name__ == '__main__':
+    from settings.general_functions import naptime
+    from settings.settings import timeout
+
+    from eagle.eagle_variables import (clear_search_id, instrument_search_id,
+                                       search_button_id, search_title,
+                                       search_url)
+else:
+    from .eagle.eagle_variables import (clear_search_id, instrument_search_id,
+                                        search_button_id, search_title,
+                                        search_url)
+
+    from .settings.general_functions import naptime
+    from .settings.settings import timeout
 
 
 def open_search(browser):
