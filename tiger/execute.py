@@ -1,20 +1,39 @@
-from settings.abstract_object import abstract_dictionary as dictionary
-from settings.bad_search import record_bad_search
-from settings.driver import create_webdriver
-from settings.export import export_document
-from settings.file_management import (bundle_project,
-                                      create_document_directory,
-                                      remaining_downloads)
-from settings.general_functions import get_county_data, naptime
-from settings.import_list import generate_document_list
-from settings.settings import web_directory
+if __name__ == '__main__':
+    from settings.abstract_object import abstract_dictionary as dictionary
+    from settings.bad_search import record_bad_search
+    from settings.driver import create_webdriver
+    from settings.export import export_document
+    from settings.file_management import (bundle_project,
+                                          create_document_directory,
+                                          remaining_downloads)
+    from settings.general_functions import get_county_data, naptime
+    from settings.import_list import generate_document_list
+    from settings.settings import web_directory
 
-from tiger.download import download_document
-from tiger.login import account_login
-from tiger.open_document import open_document
-from tiger.record import record_document
-from tiger.search import search
-from tiger.tiger_variables import search_script
+    from tiger.download import download_document
+    from tiger.login import account_login
+    from tiger.open_document import open_document
+    from tiger.record import record_document
+    from tiger.search import search
+    from tiger.tiger_variables import search_script
+else:
+    from .settings.abstract_object import abstract_dictionary as dictionary
+    from .settings.bad_search import record_bad_search
+    from .settings.driver import create_webdriver
+    from .settings.export import export_document
+    from .settings.file_management import (bundle_project,
+                                           create_document_directory,
+                                           remaining_downloads)
+    from .settings.general_functions import get_county_data, naptime
+    from .settings.import_list import generate_document_list
+    from .settings.settings import web_directory
+
+    from .tiger.download import download_document
+    from .tiger.login import account_login
+    from .tiger.open_document import open_document
+    from .tiger.record import record_document
+    from .tiger.search import search
+    from .tiger.tiger_variables import search_script
 
 
 def search_documents_from_list(browser, county, target_directory, document_list, download):

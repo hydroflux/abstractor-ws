@@ -3,8 +3,12 @@ import os
 import pandas as pd
 import xlsxwriter
 
-from settings.settings import (abstraction_type, authorship, text_formats,
-                               worksheet_properties)
+if __name__ == '__main__':
+    from settings.settings import (abstraction_type, authorship, text_formats,
+                                   worksheet_properties)
+else:
+    from .settings.settings import (abstraction_type, authorship, text_formats,
+                                    worksheet_properties)
 
 
 def prepare_output_environment(target_directory):

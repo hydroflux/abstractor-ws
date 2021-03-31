@@ -1,7 +1,11 @@
 import os
 
-from settings.import_list import generate_document_list
-from settings.settings import root
+if __name__ == '__main__':
+    from settings.import_list import generate_document_list
+    from settings.settings import root
+else:
+    from .settings.import_list import generate_document_list
+    from .settings.settings import root
 
 
 def clear_terminal():

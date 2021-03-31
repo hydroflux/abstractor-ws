@@ -1,13 +1,23 @@
+from time import sleep
+
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-from settings.settings import timeout
-from time import sleep
 
-from tiger.tiger_variables import (first_result_tag, result_cell_tag,
-                                   result_count_button_id, result_count_id,
-                                   results_body_tag, results_id)
+if __name__ == '__main__':
+    from settings.settings import timeout
+
+    from tiger.tiger_variables import (first_result_tag, result_cell_tag,
+                                       result_count_button_id, result_count_id,
+                                       results_body_tag, results_id)
+else:
+    from .settings.settings import timeout
+
+    from .tiger.tiger_variables import (first_result_tag, result_cell_tag,
+                                        result_count_button_id,
+                                        result_count_id, results_body_tag,
+                                        results_id)
 
 
 def open_result_count(browser, document_number):

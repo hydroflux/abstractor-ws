@@ -2,11 +2,19 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-from settings.settings import timeout
 
-from tiger.tiger_variables import (instrument_search_id, search_button_id,
-                                   search_navigation_id, search_script,
-                                   search_tab_id, search_title)
+if __name__ == '__main__':
+    from settings.settings import timeout
+
+    from tiger.tiger_variables import (instrument_search_id, search_button_id,
+                                       search_navigation_id, search_script,
+                                       search_tab_id, search_title)
+else:
+    from .settings.settings import timeout
+
+    from .tiger.tiger_variables import (instrument_search_id, search_button_id,
+                                        search_navigation_id, search_script,
+                                        search_tab_id, search_title)
 
 
 def open_search(browser):

@@ -3,7 +3,10 @@ import shutil
 
 from pandas import DataFrame
 
-from settings.settings import abstraction_type
+if __name__ == '__main__':
+    from settings.settings import abstraction_type
+else:
+    from .settings.settings import abstraction_type
 
 
 def create_folder(directory):
