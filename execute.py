@@ -2,7 +2,7 @@ import os
 
 from .abstract_object import abstract_dictionary
 from .download import download_document
-from .driver import chrome_webdriver
+from .driver import create_webdriver
 from .export import export_document
 from .file_management import create_folder
 from .import_list import generate_document_list
@@ -44,8 +44,8 @@ def create_abstraction(browser, target_directory, file_name, sheet_name, downloa
     return abstract_dictionary
 
 
-def execute_program(target_directory, file_name, sheet_name, download):
-    browser = chrome_webdriver(target_directory)
+def execute_program(headless, target_directory, file_name, sheet_name, download):
+    browser = create_webdriver(target_directory, headless)
     account_login(browser)
     create_abstraction(browser, target_directory, file_name, sheet_name, download)
     while continue_prompt(target_directory, file_name, sheet_name):
@@ -61,7 +61,8 @@ def execute_web_program(client, legal, upload_file):
     download = False
     file_name = upload_file
     target_directory = web_directory
-    browser = chrome_webdriver(target_directory)
+    headless = False
+    browser = create_webdriver(target_directory, headless)
     account_login(browser)
     abstract_dictionary = create_abstraction(browser, target_directory, file_name, sheet_name, download)
     browser.close()

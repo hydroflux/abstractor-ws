@@ -7,7 +7,7 @@ from ..import_list import generate_document_list
 from .login import account_login
 from ..bad_search import record_bad_search
 from ..abstract_object import abstract_dictionary as dictionary
-from ..driver import chrome_webdriver
+from ..driver import create_webdriver
 from ..export import export_document
 
 from .variables import web_directory
@@ -37,7 +37,7 @@ def execute_web_program(client, legal, upload_file):
     download = True
     file_name = upload_file
     target_directory = web_directory
-    browser = chrome_webdriver(target_directory, False)
+    browser = create_webdriver(target_directory, False)
     account_login(browser)
     dictionary = create_abstraction(browser, target_directory, file_name, sheet_name, download)
     export_document(target_directory, file_name, dictionary, client, legal)

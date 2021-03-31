@@ -6,7 +6,9 @@ def chrome_webdriver(target_directory, headless):
     chromedriver = ChromeDriverManager().install()
     options = webdriver.ChromeOptions()
 
-    # options.add_argument('start-maximized') # Maximize Viewport
+    if headless:
+        options.add_argument('--headless')
+        # options.add_argument('start-maximized') # Maximize Viewport
     options.add_argument('--no-sandbox')  # Bypass OS Security Model
 
     prefs = {
@@ -25,10 +27,12 @@ def chrome_webdriver(target_directory, headless):
 
 def enable_download_in_headless_chrome(browser, target_directory):
     document_directory = f'{target_directory}/Downloads'
+
     browser.command_executor._commands["send_command"] = (
         "POST",
         '/session/$sessionId/chromium/send_command'
     )
+
     params = {
         'cmd': 'Page.setDownloadBehavior',
         'params': {
