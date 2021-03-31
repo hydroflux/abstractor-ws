@@ -1,6 +1,7 @@
 variables.py
 tiger/tiger_variables.py
 eagle/eagle_variables.py
+settings/settings.py
 formatting/excel_export_format.py
 .vscode
 __pycache__
