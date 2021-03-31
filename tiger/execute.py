@@ -7,13 +7,13 @@ from ..file_management import create_download_directory, remaining_downloads
 from ..bad_search import record_bad_search
 
 
-def search_documents_from_list(browser, document_list, download):
+def search_documents_from_list(browser, county, target_directory, document_list, download):
     for document_number in document_list:
         search(browser, document_number)
         if open_document(browser, document_number):
             record_document(browser, dictionary, document_number)
             if download:
-                if not download_document(browser, county, document_directory, document_number):
+                if not download_document(browser, county, target_directory, document_number):
                     dictionary["Comments"][-1] = f'No document image located at reception number {document_number}.'
         else:
             record_bad_search(dictionary, document_number)

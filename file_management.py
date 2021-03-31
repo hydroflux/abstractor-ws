@@ -13,10 +13,10 @@ def create_folder(directory):
         print('Error: Creating directory ' + directory)
 
 
-def create_download_directory(target_directory):
-    download_directory = f'{target_directory}/Documents'
-    create_folder(download_directory)
-    os.chdir(download_directory)
+def create_document_directory(target_directory):
+    document_directory = create_folder(f'{target_directory}/Documents')
+    os.chdir(document_directory)
+    return document_directory
 
 
 def remaining_downloads(document_list, document_number):

@@ -6,7 +6,14 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
+from ..file_management import create_document_directory
 from .variables import view_panel_id, view_group_id, download_button_id, stock_download, timeout
+
+
+def create_document_directory(target_directory):
+    document_directory = create_folder(f'{target_directory}/Documents')
+    os.chdir(document_directory)
+    return document_directory
 
 
 def open_document_submenu(browser, document_number):
@@ -77,7 +84,8 @@ def update_download(browser, county, document_directory, document_number):
         rename_download(document_directory, document_number, download_path, new_download_name)
 
 
-def download_document(browser, county, document_directory, document_number):
+def download_document(browser, county, target_directory, document_number):
+    document_directory = create_document_directory(target_directory)
     open_document_submenu(browser, document_number)
     execute_download(browser, document_number)
     if update_download(county, document_directory, document_number):
