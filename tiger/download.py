@@ -85,6 +85,7 @@ def update_download(browser, county, document_directory, document_number):
     else:
         new_download_name = f'{county.prefix}-{document_number}.pdf'
         rename_download(document_directory, document_number, download_path, new_download_name)
+        return True
 
 
 def download_document(browser, county, target_directory, document_number):

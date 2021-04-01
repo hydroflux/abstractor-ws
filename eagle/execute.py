@@ -17,6 +17,7 @@ if __name__ == '__main__':
     from eagle.record import record_document
     from eagle.search import document_number_search
 else:
+    print(__name__)
     from ..settings.abstract_object import abstract_dictionary
     from ..settings.bad_search import record_bad_search
     from ..settings.driver import create_webdriver
