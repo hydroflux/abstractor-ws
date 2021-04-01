@@ -12,12 +12,12 @@ if __name__ == '__main__':
                                        missing_values, more_info,
                                        related_table_class)
 else:
-    from .eagle.eagle_variables import (document_information_id,
-                                        document_table_class, index_table_tags,
-                                        information_links_class, less_info,
-                                        missing_values, more_info,
-                                        related_table_class)
-    from .settings.settings import search_errors, timeout
+    from ..settings.settings import search_errors, timeout
+    from .eagle_variables import (document_information_id,
+                                  document_table_class, index_table_tags,
+                                  information_links_class, less_info,
+                                  missing_values, more_info,
+                                  related_table_class)
 
 
 def access_document_information(browser, document_number):

@@ -12,12 +12,10 @@ if __name__ == '__main__':
                                        result_count_button_id, result_count_id,
                                        results_body_tag, results_id)
 else:
-    from .settings.settings import timeout
-
-    from .tiger.tiger_variables import (first_result_tag, result_cell_tag,
-                                        result_count_button_id,
-                                        result_count_id, results_body_tag,
-                                        results_id)
+    from ..settings.settings import timeout
+    from .tiger_variables import (first_result_tag, result_cell_tag,
+                                  result_count_button_id, result_count_id,
+                                  results_body_tag, results_id)
 
 
 def open_result_count(browser, document_number):

@@ -12,11 +12,9 @@ if __name__ == '__main__':
                                        pdf_viewer_class_name,
                                        pdf_viewer_load_id)
 else:
-    from .eagle.eagle_variables import (download_button_id, loading_status,
-                                        pdf_viewer_class_name,
-                                        pdf_viewer_load_id)
-
-    from .settings.settings import long_timeout
+    from ..settings.settings import long_timeout
+    from .eagle_variables import (download_button_id, loading_status,
+                                  pdf_viewer_class_name, pdf_viewer_load_id)
 
 
 def pdf_load_status(browser):

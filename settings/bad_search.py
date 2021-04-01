@@ -1,7 +1,7 @@
 if __name__ == '__main__':
     from settings.settings import search_errors
 else:
-    from .settings.settings import search_errors
+    from .settings import search_errors
 
 
 def record_bad_search(dataframe, document_number):

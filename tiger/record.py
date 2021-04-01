@@ -13,13 +13,11 @@ if __name__ == '__main__':
                                        empty_values, row_data_tag, row_titles,
                                        table_row_tag)
 else:
-    from .settings.settings import empty_value, not_applicable, timeout
-
-    from .tiger.tiger_variables import (book_page_abbreviation,
-                                        document_image_id,
-                                        document_information_id, document_tag,
-                                        empty_values, row_data_tag, row_titles,
-                                        table_row_tag)
+    from ..settings.settings import empty_value, not_applicable, timeout
+    from .tiger_variables import (book_page_abbreviation, document_image_id,
+                                  document_information_id, document_tag,
+                                  empty_values, row_data_tag, row_titles,
+                                  table_row_tag)
 
 
 def document_image_loaded(browser, document_number):

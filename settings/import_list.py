@@ -5,7 +5,7 @@ import pandas as pd
 if __name__ == '__main__':
     from settings.settings import web_directory
 else:
-    from .settings.settings import web_directory
+    from .settings import web_directory
 
 
 def import_excel_document(file_path, sheet_name):

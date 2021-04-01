@@ -1,7 +1,10 @@
 from random import randint
 from time import sleep
 
-import settings.classes.counties as county_data
+if __name__ == '__main__':
+    import settings.classes.counties as county_data
+else:
+    from .classes.counties import county_dictionary as county_data
 
 
 def naptime():
@@ -10,4 +13,4 @@ def naptime():
 
 
 def get_county_data(county):
-    return county_data.county_dictionary.get(county)
+    return county_data.get(county)
