@@ -65,7 +65,7 @@ def execute_web_program(county, client, legal, upload_file):
     download = True
     file_name = upload_file
     target_directory = web_directory
-    browser = create_webdriver(target_directory, True)
+    browser = create_webdriver(target_directory, False)
     account_login(browser)
     dictionary = create_abstraction(browser, county, target_directory, file_name, sheet_name, download)
     export_document(target_directory, file_name, dictionary, client, legal)

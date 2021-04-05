@@ -4,18 +4,18 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-if __name__ == '__main__':
-    from settings.general_functions import naptime
-    from settings.settings import timeout
+# if __name__ == '__main__':
+from settings.general_functions import naptime
+from settings.settings import timeout
 
-    from eagle.eagle_variables import (first_result_class_name,
-                                       first_result_tag, search_action_tag,
-                                       search_actions_class_name)
-else:
-    from ..settings.general_functions import naptime
-    from ..settings.settings import timeout
-    from .eagle_variables import (first_result_class_name, first_result_tag,
-                                  search_action_tag, search_actions_class_name)
+from eagle.eagle_variables import (first_result_class_name,
+                                    first_result_tag, search_action_tag,
+                                    search_actions_class_name)
+# else:
+#     from ..settings.general_functions import naptime
+#     from ..settings.settings import timeout
+#     from .eagle_variables import (first_result_class_name, first_result_tag,
+#                                   search_action_tag, search_actions_class_name)
 
 
 def get_first_result(browser):
