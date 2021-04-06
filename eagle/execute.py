@@ -1,5 +1,6 @@
 import os
 
+# Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("execute", __name__)
 
 # if __name__ == '__main__':
