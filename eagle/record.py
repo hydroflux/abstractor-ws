@@ -113,12 +113,10 @@ def record_notes(document_tables, dataframe):
             return
         elif notes.endswith(search_errors[3]):
             return
-        if dataframe["Legal"][-1] == "":
-            dataframe["Legal"][-1] = notes
-        elif dataframe["Related Documents"][-1] == "":
-            dataframe["Related Documents"][-1] = notes
+        else:
+            dataframe["Comments"].append(notes)
     except IndexError:
-        pass
+        dataframe["Comments"].append("")
 
 
 def aggregate_document_information(document_tables, dataframe):
@@ -127,12 +125,11 @@ def aggregate_document_information(document_tables, dataframe):
     record_name_data(document_tables[2], dataframe)
     record_legal_data(document_tables[4], dataframe)
     record_related_documents(document_tables[-2], dataframe)
-    # record_notes(document_tables, dataframe)
+    record_notes(document_tables, dataframe)
     book = search_errors[2]
     dataframe["Book"].append(book)
     page = search_errors[2]
     dataframe["Page"].append(page)
-    dataframe["Comments"].append("")
 
 
 def drop_last_entry(dataframe):
