@@ -13,7 +13,8 @@ print("download", __name__)
 from settings.settings import long_timeout
 
 from eagle.eagle_variables import (download_button_id, loading_status,
-                                   pdf_viewer_class_name, pdf_viewer_load_id)
+                                   pdf_viewer_class_name, pdf_viewer_load_id,
+                                   stock_download_suffix)
 
 
 def pdf_load_status(browser):
@@ -57,7 +58,7 @@ def switch_to_browser_window(browser):
 
 
 def determine_stock_download(document_number):
-    pass
+    return f'{document_number}-{stock_download_suffix}'
 
 
 def download_document(browser, target_directory, county, document_number):
