@@ -4,6 +4,8 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+from settings.download_management import update_download
+from settings.file_management import create_document_directory
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("download", __name__)
@@ -54,8 +56,16 @@ def switch_to_browser_window(browser):
     browser.switch_to.default_content()
 
 
-def download_document(browser):
+def determine_stock_download(document_number):
+    pass
+
+
+def download_document(browser, target_directory, county, document_number):
     wait_for_pdf_load(browser)
     access_pdf_viewer(browser)
     execute_download(browser)
     switch_to_browser_window(browser)
+    document_directory = create_document_directory(target_directory)
+    stock_download = determine_stock_download(document_number)
+    if update_download(browser, county, stock_download, document_directory, document_number):
+        return True
