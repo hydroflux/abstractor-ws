@@ -95,15 +95,6 @@ def record_legal_data(document_table, dataframe):
         dataframe["Legal"].append(legal)
 
 
-def record_notes(document_table, dataframe):
-    notes = access_field_body(document_table)
-    if dataframe["Legal"][-1] == "":
-        dataframe["Legal"][-1] = notes
-        dataframe["Comments"].append("")
-    else:
-        dataframe["Comments"].append(notes)
-
-
 def record_related_documents(document_table, dataframe):
     related_table_rows = document_table.find_elements_by_class_name(related_table_class)
     related_documents_info = list(map(access_table_body, related_table_rows))
@@ -112,13 +103,25 @@ def record_related_documents(document_table, dataframe):
     dataframe["Related Documents"].append(related_documents)
 
 
+def record_notes(document_table, dataframe):
+    notes = access_field_body(document_table)
+    if dataframe["Legal"][-1] == "":
+        dataframe["Legal"][-1] = notes
+        dataframe["Comments"].append("")
+    elif dataframe["Related Documents"][-1] == "":
+        dataframe["Related Documents"][-1] = notes
+        dataframe["Comments"].append("")
+    else:
+        dataframe["Comments"].append(notes)
+
+
 def aggregate_document_information(document_tables, dataframe):
     record_document_type(document_tables[0], dataframe)
     record_indexing_data(document_tables[1], dataframe)
     record_name_data(document_tables[2], dataframe)
     record_legal_data(document_tables[4], dataframe)
-    record_notes(document_tables[5], dataframe)
     record_related_documents(document_tables[-2], dataframe)
+    record_notes(document_tables[5], dataframe)
     book = search_errors[2]
     dataframe["Book"].append(book)
     page = search_errors[2]
