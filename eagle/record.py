@@ -3,25 +3,16 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("record", __name__)
 
-# if __name__ == '__main__':
 from settings.settings import search_errors, timeout
 
 from eagle.eagle_variables import (document_information_id,
-                                    document_table_class, index_table_tags,
-                                    information_links_class, less_info,
-                                    missing_values, more_info,
-                                    related_table_class)
-# else:
-#     from ..settings.settings import search_errors, timeout
-#     from .eagle_variables import (document_information_id,
-#                                   document_table_class, index_table_tags,
-#                                   information_links_class, less_info,
-#                                   missing_values, more_info,
-#                                   related_table_class)
+                                   document_table_class, index_table_tags,
+                                   information_links_class, less_info,
+                                   missing_values, more_info,
+                                   related_table_class)
 
 
 def access_document_information(browser, document_number):
@@ -55,7 +46,9 @@ def access_table_body(document_table):
 
 
 def access_table_rows(table_body):
-    return table_body.find_elements_by_tag_name(index_table_tags[1])
+    body_text = table_body.find_elements_by_tag_name(index_table_tags[1])
+    body_text.replace("'S ", "'s ")
+    return body_text
 
 
 def access_title_case_text(data):
