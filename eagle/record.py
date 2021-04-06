@@ -107,7 +107,7 @@ def record_related_documents(document_table, dataframe):
 def record_notes(document_tables, dataframe):
     try:
         notes = access_field_body_no_title(document_tables[5])
-        if notes == search_errors[3]:
+        if notes == search_errors[3] or notes == search_errors[4]:
             return
         elif notes.startswith(search_errors[3]) or notes.startswith("$"):
             return
