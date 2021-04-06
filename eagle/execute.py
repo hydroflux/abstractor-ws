@@ -1,5 +1,7 @@
 import os
 
+print("execute", __name__)
+
 # if __name__ == '__main__':
 from settings.abstract_object import abstract_dictionary
 from settings.bad_search import record_bad_search
@@ -50,6 +52,20 @@ def search_documents_from_list(browser, document_list, download):
                   f'{remaining_downloads(document_list, document_number)} documents remaining.')
 
 
+def review_documents_from_list(browser, document_list):
+    for document_number in document_list:
+        document_number_search(browser, document_number)
+        if open_document(browser, document_number):
+            input(f'Document located at reception number {document_number} located,'
+                  'please review & press enter to continue...'
+                  f'({remaining_downloads(document_list, document_number)} documents remaining)')
+        else:
+            record_bad_search(abstract_dictionary, document_number)
+            input(f'No document found at reception number {document_number}, '
+                  'please review & press enter to continue...'
+                  f'({remaining_downloads(document_list, document_number)} documents remaining)')
+
+
 def create_abstraction_dictionary(browser, target_directory, document_list, download):
     if download:
         create_document_directory(target_directory)
@@ -72,6 +88,15 @@ def execute_program(headless, target_directory, file_name, sheet_name, download)
         target_directory, file_name, sheet_name = \
             request_more_information(target_directory, file_name, sheet_name)
         create_abstraction(target_directory, file_name, sheet_name, download)
+    browser.close()
+    quit()
+
+
+def execute_review(target_directory, file_name, sheet_name):
+    browser = create_webdriver(target_directory, False)
+    account_login(browser)
+    document_list = generate_document_list(target_directory, file_name, sheet_name)
+    review_documents_from_list(browser, document_list)
     browser.close()
     quit()
 

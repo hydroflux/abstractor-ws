@@ -6,6 +6,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
+print("login", __name__)
 # if __name__ == '__main__':
 from settings.settings import timeout
 

@@ -3,6 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
+print("record", __name__)
 # if __name__ == '__main__':
 from settings.settings import search_errors, timeout
 
@@ -58,6 +59,10 @@ def access_title_case_text(data):
     return data.text.title()
 
 
+def access_field_body_no_title(field_info):
+    return "\n".join(field_info.text.split("\n")[1:])
+
+
 def access_field_body(field_info):
     return "\n".join(field_info.text.split("\n")[1:]).title()
 
@@ -105,7 +110,13 @@ def record_related_documents(document_table, dataframe):
 
 def record_notes(document_tables, dataframe):
     try:
-        notes = access_field_body(document_tables[5])
+        notes = access_field_body_no_title(document_tables[5])
+        if notes == search_errors[3]:
+            return
+        elif notes.startswith(search_errors[3]) or notes.startswith("$"):
+            return
+        elif notes.endswith(search_errors[3]):
+            return
         if dataframe["Legal"][-1] == "":
             dataframe["Legal"][-1] = notes
         elif dataframe["Related Documents"][-1] == "":
@@ -120,7 +131,7 @@ def aggregate_document_information(document_tables, dataframe):
     record_name_data(document_tables[2], dataframe)
     record_legal_data(document_tables[4], dataframe)
     record_related_documents(document_tables[-2], dataframe)
-    record_notes(document_tables, dataframe)
+    # record_notes(document_tables, dataframe)
     book = search_errors[2]
     dataframe["Book"].append(book)
     page = search_errors[2]
