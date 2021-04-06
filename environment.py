@@ -11,7 +11,7 @@ else:
     from .tiger.execute import execute_web_program
 
 
-execute_program(False, target_directory, file_name, sheet_name, download)
+# execute_program(False, target_directory, file_name, sheet_name, download)
 execute_review(target_directory, file_name, sheet_name)
 # execute_web_program(county, client, legal, upload_file)
 # execute_web_program("ADAMS", '', '', "CAPSTONE-TEST")
