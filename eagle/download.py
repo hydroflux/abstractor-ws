@@ -5,16 +5,13 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-# if __name__ == '__main__':
+# Use the following print statement to identify the best way to manage imports for Django vs the script folder
+print("download", __name__)
+
 from settings.settings import long_timeout
 
 from eagle.eagle_variables import (download_button_id, loading_status,
-                                    pdf_viewer_class_name,
-                                    pdf_viewer_load_id)
-# else:
-#     from ..settings.settings import long_timeout
-#     from .eagle_variables import (download_button_id, loading_status,
-#                                   pdf_viewer_class_name, pdf_viewer_load_id)
+                                   pdf_viewer_class_name, pdf_viewer_load_id)
 
 
 def pdf_load_status(browser):
