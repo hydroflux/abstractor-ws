@@ -41,6 +41,14 @@ def get_page_number(row):
         return int(page)
 
 
+def document_number(row):
+    document_number = row['Document']
+    if is_empty_value(document_number):
+        return None
+    else:
+        return int(document_number)
+
+
 def import_excel_document(file_path, sheet_name):
     excel_object = pd.read_excel(file_path, sheet_name)
     int_document_list = excel_object.values.flatten().tolist()
