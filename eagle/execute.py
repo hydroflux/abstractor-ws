@@ -20,8 +20,8 @@ from eagle.search import document_number_search
 
 
 def search_documents_from_list(browser, county, target_directory, document_list, download):
-    for document_number in document_list:
-        document_number_search(browser, document_number)
+    for document in document_list:
+        document_number_search(browser, document)
         if open_document(browser, document_number):
             record_document(browser, abstract_dictionary, document_number)
             if download:

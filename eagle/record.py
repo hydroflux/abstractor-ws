@@ -161,6 +161,7 @@ def record_document_fields(browser, dataframe, document_number):
     aggregate_document_information(document_tables, dataframe)
     scroll_to_top(browser)
 
+
 # This series of functions may be unnecessary, continue to test
 def review_entry(browser, dataframe, document_number):
     while dataframe["Grantor"][-1] == missing_values[0] and dataframe["Grantee"][-1] == missing_values[0]\
