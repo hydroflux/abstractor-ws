@@ -1,4 +1,4 @@
-from selenium.common.exceptions import (StaleElementReferenceException,
+from selenium.common.exceptions import (StaleElementReferenceException, NoSuchElementException,
                                         TimeoutException)
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -14,8 +14,8 @@ from settings.settings import timeout
 from eagle.eagle_variables import (book_and_page_tag, book_title,
                                    first_result_class_name,
                                    first_result_submenu_class,
-                                   first_result_tag, page_title,
-                                   search_action_tag,
+                                   first_result_tag, nested_submenu_class,
+                                   page_title, search_action_tag,
                                    search_actions_class_name)
 
 
@@ -54,8 +54,15 @@ def split_book_and_page_info(book_and_page_info):
         return False
 
 
+def expand_first_result_nested_info(browser, first_result_info):
+    try:
+        browser.find_element_by_class_name(nested_submenu_class)
+    except NoSuchElementException:
+        first_result_info.click()
+
+
 def get_book_and_page_values(browser, first_result_info):
-    first_result_info.click()
+    expand_first_result_nested_info(browser, first_result_info)
     nested_info = get_first_result_nested_info(browser, first_result_info)
     book_and_page_info = nested_info[-1].find_elements_by_tag_name(book_and_page_tag)
     return split_book_and_page_info(book_and_page_info)
