@@ -32,20 +32,26 @@ def get_first_result_info(browser):
     return first_result_info
 
 
-def verify_first_result_number(document, first_result_info):
-    return first_result_info.text.split(" ")[0] == document.value
+def get_first_result_value(browser, document):
+    first_result_info = get_first_result_info(browser, document)
+    if document_type(document) == "document_number":
+        return first_result_info.text.split(" ")[0]
 
 
-def verify_first_result_book_and_page(document, first_result_info):
+def verify_first_result_number(document, first_result_value):
+    return first_result_value == document.value
+
+
+def verify_first_result_book_and_page(document, first_result_value):
     pass
 
 
 def verify_result(browser, document):
-    first_result_info = get_first_result_info(browser)
+    first_result_value = get_first_result_value(browser, document)
     if document_type(document) == "document_number":
-        return verify_first_result_number(document, first_result_info)
+        return verify_first_result_number(document, first_result_value)
     elif document_type(document) == "book_and_page":
-        return verify_first_result_book_and_page(document, first_result_info)
+        return verify_first_result_book_and_page(document, first_result_value)
 
 
 def view_search_actions(browser, first_result):
@@ -71,7 +77,7 @@ def determine_document_status(browser, document):
         return True
     else:
         print(f'Document number {document_value(document)} not found -- document number '
-              f'{first_result_number(browser)} returned as top search result.')
+              f'{get_first_result_value(browser, document)} returned as top search result.')
         return False
 
 
