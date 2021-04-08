@@ -8,9 +8,10 @@ if __name__ == '__main__':
 
     # from tiger.execute import execute_web_program
 else:
-    from .eagle.execute import execute_program
-    from .settings.settings import (download, file_name, sheet_name,
-                                    target_directory, web_directory)
+    from .eagle.execute import execute_program as execute_eagle
+    from .eagle.execute import execute_review as review_eagle
+    from .settings.settings import (headless, county, download, file_name, programs,
+                                   sheet_name, target_directory, web_directory)
     from .tiger.execute import execute_web_program
 
 
