@@ -8,6 +8,10 @@ else:
     from .settings import web_directory
 
 
+def get_sheet_columns(excel_object):
+    return excel_object.columns
+
+
 def get_sheet_rows(excel_object):
     rows = []
     for index, row in excel_object.iterrows():
