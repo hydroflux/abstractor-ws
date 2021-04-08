@@ -7,9 +7,9 @@ from selenium.webdriver.support.wait import WebDriverWait
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("open", __name__)
 
+from settings.file_management import document_type, document_value
 from settings.general_functions import naptime
 from settings.settings import timeout
-from settings.file_management import document_value, document_type
 
 from eagle.eagle_variables import (first_result_class_name, first_result_tag,
                                    search_action_tag,
@@ -32,20 +32,20 @@ def get_first_result_info(browser):
     return first_result_info
 
 
-def first_result_number(first_result_info):
-    return first_result_info.text.split(" ")[0]
+def verify_first_result_number(document, first_result_info):
+    return first_result_info.text.split(" ")[0] == document.value
 
 
-def first_result_book_and_page(first_result_info):
+def verify_first_result_book_and_page(document, first_result_info):
     pass
 
 
 def verify_result(browser, document):
     first_result_info = get_first_result_info(browser)
     if document_type(document) == "document_number":
-        return first_result_number(browser) == document.value
+        return verify_first_result_number(document, first_result_info)
     elif document_type(document) == "book_and_page":
-        return first_result_book_and_page(first_result_info)
+        return verify_first_result_book_and_page(document, first_result_info)
 
 
 def view_search_actions(browser, first_result):
