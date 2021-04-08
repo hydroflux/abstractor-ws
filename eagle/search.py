@@ -10,7 +10,7 @@ from settings.general_functions import naptime
 from settings.settings import timeout
 
 from eagle.eagle_variables import (clear_search_id, instrument_search_id,
-                                   search_button_id, search_title, search_url)
+                                   search_button_id, search_title, search_url, book_search_id, page_search_id)
 
 
 def open_search(browser):
@@ -40,6 +40,34 @@ def enter_document_number(browser, document_number):
         print(f'Browser timed out while trying to fill document field for document number {document_number}.')
 
 
+def split_book_and_page(book_and_page):
+    book = book_and_page["book"]
+    page = book_and_page["page"]
+    return book, page
+
+
+def enter_book_number(browser, book):
+    try:
+        book_search_field_present = EC.presence_of_element_located((By.ID, book_search_id))
+        WebDriverWait(browser, timeout).until(book_search_field_present)
+        book_search_field = browser.find_element_by_id(book_search_id)
+        book_search_field.clear()
+        book_search_field.send_keys(book)
+    except TimeoutException:
+        print(f'Browser timed out while trying to fill document field for B: {book}.')
+
+
+def enter_page_number(browser, page):
+    try:
+        page_search_field_present = EC.presence_of_element_located((By.ID, page_search_id))
+        WebDriverWait(browser, timeout).until(page_search_field_present)
+        page_search_field = browser.find_element_by_id(page_search_id)
+        page_search_field.clear()
+        page_search_field.send_keys(page)
+    except TimeoutException:
+        print(f'Browser timed out while trying to fill document field for P: {page}.')
+
+
 def execute_search(browser):
     try:
         search_button_present = EC.element_to_be_clickable((By.ID, search_button_id))
@@ -54,6 +82,15 @@ def document_number_search(browser, document_number):
     open_search(browser)
     clear_search(browser)
     naptime()
-    # browser.refresh()
     enter_document_number(browser, document_number)
+    execute_search(browser)
+
+
+def book_and_page_search(browser, book_and_page):
+    book, page = split_book_and_page(book_and_page)
+    open_search(browser)
+    clear_search(browser)
+    naptime()
+    enter_book_number(browser, book)
+    enter_page_number(browser, page)
     execute_search(browser)
