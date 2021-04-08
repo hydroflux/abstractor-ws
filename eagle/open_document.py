@@ -79,7 +79,12 @@ def get_first_result_value(browser, document):
 
 
 def verify_first_result_number(document, first_result_value):
-    return first_result_value == document_value(document)
+    if first_result_value == document_value(document):
+        return True
+    else:
+        print(f'First result Document number {first_result_value} does not match '
+              f'searched {extrapolate_document_value(document)}, please review.')
+        return False
 
 
 def verify_first_result_book_and_page(document, first_result_value):
