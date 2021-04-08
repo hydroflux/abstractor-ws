@@ -9,7 +9,7 @@ print("open", __name__)
 
 from settings.general_functions import naptime
 from settings.settings import timeout
-from settings.file_management import document_value
+from settings.file_management import document_value, document_type
 
 from eagle.eagle_variables import (first_result_class_name, first_result_tag,
                                    search_action_tag,
@@ -25,15 +25,27 @@ def get_first_result(browser):
         print("Browser timed out while trying to retrieve the first result of the search.")
 
 
-def first_result_number(browser):
+def get_first_result_info(browser):
     first_result = get_first_result(browser)
     first_result_info = first_result.find_element_by_tag_name(first_result_tag)
     browser.execute_script("arguments[0].scrollIntoView();", first_result_info)
+    return first_result_info
+
+
+def first_result_number(first_result_info):
     return first_result_info.text.split(" ")[0]
 
 
+def first_result_book_and_page(first_result_info):
+    pass
+
+
 def verify_result(browser, document):
-    return first_result_number(browser) == document_number
+    first_result_info = get_first_result_info(browser)
+    if document_type(document) == "document_number":
+        return first_result_number(browser) == document.value
+    elif document_type(document) == "book_and_page":
+        return first_result_book_and_page(first_result_info)
 
 
 def view_search_actions(browser, first_result):
