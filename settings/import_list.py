@@ -41,7 +41,7 @@ def get_page_number(row):
         return int(page)
 
 
-def document_number(row):
+def get_document_number(row):
     document_number = row['Document']
     if is_empty_value(document_number):
         return None
@@ -61,14 +61,11 @@ def create_book_and_page_object(document_list, row):
         document_list.append(document)
 
 
-def store_documents(excel_object):
-    document_list = []
-    columns = get_sheet_columns(excel_object)
-    rows = get_sheet_rows(excel_object)
-    if 'Book' in columns and 'Page' in columns:
-        for row in rows:
-            create_book_and_page_object(row)
-            value = [int(rows[0]['Book']), int(rows[0]['Page'])]
+def create_document_number_object(document_list, row):
+    document_number = get_document_number(row)
+    if document_number is not None:
+        document = Document(type='document_number', value=document_number)
+        document_list.append(document)
 
 
 def import_excel_document(file_path, sheet_name):
