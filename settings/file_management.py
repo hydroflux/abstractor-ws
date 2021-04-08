@@ -28,11 +28,6 @@ def remaining_downloads(document_list, document_number):
     return len(document_list) - document_list.index(document_number) - 1
 
 
-def create_dataframe(dictionary):
-    dataframe = DataFrame(dictionary)
-    print(dataframe)
-
-
 def rename_documents_in_directory(county, directory):
     os.chdir(directory)
     for pdf in os.listdir(directory):

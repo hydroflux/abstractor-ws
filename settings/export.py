@@ -1,6 +1,6 @@
 import os
 
-import pandas as pd
+from pandas import DataFrame, ExcelWriter
 import xlsxwriter
 
 if __name__ == '__main__':
@@ -15,8 +15,13 @@ def prepare_output_environment(target_directory):
     os.chdir(target_directory)
 
 
+def create_dataframe(dictionary):
+    dataframe = DataFrame(dictionary)
+    print(dataframe)
+
+
 def transform_dictionary(dictionary):
-    dataframe = pd.DataFrame(dictionary)
+    dataframe = create_dataframe(dictionary)
     dataframe.rename({"Legal": "Legal Description"}, axis=1)
     return dataframe
 
@@ -27,7 +32,7 @@ def create_output_file(file_name):
 
 
 def create_excel_writer(output_file):
-    return pd.ExcelWriter(
+    return ExcelWriter(
         output_file,
         engine='xlsxwriter',
         datetime_format='mm/dd/yyyy',
