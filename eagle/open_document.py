@@ -11,10 +11,12 @@ from settings.file_management import document_type, document_value
 from settings.general_functions import naptime
 from settings.settings import timeout
 
-from eagle.eagle_variables import (first_result_class_name,
+from eagle.eagle_variables import (book_and_page_tag, book_title,
+                                   first_result_class_name,
                                    first_result_submenu_class,
-                                   first_result_tag, search_action_tag,
-                                   search_actions_class_name, book_and_page_tag)
+                                   first_result_tag, page_title,
+                                   search_action_tag,
+                                   search_actions_class_name)
 
 
 def get_first_result(browser):
@@ -44,15 +46,19 @@ def get_first_result_nested_info(browser, first_result_info):
 
 
 def split_book_and_page_info(book_and_page_info):
-    pass
+    book_and_page_values = book_and_page_info[-1].text
+    if book_and_page_values[0] == book_title and book_and_page_values[2] == page_title:
+        return [book_and_page_values[1], book_and_page_values[3]]
+    else:
+        print(f'Book & page titles do not line up as expected, instead got "{book_and_page_values}", please review.')
+        return False
 
 
 def get_book_and_page_values(browser, first_result_info):
     first_result_info.click()
     nested_info = get_first_result_nested_info(browser, first_result_info)
     book_and_page_info = nested_info[-1].find_elements_by_tag_name(book_and_page_tag)
-    book, page = split_book_and_page_info(book_and_page_info[-1])
-    return book, page
+    return split_book_and_page_info(book_and_page_info)
 
 
 def get_first_result_value(browser, document):
