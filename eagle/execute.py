@@ -60,8 +60,8 @@ def create_abstraction(browser, county, target_directory, file_name, sheet_name,
     return abstract_dictionary
 
 
-def execute_program(headless, county, target_directory, file_name, sheet_name, download):
-    browser = create_webdriver(target_directory, headless)
+def execute_program(county, target_directory, file_name, sheet_name, download):
+    browser = create_webdriver(target_directory, False)
     account_login(browser)
     create_abstraction(browser, county, target_directory, file_name, sheet_name, download)
     while continue_prompt(target_directory, file_name, sheet_name):

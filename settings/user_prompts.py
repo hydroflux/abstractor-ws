@@ -12,6 +12,25 @@ def clear_terminal():
     os.system("clear")
 
 
+def get_program_type():
+    clear_terminal()
+    user_input = input('What would you like to do? \n'
+                       '[1] Execute Program \n'
+                       '[2] Review Output \n'
+                       )
+    while user_input not in ["1", "2"]:
+        clear_terminal()
+        print(f'You entered {user_input} Please enter 1 or 2')
+        user_input = input('What would you like to do? \n'
+                           '[1] Execute Program \n'
+                           '[2] Review Output \n'
+                           )
+    if user_input == "1":
+        return "execute"
+    elif user_input == "2":
+        return "review"
+
+
 def request_yes_or_no(prompt):
     clear_terminal()
     user_input = input(f'{prompt} (Y/N) \n')
@@ -23,24 +42,6 @@ def request_yes_or_no(prompt):
         return True
     else:
         return False
-
-
-def get_program_type():
-    user_input = input('What would you like to do? \n'
-                       '[1] Execute Program \n'
-                       '[2] Review Output \n'
-                       )
-    while user_input not in [1, 2]:
-        clear_terminal()
-        print(f'You entered {user_input} Please enter 1 or 2')
-        user_input = input('What would you like to do? \n'
-                           '[1] Execute Program \n'
-                           '[2] Review Output \n'
-                           )
-    if user_input == 1:
-        return "execute"
-    else:
-        return "review"
 
 
 def continue_prompt(current_target_directory, current_file_name, current_sheet_name):
