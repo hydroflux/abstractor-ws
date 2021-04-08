@@ -48,7 +48,7 @@ def extrapolate_document_value(document):
     if type(value) == list:
         return f'Book: {value[0]}, Page: {value[1]}'
     elif type(value) == str:
-        return f'number {value}'
+        return f'Document number {value}'
 
 
 def rename_documents_in_directory(county, directory):
