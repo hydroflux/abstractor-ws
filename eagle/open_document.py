@@ -46,7 +46,7 @@ def get_first_result_nested_info(browser, first_result_info):
 
 
 def split_book_and_page_info(book_and_page_info):
-    book_and_page_values = book_and_page_info[-1].text
+    book_and_page_values = book_and_page_info[-1].text.split()
     if book_and_page_values[0] == book_title and book_and_page_values[2] == page_title:
         return [book_and_page_values[1], book_and_page_values[3]]
     else:
@@ -62,19 +62,21 @@ def get_book_and_page_values(browser, first_result_info):
 
 
 def get_first_result_value(browser, document):
-    first_result_info = get_first_result_info(browser, document)
+    first_result_info = get_first_result_info(browser)
     if document_type(document) == "document_number":
         return first_result_info.text.split(" ")[0]
     elif document_type(document) == "book_and_page":
-        book, page = get_book_and_page_values(browser, first_result_info)
+        return get_book_and_page_values(browser, first_result_info)
 
 
 def verify_first_result_number(document, first_result_value):
     return first_result_value == document.value
 
 
-def verify_first_result_book_and_page(document, first_result_value):
-    pass
+def verify_first_result_book_and_page(document, book_and_page_values):
+    if book_and_page_values is not False:
+        book = book_and_page_values[0]
+        page = book_and_page_values[1]
 
 
 def verify_result(browser, document):
@@ -82,7 +84,8 @@ def verify_result(browser, document):
     if document_type(document) == "document_number":
         return verify_first_result_number(document, first_result_value)
     elif document_type(document) == "book_and_page":
-        return verify_first_result_book_and_page(document, first_result_value)
+        book_and_page_values = get_book_and_page_values(browser, first_result_info)
+        return verify_first_result_book_and_page(document, book_and_page_values)
 
 
 def view_search_actions(browser, first_result):
