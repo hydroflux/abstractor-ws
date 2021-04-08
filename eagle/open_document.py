@@ -11,8 +11,9 @@ from settings.file_management import document_type, document_value
 from settings.general_functions import naptime
 from settings.settings import timeout
 
-from eagle.eagle_variables import (first_result_class_name, first_result_tag,
-                                   search_action_tag,
+from eagle.eagle_variables import (first_result_class_name,
+                                   first_result_submenu_class,
+                                   first_result_tag, search_action_tag,
                                    search_actions_class_name)
 
 
@@ -32,10 +33,23 @@ def get_first_result_info(browser):
     return first_result_info
 
 
+def get_first_result_nested_info(browser, first_result_info):
+    try:
+        first_result_nested_info_present = EC.presence_of_element_located((By.CLASS_NAME, first_result_submenu_class))
+        WebDriverWait(browser, timeout).until(first_result_nested_info_present)
+        first_result_nested_info = browser.find_elements_by_class_name(first_result_submenu_class)
+        return first_result_nested_info
+    except TimeoutException:
+        print(f'Browser timed out while trying to get nested information from {first_result_info.text}')
+
+
 def get_first_result_value(browser, document):
     first_result_info = get_first_result_info(browser, document)
     if document_type(document) == "document_number":
         return first_result_info.text.split(" ")[0]
+    elif document_type(document) == "book_and_page":
+        first_result_info.click()
+        nested_info = get_first_result_nested_info(browser, first_result_info)
 
 
 def verify_first_result_number(document, first_result_value):
