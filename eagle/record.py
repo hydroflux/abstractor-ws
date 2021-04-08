@@ -6,6 +6,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("record", __name__)
 
+from settings.file_management import extrapolate_document_value
 from settings.settings import search_errors, timeout
 
 from eagle.eagle_variables import (document_information_id,
@@ -15,14 +16,15 @@ from eagle.eagle_variables import (document_information_id,
                                    related_table_class)
 
 
-def access_document_information(browser, document_number):
+def access_document_information(browser, document):
     try:
         document_information_present = EC.presence_of_element_located((By.ID, document_information_id))
         WebDriverWait(browser, timeout).until(document_information_present)
         document_info = browser.find_element_by_id(document_information_id)
         return document_info.find_elements_by_class_name(document_table_class)
     except TimeoutException:
-        print(f'Browser timed out while trying to access document information for document number {document_number}.')
+        print(f'Browser timed out while trying to access document information for '
+              f'{extrapolate_document_value(document)}.')
 
 
 def display_all_information(browser):
@@ -155,26 +157,26 @@ def scroll_to_top(browser):
         print("Timed out while trying to scroll to the top of the page.")
 
 
-def record_document_fields(browser, dataframe, document_number):
-    document_tables = access_document_information(browser, document_number)
+def record_document_fields(browser, dataframe, document):
+    document_tables = access_document_information(browser, document)
     display_all_information(browser)
     aggregate_document_information(document_tables, dataframe)
     scroll_to_top(browser)
 
 
 # This series of functions may be unnecessary, continue to test
-def review_entry(browser, dataframe, document_number):
+def review_entry(browser, dataframe, document):
     while dataframe["Grantor"][-1] == missing_values[0] and dataframe["Grantee"][-1] == missing_values[0]\
             and dataframe["Related Documents"][-1] == missing_values[1]:
         print("Recording of last document was processed incorrectly, attempting to record again.")
-        re_record_document_fields(browser, dataframe, document_number)
+        re_record_document_fields(browser, dataframe, document)
 
 
-def re_record_document_fields(browser, dataframe, document_number):
+def re_record_document_fields(browser, dataframe, document):
     drop_last_entry(dataframe)
-    record_document_fields(browser, dataframe, document_number)
+    record_document_fields(browser, dataframe, document)
 
 
-def record_document(browser, dataframe, document_number):
-    record_document_fields(browser, dataframe, document_number)
-    review_entry(browser, dataframe, document_number)
+def record_document(browser, dataframe, document):
+    record_document_fields(browser, dataframe, document)
+    review_entry(browser, dataframe, document)
