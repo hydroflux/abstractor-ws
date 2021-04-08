@@ -25,6 +25,24 @@ def request_yes_or_no(prompt):
         return False
 
 
+def get_program_type():
+    user_input = input('What would you like to do? \n'
+                       '[1] Execute Program \n'
+                       '[2] Review Output \n'
+                       )
+    while user_input not in [1, 2]:
+        clear_terminal()
+        print(f'You entered {user_input} Please enter 1 or 2')
+        user_input = input('What would you like to do? \n'
+                           '[1] Execute Program \n'
+                           '[2] Review Output \n'
+                           )
+    if user_input == 1:
+        return "execute"
+    else:
+        return "review"
+
+
 def continue_prompt(current_target_directory, current_file_name, current_sheet_name):
     return request_yes_or_no('Would you like to create another abstraction?')
 
