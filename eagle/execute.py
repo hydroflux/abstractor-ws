@@ -32,30 +32,31 @@ def search_documents_from_list(browser, county, target_directory, document_list,
             record_bad_search(abstract_dictionary, document)
             print(f'No document found at {document}, '
                   f'{remaining_documents(document_list, document)}')
+    return abstract_dictionary
 
 
 def review_documents_from_list(browser, document_list):
     for document in document_list:
         document_value = document_search(browser, document)
         if open_document(browser, document):
-            input(f'Document located at {document} located,'
+            input(f'Document located at {document_value} located,'
                   'please review & press enter to continue...'
                   f'{remaining_documents(document_list, document)}')
         else:
             record_bad_search(abstract_dictionary, document)
-            input(f'No document found at {document}, '
+            input(f'No document found at {document_value}, '
                   'please review & press enter to continue...'
                   f'{remaining_documents(document_list, document)}')
 
 
-def create_abstraction_dictionary(browser, county, target_directory, document_list, download):
-    search_documents_from_list(browser, county, target_directory, document_list, download)
-    return abstract_dictionary
+# def create_abstraction_dictionary(browser, county, target_directory, document_list, download):
+#     search_documents_from_list(browser, county, target_directory, document_list, download)
+#     return abstract_dictionary
 
 
 def create_abstraction(browser, county, target_directory, file_name, sheet_name, download):
     document_list = generate_document_list(target_directory, file_name, sheet_name)
-    abstract_dictionary = create_abstraction_dictionary(browser, county, target_directory, document_list, download)
+    abstract_dictionary = search_documents_from_list(browser, county, target_directory, document_list, download)
     export_document(target_directory, file_name, abstract_dictionary)
     return abstract_dictionary
 
