@@ -8,6 +8,7 @@ print("search", __name__)
 
 from settings.general_functions import naptime
 from settings.settings import timeout
+from settings.file_management import document_type
 
 from eagle.eagle_variables import (book_search_id, clear_search_id,
                                    instrument_search_id, page_search_id,
@@ -28,10 +29,6 @@ def clear_search(browser):
         clear_search.click()
     except TimeoutException:
         print("Browser timed out while trying to clear the search form.")
-
-
-def determine_document_search(document):
-    pass
 
 
 def enter_document_number(browser, document_number):
@@ -87,12 +84,10 @@ def document_search(browser, document):
     open_search(browser)
     clear_search(browser)
     naptime()
-    document_type = determine_document_search(document)
-    if document_type == "document_number":
+    if document_type(document) == "document_number":
         enter_document_number(browser, document)
-    elif document_type == "book_and_page":
+    elif document_type(document) == "book_and_page":
         book, page = split_book_and_page(document)
         enter_book_number(browser, book)
         enter_page_number(browser, page)
     execute_search(browser)
-    return document.value

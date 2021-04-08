@@ -28,6 +28,14 @@ def remaining_documents(document_list, document):
     return f'{len(document_list) - document_list.index(document) - 1} documents remaining.'
 
 
+def document_value(document):
+    return str(document.value)
+
+
+def document_type(document):
+    return str(document.type)
+
+
 def rename_documents_in_directory(county, directory):
     os.chdir(directory)
     for pdf in os.listdir(directory):

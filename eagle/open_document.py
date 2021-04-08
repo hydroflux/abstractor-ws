@@ -9,6 +9,7 @@ print("open", __name__)
 
 from settings.general_functions import naptime
 from settings.settings import timeout
+from settings.file_management import document_value
 
 from eagle.eagle_variables import (first_result_class_name, first_result_tag,
                                    search_action_tag,
@@ -31,7 +32,7 @@ def first_result_number(browser):
     return first_result_info.text.split(" ")[0]
 
 
-def verify_result(browser, document_number):
+def verify_result(browser, document):
     return first_result_number(browser) == document_number
 
 
@@ -50,22 +51,22 @@ def open_document_description(browser, first_result):
     browser.get(search_actions[1].get_attribute("href"))
 
 
-def determine_document_status(browser, document_number):
-    if verify_result(browser, document_number):
-        print(f'Document number {document_number} matches the search result, moving forward.')
+def determine_document_status(browser, document):
+    if verify_result(browser, document):
+        print(f'Document {document_value(document)} matches the search result, moving forward.')
         open_document_description(browser, get_first_result(browser))
         naptime()
         return True
     else:
-        print(f'Document number {document_number} not found -- document number '
+        print(f'Document number {document_value(document)} not found -- document number '
               f'{first_result_number(browser)} returned as top search result.')
         return False
 
 
-def open_document(browser, document_number):
+def open_document(browser, document):
     try:
-        return determine_document_status(browser, document_number)
+        return determine_document_status(browser, document)
     except StaleElementReferenceException:
-        print(f'Encountered a stale element exception while trying to open {document_number}, trying again.')
+        print(f'Encountered a stale element exception while trying to open {document_value(document)}, trying again.')
         browser.refresh()
-        return determine_document_status(browser, document_number)
+        return determine_document_status(browser, document)
