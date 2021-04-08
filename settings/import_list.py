@@ -77,16 +77,15 @@ def create_document_list(excel_object):
     rows = get_sheet_rows(excel_object)
     for row in rows:
         if 'Book' in columns and 'Page' in columns:
-            create_book_and_page_object(row)
+            create_book_and_page_object(document_list, row)
         if 'Document' in columns:
-            create_document_number_object(row)
+            create_document_number_object(document_list, row)
     return document_list
 
 
 def import_excel_document(file_path, sheet_name):
     excel_object = pd.read_excel(file_path, sheet_name)
-    int_document_list = excel_object.values.flatten().tolist()
-    return [str(i) for i in int_document_list]
+    return create_document_list(excel_object)
 
 
 def generate_document_list(target_directory, file_name, sheet_name):
