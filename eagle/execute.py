@@ -7,7 +7,7 @@ from settings.abstract_object import abstract_dictionary
 from settings.bad_search import record_bad_search
 from settings.driver import create_webdriver
 from settings.export import export_document
-from settings.file_management import remaining_documents, document_value
+from settings.file_management import remaining_documents, extrapolate_document_value
 from settings.import_list import generate_document_list
 from settings.settings import web_directory
 from settings.user_prompts import continue_prompt, request_more_information
@@ -25,11 +25,11 @@ def search_documents_from_list(browser, county, target_directory, document_list,
             record_document(browser, abstract_dictionary, document)
             if download:
                 download_document(browser, target_directory, county, document)
-            print(f'Document located at {document_value(document)} recorded, '
+            print(f'Document located at {extrapolate_document_value(document)} recorded, '
                   f'{remaining_documents(document_list, document)}')
         else:
             record_bad_search(abstract_dictionary, document)
-            print(f'No document found at {document_value(document)}, '
+            print(f'No document found at {extrapolate_document_value(document)}, '
                   f'{remaining_documents(document_list, document)}')
     return abstract_dictionary
 
@@ -37,12 +37,12 @@ def search_documents_from_list(browser, county, target_directory, document_list,
 def review_documents_from_list(browser, document_list):
     for document in document_list:
         if open_document(browser, document):
-            input(f'Document located at {document_value(document)} located,'
+            input(f'Document located at {extrapolate_document_value(document)} located,'
                   'please review & press enter to continue...'
                   f'{remaining_documents(document_list, document)}')
         else:
             record_bad_search(abstract_dictionary, document)
-            input(f'No document found at {document_value(document)}, '
+            input(f'No document found at {extrapolate_document_value(document)}, '
                   'please review & press enter to continue...'
                   f'{remaining_documents(document_list, document)}')
 
