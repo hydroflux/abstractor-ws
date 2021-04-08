@@ -12,24 +12,9 @@ print("download", __name__)
 
 from settings.settings import long_timeout
 
-from eagle.eagle_variables import (download_button_id, loading_status,
-                                   pdf_viewer_class_name, pdf_viewer_load_id,
+from eagle.eagle_variables import (download_button_id,
+                                   pdf_viewer_class_name,
                                    stock_download_suffix)
-
-
-def pdf_load_status(browser):
-    try:
-        pdf_viewer_loaded = EC.presence_of_element_located((By.ID, pdf_viewer_load_id))
-        WebDriverWait(browser, long_timeout).until(pdf_viewer_loaded)
-        return browser.find_element_by_id(pdf_viewer_load_id).text
-    except TimeoutException:
-        print("Browser timed out while waiting for the PDF Viewer to load.")
-
-
-def wait_for_pdf_load(browser):
-    while pdf_load_status(browser).startswith(loading_status):
-        sleep(0.5)
-        pdf_load_status(browser)
 
 
 def access_pdf_viewer(browser):
@@ -62,7 +47,6 @@ def determine_stock_download(document_number):
 
 
 def download_document(browser, target_directory, county, document_number):
-    wait_for_pdf_load(browser)
     access_pdf_viewer(browser)
     execute_download(browser)
     switch_to_browser_window(browser)

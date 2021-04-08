@@ -12,8 +12,24 @@ from settings.settings import search_errors, timeout
 from eagle.eagle_variables import (document_information_id,
                                    document_table_class, index_table_tags,
                                    information_links_class, less_info,
+                                   loading_status, long_timeout,
                                    missing_values, more_info,
-                                   related_table_class)
+                                   pdf_viewer_load_id, related_table_class)
+
+
+def pdf_load_status(browser):
+    try:
+        pdf_viewer_loaded = EC.presence_of_element_located((By.ID, pdf_viewer_load_id))
+        WebDriverWait(browser, long_timeout).until(pdf_viewer_loaded)
+        return browser.find_element_by_id(pdf_viewer_load_id).text
+    except TimeoutException:
+        print("Browser timed out while waiting for the PDF Viewer to load.")
+
+
+def wait_for_pdf_to_load(browser):
+    while pdf_load_status(browser).startswith(loading_status):
+        sleep(0.5)
+        pdf_load_status(browser)
 
 
 def access_document_information(browser, document):
@@ -178,5 +194,6 @@ def re_record_document_fields(browser, dataframe, document):
 
 
 def record_document(browser, dataframe, document):
+    wait_for_pdf_to_load(browser)
     record_document_fields(browser, dataframe, document)
     review_entry(browser, dataframe, document)
