@@ -3,18 +3,14 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-# if __name__ == '__main__':
+# Use the following print statement to identify the best way to manage imports for Django vs the script folder
+print("search", __name__)
+
 from settings.general_functions import naptime
 from settings.settings import timeout
 
 from eagle.eagle_variables import (clear_search_id, instrument_search_id,
-                                    search_button_id, search_title,
-                                    search_url)
-# else:
-#     from ..settings.general_functions import naptime
-#     from ..settings.settings import timeout
-#     from .eagle_variables import (clear_search_id, instrument_search_id,
-#                                   search_button_id, search_title, search_url)
+                                   search_button_id, search_title, search_url)
 
 
 def open_search(browser):
