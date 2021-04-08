@@ -39,7 +39,7 @@ def document_value(document):
         return [str(document.value["Book"]), str(document.value["Page"])]
 
 
-def extrapolate_document_values(document):
+def extrapolate_document_value(document):
     value = document_value(document)
     if type(value) == list:
         return f'Book: {value[0]}, Page: {value[1]}'

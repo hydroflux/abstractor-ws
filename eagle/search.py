@@ -8,7 +8,7 @@ print("search", __name__)
 
 from settings.general_functions import naptime
 from settings.settings import timeout
-from settings.file_management import document_type
+from settings.file_management import document_type, extrapolate_document_value, document_value
 
 from eagle.eagle_variables import (book_search_id, clear_search_id,
                                    instrument_search_id, page_search_id,
@@ -31,20 +31,20 @@ def clear_search(browser):
         print("Browser timed out while trying to clear the search form.")
 
 
-def enter_document_number(browser, document_number):
+def enter_document_number(browser, document):
     try:
         instrument_search_field_present = EC.presence_of_element_located((By.ID, instrument_search_id))
         WebDriverWait(browser, timeout).until(instrument_search_field_present)
         instrument_search_field = browser.find_element_by_id(instrument_search_id)
         instrument_search_field.clear()
-        instrument_search_field.send_keys(document_number.value)
+        instrument_search_field.send_keys(extrapolate_document_value(document))
     except TimeoutException:
-        print(f'Browser timed out while trying to fill document field for document number {document_number.value}.')
+        print(f'Browser timed out while trying to fill document field for document number {extrapolate_document_value(document)}.')
 
 
 def split_book_and_page(book_and_page):
-    book = book_and_page.value["Book"]
-    page = book_and_page.value["Page"]
+    book = document_value(book_and_page)[0]
+    page = document_value(book_and_page)[1]
     return book, page
 
 
@@ -56,7 +56,7 @@ def enter_book_number(browser, book):
         book_search_field.clear()
         book_search_field.send_keys(book)
     except TimeoutException:
-        print(f'Browser timed out while trying to fill document field for B: {book}.')
+        print(f'Browser timed out while trying to fill document field for Book: {book}.')
 
 
 def enter_page_number(browser, page):
@@ -67,7 +67,7 @@ def enter_page_number(browser, page):
         page_search_field.clear()
         page_search_field.send_keys(page)
     except TimeoutException:
-        print(f'Browser timed out while trying to fill document field for P: {page}.')
+        print(f'Browser timed out while trying to fill document field for Page: {page}.')
 
 
 def execute_search(browser):
