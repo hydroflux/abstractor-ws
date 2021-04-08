@@ -2,16 +2,18 @@ print("environment", __name__)
 if __name__ == '__main__':
     from eagle.execute import execute_program as execute_eagle
     from eagle.execute import execute_review as review_eagle
-    from settings.settings import (headless, county, download, file_name, programs,
-                                   sheet_name, target_directory, web_directory)
+    from settings.settings import (county, download, file_name, headless,
+                                   programs, sheet_name, target_directory,
+                                   web_directory)
     from settings.user_prompts import get_program_type
 
     # from tiger.execute import execute_web_program
 else:
     from .eagle.execute import execute_program as execute_eagle
     from .eagle.execute import execute_review as review_eagle
-    from .settings.settings import (headless, county, download, file_name, programs,
-                                   sheet_name, target_directory, web_directory)
+    from .settings.settings import (county, download, file_name, headless,
+                                    programs, sheet_name, target_directory,
+                                    web_directory)
     from .tiger.execute import execute_web_program
 
 
