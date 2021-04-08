@@ -78,7 +78,9 @@ def create_document_list(excel_object):
     for row in rows:
         if 'Book' in columns and 'Page' in columns:
             create_book_and_page_object(document_list, row)
-        if 'Document' in columns:
+        if 'Document' in columns or 'Documents' in columns or \
+                                    'Reception Number' in columns or \
+                                    'Reception Numbers' in columns:
             create_document_number_object(document_list, row)
     return document_list
 
