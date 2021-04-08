@@ -1,5 +1,5 @@
 import os
-
+import openpyxl
 import pandas as pd
 
 if __name__ == '__main__':
@@ -8,9 +8,16 @@ else:
     from .settings import web_directory
 
 
+def get_sheet_rows(excel_object):
+    rows = []
+    for index, row in excel_object.iterrows():
+        rows.append(row)
+    return rows
+
+
 def import_excel_document(file_path, sheet_name):
-    excel = pd.read_excel(file_path, sheet_name)
-    int_document_list = excel.values.flatten().tolist()
+    excel_object = pd.read_excel(file_path, sheet_name, index_col=0)
+    int_document_list = excel_object.values.flatten().tolist()
     return [str(i) for i in int_document_list]
 
 
