@@ -33,6 +33,14 @@ def get_book_number(row):
         return int(book)
 
 
+def get_page_number(row):
+    page = row['Page']
+    if is_empty_value(page):
+        return None
+    else:
+        return int(page)
+
+
 def import_excel_document(file_path, sheet_name):
     excel_object = pd.read_excel(file_path, sheet_name)
     int_document_list = excel_object.values.flatten().tolist()
