@@ -80,6 +80,7 @@ def create_document_list(excel_object):
             create_book_and_page_object(row)
         if 'Document' in columns:
             create_document_number_object(row)
+    return document_list
 
 
 def import_excel_document(file_path, sheet_name):
