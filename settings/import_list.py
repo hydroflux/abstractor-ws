@@ -2,11 +2,11 @@ import os
 import math
 import pandas as pd
 
-if __name__ == '__main__':
-    from settings.settings import web_directory
-    from settings.classes.Document import Document
-else:
-    from .settings import web_directory
+# Use the following print statement to identify the best way to manage imports for Django vs the script folder
+print("import_list", __name__)
+
+from settings.settings import web_directory
+from settings.classes.Document import Document
 
 
 def get_sheet_columns(excel_object):
@@ -95,6 +95,6 @@ def generate_document_list(target_directory, file_name, sheet_name):
     return import_excel_document(file_path, sheet_name)
 
 
-def generate_list_from_file(file_name, sheet_name):
-    file_path = f'{web_directory}/{file_name}'
-    return import_excel_document(file_path, sheet_name)
+# def generate_list_from_file(file_name, sheet_name):
+#     file_path = f'{web_directory}/{file_name}'
+#     return import_excel_document(file_path, sheet_name)
