@@ -23,7 +23,7 @@ from eagle.search import document_search
 def search_documents_from_list(browser, county, target_directory, document_list, download):
     for document in document_list:
         if open_document(browser, document):
-            record_document(browser, abstract_dictionary, document)
+            document_number = record_document(browser, abstract_dictionary, document)
             if download:
                 download_document(browser, target_directory, county, document)
             print(f'Document located at {extrapolate_document_value(document)} recorded, '

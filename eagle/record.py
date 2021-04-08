@@ -98,6 +98,7 @@ def record_indexing_data(document_table, dataframe):
     reception_number, recording_date = access_indexing_information(document_table)
     dataframe["Reception Number"].append(reception_number)
     dataframe["Recording Date"].append(recording_date[:10])
+    return reception_number
 
 
 def record_name_data(document_table, dataframe):
@@ -140,8 +141,8 @@ def record_notes(document_tables, dataframe):
 
 
 def aggregate_document_information(document_tables, dataframe):
+    reception_number = record_indexing_data(document_tables[1], dataframe)
     record_document_type(document_tables[0], dataframe)
-    record_indexing_data(document_tables[1], dataframe)
     record_name_data(document_tables[2], dataframe)
     record_legal_data(document_tables[4], dataframe)
     record_related_documents(document_tables[-2], dataframe)
@@ -150,6 +151,7 @@ def aggregate_document_information(document_tables, dataframe):
     dataframe["Book"].append(book)
     page = search_errors[2]
     dataframe["Page"].append(page)
+    return reception_number
 
 
 def drop_last_entry(dataframe):
@@ -178,8 +180,9 @@ def scroll_to_top(browser):
 def record_document_fields(browser, dataframe, document):
     document_tables = access_document_information(browser, document)
     display_all_information(browser)
-    aggregate_document_information(document_tables, dataframe)
+    reception_number = aggregate_document_information(document_tables, dataframe)
     scroll_to_top(browser)
+    return reception_number
 
 
 # This series of functions may be unnecessary, continue to test
@@ -197,5 +200,6 @@ def re_record_document_fields(browser, dataframe, document):
 
 def record_document(browser, dataframe, document):
     wait_for_pdf_to_load(browser)
-    record_document_fields(browser, dataframe, document)
+    document_number = record_document_fields(browser, dataframe, document)
     review_entry(browser, dataframe, document)
+    return document_number
