@@ -133,6 +133,7 @@ def determine_document_status(browser, document):
     else:
         print(f'{extrapolate_document_value(document)} not found -- '
               f'{get_first_result_value(browser, document)} returned as top search result.')
+        naptime()
         return False
 
 
