@@ -40,7 +40,8 @@ def enter_document_number(browser, document):
         instrument_search_field.clear()
         instrument_search_field.send_keys(extrapolate_document_value(document))
     except TimeoutException:
-        print(f'Browser timed out while trying to fill document field for document number {extrapolate_document_value(document)}.')
+        print(f'Browser timed out while trying to fill document field for document number '
+              f'{extrapolate_document_value(document)}.')
 
 
 def split_book_and_page(book_and_page):

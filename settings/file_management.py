@@ -25,7 +25,11 @@ def create_document_directory(target_directory):
 
 
 def remaining_documents(document_list, document):
-    return f'{len(document_list) - document_list.index(document) - 1} documents remaining.'
+    return len(document_list) - document_list.index(document) - 1
+
+
+def list_remaining_documents(document_list, document):
+    return f'{remaining_documents(document_list, document)} documents remaining.'
 
 
 def document_type(document):
