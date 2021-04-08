@@ -8,7 +8,8 @@ from selenium.webdriver.support.wait import WebDriverWait
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("open", __name__)
 
-from settings.file_management import document_type, document_value
+from settings.file_management import (document_type, document_value,
+                                      extrapolate_document_value)
 from settings.general_functions import naptime
 from settings.settings import timeout
 
@@ -78,7 +79,7 @@ def get_first_result_value(browser, document):
 
 
 def verify_first_result_number(document, first_result_value):
-    return first_result_value == document.value
+    return first_result_value == document_value(document)
 
 
 def verify_first_result_book_and_page(document, first_result_value):
@@ -119,12 +120,12 @@ def open_document_description(browser, first_result):
 
 def determine_document_status(browser, document):
     if verify_result(browser, document):
-        print(f'Document {document_value(document)} matches the search result, moving forward.')
+        print(f'{extrapolate_document_value(document)} matches the search result, moving forward.')
         open_document_description(browser, get_first_result(browser))
         naptime()
         return True
     else:
-        print(f'Document number {document_value(document)} not found -- document number '
+        print(f'{extrapolate_document_value(document)} not found -- '
               f'{get_first_result_value(browser, document)} returned as top search result.')
         return False
 
@@ -133,6 +134,7 @@ def open_document(browser, document):
     try:
         return determine_document_status(browser, document)
     except StaleElementReferenceException:
-        print(f'Encountered a stale element exception while trying to open {document_value(document)}, trying again.')
+        print(f'Encountered a stale element exception while trying to open '
+              f'{extrapolate_document_value(document)}, trying again.')
         browser.refresh()
         return determine_document_status(browser, document)
