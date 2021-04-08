@@ -1,4 +1,5 @@
-from selenium.common.exceptions import (StaleElementReferenceException, NoSuchElementException,
+from selenium.common.exceptions import (NoSuchElementException,
+                                        StaleElementReferenceException,
                                         TimeoutException)
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -80,10 +81,17 @@ def verify_first_result_number(document, first_result_value):
     return first_result_value == document.value
 
 
-def verify_first_result_book_and_page(document, book_and_page_values):
-    if book_and_page_values is not False:
-        book = book_and_page_values[0]
-        page = book_and_page_values[1]
+def verify_first_result_book_and_page(document, first_result_value):
+    if first_result_value is not False:
+        book = first_result_value[0]
+        page = first_result_value[1]
+        if book == document_value(document)[0] and page == document_value(document)[1]:
+            return True
+        else:
+            print("")
+            return False
+    else:
+        return False
 
 
 def verify_result(browser, document):
@@ -91,8 +99,7 @@ def verify_result(browser, document):
     if document_type(document) == "document_number":
         return verify_first_result_number(document, first_result_value)
     elif document_type(document) == "book_and_page":
-        book_and_page_values = get_book_and_page_values(browser, first_result_info)
-        return verify_first_result_book_and_page(document, book_and_page_values)
+        return verify_first_result_book_and_page(document, first_result_value)
 
 
 def view_search_actions(browser, first_result):

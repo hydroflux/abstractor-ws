@@ -28,12 +28,23 @@ def remaining_documents(document_list, document):
     return f'{len(document_list) - document_list.index(document) - 1} documents remaining.'
 
 
-def document_value(document):
-    return str(document.value)
-
-
 def document_type(document):
     return str(document.type)
+
+
+def document_value(document):
+    if document_type(document) == "document_number":
+        return str(document.value)
+    elif document_type(document) == "book_and_page":
+        return [str(document.value["Book"]), str(document.value["Page"])]
+
+
+def extrapolate_document_values(document):
+    value = document_value(document)
+    if type(value) == list:
+        return f'Book: {value[0]}, Page: {value[1]}'
+    elif type(value) == str:
+        return f'number {value}'
 
 
 def rename_documents_in_directory(county, directory):
