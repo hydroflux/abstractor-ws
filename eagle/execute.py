@@ -25,11 +25,11 @@ def search_documents_from_list(browser, county, target_directory, document_list,
             record_document(browser, abstract_dictionary, document)
             if download:
                 download_document(browser, target_directory, county, document)
-            print(f'Document located at {str(document.value)} recorded, '
+            print(f'Document located at {document_value(document)} recorded, '
                   f'{remaining_documents(document_list, document)}')
         else:
             record_bad_search(abstract_dictionary, document)
-            print(f'No document found at {str(document.value)}, '
+            print(f'No document found at {document_value(document)}, '
                   f'{remaining_documents(document_list, document)}')
     return abstract_dictionary
 
@@ -37,12 +37,12 @@ def search_documents_from_list(browser, county, target_directory, document_list,
 def review_documents_from_list(browser, document_list):
     for document in document_list:
         if open_document(browser, document):
-            input(f'Document located at {str(document.value)} located,'
+            input(f'Document located at {document_value(document)} located,'
                   'please review & press enter to continue...'
                   f'{remaining_documents(document_list, document)}')
         else:
             record_bad_search(abstract_dictionary, document)
-            input(f'No document found at {str(document.value)}, '
+            input(f'No document found at {document_value(document)}, '
                   'please review & press enter to continue...'
                   f'{remaining_documents(document_list, document)}')
 
