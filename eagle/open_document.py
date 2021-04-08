@@ -89,7 +89,8 @@ def verify_first_result_book_and_page(document, first_result_value):
         if book == document_value(document)[0] and page == document_value(document)[1]:
             return True
         else:
-            print("")
+            print(f'First result Book: {book}, Page: {page} does not match '
+                  f'searched {extrapolate_document_value(document)}, please review.')
             return False
     else:
         return False
