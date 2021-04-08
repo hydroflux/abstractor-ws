@@ -6,9 +6,10 @@ from selenium.webdriver.support.wait import WebDriverWait
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("search", __name__)
 
+from settings.file_management import (document_type, document_value,
+                                      extrapolate_document_value)
 from settings.general_functions import naptime
 from settings.settings import timeout
-from settings.file_management import document_type, extrapolate_document_value, document_value
 
 from eagle.eagle_variables import (book_search_id, clear_search_id,
                                    instrument_search_id, page_search_id,
