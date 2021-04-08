@@ -49,23 +49,26 @@ def get_document_number(row):
         return int(document_number)
 
 
+def store_document(document_list, type, value):
+    document = Document(type=type, value=value)
+    document_list.append(document)
+
+
 def create_book_and_page_object(document_list, row):
     book = get_book_number(row)
     page = get_page_number(row)
     if book is not None and page is not None:
-        value = {
+        book_and_page = {
             "Book": book,
             "Page": page
         }
-        document = Document(type='book_and_page', value=value)
-        document_list.append(document)
+        store_document(document_list, "book_and_page", book_and_page)
 
 
 def create_document_number_object(document_list, row):
     document_number = get_document_number(row)
     if document_number is not None:
-        document = Document(type='document_number', value=document_number)
-        document_list.append(document)
+        store_document(document_list, "document_number", document_number)
 
 
 def import_excel_document(file_path, sheet_name):
