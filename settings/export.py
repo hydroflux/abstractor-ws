@@ -1,7 +1,7 @@
 import os
 
-from pandas import DataFrame, ExcelWriter
 import xlsxwriter
+from pandas import DataFrame, ExcelWriter
 
 if __name__ == '__main__':
     from settings.settings import (abstraction_type, authorship, text_formats,
