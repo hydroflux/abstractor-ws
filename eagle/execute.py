@@ -7,7 +7,7 @@ from settings.abstract_object import abstract_dictionary
 from settings.bad_search import record_bad_search
 from settings.driver import create_webdriver
 from settings.export import export_document
-from settings.file_management import remaining_downloads
+from settings.file_management import remaining_documents
 from settings.import_list import generate_document_list
 from settings.settings import web_directory
 from settings.user_prompts import continue_prompt, request_more_information
@@ -16,36 +16,36 @@ from eagle.download import download_document
 from eagle.login import account_login
 from eagle.open_document import open_document
 from eagle.record import record_document
-from eagle.search import document_number_search
+from eagle.search import document_search
 
 
 def search_documents_from_list(browser, county, target_directory, document_list, download):
     for document in document_list:
-        document_number_search(browser, document)
-        if open_document(browser, document_number):
-            record_document(browser, abstract_dictionary, document_number)
+        document_value = document_search(browser, document)
+        if open_document(browser, document_value):
+            record_document(browser, abstract_dictionary, document_value)
             if download:
-                download_document(browser, target_directory, county, document_number)
-            print(f'Document located at reception number {document_number} recorded, '
-                  f'{remaining_downloads(document_list, document_number)} documents remaining.')
+                download_document(browser, target_directory, county, document_value)
+            print(f'Document located at {document_value} recorded, '
+                  f'{remaining_documents(document_list, document)}')
         else:
-            record_bad_search(abstract_dictionary, document_number)
-            print(f'No document found at reception number {document_number}, '
-                  f'{remaining_downloads(document_list, document_number)} documents remaining.')
+            record_bad_search(abstract_dictionary, document)
+            print(f'No document found at {document}, '
+                  f'{remaining_documents(document_list, document)}')
 
 
 def review_documents_from_list(browser, document_list):
-    for document_number in document_list:
-        document_number_search(browser, document_number)
-        if open_document(browser, document_number):
-            input(f'Document located at reception number {document_number} located,'
+    for document in document_list:
+        document_value = document_search(browser, document)
+        if open_document(browser, document):
+            input(f'Document located at {document} located,'
                   'please review & press enter to continue...'
-                  f'({remaining_downloads(document_list, document_number)} documents remaining)')
+                  f'{remaining_documents(document_list, document)}')
         else:
-            record_bad_search(abstract_dictionary, document_number)
-            input(f'No document found at reception number {document_number}, '
+            record_bad_search(abstract_dictionary, document)
+            input(f'No document found at {document}, '
                   'please review & press enter to continue...'
-                  f'({remaining_downloads(document_list, document_number)} documents remaining)')
+                  f'{remaining_documents(document_list, document)}')
 
 
 def create_abstraction_dictionary(browser, county, target_directory, document_list, download):

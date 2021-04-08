@@ -95,3 +95,4 @@ def document_search(browser, document):
         enter_book_number(browser, book)
         enter_page_number(browser, page)
     execute_search(browser)
+    return document.value

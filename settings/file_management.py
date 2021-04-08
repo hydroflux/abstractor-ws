@@ -24,8 +24,8 @@ def create_document_directory(target_directory):
     return document_directory
 
 
-def remaining_downloads(document_list, document_number):
-    return len(document_list) - document_list.index(document_number) - 1
+def remaining_documents(document_list, document):
+    return f'{len(document_list) - document_list.index(document) - 1} documents remaining.'
 
 
 def rename_documents_in_directory(county, directory):
