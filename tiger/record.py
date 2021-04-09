@@ -8,6 +8,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 print("record", __name__)
 
 from settings.file_management import extrapolate_document_value
+from settings.general_functions import get_element_text
 from settings.settings import empty_value, not_applicable, timeout
 
 from tiger.tiger_variables import (book_page_abbreviation, document_image_id,
@@ -47,10 +48,6 @@ def document_table_data(browser, document_number):
 
 def get_table_rows(document_table):
     return document_table.find_elements_by_tag_name(table_row_tag)
-
-
-def get_element_text(element):
-    return element.text.strip()
 
 
 def get_row_data(row):

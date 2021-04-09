@@ -26,3 +26,7 @@ def javascript_script_execution(browser, script):
 
 def get_element_text(element):
     return element.text.strip()
+
+
+def title_strip(text):
+    return text.title().strip()
