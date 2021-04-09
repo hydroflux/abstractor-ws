@@ -38,7 +38,7 @@ def enter_document_number(browser, document):
         WebDriverWait(browser, timeout).until(instrument_search_field_present)
         instrument_search_field = browser.find_element_by_id(instrument_search_id)
         instrument_search_field.clear()
-        instrument_search_field.send_keys(extrapolate_document_value(document))
+        instrument_search_field.send_keys(document_value(document))
     except TimeoutException:
         print(f'Browser timed out while trying to fill document field for document number '
               f'{extrapolate_document_value(document)}.')

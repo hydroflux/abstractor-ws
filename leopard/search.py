@@ -2,12 +2,16 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+from settings.general_functions import scroll_into_view
 from settings.settings import timeout
+from settings.file_management import extrapolate_document_value
 
 from leopard.leopard_variables import (instrument_search_id, search_button_id,
                                        search_navigation_id, search_script,
                                        search_tab_id, search_title)
 
+
+# Script is nearly identical to tiger search
 
 def check_active_class(element):
     element_class = element.get_attribute("class")
@@ -37,7 +41,7 @@ def open_search_tab(browser):
         search_tab_present = EC.element_to_be_clickable((By.ID, search_tab_id))
         WebDriverWait(browser, timeout).until(search_tab_present)
         search_tab = browser.find_element_by_id(search_tab_id)
-        browser.execute_script("arguments[0].scrollIntoView();", search_tab)
+        scroll_into_view(browser, search_tab)
         if check_active_class(get_parent_element(search_tab)):
             return
         search_tab.click()
@@ -45,7 +49,7 @@ def open_search_tab(browser):
         print("Browser timed out while trying to access the search tab.")
 
 
-def enter_document_number(browser, document_number):
+def enter_document_number(browser, document):
     try:
         instrument_search_field_present = EC.element_to_be_clickable((By.ID, instrument_search_id))
         WebDriverWait(browser, timeout).until(instrument_search_field_present)
@@ -53,8 +57,8 @@ def enter_document_number(browser, document_number):
         instrument_search_field.clear()
         instrument_search_field.send_keys(document_number)
     except TimeoutException:
-        print(f'Browser timed out while trying to fill document field for document number '
-              f'{document_number}, trying again.')
+        print(f'Browser timed out while trying to fill document field for '
+              f'{extrapolate_document_value(document)}, trying again.')
 
 
 def execute_search(browser):

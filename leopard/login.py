@@ -9,6 +9,7 @@ from leopard.leopard_variables import (credentials, handle_disclaimer_id,
                                        website, website_title)
 from leopard.search import open_search
 
+# Script is nearly identical to tiger login--extrapolate into "big cats"
 
 def open_site(browser):
     browser.get(website)
