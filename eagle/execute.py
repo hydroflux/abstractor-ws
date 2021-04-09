@@ -22,6 +22,7 @@ from eagle.search import document_search
 
 def search_documents_from_list(browser, county, target_directory, document_list, download):
     for document in document_list:
+        document_search(browser, document)
         if open_document(browser, document):
             document_number = record_document(browser, abstract_dictionary, document)
             if download:
@@ -37,6 +38,7 @@ def search_documents_from_list(browser, county, target_directory, document_list,
 
 def review_documents_from_list(browser, document_list):
     for document in document_list:
+        document_search(browser, document)
         if open_document(browser, document):
             input(f'Document located at {extrapolate_document_value(document)} located,'
                   'please review & press enter to continue...'
