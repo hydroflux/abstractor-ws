@@ -18,3 +18,7 @@ def get_county_data(county):
 
 def scroll_into_view(browser, element):
     browser.execute_script("arguments[0].scrollIntoView();", element)
+
+
+def javascript_script_execution(browser, script):
+    browser.execute_script(script)

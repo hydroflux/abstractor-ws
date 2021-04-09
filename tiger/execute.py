@@ -1,6 +1,3 @@
-# Use the following print statement to identify the best way to manage imports for Django vs the script folder
-print("execute", __name__)
-
 from settings.abstract_object import abstract_dictionary as dictionary
 from settings.bad_search import record_bad_search
 from settings.driver import create_webdriver
@@ -8,9 +5,13 @@ from settings.export import export_document
 from settings.file_management import (bundle_project,
                                       create_document_directory,
                                       remaining_downloads)
-from settings.general_functions import get_county_data, naptime
+from settings.general_functions import (get_county_data,
+                                        javascript_script_execution, naptime)
 from settings.import_list import generate_document_list
 from settings.settings import web_directory
+
+# Use the following print statement to identify the best way to manage imports for Django vs the script folder
+print("execute", __name__)
 
 from tiger.download import download_document
 from tiger.login import account_login
@@ -30,7 +31,7 @@ def search_documents_from_list(browser, county, target_directory, document_list,
                     dictionary["Comments"][-1] = f'No document image located at reception number {document_number}.'
             print(f'Document located at reception number {document_number} recorded, '
                   f'{remaining_downloads(document_list, document_number)} documents remaining.')
-            browser.execute_script(search_script)
+            javascript_script_execution(search_script)
             naptime()
         else:
             record_bad_search(dictionary, document_number)
