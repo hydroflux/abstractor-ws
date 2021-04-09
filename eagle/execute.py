@@ -7,11 +7,12 @@ from settings.abstract_object import abstract_dictionary
 from settings.bad_search import record_bad_search
 from settings.driver import create_webdriver
 from settings.export import export_document
-from settings.file_management import (extrapolate_document_value,
+from settings.file_management import (bundle_project,
+                                      extrapolate_document_value,
                                       list_remaining_documents)
+from settings.general_functions import get_county_data
 from settings.import_list import generate_document_list
 from settings.settings import web_directory
-from settings.general_functions import get_county_data
 from settings.user_prompts import continue_prompt, request_more_information
 
 from eagle.download import download_document
@@ -71,6 +72,7 @@ def execute_program(county, target_directory, file_name, sheet_name, download):
         target_directory, file_name, sheet_name = \
             request_more_information(target_directory, file_name, sheet_name)
         create_abstraction(browser, county, target_directory, file_name, sheet_name, download)
+    bundle_project(target_directory, file_name)
     browser.close()
     quit()
 
