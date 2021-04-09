@@ -43,6 +43,7 @@ def rename_download(document_directory, stock_download, document_number, downloa
 
 def update_download(browser, county, stock_download, document_directory, document_number):
     download_path = f'{document_directory}/{stock_download}'
+    print(download_path)
     if wait_for_download(browser, download_path):
         return False
     else:

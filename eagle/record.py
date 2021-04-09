@@ -92,9 +92,25 @@ def record_document_type(document_table, dataframe):
     dataframe["Document Type"].append(document_type)
 
 
+def split_reception_field(reception_field):
+    if "Book" in reception_field and "Page" in reception_field:
+        reception_fields = reception_field.split("\n")
+        reception_number = reception_fields[0]
+        book = reception_fields[2]
+        page = reception_fields[4]
+    else:
+        reception_number = reception_field
+        book = search_errors[2]
+        page = search_errors[2]
+    return reception_number, book, page
+
+
 def record_indexing_data(document_table, dataframe):
-    reception_number, recording_date = access_indexing_information(document_table)
+    reception_field, recording_date = access_indexing_information(document_table)
+    reception_number, book, page = split_reception_field(reception_field)
     dataframe["Reception Number"].append(reception_number)
+    dataframe["Book"].append(book)
+    dataframe["Page"].append(page)
     dataframe["Recording Date"].append(recording_date[:10])
     return reception_number
 
@@ -145,10 +161,6 @@ def aggregate_document_information(document_tables, dataframe):
     record_legal_data(document_tables[4], dataframe)
     record_related_documents(document_tables[-2], dataframe)
     record_notes(document_tables, dataframe)
-    book = search_errors[2]
-    dataframe["Book"].append(book)
-    page = search_errors[2]
-    dataframe["Page"].append(page)
     return reception_number
 
 

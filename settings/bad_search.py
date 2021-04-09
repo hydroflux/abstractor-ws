@@ -1,8 +1,8 @@
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("bad_search", __name__)
 
-from file_management import (document_type, document_value,
-                             extrapolate_document_value)
+from settings.file_management import (document_type, document_value,
+                                      extrapolate_document_value)
 from settings.settings import search_errors
 
 

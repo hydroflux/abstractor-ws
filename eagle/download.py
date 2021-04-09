@@ -44,7 +44,7 @@ def determine_stock_download(document_number):
     return f'{document_number}-{stock_download_suffix}'
 
 
-def download_document(browser, target_directory, county, document_number):
+def download_document(browser, county, target_directory, document_number):
     access_pdf_viewer(browser)
     execute_download(browser)
     switch_to_browser_window(browser)

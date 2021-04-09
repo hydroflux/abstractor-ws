@@ -11,6 +11,7 @@ from settings.file_management import (extrapolate_document_value,
                                       list_remaining_documents)
 from settings.import_list import generate_document_list
 from settings.settings import web_directory
+from settings.general_functions import get_county_data
 from settings.user_prompts import continue_prompt, request_more_information
 
 from eagle.download import download_document
@@ -26,7 +27,7 @@ def search_documents_from_list(browser, county, target_directory, document_list,
         if open_document(browser, document):
             document_number = record_document(browser, abstract_dictionary, document)
             if download:
-                download_document(browser, target_directory, county, document_number)
+                download_document(browser, county, target_directory, document_number)
             print(f'Document located at {extrapolate_document_value(document)} recorded, '
                   f'{list_remaining_documents(document_list, document)}')
         else:
@@ -63,6 +64,7 @@ def create_abstraction(browser, county, target_directory, file_name, sheet_name,
 
 def execute_program(county, target_directory, file_name, sheet_name, download):
     browser = create_webdriver(target_directory, False)
+    county = get_county_data(county)
     account_login(browser)
     create_abstraction(browser, county, target_directory, file_name, sheet_name, download)
     while continue_prompt(target_directory, file_name, sheet_name):
