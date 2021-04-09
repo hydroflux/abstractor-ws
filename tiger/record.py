@@ -7,11 +7,11 @@ from selenium.webdriver.support.wait import WebDriverWait
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("record", __name__)
 
-from settings.settings import empty_value, not_applicable, timeout
 from settings.file_management import extrapolate_document_value
+from settings.settings import empty_value, not_applicable, timeout
 
 from tiger.tiger_variables import (book_page_abbreviation, document_image_id,
-                                   document_information_id, document_tag,
+                                   document_information_id, document_table_tag,
                                    empty_values, row_data_tag, row_titles,
                                    table_row_tag)
 
