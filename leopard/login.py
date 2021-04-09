@@ -5,6 +5,9 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from settings.settings import timeout
 
+# Use the following print statement to identify the best way to manage imports for Django vs the script folder
+print("login", __name__)
+
 from leopard.leopard_variables import (credentials, handle_disclaimer_id,
                                        website, website_title)
 from leopard.search import open_search

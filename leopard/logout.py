@@ -5,6 +5,9 @@ from selenium.webdriver.support.wait import WebDriverWait
 from leopard.leopard_variables import logout_button_id
 from settings.settings import timeout
 
+# Use the following print statement to identify the best way to manage imports for Django vs the script folder
+print("logout", __name__)
+
 def logout(browser):
     try:
         logout_button_present = EC.presence_of_element_located((By.ID, logout_button_id))

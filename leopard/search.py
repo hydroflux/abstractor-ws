@@ -6,6 +6,9 @@ from settings.file_management import document_value, extrapolate_document_value
 from settings.general_functions import scroll_into_view
 from settings.settings import timeout
 
+# Use the following print statement to identify the best way to manage imports for Django vs the script folder
+print("search", __name__)
+
 from leopard.leopard_variables import (instrument_search_id, search_button_id,
                                        search_navigation_id, search_script,
                                        search_tab_id, search_title)

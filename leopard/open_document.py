@@ -7,6 +7,9 @@ from selenium.webdriver.support.wait import WebDriverWait
 from settings.file_management import document_value, extrapolate_document_value
 from settings.settings import timeout
 
+# Use the following print statement to identify the best way to manage imports for Django vs the script folder
+print("open_document", __name__)
+
 from leopard.leopard_variables import (first_result_tag, result_cell_tag,
                                        result_count_button_id,
                                        result_count_class, results_body_tag,
