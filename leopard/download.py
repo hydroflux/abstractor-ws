@@ -11,4 +11,3 @@ from tiger.tiger_variables import (download_button_id, stock_download,
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("download", __name__)
-
