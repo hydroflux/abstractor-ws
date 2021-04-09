@@ -56,6 +56,7 @@ def split_book_and_page_info(book_and_page_info):
         return False
 
 
+# Hitting a snag on clicking the first result info, please review
 def expand_first_result_nested_info(browser, first_result_info):
     try:
         browser.find_element_by_class_name(nested_submenu_class)
