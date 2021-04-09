@@ -6,7 +6,7 @@ import pandas as pd
 print("import_list", __name__)
 
 from settings.settings import web_directory
-from settings.classes.Documents import Documents as Document
+from settings.classes.Document import Document
 
 
 def get_sheet_columns(excel_object):
