@@ -5,37 +5,38 @@ from settings.export import export_document
 from settings.file_management import (bundle_project,
                                       create_document_directory,
                                       remaining_downloads)
-from settings.general_functions import get_county_data, naptime, javascript_search_execution
+from settings.general_functions import (get_county_data,
+                                        javascript_script_execution, naptime)
 from settings.import_list import generate_document_list
 from settings.settings import web_directory
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("execute", __name__)
 
-from leopard.download import download_document
+# from leopard.download import download_document
+from leopard.leopard_variables import search_script
 from leopard.login import account_login
 from leopard.open_document import open_document
-from leopard.record import record_document
+# from leopard.record import record_document
 from leopard.search import search
-from leopard.leopard_variables import search_script
 
 
 def search_documents_from_list(browser, county, target_directory, document_list, download):
     for document_number in document_list:
         search(browser, document_number)
-        if open_document(browser, document_number):
-            record_document(browser, dictionary, document_number)
-            if download:
-                if not download_document(browser, county, target_directory, document_number):
-                    dictionary["Comments"][-1] = f'No document image located at reception number {document_number}.'
-            print(f'Document located at reception number {document_number} recorded, '
-                  f'{remaining_downloads(document_list, document_number)} documents remaining.')
-            javascript_script_execution(script)
-            naptime()
-        else:
-            record_bad_search(dictionary, document_number)
-            print(f'No document found at reception number {document_number}, '
-                  f'{remaining_downloads(document_list, document_number)} documents remaining.')
+        # if open_document(browser, document_number):
+        #     record_document(browser, dictionary, document_number)
+        #     if download:
+        #         if not download_document(browser, county, target_directory, document_number):
+        #             dictionary["Comments"][-1] = f'No document image located at reception number {document_number}.'
+        #     print(f'Document located at reception number {document_number} recorded, '
+        #           f'{remaining_downloads(document_list, document_number)} documents remaining.')
+        #     javascript_script_execution(search_script)
+        #     naptime()
+        # else:
+        #     record_bad_search(dictionary, document_number)
+        #     print(f'No document found at reception number {document_number}, '
+        #           f'{remaining_downloads(document_list, document_number)} documents remaining.')
 
 
 def create_abstraction(browser, county, target_directory, file_name, sheet_name, download):
@@ -44,16 +45,14 @@ def create_abstraction(browser, county, target_directory, file_name, sheet_name,
     return dictionary
 
 
-def execute_web_program(county, client, legal, upload_file):
+def execute_program(headless, target_directory, county, file_name, sheet_name, download):
+    browser = create_webdriver(target_directory, headless)
     county = get_county_data(county)
-    sheet_name = 'Documents'
-    download = True
-    file_name = upload_file
-    target_directory = web_directory
-    browser = create_webdriver(target_directory, False)
     account_login(browser)
-    dictionary = create_abstraction(browser, county, target_directory, file_name, sheet_name, download)
-    export_document(target_directory, file_name, dictionary, client, legal)
-    bundle_project(target_directory, file_name)
+    # create_abstraction(browser, county, target_directory, file_name, sheet_name, download)
+    # while continue_prompt(target_directory, file_name, sheet_name):
+    #     target_directory, file_name, sheet_name = \
+    #         request_more_information(target_directory, file_name, sheet_name)
+    #     create_abstraction(browser, county, target_directory, file_name, sheet_name, download)
     browser.close()
-    return dictionary
+    quit()
