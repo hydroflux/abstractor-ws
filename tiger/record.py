@@ -13,8 +13,7 @@ from settings.settings import empty_value, not_applicable, timeout
 
 from tiger.tiger_variables import (book_page_abbreviation, document_image_id,
                                    document_information_id, document_table_tag,
-                                   empty_values, row_data_tag, row_titles,
-                                   table_row_tag)
+                                   row_data_tag, row_titles, table_row_tag)
 
 
 def document_image_loaded(browser, document):
@@ -53,11 +52,6 @@ def get_table_rows(document_table):
 def get_row_data(row):
     row_data = row.find_elements_by_tag_name(row_data_tag)
     return get_element_text(row_data[0]), get_element_text(row_data[1])
-
-
-# def check_for_value(content, value_type):
-#     if content != empty_values[value_type]:
-#         return True
 
 
 def get_row_value(row, title):

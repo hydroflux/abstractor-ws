@@ -14,8 +14,8 @@ from settings.settings import empty_value, not_applicable, timeout
 from leopard.leopard_variables import (book_page_abbreviation,
                                        document_image_id,
                                        document_information_id,
-                                       document_table_tag, empty_values,
-                                       row_data_tag, row_titles, table_row_tag)
+                                       document_table_tag, row_data_tag,
+                                       row_titles, table_row_tag)
 
 # Script is similar to tiger but superior at time of testing--needs further review
 
