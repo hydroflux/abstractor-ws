@@ -66,12 +66,11 @@ def access_table_body(document_table):
 
 def access_table_rows(table_body):
     body_text = table_body.find_elements_by_tag_name(index_table_tags[1])
-    body_text.replace("'S ", "'s ")
     return body_text
 
 
 def access_title_case_text(data):
-    return data.text.title()
+    return data.text.title().replace("'S ", "'s ")
 
 
 def access_field_body_no_title(field_info):
