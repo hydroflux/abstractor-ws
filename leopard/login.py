@@ -3,7 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-from settings.settings import timeout, short_timeout
+from settings.settings import timeout
 
 from leopard.leopard_variables import (credentials, handle_disclaimer_id,
                                        website, website_title)
@@ -29,7 +29,7 @@ def enter_credentials(browser):
 def handle_disclaimer(browser):
     try:
         disclaimer_present = EC.element_to_be_clickable((By.ID, handle_disclaimer_id))
-        WebDriverWait(browser, short_timeout).until(disclaimer_present)
+        WebDriverWait(browser, timeout).until(disclaimer_present)
         disclaimer = browser.find_element_by_id(handle_disclaimer_id)
         disclaimer.click()
     except TimeoutException:
