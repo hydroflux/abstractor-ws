@@ -22,13 +22,13 @@ from leopard.search import search
 
 
 def search_documents_from_list(browser, county, target_directory, document_list, download):
-    for document_number in document_list:
-        search(browser, document_number)
-        if open_document(browser, document_number):
-            record_document(browser, dictionary, document_number)
-        #     if download:
-        #         if not download_document(browser, county, target_directory, document_number):
-        #             dictionary["Comments"][-1] = f'No document image located at reception number {document_number}.'
+    for document in document_list:
+        search(browser, document)
+        if open_document(browser, document):
+            record_document(browser, dictionary, document)
+            if download:
+                if not download_document(browser, county, target_directory, document, document_number):
+                    dictionary["Comments"][-1] = f'No document image located at reception number {document_number}.'
         #     print(f'Document located at reception number {document_number} recorded, '
         #           f'{remaining_downloads(document_list, document_number)} documents remaining.')
         #     javascript_script_execution(search_script)
