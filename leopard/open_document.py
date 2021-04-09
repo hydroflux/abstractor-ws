@@ -5,6 +5,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from settings.file_management import document_value, extrapolate_document_value
+from settings.general_functions import scroll_into_view
 from settings.settings import timeout
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
@@ -12,8 +13,8 @@ print("open_document", __name__)
 
 from leopard.leopard_variables import (first_result_tag, result_cell_tag,
                                        result_count_button_id,
-                                       result_count_class, results_body_tag,
-                                       results_id)
+                                       result_count_class, result_row_class,
+                                       results_body_tag, results_id)
 
 # Script is SIMILAR, but not nearly identical, to tiger open_document
 
@@ -28,17 +29,38 @@ def count_results(browser, document):
               f'{extrapolate_document_value(document)}.')
 
 
-def identify_first_result(browser, document):
+def get_results_table_body(browser, document):
     try:
         results_present = EC.presence_of_element_located((By.ID, results_id))
         WebDriverWait(browser, timeout).until(results_present)
         results = browser.find_element_by_id(results_id)
-        browser.execute_script("arguments[0].scrollIntoView();", results)
-        results_body = results.find_element_by_tag_name(results_body_tag)
-        return results_body.find_element_by_tag_name(first_result_tag)
+        scroll_into_view(browser, results)
+        results_table_body = results.find_element_by_tag_name(results_body_tag)
+        return results_table_body
     except TimeoutException:
-        print(f'Browser timed out trying to identify first result after searching '
-              f'{extrapolate_document_value(document)}.')
+        print(f'Browser timed out trying to get results table after searching '
+              f'{extrapolate_document_value(document)}, please review.')
+
+
+def get_all_results(browser, results_table_body, document):
+    try:
+        first_row_present = EC.presence_of_element_located((By.CLASS_NAME, result_row_class))
+        WebDriverWait(browser, timeout).until(first_row_present)
+        all_results = results_table_body.find_elements_by_class_name(result_row_class)
+        return all_results
+    except TimeoutException:
+        print(f'Browser timed out while trying to get results for '
+              f'{extrapolate_document_value(document)}, please review.')
+
+
+def get_first_row(browser, results_table_body, document):
+    all_results = get_all_results(browser, results_table_body, document)
+    return all_results[0]
+
+
+def identify_first_result(browser, document):
+    results_table_body = get_results_table_body(browser, document)
+    return get_first_row(browser, results_table_body, document)
 
 
 def get_element_text(element):
