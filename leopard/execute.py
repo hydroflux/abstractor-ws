@@ -17,15 +17,15 @@ print("execute", __name__)
 from leopard.leopard_variables import search_script
 from leopard.login import account_login
 from leopard.open_document import open_document
-# from leopard.record import record_document
+from leopard.record import record_document
 from leopard.search import search
 
 
 def search_documents_from_list(browser, county, target_directory, document_list, download):
     for document_number in document_list:
         search(browser, document_number)
-        # if open_document(browser, document_number):
-        #     record_document(browser, dictionary, document_number)
+        if open_document(browser, document_number):
+            record_document(browser, dictionary, document_number)
         #     if download:
         #         if not download_document(browser, county, target_directory, document_number):
         #             dictionary["Comments"][-1] = f'No document image located at reception number {document_number}.'
