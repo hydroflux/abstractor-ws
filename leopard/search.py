@@ -2,14 +2,13 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+from settings.file_management import document_value, extrapolate_document_value
 from settings.general_functions import scroll_into_view
 from settings.settings import timeout
-from settings.file_management import extrapolate_document_value
 
 from leopard.leopard_variables import (instrument_search_id, search_button_id,
                                        search_navigation_id, search_script,
                                        search_tab_id, search_title)
-
 
 # Script is nearly identical to tiger search
 
@@ -55,7 +54,7 @@ def enter_document_number(browser, document):
         WebDriverWait(browser, timeout).until(instrument_search_field_present)
         instrument_search_field = browser.find_element_by_id(instrument_search_id)
         instrument_search_field.clear()
-        instrument_search_field.send_keys(document_number)
+        instrument_search_field.send_keys(document_value(document))
     except TimeoutException:
         print(f'Browser timed out while trying to fill document field for '
               f'{extrapolate_document_value(document)}, trying again.')
@@ -71,8 +70,8 @@ def execute_search(browser):
         print("Browser timed out while trying to execute search.")
 
 
-def search(browser, document_number):
+def search(browser, document):
     open_search(browser)
     open_search_tab(browser)
-    enter_document_number(browser, document_number)
+    enter_document_number(browser, document)
     execute_search(browser)
