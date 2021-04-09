@@ -21,8 +21,11 @@ def get_sheet_rows(excel_object):
 
 
 def is_empty_value(value):
-    value_check = float(value)
-    return math.isnan(value_check)
+    try:
+        value_check = float(value)
+        return math.isnan(value_check)
+    except ValueError:
+        return True
 
 
 def get_book_number(row):
@@ -30,7 +33,10 @@ def get_book_number(row):
     if is_empty_value(book):
         return None
     else:
-        return int(book)
+        try:
+            return int(book)
+        except ValueError:
+            return str(book)
 
 
 def get_page_number(row):
@@ -38,7 +44,10 @@ def get_page_number(row):
     if is_empty_value(page):
         return None
     else:
-        return int(page)
+        try:
+            return int(page)
+        except ValueError:
+            return str(page)
 
 
 def get_document_number(columns, row):
@@ -58,8 +67,6 @@ def get_document_number(columns, row):
 
 def store_document(document_list, type, value):
     document = Document(type=type, value=value)
-    print(document.type)
-    print(document.value)
     document_list.append(document)
 
 
@@ -87,12 +94,10 @@ def create_document_list(excel_object):
     for row in rows:
         if 'Book' in columns and 'Page' in columns:
             create_book_and_page_object(document_list, row)
-            input("Continue? (book_and_page)")
         if 'Document' in columns or 'Documents' in columns or \
                                     'Reception Number' in columns or \
                                     'Reception Numbers' in columns:
             create_document_number_object(document_list, columns, row)
-            input("Continue? (document_number)")
     return document_list
 
 
