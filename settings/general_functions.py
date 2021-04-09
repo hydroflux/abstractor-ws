@@ -22,3 +22,7 @@ def scroll_into_view(browser, element):
 
 def javascript_script_execution(browser, script):
     browser.execute_script(script)
+
+
+def get_element_text(element):
+    return element.text.strip()

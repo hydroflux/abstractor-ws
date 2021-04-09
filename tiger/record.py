@@ -42,7 +42,7 @@ def document_loaded(browser, document):
 
 def document_table_data(browser, document_number):
     document = document_loaded(browser, document_number)
-    return document.find_element_by_tag_name(document_tag)
+    return document.find_element_by_tag_name(document_table_tag)
 
 
 def get_table_rows(document_table):

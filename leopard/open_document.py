@@ -5,7 +5,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from settings.file_management import document_value, extrapolate_document_value
-from settings.general_functions import scroll_into_view
+from settings.general_functions import scroll_into_view, get_element_text
 from settings.settings import timeout
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
@@ -61,10 +61,6 @@ def get_first_row(browser, results_table_body, document):
 def identify_first_result(browser, document):
     results_table_body = get_results_table_body(browser, document)
     return get_first_row(browser, results_table_body, document)
-
-
-def get_element_text(element):
-    return element.text
 
 
 def check_result(browser, document):
