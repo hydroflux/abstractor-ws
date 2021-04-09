@@ -7,7 +7,7 @@ from settings.settings import timeout, short_timeout
 
 from leopard.leopard_variables import (credentials, handle_disclaimer_id,
                                        website, website_title)
-# from leopard.search import open_search
+from leopard.search import open_search
 
 
 def open_site(browser):
@@ -38,5 +38,5 @@ def handle_disclaimer(browser):
 def account_login(browser):
     open_site(browser)
     enter_credentials(browser)
-    # open_search(browser)
+    open_search(browser)
     handle_disclaimer(browser)

@@ -14,3 +14,7 @@ def naptime():
 
 def get_county_data(county):
     return county_data.get(county)
+
+
+def scroll_into_view(browser, element):
+    browser.execute_script("arguments[0].scrollIntoView();", element)
