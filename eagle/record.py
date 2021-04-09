@@ -9,13 +9,12 @@ from selenium.webdriver.support.wait import WebDriverWait
 print("record", __name__)
 
 from settings.file_management import extrapolate_document_value
-from settings.settings import search_errors, timeout
+from settings.settings import long_timeout, search_errors, timeout
 
 from eagle.eagle_variables import (document_information_id,
                                    document_table_class, index_table_tags,
                                    information_links_class, less_info,
-                                   loading_status, long_timeout,
-                                   missing_values, more_info,
+                                   loading_status, missing_values, more_info,
                                    pdf_viewer_load_id, related_table_class)
 
 
