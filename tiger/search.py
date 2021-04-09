@@ -16,6 +16,12 @@ else:
                                   search_tab_id, search_title)
 
 
+def check_active_class(element):
+    element_class = element.get_attribute("class")
+    if element_class.endswith("active"):
+        return True
+
+
 def open_search(browser):
     try:
         search_navigation_present = EC.element_to_be_clickable((By.ID, search_navigation_id))
@@ -32,12 +38,6 @@ def open_search(browser):
 def get_parent_element(element):
     # return element.find_element_by_xpath(".//ancestor::li")
     return element.find_element_by_xpath("..")
-
-
-def check_active_class(element):
-    element_class = element.get_attribute("class")
-    if element_class.endswith("active"):
-        return True
 
 
 def open_search_tab(browser):
