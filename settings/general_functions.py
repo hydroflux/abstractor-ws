@@ -1,10 +1,7 @@
 from random import randint
 from time import sleep
 
-if __name__ == '__main__':
-    import settings.classes.counties as county_data
-else:
-    from .classes.counties import county_dictionary as county_data
+from settings.classes.counties import county_dictionary
 
 
 def naptime():
@@ -13,7 +10,7 @@ def naptime():
 
 
 def get_county_data(county):
-    return county_data.get(county)
+    return county_dictionary.get(county)
 
 
 def scroll_into_view(browser, element):
