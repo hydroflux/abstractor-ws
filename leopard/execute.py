@@ -68,7 +68,7 @@ def execute_program(headless, target_directory, county, file_name, sheet_name, d
     browser = create_webdriver(target_directory, headless)
     county = get_county_data(county)
     account_login(browser)
-    create_abstraction(browser, county, target_directory, file_name, sheet_name, download)
+    dictionary = create_abstraction(browser, county, target_directory, file_name, sheet_name, download)
     export_document(target_directory, file_name, dictionary)
     bundle_project(target_directory, file_name)
     logout(browser)
