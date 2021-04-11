@@ -9,6 +9,10 @@ def naptime():
     sleep(randint(2, 3))
 
 
+def short_nap():
+    sleep(randint(1, 2))
+
+
 def get_county_data(county):
     return county_dictionary.get(county)
 

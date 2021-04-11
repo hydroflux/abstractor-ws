@@ -4,8 +4,9 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-from settings.file_management import document_value, extrapolate_document_value
-from settings.general_functions import scroll_into_view, get_element_text
+from settings.file_management import (document_type, document_value,
+                                      extrapolate_document_value)
+from settings.general_functions import get_element_text, scroll_into_view
 from settings.settings import timeout
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
@@ -65,7 +66,10 @@ def identify_first_result(browser, document):
 def check_result(browser, document):
     first_result = identify_first_result(browser, document)
     first_result_cells = first_result.find_elements_by_tag_name(result_cell_tag)
-    if document_value(document) in map(get_element_text, first_result_cells):
+    if document_type(document) == "document_number":
+        if document_value(document) in map(get_element_text, first_result_cells):
+            return True
+    elif document_type(document) == "book_and_page":
         return True
 
 

@@ -7,7 +7,8 @@ from selenium.webdriver.support.wait import WebDriverWait
 print("search", __name__)
 
 from settings.file_management import (document_type, document_value,
-                                      extrapolate_document_value)
+                                      extrapolate_document_value,
+                                      split_book_and_page)
 from settings.general_functions import naptime
 from settings.settings import timeout
 
@@ -42,12 +43,6 @@ def enter_document_number(browser, document):
     except TimeoutException:
         print(f'Browser timed out while trying to fill document field for document number '
               f'{extrapolate_document_value(document)}.')
-
-
-def split_book_and_page(book_and_page):
-    book = document_value(book_and_page)[0]
-    page = document_value(book_and_page)[1]
-    return book, page
 
 
 def enter_book_number(browser, book):

@@ -100,6 +100,7 @@ def row_title_check(rows):
 
 def record_reception_number(rows, dictionary):
     reception_number = check_rows(rows, row_titles["reception_number"])
+    print("record reception number", reception_number)
     dictionary["Reception Number"].append(reception_number)
 
 

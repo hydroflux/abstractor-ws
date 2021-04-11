@@ -27,13 +27,14 @@ def search_documents_from_list(browser, county, target_directory, document_list,
         search(browser, document)
         if open_document(browser, document):
             document_number = record_document(browser, dictionary, document)
+            print("execute document number", document_number)
             if download:
                 if not download_document(browser, county, target_directory, document, document_number):
                     dictionary["Comments"][-1] = f'No document image located at {extrapolate_document_value(document)}'
             print(f'Document located at '
                   f'{extrapolate_document_value(document)} recorded, '
                   f'{list_remaining_documents(document_list, document)}')
-            javascript_script_execution(search_script)
+            javascript_script_execution(browser, search_script)
             naptime()
         else:
             record_bad_search(dictionary, document)

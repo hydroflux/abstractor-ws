@@ -51,6 +51,12 @@ def extrapolate_document_value(document):
         return f'Document number {value}'
 
 
+def split_book_and_page(book_and_page):
+    book = document_value(book_and_page)[0]
+    page = document_value(book_and_page)[1]
+    return book, page
+
+
 def rename_documents_in_directory(county, directory):
     os.chdir(directory)
     for pdf in os.listdir(directory):
