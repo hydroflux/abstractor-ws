@@ -25,7 +25,7 @@ def is_empty_value(value):
         value_check = float(value)
         return math.isnan(value_check)
     except ValueError:
-        return True
+        return False
 
 
 def get_book_number(row):
