@@ -62,7 +62,10 @@ def get_document_number(columns, row):
     if is_empty_value(document_number):
         return None
     else:
-        return int(document_number)
+        try:
+            return int(document_number)
+        except ValueError:
+            return str(document_number)
 
 
 def store_document(document_list, type, value):
