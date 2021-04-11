@@ -39,7 +39,7 @@ def execute_download(browser, document):
 
 def download_document(browser, county, target_directory, document, document_number):
     document_directory = create_document_directory(target_directory)
-    number_files = os.listdir(document_directory)
+    number_files = len(os.listdir(document_directory))
     open_document_submenu(browser, document)
     execute_download(browser, document)
     if update_download(browser, county, stock_download, document_directory, number_files, document_number):

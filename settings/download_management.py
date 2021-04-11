@@ -19,7 +19,6 @@ def check_for_download_error(browser):
 
 
 def wait_for_download(browser, document_directory, download_path, number_files):
-    # check_for_error = time() + 10
     download_wait = True
     while not os.path.exists(download_path) and download_wait:
         sleep(1)
@@ -51,7 +50,7 @@ def rename_download(document_directory, stock_download, document_number, downloa
 
 
 def check_for_rename(browser, document_directory, number_files, document_number, new_download_name):
-    rename_path = f'{document_directory}/{new_download_name}.pdf'
+    rename_path = f'{document_directory}/{new_download_name}'
     # wait_for_download(browser, document_directory, rename_path, number_files)
     if os.path.isfile(rename_path):
         os.chdir(document_directory)
