@@ -1,6 +1,6 @@
 def convert_document_numbers(document_list):
     for document in document_list:
-        if document.type == "document_number":
+        if document.type == "document_number" and document.value.find("-") != -1:
             document_number, year = document.value.split('-')
             year = int(year)
             if year <= 1984:
