@@ -12,7 +12,6 @@ from settings.settings import timeout
 print("open_document", __name__)
 
 from leopard.leopard_variables import (first_result_tag, result_cell_tag,
-                                       result_count_button_id,
                                        result_count_class, result_row_class,
                                        results_body_tag, results_id)
 
