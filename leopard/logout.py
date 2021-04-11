@@ -14,6 +14,6 @@ def logout(browser):
         WebDriverWait(browser, timeout).until(logout_button_present)
         logout_button = browser.find_element_by_id(logout_button_id)
         logout_link = logout_button.get_attribute("href")
-        browser(logout_link)
+        browser.get(logout_link)
     except TimeoutException:
         print("Browser timed out while trying to logout, please review.")

@@ -27,7 +27,6 @@ def search_documents_from_list(browser, county, target_directory, document_list,
         search(browser, document)
         if open_document(browser, document):
             document_number = record_document(browser, dictionary, document)
-            print("execute document number", document_number)
             if download:
                 if not download_document(browser, county, target_directory, document, document_number):
                     dictionary["Comments"][-1] = f'No document image located at {extrapolate_document_value(document)}'
@@ -70,9 +69,9 @@ def execute_program(headless, target_directory, county, file_name, sheet_name, d
     county = get_county_data(county)
     account_login(browser)
     create_abstraction(browser, county, target_directory, file_name, sheet_name, download)
-    logout(browser)
     export_document(target_directory, file_name, dictionary)
     bundle_project(target_directory, file_name)
+    logout(browser)
     browser.close()
     quit()
 
