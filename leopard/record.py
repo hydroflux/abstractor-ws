@@ -82,7 +82,10 @@ def check_rows(rows, title):
         try:
             row_title, row_content = get_row_data(row)
             if row_title == title:
-                return row_content
+                if row_content != "":
+                    return row_content
+                else:
+                    return not_applicable
         except IndexError:
             continue
     return not_applicable
@@ -100,8 +103,8 @@ def row_title_check(rows):
 
 def record_reception_number(rows, dictionary):
     reception_number = check_rows(rows, row_titles["reception_number"])
-    print("record reception number", reception_number)
     dictionary["Reception Number"].append(reception_number)
+    return reception_number
 
 
 def record_book_and_page(rows, dictionary):

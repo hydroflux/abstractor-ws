@@ -12,11 +12,14 @@ from settings.settings import timeout
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("search", __name__)
 
-from leopard.leopard_variables import (book_and_page_search_tab_id,
-                                       book_search_id, document_search_tab_id,
+from leopard.leopard_variables import (book_and_page_search_button_id,
+                                       book_and_page_search_tab_id,
+                                       book_search_id,
+                                       document_search_button_id,
+                                       document_search_tab_id,
                                        instrument_search_id, page_search_id,
-                                       search_button_id, search_navigation_id,
-                                       search_script, search_title)
+                                       search_navigation_id, search_script,
+                                       search_title)
 
 # Script is nearly identical to tiger search
 
@@ -109,14 +112,23 @@ def enter_page_number(browser, document, page):
               f'{extrapolate_document_value(document)}, trying again.')
 
 
-def execute_search(browser):
+def identify_search_button(document):
+    if document_type(document) == "document_number":
+        return document_search_button_id
+    elif document_type(document) == "book_and_page":
+        return book_and_page_search_button_id
+
+
+def execute_search(browser, document):
+    search_button_id = identify_search_button(document)
     try:
         search_button_present = EC.element_to_be_clickable((By.ID, search_button_id))
         WebDriverWait(browser, timeout).until(search_button_present)
         search_button = browser.find_element_by_id(search_button_id)
         search_button.click()
     except TimeoutException:
-        print("Browser timed out while trying to execute search.")
+        print(f'Browser timed out while trying to execute search for '
+              f'{extrapolate_document_value(document)}')
 
 
 def search(browser, document):
@@ -127,6 +139,6 @@ def search(browser, document):
     elif document_type(document) == "book_and_page":
         open_book_and_page_search_tab(browser)
         book, page = split_book_and_page(document)
-        enter_book_number(browser, document, book, page)
-        enter_page_number(browser, document, book, page)
-    execute_search(browser)
+        enter_book_number(browser, document, book)
+        enter_page_number(browser, document, page)
+    execute_search(browser, document)
