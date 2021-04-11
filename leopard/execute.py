@@ -19,10 +19,10 @@ from leopard.logout import logout
 from leopard.open_document import open_document
 from leopard.record import record_document
 from leopard.search import search
+from leopard.convert_document_numbers import convert_document_numbers
 
 
 def search_documents_from_list(browser, county, target_directory, document_list, download):
-    county = get_county_data(county)
     for document in document_list:
         search(browser, document)
         if open_document(browser, document):
@@ -59,6 +59,7 @@ def review_documents_from_list(browser, document_list):
 
 def create_abstraction(browser, county, target_directory, file_name, sheet_name, download):
     document_list = generate_document_list(target_directory, file_name, sheet_name)
+    convert_document_numbers(document_list)
     search_documents_from_list(browser, county, target_directory, document_list, download)
     return dictionary
 
@@ -79,6 +80,7 @@ def execute_review(target_directory, file_name, sheet_name):
     browser = create_webdriver(target_directory, False)
     account_login(browser)
     document_list = generate_document_list(target_directory, file_name, sheet_name)
+    convert_document_numbers(document_list)
     review_documents_from_list(browser, document_list)
     logout(browser)
     browser.close()
