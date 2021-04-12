@@ -143,11 +143,11 @@ def record_notes(document_tables, dataframe):
     try:
         notes = access_field_body_no_title(document_tables[5])
         if notes == search_errors[3] or notes == search_errors[4]:
-            return
+            dataframe["Comments"].append("")
         elif notes.startswith(search_errors[3]) or notes.startswith("$"):
-            return
+            dataframe["Comments"].append("")
         elif notes.endswith(search_errors[3]):
-            return
+            dataframe["Comments"].append("")
         else:
             dataframe["Comments"].append(notes)
     except IndexError:
