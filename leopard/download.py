@@ -4,7 +4,7 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-from settings.download_management import update_download
+from settings.download_management import previously_downloaded, update_download
 from settings.file_management import (create_document_directory,
                                       extrapolate_document_value)
 from settings.settings import timeout
@@ -39,8 +39,11 @@ def execute_download(browser, document):
 
 def download_document(browser, county, target_directory, document, document_number):
     document_directory = create_document_directory(target_directory)
-    number_files = len(os.listdir(document_directory))
-    open_document_submenu(browser, document)
-    execute_download(browser, document)
-    if update_download(browser, county, stock_download, document_directory, number_files, document_number):
+    if previously_downloaded(county, document_directory, document_number):
         return True
+    else:
+        number_files = len(os.listdir(document_directory))
+        open_document_submenu(browser, document)
+        execute_download(browser, document)
+        if update_download(browser, county, stock_download, document_directory, number_files, document_number):
+            return True

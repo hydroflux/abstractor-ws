@@ -3,6 +3,14 @@ from time import sleep, time
 from settings.general_functions import naptime
 
 
+def previously_downloaded(county, document_directory, document_number):
+    document_download_path = f'{document_directory}/{county.prefix}-{document_number}.pdf'
+    if os.path.exists(document_download_path):
+        return True
+    else:
+        return False
+
+
 def check_for_download_error(browser):
     handles = browser.window_handles
     number_windows = len(handles)
@@ -40,8 +48,19 @@ def check_download_size(new_download_name, document_number):
         print(f'Failed to download document number {document_number}.')
 
 
-def rename_download(document_directory, stock_download, document_number, download_path, new_download_name):
+def check_file_size(download_path):
     if os.path.isfile(download_path):
+        return True
+    else:
+        sleep(10)
+        if os.path.isfile(download_path):
+            return True
+        else:
+            return False
+
+
+def rename_download(document_directory, stock_download, document_number, download_path, new_download_name):
+    if check_file_size(download_path):
         os.rename(stock_download, new_download_name)
         os.chdir(document_directory)
         check_download_size(new_download_name, document_number)
