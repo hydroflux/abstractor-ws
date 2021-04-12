@@ -177,6 +177,32 @@ def drop_last_entry(dataframe):
     dataframe["Comments"].pop()
 
 
+def check_length(dataframe):
+    grantors = len(dataframe["Grantor"])
+    grantees = len(dataframe["Grantee"])
+    books = len(dataframe["Book"])
+    pages = len(dataframe["Page"])
+    reception_numbers = len(dataframe["Reception Number"])
+    document_types = len(dataframe["Document Type"])
+    recording_dates = len(dataframe["Recording Date"])
+    legals = len(dataframe["Legal"])
+    related_documents = len(dataframe["Related Documents"])
+    comments = len(dataframe["Comments"])
+    if (grantors == grantees == books == pages == reception_numbers == document_types == recording_dates == legals == related_documents == comments):
+        pass
+    else:
+        print("Grantors: ", grantors)
+        print("Grantees: ", grantees)
+        print("Books: ", books)
+        print("Pages: ", pages)
+        print("Reception Numbers: ", reception_numbers)
+        print("Document Types: ", document_types)
+        print("Recording Dates: ", recording_dates)
+        print("Legals: ", legals)
+        print("Related Documents: ", related_documents)
+        print("Comments: ", comments)
+
+
 def scroll_to_top(browser):
     try:
         head_element_present = EC.presence_of_element_located((By.TAG_NAME, "body"))
@@ -211,5 +237,6 @@ def re_record_document_fields(browser, dataframe, document):
 def record_document(browser, dataframe, document):
     wait_for_pdf_to_load(browser)
     document_number = record_document_fields(browser, dataframe, document)
+    check_length(dataframe)
     review_entry(browser, dataframe, document)
     return document_number
