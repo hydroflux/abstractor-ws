@@ -1,11 +1,9 @@
 import os
 
-if __name__ == '__main__':
-    from settings.import_list import generate_document_list
-    from settings.settings import root
-else:
-    from .import_list import generate_document_list
-    from .settings import root
+from settings.file_management import (extrapolate_document_value,
+                                      list_remaining_documents)
+from settings.import_list import generate_document_list
+from settings.settings import root
 
 
 def clear_terminal():
@@ -82,6 +80,18 @@ def sheet_name_prompt(current_sheet_name):
         return f'{sheet_name_input}'
     else:
         return current_sheet_name
+
+
+def document_found_review(document_list, document):
+    input(f'Document located at {extrapolate_document_value(document)} located,'
+          f'please review & press enter to continue...'
+          f'{list_remaining_documents(document_list, document)}')
+
+
+def no_document_found_review(document_list, document):
+    input(f'No document found at {extrapolate_document_value(document)}, '
+          f'please review & press enter to continue...'
+          f'{list_remaining_documents(document_list, document)}')
 
 
 # Add an additional prompt for request for download

@@ -18,6 +18,7 @@ def prepare_output_environment(target_directory):
 def create_dataframe(dictionary):
     dataframe = DataFrame(dictionary)
     print(dataframe)
+    return dataframe
 
 
 def transform_dictionary(dictionary):

@@ -8,6 +8,7 @@ from settings.file_management import (bundle_project,
 from settings.general_functions import (get_county_data,
                                         javascript_script_execution, naptime)
 from settings.import_list import generate_document_list
+from settings.user_prompts import no_document_found_review, document_found_review
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("execute", __name__)
@@ -46,15 +47,11 @@ def review_documents_from_list(browser, document_list):
     for document in document_list:
         search(browser, document)
         if open_document(browser, document):
-            input(f'Document located at {extrapolate_document_value(document)} located,'
-                  'please review & press enter to continue...'
-                  f'{list_remaining_documents(document_list, document)}')
+            document_found_review(document_list, document)
             javascript_script_execution(search_script)
             naptime()
         else:
-            input(f'No document found at {extrapolate_document_value(document)}, '
-                  'please review & press enter to continue...'
-                  f'{list_remaining_documents(document_list, document)}')
+            no_document_found_review(document_list, document)
 
 
 def create_abstraction(browser, county, target_directory, file_name, sheet_name, download):
