@@ -88,7 +88,7 @@ def access_indexing_information(document_table):
 
 
 def record_document_type(document_table, dataframe):
-    document_type = document_table.text.title()
+    document_type = document_table.text.title().replace("'S ", "'s ")
     dataframe["Document Type"].append(document_type)
 
 
