@@ -5,6 +5,7 @@ from settings.general_functions import naptime, long_nap
 
 def previously_downloaded(county, document_directory, document_number):
     document_download_path = f'{document_directory}/{county.prefix}-{document_number}.pdf'
+    print(document_download_path)
     if os.path.exists(document_download_path):
         return True
     else:

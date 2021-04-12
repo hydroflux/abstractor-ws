@@ -1,8 +1,10 @@
+import os
+
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-from settings.download_management import update_download
+from settings.download_management import previously_downloaded, update_download
 from settings.file_management import create_document_directory
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
@@ -10,8 +12,7 @@ print("download", __name__)
 
 from settings.settings import long_timeout
 
-from eagle.eagle_variables import (download_button_id,
-                                   pdf_viewer_class_name,
+from eagle.eagle_variables import (download_button_id, pdf_viewer_class_name,
                                    stock_download_suffix)
 
 
@@ -45,10 +46,14 @@ def determine_stock_download(document_number):
 
 
 def download_document(browser, county, target_directory, document_number):
-    access_pdf_viewer(browser)
-    execute_download(browser)
-    switch_to_browser_window(browser)
     document_directory = create_document_directory(target_directory)
-    stock_download = determine_stock_download(document_number)
-    if update_download(browser, county, stock_download, document_directory, document_number):
+    if previously_downloaded(county, document_directory, document_number):
         return True
+    else:
+        number_files = len(os.listdir(document_directory))
+        access_pdf_viewer(browser)
+        execute_download(browser)
+        switch_to_browser_window(browser)
+        stock_download = determine_stock_download(document_number)
+        if update_download(browser, county, stock_download, document_directory, number_files, document_number):
+            return True

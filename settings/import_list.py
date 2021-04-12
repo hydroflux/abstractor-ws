@@ -63,7 +63,7 @@ def get_document_number(columns, row):
         return None
     else:
         try:
-            return int(document_number)
+            return str(int(document_number))
         except ValueError:
             return str(document_number)
 

@@ -1,4 +1,5 @@
-from selenium.common.exceptions import (NoSuchElementException,
+from selenium.common.exceptions import (ElementClickInterceptedException,
+                                        NoSuchElementException,
                                         StaleElementReferenceException,
                                         TimeoutException)
 from selenium.webdriver.common.by import By
@@ -10,20 +11,21 @@ print("open", __name__)
 
 from settings.file_management import (document_type, document_value,
                                       extrapolate_document_value)
-from settings.general_functions import naptime
+from settings.general_functions import naptime, scroll_into_view
 from settings.settings import timeout
 
 from eagle.eagle_variables import (book_and_page_tag, book_title,
                                    first_result_class_name,
                                    first_result_submenu_class,
                                    first_result_tag, nested_submenu_class,
-                                   page_title, search_action_tag,
+                                   no_results_message, page_title,
+                                   results_present_class, search_action_tag,
                                    search_actions_class_name)
 
 
 def get_first_result(browser):
     try:
-        first_result_present = EC.presence_of_element_located((By.CLASS_NAME, first_result_class_name))
+        first_result_present = EC.element_to_be_clickable((By.CLASS_NAME, first_result_class_name))
         WebDriverWait(browser, timeout).until(first_result_present)
         return browser.find_element_by_class_name(first_result_class_name)
     except TimeoutException:
@@ -32,6 +34,8 @@ def get_first_result(browser):
 
 def get_first_result_info(browser):
     first_result = get_first_result(browser)
+    if first_result is None:
+        return None
     first_result_info = first_result.find_element_by_tag_name(first_result_tag)
     browser.execute_script("arguments[0].scrollIntoView();", first_result_info)
     return first_result_info
@@ -61,7 +65,12 @@ def expand_first_result_nested_info(browser, first_result_info):
     try:
         browser.find_element_by_class_name(nested_submenu_class)
     except NoSuchElementException:
-        first_result_info.click()
+        try:
+            scroll_into_view(browser, first_result_info)
+            first_result_info.click()
+        except ElementClickInterceptedException:
+            print("Element click intercepted, trying again.")
+            get_first_result_info(browser).click()
 
 
 def get_book_and_page_values(browser, first_result_info):
@@ -73,6 +82,8 @@ def get_book_and_page_values(browser, first_result_info):
 
 def get_first_result_value(browser, document):
     first_result_info = get_first_result_info(browser)
+    if first_result_info is None:
+        return False
     if document_type(document) == "document_number":
         return first_result_info.text.split(" ")[0]
     elif document_type(document) == "book_and_page":
@@ -109,6 +120,8 @@ def verify_first_result_book_and_page(document, first_result_value):
 # Verify book & page is broken, need to assess verification on documents prior to 1900
 def verify_result(browser, document):
     first_result_value = get_first_result_value(browser, document)
+    if first_result_value is False:
+        return False
     if document_type(document) == "document_number":
         return verify_first_result_number(document, first_result_value)
     elif document_type(document) == "book_and_page":
