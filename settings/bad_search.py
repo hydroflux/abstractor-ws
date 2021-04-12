@@ -40,4 +40,5 @@ def record_bad_search(dataframe, document):
 
 
 def no_document_image(dataframe, document):
-    dataframe["Comments"][-1] = f'No document image located at {extrapolate_document_value(document)}'
+    dataframe["Comments"][-1] = ('No document image located at '
+                                 f'{extrapolate_document_value(document)}')

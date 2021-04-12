@@ -44,7 +44,7 @@ def review_documents_from_list(browser, document_list):
         search(browser, document)
         if open_document(browser, document):
             document_found(document_list, document, "review")
-            javascript_script_execution(search_script)
+            javascript_script_execution(browser, search_script)
             naptime()
         else:
             no_document_found(document_list, document, "review")

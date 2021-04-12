@@ -116,8 +116,14 @@ def record_book_and_page(rows, dictionary):
         if book_and_page.startswith(book_page_abbreviation):
             book_and_page = book_and_page[len(book_page_abbreviation):]
         book, page = book_and_page.replace("/", "").split()
-        dictionary["Book"].append(book)
-        dictionary["Page"].append(page)
+        if book == "0":
+            dictionary["Book"].append(not_applicable)
+        else:
+            dictionary["Book"].append(book)
+        if page == "0":
+            dictionary["Page"].append(not_applicable)
+        else:
+            dictionary["Page"].append(page)
 
 
 def record_recording_date(rows, dictionary):
