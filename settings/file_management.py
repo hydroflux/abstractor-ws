@@ -29,7 +29,7 @@ def remaining_documents(document_list, document):
 
 
 def list_remaining_documents(document_list, document):
-    return f'{remaining_documents(document_list, document)} documents remaining.'
+    return f'({remaining_documents(document_list, document)} documents remaining)'
 
 
 def document_type(document):

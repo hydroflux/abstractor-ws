@@ -89,7 +89,7 @@ def document_found(document_list, document, alt=None):
               f'{list_remaining_documents(document_list, document)}')
     elif alt == "review":
         input(f'Document located at {extrapolate_document_value(document)} located,'
-              'please review & press enter to continue...'
+              'please review & press enter to continue... '
               f'{list_remaining_documents(document_list, document)}')
 
 
@@ -100,7 +100,7 @@ def no_document_found(document_list, document, alt=None):
               f'{list_remaining_documents(document_list, document)}')
     elif alt == "review":
         input(f'No document found at {extrapolate_document_value(document)}, '
-              'please review & press enter to continue...'
+              'please review & press enter to continue... '
               f'{list_remaining_documents(document_list, document)}')
 
 
