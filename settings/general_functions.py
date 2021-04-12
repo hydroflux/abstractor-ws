@@ -13,6 +13,10 @@ def short_nap():
     sleep(randint(1, 2))
 
 
+def long_nap():
+    sleep(randint(30, 45))
+
+
 def get_county_data(county):
     return county_dictionary.get(county)
 
