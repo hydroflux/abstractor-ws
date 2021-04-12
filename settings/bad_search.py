@@ -37,3 +37,7 @@ def record_bad_search(dataframe, document):
     dataframe["Legal"].append(search_errors[2])
     dataframe["Related Documents"].append(search_errors[2])
     add_bad_search_message(dataframe, document)
+
+
+def no_document_image(dataframe, document):
+    dataframe["Comments"][-1] = f'No document image located at {extrapolate_document_value(document)}'
