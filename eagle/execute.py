@@ -51,11 +51,6 @@ def review_documents_from_list(browser, document_list):
                   f'{list_remaining_documents(document_list, document)}')
 
 
-# def create_abstraction_dictionary(browser, county, target_directory, document_list, download):
-#     search_documents_from_list(browser, county, target_directory, document_list, download)
-#     return abstract_dictionary
-
-
 def create_abstraction(browser, county, target_directory, file_name, sheet_name, download):
     document_list = generate_document_list(target_directory, file_name, sheet_name)
     abstract_dictionary = search_documents_from_list(browser, county, target_directory, document_list, download)
