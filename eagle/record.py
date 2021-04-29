@@ -70,8 +70,11 @@ def access_table_rows(table_body):
     return body_text
 
 
+def update_sentence_case_extras(text)
+    return text.replace("'S ", "'s ").replace("1St ", "1st ").replace("2Nd ", "2nd ").replace("3Rd ", "3rd ").replace("4Th ", "4th ")
+
 def access_title_case_text(data):
-    return data.text.title().replace("'S ", "'s ")
+    return update_sentence_case_extras(data.text.title())
 
 
 def access_field_body_no_title(field_info):
@@ -89,8 +92,9 @@ def access_indexing_information(document_table):
 
 
 def record_document_type(document_table, dataframe):
-    document_type = document_table.text.title().replace("'S ", "'s ")
+    document_type = update_sentence_case_extras(document_table.text.title())
     dataframe["Document Type"].append(document_type)
+
 
 
 def split_reception_field(reception_field):
