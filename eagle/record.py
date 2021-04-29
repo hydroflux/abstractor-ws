@@ -9,6 +9,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 print("record", __name__)
 
 from settings.file_management import extrapolate_document_value
+from settings.general_functions import scroll_to_top
 from settings.settings import long_timeout, search_errors, timeout
 
 from eagle.eagle_variables import (document_information_id,
@@ -201,16 +202,6 @@ def check_length(dataframe):
         print("Legals: ", legals)
         print("Related Documents: ", related_documents)
         print("Comments: ", comments)
-
-
-def scroll_to_top(browser):
-    try:
-        head_element_present = EC.presence_of_element_located((By.TAG_NAME, "body"))
-        WebDriverWait(browser, timeout).until(head_element_present)
-        head_element = browser.find_element_by_tag_name("body")
-        browser.execute_script("arguments[0].scrollIntoView();", head_element)
-    except TimeoutException:
-        print("Timed out while trying to scroll to the top of the page.")
 
 
 def record_document_fields(browser, dataframe, document):

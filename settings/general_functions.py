@@ -3,6 +3,11 @@ from time import sleep
 
 from settings.classes.counties import county_dictionary
 
+from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.wait import WebDriverWait
+
 
 def naptime():
     # sleep(randint(3, 6))
@@ -35,3 +40,13 @@ def get_element_text(element):
 
 def title_strip(text):
     return text.title().strip()
+
+
+def scroll_to_top(browser):
+    try:
+        body_element_present = EC.presence_of_element_located((By.TAG_NAME, "body"))
+        WebDriverWait(browser, timeout).until(body_element_present)
+        body_element = browser.find_element_by_tag_name("body")
+        browser.execute_script("arguments[0].scrollIntoView();", body_element)
+    except TimeoutException:
+        print("Timed out while trying to scroll to the top of the page.")
