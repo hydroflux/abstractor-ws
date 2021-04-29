@@ -9,7 +9,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 print("record", __name__)
 
 from settings.file_management import extrapolate_document_value
-from settings.general_functions import scroll_to_top
+from settings.general_functions import scroll_to_top, scroll_into_view
 from settings.settings import long_timeout, search_errors, timeout
 
 from eagle.eagle_variables import (document_information_id,
@@ -50,7 +50,7 @@ def display_all_information(browser):
     information_links = document_info.find_elements_by_class_name(information_links_class)
     for link in information_links:
         if link.text == more_info:
-            browser.execute_script("arguments[0].scrollIntoView();", link)
+            scroll_into_view(browser, link)
             link.click()
 
 
