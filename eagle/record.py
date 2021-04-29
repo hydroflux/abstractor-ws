@@ -56,7 +56,7 @@ def display_all_information(browser):
 
 def drop_superfluous_information(string):
     if string.endswith(less_info):
-        return string[:-len(less_info)]
+        return string[:-(len(less_info) + 1)]
     else:
         return string
 
