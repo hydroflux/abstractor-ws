@@ -129,6 +129,8 @@ def record_legal_data(document_table, dataframe):
         dataframe["Legal"].append(search_errors[2])
     else:
         legal = legal_data[-1].text
+        if legal.endswith("SEE RECORD"):
+            legal = legal[:-10]
         dataframe["Legal"].append(legal)
 
 
