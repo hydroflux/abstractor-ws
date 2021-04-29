@@ -144,15 +144,19 @@ def record_notes(document_tables, dataframe):
     try:
         notes = access_field_body_no_title(document_tables[5])
         if notes == search_errors[3] or notes == search_errors[4]:
-            dataframe["Comments"].append("")
+            pass
         elif notes.startswith(search_errors[3]) or notes.startswith("$"):
-            dataframe["Comments"].append("")
+            pass
         elif notes.endswith(search_errors[3]):
-            dataframe["Comments"].append("")
+            pass
         else:
-            dataframe["Comments"].append(notes)
+            notes = f'Notes: {notes}'
+            if dataframe["Legal"][-1] == "":
+                dataframe["Legal"][-1] = notes
+            else:
+                dataframe["Legal"][-1] = f'{dataframe["Legal"][-1]}\n{notes}'
     except IndexError:
-        dataframe["Comments"].append("")
+        pass
 
 
 def aggregate_document_information(document_tables, dataframe):
@@ -162,6 +166,7 @@ def aggregate_document_information(document_tables, dataframe):
     record_legal_data(document_tables[4], dataframe)
     record_related_documents(document_tables[-2], dataframe)
     record_notes(document_tables, dataframe)
+    dataframe["Comments"].append("")
     return reception_number
 
 
