@@ -70,8 +70,9 @@ def access_table_rows(table_body):
     return body_text
 
 
-def update_sentence_case_extras(text)
+def update_sentence_case_extras(text):
     return text.replace("'S ", "'s ").replace("1St ", "1st ").replace("2Nd ", "2nd ").replace("3Rd ", "3rd ").replace("4Th ", "4th ")
+
 
 def access_title_case_text(data):
     return update_sentence_case_extras(data.text.title())
