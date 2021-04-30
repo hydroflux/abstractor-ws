@@ -12,6 +12,9 @@ def chrome_webdriver(target_directory, headless):
         # options.add_argument('start-maximized') # Maximize Viewport
     options.add_argument('--no-sandbox')  # Bypass OS Security Model
 
+    # Needs to be reviewed, but possibly can be used for adblock???
+    # options.add_extension(‘Users/Desktop/Python Scripting/crx_files/adblock_plus_3_8_4_0.crx’)
+
     prefs = {
         "download.default_directory": f'{target_directory}/Documents',
         "download.prompt_for_download": False,
