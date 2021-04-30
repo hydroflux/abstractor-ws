@@ -21,21 +21,26 @@ from eagle.eagle_variables import (book_and_page_tag, book_title,
                                    no_results_message, page_title,
                                    search_action_tag,
                                    search_actions_class_name,
-                                   search_results_class_name)
+                                   search_results_header_class_name)
 
 
-def get_results_table(browser):
+def get_results_table_header(browser):
     try:
-        search_results_present = EC.presence_of_element_located((By.CLASS_NAME, search_results_class_name))
-        WebDriverWait(browser, timeout).until(search_results_present)
-        search_results = browser.find_elements_by_class_name(search_results_class_name)[1]
-        return search_results
+        search_results_header_present = EC.presence_of_element_located((By.CLASS_NAME, search_results_header_class_name))
+        WebDriverWait(browser, timeout).until(search_results_header_present)
+        search_results_header = browser.find_elements_by_class_name(search_results_header_class_name)[1].text
+        return search_results_header
     except TimeoutException:
         print("Browser timed out while trying to retrieve the search results table.")
-        
+
+
+def get_number_of_results(results_header):
+    return int(results_header[(results_header.find("for") + 3):(results_header.find("Total"))].strip())
+
 
 def count_results(browser):
-    results = get_results_table(browser)
+    results_header = get_results_table_header(browser)
+    return get_number_of_results(results_header)
 
 
 def get_first_result(browser):
