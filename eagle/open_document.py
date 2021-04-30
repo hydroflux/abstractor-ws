@@ -23,6 +23,10 @@ from eagle.eagle_variables import (book_and_page_tag, book_title,
                                    search_actions_class_name)
 
 
+def count_results(browser):
+    pass
+
+
 def get_first_result(browser):
     try:
         first_result_present = EC.element_to_be_clickable((By.CLASS_NAME, first_result_class_name))
@@ -158,6 +162,7 @@ def determine_document_status(browser, document):
 
 
 def open_document(browser, document):
+    number_results = count_results(browser)
     try:
         return determine_document_status(browser, document)
     except StaleElementReferenceException:
