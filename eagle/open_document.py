@@ -19,12 +19,23 @@ from eagle.eagle_variables import (book_and_page_tag, book_title,
                                    first_result_submenu_class,
                                    first_result_tag, nested_submenu_class,
                                    no_results_message, page_title,
-                                   results_present_class, search_action_tag,
-                                   search_actions_class_name)
+                                   search_action_tag,
+                                   search_actions_class_name,
+                                   search_results_class_name)
 
+
+def get_results_table(browser):
+    try:
+        search_results_present = EC.presence_of_element_located((By.CLASS_NAME, search_results_class_name))
+        WebDriverWait(browser, timeout).until(search_results_present)
+        search_results = browser.find_elements_by_class_name(search_results_class_name)[1]
+        return search_results
+    except TimeoutException:
+        print("Browser timed out while trying to retrieve the search results table.")
+        
 
 def count_results(browser):
-    pass
+    results = get_results_table(browser)
 
 
 def get_first_result(browser):
