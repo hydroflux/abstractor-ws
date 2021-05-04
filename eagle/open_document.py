@@ -179,6 +179,8 @@ def determine_document_status(browser, document):
 
 def open_document(browser, document):
     number_results = count_results(browser)
+    if number_results > 1:
+        print(f'{number_results} returned while searching {extrapolate_document_value(document)}, please review.')
     try:
         return determine_document_status(browser, document)
     except StaleElementReferenceException:
