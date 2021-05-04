@@ -11,19 +11,28 @@ from settings.file_management import create_document_directory
 print("download", __name__)
 
 from settings.settings import long_timeout
+from settings.general_functions import naptime
 
 from eagle.eagle_variables import (download_button_id, pdf_viewer_class_name,
                                    stock_download_suffix)
 
 
-def access_pdf_viewer(browser):
+def switch_into_frame(browser):
     try:
         pdf_viewer_present = EC.presence_of_element_located((By.CLASS_NAME, pdf_viewer_class_name))
         WebDriverWait(browser, long_timeout).until(pdf_viewer_present)
         pdf_viewer = browser.find_element_by_class_name(pdf_viewer_class_name)
         browser.switch_to.frame(pdf_viewer)
+        return True
     except TimeoutException:
-        print("Browser timed out while trying to access the pdf viewer.")
+        print("Browser timed out while trying to access the pdf viewer, refreshing the page to try again.")
+        return False
+    
+
+def access_pdf_viewer(browser):
+    while not switch_into_frame(browser):
+        browser.refresh()
+        naptime()
 
 
 def execute_download(browser):
