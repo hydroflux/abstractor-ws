@@ -248,6 +248,16 @@ def add_content(dataframe, worksheet, font_formats, client=None, legal=None):
     add_footer_row(dataframe, worksheet, font_formats)
 
 
+def add_conditional_formatting(dataframe, worksheet, font_format):
+    worksheet_range = get_worksheet_range(dataframe)
+    no_record_format = worksheet_properties['conditional_formats']['no_record_format']
+    multi_documents_format = worksheet_properties['conditional_formats']['multi_documents_format']
+    border_format_1['format'] = font_format
+    border_format_2['format'] = font_format
+    worksheet.conditional_format(worksheet_range, no_record_format)
+    worksheet.conditional_format(worksheet_range, multi_documents_format)
+
+
 def format_xlsx_document(writer, dataframe, client=None, legal=None):
     font_formats, workbook = format_workbook(writer)
     worksheet = format_worksheet(writer)
