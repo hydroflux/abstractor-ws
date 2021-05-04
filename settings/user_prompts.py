@@ -85,7 +85,7 @@ def sheet_name_prompt(current_sheet_name):
 def document_found(document_list, document, alt=None):
     if alt is None:
         print('Document located at '
-              f'{extrapolate_document_value(document)} recorded, '
+              f'{extrapolate_document_value(document)} recorded '
               f'{list_remaining_documents(document_list, document)}')
     elif alt == "review":
         input(f'Document located at {extrapolate_document_value(document)} located,'
