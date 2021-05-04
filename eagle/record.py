@@ -251,7 +251,7 @@ def get_result_buttons(browser, document):
 def get_next_result_button(browser, document):
     result_buttons = get_result_buttons(browser, document)
     return result_buttons.find_elements_by_tag_name(result_button_tag)[1]
-
+    
 
 def record_document(browser, dataframe, document):
     wait_for_pdf_to_load(browser)
