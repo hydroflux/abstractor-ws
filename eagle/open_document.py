@@ -15,10 +15,10 @@ from settings.general_functions import naptime, scroll_into_view
 from settings.settings import timeout
 
 from eagle.eagle_variables import (book_and_page_tag, book_title,
-                                   first_result_class_name,
+                                   search_result_class_name,
                                    first_result_submenu_class,
-                                   first_result_tag, nested_submenu_class,
-                                   search_results_tag, no_results_message, page_title,
+                                   first_result_tag, nested_submenu_class, first_result_class_name,
+                                   search_results_tag, no_results, page_title,
                                    search_action_tag, currently_searching,
                                    search_actions_class_name,
                                    search_results_header_class_name)
@@ -64,17 +64,30 @@ def wait_for_results(browser):
 #     else:
 #         return get_number_of_results(results_header)
 
-def count_results(browser):
-    current_results = wait_for_search(browser)
-
-
 def get_results(browser):
     try:
-        result_present = EC.element_to_be_clickable((By.CLASS_NAME, first_result_class_name))
+        first_result_present = EC.element_to_be_clickable((By.CLASS_NAME, search_result_class_name))
         WebDriverWait(browser, timeout).until(first_result_present)
-        return browser.find_element_by_class_name(first_result_class_name)
+        return browser.find_elements_by_class_name(search_result_class_name)
     except TimeoutException:
         print("Browser timed out while trying to retrieve the first result of the search.")
+
+
+def count_results(browser):
+    search_results = wait_for_search(browser)
+    if search_results == no_results:
+        return 0
+    else:
+        return int(len(get_results(browser)))
+
+
+# def get_first_result(browser):
+#     try:
+#         result_present = EC.element_to_be_clickable((By.CLASS_NAME, first_result_class_name))
+#         WebDriverWait(browser, timeout).until(first_result_present)
+#         return browser.find_element_by_class_name(first_result_class_name)
+#     except TimeoutException:
+#         print("Browser timed out while trying to retrieve the first result of the search.")
 
 
 def get_first_result_info(browser):
