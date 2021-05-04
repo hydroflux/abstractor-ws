@@ -237,6 +237,16 @@ def re_record_document_fields(browser, dataframe, document):
     record_document_fields(browser, dataframe, document)
 
 
+def get_result_buttons(browser):
+    try:
+        result_buttons_present = EC.presence_of_element_located((By.CLASS_NAME, result_buttons_class))
+        WebDriverWait(browser, timeout).until(result_buttons_present)
+        result_buttons = browser.find_element_by_class_name(result_buttons_class)
+        return result_buttons
+    except TimeoutException:
+        print(f'Browser timed out while trying to locate result buttons for {extrapolate_document_value(document)}.')
+
+
 def record_document(browser, dataframe, document):
     wait_for_pdf_to_load(browser)
     document_number = record_document_fields(browser, dataframe, document)
