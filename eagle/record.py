@@ -9,14 +9,15 @@ from selenium.webdriver.support.wait import WebDriverWait
 print("record", __name__)
 
 from settings.file_management import extrapolate_document_value
-from settings.general_functions import scroll_to_top, scroll_into_view
+from settings.general_functions import scroll_into_view, scroll_to_top
 from settings.settings import long_timeout, search_errors, timeout
 
 from eagle.eagle_variables import (document_information_id,
                                    document_table_class, index_table_tags,
                                    information_links_class, less_info,
                                    loading_status, missing_values, more_info,
-                                   pdf_viewer_load_id, related_table_class)
+                                   pdf_viewer_load_id, related_table_class,
+                                   result_button_class, result_button_tag)
 
 
 def pdf_load_status(browser):
@@ -237,7 +238,7 @@ def re_record_document_fields(browser, dataframe, document):
     record_document_fields(browser, dataframe, document)
 
 
-def get_result_buttons(browser):
+def get_result_buttons(browser, document):
     try:
         result_buttons_present = EC.presence_of_element_located((By.CLASS_NAME, result_buttons_class))
         WebDriverWait(browser, timeout).until(result_buttons_present)
@@ -245,6 +246,11 @@ def get_result_buttons(browser):
         return result_buttons
     except TimeoutException:
         print(f'Browser timed out while trying to locate result buttons for {extrapolate_document_value(document)}.')
+
+
+def get_next_result_button(browser, document):
+    result_buttons = get_result_buttons(browser, document)
+    return result_buttons.find_elements_by_tag_name(result_button_tag)[1]
 
 
 def record_document(browser, dataframe, document):
