@@ -98,7 +98,6 @@ def record_document_type(document_table, dataframe):
     dataframe["Document Type"].append(document_type)
 
 
-
 def split_reception_field(reception_field):
     if "Book" in reception_field and "Page" in reception_field:
         reception_fields = reception_field.split("\n")
