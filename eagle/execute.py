@@ -26,7 +26,9 @@ def search_documents_from_list(browser, county, target_directory, document_list,
     for document in document_list:
         document_search(browser, document)
         if open_document(browser, document):
-            for document in range(0, document.number_results):
+            if document.number_results > 1:
+                record_multiple_documents(browser, county, target_directory, abstract_dictionary, document)
+            else:
                 document_number = record_document(browser, abstract_dictionary, document)
                 if download:
                     download_document(browser, county, target_directory, document_number)
@@ -37,6 +39,14 @@ def search_documents_from_list(browser, county, target_directory, document_list,
             print(f'No document found at {extrapolate_document_value(document)}, '
                   f'{list_remaining_documents(document_list, document)}')
     return abstract_dictionary
+
+
+def record_multiple_documents(browser, county, target_directory, abstract_dictionary, document):
+    for document in range(0, document.number_results):
+        document_number = record_document(browser, abstract_dictionary, document)
+        if download:
+            download_document(browser, county, target_directory, document_number)
+        next_result(browser, document)
 
 
 def review_documents_from_list(browser, document_list):
