@@ -19,18 +19,25 @@ from eagle.eagle_variables import (book_and_page_tag, book_title,
                                    first_result_submenu_class,
                                    first_result_tag, nested_submenu_class,
                                    search_results_tag, no_results_message, page_title,
-                                   search_action_tag,
+                                   search_action_tag, currently_searching,
                                    search_actions_class_name,
                                    search_results_header_class_name)
 
 
-def get_current_results(browser):
+def get_search_results(browser):
     try:
         search_results_present = EC.presence_of_element_located((By.TAG_NAME, search_results_tag))
         WebDriverWait(browser, timeout).until(search_results_present)
-        search_results = browser.find_element_by_tag_name(no_results_tag).text
+        return browser.find_element_by_tag_name(no_results_tag).text
     except TimeoutException:
         print("Browser timed out while trying to get current results.")
+
+
+def wait_for_results(browser):
+    search_results = get_search_results(browser)
+    while search_results == currently_searching:
+        search_results = get_search_results(browser)
+    return search_results
 
 
 # def get_results_table_header(browser):
@@ -50,12 +57,15 @@ def get_current_results(browser):
 #     return int(results_header[(results_header.find("for") + 3):(results_header.find("Total"))].strip())
 
 
+# def count_results(browser):
+#     results_header = get_results_table_header(browser)
+#     if results_header is None:
+#         return 0
+#     else:
+#         return get_number_of_results(results_header)
+
 def count_results(browser):
-    results_header = get_results_table_header(browser)
-    if results_header is None:
-        return 0
-    else:
-        return get_number_of_results(results_header)
+    current_results = wait_for_search(browser)
 
 
 def get_results(browser):
