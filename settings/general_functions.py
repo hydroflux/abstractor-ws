@@ -1,3 +1,4 @@
+from pprint import pprint
 from random import randint
 from time import sleep
 
@@ -50,3 +51,8 @@ def title_strip(text):
 def scroll_to_top(browser):
     body_element = browser.find_element_by_tag_name("body")
     scroll_into_view(browser, body_element)
+
+
+def get_element_attributes(browser, element):
+    attributes = browser.execute_script('var items = {}; for (index = 0; index < arguments[0].attributes.length; ++index) { items[arguments[0].attributes[index].name] = arguments[0].attributes[index].value }; return items;', element)
+    pprint(attributes)
