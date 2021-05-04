@@ -199,10 +199,14 @@ def access_last_row(dataframe):
     return len(dataframe.index) + worksheet_properties['startrow']
 
 
-def set_worksheet_border(dataframe, worksheet, font_format):
+def get_worksheet_range(dataframe):
     number_columns = count_columns(dataframe)
-    worksheet_range = f'A{worksheet_properties["startrow"]}:'\
-        f'{number_to_letter(number_columns)}{access_last_row(dataframe)}'
+    return (f'A{worksheet_properties["startrow"]}:'
+            f'{number_to_letter(number_columns)}{access_last_row(dataframe)}')
+
+
+def set_worksheet_border(dataframe, worksheet, font_format):
+    worksheet_range = get_worksheet_range(dataframe)
     border_format_1 = worksheet_properties['conditional_formats']['border_format_1']
     border_format_2 = worksheet_properties['conditional_formats']['border_format_2']
     border_format_1['format'] = font_format
@@ -249,6 +253,7 @@ def format_xlsx_document(writer, dataframe, client=None, legal=None):
     worksheet = format_worksheet(writer)
     set_dataframe_format(worksheet, font_formats['body'])
     add_content(dataframe, worksheet, font_formats, client, legal)
+    add_conditional_formatting(worksheet)
     return workbook
 
 
