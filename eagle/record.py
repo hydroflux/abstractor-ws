@@ -247,9 +247,20 @@ def get_result_buttons(browser, document):
         print(f'Browser timed out while trying to locate result buttons for {extrapolate_document_value(document)}.')
 
 
+def get_previous_result_button(browser, document):
+    result_buttons = get_result_buttons(browser, document)
+    return result_buttons.find_elements_by_tag_name(result_button_tag)[0]
+
+
 def get_next_result_button(browser, document):
     result_buttons = get_result_buttons(browser, document)
     return result_buttons.find_elements_by_tag_name(result_button_tag)[1]
+
+
+def previous_result(browser, document):
+    previous_result_button = get_previous_result_button(browser, document)
+    previous_result_button.click()
+    naptime()
 
 
 def next_result(browser, document):
