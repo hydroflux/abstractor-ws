@@ -24,20 +24,20 @@ from eagle.eagle_variables import (book_and_page_tag, book_title,
                                    search_results_header_class_name)
 
 
-def get_search_results(browser):
+def get_search_status(browser):
     try:
-        search_results_present = EC.presence_of_element_located((By.TAG_NAME, search_results_tag))
-        WebDriverWait(browser, timeout).until(search_results_present)
-        return browser.find_element_by_tag_name(no_results_tag).text
+        search_status_present = EC.presence_of_element_located((By.TAG_NAME, search_status_tag))
+        WebDriverWait(browser, timeout).until(search_status_present)
+        return browser.find_element_by_tag_name(search_status_tag).text
     except TimeoutException:
         print("Browser timed out while trying to get current results.")
 
 
 def wait_for_results(browser):
-    search_results = get_search_results(browser)
-    while search_results == currently_searching:
-        search_results = get_search_results(browser)
-    return search_results
+    search_status = get_search_status(browser)
+    while search_status == currently_searching:
+        search_status = get_search_status(browser)
+    return search_status
 
 
 # def get_results_table_header(browser):
@@ -64,7 +64,7 @@ def wait_for_results(browser):
 #     else:
 #         return get_number_of_results(results_header)
 
-def get_results(browser):
+def get_search_results(browser):
     try:
         first_result_present = EC.element_to_be_clickable((By.CLASS_NAME, search_result_class_name))
         WebDriverWait(browser, timeout).until(first_result_present)
@@ -79,6 +79,17 @@ def count_results(browser):
         return 0
     else:
         return int(len(get_results(browser)))
+
+
+def check_search_results(browser, document):
+    number_results = count_results(browser)
+    if number_results == 0:
+        return False
+    else:
+        if number_results > 1:
+            print(f'{number_results} documents returned while searching {extrapolate_document_value(document)}, please review.')
+            # perform some action to update the index
+        return True
 
 
 # def get_first_result(browser):
@@ -161,18 +172,18 @@ def verify_first_result_number(document, first_result_value):
         return False
 
 
-def verify_first_result_book_and_page(document, first_result_value):
-    if first_result_value is not False:
-        book = first_result_value[0]
-        page = first_result_value[1]
-        if book == document_value(document)[0] and page == document_value(document)[1]:
-            return True
-        else:
-            print(f'First result Book: {book}, Page: {page} does not match '
-                  f'searched {extrapolate_document_value(document)}, please review.')
-            return False
-    else:
-        return False
+# def verify_first_result_book_and_page(document, first_result_value):
+#     if first_result_value is not False:
+#         book = first_result_value[0]
+#         page = first_result_value[1]
+#         if book == document_value(document)[0] and page == document_value(document)[1]:
+#             return True
+#         else:
+#             print(f'First result Book: {book}, Page: {page} does not match '
+#                   f'searched {extrapolate_document_value(document)}, please review.')
+#             return False
+#     else:
+#         return False
 
 
 # Verify book & page is broken, need to assess verification on documents prior to 1900
@@ -202,34 +213,26 @@ def open_document_description(browser, first_result):
     browser.get(search_actions[1].get_attribute("href"))
 
 
-def determine_document_status(browser, document):
-    if verify_result(browser, document):
-        print(f'{extrapolate_document_value(document)} matches the search result, moving forward.')
-        open_document_description(browser, get_first_result(browser))
-        naptime()
-        return True
-    else:
-        print(f'{extrapolate_document_value(document)} not found -- '
-              f'{get_first_result_value(browser, document)} returned as top search result.')
-        naptime()
-        return False
-
-
-def check_search_results(browser, document):
-    number_results = count_results(browser)
-    if number_results == 0:
-        return False
-    else:
-        if number_results > 1:
-            print(f'{number_results} documents returned while searching {extrapolate_document_value(document)}, please review.')
-            # perform some action to update the index
-        return True
+# def determine_document_status(browser, document):
+#     if verify_result(browser, document):
+#         print(f'{extrapolate_document_value(document)} matches the search result, moving forward.')
+#         open_document_description(browser, get_first_result(browser))
+#         naptime()
+#         return True
+#     else:
+#         print(f'{extrapolate_document_value(document)} not found -- '
+#               f'{get_first_result_value(browser, document)} returned as top search result.')
+#         naptime()
+#         return False
 
 
 def open_document(browser, document):
     if check_search_results(browser, document):    
         try:
-            return determine_document_status(browser, document)
+            first_result = get_results(browser)[0]
+            open_document_description(browser, get_first_result(browser))
+            naptime()
+            return True
         except StaleElementReferenceException:
             print(f'Encountered a stale element exception while trying to open '
                 f'{extrapolate_document_value(document)}, trying again.')
