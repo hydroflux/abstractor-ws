@@ -10,7 +10,7 @@ print("record", __name__)
 
 from settings.file_management import extrapolate_document_value
 from settings.general_functions import naptime, scroll_into_view, scroll_to_top
-from settings.settings import long_timeout, search_errors, timeout
+from settings.settings import long_timeout, search_errors, timeout, county_instance
 
 from eagle.eagle_variables import (document_information_id,
                                    document_table_class, index_table_tags,
@@ -173,8 +173,16 @@ def aggregate_document_information(document_tables, dataframe):
     record_legal_data(document_tables[4], dataframe)
     record_related_documents(document_tables[-2], dataframe)
     record_notes(document_tables, dataframe)
-    dataframe["Comments"].append("")
     return reception_number
+
+
+def record_comments(dataframe, document):
+    if document.number_results > 1:
+        dataframe["Comments"].append(f'Multiple documents located at {extrapolate_document_value(document)}'
+                                     f' on the {county_instance} recording website; {document.number_results}'
+                                     f' documents total, please review')
+    else:
+        dataframe["Comments"].append("")
 
 
 def drop_last_entry(dataframe):
@@ -220,6 +228,7 @@ def record_document_fields(browser, dataframe, document):
     document_tables = access_document_information(browser, document)
     display_all_information(browser)
     reception_number = aggregate_document_information(document_tables, dataframe)
+    record_comments(dataframe, document)
     scroll_to_top(browser)
     return reception_number
 
