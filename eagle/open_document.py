@@ -194,14 +194,23 @@ def determine_document_status(browser, document):
         return False
 
 
-def open_document(browser, document):
+def check_search_results(browser, document):
     number_results = count_results(browser)
-    if number_results > 1:
-        print(f'{number_results} returned while searching {extrapolate_document_value(document)}, please review.')
-    try:
-        return determine_document_status(browser, document)
-    except StaleElementReferenceException:
-        print(f'Encountered a stale element exception while trying to open '
-              f'{extrapolate_document_value(document)}, trying again.')
-        browser.refresh()
-        return determine_document_status(browser, document)
+    if number_results == 0:
+        return False
+    else:
+        if number_results > 1:
+            print(f'{number_results} returned while searching {extrapolate_document_value(document)}, please review.')
+            # perform some action to update the index
+        return True
+
+
+def open_document(browser, document):
+    if check_search_results(browser, document):    
+        try:
+            return determine_document_status(browser, document)
+        except StaleElementReferenceException:
+            print(f'Encountered a stale element exception while trying to open '
+                f'{extrapolate_document_value(document)}, trying again.')
+            browser.refresh()
+            return determine_document_status(browser, document)
