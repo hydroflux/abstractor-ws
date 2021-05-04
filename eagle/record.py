@@ -9,7 +9,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 print("record", __name__)
 
 from settings.file_management import extrapolate_document_value
-from settings.general_functions import scroll_into_view, scroll_to_top
+from settings.general_functions import naptime, scroll_into_view, scroll_to_top
 from settings.settings import long_timeout, search_errors, timeout
 
 from eagle.eagle_variables import (document_information_id,
@@ -255,6 +255,7 @@ def get_next_result_button(browser, document):
 def next_result(browser, document):
     next_result_button = get_next_result_button(browser, document)
     next_result_button.click()
+    naptime()
 
 
 def record_document(browser, dataframe, document):
