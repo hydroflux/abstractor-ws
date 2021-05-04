@@ -18,38 +18,36 @@ from eagle.eagle_variables import (book_and_page_tag, book_title,
                                    first_result_class_name,
                                    first_result_submenu_class,
                                    first_result_tag, nested_submenu_class,
-                                   no_results_tag, no_results_message, page_title,
+                                   search_results_tag, no_results_message, page_title,
                                    search_action_tag,
                                    search_actions_class_name,
                                    search_results_header_class_name)
 
 
-def check_for_results(browser):
+def get_current_results(browser):
     try:
-        no_results_present = EC.presence_of_element_located((By.TAG_NAME, no_results_tag))
-        WebDriverWait(browser, timeout).until(no_results_present)
-        no_results = browser.find_element_by_tag_name(no_results_tag).text
-        if no_results == no_results_message:
-            return None
+        search_results_present = EC.presence_of_element_located((By.TAG_NAME, search_results_tag))
+        WebDriverWait(browser, timeout).until(search_results_present)
+        search_results = browser.find_element_by_tag_name(no_results_tag).text
     except TimeoutException:
-        print("Browser timed out while trying to check for any existing results.")
+        print("Browser timed out while trying to get current results.")
 
 
-def get_results_table_header(browser):
-    try:
-        search_results_header_present = EC.presence_of_element_located((By.CLASS_NAME, search_results_header_class_name))
-        WebDriverWait(browser, timeout).until(search_results_header_present)
-        search_results_header = browser.find_elements_by_class_name(search_results_header_class_name)[1].text
-        return search_results_header
-    except TimeoutException:
-        if check_for_results(browser) is None:
-            return None
-        else:
-            print("Browser timed out while trying to retrieve the search results table.")
+# def get_results_table_header(browser):
+#     try:
+#         search_results_header_present = EC.presence_of_element_located((By.CLASS_NAME, search_results_header_class_name))
+#         WebDriverWait(browser, timeout).until(search_results_header_present)
+#         search_results_header = browser.find_elements_by_class_name(search_results_header_class_name)[1].text
+#         return search_results_header
+#     except TimeoutException:
+#         if check_for_results(browser) is None:
+#             return None
+#         else:
+#             print("Browser timed out while trying to retrieve the search results table.")
 
 
-def get_number_of_results(results_header):
-    return int(results_header[(results_header.find("for") + 3):(results_header.find("Total"))].strip())
+# def get_number_of_results(results_header):
+#     return int(results_header[(results_header.find("for") + 3):(results_header.find("Total"))].strip())
 
 
 def count_results(browser):
@@ -60,9 +58,9 @@ def count_results(browser):
         return get_number_of_results(results_header)
 
 
-def get_first_result(browser):
+def get_results(browser):
     try:
-        first_result_present = EC.element_to_be_clickable((By.CLASS_NAME, first_result_class_name))
+        result_present = EC.element_to_be_clickable((By.CLASS_NAME, first_result_class_name))
         WebDriverWait(browser, timeout).until(first_result_present)
         return browser.find_element_by_class_name(first_result_class_name)
     except TimeoutException:
@@ -200,7 +198,7 @@ def check_search_results(browser, document):
         return False
     else:
         if number_results > 1:
-            print(f'{number_results} returned while searching {extrapolate_document_value(document)}, please review.')
+            print(f'{number_results} documents returned while searching {extrapolate_document_value(document)}, please review.')
             # perform some action to update the index
         return True
 
