@@ -18,7 +18,7 @@ from settings.user_prompts import continue_prompt, request_more_information
 from eagle.download import download_document
 from eagle.login import account_login
 from eagle.open_document import open_document
-from eagle.record import record_document
+from eagle.record import record_document, next_result
 from eagle.search import document_search
 
 
@@ -29,11 +29,7 @@ def search_documents_from_list(browser, county, target_directory, document_list,
             if document.number_results > 1:
                 record_multiple_documents(browser, county, target_directory, abstract_dictionary, document)
             else:
-                document_number = record_document(browser, abstract_dictionary, document)
-                if download:
-                    download_document(browser, county, target_directory, document_number)
-            print(f'Document located at {extrapolate_document_value(document)} recorded, '
-                f'{list_remaining_documents(document_list, document)}')
+                record_single_document(browser, county, target_directory, abstract_dictionary, document)
         else:
             record_bad_search(abstract_dictionary, document)
             print(f'No document found at {extrapolate_document_value(document)}, '
@@ -41,11 +37,17 @@ def search_documents_from_list(browser, county, target_directory, document_list,
     return abstract_dictionary
 
 
+def record_single_document(browser, county, target_directory, abstract_dictionary, document):
+    document_number = record_document(browser, abstract_dictionary, document)
+    if download:
+        download_document(browser, county, target_directory, document_number)
+    print(f'Document located at {extrapolate_document_value(document)} recorded, '
+    f'{list_remaining_documents(document_list, document)}')
+
+
 def record_multiple_documents(browser, county, target_directory, abstract_dictionary, document):
     for document in range(0, document.number_results):
-        document_number = record_document(browser, abstract_dictionary, document)
-        if download:
-            download_document(browser, county, target_directory, document_number)
+        record_single_document(browser, county, target_directory, abstract_dictionary, document)
         next_result(browser, document)
 
 
