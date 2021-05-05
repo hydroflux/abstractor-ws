@@ -160,11 +160,12 @@ def add_title_row(dataframe, worksheet, font_formats, client=None, legal=None):
 
 def add_limitations(dataframe, worksheet, font_format):
     worksheet.set_row(1, worksheet_properties['limitations_height'])
-    worksheet.merge_range(f'A1:{last_column(dataframe)}1', worksheet_properties['footer_title_content'], font_format)
+    worksheet.merge_range(f'A2:{last_column(dataframe)}2', worksheet_properties['limitations_content'], font_format)
 
 
-def add_disclaimer():
-    pass
+def add_disclaimer(dataframe, worksheet, font_formats):
+    worksheet.set_row(1, worksheet_properties['disclaimer_height'])
+    worksheet.merge_range(f'A3:{last_column(dataframe)}3', worksheet_properties['disclaimer_content'], font_format)
 
 
 def merge_primary_datatype_ranges(dataframe, worksheet, font_format):
@@ -250,9 +251,10 @@ def add_footer_row(dataframe, worksheet, font_format):
 def add_content(dataframe, worksheet, font_formats, client=None, legal=None):
     add_title_row(dataframe, worksheet, font_formats, client, legal)
     add_limitations(dataframe, worksheet, font_formats['limitations'])
+    add_disclaimer(dataframe, worksheet, font_formats['disclaimer'])
     add_dataframe_headers(dataframe, worksheet, font_formats['datatype'])
     set_worksheet_border(dataframe, worksheet, font_formats['border'])
-    add_footer_row(dataframe, worksheet, font_format['footer'])
+    add_footer_row(dataframe, worksheet, font_formats['footer'])
 
 
 def add_no_record_format(worksheet, worksheet_range):
