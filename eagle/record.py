@@ -179,8 +179,8 @@ def aggregate_document_information(document_tables, dataframe):
 def record_comments(dataframe, document):
     if document.number_results > 1:
         dataframe["Comments"].append(f'Multiple documents located at {extrapolate_document_value(document)}'
-                                     f' on the {county_instance} recording website; {document.number_results}'
-                                     f' documents total, please review')
+                                     f' on the {county_instance} recording website; Each of the {document.number_results}'
+                                     f' documents has been listed, please review')
     else:
         dataframe["Comments"].append("")
 
