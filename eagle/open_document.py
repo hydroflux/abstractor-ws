@@ -18,13 +18,32 @@ from eagle.eagle_variables import (book_and_page_tag, book_title,
                                    currently_searching, failed_search,
                                    first_result_class_name,
                                    first_result_submenu_class,
-                                   first_result_tag, nested_submenu_class,
-                                   no_results, page_title, search_action_tag,
+                                   first_result_tag, invalid_search_message,
+                                   nested_submenu_class, no_results,
+                                   page_title, search_action_tag,
                                    search_actions_class_name,
                                    search_result_class_name,
                                    search_results_header_class_name,
-                                   search_status_tag)
-from eagle.search import execute_search
+                                   search_status_tag, validation_class_name)
+from eagle.search import document_search, execute_search
+
+
+def validate_search(browser, document):
+    try:
+        validation_message_present = EC.presence_of_element_located((By.CLASS_NAME, validation_class_name))
+        WebDriverWait(browser, timeout).until(validation_message_present)
+        validation_message = browser.find_element_by_class_name(validation_class_name)
+        if validation_message == invalid_search_message:
+            return False
+        else:
+            return True
+    except TimeoutException:
+        print(f'Browser timed out while trying to validate the search for {extrapolate_document_value(document)}')
+
+
+def retry_search(browser, document):
+    naptime()
+    document_search(browser, document)
 
 
 def get_search_status(browser):
@@ -69,7 +88,7 @@ def wait_for_results(browser):
 #         return get_number_of_results(results_header)
 
 
-def retry_search(browser, document):
+def retry_execute_search(browser, document):
     while number_results == None:
         print(f'Search failed for {extrapolate_document_value(document)},'
               f' executing search again.')
@@ -91,7 +110,7 @@ def get_search_results(browser):
 def count_results(browser, document):
     search_results = wait_for_results(browser)
     if search_results.startswith(failed_search):
-        return retry_search(browser, document)
+        return retry_execute_search(browser, document)
     if search_results == no_results:
         return 0
     else:
@@ -244,6 +263,8 @@ def open_document_description(browser, first_result):
 
 
 def open_document(browser, document):
+    while not validate_search(browser, document):
+        retry_search(browser, document)
     if check_search_results(browser, document):    
         try:
             first_result = get_search_results(browser)[0]
