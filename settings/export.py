@@ -158,6 +158,13 @@ def add_title_row(dataframe, worksheet, font_formats, client=None, legal=None):
     write_title_content(dataframe, worksheet, font_formats, client, legal)
 
 
+def add_watermark(worksheet):
+    # Insert the watermark image in the header.
+    worksheet.set_header('&C&G', {'image_center': 'draft.png'})
+    worksheet.set_column('A:A', 50)
+    # worksheet.write('A1', 'Select Print Preview to see the watermark.')
+
+
 def add_limitations(dataframe, worksheet, font_format):
     worksheet.set_row(1, worksheet_properties['limitations_height'])
     worksheet.merge_range(f'A2:{last_column(dataframe)}2', worksheet_properties['limitations_content'], font_format)
@@ -250,6 +257,7 @@ def add_footer_row(dataframe, worksheet, font_format):
 
 def add_content(dataframe, worksheet, font_formats, client=None, legal=None):
     add_title_row(dataframe, worksheet, font_formats, client, legal)
+    add_watermark(dataframe, worksheet)
     add_limitations(dataframe, worksheet, font_formats['limitations'])
     add_disclaimer(dataframe, worksheet, font_formats['disclaimer'])
     add_dataframe_headers(dataframe, worksheet, font_formats['datatype'])
