@@ -240,16 +240,11 @@ def set_dataframe_format(worksheet, font_format):
     # worksheet.merge_range(footer_title_range, worksheet_properties['footer_title_content'], font_format)
 
 
-def set_footer(worksheet, last_row, font_format):
+def add_footer_row(dataframe, worksheet, font_format):
     footer_row = access_last_row(dataframe) + 1
     footer_range = f'A{footer_row}:{last_column(dataframe)}{footer_row}'
     worksheet.set_row((footer_row - 1), worksheet_properties['footer_height'])
     worksheet.merge_range(footer_range, worksheet_properties['footer_content'], font_format)
-
-
-def add_footer_row(dataframe, worksheet, font_formats):
-    # set_footer_title(worksheet, last_row, font_formats['footer_title'])
-    set_footer(worksheet, last_column, last_row, font_formats['footer'])
 
 
 def add_content(dataframe, worksheet, font_formats, client=None, legal=None):
@@ -257,7 +252,7 @@ def add_content(dataframe, worksheet, font_formats, client=None, legal=None):
     add_limitations(dataframe, worksheet, font_formats['limitations'])
     add_dataframe_headers(dataframe, worksheet, font_formats['datatype'])
     set_worksheet_border(dataframe, worksheet, font_formats['border'])
-    add_footer_row(dataframe, worksheet, font_formats)
+    add_footer_row(dataframe, worksheet, font_format['footer'])
 
 
 def add_no_record_format(worksheet, worksheet_range):
