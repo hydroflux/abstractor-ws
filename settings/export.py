@@ -285,13 +285,8 @@ def close_workbook(workbook):
     workbook.close()
 
 
-def save_xlsx_document(writer):
-    writer.save()
-
-
 def finalize_xlsx_document(writer, dataframe, client=None, legal=None):
     workbook = format_xlsx_document(writer, dataframe, client, legal)
-    # save_xlsx_document(writer)
     close_workbook(workbook)
 
 
