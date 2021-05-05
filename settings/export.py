@@ -92,6 +92,8 @@ def set_font_formats(workbook):
         'limitations': workbook.add_format(text_formats['limitations']),
         'disclaimer': workbook.add_format(text_formats['disclaimer']),
         'footer': workbook.add_format(text_formats['footer']),
+        'no_record': workbook.add_format(text_formats['no_record']),
+        'multiple_documents': workbook.add_format(text_formats['multiple_documents'])
     }
 
 
@@ -251,7 +253,7 @@ def add_footer_row(dataframe, worksheet, font_format):
 
 def add_watermark(worksheet):
     # Insert the watermark image in the header.
-    worksheet.set_header('&C&G', {'image_center': 'draft.png'})
+    worksheet.set_header('&C&G', {'image_center': './assets/draft_watermark.png'})
     worksheet.set_column('A:A', 50)
     # worksheet.write('A1', 'Select Print Preview to see the watermark.')
 
@@ -266,20 +268,22 @@ def add_content(dataframe, worksheet, font_formats, client=None, legal=None):
     add_watermark(worksheet)
 
 
-def add_no_record_format(worksheet, worksheet_range):
+def add_no_record_format(worksheet, worksheet_range, font_format):
     no_record_format = worksheet_properties['conditional_formats']['no_record_format']
+    no_record_format['format'] = font_format
     worksheet.conditional_format(worksheet_range, no_record_format)
 
 
-def add_multiple_document_format(worksheet, worksheet_range):
+def add_multiple_document_format(worksheet, worksheet_range, font_format):
     multi_documents_format = worksheet_properties['conditional_formats']['multi_documents_format']
+    multi_documents_format['format'] = font_format
     worksheet.conditional_format(worksheet_range, multi_documents_format)
 
 
-def add_conditional_formatting(dataframe, worksheet):
+def add_conditional_formatting(dataframe, worksheet, font_formats):
     worksheet_range = get_worksheet_range(dataframe)
-    add_no_record_format(worksheet, worksheet_range)
-    add_multiple_document_format(worksheet, worksheet_range)
+    add_no_record_format(worksheet, worksheet_range, font_formats['no_record'])
+    add_multiple_document_format(worksheet, worksheet_range, font_formats['multiple_documents'])
 
 
 def format_xlsx_document(writer, dataframe, client=None, legal=None):
@@ -287,7 +291,7 @@ def format_xlsx_document(writer, dataframe, client=None, legal=None):
     worksheet = format_worksheet(writer)
     set_dataframe_format(worksheet, font_formats['body'])
     add_content(dataframe, worksheet, font_formats, client, legal)
-    add_conditional_formatting(dataframe, worksheet)
+    add_conditional_formatting(dataframe, worksheet, font_formats)
     return workbook
 
 
