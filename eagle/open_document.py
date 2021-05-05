@@ -11,14 +11,14 @@ print("open", __name__)
 
 from settings.file_management import (document_type, document_value,
                                       extrapolate_document_value)
-from settings.general_functions import naptime, scroll_into_view
+from settings.general_functions import naptime, scroll_into_view, short_nap
 from settings.settings import timeout
 
 from eagle.eagle_variables import (book_and_page_tag, book_title,
                                    currently_searching,
                                    first_result_class_name,
                                    first_result_submenu_class,
-                                   first_result_tag, nested_submenu_class,
+                                   first_result_tag, nested_submenu_class, search_status_tag,
                                    no_results, page_title, search_action_tag,
                                    search_actions_class_name,
                                    search_result_class_name,
@@ -37,6 +37,7 @@ def get_search_status(browser):
 def wait_for_results(browser):
     search_status = get_search_status(browser)
     while search_status == currently_searching:
+        short_nap()
         search_status = get_search_status(browser)
     return search_status
 
@@ -65,6 +66,7 @@ def wait_for_results(browser):
 #     else:
 #         return get_number_of_results(results_header)
 
+
 def get_search_results(browser):
     try:
         first_result_present = EC.element_to_be_clickable((By.CLASS_NAME, search_result_class_name))
@@ -75,7 +77,7 @@ def get_search_results(browser):
 
 
 def count_results(browser):
-    search_results = wait_for_search(browser)
+    search_results = wait_for_results(browser)
     if search_results == no_results:
         return 0
     else:
@@ -231,7 +233,7 @@ def open_document(browser, document):
     if check_search_results(browser, document):    
         try:
             first_result = get_search_results(browser)[0]
-            open_document_description(browser, get_first_result(browser))
+            open_document_description(browser, first_result)
             naptime()
             return True
         except StaleElementReferenceException:
