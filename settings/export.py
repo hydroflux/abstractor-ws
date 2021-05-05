@@ -9,6 +9,7 @@ if __name__ == '__main__':
 else:
     from .settings import (abstraction_type, authorship, text_formats,
                            worksheet_properties)
+    # from .assets import draft_watermark as draft_watermark
 
 
 def prepare_output_environment(target_directory):
@@ -167,7 +168,7 @@ def add_limitations(dataframe, worksheet, font_format):
 
 
 def add_disclaimer(dataframe, worksheet, font_format):
-    worksheet.set_row(1, worksheet_properties['disclaimer_height'])
+    worksheet.set_row(2, worksheet_properties['disclaimer_height'])
     worksheet.merge_range(f'A3:{last_column(dataframe)}3', worksheet_properties['disclaimer_content'], font_format)
 
 
@@ -177,7 +178,7 @@ def merge_primary_datatype_ranges(dataframe, worksheet, font_format):
         column_name = dataframe.columns[column]
         column_position = number_to_letter((column + 1))
         worksheet.merge_range(
-            f'{column_position}2:{column_position}3',
+            f'{column_position}4:{column_position}5',
             column_name,
             font_format
         )
@@ -188,7 +189,7 @@ def merge_custom_column(dataframe, worksheet, font_format):
     column_position_start = number_to_letter((column + 1))
     column_position_end = number_to_letter((column + 4))
     worksheet.merge_range(
-        f'{column_position_start}2:{column_position_end}2',
+        f'{column_position_start}4:{column_position_end}4',
         worksheet_properties['custom_column_name'],
         font_format
     )
@@ -200,7 +201,7 @@ def merge_secondary_datatype_ranges(dataframe, worksheet, font_format):
         column_name = dataframe.columns[column]
         column_position = number_to_letter((column + 1))
         worksheet.write(
-            f'{column_position}3',
+            f'{column_position}5',
             column_name,
             font_format
         )
@@ -253,7 +254,7 @@ def add_footer_row(dataframe, worksheet, font_format):
 
 def add_watermark(worksheet):
     # Insert the watermark image in the header.
-    worksheet.set_header('&C&G', {'image_center': './assets/draft_watermark.png'})
+    worksheet.set_header('&C&G', {'image_center': 'draft_watermark.png'})
     worksheet.set_column('A:A', 50)
     # worksheet.write('A1', 'Select Print Preview to see the watermark.')
 
@@ -265,7 +266,7 @@ def add_content(dataframe, worksheet, font_formats, client=None, legal=None):
     add_dataframe_headers(dataframe, worksheet, font_formats['datatype'])
     set_worksheet_border(dataframe, worksheet, font_formats['border'])
     add_footer_row(dataframe, worksheet, font_formats['footer'])
-    add_watermark(worksheet)
+    # add_watermark(worksheet)
 
 
 def add_no_record_format(worksheet, worksheet_range, font_format):
