@@ -69,6 +69,16 @@ def wait_for_results(browser):
 #         return get_number_of_results(results_header)
 
 
+def retry_search(browser, document):
+    while number_results == None:
+        print(f'Search failed for {extrapolate_document_value(document)},'
+              f' executing search again.')
+        execute_search(browser)
+        naptime()
+        search_results = wait_for_results(browser)
+    return search_results
+
+
 def get_search_results(browser):
     try:
         first_result_present = EC.element_to_be_clickable((By.CLASS_NAME, search_result_class_name))
@@ -78,28 +88,18 @@ def get_search_results(browser):
         print("Browser timed out while trying to retrieve the first result of the search.")
 
 
-def count_results(browser):
+def count_results(browser, document):
     search_results = wait_for_results(browser)
+    if search_results.startswith(failed_search):
+        return retry_search(browser, document)
     if search_results == no_results:
         return 0
-    elif search_results.startswith(failed_search):
-        return None
     else:
         return int(len(get_search_results(browser)))
 
 
-def check_search_success(browser, document):
-    while number_results == None:
-        print(f'Search failed for {extrapolate_document_value(document)},'
-              f' executing search again.')
-        execute_search(browser)
-        naptime()
-        number_results = count_results(browser)
-    return number_results
-
 def check_search_results(browser, document):
-    number_results = count_results(browser)
-    check_search_success(browser, document)
+    number_results = count_results(browser, document)
     if number_results == 0:
         return False
     else:
