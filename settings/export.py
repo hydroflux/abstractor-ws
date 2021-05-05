@@ -89,7 +89,8 @@ def set_font_formats(workbook):
         'datatype': workbook.add_format(text_formats['datatype']),
         'body': workbook.add_format(text_formats['body']),
         'border': workbook.add_format(text_formats['border']),
-        'footer_title': workbook.add_format(text_formats['footer_title']),
+        'limitations': workbook.add_format(text_formats['limitations']),
+        'disclaimer': workbook.add_format(text_formats['disclaimer']),
         'footer': workbook.add_format(text_formats['footer']),
     }
 
@@ -158,19 +159,12 @@ def add_title_row(dataframe, worksheet, font_formats, client=None, legal=None):
     write_title_content(dataframe, worksheet, font_formats, client, legal)
 
 
-def add_watermark(worksheet):
-    # Insert the watermark image in the header.
-    worksheet.set_header('&C&G', {'image_center': 'draft.png'})
-    worksheet.set_column('A:A', 50)
-    # worksheet.write('A1', 'Select Print Preview to see the watermark.')
-
-
 def add_limitations(dataframe, worksheet, font_format):
     worksheet.set_row(1, worksheet_properties['limitations_height'])
     worksheet.merge_range(f'A2:{last_column(dataframe)}2', worksheet_properties['limitations_content'], font_format)
 
 
-def add_disclaimer(dataframe, worksheet, font_formats):
+def add_disclaimer(dataframe, worksheet, font_format):
     worksheet.set_row(1, worksheet_properties['disclaimer_height'])
     worksheet.merge_range(f'A3:{last_column(dataframe)}3', worksheet_properties['disclaimer_content'], font_format)
 
@@ -255,14 +249,21 @@ def add_footer_row(dataframe, worksheet, font_format):
     worksheet.merge_range(footer_range, worksheet_properties['footer_content'], font_format)
 
 
+def add_watermark(worksheet):
+    # Insert the watermark image in the header.
+    worksheet.set_header('&C&G', {'image_center': 'draft.png'})
+    worksheet.set_column('A:A', 50)
+    # worksheet.write('A1', 'Select Print Preview to see the watermark.')
+
+
 def add_content(dataframe, worksheet, font_formats, client=None, legal=None):
     add_title_row(dataframe, worksheet, font_formats, client, legal)
-    add_watermark(dataframe, worksheet)
     add_limitations(dataframe, worksheet, font_formats['limitations'])
     add_disclaimer(dataframe, worksheet, font_formats['disclaimer'])
     add_dataframe_headers(dataframe, worksheet, font_formats['datatype'])
     set_worksheet_border(dataframe, worksheet, font_formats['border'])
     add_footer_row(dataframe, worksheet, font_formats['footer'])
+    add_watermark(worksheet)
 
 
 def add_no_record_format(worksheet, worksheet_range):
@@ -286,7 +287,7 @@ def format_xlsx_document(writer, dataframe, client=None, legal=None):
     worksheet = format_worksheet(writer)
     set_dataframe_format(worksheet, font_formats['body'])
     add_content(dataframe, worksheet, font_formats, client, legal)
-    add_conditional_formatting(worksheet)
+    add_conditional_formatting(dataframe, worksheet)
     return workbook
 
 
