@@ -15,12 +15,13 @@ from settings.general_functions import naptime, scroll_into_view
 from settings.settings import timeout
 
 from eagle.eagle_variables import (book_and_page_tag, book_title,
-                                   search_result_class_name,
+                                   currently_searching,
+                                   first_result_class_name,
                                    first_result_submenu_class,
-                                   first_result_tag, nested_submenu_class, first_result_class_name,
-                                   search_results_tag, no_results, page_title,
-                                   search_action_tag, currently_searching,
+                                   first_result_tag, nested_submenu_class,
+                                   no_results, page_title, search_action_tag,
                                    search_actions_class_name,
+                                   search_result_class_name,
                                    search_results_header_class_name)
 
 

@@ -10,14 +10,15 @@ print("record", __name__)
 
 from settings.file_management import extrapolate_document_value
 from settings.general_functions import naptime, scroll_into_view, scroll_to_top
-from settings.settings import long_timeout, search_errors, timeout, county_instance
+from settings.settings import (county_instance, long_timeout, search_errors,
+                               timeout)
 
 from eagle.eagle_variables import (document_information_id,
                                    document_table_class, index_table_tags,
                                    information_links_class, less_info,
                                    loading_status, missing_values, more_info,
                                    pdf_viewer_load_id, related_table_class,
-                                   result_button_class, result_button_tag)
+                                   result_button_tag)
 
 
 def pdf_load_status(browser):
