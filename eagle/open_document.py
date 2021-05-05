@@ -100,11 +100,11 @@ def count_results(browser, document):
 
 def check_search_results(browser, document):
     number_results = count_results(browser, document)
+    document.number_results = number_results
     if number_results == 0:
         return False
     else:
         if number_results > 1:
-            document.number_results = number_results
             print(f'{number_results} documents returned while searching {extrapolate_document_value(document)}.')
         return True
 
