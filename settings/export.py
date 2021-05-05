@@ -154,6 +154,14 @@ def add_title_row(dataframe, worksheet, font_formats, client=None, legal=None):
     write_title_content(dataframe, worksheet, font_formats, client, legal)
 
 
+def add_limitations():
+    pass
+
+
+def add_disclaimer():
+    pass
+
+
 def merge_primary_datatype_ranges(dataframe, worksheet, font_format):
     primary_range = worksheet_properties['datatype_content']['primary_datatype_columns']
     for column in primary_range:
