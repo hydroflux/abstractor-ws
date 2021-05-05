@@ -18,7 +18,7 @@ from eagle.eagle_variables import (document_information_id,
                                    information_links_class, less_info,
                                    loading_status, missing_values, more_info,
                                    pdf_viewer_load_id, related_table_class,
-                                   result_button_tag)
+                                   result_button_tag, result_buttons_class)
 
 
 def pdf_load_status(browser):

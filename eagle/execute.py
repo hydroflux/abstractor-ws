@@ -46,10 +46,10 @@ def record_single_document(browser, county, target_directory, abstract_dictionar
 
 
 def record_multiple_documents(browser, county, target_directory, abstract_dictionary, document_list, document, download):
-    record_single_document(browser, county, target_directory, abstract_dictionary, document, download)
-    for document in range(0, (document.number_results - 1)):
+    record_single_document(browser, county, target_directory, abstract_dictionary, document_list, document, download)
+    for document_instance in range(0, (document.number_results - 1)):
         next_result(browser, document)
-        record_single_document(browser, county, target_directory, abstract_dictionary, document, download)
+        record_single_document(browser, county, target_directory, abstract_dictionary, document_list, document, download)
 
 
 def review_documents_from_list(browser, document_list):

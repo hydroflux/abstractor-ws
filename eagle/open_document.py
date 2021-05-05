@@ -15,14 +15,16 @@ from settings.general_functions import naptime, scroll_into_view, short_nap
 from settings.settings import timeout
 
 from eagle.eagle_variables import (book_and_page_tag, book_title,
-                                   currently_searching,
+                                   currently_searching, failed_search,
                                    first_result_class_name,
                                    first_result_submenu_class,
-                                   first_result_tag, nested_submenu_class, search_status_tag,
+                                   first_result_tag, nested_submenu_class,
                                    no_results, page_title, search_action_tag,
                                    search_actions_class_name,
                                    search_result_class_name,
-                                   search_results_header_class_name)
+                                   search_results_header_class_name,
+                                   search_status_tag)
+from eagle.search import execute_search
 
 
 def get_search_status(browser):
@@ -80,17 +82,29 @@ def count_results(browser):
     search_results = wait_for_results(browser)
     if search_results == no_results:
         return 0
+    elif search_results.startswith(failed_search):
+        return None
     else:
         return int(len(get_search_results(browser)))
 
 
+def check_search_success(browser, document):
+    while number_results == None:
+        print(f'Search failed for {extrapolate_document_value(document)},'
+              f' executing search again.')
+        execute_search(browser)
+        naptime()
+        number_results = count_results(browser)
+    return number_results
+
 def check_search_results(browser, document):
     number_results = count_results(browser)
-    document.number_results = number_results
+    check_search_success(browser, document)
     if number_results == 0:
         return False
     else:
         if number_results > 1:
+            document.number_results = number_results
             print(f'{number_results} documents returned while searching {extrapolate_document_value(document)}.')
         return True
 
