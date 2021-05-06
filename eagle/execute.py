@@ -65,7 +65,7 @@ def search_documents_from_list(browser, county, target_directory, document_list,
 def create_abstraction(browser, county, target_directory, file_name, sheet_name, download):
     document_list = generate_document_list(target_directory, file_name, sheet_name)
     abstract_dictionary = search_documents_from_list(browser, county, target_directory, document_list, download) # Is the abstract_dictionary return necessary ? ? ?
-    export_document(target_directory, file_name, abstract_dictionary)
+    export_document(county, target_directory, file_name, abstract_dictionary)
     return abstract_dictionary
 
 

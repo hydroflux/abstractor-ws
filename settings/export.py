@@ -140,8 +140,9 @@ def create_range_message(dataframe, content):
     return f'From {start.iloc[0]} to {start.iloc[-1]} \n ({content["order"]})'
 
 
-def write_title_content(dataframe, worksheet, font_formats, client=None, legal=None):
+def write_title_content(county, dataframe, worksheet, font_formats, client=None, legal=None):
     content = worksheet_properties['header_content']
+    content.county = f'{county}\n'
     range_message = create_range_message(dataframe, content)
     if client is not None and legal is not None:
         content['user'] = f'{client}\n'
@@ -157,9 +158,9 @@ def write_title_content(dataframe, worksheet, font_formats, client=None, legal=N
     )
 
 
-def add_title_row(dataframe, worksheet, font_formats, client=None, legal=None):
+def add_title_row(county, dataframe, worksheet, font_formats, client=None, legal=None):
     set_title_format(dataframe, worksheet, font_formats['header'])
-    write_title_content(dataframe, worksheet, font_formats, client, legal)
+    write_title_content(county, dataframe, worksheet, font_formats, client, legal)
 
 
 def add_limitations(dataframe, worksheet, font_format):
@@ -259,8 +260,8 @@ def add_watermark(worksheet):
     # worksheet.write('A1', 'Select Print Preview to see the watermark.')
 
 
-def add_content(dataframe, worksheet, font_formats, client=None, legal=None):
-    add_title_row(dataframe, worksheet, font_formats, client, legal)
+def add_content(county, dataframe, worksheet, font_formats, client=None, legal=None):
+    add_title_row(county, dataframe, worksheet, font_formats, client, legal)
     add_limitations(dataframe, worksheet, font_formats['limitations'])
     add_disclaimer(dataframe, worksheet, font_formats['disclaimer'])
     add_dataframe_headers(dataframe, worksheet, font_formats['datatype'])
@@ -287,11 +288,11 @@ def add_conditional_formatting(dataframe, worksheet, font_formats):
     add_multiple_document_format(worksheet, worksheet_range, font_formats['multiple_documents'])
 
 
-def format_xlsx_document(writer, dataframe, client=None, legal=None):
+def format_xlsx_document(county, writer, dataframe, client=None, legal=None):
     font_formats, workbook = format_workbook(writer)
     worksheet = format_worksheet(writer)
     set_dataframe_format(worksheet, font_formats['body'])
-    add_content(dataframe, worksheet, font_formats, client, legal)
+    add_content(county, dataframe, worksheet, font_formats, client, legal)
     add_conditional_formatting(dataframe, worksheet, font_formats)
     return workbook
 
@@ -300,13 +301,13 @@ def close_workbook(workbook):
     workbook.close()
 
 
-def finalize_xlsx_document(writer, dataframe, client=None, legal=None):
-    workbook = format_xlsx_document(writer, dataframe, client, legal)
+def finalize_xlsx_document(county, writer, dataframe, client=None, legal=None):
+    workbook = format_xlsx_document(county, writer, dataframe, client, legal)
     close_workbook(workbook)
 
 
-def export_document(target_directory, file_name, dictionary, client=None, legal=None):
+def export_document(county, target_directory, file_name, dictionary, client=None, legal=None):
     prepare_output_environment(target_directory)
     dataframe = transform_dictionary(dictionary)
     writer = create_xlsx_document(file_name, dataframe)
-    finalize_xlsx_document(writer, dataframe, client, legal)
+    finalize_xlsx_document(county, writer, dataframe, client, legal)
