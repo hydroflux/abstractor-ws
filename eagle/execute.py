@@ -33,7 +33,7 @@ def search_documents_from_list(browser, county, target_directory, document_list,
                 record_single_document(browser, county, target_directory, abstract_dictionary, document_list, document, download)
         else:
             record_bad_search(abstract_dictionary, document)
-            no_document_found(document_list, document)
+            no_document_found(start_time, document_list, document)
     return abstract_dictionary
 
 
@@ -41,7 +41,7 @@ def record_single_document(browser, county, target_directory, abstract_dictionar
     document_number = record_document(browser, abstract_dictionary, document)
     if download:
         download_document(browser, county, target_directory, document_number)
-    document_found(document_list, document)    
+    document_found(start_time, document_list, document)    
 
 
 def record_multiple_documents(browser, county, target_directory, abstract_dictionary, document_list, document, download):
@@ -52,10 +52,10 @@ def record_multiple_documents(browser, county, target_directory, abstract_dictio
 
 
 def review_multiple_documents(document_list, document):
-    document_found(document_list, document, "review")
+    document_found(start_time, document_list, document, "review")
     for document in range(0, document.number_results):
         next_result(browser, document)
-        document_found(document_list, document, "review")
+        document_found(start_time, document_list, document, "review")
 
 
 def review_documents_from_list(browser, document_list):
@@ -65,9 +65,9 @@ def review_documents_from_list(browser, document_list):
             if document.number_results > 1:
                 review_multiple_documents(document_list, document)
             else:
-                document_found(document_list, document, "review")
+                document_found(start_time, document_list, document, "review")
         else:
-            no_document_found(document_list, document, "review")
+            no_document_found(start_time, document_list, document, "review")
 
 
 def create_abstraction(browser, county, target_directory, file_name, sheet_name, download):

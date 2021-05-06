@@ -30,6 +30,10 @@ def stop_timer(start_time):
     return datetime.now() - start_time
 
 
+def report_execution_time(start_time):
+    return str(stop_timer(start_time))
+
+
 def start_program_timer(county):
     start_time = start_timer()
     print(f'{get_county_data(county)} - {abstraction_type} started on: \n'
@@ -38,7 +42,7 @@ def start_program_timer(county):
 
 
 def stop_program_timer(start_time):
-    print(f'Total Run Time: {str(datetime.now() - start_time)}')
+    print(f'Total Run Time: {report_execution_time(start_time)}')
     
 
 def scroll_into_view(browser, element):
