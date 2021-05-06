@@ -10,7 +10,7 @@ from settings.export import export_document
 from settings.file_management import (bundle_project,
                                       extrapolate_document_value,
                                       list_remaining_documents)
-from settings.general_functions import get_county_data
+from settings.general_functions import get_county_data, start_timer
 from settings.import_list import generate_document_list
 from settings.settings import web_directory
 from settings.user_prompts import (continue_prompt, document_found,
@@ -25,33 +25,34 @@ from eagle.search import document_search
 
 def search_documents_from_list(browser, county, target_directory, document_list, download):
     for document in document_list:
+        start_time = start_timer()
         document_search(browser, document)
         if open_document(browser, document):
             if document.number_results > 1:
-                record_multiple_documents(browser, county, target_directory, abstract_dictionary, document_list, document, download)
+                record_multiple_documents(browser, county, target_directory, download, abstract_dictionary, document_list, document, start_time)
             else:
-                record_single_document(browser, county, target_directory, abstract_dictionary, document_list, document, download)
+                record_single_document(browser, county, target_directory, download, abstract_dictionary, document_list, document, start_time)
         else:
             record_bad_search(abstract_dictionary, document)
             no_document_found(start_time, document_list, document)
     return abstract_dictionary
 
 
-def record_single_document(browser, county, target_directory, abstract_dictionary, document_list, document, download):
+def record_single_document(browser, county, target_directory, download, abstract_dictionary, document_list, document, start_time):
     document_number = record_document(browser, abstract_dictionary, document)
     if download:
         download_document(browser, county, target_directory, document_number)
     document_found(start_time, document_list, document)    
 
 
-def record_multiple_documents(browser, county, target_directory, abstract_dictionary, document_list, document, download):
-    record_single_document(browser, county, target_directory, abstract_dictionary, document_list, document, download)
+def record_multiple_documents(browser, county, target_directory, download, abstract_dictionary, document_list, document, start_time):
+    record_single_document(browser, county, target_directory, download, abstract_dictionary, document_list, document, start_time)
     for document_instance in range(0, (document.number_results - 1)):
         next_result(browser, document)
-        record_single_document(browser, county, target_directory, abstract_dictionary, document_list, document, download)
+        record_single_document(browser, county, target_directory, download, abstract_dictionary, document_list, document, start_time)
 
 
-def review_multiple_documents(document_list, document):
+def review_multiple_documents(start_time, document_list, document):
     document_found(start_time, document_list, document, "review")
     for document in range(0, document.number_results):
         next_result(browser, document)
@@ -60,10 +61,11 @@ def review_multiple_documents(document_list, document):
 
 def review_documents_from_list(browser, document_list):
     for document in document_list:
+        start_time = start_timer()
         document_search(browser, document)
         if open_document(browser, document):
             if document.number_results > 1:
-                review_multiple_documents(document_list, document)
+                review_multiple_documents(start_time, document_list, document)
             else:
                 document_found(start_time, document_list, document, "review")
         else:
