@@ -50,14 +50,20 @@ def get_search_status(browser):
     try:
         search_status_present = EC.presence_of_element_located((By.TAG_NAME, search_status_tag))
         WebDriverWait(browser, timeout).until(search_status_present)
-        return browser.find_element_by_tag_name(search_status_tag).text
+        search_status = browser.find_element_by_tag_name(search_status_tag).text
+        return search_status
     except TimeoutException:
         print("Browser timed out while trying to get current results.")
+    except StaleElementReferenceException:
+        print("Encountered a stale element reference exception while trying to determine search status, refreshing & trying again.")
+        browser.refresh()
+        naptime()
+        return None
 
 
 def wait_for_results(browser):
     search_status = get_search_status(browser)
-    while search_status == currently_searching:
+    while search_status == currently_searching or search_status == None:
         short_nap()
         search_status = get_search_status(browser)
     return search_status
