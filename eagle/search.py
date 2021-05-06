@@ -94,7 +94,7 @@ def execute_search(browser):
 def document_search(browser, document):
     open_search(browser)
     clear_search(browser)
-    naptime()
+    naptime() # REMOVE THIS NAP FOR TESTING IF NO ERRORS IN OPEN DOCUMENT NAP
     if document_type(document) == "document_number":
         enter_document_number(browser, document)
     elif document_type(document) == "book_and_page":

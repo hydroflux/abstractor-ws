@@ -293,7 +293,7 @@ def click_result_button(browser, button):
     try:
         scroll_to_top(browser)
         button.click()
-        naptime()
+        # naptime() # NAP REMOVED FOR TESTING, ADD THIS BACK IN IF NEXT RESULT ISSUE OCCURS
     except ElementClickInterceptedException:
         print("Button click intercepted while trying to view previous / next result")
         naptime()
