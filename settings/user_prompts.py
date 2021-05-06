@@ -89,12 +89,12 @@ def document_found(start_time, document_list, document, alt=None):
     if alt is None:
         print('Document located at '
               f'{extrapolate_document_value(document)} recorded, '
-              f'{list_remaining_documents(document_list, document)}'
+              f'{list_remaining_documents(document_list, document)} '
               f'({report_execution_time(start_time)})')
     elif alt == "review":
         input(f'Document located at {extrapolate_document_value(document)} found,'
               'please review & press enter to continue... '
-              f'({list_remaining_documents(document_list, document)})'
+              f'({list_remaining_documents(document_list, document)}) '
               f'({report_execution_time(start_time)})')
 
 
@@ -102,12 +102,12 @@ def no_document_found(start_time, document_list, document, alt=None):
     if alt is None:
         print('No document found at '
               f'{extrapolate_document_value(document)}, '
-              f'{list_remaining_documents(document_list, document)}'
+              f'{list_remaining_documents(document_list, document)} '
               f'({report_execution_time(start_time)})')
     elif alt == "review":
         input(f'No document found at {extrapolate_document_value(document)}, '
               'please review & press enter to continue... '
-              f'({list_remaining_documents(document_list, document)})'
+              f'({list_remaining_documents(document_list, document)}) '
               f'({report_execution_time(start_time)})')
 
 

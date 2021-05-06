@@ -20,8 +20,8 @@ def long_nap():
     sleep(randint(30, 45))
 
 
-def get_county_data(county):
-    return county_dictionary.get(county)
+def get_county_data(county_name):
+    return county_dictionary.get(county_name)
 
 
 def start_timer():
@@ -38,7 +38,7 @@ def report_execution_time(start_time):
 
 def start_program_timer(county):
     start_time = start_timer()
-    print(f'{get_county_data(county)} - {abstraction_type} started on: \n'
+    print(f'{county} - {abstraction_type} started on: \n'
           f'{str(start_time.strftime("%B %d, %Y %H:%M:%S"))}')
     return start_time
 
