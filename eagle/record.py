@@ -277,11 +277,6 @@ def get_previous_result_button(browser, document):
     return result_buttons.find_elements_by_tag_name(result_button_tag)[0]
 
 
-def get_next_result_button(browser, document):
-    result_buttons = get_result_buttons(browser, document)
-    return result_buttons.find_elements_by_tag_name(result_button_tag)[1]
-
-
 def previous_result(browser, document):
     previous_result_button = get_previous_result_button(browser, document)
     scroll_to_top(browser)
@@ -289,12 +284,26 @@ def previous_result(browser, document):
     naptime()
 
 
+def get_next_result_button(browser, document):
+    result_buttons = get_result_buttons(browser, document)
+    return result_buttons.find_elements_by_tag_name(result_button_tag)[1]
+
+
+def click_result_button(browser, button):
+    try:
+        scroll_to_top(browser)
+        button.click()
+        naptime()
+    except ElementClickInterceptedException:
+        print("Button click intercepted while trying to view previous / next result.")
+        naptime()
+        button.click()
+
+
 def next_result(browser, document):
     next_result_button = get_next_result_button(browser, document)
-    scroll_to_top(browser)
-    next_result_button.click()
-    naptime()
-    short_nap()
+    click_result_button(browser, button)
+    # short_nap()
     # Increased naptime by 1 second on high & low end because of an issue here;
     # consider adding a short nap here rather than increasing naptime to increase efficiency
     # Now testing with short nap
