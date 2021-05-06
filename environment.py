@@ -40,4 +40,6 @@ def execute_abstractor():
     stop_timer(start_time)
     browser.close()
     quit()
-    
+
+
+execute_abstractor()
