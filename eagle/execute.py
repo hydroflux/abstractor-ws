@@ -11,7 +11,6 @@ from settings.file_management import (bundle_project,
                                       extrapolate_document_value,
                                       list_remaining_documents)
 from settings.general_functions import start_timer
-from settings.import_list import generate_document_list
 from settings.settings import web_directory
 from settings.user_prompts import (continue_prompt, document_found,
                                    no_document_found, request_more_information)
@@ -37,7 +36,7 @@ def record_multiple_documents(browser, county, target_directory, download, abstr
         record_single_document(browser, county, target_directory, download, abstract_dictionary, document_list, document, start_time)
 
 
-def handle_search_results(browser, county, target_directory, download, abstract_dictionary, document_list, document, start_time, alt=None):
+def handle_search_results(browser, county, target_directory, download, document_list, document, start_time, alt=None):
     if alt is None:
         if document.number_results > 1:
             record_multiple_documents(browser, county, target_directory, download, abstract_dictionary, document_list, document, start_time)
@@ -45,7 +44,7 @@ def handle_search_results(browser, county, target_directory, download, abstract_
             record_single_document(browser, county, target_directory, download, abstract_dictionary, document_list, document, start_time)
     elif alt == 'review':
         if document.number_results > 1:
-            review_multiple_documents(start_time, document_list, document)
+            review_multiple_documents(browser, start_time, document_list, document)
         else:
             document_found(start_time, document_list, document, "review")
 
@@ -76,27 +75,27 @@ def execute_program(county, target_directory, document_list, file_name, download
     bundle_project(target_directory, file_name)
 
 
-def review_multiple_documents(start_time, document_list, document):
+def review_multiple_documents(browser, start_time, document_list, document):
     document_found(start_time, document_list, document, "review")
     for document in range(0, (document.number_results - 1)):
         next_result(browser, document)
         document_found(start_time, document_list, document, "review")
 
 
-def review_documents_from_list(browser, county, document_list):
+def review_documents_from_list(browser, county, target_directory, download, document_list):
     for document in document_list:
         start_time = start_timer()
         document_search(browser, document)
         if open_document(browser, document):
-            handle_search_results(browser, county, target_directory, download, abstract_dictionary, document_list, document, start_time, 'review')
+            handle_search_results(browser, county, target_directory, download, document_list, document, start_time, 'review')
         else:
             no_document_found(start_time, document_list, document, "review")
 
 
-def execute_review(county, target_directory, document_list):
+def execute_review(county, target_directory, document_list, download):
     browser = create_webdriver(target_directory, False)
     account_login(browser)
-    review_documents_from_list(browser, county, document_list)
+    review_documents_from_list(browser, county, target_directory, download, document_list)
     browser.close()
 
 
