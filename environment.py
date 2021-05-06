@@ -41,7 +41,6 @@ def execute_abstractor():
     start_time = start_program_timer(county)
     execute_program_type(county, program_type, document_list)
     stop_program_timer(start_time)
-    browser.close()
     quit()
 
 
