@@ -59,12 +59,16 @@ def open_informational_link(browser, link):
         link.click()
 
 
+def review_and_open_links(browser, links):
+    for link in links:
+        if link.text == more_info:
+            open_informational_link(browser, link)
+
+
 def display_all_information(browser):
     document_info = browser.find_element_by_id(document_information_id)
     information_links = document_info.find_elements_by_class_name(information_links_class)
-    for link in information_links:
-        if link.text == more_info:
-            open_informational_link(browser, link)
+    review_and_open_links(browser, informational_links)
 
 
 def drop_superfluous_information(string):
