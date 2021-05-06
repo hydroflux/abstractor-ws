@@ -295,14 +295,14 @@ def click_result_button(browser, button):
         button.click()
         naptime()
     except ElementClickInterceptedException:
-        print("Button click intercepted while trying to view previous / next result.")
+        print("Button click intercepted while trying to view previous / next result")
         naptime()
         button.click()
 
 
 def next_result(browser, document):
     next_result_button = get_next_result_button(browser, document)
-    click_result_button(browser, button)
+    click_result_button(browser, next_result_button)
     # short_nap()
     # Increased naptime by 1 second on high & low end because of an issue here;
     # consider adding a short nap here rather than increasing naptime to increase efficiency
