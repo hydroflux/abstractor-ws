@@ -49,24 +49,22 @@ def access_document_information(browser, document):
               f'{extrapolate_document_value(document)}.')
 
 
+def open_informational_link(browser, link):
+    try:
+        scroll_into_view(browser, link)
+        link.click()
+    except ElementClickInterceptedException:
+        grandparent = link.find_element_by_xpath("../..")
+        scroll_into_view(browser, grandparent)
+        link.click()
+
+
 def display_all_information(browser):
     document_info = browser.find_element_by_id(document_information_id)
     information_links = document_info.find_elements_by_class_name(information_links_class)
     for link in information_links:
         if link.text == more_info:
-            # Consider checking document information being received in the recording phase,
-            # then taking the opportunity to click afterwards--this would give a more precise 
-            # opportunity to click any contained menus
-            scroll_into_view(browser, link)
-            # short_nap()
-            try:
-                link.click()
-            except ElementClickInterceptedException:
-                grandparent = link.find_element_by_xpath("../..")
-                scroll_into_view(browser, grandparent)
-                short_nap()
-                link.click()
-
+            open_informational_link(browser, link)
 
 
 def drop_superfluous_information(string):
