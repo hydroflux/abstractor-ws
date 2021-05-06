@@ -88,7 +88,7 @@ def document_found(document_list, document, alt=None):
               f'{extrapolate_document_value(document)} recorded, '
               f'{list_remaining_documents(document_list, document)}')
     elif alt == "review":
-        input(f'Document located at {extrapolate_document_value(document)} located,'
+        input(f'Document located at {extrapolate_document_value(document)} found,'
               'please review & press enter to continue... '
               f'({list_remaining_documents(document_list, document)})')
 

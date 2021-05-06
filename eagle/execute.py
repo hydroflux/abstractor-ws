@@ -13,7 +13,8 @@ from settings.file_management import (bundle_project,
 from settings.general_functions import get_county_data
 from settings.import_list import generate_document_list
 from settings.settings import web_directory
-from settings.user_prompts import continue_prompt, request_more_information, no_document_found
+from settings.user_prompts import (continue_prompt, document_found,
+                                   no_document_found, request_more_information)
 
 from eagle.download import download_document
 from eagle.login import account_login
@@ -40,8 +41,7 @@ def record_single_document(browser, county, target_directory, abstract_dictionar
     document_number = record_document(browser, abstract_dictionary, document)
     if download:
         download_document(browser, county, target_directory, document_number)
-    print(f'Document located at {extrapolate_document_value(document)} recorded, '
-    f'{list_remaining_documents(document_list, document)}')
+    document_found(document_list, document)    
 
 
 def record_multiple_documents(browser, county, target_directory, abstract_dictionary, document_list, document, download):
@@ -51,29 +51,23 @@ def record_multiple_documents(browser, county, target_directory, abstract_dictio
         record_single_document(browser, county, target_directory, abstract_dictionary, document_list, document, download)
 
 
+def review_multiple_documents(document_list, document):
+    document_found(document_list, document, "review")
+    for document in range(0, document.number_results):
+        next_result(browser, document)
+        document_found(document_list, document, "review")
+
+
 def review_documents_from_list(browser, document_list):
     for document in document_list:
         document_search(browser, document)
         if open_document(browser, document):
             if document.number_results > 1:
-                review_single_document(document_list, document)
-            else:
                 review_multiple_documents(document_list, document)
+            else:
+                document_found(document_list, document, "review")
         else:
             no_document_found(document_list, document, "review")
-
-
-def review_single_document(document_list, document):
-    input(f'Document located at {extrapolate_document_value(document)} located,'
-                'please review & press enter to continue...'
-                f'{list_remaining_documents(document_list, document)}')
-
-
-def review_multiple_documents(document_list, document):
-    review_single_document(document_list, document)
-    for document in range(0, document.number_results):
-        next_result(browser, document)
-        review_single_document(document_list, document)
 
 
 def create_abstraction(browser, county, target_directory, file_name, sheet_name, download):
