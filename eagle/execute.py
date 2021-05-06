@@ -10,7 +10,7 @@ from settings.export import export_document
 from settings.file_management import (bundle_project,
                                       extrapolate_document_value,
                                       list_remaining_documents)
-from settings.general_functions import get_county_data, start_timer
+from settings.general_functions import start_timer
 from settings.import_list import generate_document_list
 from settings.settings import web_directory
 from settings.user_prompts import (continue_prompt, document_found,
@@ -62,22 +62,16 @@ def search_documents_from_list(browser, county, target_directory, document_list,
     return abstract_dictionary # Is this necessary ? ? ?
 
 
-def create_abstraction(browser, county, target_directory, file_name, sheet_name, download):
-    document_list = generate_document_list(target_directory, file_name, sheet_name)
+def create_abstraction(browser, county, target_directory, document_list, file_name, download):
     abstract_dictionary = search_documents_from_list(browser, county, target_directory, document_list, download) # Is the abstract_dictionary return necessary ? ? ?
     export_document(county, target_directory, file_name, abstract_dictionary)
     return abstract_dictionary
 
 
-def execute_program(county, target_directory, file_name, sheet_name, download):
+def execute_program(county, target_directory, document_list, file_name, download):
     browser = create_webdriver(target_directory, False)
-    county = get_county_data(county)
     account_login(browser)
-    create_abstraction(browser, county, target_directory, file_name, sheet_name, download)
-    while continue_prompt(target_directory, file_name, sheet_name):
-        target_directory, file_name, sheet_name = \
-            request_more_information(target_directory, file_name, sheet_name)
-        create_abstraction(browser, county, target_directory, file_name, sheet_name, download)
+    create_abstraction(browser, county, target_directory, document_list, file_name, download)
     bundle_project(target_directory, file_name)
 
 
@@ -88,7 +82,7 @@ def review_multiple_documents(start_time, document_list, document):
         document_found(start_time, document_list, document, "review")
 
 
-def review_documents_from_list(browser, document_list):
+def review_documents_from_list(browser, county, document_list):
     for document in document_list:
         start_time = start_timer()
         document_search(browser, document)
@@ -98,11 +92,10 @@ def review_documents_from_list(browser, document_list):
             no_document_found(start_time, document_list, document, "review")
 
 
-def execute_review(target_directory, file_name, sheet_name):
-    document_list = generate_document_list(target_directory, file_name, sheet_name)
+def execute_review(county, target_directory, document_list):
     browser = create_webdriver(target_directory, False)
     account_login(browser)
-    review_documents_from_list(browser, document_list)
+    review_documents_from_list(browser, county, document_list)
 
 
 # def execute_web_program(client, legal, upload_file):

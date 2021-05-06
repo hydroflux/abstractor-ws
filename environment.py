@@ -19,12 +19,12 @@ else:
     from .tiger.execute import execute_web_program    
 
 
-def execute_program_type(county, program_type):
+def execute_program_type(county, program_type, document_list):
     if county['program'] == 'eagle':
         if program_type == "execute":
-            execute_eagle(county, target_directory, file_name, sheet_name, download)
+            execute_eagle(county, target_directory, document_list, file_name, download)
         elif program_type == "review":
-            review_eagle(target_directory, file_name, sheet_name)
+            review_eagle(county, target_directory, document_list)
     elif county['program'] == 'leopard':
         if program_type == "execute":
             execute_leopard(headless, target_directory, county, file_name, sheet_name, download)
@@ -36,9 +36,10 @@ def execute_program_type(county, program_type):
 
 def execute_abstractor():
     county = get_county_data(county_name)
+    document_list = generate_document_list(target_directory, file_name, sheet_name)
     program_type = get_program_type()
     start_time = start_program_timer(county)
-    execute_program_type(county, program_type)
+    execute_program_type(county, program_type, document_list)
     stop_program_timer(start_time)
     browser.close()
     quit()
