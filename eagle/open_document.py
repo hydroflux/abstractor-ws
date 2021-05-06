@@ -94,8 +94,8 @@ def wait_for_results(browser):
 #         return get_number_of_results(results_header)
 
 
-def retry_execute_search(browser, document):
-    while number_results == None:
+def retry_execute_search(browser, document, search_results):
+    while search_results == failed_search:
         print(f'Search failed for {extrapolate_document_value(document)},'
               f' executing search again.')
         execute_search(browser)
@@ -115,8 +115,8 @@ def get_search_results(browser):
 
 def count_results(browser, document):
     search_results = wait_for_results(browser)
-    if search_results.startswith(failed_search):
-        return retry_execute_search(browser, document)
+    if search_results == failed_search:
+        search_results = retry_execute_search(browser, document, search_results)
     if search_results == no_results:
         return 0
     else:

@@ -12,7 +12,7 @@ print("record", __name__)
 from settings.file_management import extrapolate_document_value
 from settings.general_functions import (naptime, scroll_into_view,
                                         scroll_to_top, short_nap)
-from settings.settings import (county_instance, long_timeout, search_errors,
+from settings.settings import (long_timeout, search_errors,
                                timeout)
 
 from eagle.eagle_variables import (document_information_id,
@@ -192,10 +192,10 @@ def aggregate_document_information(document_tables, dataframe):
     return reception_number
 
 
-def record_comments(dataframe, document):
+def record_comments(county, dataframe, document):
     if document.number_results > 1:
         dataframe["Comments"].append(f'Multiple documents located at {extrapolate_document_value(document)}'
-                                     f' on the {county_instance} recording website; Each of the {document.number_results}'
+                                     f' on the {county} recording website; Each of the {document.number_results}'
                                      f' documents has been listed, please review')
     else:
         dataframe["Comments"].append("")
@@ -240,26 +240,26 @@ def check_length(dataframe):
         print("Comments: ", comments)
 
 
-def record_document_fields(browser, dataframe, document):
+def record_document_fields(browser, county, dataframe, document):
     document_tables = access_document_information(browser, document)
     display_all_information(browser)
     reception_number = aggregate_document_information(document_tables, dataframe)
-    record_comments(dataframe, document)
+    record_comments(county, dataframe, document)
     scroll_to_top(browser)
     return reception_number
 
 
 # This series of functions may be unnecessary, continue to test
-def review_entry(browser, dataframe, document):
+def review_entry(browser, county, dataframe, document):
     while dataframe["Grantor"][-1] == missing_values[0] and dataframe["Grantee"][-1] == missing_values[0]\
             and dataframe["Related Documents"][-1] == missing_values[1]:
         print("Recording of last document was processed incorrectly, attempting to record again.")
-        re_record_document_fields(browser, dataframe, document)
+        re_record_document_fields(browser, county, dataframe, document)
 
 
-def re_record_document_fields(browser, dataframe, document):
+def re_record_document_fields(browser, county, dataframe, document):
     drop_last_entry(dataframe)
-    record_document_fields(browser, dataframe, document)
+    record_document_fields(browser, county, dataframe, document)
 
 
 def get_result_buttons(browser, document):
@@ -309,9 +309,9 @@ def next_result(browser, document):
     # Now testing with short nap
 
 
-def record_document(browser, dataframe, document):
+def record_document(browser, county, dataframe, document):
     wait_for_pdf_to_load(browser)
-    document_number = record_document_fields(browser, dataframe, document)
+    document_number = record_document_fields(browser, county, dataframe, document)
     check_length(dataframe)
     review_entry(browser, dataframe, document)
     return document_number
