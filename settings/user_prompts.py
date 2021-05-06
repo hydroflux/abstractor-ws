@@ -85,12 +85,12 @@ def sheet_name_prompt(current_sheet_name):
 def document_found(document_list, document, alt=None):
     if alt is None:
         print('Document located at '
-              f'{extrapolate_document_value(document)} recorded '
+              f'{extrapolate_document_value(document)} recorded, '
               f'{list_remaining_documents(document_list, document)}')
     elif alt == "review":
         input(f'Document located at {extrapolate_document_value(document)} located,'
               'please review & press enter to continue... '
-              f'{list_remaining_documents(document_list, document)}')
+              f'({list_remaining_documents(document_list, document)})')
 
 
 def no_document_found(document_list, document, alt=None):
@@ -101,7 +101,7 @@ def no_document_found(document_list, document, alt=None):
     elif alt == "review":
         input(f'No document found at {extrapolate_document_value(document)}, '
               'please review & press enter to continue... '
-              f'{list_remaining_documents(document_list, document)}')
+              f'({list_remaining_documents(document_list, document)})')
 
 
 # Add an additional prompt for request for download

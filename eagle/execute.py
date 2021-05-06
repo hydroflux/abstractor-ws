@@ -13,12 +13,12 @@ from settings.file_management import (bundle_project,
 from settings.general_functions import get_county_data
 from settings.import_list import generate_document_list
 from settings.settings import web_directory
-from settings.user_prompts import continue_prompt, request_more_information
+from settings.user_prompts import continue_prompt, request_more_information, no_document_found
 
 from eagle.download import download_document
 from eagle.login import account_login
 from eagle.open_document import open_document
-from eagle.record import record_document, next_result
+from eagle.record import next_result, record_document
 from eagle.search import document_search
 
 
@@ -32,8 +32,7 @@ def search_documents_from_list(browser, county, target_directory, document_list,
                 record_single_document(browser, county, target_directory, abstract_dictionary, document_list, document, download)
         else:
             record_bad_search(abstract_dictionary, document)
-            print(f'No document found at {extrapolate_document_value(document)}, '
-                  f'{list_remaining_documents(document_list, document)}')
+            no_document_found(document_list, document)
     return abstract_dictionary
 
 
@@ -61,9 +60,7 @@ def review_documents_from_list(browser, document_list):
             else:
                 review_multiple_documents(document_list, document)
         else:
-            input(f'No document found at {extrapolate_document_value(document)}, '
-                  'please review & press enter to continue...'
-                  f'{list_remaining_documents(document_list, document)}')
+            no_document_found(document_list, document, "review")
 
 
 def review_single_document(document_list, document):
