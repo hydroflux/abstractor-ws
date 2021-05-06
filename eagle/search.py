@@ -52,8 +52,10 @@ def enter_book_number(browser, book):
         book_search_field = browser.find_element_by_id(book_search_id)
         book_search_field.clear()
         book_search_field.send_keys(book)
+        return True
     except TimeoutException:
         print(f'Browser timed out while trying to fill document field for Book: {book}.')
+        return False
 
 
 def enter_page_number(browser, page):
@@ -63,10 +65,22 @@ def enter_page_number(browser, page):
         page_search_field = browser.find_element_by_id(page_search_id)
         page_search_field.clear()
         page_search_field.send_keys(page)
+        return True
     except TimeoutException:
         print(f'Browser timed out while trying to fill document field for Page: {page}.')
+        return False
 
 
+def prepare_book_and_page_search(browser, document):
+    book, page = split_book_and_page(document)
+    ready = False
+    while not ready:
+        if enter_book_number(browser, book) and enter_page_number(browser, page):
+            ready = True
+        else:
+            open_search(browser)
+
+    
 def execute_search(browser):
     try:
         search_button_present = EC.element_to_be_clickable((By.ID, search_button_id))
@@ -84,7 +98,5 @@ def document_search(browser, document):
     if document_type(document) == "document_number":
         enter_document_number(browser, document)
     elif document_type(document) == "book_and_page":
-        book, page = split_book_and_page(document)
-        enter_book_number(browser, book)
-        enter_page_number(browser, page)
+        prepare_book_and_page_search(browser, document)
     execute_search(browser)

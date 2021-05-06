@@ -284,12 +284,14 @@ def get_next_result_button(browser, document):
 
 def previous_result(browser, document):
     previous_result_button = get_previous_result_button(browser, document)
+    scroll_to_top(browser)
     previous_result_button.click()
     naptime()
 
 
 def next_result(browser, document):
     next_result_button = get_next_result_button(browser, document)
+    scroll_to_top(browser)
     next_result_button.click()
     naptime()
     short_nap()
