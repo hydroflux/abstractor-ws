@@ -87,8 +87,6 @@ def execute_program(county, target_directory, file_name, sheet_name, download):
             request_more_information(target_directory, file_name, sheet_name)
         create_abstraction(browser, county, target_directory, file_name, sheet_name, download)
     bundle_project(target_directory, file_name)
-    browser.close()
-    quit()
 
 
 def execute_review(target_directory, file_name, sheet_name):
@@ -96,8 +94,6 @@ def execute_review(target_directory, file_name, sheet_name):
     account_login(browser)
     document_list = generate_document_list(target_directory, file_name, sheet_name)
     review_documents_from_list(browser, document_list)
-    browser.close()
-    quit()
 
 
 # def execute_web_program(client, legal, upload_file):

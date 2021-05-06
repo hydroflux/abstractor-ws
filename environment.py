@@ -1,3 +1,5 @@
+from datetime import datetime
+
 print("environment", __name__)
 if __name__ == '__main__':
     from eagle.execute import execute_program as execute_eagle
@@ -17,16 +19,24 @@ else:
     from .tiger.execute import execute_web_program
 
 
-program_type = get_program_type()
-if county == programs["eagle"]:
-    if program_type == "execute":
-        execute_eagle(county, target_directory, file_name, sheet_name, download)
-    elif program_type == "review":
-        review_eagle(target_directory, file_name, sheet_name)
-elif county == programs["leopard"]:
-    if program_type == "execute":
-        execute_leopard(headless, target_directory, county, file_name, sheet_name, download)
-    elif program_type == "review":
-        review_leopard(target_directory, file_name, sheet_name)
-else:
-    print(f'County {county} does not match available execution options, please review.')
+def execute_program_type(program_type):
+    if county == programs["eagle"]:
+        if program_type == "execute":
+            execute_eagle(county, target_directory, file_name, sheet_name, download)
+        elif program_type == "review":
+            review_eagle(target_directory, file_name, sheet_name)
+    elif county == programs["leopard"]:
+        if program_type == "execute":
+            execute_leopard(headless, target_directory, county, file_name, sheet_name, download)
+        elif program_type == "review":
+            review_leopard(target_directory, file_name, sheet_name)
+    else:
+        print(f'County {county} does not match available execution options, please review.')
+
+
+def execute_abstractor(program_type):
+    program_type = get_program_type()
+    execute_abstractor(program_type)
+    browser.close()
+    quit()
+    
