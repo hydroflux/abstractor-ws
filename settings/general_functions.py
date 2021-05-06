@@ -4,7 +4,7 @@ from random import randint
 from time import sleep
 
 from settings.classes.counties import county_dictionary
-from settings import abstraction_type
+from settings.settings import abstraction_type
 
 
 def naptime():

@@ -51,7 +51,7 @@ def handle_search_results(browser, county, target_directory, download, abstract_
 
 
 def search_documents_from_list(browser, county, target_directory, document_list, download):
-    for document in document_list:
+    for document in document_list[1000:1005]:
         start_time = start_timer()
         document_search(browser, document)
         if open_document(browser, document):
