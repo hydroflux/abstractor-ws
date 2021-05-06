@@ -26,6 +26,11 @@ def start_timer(county):
     start_time = datetime.now()
     print(f'{get_county_data(county)} - {abstraction_type} started on: \n'
           f'{str(start_time.strftime("%B %d, %Y %H:%M:%S"))}\n')
+    return start_time
+
+
+def stop_timer(start_time):
+    print(f'Total Run Time: {str(datetime.now() - start_time)}')
 
 
 def scroll_into_view(browser, element):
