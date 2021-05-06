@@ -277,6 +277,8 @@ def next_result(browser, document):
     next_result_button = get_next_result_button(browser, document)
     next_result_button.click()
     naptime()
+    # Increased naptime by 1 second on high & low end because of an issue here;
+    # consider adding a short nap here rather than increasing naptime to increase efficiency
 
 
 def record_document(browser, dataframe, document):
