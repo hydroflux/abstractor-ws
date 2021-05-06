@@ -7,7 +7,7 @@ from settings.classes.counties import county_dictionary
 
 def naptime():
     # sleep(randint(3, 6))
-    sleep(randint(3, 4))
+    sleep(randint(2, 3))
 
 
 def short_nap():
