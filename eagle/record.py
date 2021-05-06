@@ -9,7 +9,8 @@ from selenium.webdriver.support.wait import WebDriverWait
 print("record", __name__)
 
 from settings.file_management import extrapolate_document_value
-from settings.general_functions import naptime, scroll_into_view, scroll_to_top
+from settings.general_functions import (naptime, scroll_into_view,
+                                        scroll_to_top, short_nap)
 from settings.settings import (county_instance, long_timeout, search_errors,
                                timeout)
 
@@ -50,9 +51,13 @@ def access_document_information(browser, document):
 def display_all_information(browser):
     document_info = browser.find_element_by_id(document_information_id)
     information_links = document_info.find_elements_by_class_name(information_links_class)
-    for link in information_links:
+    for link in information_links[:1]:
         if link.text == more_info:
+            # Consider checking document information being received in the recording phase,
+            # then taking the opportunity to click afterwards--this would give a more precise 
+            # opportunity to click any contained menus
             scroll_into_view(browser, link)
+            short_nap()
             link.click()
 
 
