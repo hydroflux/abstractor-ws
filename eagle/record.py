@@ -313,5 +313,5 @@ def record_document(browser, county, dataframe, document):
     wait_for_pdf_to_load(browser)
     document_number = record_document_fields(browser, county, dataframe, document)
     check_length(dataframe)
-    review_entry(browser, dataframe, document)
+    review_entry(browser, county, dataframe, document)
     return document_number

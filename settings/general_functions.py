@@ -39,7 +39,7 @@ def report_execution_time(start_time):
 def start_program_timer(county):
     start_time = start_timer()
     print(f'{get_county_data(county)} - {abstraction_type} started on: \n'
-          f'{str(start_time.strftime("%B %d, %Y %H:%M:%S"))}\n')
+          f'{str(start_time.strftime("%B %d, %Y %H:%M:%S"))}')
     return start_time
 
 

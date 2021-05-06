@@ -25,9 +25,11 @@ def get_program_type():
                            '[2] Review Output \n'
                            )
     if user_input == "1":
-        return "execute"
+        program_type = "execute"
     elif user_input == "2":
-        return "review"
+        program_type = "review"
+    clear_terminal()
+    return program_type
 
 
 def request_yes_or_no(prompt):

@@ -142,7 +142,7 @@ def create_range_message(dataframe, content):
 
 def write_title_content(county, dataframe, worksheet, font_formats, client=None, legal=None):
     content = worksheet_properties['header_content']
-    content.county = f'{county}\n'
+    content['county'] = f'{county}\n'
     range_message = create_range_message(dataframe, content)
     if client is not None and legal is not None:
         content['user'] = f'{client}\n'

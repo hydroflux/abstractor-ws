@@ -51,7 +51,7 @@ def handle_search_results(browser, county, target_directory, download, abstract_
 
 
 def search_documents_from_list(browser, county, target_directory, document_list, download):
-    for document in document_list[1000:1005]:
+    for document in document_list:
         start_time = start_timer()
         document_search(browser, document)
         if open_document(browser, document):
@@ -99,9 +99,9 @@ def review_documents_from_list(browser, document_list):
 
 
 def execute_review(target_directory, file_name, sheet_name):
+    document_list = generate_document_list(target_directory, file_name, sheet_name)
     browser = create_webdriver(target_directory, False)
     account_login(browser)
-    document_list = generate_document_list(target_directory, file_name, sheet_name)
     review_documents_from_list(browser, document_list)
 
 
