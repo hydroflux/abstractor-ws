@@ -9,21 +9,16 @@ if __name__ == '__main__':
     from settings.settings import (county, download, file_name, headless,
                                     programs, sheet_name, target_directory,
                                     web_directory)
+    from settings.general_functions import start_timer
     from settings.user_prompts import get_program_type
 else:
     from .eagle.execute import execute_program as execute_eagle
     from .eagle.execute import execute_review as review_eagle
-    from .settings.settings import (county, county_instance, download, file_name, headless,
+    from .settings.settings import (county, download, file_name, headless,
                                     programs, sheet_name, target_directory,
                                     web_directory)
-    from .tiger.execute import execute_web_program
+    from .tiger.execute import execute_web_program    
 
-
-def start_timer():
-    start_time = datetime.now()
-    print(f'{county_instance} - {abstraction_type} started on: \n'
-          f'{str(start_time.strftime("%B %d, %Y %H:%M:%S"))}\n')
-    
 
 def execute_program_type(program_type):
     if county == programs["eagle"]:
@@ -42,7 +37,7 @@ def execute_program_type(program_type):
 
 def execute_abstractor(program_type):
     program_type = get_program_type()
-    start_time = start_timer()
+    start_time = start_timer(county)
     execute_abstractor(program_type)
     browser.close()
     quit()
