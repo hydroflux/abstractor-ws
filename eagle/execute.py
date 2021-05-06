@@ -72,6 +72,7 @@ def execute_program(county, target_directory, document_list, file_name, download
     browser = create_webdriver(target_directory, False)
     account_login(browser)
     create_abstraction(browser, county, target_directory, document_list, file_name, download)
+    browser.close()
     bundle_project(target_directory, file_name)
 
 
@@ -96,6 +97,7 @@ def execute_review(county, target_directory, document_list):
     browser = create_webdriver(target_directory, False)
     account_login(browser)
     review_documents_from_list(browser, county, document_list)
+    browser.close()
 
 
 # def execute_web_program(client, legal, upload_file):
