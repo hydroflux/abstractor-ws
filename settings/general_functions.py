@@ -22,16 +22,24 @@ def get_county_data(county):
     return county_dictionary.get(county)
 
 
-def start_timer(county):
-    start_time = datetime.now()
+def start_timer():
+    return datetime.now()
+
+
+def stop_timer(start_time):
+    return datetime.now() - start_time
+
+
+def start_program_timer(county):
+    start_time = start_timer()
     print(f'{get_county_data(county)} - {abstraction_type} started on: \n'
           f'{str(start_time.strftime("%B %d, %Y %H:%M:%S"))}\n')
     return start_time
 
 
-def stop_timer(start_time):
+def stop_program_timer(start_time):
     print(f'Total Run Time: {str(datetime.now() - start_time)}')
-
+    
 
 def scroll_into_view(browser, element):
     browser.execute_script("arguments[0].scrollIntoView();", element)

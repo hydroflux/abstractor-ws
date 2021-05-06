@@ -7,7 +7,7 @@ if __name__ == '__main__':
     from settings.settings import (county, download, file_name, headless,
                                     programs, sheet_name, target_directory,
                                     web_directory)
-    from settings.general_functions import start_timer, stop_timer
+    from settings.general_functions import start_program_timer, stop_program_timer
     from settings.user_prompts import get_program_type
 else:
     from .eagle.execute import execute_program as execute_eagle
@@ -35,9 +35,9 @@ def execute_program_type(program_type):
 
 def execute_abstractor():
     program_type = get_program_type()
-    start_time = start_timer(county)
+    start_time = start_program_timer(county)
     execute_abstractor(program_type)
-    stop_timer(start_time)
+    stop_program_timer(start_time)
     browser.close()
     quit()
 
