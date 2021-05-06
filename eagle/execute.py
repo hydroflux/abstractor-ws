@@ -83,7 +83,7 @@ def execute_program(county, target_directory, file_name, sheet_name, download):
 
 def review_multiple_documents(start_time, document_list, document):
     document_found(start_time, document_list, document, "review")
-    for document in range(0, document.number_results):
+    for document in range(0, (document.number_results - 1)):
         next_result(browser, document)
         document_found(start_time, document_list, document, "review")
 
