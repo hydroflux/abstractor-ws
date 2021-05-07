@@ -8,13 +8,10 @@ from settings.abstract_object import abstract_dictionary
 from settings.bad_search import record_bad_search
 from settings.driver import create_webdriver
 from settings.export import export_document
-from settings.file_management import (bundle_project,
-                                      extrapolate_document_value,
-                                      list_remaining_documents)
+from settings.file_management import bundle_project
 from settings.general_functions import start_timer
 from settings.settings import web_directory
-from settings.user_prompts import (continue_prompt, document_found,
-                                   no_document_found, request_more_information)
+from settings.user_prompts import document_found, no_document_found
 
 from eagle.download import download_document
 from eagle.login import account_login

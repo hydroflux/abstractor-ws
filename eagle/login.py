@@ -13,10 +13,6 @@ from settings.settings import timeout
 
 from eagle.eagle_variables import (credentials, login_button_class,
                                     webpage_title, website)
-# else:
-#     from ..settings.settings import timeout
-#     from .eagle_variables import (credentials, login_button_class,
-#                                   webpage_title, website)
 
 
 def open_site(browser):
