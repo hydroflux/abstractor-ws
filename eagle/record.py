@@ -40,14 +40,25 @@ def wait_for_pdf_to_load(browser):
         pdf_load_status(browser)
 
 
-def access_document_information(browser, document):
+def get_document_information(browser, document):
     try:
         document_information_present = EC.presence_of_element_located((By.ID, document_information_id))
         WebDriverWait(browser, timeout).until(document_information_present)
-        document_info = browser.find_element_by_id(document_information_id)
-        return document_info.find_elements_by_class_name(document_table_class)
+        document_information = browser.find_element_by_id(document_information_id)
+        return document_information
     except TimeoutException:
-        print(f'Browser timed out while trying to access document information for '
+        print(f'Browser timed out while trying to get document information for '
+              f'{extrapolate_document_value(document)}.')
+
+
+def access_document_information_tables(browser, document, document_information):
+    try:
+        document_tables_present = EC.presence_of_element_located((By.CLASS_NAME, document_table_class))
+        WebDriverWait(browser, timeout).until(document_tables_present)
+        document_tables = document_info.find_elements_by_class_name(document_table_class)
+        return document_tables
+    except TimeoutException:
+        print(f'Browser timed out while trying to access document table information for '
               f'{extrapolate_document_value(document)}.')
 
 
@@ -76,9 +87,15 @@ def review_and_open_links(browser, links):
         if link.text == more_info:
             open_informational_link(browser, link)
 
+def display_all_information(browser):
+    document_info = browser.find_element_by_id(document_information_id)
+    information_links = document_info.find_elements_by_class_name(information_links_class)
+    review_and_open_links(browser, information_links)
+
+
 
 def display_all_information(browser, document):
-    document_info = access_document_information(browser, document)
+    document_info = get_document_information(browser, document)
     information_links = get_informational_links(browser, document, document_info)
     (browser, information_links)
 
@@ -210,7 +227,8 @@ def record_comments(county, dataframe, document):
 
 
 def record_document_fields(browser, county, dataframe, document):
-    document_tables = access_document_information(browser, document)
+    document_information = get_document_information(browser, document)
+    document_tables = access_document_information_tables(browser, document, document_information)
     display_all_information(browser, document)
     reception_number = aggregate_document_information(document_tables, dataframe)
     record_comments(county, dataframe, document)
@@ -280,6 +298,7 @@ def next_result(browser, document):
 def record_document(browser, county, dataframe, document):
     wait_for_pdf_to_load(browser)
     short_nap() # Added in an effort to make sure entire page loads -- test by checking related documents during review
+    # Overall this is a bad practice because it's adding 1 - 2 seconds for a 0.1% chance it misses (based on testing)
     document_number = record_document_fields(browser, county, dataframe, document)
     check_length(dataframe)
     review_entry(browser, county, dataframe, document)
