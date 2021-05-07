@@ -11,9 +11,9 @@ print("record", __name__)
 
 from settings.file_management import extrapolate_document_value
 from settings.general_functions import (naptime, scroll_into_view,
-                                        scroll_to_top, short_nap)
-from settings.settings import (long_timeout, search_errors,
-                               timeout)
+                                        scroll_to_top, short_nap,
+                                        update_sentence_case_extras)
+from settings.settings import long_timeout, search_errors, timeout
 
 from eagle.eagle_variables import (document_information_id,
                                    document_table_class, index_table_tags,
@@ -95,10 +95,6 @@ def access_table_body(document_table):
 def access_table_rows(table_body):
     body_text = table_body.find_elements_by_tag_name(index_table_tags[1])
     return body_text
-
-
-def update_sentence_case_extras(text):
-    return text.replace("'S ", "'s ").replace("1St ", "1st ").replace("2Nd ", "2nd ").replace("3Rd ", "3rd ").replace("4Th ", "4th ")
 
 
 def access_title_case_text(data):

@@ -63,6 +63,9 @@ def title_strip(text):
     return text.title().strip()
 
 
+def update_sentence_case_extras(text):
+    return text.replace("'S ", "'s ").replace("1St ", "1st ").replace("2Nd ", "2nd ").replace("3Rd ", "3rd ").replace("4Th ", "4th ")
+
 # def scroll_to_top(browser):
 #     try:
 #         body_element_present = EC.presence_of_element_located((By.TAG_NAME, "body"))
