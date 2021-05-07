@@ -137,5 +137,3 @@ def open_document(browser, document):
         except StaleElementReferenceException:
             print(f'Encountered a stale element exception while trying to open '
                 f'{extrapolate_document_value(document)}, trying again.')
-            browser.refresh()
-            return determine_document_status(browser, document)
