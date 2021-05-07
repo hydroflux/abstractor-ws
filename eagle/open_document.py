@@ -276,6 +276,7 @@ def open_document(browser, document):
             first_result = get_search_results(browser)[0]
             open_document_description(browser, first_result)
             # naptime() # Commented out for testing
+            short_nap() # Testing find without naptime, however hitting manual overrides more often; Use short_nap if this works
             return True
         except StaleElementReferenceException:
             print(f'Encountered a stale element exception while trying to open '
