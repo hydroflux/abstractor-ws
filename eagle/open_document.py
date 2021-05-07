@@ -9,22 +9,16 @@ from selenium.webdriver.support.wait import WebDriverWait
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("open", __name__)
 
-from settings.file_management import (document_type, document_value,
-                                      extrapolate_document_value)
-from settings.general_functions import naptime, scroll_into_view, short_nap
+from settings.file_management import document_value, extrapolate_document_value
+from settings.general_functions import naptime, short_nap
 from settings.settings import timeout
 
-from eagle.eagle_variables import (book_and_page_tag, book_title,
-                                   currently_searching, failed_search,
-                                   first_result_class_name,
-                                   first_result_submenu_class,
-                                   first_result_tag, invalid_search_message,
-                                   nested_submenu_class, no_results,
-                                   page_title, search_action_tag,
+from eagle.eagle_variables import (currently_searching, failed_search,
+                                   invalid_search_message, no_results_message,
+                                   search_action_tag,
                                    search_actions_class_name,
-                                   search_result_class_name,
-                                   search_results_header_class_name,
-                                   search_status_tag, validation_class_name)
+                                   search_result_class_name, search_status_tag,
+                                   validation_class_name)
 from eagle.search import document_search, execute_search
 
 
@@ -92,7 +86,7 @@ def count_results(browser, document):
     search_results = wait_for_results(browser)
     if search_results == failed_search:
         search_results = retry_execute_search(browser, document, search_results)
-    if search_results == no_results:
+    if search_results == no_results_message:
         return 0
     else:
         return int(len(get_search_results(browser)))
