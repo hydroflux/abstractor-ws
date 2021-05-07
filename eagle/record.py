@@ -49,14 +49,14 @@ def access_document_information(browser, document):
               f'{extrapolate_document_value(document)}.')
 
 
-def get_informational_links(browser, document_info):
+def get_informational_links(browser, document, document_info):
     try:
         informational_links_present = EC.presence_of_element_located((By.CLASS_NAME, information_links_class))
         WebDriverWait(browser, timeout).until(informational_links_present)
         informational_links = document_info.find_elements_by_class_name(information_links_class)
         return informational_links
     except TimeoutException:
-        print("Browser timed out while trying to get informational links.")
+        print(f'Browser timed out while trying to get informational links for {extrapolate_document_value(document)}.')
 
 
 def open_informational_link(browser, link):
@@ -75,9 +75,9 @@ def review_and_open_links(browser, links):
             open_informational_link(browser, link)
 
 
-def display_all_information(browser):
-    document_info = browser.find_element_by_id(document_information_id)
-    information_links = get_informational_links(browser, document_info)
+def display_all_information(browser, document):
+    document_info = access_document_information(browser, document)
+    information_links = get_informational_links(browser, document, document_info)
     (browser, information_links)
 
 
@@ -209,7 +209,7 @@ def record_comments(county, dataframe, document):
 
 def record_document_fields(browser, county, dataframe, document):
     document_tables = access_document_information(browser, document)
-    display_all_information(browser)
+    display_all_information(browser, document)
     reception_number = aggregate_document_information(document_tables, dataframe)
     record_comments(county, dataframe, document)
     scroll_to_top(browser)
