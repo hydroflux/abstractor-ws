@@ -6,8 +6,7 @@ from settings.file_management import (document_type, document_value,
                                       extrapolate_document_value,
                                       split_book_and_page)
 from settings.general_functions import (javascript_script_execution,
-                                        scroll_into_view, short_nap)
-from settings.settings import timeout
+                                        scroll_into_view, short_nap, timeout)
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("search", __name__)

@@ -7,7 +7,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from settings.download_management import previously_downloaded, update_download
 from settings.file_management import (create_document_directory,
                                       extrapolate_document_value)
-from settings.settings import timeout
+from settings.general_functions import timeout
 
 from leopard.leopard_variables import (download_button_id, stock_download,
                                        view_group_id, view_panel_id)

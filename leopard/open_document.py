@@ -6,15 +6,15 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from settings.file_management import (document_type, document_value,
                                       extrapolate_document_value)
-from settings.general_functions import get_element_text, scroll_into_view
-from settings.settings import timeout
+from settings.general_functions import (get_element_text, scroll_into_view,
+                                        timeout)
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("open_document", __name__)
 
 from leopard.leopard_variables import (first_result_tag, result_cell_tag,
-                                       results_count_id, result_row_class,
-                                       results_body_tag, results_id)
+                                       result_row_class, results_body_tag,
+                                       results_count_id, results_id)
 
 # Script is SIMILAR, but not nearly identical, to tiger open_document
 

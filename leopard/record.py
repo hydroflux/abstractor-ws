@@ -8,8 +8,8 @@ from selenium.webdriver.support.wait import WebDriverWait
 print("record", __name__)
 
 from settings.file_management import extrapolate_document_value
-from settings.general_functions import get_element_text, title_strip
-from settings.settings import empty_value, not_applicable, timeout
+from settings.general_functions import get_element_text, timeout, title_strip
+from settings.export_settings import empty_value, not_applicable
 
 from leopard.leopard_variables import (book_page_abbreviation,
                                        document_image_id,

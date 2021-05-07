@@ -6,7 +6,8 @@ from settings.file_management import (bundle_project,
                                       extrapolate_document_value,
                                       list_remaining_documents)
 from settings.general_functions import (get_county_data,
-                                        javascript_script_execution, naptime)
+                                        javascript_script_execution, naptime,
+                                        timeout)
 from settings.import_list import generate_document_list
 from settings.user_prompts import document_found, no_document_found
 
