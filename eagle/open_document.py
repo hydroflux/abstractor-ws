@@ -10,8 +10,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 print("open", __name__)
 
 from settings.file_management import document_value, extrapolate_document_value
-from settings.general_functions import naptime, short_nap
-from settings.settings import timeout
+from settings.general_functions import naptime, short_nap, timeout
 
 from eagle.eagle_variables import (currently_searching, failed_search,
                                    invalid_search_message, no_results_message,

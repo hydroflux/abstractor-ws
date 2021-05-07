@@ -9,7 +9,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("login", __name__)
 # if __name__ == '__main__':
-from settings.settings import timeout
+from settings.general_functions import timeout
 
 from eagle.eagle_variables import (credentials, login_button_class,
                                     webpage_title, website)

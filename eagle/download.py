@@ -10,8 +10,7 @@ from settings.file_management import create_document_directory
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("download", __name__)
 
-from settings.settings import long_timeout
-from settings.general_functions import naptime
+from settings.general_functions import long_timeout, naptime
 
 from eagle.eagle_variables import (download_button_id, pdf_viewer_class_name,
                                    stock_download_suffix)

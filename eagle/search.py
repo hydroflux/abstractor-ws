@@ -9,8 +9,7 @@ print("search", __name__)
 from settings.file_management import (document_type, document_value,
                                       extrapolate_document_value,
                                       split_book_and_page)
-from settings.general_functions import naptime, scroll_into_view
-from settings.settings import timeout
+from settings.general_functions import naptime, scroll_into_view, timeout
 
 from eagle.eagle_variables import (book_search_id, clear_search_id,
                                    instrument_search_id, page_search_id,

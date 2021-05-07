@@ -9,12 +9,13 @@ from selenium.webdriver.support.wait import WebDriverWait
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("record", __name__)
 
-from settings.file_management import extrapolate_document_value
-from settings.general_functions import (check_length, drop_last_entry, naptime,
-                                        scroll_into_view, scroll_to_top,
-                                        short_nap, update_sentence_case_extras)
-from settings.settings import long_timeout, timeout
 from settings.export_settings import search_errors
+from settings.file_management import extrapolate_document_value
+from settings.general_functions import (check_length, drop_last_entry,
+                                        long_timeout, naptime,
+                                        scroll_into_view, scroll_to_top,
+                                        short_nap, timeout,
+                                        update_sentence_case_extras)
 
 from eagle.eagle_variables import (document_information_id,
                                    document_table_class, index_table_tags,
