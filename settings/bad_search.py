@@ -3,7 +3,7 @@ print("bad_search", __name__)
 
 from settings.file_management import (document_type, document_value,
                                       extrapolate_document_value)
-from settings.settings import search_errors
+from settings.export_settings import search_errors
 
 
 def add_bad_search_key_values(dataframe, document):

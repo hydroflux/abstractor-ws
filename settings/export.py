@@ -7,8 +7,9 @@ if __name__ == '__main__':
     from settings.settings import (abstraction_type, authorship, text_formats,
                                    worksheet_properties)
 else:
-    from .settings import (abstraction_type, authorship, text_formats,
-                           worksheet_properties)
+    from .export_settings import authorship, text_formats, worksheet_properties
+    from .settings import abstraction_type
+
     # from .assets import draft_watermark as draft_watermark
 
 

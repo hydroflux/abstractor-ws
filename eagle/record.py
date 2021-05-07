@@ -13,7 +13,8 @@ from settings.file_management import extrapolate_document_value
 from settings.general_functions import (check_length, drop_last_entry, naptime,
                                         scroll_into_view, scroll_to_top,
                                         short_nap, update_sentence_case_extras)
-from settings.settings import long_timeout, search_errors, timeout
+from settings.settings import long_timeout, timeout
+from settings.export_settings import search_errors
 
 from eagle.eagle_variables import (document_information_id,
                                    document_table_class, index_table_tags,
