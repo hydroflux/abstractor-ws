@@ -10,9 +10,9 @@ from selenium.webdriver.support.wait import WebDriverWait
 print("record", __name__)
 
 from settings.file_management import extrapolate_document_value
-from settings.general_functions import (naptime, scroll_into_view,
-                                        scroll_to_top, short_nap,
-                                        update_sentence_case_extras)
+from settings.general_functions import (check_length, drop_last_entry, naptime,
+                                        scroll_into_view, scroll_to_top,
+                                        short_nap, update_sentence_case_extras)
 from settings.settings import long_timeout, search_errors, timeout
 
 from eagle.eagle_variables import (document_information_id,
@@ -207,45 +207,6 @@ def record_comments(county, dataframe, document):
         dataframe["Comments"].append("")
 
 
-def drop_last_entry(dataframe):
-    dataframe["Grantor"].pop()
-    dataframe["Grantee"].pop()
-    dataframe["Book"].pop()
-    dataframe["Page"].pop()
-    dataframe["Reception Number"].pop()
-    dataframe["Document Type"].pop()
-    dataframe["Recording Date"].pop()
-    dataframe["Legal"].pop()
-    dataframe["Related Documents"].pop()
-    dataframe["Comments"].pop()
-
-
-def check_length(dataframe):
-    grantors = len(dataframe["Grantor"])
-    grantees = len(dataframe["Grantee"])
-    books = len(dataframe["Book"])
-    pages = len(dataframe["Page"])
-    reception_numbers = len(dataframe["Reception Number"])
-    document_types = len(dataframe["Document Type"])
-    recording_dates = len(dataframe["Recording Date"])
-    legals = len(dataframe["Legal"])
-    related_documents = len(dataframe["Related Documents"])
-    comments = len(dataframe["Comments"])
-    if (grantors == grantees == books == pages == reception_numbers == document_types == recording_dates == legals == related_documents == comments):
-        pass
-    else:
-        print("Grantors: ", grantors)
-        print("Grantees: ", grantees)
-        print("Books: ", books)
-        print("Pages: ", pages)
-        print("Reception Numbers: ", reception_numbers)
-        print("Document Types: ", document_types)
-        print("Recording Dates: ", recording_dates)
-        print("Legals: ", legals)
-        print("Related Documents: ", related_documents)
-        print("Comments: ", comments)
-
-
 def record_document_fields(browser, county, dataframe, document):
     document_tables = access_document_information(browser, document)
     display_all_information(browser)
@@ -255,7 +216,6 @@ def record_document_fields(browser, county, dataframe, document):
     return reception_number
 
 
-# This series of functions may be unnecessary, continue to test
 def review_entry(browser, county, dataframe, document):
     while dataframe["Grantor"][-1] == missing_values[0] and dataframe["Grantee"][-1] == missing_values[0]\
             and dataframe["Related Documents"][-1] == missing_values[1]:
@@ -299,7 +259,7 @@ def click_result_button(browser, button):
     try:
         scroll_to_top(browser)
         button.click()
-        short_nap() # Nap is necessary
+        short_nap() # Nap is necessary, consider lengthening if app breaks at this point
     except ElementClickInterceptedException:
         print("Button click intercepted while trying to view previous / next result, trying again")
         naptime()
@@ -313,10 +273,6 @@ def click_result_button(browser, button):
 def next_result(browser, document):
     next_result_button = get_next_result_button(browser, document)
     click_result_button(browser, next_result_button)
-    # short_nap()
-    # Increased naptime by 1 second on high & low end because of an issue here;
-    # consider adding a short nap here rather than increasing naptime to increase efficiency
-    # Now testing with short nap
 
 
 def record_document(browser, county, dataframe, document):
