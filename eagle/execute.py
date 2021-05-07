@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import os
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
@@ -54,7 +55,7 @@ def search_documents_from_list(browser, county, target_directory, document_list,
         start_time = start_timer()
         document_search(browser, document)
         if open_document(browser, document):
-            handle_search_results(browser, county, target_directory, download, abstract_dictionary, document_list, document, start_time)
+            handle_search_results(browser, county, target_directory, download, document_list, document, start_time)
         else:
             record_bad_search(abstract_dictionary, document)
             no_document_found(start_time, document_list, document)

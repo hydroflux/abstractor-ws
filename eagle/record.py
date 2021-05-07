@@ -68,7 +68,7 @@ def review_and_open_links(browser, links):
 def display_all_information(browser):
     document_info = browser.find_element_by_id(document_information_id)
     information_links = document_info.find_elements_by_class_name(information_links_class)
-    review_and_open_links(browser, information_links)
+    (browser, information_links)
 
 
 def drop_superfluous_information(string):
@@ -293,9 +293,13 @@ def click_result_button(browser, button):
     try:
         scroll_to_top(browser)
         button.click()
-        # naptime() # NAP REMOVED FOR TESTING, ADD THIS BACK IN IF NEXT RESULT ISSUE OCCURS
+        short_nap() # Nap is necessary
     except ElementClickInterceptedException:
-        print("Button click intercepted while trying to view previous / next result")
+        print("Button click intercepted while trying to view previous / next result, trying again")
+        naptime()
+        button.click()
+    except StaleElementReferenceException:
+        print("Stale element reference exception encountered while trying to view previous / next result, trying again")
         naptime()
         button.click()
 

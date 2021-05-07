@@ -9,7 +9,7 @@ print("search", __name__)
 from settings.file_management import (document_type, document_value,
                                       extrapolate_document_value,
                                       split_book_and_page)
-from settings.general_functions import naptime
+from settings.general_functions import naptime, scroll_into_view
 from settings.settings import timeout
 
 from eagle.eagle_variables import (book_search_id, clear_search_id,
@@ -27,7 +27,7 @@ def clear_search(browser):
         clear_search_present = EC.presence_of_element_located((By.ID, clear_search_id))
         WebDriverWait(browser, timeout).until(clear_search_present)
         clear_search = browser.find_element_by_id(clear_search_id)
-        browser.execute_script("arguments[0].scrollIntoView();", clear_search)
+        scroll_into_view(browser, clear_search)
         clear_search.click()
     except TimeoutException:
         print("Browser timed out while trying to clear the search form.")
@@ -86,6 +86,7 @@ def execute_search(browser):
         search_button_present = EC.element_to_be_clickable((By.ID, search_button_id))
         WebDriverWait(browser, timeout).until(search_button_present)
         search_button = browser.find_element_by_id(search_button_id)
+        scroll_into_view(browser, search_button)
         search_button.click()
     except TimeoutException:
         print("Browser timed out while trying to execute search.")
