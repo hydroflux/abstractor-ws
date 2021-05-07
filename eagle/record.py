@@ -55,18 +55,18 @@ def access_document_information_tables(browser, document, document_information):
     try:
         document_tables_present = EC.presence_of_element_located((By.CLASS_NAME, document_table_class))
         WebDriverWait(browser, timeout).until(document_tables_present)
-        document_tables = document_info.find_elements_by_class_name(document_table_class)
+        document_tables = document_information.find_elements_by_class_name(document_table_class)
         return document_tables
     except TimeoutException:
         print(f'Browser timed out while trying to access document table information for '
               f'{extrapolate_document_value(document)}.')
 
 
-def get_informational_links(browser, document, document_info):
+def get_informational_links(browser, document, document_information):
     try:
         informational_links_present = EC.presence_of_element_located((By.CLASS_NAME, information_links_class))
         WebDriverWait(browser, timeout).until(informational_links_present)
-        informational_links = document_info.find_elements_by_class_name(information_links_class)
+        informational_links = document_information.find_elements_by_class_name(information_links_class)
         return informational_links
     except TimeoutException:
         print(f'Browser timed out while trying to get informational links for {extrapolate_document_value(document)}.')
@@ -87,17 +87,11 @@ def review_and_open_links(browser, links):
         if link.text == more_info:
             open_informational_link(browser, link)
 
-def display_all_information(browser):
-    document_info = browser.find_element_by_id(document_information_id)
-    information_links = document_info.find_elements_by_class_name(information_links_class)
-    review_and_open_links(browser, information_links)
-
-
 
 def display_all_information(browser, document):
-    document_info = get_document_information(browser, document)
-    information_links = get_informational_links(browser, document, document_info)
-    (browser, information_links)
+    document_information = get_document_information(browser, document)
+    information_links = get_informational_links(browser, document, document_information)
+    review_and_open_links(browser, information_links)
 
 
 def drop_superfluous_information(string):
