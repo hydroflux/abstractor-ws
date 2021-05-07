@@ -36,7 +36,7 @@ def pdf_load_status(browser):
 
 def wait_for_pdf_to_load(browser):
     while pdf_load_status(browser).startswith(loading_status):
-        sleep(0.5)
+        sleep(1) # Sleep increased from 0.5 seconds to 1 second in order to try & grab all related documents
         pdf_load_status(browser)
 
 
@@ -279,6 +279,7 @@ def next_result(browser, document):
 
 def record_document(browser, county, dataframe, document):
     wait_for_pdf_to_load(browser)
+    short_nap() # Added in an effort to make sure entire page loads -- test by checking related documents during review
     document_number = record_document_fields(browser, county, dataframe, document)
     check_length(dataframe)
     review_entry(browser, county, dataframe, document)
