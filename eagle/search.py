@@ -39,7 +39,8 @@ def execute_clear_search(browser, button):
         button.click()
         return True
     except ElementClickInterceptedException:
-        print("Encountered an element click interception exception while trying to clear the search form, refreshing & trying again.")
+        print('Encountered an element click interception exception while trying to clear the search form, '
+              'refreshing & trying again.')
         return False
 
 
@@ -115,7 +116,7 @@ def execute_search(browser):
 def document_search(browser, document):
     open_search(browser)
     clear_search(browser)
-    naptime() # Consider testing without this nap to see if necessary
+    naptime()  # Consider testing without this nap to see if necessary
     if document_type(document) == "document_number":
         enter_document_number(browser, document)
     elif document_type(document) == "book_and_page":
