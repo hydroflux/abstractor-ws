@@ -40,14 +40,17 @@ def execute_clear_search(browser, button):
         return True
     except ElementClickInterceptedException:
         print("Encountered an element click interception exception while trying to clear the search form, refreshing & trying again.")
+        return False
 
 
 def clear_search(browser):
-    while not True:
-        clear_button = get_clear_search_button(browser)
-        execute_clear_search(browser, clear_search_button)
-        browser.refresh()
-        medium_nap()
+    clear = False
+    while clear is not True:
+        clear_search_button = get_clear_search_button(browser)
+        clear = execute_clear_search(browser, clear_search_button)
+        if clear is False:
+            browser.refresh()
+            medium_nap()
 
 
 def enter_document_number(browser, document):
@@ -97,7 +100,7 @@ def prepare_book_and_page_search(browser, document):
         else:
             open_search(browser)
 
-    
+
 def execute_search(browser):
     try:
         search_button_present = EC.element_to_be_clickable((By.ID, search_button_id))
