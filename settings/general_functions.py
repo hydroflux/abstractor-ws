@@ -23,6 +23,10 @@ def short_nap():
     sleep(randint(1, 2))
 
 
+def medium_nap():
+    sleep(randint(15, 25))
+
+
 def long_nap():
     sleep(randint(30, 45))
 

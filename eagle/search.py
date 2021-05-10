@@ -10,7 +10,8 @@ print("search", __name__)
 from settings.file_management import (document_type, document_value,
                                       extrapolate_document_value,
                                       split_book_and_page)
-from settings.general_functions import naptime, scroll_into_view, timeout
+from settings.general_functions import (medium_nap, naptime, scroll_into_view,
+                                        timeout)
 
 from eagle.eagle_variables import (book_search_id, clear_search_id,
                                    instrument_search_id, page_search_id,
@@ -46,7 +47,7 @@ def clear_search(browser):
         clear_button = get_clear_search_button(browser)
         execute_clear_search(browser, clear_search_button)
         browser.refresh()
-        naptime()
+        medium_nap()
 
 
 def enter_document_number(browser, document):
