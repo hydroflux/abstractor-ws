@@ -1,11 +1,13 @@
 # abstractor-ws
 
 # GENERAL TO DO
+
 - [ ] Create a fully built-out README
 - [ ] Add watermark
 - [ ] Duplicated results—add “multiple results” as an array to Document class in order to create more effective comments when encountering multiple documents
 
 # EAGLE TO DO
+
 - [ ] For some reason the ’s isn’t catching on entries when the grantor has to hit show more, please review
 - [ ] Verify results after clicking into the document page
 - [ ] Create a check that if there is anything in the “related” box, throw an extra nap in to make sure that the related documents are grabbed—this will also be an extra verification to make sure that all related documents are grabbed
@@ -15,3 +17,5 @@
 - [ ] Create a check to add comments for multiple documents coming from the same line of the index—i.e. if book & page for a line item hits nothing, make sure the comment says to check the reception number document that comes through—alternatively, do it whether it hits or not
 - [ ] Similar to the above line, create a check that ensures that if the book & page & the reception number document that returns is identical, the document is not duplicated on the run sheet
 - [ ] Add “look for link text” to record—if the program is moving too fast it misses some links that don’t generate right away
+- [ ] Implement 'medium_nap()'s when refreshing the page after encountering an exception
+- [ ] Add a .strip() to Document class instance values when created in order to catch any numbers which were typed with extra space(s) on either side of the document value
