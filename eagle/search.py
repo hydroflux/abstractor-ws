@@ -1,4 +1,5 @@
-from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import (ElementClickInterceptedException,
+                                        TimeoutException)
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
@@ -21,15 +22,31 @@ def open_search(browser):
     assert search_title
 
 
-def clear_search(browser):
+def get_clear_search_button(browser):
     try:
-        clear_search_present = EC.presence_of_element_located((By.ID, clear_search_id))
-        WebDriverWait(browser, timeout).until(clear_search_present)
-        clear_search = browser.find_element_by_id(clear_search_id)
-        scroll_into_view(browser, clear_search)
-        clear_search.click()
+        clear_search_button_present = EC.presence_of_element_located((By.ID, clear_search_id))
+        WebDriverWait(browser, timeout).until(clear_search_button_present)
+        clear_search_button = browser.find_element_by_id(clear_search_id)
+        return clear_search_button
     except TimeoutException:
         print("Browser timed out while trying to clear the search form.")
+
+
+def execute_clear_search(browser, button):
+    try:
+        scroll_into_view(browser, button)
+        button.click()
+        return True
+    except ElementClickInterceptedException:
+        print("Encountered an element click interception exception while trying to clear the search form, refreshing & trying again.")
+
+
+def clear_search(browser):
+    while not True:
+        clear_button = get_clear_search_button(browser)
+        execute_clear_search(browser, clear_search_button)
+        browser.refresh()
+        naptime()
 
 
 def enter_document_number(browser, document):
