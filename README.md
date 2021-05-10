@@ -7,6 +7,8 @@
 - [ ] Duplicated results—add “multiple results” as an array to Document class in order to create more effective comments when encountering multiple documents
 - [ ] When creating document instances, leave an indication if a book and page instance & a document number instance are on the same line (use the index) in order to create more effective comments
 - [ ] In the same vein as the two above, create an indicator for any instances that are repeated (don't necessarily remove them)
+- [ ] Figure out how to send cookies through to browser instances in order to get faster page load times
+- [ ] Entire header should be created in the settings block, rather than relying on first & last recording dates in the dataframe
 
 # EAGLE TO DO
 
