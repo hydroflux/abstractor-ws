@@ -62,7 +62,6 @@ def execute_program(headless, county, target_directory, document_list, file_name
     bundle_project(target_directory, file_name)
     logout(browser)
     browser.close()
-    quit()
 
 
 def execute_review(target_directory, document_list, file_name, sheet_name):
@@ -71,4 +70,3 @@ def execute_review(target_directory, document_list, file_name, sheet_name):
     review_documents_from_list(browser, document_list)
     logout(browser)
     browser.close()
-    quit()
