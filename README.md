@@ -9,6 +9,8 @@
 - [ ] In the same vein as the two above, create an indicator for any instances that are repeated (don't necessarily remove them)
 - [ ] Figure out how to send cookies through to browser instances in order to get faster page load times
 - [ ] Entire header should be created in the settings block, rather than relying on first & last recording dates in the dataframe
+- [ ] Remove an additional space when dropping "see record" in order to cut the new line character out
+- [ ] Consider an "append_text" function to go in general functions / file management which would strip, title case, & replace any unwanted information
 
 # EAGLE TO DO
 
@@ -23,3 +25,5 @@
 - [ ] Add “look for link text” to record—if the program is moving too fast it misses some links that don’t generate right away
 - [ ] Implement 'medium_nap()'s when refreshing the page after encountering an exception
 - [ ] Add a .strip() to Document class instance values when created in order to catch any numbers which were typed with extra space(s) on either side of the document value
+- [ ] Count results doesn't work if the search button has never been pressed, add a fallback procedure to account for this--occurs when the browser instance is offscreen during a search
+- [ ] If a grantor / grantee ends in a tag indicating more information is present, redo the search -- add to eagle record
