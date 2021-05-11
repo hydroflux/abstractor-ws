@@ -32,7 +32,7 @@ def execute_program_type(county, program_type, document_list):
             review_eagle(county, target_directory, document_list, download)
     elif county.program == 'leopard':
         if program_type == "execute":
-            execute_leopard(headless, target_directory, county, file_name, sheet_name, download)
+            execute_leopard(headless, county, target_directory, document_list, file_name, sheet_name, download)
         elif program_type == "review":
             review_leopard(target_directory, file_name, sheet_name)
     else:

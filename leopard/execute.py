@@ -25,6 +25,7 @@ from leopard.search import search
 
 
 def search_documents_from_list(browser, county, target_directory, document_list, download):
+    convert_document_numbers(document_list)
     for document in document_list:
         search(browser, document)
         if open_document(browser, document):
@@ -38,9 +39,11 @@ def search_documents_from_list(browser, county, target_directory, document_list,
         else:
             record_bad_search(dictionary, document)
             no_document_found(document_list, document)
+    return dictionary
 
 
 def review_documents_from_list(browser, document_list):
+    convert_document_numbers(document_list)
     for document in document_list:
         search(browser, document)
         if open_document(browser, document):
@@ -51,18 +54,10 @@ def review_documents_from_list(browser, document_list):
             no_document_found(document_list, document, "review")
 
 
-def create_abstraction(browser, county, target_directory, file_name, sheet_name, download):
-    document_list = generate_document_list(target_directory, file_name, sheet_name)
-    convert_document_numbers(document_list)
-    search_documents_from_list(browser, county, target_directory, document_list, download)
-    return dictionary
-
-
-def execute_program(headless, target_directory, county, file_name, sheet_name, download):
+def execute_program(headless, county, target_directory, document_list, file_name, sheet_name, download):
     browser = create_webdriver(target_directory, headless)
-    county = get_county_data(county)
     account_login(browser)
-    dictionary = create_abstraction(browser, county, target_directory, file_name, sheet_name, download)
+    dictionary = search_documents_from_list(browser, county, target_directory, document_list, download)
     export_document(target_directory, file_name, dictionary)
     bundle_project(target_directory, file_name)
     logout(browser)
@@ -70,11 +65,9 @@ def execute_program(headless, target_directory, county, file_name, sheet_name, d
     quit()
 
 
-def execute_review(target_directory, file_name, sheet_name):
+def execute_review(target_directory, document_list, file_name, sheet_name):
     browser = create_webdriver(target_directory, False)
     account_login(browser)
-    document_list = generate_document_list(target_directory, file_name, sheet_name)
-    convert_document_numbers(document_list)
     review_documents_from_list(browser, document_list)
     logout(browser)
     browser.close()
