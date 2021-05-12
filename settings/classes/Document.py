@@ -1,5 +1,5 @@
 class Document:
-    def __init__(self, type, value, number_results=None):
+    def __init__(self, type, value, number_results=0):
         self.type = type
         self.value = value
         self.number_results = number_results

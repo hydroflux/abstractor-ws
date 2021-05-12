@@ -86,7 +86,7 @@ def count_results(browser, document):
     if search_results == failed_search:
         search_results = retry_execute_search(browser, document, search_results)
     if search_results == no_results_message:
-        return 0
+        return 0 # If we start at 0 we don't need to return zero, only return what isn't 0
     else:
         return int(len(get_search_results(browser)))
 

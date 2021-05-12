@@ -100,7 +100,7 @@ def verify_document_number(document, cells):
         return True
 
 
-def verify_book_and_page_numbers(browser, document, cells):
+def verify_book_and_page_numbers(document, cells):
     book, page = split_book_and_page(document)
     if book and page in map(get_element_text, cells):
         return True
@@ -115,15 +115,25 @@ def verify_first_result(browser, document):
         verify_book_and_page_numbers(browser, document, first_result_cells)
 
 
-def check_result(row, document):
-    pass
+def verify_result(document, cells):
+    if document_type(document) == "document_number":
+        return verify_document_number(document, cells)
+    elif document_type(document) == "book_and_page":
+        return verify_book_and_page_numbers(document, cells)
+
+
+def check_result(browser, document, row):
+    row_cells = get_row_cells(browser, document, row)
+    if verify_result(document, row_cells):
+        document.number_results += 1
+        return True
 
 
 def count_matching_results(browser, document):
     result_rows = get_result_rows(browser, document)
     for row in result_rows:
-        print(row.text)
-        check_result(row, document)
+        if not check_result(browser, document, row):
+            break
 
 
 def open_document(browser, document):
