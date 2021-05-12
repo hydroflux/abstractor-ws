@@ -10,9 +10,9 @@ from selenium.webdriver.support.wait import WebDriverWait
 print("record", __name__)
 
 from settings.export_settings import search_errors
-from settings.file_management import extrapolate_document_value
-from settings.general_functions import (check_length, drop_last_entry,
-                                        long_timeout, naptime,
+from settings.file_management import (check_length, drop_last_entry,
+                                      extrapolate_document_value)
+from settings.general_functions import (long_timeout, naptime,
                                         scroll_into_view, scroll_to_top,
                                         short_nap, timeout,
                                         update_sentence_case_extras)

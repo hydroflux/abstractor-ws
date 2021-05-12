@@ -95,48 +95,6 @@ def get_element_attributes(browser, element):
     pprint(attributes)
 
 
-def drop_last_entry(dataframe):
-    dataframe["Grantor"].pop()
-    dataframe["Grantee"].pop()
-    dataframe["Book"].pop()
-    dataframe["Page"].pop()
-    dataframe["Reception Number"].pop()
-    dataframe["Document Type"].pop()
-    dataframe["Recording Date"].pop()
-    dataframe["Legal"].pop()
-    dataframe["Related Documents"].pop()
-    dataframe["Comments"].pop()
-
-
-def check_length(dataframe):
-    grantors = len(dataframe["Grantor"])
-    grantees = len(dataframe["Grantee"])
-    books = len(dataframe["Book"])
-    pages = len(dataframe["Page"])
-    reception_numbers = len(dataframe["Reception Number"])
-    document_types = len(dataframe["Document Type"])
-    recording_dates = len(dataframe["Recording Date"])
-    legals = len(dataframe["Legal"])
-    related_documents = len(dataframe["Related Documents"])
-    comments = len(dataframe["Comments"])
-    if (grantors == grantees == books == pages
-            == reception_numbers == document_types
-            == recording_dates == legals == related_documents
-            == comments):
-        pass
-    else:
-        print("Grantors: ", grantors)
-        print("Grantees: ", grantees)
-        print("Books: ", books)
-        print("Pages: ", pages)
-        print("Reception Numbers: ", reception_numbers)
-        print("Document Types: ", document_types)
-        print("Recording Dates: ", recording_dates)
-        print("Legals: ", legals)
-        print("Related Documents: ", related_documents)
-        print("Comments: ", comments)
-
-
 def check_active_class(element):
     element_class = element.get_attribute("class")
     if element_class.endswith("active"):
@@ -145,3 +103,7 @@ def check_active_class(element):
 
 def get_parent_element(element):
     return element.find_element_by_xpath("..")
+
+
+def four_character_padding(value):
+    return value.zfill(4)
