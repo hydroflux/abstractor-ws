@@ -13,8 +13,8 @@ from leopard.leopard_variables import (book_and_page_search_button_id,
                                        book_and_page_search_tab_id,
                                        book_search_id,
                                        document_search_button_id,
-                                       document_search_tab_id,
-                                       document_search_field_id, page_search_id,
+                                       document_search_field_id,
+                                       document_search_tab_id, page_search_id,
                                        search_navigation_id, search_script,
                                        search_title)
 
