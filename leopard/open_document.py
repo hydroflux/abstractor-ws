@@ -61,7 +61,7 @@ def get_results_table_body(browser, document):
     return locate_results_table_body(browser, document, results)
 
 
-def get_result_rows(browser, results_table_body, document):
+def get_result_rows(browser, document, results_table_body):
     try:
         first_row_present = EC.presence_of_element_located((By.CLASS_NAME, result_row_class))
         WebDriverWait(browser, timeout).until(first_row_present)
@@ -74,17 +74,29 @@ def get_result_rows(browser, results_table_body, document):
 
 def get_first_row(browser, document):
     results_table_body = get_results_table_body(browser, document)
-    result_rows = get_result_rows(browser, results_table_body, document)
+    result_rows = get_result_rows(browser, document, results_table_body)
     return result_rows[0]
 
 
+def get_row_cells(browser, document, row):
+    try:
+        row_cells_present = EC.presence_of_element_located((By.TAG_NAME, result_cell_tag))
+        WebDriverWait(browser, timeout).until(row_cells_present)
+        row_cells = row.find_elements_by_tag_name(result_cell_tag)
+        return row_cells
+    except TimeoutException:
+        print(f'Browser timed out trying to identify row cells for '
+              f'{extrapolate_document_value(document)}, please review.')
+
+
 def verify_result(browser, document):
-    first_row = get_first_row(browser, document)
+    first_result = get_first_row(browser, document)
+    first_result_cells = get_row_cells(browser, document, first_result)
 
 
 def check_result(browser, document):
-    first_result = get_first_row(browser, document)
-    first_result_cells = first_result.find_elements_by_tag_name(result_cell_tag)
+    # first_result = get_first_row(browser, document)
+    # first_result_cells = first_result.find_elements_by_tag_name(result_cell_tag)
     if document_type(document) == "document_number":
         if document_value(document) in map(get_element_text, first_result_cells):
             return True
