@@ -53,14 +53,18 @@ def locate_document_search_tab(browser):
         print("Browser timed out while trying to access the document search tab.")
 
 
+def open_tab(browser, tab):
+    scroll_into_view(browser, tab)
+    if check_active_class(get_parent_element(tab)):
+        return
+    tab.click()
+    short_nap()
+    tab.click()  # This is a bad practice, need to circle back to this
+
+
 def open_document_search_tab(browser):
     document_search_tab = locate_document_search_tab(browser)
-    scroll_into_view(browser, document_search_tab)
-    if check_active_class(get_parent_element(document_search_tab)):
-        return
-    document_search_tab.click()
-    short_nap()
-    document_search_tab.click()  # This is a bad practice, need to circle back to this
+    open_tab(browser, document_search_tab)
 
 
 def locate_book_and_page_search_tab(browser):
@@ -75,12 +79,7 @@ def locate_book_and_page_search_tab(browser):
 
 def open_book_and_page_search_tab(browser):
     book_and_page_search_tab = locate_document_search_tab(browser)
-    scroll_into_view(browser, book_and_page_search_tab)
-    if check_active_class(get_parent_element(book_and_page_search_tab)):
-        return
-    book_and_page_search_tab.click()
-    short_nap()
-    book_and_page_search_tab.click()  # This is a bad practice, need to circle back to this
+    open_tab(browser, book_and_page_search_tab)
 
 
 def enter_document_number(browser, document):
