@@ -78,6 +78,10 @@ def get_first_row(browser, document):
     return result_rows[0]
 
 
+def verify_result(browser, document):
+    first_row = get_first_row(browser, document)
+
+
 def check_result(browser, document):
     first_result = get_first_row(browser, document)
     first_result_cells = first_result.find_elements_by_tag_name(result_cell_tag)
