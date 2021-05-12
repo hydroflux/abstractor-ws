@@ -13,12 +13,13 @@
 - [ ] Entire header should be created in the settings block, rather than relying on first & last recording dates in the dataframe
 - [ ] Remove an additional space when dropping "see record" in order to cut the new line character out
 - [ ] Consider an "append_text" function to go in general functions / file management which would strip, title case, & replace any unwanted information
-- [ ] Compared parallel scripts from leopard & eagle in order to help refactoring
+- [ ] Compare parallel scripts from leopard & eagle in order to help refactoring
 
 ### Leopard To Do
 
 - [ ] Update search & record functions to function when multiple documents are returned
 - [ ] Find a better way to handle opening search tabs without click nap click
+- [ ] Create a "big cat" repo to combine information that matches between tiger & leopard
 
 ### Eagle To Do
 

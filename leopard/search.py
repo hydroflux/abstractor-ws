@@ -75,7 +75,7 @@ def locate_document_search_field(browser, document):
         return document_search_field
     except TimeoutException:
         print(f'Browser timed out while trying to locate document number field for '
-              f'{extrapolate_document_value(document)}, trying again.')
+              f'{extrapolate_document_value(document)}.')
 
 
 def enter_document_number(browser, document):
@@ -99,28 +99,38 @@ def open_book_and_page_search_tab(browser):
     open_tab(browser, book_and_page_search_tab)
 
 
-def enter_book_number(browser, document, book):
+def locate_book_search_field(browser, document):
     try:
         book_search_field_present = EC.element_to_be_clickable((By.ID, book_search_id))
         WebDriverWait(browser, timeout).until(book_search_field_present)
         book_search_field = browser.find_element_by_id(book_search_id)
-        book_search_field.clear()
-        book_search_field.send_keys(book)
+        return book_search_field
     except TimeoutException:
-        print(f'Browser timed out while trying to fill book field for '
-              f'{extrapolate_document_value(document)}, trying again.')
+        print(f'Browser timed out while trying to locate book field for '
+              f'{extrapolate_document_value(document)}.')
 
 
-def enter_page_number(browser, document, page):
+def enter_book_number(browser, document, book):
+    book_search_field = locate_book_search_field(browser, document)
+    book_search_field.clear()
+    book_search_field.send_keys(book)
+
+
+def locate_page_search_field(browser, document):
     try:
         page_search_field_present = EC.element_to_be_clickable((By.ID, page_search_id))
         WebDriverWait(browser, timeout).until(page_search_field_present)
         page_search_field = browser.find_element_by_id(page_search_id)
-        page_search_field.clear()
-        page_search_field.send_keys(page)
+        return page_search_field
     except TimeoutException:
-        print(f'Browser timed out while trying to fill page field for '
-              f'{extrapolate_document_value(document)}, trying again.')
+        print(f'Browser timed out while trying to locate page field for '
+              f'{extrapolate_document_value(document)}.')
+
+
+def enter_page_number(browser, document, page):
+    page_search_field = locate_page_search_field(browser, document)
+    page_search_field.clear()
+    page_search_field.send_keys(page)
 
 
 def identify_search_button(document):
@@ -139,7 +149,7 @@ def execute_search(browser, document):
         search_button.click()
     except TimeoutException:
         print(f'Browser timed out while trying to execute search for '
-              f'{extrapolate_document_value(document)}')
+              f'{extrapolate_document_value(document)}.')
 
 
 def search(browser, document):
