@@ -14,7 +14,7 @@ from leopard.leopard_variables import (book_and_page_search_button_id,
                                        book_search_id,
                                        document_search_button_id,
                                        document_search_tab_id,
-                                       instrument_search_id, page_search_id,
+                                       document_search_field_id, page_search_id,
                                        search_navigation_id, search_script,
                                        search_title)
 
@@ -67,6 +67,23 @@ def open_document_search_tab(browser):
     open_tab(browser, document_search_tab)
 
 
+def locate_document_search_field(browser, document):
+    try:
+        document_search_field_present = EC.element_to_be_clickable((By.ID, document_search_field_id))
+        WebDriverWait(browser, timeout).until(document_search_field_present)
+        document_search_field = browser.find_element_by_id(document_search_field_id)
+        return document_search_field
+    except TimeoutException:
+        print(f'Browser timed out while trying to locate document number field for '
+              f'{extrapolate_document_value(document)}, trying again.')
+
+
+def enter_document_number(browser, document):
+    document_search_field = locate_document_search_field(browser, document)
+    document_search_field.clear()
+    document_search_field.send_keys(document_value(document))
+
+
 def locate_book_and_page_search_tab(browser):
     try:
         book_and_page_search_tab_present = EC.element_to_be_clickable((By.ID, book_and_page_search_tab_id))
@@ -80,18 +97,6 @@ def locate_book_and_page_search_tab(browser):
 def open_book_and_page_search_tab(browser):
     book_and_page_search_tab = locate_document_search_tab(browser)
     open_tab(browser, book_and_page_search_tab)
-
-
-def enter_document_number(browser, document):
-    try:
-        instrument_search_field_present = EC.element_to_be_clickable((By.ID, instrument_search_id))
-        WebDriverWait(browser, timeout).until(instrument_search_field_present)
-        instrument_search_field = browser.find_element_by_id(instrument_search_id)
-        instrument_search_field.clear()
-        instrument_search_field.send_keys(document_value(document))
-    except TimeoutException:
-        print(f'Browser timed out while trying to fill document number field for '
-              f'{extrapolate_document_value(document)}, trying again.')
 
 
 def enter_book_number(browser, document, book):
