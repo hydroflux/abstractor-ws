@@ -136,15 +136,20 @@ def enter_page_number(browser, document, page):
     enter_key_value(browser, page_search_field, page)
 
 
-def execute_search(browser, document, button_id):
+def locate_search_button(browser, document, button_id):
     try:
         search_button_present = EC.element_to_be_clickable((By.ID, button_id))
         WebDriverWait(browser, timeout).until(search_button_present)
         search_button = browser.find_element_by_id(button_id)
-        search_button.click()
+        return search_button
     except TimeoutException:
-        print(f'Browser timed out while trying to execute search for '
+        print(f'Browser timed out while trying to locate search button for '
               f'{extrapolate_document_value(document)}.')
+
+
+def execute_search(browser, document, button_id):
+    search_button = locate_search_button(browser, document, button_id)
+    search_button.click()
 
 
 def execute_document_number_search(browser, document):
