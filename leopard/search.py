@@ -5,8 +5,9 @@ from selenium.webdriver.support.wait import WebDriverWait
 from settings.file_management import (document_type, document_value,
                                       extrapolate_document_value,
                                       split_book_and_page)
-from settings.general_functions import (javascript_script_execution,
-                                        scroll_into_view, short_nap, get_parent_element, check_active_class, timeout)
+from settings.general_functions import (check_active_class, get_parent_element,
+                                        javascript_script_execution,
+                                        scroll_into_view, short_nap, timeout)
 
 from leopard.leopard_variables import (book_and_page_search_button_id,
                                        book_and_page_search_tab_id,
@@ -23,17 +24,23 @@ print("search", __name__)
 # Script is nearly identical to tiger search
 
 
-def open_search(browser):
+def locate_search_navigation(browser):
     try:
         search_navigation_present = EC.element_to_be_clickable((By.ID, search_navigation_id))
         WebDriverWait(browser, timeout).until(search_navigation_present)
         search_navigation = browser.find_element_by_id(search_navigation_id)
-        if check_active_class(search_navigation):
-            return
-        javascript_script_execution(browser, search_script)
-        assert search_title
+        return search_navigation
     except TimeoutException:
         print("Browser timed out while trying to open the search navigation.")
+
+
+def open_search(browser):
+    search_navigation = locate_search_navigation(browser)
+    if check_active_class(search_navigation):
+        assert search_title
+        return
+    javascript_script_execution(browser, search_script)
+    assert search_title
 
 
 def open_document_search_tab(browser):

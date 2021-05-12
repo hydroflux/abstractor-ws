@@ -6,7 +6,6 @@ from time import sleep
 from settings.classes.counties import county_dictionary
 from settings.settings import abstraction_type
 
-
 # Timeout / Wait Variables
 # search_wait = sleep(randint(2, 5)) # Commented out, delete if runtime continues uninhibited
 timeout = randint(20, 30)
