@@ -14,6 +14,7 @@
 - [ ] Remove an additional space when dropping "see record" in order to cut the new line character out
 - [ ] Consider an "append_text" function to go in general functions / file management which would strip, title case, & replace any unwanted information
 - [ ] Compare parallel scripts from leopard & eagle in order to help refactoring
+- [ ] Review all scripts for "standardized" functions that might be extrapolated
 
 ### Leopard To Do
 

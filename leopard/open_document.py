@@ -78,6 +78,7 @@ def get_first_row(browser, document):
     return result_rows[0]
 
 
+# get_row_cells could be tweaked to be a standardized function
 def get_row_cells(browser, document, row):
     try:
         row_cells_present = EC.presence_of_element_located((By.TAG_NAME, result_cell_tag))
@@ -89,23 +90,26 @@ def get_row_cells(browser, document, row):
               f'{extrapolate_document_value(document)}, please review.')
 
 
-def verify_result(browser, document):
+def verify_document_number(browser, document, cells):
+    if document_value(document) in map(get_element_text, cells):
+        return True
+
+
+def verify_book_and_page_numbers(browser, document, cells):
+    pass
+
+
+def verify_first_result(browser, document):
     first_result = get_first_row(browser, document)
     first_result_cells = get_row_cells(browser, document, first_result)
-
-
-def check_result(browser, document):
-    # first_result = get_first_row(browser, document)
-    # first_result_cells = first_result.find_elements_by_tag_name(result_cell_tag)
     if document_type(document) == "document_number":
-        if document_value(document) in map(get_element_text, first_result_cells):
-            return True
+        verify_document_number(browser, document, first_result_cells)
     elif document_type(document) == "book_and_page":
-        return True
+        verify_book_and_page_numbers(browser, document, first_result_cells)
 
 
 def open_document(browser, document):
     count_results(browser, document)
-    if check_result(browser, document):
+    if verify_first_result(browser, document):
         get_first_row(browser, document).click()
         return True
