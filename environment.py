@@ -2,7 +2,6 @@ import sys
 
 sys.path.append(".")
 
-print("environment", __name__)
 if __name__ == '__main__':
     from eagle.execute import execute_program as execute_eagle
     from eagle.execute import execute_review as review_eagle
@@ -13,15 +12,10 @@ if __name__ == '__main__':
                                             stop_program_timer)
     from settings.import_list import generate_document_list
     from settings.settings import (county_name, download, file_name, headless,
-                                   sheet_name, target_directory, web_directory)
+                                   sheet_name, target_directory)
     from settings.user_prompts import get_program_type
-else:
-    from .eagle.execute import execute_program as execute_eagle
-    from .eagle.execute import execute_review as review_eagle
-    from .settings.settings import (county_name, download, file_name, headless,
-                                    programs, sheet_name, target_directory,
-                                    web_directory)
-    from .tiger.execute import execute_web_program    
+
+print("environment", __name__)
 
 
 def execute_program_type(county, program_type, document_list):
