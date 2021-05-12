@@ -1,6 +1,8 @@
-# Abstractor To Do List
+# abstractor-ws
 
-General To Do
+## To Do List
+
+### General To Do
 
 - [ ] Create a fully built-out README
 - [ ] Add watermark
@@ -13,12 +15,12 @@ General To Do
 - [ ] Consider an "append_text" function to go in general functions / file management which would strip, title case, & replace any unwanted information
 - [ ] Compared parallel scripts from leopard & eagle in order to help refactoring
 
-Leopard To Do
+### Leopard To Do
 
 - [ ] Update search & record functions to function when multiple documents are returned
 - [ ] Find a better way to handle opening search tabs without click nap click
 
-Eagle To Do
+### Eagle To Do
 
 - [ ] For some reason the ’s isn’t catching on entries when the grantor has to hit show more, please review
 - [ ] Verify results after clicking into the document page
