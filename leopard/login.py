@@ -6,7 +6,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 
 from settings.general_functions import timeout
 
-from leopard.leopard_variables import (credentials, handle_disclaimer_id,
+from leopard.leopard_variables import (credentials, disclaimer_id, handle_disclaimer_id,
                                        website, website_title)
 from leopard.search import open_search
 
@@ -36,14 +36,19 @@ def enter_credentials(browser):
     login_prompt.send_keys(credentials[0] + Keys.TAB + credentials[2] + Keys.RETURN)
 
 
-def handle_disclaimer(browser):
+def locate_disclaimer(browser):
     try:
         disclaimer_present = EC.element_to_be_clickable((By.ID, handle_disclaimer_id))
         WebDriverWait(browser, timeout).until(disclaimer_present)
         disclaimer = browser.find_element_by_id(handle_disclaimer_id)
-        disclaimer.click()
+        return disclaimer
     except TimeoutException:
         print("No disclaimer present, moving forward.")
+
+
+def handle_disclaimer(browser):
+    disclaimer = locate_disclaimer(browser)
+    disclaimer.click()
 
 
 def account_login(browser):
