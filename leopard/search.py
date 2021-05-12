@@ -43,34 +43,44 @@ def open_search(browser):
     assert search_title
 
 
-def open_document_search_tab(browser):
+def locate_document_search_tab(browser):
     try:
         document_search_tab_present = EC.element_to_be_clickable((By.ID, document_search_tab_id))
         WebDriverWait(browser, timeout).until(document_search_tab_present)
         document_search_tab = browser.find_element_by_id(document_search_tab_id)
-        scroll_into_view(browser, document_search_tab)
-        if check_active_class(get_parent_element(document_search_tab)):
-            return
-        document_search_tab.click()
-        short_nap()
-        document_search_tab.click()
+        return document_search_tab
     except TimeoutException:
         print("Browser timed out while trying to access the document search tab.")
 
 
-def open_book_and_page_search_tab(browser):
+def open_document_search_tab(browser):
+    document_search_tab = locate_document_search_tab(browser)
+    scroll_into_view(browser, document_search_tab)
+    if check_active_class(get_parent_element(document_search_tab)):
+        return
+    document_search_tab.click()
+    short_nap()
+    document_search_tab.click()  # This is a bad practice, need to circle back to this
+
+
+def locate_book_and_page_search_tab(browser):
     try:
         book_and_page_search_tab_present = EC.element_to_be_clickable((By.ID, book_and_page_search_tab_id))
         WebDriverWait(browser, timeout).until(book_and_page_search_tab_present)
         book_and_page_search_tab = browser.find_element_by_id(book_and_page_search_tab_id)
-        scroll_into_view(browser, book_and_page_search_tab)
-        if check_active_class(get_parent_element(book_and_page_search_tab)):
-            return
-        book_and_page_search_tab.click()
-        short_nap()
-        book_and_page_search_tab.click()
+        return book_and_page_search_tab
     except TimeoutException:
         print("Browser timed out while trying to access the book and page search tab.")
+
+
+def open_book_and_page_search_tab(browser):
+    book_and_page_search_tab = locate_document_search_tab(browser)
+    scroll_into_view(browser, book_and_page_search_tab)
+    if check_active_class(get_parent_element(book_and_page_search_tab)):
+        return
+    book_and_page_search_tab.click()
+    short_nap()
+    book_and_page_search_tab.click()  # This is a bad practice, need to circle back to this
 
 
 def enter_document_number(browser, document):

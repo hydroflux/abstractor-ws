@@ -16,6 +16,7 @@ General To Do
 Leopard To Do
 
 - [ ] Update search & record functions to function when multiple documents are returned
+- [ ] Find a better way to handle opening search tabs without click nap click
 
 Eagle To Do
 
