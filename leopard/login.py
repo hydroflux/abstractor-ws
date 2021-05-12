@@ -4,16 +4,17 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-# Use the following print statement to identify the best way to manage imports for Django vs the script folder
-print("login", __name__)
-
 from settings.general_functions import timeout
 
 from leopard.leopard_variables import (credentials, handle_disclaimer_id,
                                        website, website_title)
 from leopard.search import open_search
 
+# Use the following print statement to identify the best way to manage imports for Django vs the script folder
+print("login", __name__)
+
 # Script is nearly identical to tiger login--extrapolate into "big cats"
+
 
 def open_site(browser):
     browser.get(website)
@@ -44,4 +45,4 @@ def account_login(browser):
     open_site(browser)
     enter_credentials(browser)
     open_search(browser)
-    handle_disclaimer(browser)
+    handle_disclaimer(browser)  # While testing, check to see if the disclaimer appears with each search
