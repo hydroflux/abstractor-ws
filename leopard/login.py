@@ -21,14 +21,19 @@ def open_site(browser):
     assert website_title in browser.title
 
 
-def enter_credentials(browser):
+def locate_login_prompt(browser):
     try:
         login_prompt_open = EC.presence_of_element_located((By.ID, credentials[1]))
         WebDriverWait(browser, timeout).until(login_prompt_open)
         login_prompt = browser.find_element_by_id(credentials[1])
-        login_prompt.send_keys(credentials[0] + Keys.TAB + credentials[2] + Keys.RETURN)
+        return login_prompt
     except TimeoutException:
-        print("Browser timed out while trying to enter login credentials.")
+        print("Browser timed out while trying to locate login prompt.")
+
+
+def enter_credentials(browser):
+    login_prompt = locate_login_prompt(browser)
+    login_prompt.send_keys(credentials[0] + Keys.TAB + credentials[2] + Keys.RETURN)
 
 
 def handle_disclaimer(browser):
