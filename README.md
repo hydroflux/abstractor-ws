@@ -26,7 +26,6 @@
 - [ ] Refactor record_document
 - [ ] Refactor download_document
 - [ ] Refactor login
-- [ ] Refactor logout
 - [ ] Refactor convert_document_numbers
 
 ### Eagle To Do

@@ -5,14 +5,13 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-
-# Use the following print statement to identify the best way to manage imports for Django vs the script folder
-print("login", __name__)
-# if __name__ == '__main__':
 from settings.general_functions import timeout
 
 from eagle.eagle_variables import (credentials, login_button_class,
-                                    webpage_title, website)
+                                   webpage_title, website)
+
+# Use the following print statement to identify the best way to manage imports for Django vs the script folder
+print("login", __name__)
 
 
 def open_site(browser):
