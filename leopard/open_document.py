@@ -3,7 +3,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from settings.file_management import (document_type, document_value,
-                                      extrapolate_document_value)
+                                      extrapolate_document_value,
+                                      split_book_and_page)
 from settings.general_functions import (get_element_text, scroll_into_view,
                                         timeout)
 
@@ -28,12 +29,12 @@ def locate_result_count(browser, document):
               f'{extrapolate_document_value(document)}.')
 
 
-def count_results(browser, document):
+def count_total_results(browser, document):
     result_count = locate_result_count(browser, document)
     return result_count.text.split(' ')[-1]
 
 
-def locate_results(browser, document):
+def locate_results_table(browser, document):
     try:
         results_present = EC.presence_of_element_located((By.ID, results_id))
         WebDriverWait(browser, timeout).until(results_present)
@@ -44,11 +45,11 @@ def locate_results(browser, document):
               f'{extrapolate_document_value(document)}, please review.')
 
 
-def locate_results_table_body(browser, document, results):
+def locate_results_table_body(browser, document, results_table):
     try:
         results_table_body_present = EC.presence_of_element_located((By.TAG_NAME, results_body_tag))
         WebDriverWait(browser, timeout).until(results_table_body_present)
-        results_table_body = results.find_element_by_tag_name(results_body_tag)
+        results_table_body = results_table.find_element_by_tag_name(results_body_tag)
         return results_table_body
     except TimeoutException:
         print(f'Browser timed out trying to extrapolate the results table for '
@@ -56,12 +57,12 @@ def locate_results_table_body(browser, document, results):
 
 
 def get_results_table_body(browser, document):
-    results = locate_results(browser, document)
+    results = locate_results_table(browser, document)
     scroll_into_view(browser, results)
     return locate_results_table_body(browser, document, results)
 
 
-def get_result_rows(browser, document, results_table_body):
+def locate_result_rows(browser, document, results_table_body):
     try:
         first_row_present = EC.presence_of_element_located((By.CLASS_NAME, result_row_class))
         WebDriverWait(browser, timeout).until(first_row_present)
@@ -72,9 +73,13 @@ def get_result_rows(browser, document, results_table_body):
               f'{extrapolate_document_value(document)}, please review.')
 
 
-def get_first_row(browser, document):
+def get_result_rows(browser, document):
     results_table_body = get_results_table_body(browser, document)
-    result_rows = get_result_rows(browser, document, results_table_body)
+    return locate_result_rows(browser, document, results_table_body)
+
+
+def get_first_row(browser, document):
+    result_rows = get_result_rows(browser, document)
     return result_rows[0]
 
 
@@ -90,13 +95,15 @@ def get_row_cells(browser, document, row):
               f'{extrapolate_document_value(document)}, please review.')
 
 
-def verify_document_number(browser, document, cells):
+def verify_document_number(document, cells):
     if document_value(document) in map(get_element_text, cells):
         return True
 
 
 def verify_book_and_page_numbers(browser, document, cells):
-    pass
+    book, page = split_book_and_page(document)
+    if book and page in map(get_element_text, cells):
+        return True
 
 
 def verify_first_result(browser, document):
@@ -108,8 +115,20 @@ def verify_first_result(browser, document):
         verify_book_and_page_numbers(browser, document, first_result_cells)
 
 
+def check_result(row, document):
+    pass
+
+
+def count_matching_results(browser, document):
+    result_rows = get_result_rows(browser, document)
+    for row in result_rows:
+        print(row.text)
+        check_result(row, document)
+
+
 def open_document(browser, document):
-    count_results(browser, document)
+    count_total_results(browser, document)
     if verify_first_result(browser, document):
         get_first_row(browser, document).click()
+        count_matching_results(browser, document)
         return True

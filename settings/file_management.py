@@ -51,9 +51,9 @@ def extrapolate_document_value(document):
         return f'Document number {value}'
 
 
-def split_book_and_page(book_and_page):
-    book = four_character_padding(document_value(book_and_page)[0])
-    page = four_character_padding(document_value(book_and_page)[1])
+def split_book_and_page(document):
+    book = four_character_padding(document_value(document)[0])
+    page = four_character_padding(document_value(document)[1])
     return book, page
 
 

@@ -15,6 +15,8 @@
 - [ ] Consider an "append_text" function to go in general functions / file management which would strip, title case, & replace any unwanted information
 - [ ] Compare parallel scripts from leopard & eagle in order to help refactoring
 - [ ] Review all scripts for "standardized" functions that might be extrapolated
+- [ ] Create a time_management file in settings to handle sleeps, dates, & timers
+- [ ] Create a 'testing' script that imports all settings & variables & opens a browser instance so dev setup doesn't have to be completely manual
 
 ### Leopard To Do
 
