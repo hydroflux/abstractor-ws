@@ -78,11 +78,6 @@ def get_result_rows(browser, document):
     return locate_result_rows(browser, document, results_table_body)
 
 
-def get_first_row(browser, document):
-    result_rows = get_result_rows(browser, document)
-    return result_rows[0]
-
-
 # get_row_cells could be tweaked to be a standardized function
 def get_row_cells(browser, document, row):
     try:
@@ -106,15 +101,6 @@ def verify_book_and_page_numbers(document, cells):
         return True
 
 
-def verify_first_result(browser, document):
-    first_result = get_first_row(browser, document)
-    first_result_cells = get_row_cells(browser, document, first_result)
-    if document_type(document) == "document_number":
-        verify_document_number(browser, document, first_result_cells)
-    elif document_type(document) == "book_and_page":
-        verify_book_and_page_numbers(browser, document, first_result_cells)
-
-
 def verify_result(document, cells):
     if document_type(document) == "document_number":
         return verify_document_number(document, cells)
@@ -136,9 +122,18 @@ def count_matching_results(browser, document):
             break
 
 
+def get_first_row(browser, document):
+    result_rows = get_result_rows(browser, document)
+    return result_rows[0]
+
+
+def verify_results(browser, document):
+    count_matching_results(browser, document)
+    if document.number_results > 0:
+        get_first_row(browser, document).click()
+        return True
+
+
 def open_document(browser, document):
     count_total_results(browser, document)
-    if verify_first_result(browser, document):
-        get_first_row(browser, document).click()
-        count_matching_results(browser, document)
-        return True
+    verify_results(browser, document)
