@@ -61,29 +61,25 @@ def get_results_table_body(browser, document):
     return locate_results_table_body(browser, document, results)
 
 
-def get_all_results(browser, results_table_body, document):
+def get_result_rows(browser, results_table_body, document):
     try:
         first_row_present = EC.presence_of_element_located((By.CLASS_NAME, result_row_class))
         WebDriverWait(browser, timeout).until(first_row_present)
-        all_results = results_table_body.find_elements_by_class_name(result_row_class)
-        return all_results
+        result_rows = results_table_body.find_elements_by_class_name(result_row_class)
+        return result_rows
     except TimeoutException:
-        print(f'Browser timed out while trying to get results for '
+        print(f'Browser timed out while trying to get result rows for '
               f'{extrapolate_document_value(document)}, please review.')
 
 
-def get_first_row(browser, results_table_body, document):
-    all_results = get_all_results(browser, results_table_body, document)
-    return all_results[0]
-
-
-def identify_first_result(browser, document):
+def get_first_row(browser, document):
     results_table_body = get_results_table_body(browser, document)
-    return get_first_row(browser, results_table_body, document)
+    result_rows = get_result_rows(browser, results_table_body, document)
+    return result_rows[0]
 
 
 def check_result(browser, document):
-    first_result = identify_first_result(browser, document)
+    first_result = get_first_row(browser, document)
     first_result_cells = first_result.find_elements_by_tag_name(result_cell_tag)
     if document_type(document) == "document_number":
         if document_value(document) in map(get_element_text, first_result_cells):
@@ -95,5 +91,5 @@ def check_result(browser, document):
 def open_document(browser, document):
     count_results(browser, document)
     if check_result(browser, document):
-        identify_first_result(browser, document).click()
+        get_first_row(browser, document).click()
         return True
