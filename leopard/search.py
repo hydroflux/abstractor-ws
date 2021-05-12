@@ -8,9 +8,6 @@ from settings.file_management import (document_type, document_value,
 from settings.general_functions import (javascript_script_execution,
                                         scroll_into_view, short_nap, timeout)
 
-# Use the following print statement to identify the best way to manage imports for Django vs the script folder
-print("search", __name__)
-
 from leopard.leopard_variables import (book_and_page_search_button_id,
                                        book_and_page_search_tab_id,
                                        book_search_id,
@@ -20,7 +17,11 @@ from leopard.leopard_variables import (book_and_page_search_button_id,
                                        search_navigation_id, search_script,
                                        search_title)
 
+# Use the following print statement to identify the best way to manage imports for Django vs the script folder
+print("search", __name__)
+
 # Script is nearly identical to tiger search
+
 
 def check_active_class(element):
     element_class = element.get_attribute("class")

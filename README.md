@@ -1,6 +1,4 @@
-# abstractor-ws
-
-# TO DO LIST
+# Abstractor To Do List
 
 General To Do
 
