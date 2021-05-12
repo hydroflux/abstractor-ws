@@ -78,10 +78,15 @@ def locate_document_search_field(browser, document):
               f'{extrapolate_document_value(document)}.')
 
 
+def enter_key_value(browser, field, value):
+    scroll_into_view(browser, field)
+    field.clear()
+    field.send_keys(value)
+
+
 def enter_document_number(browser, document):
     document_search_field = locate_document_search_field(browser, document)
-    document_search_field.clear()
-    document_search_field.send_keys(document_value(document))
+    enter_key_value(browser, document_search_field, document_value(document))
 
 
 def locate_book_and_page_search_tab(browser):
@@ -112,8 +117,7 @@ def locate_book_search_field(browser, document):
 
 def enter_book_number(browser, document, book):
     book_search_field = locate_book_search_field(browser, document)
-    book_search_field.clear()
-    book_search_field.send_keys(book)
+    enter_key_value(browser, book_search_field, book)
 
 
 def locate_page_search_field(browser, document):
@@ -129,8 +133,7 @@ def locate_page_search_field(browser, document):
 
 def enter_page_number(browser, document, page):
     page_search_field = locate_page_search_field(browser, document)
-    page_search_field.clear()
-    page_search_field.send_keys(page)
+    enter_key_value(browser, page_search_field, page)
 
 
 def identify_search_button(document):
