@@ -7,9 +7,9 @@ from settings.file_management import (document_type, document_value,
 from settings.general_functions import (get_element_text, scroll_into_view,
                                         timeout)
 
-from leopard.leopard_variables import (result_cell_tag,
-                                       result_row_class, results_body_tag,
-                                       results_count_id, results_id)
+from leopard.leopard_variables import (result_cell_tag, result_row_class,
+                                       results_body_tag, results_count_id,
+                                       results_id)
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("open_document", __name__)
@@ -17,15 +17,20 @@ print("open_document", __name__)
 # Script is SIMILAR, but not nearly identical, to tiger open_document
 
 
-def count_results(browser, document):
+def locate_result_count(browser, document):
     try:
         result_count_present = EC.presence_of_element_located((By.ID, results_count_id))
         WebDriverWait(browser, timeout).until(result_count_present)
         result_count = browser.find_element_by_id(results_count_id)
-        return result_count.text.split(' ')[-1]
+        return result_count
     except TimeoutException:
-        print(f'Browser timed out trying to read the number of results for '
+        print(f'Browser timed out trying to locate the number of results returned for '
               f'{extrapolate_document_value(document)}.')
+
+
+def count_results(browser, document):
+    result_count = locate_result_count(browser, document)
+    return result_count.text.split(' ')[-1]
 
 
 def get_results_table_body(browser, document):
