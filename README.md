@@ -1,6 +1,8 @@
 # abstractor-ws
 
-# GENERAL TO DO
+# TO DO LIST
+
+General To Do
 
 - [ ] Create a fully built-out README
 - [ ] Add watermark
@@ -11,8 +13,13 @@
 - [ ] Entire header should be created in the settings block, rather than relying on first & last recording dates in the dataframe
 - [ ] Remove an additional space when dropping "see record" in order to cut the new line character out
 - [ ] Consider an "append_text" function to go in general functions / file management which would strip, title case, & replace any unwanted information
+- [ ] Compared parallel scripts from leopard & eagle in order to help refactoring
 
-# EAGLE TO DO
+Leopard To Do
+
+- [ ] Update search & record functions to function when multiple documents are returned
+
+Eagle To Do
 
 - [ ] For some reason the ’s isn’t catching on entries when the grantor has to hit show more, please review
 - [ ] Verify results after clicking into the document page
