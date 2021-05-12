@@ -155,14 +155,26 @@ def execute_search(browser, document):
               f'{extrapolate_document_value(document)}.')
 
 
+def execute_document_number_search(browser, document):
+    open_document_search_tab(browser)
+    enter_document_number(browser, document)
+    # do something
+    execute_search(browser, document)
+
+
+def execute_book_and_page_search(browser, document):
+    pass
+
+
 def search(browser, document):
     open_search(browser)
     if document_type(document) == "document_number":
-        open_document_search_tab(browser)
-        enter_document_number(browser, document)
+        execute_document_number_search(browser, document)
+        # open_document_search_tab(browser)
+        # enter_document_number(browser, document)
     elif document_type(document) == "book_and_page":
         open_book_and_page_search_tab(browser)
         book, page = split_book_and_page(document)
         enter_book_number(browser, document, book)
         enter_page_number(browser, document, page)
-    execute_search(browser, document)
+    # execute_search(browser, document)
