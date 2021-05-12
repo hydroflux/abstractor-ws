@@ -136,19 +136,11 @@ def enter_page_number(browser, document, page):
     enter_key_value(browser, page_search_field, page)
 
 
-def identify_search_button(document):
-    if document_type(document) == "document_number":
-        return document_search_button_id
-    elif document_type(document) == "book_and_page":
-        return book_and_page_search_button_id
-
-
-def execute_search(browser, document):
-    search_button_id = identify_search_button(document)
+def execute_search(browser, document, button_id):
     try:
-        search_button_present = EC.element_to_be_clickable((By.ID, search_button_id))
+        search_button_present = EC.element_to_be_clickable((By.ID, button_id))
         WebDriverWait(browser, timeout).until(search_button_present)
-        search_button = browser.find_element_by_id(search_button_id)
+        search_button = browser.find_element_by_id(button_id)
         search_button.click()
     except TimeoutException:
         print(f'Browser timed out while trying to execute search for '
@@ -158,23 +150,20 @@ def execute_search(browser, document):
 def execute_document_number_search(browser, document):
     open_document_search_tab(browser)
     enter_document_number(browser, document)
-    # do something
-    execute_search(browser, document)
+    execute_search(browser, document, document_search_button_id)
 
 
 def execute_book_and_page_search(browser, document):
-    pass
+    open_book_and_page_search_tab(browser)
+    book, page = split_book_and_page(document)
+    enter_book_number(browser, document, book)
+    enter_page_number(browser, document, page)
+    execute_search(browser, document, book_and_page_search_button_id)
 
 
 def search(browser, document):
     open_search(browser)
     if document_type(document) == "document_number":
         execute_document_number_search(browser, document)
-        # open_document_search_tab(browser)
-        # enter_document_number(browser, document)
     elif document_type(document) == "book_and_page":
-        open_book_and_page_search_tab(browser)
-        book, page = split_book_and_page(document)
-        enter_book_number(browser, document, book)
-        enter_page_number(browser, document, page)
-    # execute_search(browser, document)
+        execute_book_and_page_search(browser, document)
