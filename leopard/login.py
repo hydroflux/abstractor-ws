@@ -3,10 +3,10 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-
 from settings.general_functions import timeout
 
-from leopard.leopard_variables import (credentials, disclaimer_id, handle_disclaimer_id,
+from leopard.leopard_variables import (credentials, disclaimer_active_class,
+                                       disclaimer_button_id, disclaimer_id,
                                        website, website_title)
 from leopard.search import open_search
 
@@ -38,21 +38,33 @@ def enter_credentials(browser):
 
 def locate_disclaimer(browser):
     try:
-        disclaimer_present = EC.element_to_be_clickable((By.ID, handle_disclaimer_id))
+        disclaimer_present = EC.presence_of_element_located((By.ID, disclaimer_id))
         WebDriverWait(browser, timeout).until(disclaimer_present)
-        disclaimer = browser.find_element_by_id(handle_disclaimer_id)
+        disclaimer = browser.find_element_by_id(disclaimer_id)
         return disclaimer
     except TimeoutException:
-        print("No disclaimer present, moving forward.")
+        print("Browser timed out while trying to locate disclaimer while logging in, please review.")
+
+
+def locate_disclaimer_button(browser):
+    try:
+        disclaimer_button_present = EC.element_to_be_clickable((By.ID, disclaimer_button_id))
+        WebDriverWait(browser, timeout).until(disclaimer_button_present)
+        disclaimer_button = browser.find_element_by_id(disclaimer_button_id)
+        return disclaimer_button
+    except TimeoutException:
+        print("Browser timed out while trying to locate disclaimer button while logging in, please review.")
 
 
 def handle_disclaimer(browser):
     disclaimer = locate_disclaimer(browser)
-    disclaimer.click()
+    if disclaimer.get_attribute('class') == disclaimer_active_class:
+        disclaimer_button = locate_disclaimer_button(browser)
+        disclaimer_button.click()
 
 
 def account_login(browser):
     open_site(browser)
     enter_credentials(browser)
     open_search(browser)
-    handle_disclaimer(browser)  # While testing, check to see if the disclaimer appears with each search
+    handle_disclaimer(browser)
