@@ -56,7 +56,7 @@ def start_program_timer(county):
 
 def stop_program_timer(start_time):
     print(f'Total Run Time: {report_execution_time(start_time)}')
-    
+
 
 def scroll_into_view(browser, element):
     browser.execute_script("arguments[0].scrollIntoView();", element)
@@ -75,16 +75,11 @@ def title_strip(text):
 
 
 def update_sentence_case_extras(text):
-    return text.replace("'S ", "'s ").replace("1St ", "1st ").replace("2Nd ", "2nd ").replace("3Rd ", "3rd ").replace("4Th ", "4th ")
-
-# def scroll_to_top(browser):
-#     try:
-#         body_element_present = EC.presence_of_element_located((By.TAG_NAME, "body"))
-#         WebDriverWait(browser, timeout).until(body_element_present)
-#         body_element = browser.find_element_by_tag_name("body")
-#         browser.execute_script("arguments[0].scrollIntoView();", body_element)
-#     except TimeoutException:
-#         print("Timed out while trying to scroll to the top of the page.")
+    return (text.replace("'S ", "'s ")
+            .replace("1St ", "1st ")
+            .replace("2Nd ", "2nd ")
+            .replace("3Rd ", "3rd ")
+            .replace("4Th ", "4th "))
 
 
 def scroll_to_top(browser):
@@ -93,7 +88,11 @@ def scroll_to_top(browser):
 
 
 def get_element_attributes(browser, element):
-    attributes = browser.execute_script('var items = {}; for (index = 0; index < arguments[0].attributes.length; ++index) { items[arguments[0].attributes[index].name] = arguments[0].attributes[index].value }; return items;', element)
+    attributes = browser.execute_script(
+                    'var items = {};'
+                    'for (index = 0; index < arguments[0].attributes.length; ++index)'
+                    '{ items[arguments[0].attributes[index].name] = arguments[0].attributes[index].value }; '
+                    'return items;', element)
     pprint(attributes)
 
 
@@ -121,7 +120,10 @@ def check_length(dataframe):
     legals = len(dataframe["Legal"])
     related_documents = len(dataframe["Related Documents"])
     comments = len(dataframe["Comments"])
-    if (grantors == grantees == books == pages == reception_numbers == document_types == recording_dates == legals == related_documents == comments):
+    if (grantors == grantees == books == pages
+            == reception_numbers == document_types
+            == recording_dates == legals == related_documents
+            == comments):
         pass
     else:
         print("Grantors: ", grantors)
@@ -134,3 +136,13 @@ def check_length(dataframe):
         print("Legals: ", legals)
         print("Related Documents: ", related_documents)
         print("Comments: ", comments)
+
+
+def check_active_class(element):
+    element_class = element.get_attribute("class")
+    if element_class.endswith("active"):
+        return True
+
+
+def get_parent_element(element):
+    return element.find_element_by_xpath("..")

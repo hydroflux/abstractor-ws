@@ -6,7 +6,7 @@ from settings.file_management import (document_type, document_value,
                                       extrapolate_document_value,
                                       split_book_and_page)
 from settings.general_functions import (javascript_script_execution,
-                                        scroll_into_view, short_nap, timeout)
+                                        scroll_into_view, short_nap, get_parent_element, check_active_class, timeout)
 
 from leopard.leopard_variables import (book_and_page_search_button_id,
                                        book_and_page_search_tab_id,
@@ -23,12 +23,6 @@ print("search", __name__)
 # Script is nearly identical to tiger search
 
 
-def check_active_class(element):
-    element_class = element.get_attribute("class")
-    if element_class.endswith("active"):
-        return True
-
-
 def open_search(browser):
     try:
         search_navigation_present = EC.element_to_be_clickable((By.ID, search_navigation_id))
@@ -40,10 +34,6 @@ def open_search(browser):
         assert search_title
     except TimeoutException:
         print("Browser timed out while trying to open the search navigation.")
-
-
-def get_parent_element(element):
-    return element.find_element_by_xpath("..")
 
 
 def open_document_search_tab(browser):
