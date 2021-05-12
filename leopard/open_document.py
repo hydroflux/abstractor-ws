@@ -33,17 +33,32 @@ def count_results(browser, document):
     return result_count.text.split(' ')[-1]
 
 
-def get_results_table_body(browser, document):
+def locate_results(browser, document):
     try:
         results_present = EC.presence_of_element_located((By.ID, results_id))
         WebDriverWait(browser, timeout).until(results_present)
         results = browser.find_element_by_id(results_id)
-        scroll_into_view(browser, results)
+        return results
+    except TimeoutException:
+        print(f'Browser timed out trying to locate results for '
+              f'{extrapolate_document_value(document)}, please review.')
+
+
+def locate_results_table_body(browser, document, results):
+    try:
+        results_table_body_present = EC.presence_of_element_located((By.TAG_NAME, results_body_tag))
+        WebDriverWait(browser, timeout).until(results_table_body_present)
         results_table_body = results.find_element_by_tag_name(results_body_tag)
         return results_table_body
     except TimeoutException:
-        print(f'Browser timed out trying to get results table after searching '
+        print(f'Browser timed out trying to extrapolate the results table for '
               f'{extrapolate_document_value(document)}, please review.')
+
+
+def get_results_table_body(browser, document):
+    results = locate_results(browser, document)
+    scroll_into_view(browser, results)
+    return locate_results_table_body(browser, document, results)
 
 
 def get_all_results(browser, results_table_body, document):
