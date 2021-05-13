@@ -65,6 +65,7 @@ def open_tab(browser, tab):
 
 def open_document_search_tab(browser):
     document_search_tab = locate_document_search_tab(browser)
+    print("2", document_search_tab)
     open_tab(browser, document_search_tab)
 
 
