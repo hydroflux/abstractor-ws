@@ -24,7 +24,7 @@ def document_image_loaded(browser, document):
         document_image_present = EC.presence_of_element_located((By.ID, document_image_id))
         WebDriverWait(browser, timeout).until(document_image_present)
     except TimeoutException:
-        print(f'Browser timed out while waiting for '
+        print(f'Browser timed out waiting for '
               f'{extrapolate_document_value(document)} document image to load.')
 
 
@@ -35,7 +35,7 @@ def get_document_information(browser, document):
         document_information = browser.find_element_by_id(document_information_id)
         return document_information
     except TimeoutException:
-        print(f'Browser timed out while waiting for '
+        print(f'Browser timed out waiting for '
               f'{extrapolate_document_value(document)} document information to load.')
 
 

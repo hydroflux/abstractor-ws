@@ -57,20 +57,18 @@ def access_element(browser, access_function, document, element_type):
               f'{extrapolate_document_value(document)}')
 
 
-# def wait_for_active(browser, access_function):
-#     try:
-#         element = access_function(browser)
-#         return check_active_class(element)
-#     except StaleElementReferenceException:
-#         print('Encountered a stale element reference exception '
-#               'while trying to access element class.')
+def wait_for_active(browser, element):
+    try:
+        return check_active_class(element)
+    except StaleElementReferenceException:
+        print('Encountered a stale element reference exception '
+              'while trying to access element class.')
 
 
 def open_search(browser, document):
     javascript_script_execution(browser, search_script)
     search_navigation_tab = access_element(browser, get_search_navigation_tab, document, "search navigation")
-    print(search_navigation_tab)
-    while not check_active_class(search_navigation_tab):
+    while not wait_for_active(browser, search_navigation_tab):
         javascript_script_execution(browser, search_script)
         short_nap()
         search_navigation_tab = access_element(browser, get_search_navigation_tab, document, "search navigation")
@@ -79,7 +77,7 @@ def open_search(browser, document):
 
 def open_tab(browser, access_function, document):
     tab = access_element(browser, access_function, document, "search tab")
-    while not check_active_class(tab):
+    while not wait_for_active(browser, tab):
         tab = access_element(browser, access_function, document, "search tab")
         tab.click()
 
