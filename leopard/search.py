@@ -1,4 +1,4 @@
-from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import StaleElementReferenceException, TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
@@ -6,7 +6,7 @@ from settings.file_management import (document_type, document_value,
                                       extrapolate_document_value,
                                       split_book_and_page)
 from settings.general_functions import (check_active_class, get_parent_element,
-                                        javascript_script_execution,
+                                        javascript_script_execution, short_nap,
                                         scroll_into_view, timeout)
 
 from leopard.leopard_variables import (book_and_page_search_button_id,
@@ -25,7 +25,6 @@ print("search", __name__)
 
 
 def locate_search_navigation(browser):
-    print("1")
     try:
         search_navigation_present = EC.element_to_be_clickable((By.ID, search_navigation_id))
         WebDriverWait(browser, timeout).until(search_navigation_present)
@@ -33,12 +32,16 @@ def locate_search_navigation(browser):
         return search_navigation
     except TimeoutException:
         print("Browser timed out while trying to open the search navigation.")
+    except StaleElementReferenceException:
+        print("Encountered a stale element reference exception while locating search navigation, trying again.")
 
 
 def open_search(browser):
+    javascript_script_execution(browser, search_script)
     search_navigation = locate_search_navigation(browser)
     while not check_active_class(search_navigation):
         javascript_script_execution(browser, search_script)
+        short_nap()
         search_navigation = locate_search_navigation(browser)
     assert search_title
 
@@ -60,7 +63,6 @@ def open_tab(browser, tab):
 
 def open_document_search_tab(browser):
     document_search_tab = locate_document_search_tab(browser)
-    print("2", document_search_tab)
     open_tab(browser, document_search_tab)
 
 
