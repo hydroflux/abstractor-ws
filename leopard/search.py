@@ -25,6 +25,7 @@ print("search", __name__)
 
 
 def locate_search_navigation(browser):
+    print("1")
     try:
         search_navigation_present = EC.element_to_be_clickable((By.ID, search_navigation_id))
         WebDriverWait(browser, timeout).until(search_navigation_present)
