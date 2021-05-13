@@ -10,7 +10,7 @@ from leopard.download import download_document
 from leopard.login import account_login
 from leopard.logout import logout
 from leopard.open_document import open_document
-from leopard.record import record_document
+from leopard.record import record_document, next_result
 from leopard.search import search
 from leopard.transform_document_list import transform_document_list
 
@@ -27,11 +27,17 @@ def record_single_document(browser, county, target_directory, download, document
 
 
 def record_multiple_documents(browser, county, target_directory, download, document_list, document, start_time):
-    pass
+    record_single_document(browser, county, target_directory, download, document_list, document, start_time)
+    for document_instance in range(0, (document.number_results - 1)):
+        next_result(browser, document)
+        record_single_document(browser, county, target_directory, download, document_list, document, start_time)
 
 
 def review_multiple_documents(browser, start_time, document_list, document):
-    pass
+    document_found(start_time, document_list, document, "review")
+    for document_instance in range(0, (document.number_results - 1)):
+        next_result(browser, document)
+        document_found(start_time, document_list, document, "review")
 
 
 def handle_search_results(browser, county, target_directory, download,

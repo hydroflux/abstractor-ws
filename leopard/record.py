@@ -191,6 +191,10 @@ def aggregate_document_information(browser, dictionary, rows):
     return document_number
 
 
+def next_result(browser, document):
+    pass
+
+
 def record_document(browser, dictionary, document):
     rows = get_document_content(browser, document)
     document_number = aggregate_document_information(browser, dictionary, rows)
