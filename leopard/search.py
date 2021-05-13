@@ -7,7 +7,7 @@ from settings.file_management import (document_type, document_value,
                                       split_book_and_page)
 from settings.general_functions import (check_active_class, get_parent_element,
                                         javascript_script_execution,
-                                        scroll_into_view, short_nap, timeout)
+                                        scroll_into_view, timeout)
 
 from leopard.leopard_variables import (book_and_page_search_button_id,
                                        book_and_page_search_tab_id,
@@ -35,13 +35,9 @@ def locate_search_navigation(browser):
 
 
 def open_search(browser):
-    javascript_script_execution(browser, search_script)
     search_navigation = locate_search_navigation(browser)
-    print("1", search_navigation)
-    # print(search_navigation.get_attribute('class'))
     while not check_active_class(search_navigation):
         javascript_script_execution(browser, search_script)
-        short_nap()
         search_navigation = locate_search_navigation(browser)
     assert search_title
 
@@ -57,10 +53,8 @@ def locate_document_search_tab(browser):
 
 
 def open_tab(browser, tab):
-    scroll_into_view(browser, tab)
     while not check_active_class(get_parent_element(tab)):
         tab.click()
-        short_nap()
 
 
 def open_document_search_tab(browser):
