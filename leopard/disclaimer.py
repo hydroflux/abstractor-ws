@@ -2,7 +2,8 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-from settings.general_functions import javascript_script_execution, timeout
+from settings.general_functions import (javascript_script_execution, naptime,
+                                        timeout)
 
 from leopard.leopard_variables import (disclaimer_active_class,
                                        disclaimer_button_id, disclaimer_id,
@@ -35,3 +36,4 @@ def handle_disclaimer(browser):
     if disclaimer.get_attribute('class') == disclaimer_active_class:
         disclaimer_button = locate_disclaimer_button(browser)
         disclaimer_button.click()
+        naptime()

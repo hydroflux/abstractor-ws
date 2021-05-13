@@ -24,8 +24,7 @@
 
 ### Leopard To Do
 
-- [ ] Update record function to handle multiple document results
-- [ ] Consider adding naptime back into login--there is a stale element at each login & should just be surpassed
+- [ ] Create a next_result function in record to handle processing the "next result"
 
 ### Eagle To Do
 
