@@ -1,15 +1,12 @@
-from selenium.common.exceptions import (StaleElementReferenceException,
+from selenium.common.exceptions import (
                                         TimeoutException)
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-# Use the following print statement to identify the best way to manage imports for Django vs the script folder
-print("record", __name__)
-
 from settings.file_management import extrapolate_document_value
 from settings.general_functions import get_element_text, timeout, title_strip
-from settings.export_settings import empty_value, not_applicable
+from settings.export_settings import not_applicable
 
 from leopard.leopard_variables import (book_page_abbreviation,
                                        document_image_id,
@@ -17,7 +14,10 @@ from leopard.leopard_variables import (book_page_abbreviation,
                                        document_table_tag, row_data_tag,
                                        row_titles, table_row_tag)
 
+# Use the following print statement to identify the best way to manage imports for Django vs the script folder
+print("record", __name__)
 # Script is similar to tiger but superior at time of testing--needs further review
+
 
 def document_image_loaded(browser, document):
     try:

@@ -69,6 +69,7 @@ def access_element(browser, access_function, document, element_type):
 def open_search(browser, document):
     javascript_script_execution(browser, search_script)
     search_navigation_tab = access_element(browser, get_search_navigation_tab, document, "search navigation")
+    print(search_navigation_tab)
     while not check_active_class(search_navigation_tab):
         javascript_script_execution(browser, search_script)
         short_nap()

@@ -1,6 +1,5 @@
 import os
 
-import xlsxwriter
 from pandas import DataFrame, ExcelWriter
 
 if __name__ == '__main__':
