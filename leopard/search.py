@@ -7,7 +7,7 @@ from settings.file_management import (document_type, document_value,
                                       extrapolate_document_value,
                                       split_book_and_page)
 from settings.general_functions import (check_active_class, get_parent_element,
-                                        javascript_script_execution, naptime,
+                                        javascript_script_execution, short_nap,
                                         scroll_into_view, timeout)
 
 from leopard.leopard_variables import (book_and_page_search_button_id,
@@ -49,7 +49,8 @@ def access_element(browser, access_function):
         element = access_function(browser)
         return check_active_class(element)
     except StaleElementReferenceException:
-        print("Encountered a stale element reference exception while trying to interact with element.")
+        print('Encountered a stale element reference exception '
+              'while trying to access element class.')
 
 
 # If it continues to work like this the reason that it's getting slowing is because
@@ -62,8 +63,8 @@ def open_search(browser):
     # search_navigation = access_search_navigation(browser)
     # while not check_active_class(search_navigation):
     while not access_element(browser, get_search_navigation_tab):
-        # naptime()
         javascript_script_execution(browser, search_script)
+        short_nap()
         # search_navigation = access_search_navigation(browser)
     assert search_title
 
@@ -79,20 +80,21 @@ def locate_document_search_tab(browser):
 
 
 def get_document_search_tab(browser):
-    document_search_tab = locate_document_search_tab(browser)
+    document_search_tab = get_parent_element(locate_document_search_tab(browser))
     while document_search_tab is None:
-        document_search_tab = locate_document_search_tab(browser)
+        document_search_tab = get_parent_element(locate_document_search_tab(browser))
     return document_search_tab
 
 
-def open_tab(browser, tab):
-    while not check_active_class(get_parent_element(tab)):
+def open_tab(browser, access_tab_function):
+    while not access_element(browser, access_tab_function):
+        tab = access_tab_function(browser)
         tab.click()
 
 
 def open_document_search_tab(browser):
-    document_search_tab = get_document_search_tab(browser)
-    open_tab(browser, document_search_tab)
+    # document_search_tab = get_document_search_tab(browser)
+    open_tab(browser, get_document_search_tab)
 
 
 def locate_document_search_field(browser, document):
