@@ -61,16 +61,15 @@ def search_documents_from_list(browser, county, target_directory, document_list,
 
 def create_abstraction(browser, county, target_directory, document_list, file_name, download):
     abstract_dictionary = search_documents_from_list(browser, county, target_directory, document_list, download) # Is the abstract_dictionary return necessary ? ? ?
-    export_document(county, target_directory, file_name, abstract_dictionary)
-    return abstract_dictionary
+    return export_document(county, target_directory, file_name, abstract_dictionary)
 
 
 def execute_program(county, target_directory, document_list, file_name, download):
     browser = create_webdriver(target_directory, False)
     account_login(browser)
-    create_abstraction(browser, county, target_directory, document_list, file_name, download)
+    abstraction = create_abstraction(browser, county, target_directory, document_list, file_name, download)
     browser.close()
-    bundle_project(target_directory, file_name)
+    bundle_project(target_directory, abstraction, download)
 
 
 def review_multiple_documents(browser, start_time, document_list, document):
