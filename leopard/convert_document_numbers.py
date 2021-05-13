@@ -19,5 +19,4 @@ def convert_document_numbers(document_list):
                 new_name = ('{}0{}'.format(year, document_number))
             else:
                 new_name = ('{}{}'.format(year, document_number))
-                print(new_name)
             document.value = new_name

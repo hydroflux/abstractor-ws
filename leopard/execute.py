@@ -33,7 +33,7 @@ def search_documents_from_list(browser, county, target_directory, document_list,
             naptime()
         else:
             record_bad_search(dictionary, document)
-            no_document_found(document_list, document)
+            # no_document_found(document_list, document)
     return dictionary
 
 

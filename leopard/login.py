@@ -3,10 +3,10 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-from settings.general_functions import timeout
+from settings.general_functions import short_nap, timeout, javascript_script_execution
 
 from leopard.leopard_variables import (credentials, disclaimer_active_class,
-                                       disclaimer_button_id, disclaimer_id,
+                                       disclaimer_button_id, search_script, disclaimer_id,
                                        website, website_title)
 from leopard.search import open_search
 
@@ -66,5 +66,6 @@ def handle_disclaimer(browser):
 def account_login(browser):
     open_site(browser)
     enter_credentials(browser)
-    open_search(browser)
+    javascript_script_execution(browser, search_script)
     handle_disclaimer(browser)
+    short_nap()

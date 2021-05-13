@@ -35,11 +35,14 @@ def locate_search_navigation(browser):
 
 
 def open_search(browser):
-    search_navigation = locate_search_navigation(browser)
-    if check_active_class(search_navigation):
-        assert search_title
-        return
     javascript_script_execution(browser, search_script)
+    short_nap()
+    search_navigation = locate_search_navigation(browser)
+    # print(search_navigation.get_attribute('class'))
+    while not check_active_class(search_navigation):
+        javascript_script_execution(browser, search_script)
+        short_nap()
+        search_navigation = locate_search_navigation(browser)
     assert search_title
 
 
@@ -55,11 +58,9 @@ def locate_document_search_tab(browser):
 
 def open_tab(browser, tab):
     scroll_into_view(browser, tab)
-    if check_active_class(get_parent_element(tab)):
-        return
-    tab.click()
-    short_nap()
-    tab.click()  # This is a bad practice, need to circle back to this
+    while not check_active_class(get_parent_element(tab)):
+        tab.click()
+        short_nap()
 
 
 def open_document_search_tab(browser):
