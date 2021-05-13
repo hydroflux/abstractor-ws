@@ -4,13 +4,15 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from settings.export_settings import not_applicable
 from settings.file_management import extrapolate_document_value
-from settings.general_functions import get_element_text, scroll_to_top, timeout, title_strip
+from settings.general_functions import (get_element_text, scroll_to_top,
+                                        timeout, title_strip)
 
 from leopard.leopard_variables import (book_page_abbreviation,
                                        document_image_id,
                                        document_information_id,
                                        document_table_tag, next_result_id,
-                                       row_data_tag, row_titles, table_row_tag)
+                                       previous_result_id, row_data_tag,
+                                       row_titles, table_row_tag)
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("record", __name__)
@@ -189,6 +191,23 @@ def aggregate_document_information(browser, dictionary, rows):
     record_legal(rows, dictionary)
     record_comments(dictionary)
     return document_number
+
+
+def get_previous_result_button(browser, document):
+    try:
+        previous_result_button_present = EC.element_to_be_clickable((By.ID, previous_result_id))
+        WebDriverWait(browser, timeout).until(previous_result_button_present)
+        previous_result_button = browser.find_element_by_id(previous_result_id)
+        return previous_result_button
+    except TimeoutException:
+        print(f'Browser timed out trying to locate previous result button for '
+              f'{extrapolate_document_value(document)}')
+
+
+def previous_result(browser, document):
+    previous_result_button = get_previous_result_button(browser, document)
+    scroll_to_top(browser)
+    previous_result_button.click()
 
 
 def get_next_result_button(browser, document):
