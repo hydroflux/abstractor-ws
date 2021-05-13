@@ -21,7 +21,7 @@ from leopard.leopard_variables import (book_and_page_search_button_id,
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("search", __name__)
 
-# Script is nearly identical to tiger search
+# Script FUNCTIONALLY is nearly identical to tiger search
 
 
 def locate_search_navigation(browser):
@@ -43,13 +43,27 @@ def access_search_navigation(browser):
     return search_navigation
 
 
+def access_element(browser, access_function):
+    element = access_function(browser)
+    try:
+        return check_active_class(element)
+    except StaleElementReferenceException:
+        print("Encountered a stale element reference exception while trying to interact with element.")
+
+
+# If it continues to work like this the reason that it's getting slowing is because
+# it's checking before the element has time to populate--it's just checking too fast
+# The fact that it broke where it did means this IS NOT always the case
+
+
 def open_search(browser):
     javascript_script_execution(browser, search_script)
-    search_navigation = access_search_navigation(browser)
-    while not check_active_class(search_navigation):
-        javascript_script_execution(browser, search_script)
+    # search_navigation = access_search_navigation(browser)
+    # while not check_active_class(search_navigation):
+    while not access_element(browser, access_search_navigation):
         # naptime()
-        search_navigation = access_search_navigation(browser)
+        javascript_script_execution(browser, search_script)
+        # search_navigation = access_search_navigation(browser)
     assert search_title
 
 
