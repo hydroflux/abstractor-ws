@@ -2,28 +2,43 @@ from settings.abstract_object import abstract_dictionary as dictionary
 from settings.bad_search import no_document_image, record_bad_search
 from settings.driver import create_webdriver
 from settings.export import export_document
-from settings.file_management import bundle_project
+from settings.file_management import bundle_project, check_length
 from settings.general_functions import start_timer
 from settings.user_prompts import document_found, no_document_found
 
-from leopard.transform_document_list import transform_document_list
 from leopard.download import download_document
+from leopard.leopard_variables import search_script
 from leopard.login import account_login
 from leopard.logout import logout
 from leopard.open_document import open_document
 from leopard.record import record_document
 from leopard.search import search
+from leopard.transform_document_list import transform_document_list
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("execute", __name__)
 
 
-def handle_search_results(browser, county, target_directory, download, document_list, document, start_time, alt=None):
+def record_single_document(browser, county, target_directory, download, document_list, document, start_time):
     document_number = record_document(browser, dictionary, document)
     if download:
         if not download_document(browser, county, target_directory, document, document_number):
             no_document_image(dictionary, document)
     document_found(start_time, document_list, document)
+
+
+def record_multiple_documents(browser, county, target_directory, download, document_list, document, start_time):
+    pass
+
+
+def handle_search_results(browser, county, target_directory, download, document_list, document, start_time, alt=None):
+    if alt is None:
+        if document.number_results > 1:
+            record_multiple_documents(browser, county, target_directory, download, document_list, document, start_time)
+        else:
+            record_single_document(browser, county, target_directory, download, document_list, document, start_time)
+    elif alt == 'review':
+        pass
 
 
 def search_documents_from_list(browser, county, target_directory, document_list, download):
@@ -36,6 +51,7 @@ def search_documents_from_list(browser, county, target_directory, document_list,
         else:
             record_bad_search(dictionary, document)
             no_document_found(start_time, document_list, document)
+        check_length(dictionary)
     return dictionary
 
 

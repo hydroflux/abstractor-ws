@@ -70,8 +70,6 @@ def open_search(browser, document):
     search_navigation_tab = access_element(browser, get_search_navigation_tab, document, "search navigation")
     while not wait_for_active(browser, search_navigation_tab):
         print("Navigation tab not active, attempting to connect again.")
-        javascript_script_execution(browser, search_script)
-        # short_nap()
         search_navigation_tab = access_element(browser, get_search_navigation_tab, document, "search navigation")
     assert search_title
 
@@ -123,8 +121,6 @@ def enter_document_number(browser, document):
     while document_search_field is None:
         document_search_field = access_element(browser, locate_document_search_field, document, "document search field")
         open_tab(browser, get_document_search_tab, document)
-    print("document_search_field", document_search_field)
-    print("attributes", get_element_attributes(browser, document_search_field))
     enter_key_value(browser, document_search_field, document_value(document))
 
 

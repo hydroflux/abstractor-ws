@@ -24,7 +24,7 @@ def record_single_document(browser, county, target_directory, download, abstract
     document_number = record_document(browser, county, abstract_dictionary, document)
     if download:
         download_document(browser, county, target_directory, document_number)
-    document_found(start_time, document_list, document)    
+    document_found(start_time, document_list, document)
 
 
 def record_multiple_documents(browser, county, target_directory, download, abstract_dictionary, document_list, document, start_time):
