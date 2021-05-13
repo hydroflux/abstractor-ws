@@ -6,7 +6,7 @@ from settings.file_management import bundle_project
 from settings.general_functions import start_timer
 from settings.user_prompts import document_found, no_document_found
 
-from leopard.convert_document_numbers import convert_document_numbers
+from leopard.transform_document_list import transform_document_list
 from leopard.download import download_document
 from leopard.login import account_login
 from leopard.logout import logout
@@ -19,7 +19,7 @@ print("execute", __name__)
 
 
 def search_documents_from_list(browser, county, target_directory, document_list, download):
-    convert_document_numbers(document_list)
+    transform_document_list(document_list)
     for document in document_list:
         start_time = start_timer()
         search(browser, document)
@@ -36,7 +36,7 @@ def search_documents_from_list(browser, county, target_directory, document_list,
 
 
 def review_documents_from_list(browser, document_list):
-    convert_document_numbers(document_list)
+    transform_document_list(document_list)
     for document in document_list:
         search(browser, document)
         if open_document(browser, document):

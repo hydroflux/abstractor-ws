@@ -123,6 +123,8 @@ def enter_document_number(browser, document):
     while document_search_field is None:
         document_search_field = access_element(browser, locate_document_search_field, document, "document search field")
         open_tab(browser, get_document_search_tab, document)
+    print("document_search_field", document_search_field)
+    print("attributes", get_element_attributes(browser, document_search_field))
     enter_key_value(browser, document_search_field, document_value(document))
 
 

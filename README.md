@@ -27,6 +27,7 @@
 - [ ] Find a better way to handle opening search tabs without click nap click
 - [ ] Create a "big cat" repo to combine information that matches between tiger & leopard
 - [ ] Refactor convert_document_numbers
+- [ ] Consider adding naptime back into login--there is a stale element at each login & should just be surpassed
 
 ### Eagle To Do
 
