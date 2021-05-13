@@ -8,7 +8,7 @@ from settings.file_management import (document_type, document_value,
                                       split_book_and_page)
 from settings.general_functions import (check_active_class, get_parent_element,
                                         javascript_script_execution,
-                                        scroll_into_view, short_nap, timeout)
+                                        scroll_into_view, timeout, get_element_attributes)
 
 from leopard.leopard_variables import (book_and_page_search_button_id,
                                        book_and_page_search_tab_id,
@@ -69,8 +69,9 @@ def open_search(browser, document):
     javascript_script_execution(browser, search_script)
     search_navigation_tab = access_element(browser, get_search_navigation_tab, document, "search navigation")
     while not wait_for_active(browser, search_navigation_tab):
+        print("Navigation tab not active, attempting to connect again.")
         javascript_script_execution(browser, search_script)
-        short_nap()
+        # short_nap()
         search_navigation_tab = access_element(browser, get_search_navigation_tab, document, "search navigation")
     assert search_title
 

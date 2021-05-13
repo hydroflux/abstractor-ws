@@ -67,7 +67,7 @@ def create_xlsx_document(file_name, dataframe):
     output_file = create_output_file(file_name)
     writer = create_excel_writer(output_file)
     create_excel_object(writer, dataframe, abstraction_type.upper())
-    return writer
+    return output_file, writer
 
 
 def access_workbook_object(writer):
@@ -309,5 +309,6 @@ def finalize_xlsx_document(county, writer, dataframe, client=None, legal=None):
 def export_document(county, target_directory, file_name, dictionary, client=None, legal=None):
     prepare_output_environment(target_directory)
     dataframe = transform_dictionary(dictionary)
-    writer = create_xlsx_document(file_name, dataframe)
+    output_file, writer = create_xlsx_document(file_name, dataframe)
     finalize_xlsx_document(county, writer, dataframe, client, legal)
+    return output_file
