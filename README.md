@@ -20,12 +20,11 @@
 
 ### Leopard To Do
 
-- [ ] Update search & record functions to function when multiple documents are returned
+- [ ] Update record function to handle multiple document results
 - [ ] Find a better way to handle opening search tabs without click nap click
 - [ ] Create a "big cat" repo to combine information that matches between tiger & leopard
 - [ ] Refactor record_document
 - [ ] Refactor download_document
-- [ ] Refactor login
 - [ ] Refactor convert_document_numbers
 
 ### Eagle To Do
