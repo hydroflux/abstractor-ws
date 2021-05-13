@@ -26,6 +26,8 @@
 - [ ] Refactor record_document
 - [ ] Refactor download_document
 - [ ] Refactor convert_document_numbers
+- [ ] Refactor open_search in search
+- [ ] Take the nap out of login
 
 ### Eagle To Do
 

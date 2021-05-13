@@ -136,4 +136,4 @@ def verify_results(browser, document):
 
 def open_document(browser, document):
     count_total_results(browser, document)
-    verify_results(browser, document)
+    return verify_results(browser, document)
