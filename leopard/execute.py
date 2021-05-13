@@ -19,7 +19,7 @@ print("execute", __name__)
 
 
 def record_single_document(browser, county, target_directory, download, document_list, document, start_time):
-    document_number = record_document(browser, dictionary, document)
+    document_number = record_document(browser, county, dictionary, document)
     if download:
         if not download_document(browser, county, target_directory, document, document_number):
             no_document_image(dictionary, document)

@@ -176,11 +176,17 @@ def record_legal(rows, dictionary):
             dictionary["Legal"].append(combined_legal)
 
 
-def record_comments(dictionary):
-    dictionary["Comments"].append("")
+#  Extrapolate this to a generalized file
+def record_comments(county, dictionary, document):
+    if document.number_results > 1:
+        dictionary["Comments"].append(f'Multiple documents located at {extrapolate_document_value(document)}'
+                                      f' on the {county} recording website; Each of the {document.number_results}'
+                                      f' documents has been listed, please review')
+    else:
+        dictionary["Comments"].append("")
 
 
-def aggregate_document_information(browser, dictionary, rows):
+def aggregate_document_information(browser, county, document, dictionary, rows):
     document_number = record_reception_number(rows, dictionary)
     record_book_and_page(rows, dictionary)
     record_recording_date(rows, dictionary)
@@ -189,7 +195,7 @@ def aggregate_document_information(browser, dictionary, rows):
     record_grantee(rows, dictionary)
     record_related_documents(rows, dictionary)
     record_legal(rows, dictionary)
-    record_comments(dictionary)
+    record_comments(county, dictionary, document)
     return document_number
 
 
@@ -227,7 +233,7 @@ def next_result(browser, document):
     next_result_button.click()
 
 
-def record_document(browser, dictionary, document):
+def record_document(browser, county, dictionary, document):
     rows = get_document_content(browser, document)
-    document_number = aggregate_document_information(browser, dictionary, rows)
+    document_number = aggregate_document_information(browser, county, document, dictionary, rows)
     return document_number
