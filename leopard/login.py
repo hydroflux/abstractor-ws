@@ -3,14 +3,12 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-from settings.general_functions import (javascript_script_execution, short_nap, naptime,
-                                        timeout)
+from settings.general_functions import timeout
 
 from leopard.disclaimer import handle_disclaimer
-from leopard.leopard_variables import (credentials, login_title, disclaimer_active_class,
-                                       disclaimer_button_id, disclaimer_id, validation_errors_class,
-                                       search_script, website, website_title)
-from leopard.search import open_search
+from leopard.leopard_variables import (credentials, login_title,
+                                       validation_errors_class, website,
+                                       website_title)
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("login", __name__)
