@@ -49,7 +49,7 @@ def execute_program(headless, county, target_directory, document_list, file_name
     browser = create_webdriver(target_directory, headless)
     account_login(browser)
     dictionary = search_documents_from_list(browser, county, target_directory, document_list, download)
-    export_document(target_directory, file_name, dictionary)
+    export_document(county, target_directory, file_name, dictionary)
     bundle_project(target_directory, file_name)
     logout(browser)
     browser.close()
