@@ -1,12 +1,10 @@
-from selenium.common.exceptions import (
-                                        TimeoutException)
+from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-
+from settings.export_settings import not_applicable
 from settings.file_management import extrapolate_document_value
 from settings.general_functions import get_element_text, timeout, title_strip
-from settings.export_settings import not_applicable
 
 from leopard.leopard_variables import (book_page_abbreviation,
                                        document_image_id,
@@ -91,7 +89,7 @@ def check_rows(rows, title):
     return not_applicable
 
 
-# Function intended to help with testing, no purpose in production
+# Function designed to help with development, no production purpose
 def row_title_check(rows):
     for row in rows:
         try:
