@@ -116,10 +116,15 @@ def rename_documents_in_directory(county, directory):
 
 
 def create_project_folder(target_directory, abstraction):
-    project_folder = create_folder(f'{target_directory}/{abstraction}')
-    # shutil.move(f'{target_directory}/{file_name}-{abstraction_type.upper()}.xlsx', project_folder)
-    shutil.move(f'{target_directory}/{abstraction}', project_folder)
+    project_folder = f'{target_directory}/{abstraction}'
+    create_folder(project_folder)
     return project_folder
+
+
+def move_abstraction_into_project_folder(target_directory, project_folder, abstraction):
+    # shutil.move(f'{target_directory}/{file_name}-{abstraction_type.upper()}.xlsx', project_folder)
+    # shutil.move(f'{target_directory}/{abstraction}', project_folder) <-- this works
+    shutil.move(abstraction, project_folder)
 
 
 def move_downloaded_documents(target_directory, download, project_folder):
@@ -130,5 +135,6 @@ def move_downloaded_documents(target_directory, download, project_folder):
 def bundle_project(target_directory, abstraction, download):
     os.chdir(target_directory)
     project_folder = create_project_folder(target_directory, abstraction)
+    move_abstraction_into_project_folder(target_directory, project_folder, abstraction)
     move_downloaded_documents(target_directory, download, project_folder)
     # shutil.move(f'{target_directory}/{file_name}.xlsx', project_folder)
