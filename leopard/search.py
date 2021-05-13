@@ -8,7 +8,7 @@ from settings.file_management import (document_type, document_value,
                                       split_book_and_page)
 from settings.general_functions import (check_active_class, get_parent_element,
                                         javascript_script_execution,
-                                        scroll_into_view, timeout, get_element_attributes)
+                                        scroll_into_view, timeout)
 
 from leopard.leopard_variables import (book_and_page_search_button_id,
                                        book_and_page_search_tab_id,

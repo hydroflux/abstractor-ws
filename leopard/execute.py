@@ -7,7 +7,6 @@ from settings.general_functions import start_timer
 from settings.user_prompts import document_found, no_document_found
 
 from leopard.download import download_document
-from leopard.leopard_variables import search_script
 from leopard.login import account_login
 from leopard.logout import logout
 from leopard.open_document import open_document
@@ -31,14 +30,24 @@ def record_multiple_documents(browser, county, target_directory, download, docum
     pass
 
 
-def handle_search_results(browser, county, target_directory, download, document_list, document, start_time, alt=None):
+def review_multiple_documents(browser, start_time, document_list, document):
+    pass
+
+
+def handle_search_results(browser, county, target_directory, download,
+                          document_list, document, start_time, alt=None):
     if alt is None:
         if document.number_results > 1:
-            record_multiple_documents(browser, county, target_directory, download, document_list, document, start_time)
+            record_multiple_documents(browser, county, target_directory, download,
+                                      document_list, document, start_time)
         else:
-            record_single_document(browser, county, target_directory, download, document_list, document, start_time)
+            record_single_document(browser, county, target_directory, download,
+                                   document_list, document, start_time)
     elif alt == 'review':
-        pass
+        if document.number_results > 1:
+            review_multiple_documents(browser, start_time, document_list, document)
+        else:
+            document_found(start_time, document_list, document, "review")
 
 
 def search_documents_from_list(browser, county, target_directory, document_list, download):
@@ -47,7 +56,8 @@ def search_documents_from_list(browser, county, target_directory, document_list,
         start_time = start_timer()
         search(browser, document)
         if open_document(browser, document):
-            handle_search_results(browser, county, target_directory, download, document_list, document, start_time)
+            handle_search_results(browser, county, target_directory, download,
+                                  document_list, document, start_time)
         else:
             record_bad_search(dictionary, document)
             no_document_found(start_time, document_list, document)
@@ -55,12 +65,14 @@ def search_documents_from_list(browser, county, target_directory, document_list,
     return dictionary
 
 
-def review_documents_from_list(browser, document_list):
+def review_documents_from_list(browser, county, target_directory, download, document_list):
     transform_document_list(document_list)
     for document in document_list:
+        start_time = start_timer()
         search(browser, document)
         if open_document(browser, document):
-            document_found(document_list, document, "review")
+            handle_search_results(browser, county, target_directory, download,
+                                  document_list, document, start_time, "review")
         else:
             no_document_found(document_list, document, "review")
 

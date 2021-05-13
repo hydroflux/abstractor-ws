@@ -34,6 +34,13 @@ def record_multiple_documents(browser, county, target_directory, download, abstr
         record_single_document(browser, county, target_directory, download, abstract_dictionary, document_list, document, start_time)
 
 
+def review_multiple_documents(browser, start_time, document_list, document):
+    document_found(start_time, document_list, document, "review")
+    for document_instance in range(0, (document.number_results - 1)):
+        next_result(browser, document)
+        document_found(start_time, document_list, document, "review")
+
+
 def handle_search_results(browser, county, target_directory, download, document_list, document, start_time, alt=None):
     if alt is None:
         if document.number_results > 1:
@@ -70,13 +77,6 @@ def execute_program(county, target_directory, document_list, file_name, download
     abstraction = create_abstraction(browser, county, target_directory, document_list, file_name, download)
     browser.close()
     bundle_project(target_directory, abstraction, download)
-
-
-def review_multiple_documents(browser, start_time, document_list, document):
-    document_found(start_time, document_list, document, "review")
-    for document_instance in range(0, (document.number_results - 1)):
-        next_result(browser, document)
-        document_found(start_time, document_list, document, "review")
 
 
 def review_documents_from_list(browser, county, target_directory, download, document_list):
