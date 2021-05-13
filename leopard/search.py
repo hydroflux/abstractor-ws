@@ -66,6 +66,12 @@ def open_search(browser):
     assert search_title
 
 
+def open_tab(browser, access_tab_function):
+    while not access_element(browser, access_tab_function):
+        tab = access_tab_function(browser)
+        tab.click()
+
+
 def locate_document_search_tab(browser):
     try:
         document_search_tab_present = EC.element_to_be_clickable((By.ID, document_search_tab_id))
@@ -83,10 +89,14 @@ def get_document_search_tab(browser):
     return document_search_tab
 
 
-def open_tab(browser, access_tab_function):
-    while not access_element(browser, access_tab_function):
-        tab = access_tab_function(browser)
-        tab.click()
+# Can be extrapolated into "selenium_functions" once the script is created
+def access_search_field(browser, access_function, document):
+    try:
+        return access_function(browser, document)
+    except StaleElementReferenceException:
+        print(f'Encountered a stale element reference exception '
+              f'while attempting to access search field for '
+              f'{extrapolate_document_value(document)}')
 
 
 def locate_document_search_field(browser, document):
@@ -98,16 +108,6 @@ def locate_document_search_field(browser, document):
     except TimeoutException:
         print(f'Browser timed out while trying to locate document number field for '
               f'{extrapolate_document_value(document)}.')
-
-
-# Can be extrapolated into "selenium_functions" once the script is created
-def access_search_field(browser, access_function, document):
-    try:
-        return access_function(browser, document)
-    except StaleElementReferenceException:
-        print(f'Encountered a stale element reference exception '
-              f'while attempting to access search field for '
-              f'{extrapolate_document_value(document)}')
 
 
 def enter_key_value(browser, field, value):
@@ -150,7 +150,7 @@ def locate_book_search_field(browser, document):
 
 
 def enter_book_number(browser, document, book):
-    book_search_field = locate_book_search_field(browser, document)
+    book_search_field = access_search_field(browser, locate_book_search_field, document)
     enter_key_value(browser, book_search_field, book)
 
 
@@ -166,7 +166,7 @@ def locate_page_search_field(browser, document):
 
 
 def enter_page_number(browser, document, page):
-    page_search_field = locate_page_search_field(browser, document)
+    page_search_field = access_search_field(browser, locate_page_search_field, document)
     enter_key_value(browser, page_search_field, page)
 
 
