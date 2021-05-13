@@ -62,7 +62,7 @@ def wait_for_active(browser, element):
         return check_active_class(element)
     except StaleElementReferenceException:
         print('Encountered a stale element reference exception '
-              'while trying to access element class.')
+              'trying to access element class, trying again.')
 
 
 def open_search(browser, document):
@@ -131,7 +131,7 @@ def locate_book_and_page_search_tab(browser, document):
         book_and_page_search_tab = browser.find_element_by_id(book_and_page_search_tab_id)
         return book_and_page_search_tab
     except TimeoutException:
-        print(f'Browser timed out while trying to access the book and page search tab for '
+        print(f'Browser timed out trying to access the book and page search tab for '
               f'{extrapolate_document_value(document)}.')
 
 
@@ -149,7 +149,7 @@ def locate_book_search_field(browser, document):
         book_search_field = browser.find_element_by_id(book_search_id)
         return book_search_field
     except TimeoutException:
-        print(f'Browser timed out while trying to locate book field for '
+        print(f'Browser timed out trying to locate book field for '
               f'{extrapolate_document_value(document)}.')
 
 
@@ -168,7 +168,7 @@ def locate_page_search_field(browser, document):
         page_search_field = browser.find_element_by_id(page_search_id)
         return page_search_field
     except TimeoutException:
-        print(f'Browser timed out while trying to locate page field for '
+        print(f'Browser timed out trying to locate page field for '
               f'{extrapolate_document_value(document)}.')
 
 
@@ -187,7 +187,7 @@ def locate_search_button(browser, document, button_id):
         search_button = browser.find_element_by_id(button_id)
         return search_button
     except TimeoutException:
-        print(f'Browser timed out while trying to locate search button for '
+        print(f'Browser timed out trying to locate search button for '
               f'{extrapolate_document_value(document)}.')
 
 
