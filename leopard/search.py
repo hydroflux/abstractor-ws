@@ -6,7 +6,7 @@ from settings.file_management import (document_type, document_value,
                                       extrapolate_document_value,
                                       split_book_and_page)
 from settings.general_functions import (check_active_class, get_parent_element,
-                                        javascript_script_execution, short_nap,
+                                        javascript_script_execution, naptime,
                                         scroll_into_view, timeout)
 
 from leopard.leopard_variables import (book_and_page_search_button_id,
@@ -36,13 +36,20 @@ def locate_search_navigation(browser):
         print("Encountered a stale element reference exception while locating search navigation, trying again.")
 
 
+def access_search_navigation(browser):
+    search_navigation = locate_search_navigation(browser)
+    while search_navigation is None:
+        search_navigation = locate_search_navigation(browser)
+    return search_navigation
+
+
 def open_search(browser):
     javascript_script_execution(browser, search_script)
-    search_navigation = locate_search_navigation(browser)
+    search_navigation = access_search_navigation(browser)
     while not check_active_class(search_navigation):
         javascript_script_execution(browser, search_script)
-        short_nap()
-        search_navigation = locate_search_navigation(browser)
+        # naptime()
+        search_navigation = access_search_navigation(browser)
     assert search_title
 
 
@@ -63,6 +70,8 @@ def open_tab(browser, tab):
 
 def open_document_search_tab(browser):
     document_search_tab = locate_document_search_tab(browser)
+    while document_search_tab is None:
+        document_search_tab = locate_document_search_tab(browser)
     open_tab(browser, document_search_tab)
 
 
@@ -99,7 +108,9 @@ def locate_book_and_page_search_tab(browser):
 
 
 def open_book_and_page_search_tab(browser):
-    book_and_page_search_tab = locate_document_search_tab(browser)
+    book_and_page_search_tab = locate_book_and_page_search_tab(browser)
+    while book_and_page_search_tab is None:
+        book_and_page_search_tab = locate_book_and_page_search_tab(browser)
     open_tab(browser, book_and_page_search_tab)
 
 

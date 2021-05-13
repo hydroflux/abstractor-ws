@@ -95,9 +95,12 @@ def get_element_attributes(browser, element):
     pprint(attributes)
 
 
+def get_element_class(element):
+    return element.get_attribute("class")
+
+
 def check_active_class(element):
-    element_class = element.get_attribute("class")
-    if element_class.endswith("active"):
+    if get_element_class(element).endswith("active"):
         return True
 
 
