@@ -123,8 +123,7 @@ def create_project_folder(target_directory, abstraction):
 
 def move_abstraction_into_project_folder(target_directory, project_folder, abstraction):
     # shutil.move(f'{target_directory}/{file_name}-{abstraction_type.upper()}.xlsx', project_folder)
-    # shutil.move(f'{target_directory}/{abstraction}', project_folder) <-- this works
-    shutil.move(abstraction, project_folder)
+    shutil.move(f'{target_directory}/{abstraction}', project_folder)
 
 
 def move_downloaded_documents(target_directory, download, project_folder):
