@@ -1,3 +1,4 @@
+from os import access
 from leopard.record import get_document_content
 from selenium.common.exceptions import StaleElementReferenceException, TimeoutException
 from selenium.webdriver.common.by import By
@@ -44,31 +45,39 @@ def get_search_navigation_tab(browser):
     return search_navigation_tab
 
 
-def access_element(browser, access_function):
+# Can be extrapolated into "selenium_functions" once the script is created
+def access_element(browser, access_function, document, element_type):
     try:
-        element = access_function(browser)
-        return check_active_class(element)
+        return access_function(browser, document)
     except StaleElementReferenceException:
-        print('Encountered a stale element reference exception '
-              'while trying to access element class.')
+        print(f'Encountered a stale element reference exception '
+              f'while attempting to access {element_type} for '
+              f'{extrapolate_document_value(document)}')
 
 
-# If it continues to work like this the reason that it's getting slowing is because
-# it's checking before the element has time to populate--it's just checking too fast
-# The fact that it broke where it did means this IS NOT always the case
+# def wait_for_active(browser, access_function):
+#     try:
+#         element = access_function(browser)
+#         return check_active_class(element)
+#     except StaleElementReferenceException:
+#         print('Encountered a stale element reference exception '
+#               'while trying to access element class.')
 
 
-def open_search(browser):
+def open_search(browser, document):
     javascript_script_execution(browser, search_script)
-    while not access_element(browser, get_search_navigation_tab):
+    search_navigation_tab = access_element(browser, get_search_navigation_tab, document, "search navigation")
+    while not check_active_class(search_navigation_tab):
         javascript_script_execution(browser, search_script)
         short_nap()
+        search_navigation_tab = access_element(browser, get_search_navigation_tab, document, "search navigation")
     assert search_title
 
 
-def open_tab(browser, access_tab_function):
-    while not access_element(browser, access_tab_function):
-        tab = access_tab_function(browser)
+def open_tab(browser, access_tab_function, document):
+    tab = access_element(browser, access_tab_function, document, "tab")
+    while not check_active_class(tab):
+        tab = access_element(browser, access_tab_function, document, "tab")
         tab.click()
 
 
@@ -89,16 +98,6 @@ def get_document_search_tab(browser):
     return document_search_tab
 
 
-# Can be extrapolated into "selenium_functions" once the script is created
-def access_search_field(browser, access_function, document):
-    try:
-        return access_function(browser, document)
-    except StaleElementReferenceException:
-        print(f'Encountered a stale element reference exception '
-              f'while attempting to access search field for '
-              f'{extrapolate_document_value(document)}')
-
-
 def locate_document_search_field(browser, document):
     try:
         document_search_field_present = EC.element_to_be_clickable((By.ID, document_search_field_id))
@@ -117,7 +116,9 @@ def enter_key_value(browser, field, value):
 
 
 def enter_document_number(browser, document):
-    document_search_field = access_search_field(browser, locate_document_search_field, document)
+    document_search_field = access_element(browser, locate_document_search_field, document, "document search field")
+    while document_search_field is None:
+        document_search_field = access_element(browser, locate_document_search_field, document, "document search field")
     enter_key_value(browser, document_search_field, document_value(document))
 
 
@@ -150,7 +151,9 @@ def locate_book_search_field(browser, document):
 
 
 def enter_book_number(browser, document, book):
-    book_search_field = access_search_field(browser, locate_book_search_field, document)
+    book_search_field = access_element(browser, locate_book_search_field, document, "book field")
+    while book_search_field is None:
+        book_search_field = access_element(browser, locate_book_search_field, document, "book field")
     enter_key_value(browser, book_search_field, book)
 
 
@@ -166,7 +169,9 @@ def locate_page_search_field(browser, document):
 
 
 def enter_page_number(browser, document, page):
-    page_search_field = access_search_field(browser, locate_page_search_field, document)
+    page_search_field = access_element(browser, locate_page_search_field, "page field")
+    while page_search_field is None:
+        page_search_field = access_element(browser, locate_page_search_field, "page field")
     enter_key_value(browser, page_search_field, page)
 
 
@@ -187,13 +192,13 @@ def execute_search(browser, document, button_id):
 
 
 def execute_document_number_search(browser, document):
-    open_tab(browser, get_document_search_tab)
+    open_tab(browser, get_document_search_tab, document)
     enter_document_number(browser, document)
     execute_search(browser, document, document_search_button_id)
 
 
 def execute_book_and_page_search(browser, document):
-    open_tab(browser, get_book_and_page_search_tab)
+    open_tab(browser, get_book_and_page_search_tab, document)
     book, page = split_book_and_page(document)
     enter_book_number(browser, document, book)
     enter_page_number(browser, document, page)
@@ -201,7 +206,7 @@ def execute_book_and_page_search(browser, document):
 
 
 def search(browser, document):
-    open_search(browser)
+    open_search(browser, document)
     if document_type(document) == "document_number":
         execute_document_number_search(browser, document)
     elif document_type(document) == "book_and_page":
