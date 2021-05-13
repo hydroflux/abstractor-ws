@@ -129,11 +129,15 @@ def locate_book_and_page_search_tab(browser):
         print("Browser timed out while trying to access the book and page search tab.")
 
 
-def open_book_and_page_search_tab(browser):
+def get_book_and_page_search_tab(browser):
     book_and_page_search_tab = locate_book_and_page_search_tab(browser)
     while book_and_page_search_tab is None:
         book_and_page_search_tab = locate_book_and_page_search_tab(browser)
-    open_tab(browser, book_and_page_search_tab)
+    return book_and_page_search_tab
+
+
+def open_book_and_page_search_tab(browser):
+    open_tab(browser, get_book_and_page_search_tab)
 
 
 def locate_book_search_field(browser, document):
