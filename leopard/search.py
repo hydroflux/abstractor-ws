@@ -60,12 +60,9 @@ def access_element(browser, access_function):
 
 def open_search(browser):
     javascript_script_execution(browser, search_script)
-    # search_navigation = access_search_navigation(browser)
-    # while not check_active_class(search_navigation):
     while not access_element(browser, get_search_navigation_tab):
         javascript_script_execution(browser, search_script)
         short_nap()
-        # search_navigation = access_search_navigation(browser)
     assert search_title
 
 
@@ -92,11 +89,6 @@ def open_tab(browser, access_tab_function):
         tab.click()
 
 
-def open_document_search_tab(browser):
-    # document_search_tab = get_document_search_tab(browser)
-    open_tab(browser, get_document_search_tab)
-
-
 def locate_document_search_field(browser, document):
     try:
         document_search_field_present = EC.element_to_be_clickable((By.ID, document_search_field_id))
@@ -108,6 +100,16 @@ def locate_document_search_field(browser, document):
               f'{extrapolate_document_value(document)}.')
 
 
+# Can be extrapolated into "selenium_functions" once the script is created
+def access_search_field(browser, access_function, document):
+    try:
+        return access_function(browser, document)
+    except StaleElementReferenceException:
+        print(f'Encountered a stale element reference exception '
+              f'while attempting to access search field for '
+              f'{extrapolate_document_value(document)}')
+
+
 def enter_key_value(browser, field, value):
     scroll_into_view(browser, field)
     field.clear()
@@ -115,7 +117,7 @@ def enter_key_value(browser, field, value):
 
 
 def enter_document_number(browser, document):
-    document_search_field = locate_document_search_field(browser, document)
+    document_search_field = access_search_field(browser, locate_document_search_field, document)
     enter_key_value(browser, document_search_field, document_value(document))
 
 
@@ -130,14 +132,10 @@ def locate_book_and_page_search_tab(browser):
 
 
 def get_book_and_page_search_tab(browser):
-    book_and_page_search_tab = locate_book_and_page_search_tab(browser)
+    book_and_page_search_tab = get_parent_element(locate_book_and_page_search_tab(browser))
     while book_and_page_search_tab is None:
-        book_and_page_search_tab = locate_book_and_page_search_tab(browser)
+        book_and_page_search_tab = get_parent_element(locate_book_and_page_search_tab(browser))
     return book_and_page_search_tab
-
-
-def open_book_and_page_search_tab(browser):
-    open_tab(browser, get_book_and_page_search_tab)
 
 
 def locate_book_search_field(browser, document):
@@ -189,13 +187,13 @@ def execute_search(browser, document, button_id):
 
 
 def execute_document_number_search(browser, document):
-    open_document_search_tab(browser)
+    open_tab(browser, get_document_search_tab)
     enter_document_number(browser, document)
     execute_search(browser, document, document_search_button_id)
 
 
 def execute_book_and_page_search(browser, document):
-    open_book_and_page_search_tab(browser)
+    open_tab(browser, get_book_and_page_search_tab)
     book, page = split_book_and_page(document)
     enter_book_number(browser, document, book)
     enter_page_number(browser, document, page)
