@@ -28,7 +28,7 @@ def execute_program_type(county, program_type, document_list):
         if program_type == "execute":
             execute_leopard(headless, county, target_directory, document_list, file_name, sheet_name, download)
         elif program_type == "review":
-            review_leopard(target_directory, file_name, sheet_name)
+            review_leopard(target_directory, document_list, file_name, sheet_name)
     else:
         print(f'{county} does not match available execution options, please review.')
 
