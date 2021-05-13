@@ -3,7 +3,8 @@ from settings.bad_search import no_document_image, record_bad_search
 from settings.driver import create_webdriver
 from settings.export import export_document
 from settings.file_management import bundle_project
-from settings.general_functions import javascript_script_execution, naptime
+from settings.general_functions import (javascript_script_execution, naptime,
+                                        start_timer)
 from settings.user_prompts import document_found, no_document_found
 
 from leopard.convert_document_numbers import convert_document_numbers
@@ -22,18 +23,19 @@ print("execute", __name__)
 def search_documents_from_list(browser, county, target_directory, document_list, download):
     convert_document_numbers(document_list)
     for document in document_list:
+        start_time = start_timer()
         search(browser, document)
         if open_document(browser, document):
             document_number = record_document(browser, dictionary, document)
             if download:
                 if not download_document(browser, county, target_directory, document, document_number):
                     no_document_image(dictionary, document)
-            document_found(document_list, document)
+            document_found(start_time, document_list, document)
             javascript_script_execution(browser, search_script)
             naptime()
         else:
             record_bad_search(dictionary, document)
-            # no_document_found(document_list, document)
+            no_document_found(start_time, document_list, document)
     return dictionary
 
 

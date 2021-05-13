@@ -36,8 +36,8 @@ def locate_search_navigation(browser):
 
 def open_search(browser):
     javascript_script_execution(browser, search_script)
-    short_nap()
     search_navigation = locate_search_navigation(browser)
+    print("1", search_navigation)
     # print(search_navigation.get_attribute('class'))
     while not check_active_class(search_navigation):
         javascript_script_execution(browser, search_script)
