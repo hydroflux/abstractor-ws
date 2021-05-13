@@ -15,15 +15,21 @@ from leopard.leopard_variables import (download_button_id, stock_download,
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("download", __name__)
 
-def open_document_submenu(browser, document):
+
+def locate_document_submenu(browser, document):
     try:
         view_panel_present = EC.element_to_be_clickable((By.ID, view_panel_id))
         WebDriverWait(browser, timeout).until(view_panel_present)
-        view_document = browser.find_element_by_id(view_group_id)
-        view_document.click()
+        view_document_button = browser.find_element_by_id(view_group_id)
+        return view_document_button
     except TimeoutException:
         print(f'Browser timed out trying to open document submenu for '
               f'{extrapolate_document_value(document)}.')
+
+
+def open_document_submenu(browser, document):
+    view_document_button = locate_document_submenu(browser, document)
+    view_document_button.click()
 
 
 def execute_download(browser, document):

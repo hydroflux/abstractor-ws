@@ -24,7 +24,6 @@
 - [ ] Update record function to handle multiple document results
 - [ ] Find a better way to handle opening search tabs without click nap click
 - [ ] Create a "big cat" repo to combine information that matches between tiger & leopard
-- [ ] Refactor record_document
 - [ ] Refactor download_document
 - [ ] Refactor convert_document_numbers
 - [ ] Refactor open_search in search
