@@ -24,7 +24,7 @@
 
 ### Leopard To Do
 
-- [ ] Create a next_result function in record to handle processing the "next result"
+- [ ] Update multiple_documents comment to include actual document numbers and / or book & page numbers
 
 ### Eagle To Do
 
