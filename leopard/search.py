@@ -25,22 +25,25 @@ print("search", __name__)
 # Script FUNCTIONALLY is nearly identical to tiger search
 
 
-def locate_search_navigation(browser):
+def locate_search_navigation(browser, document):
     try:
         search_navigation_present = EC.element_to_be_clickable((By.ID, search_navigation_id))
         WebDriverWait(browser, timeout).until(search_navigation_present)
         search_navigation = browser.find_element_by_id(search_navigation_id)
         return search_navigation
     except TimeoutException:
-        print("Browser timed out while trying to open the search navigation.")
+        print(f'Browser timed out trying to open the search navigation for '
+              f'{extrapolate_document_value(document)}.')
     except StaleElementReferenceException:
-        print("Encountered a stale element reference exception while locating search navigation, trying again.")
+        print(f'Encountered a stale element reference exception '
+              f'locating search navigation for '
+              f'{extrapolate_document_value(document)}.')
 
 
-def get_search_navigation_tab(browser):
-    search_navigation_tab = locate_search_navigation(browser)
+def get_search_navigation_tab(browser, document):
+    search_navigation_tab = locate_search_navigation(browser, document)
     while search_navigation_tab is None:
-        search_navigation_tab = locate_search_navigation(browser)
+        search_navigation_tab = locate_search_navigation(browser, document)
     return search_navigation_tab
 
 
@@ -50,7 +53,7 @@ def access_element(browser, access_function, document, element_type):
         return access_function(browser, document)
     except StaleElementReferenceException:
         print(f'Encountered a stale element reference exception '
-              f'while attempting to access {element_type} for '
+              f'attempting to access {element_type} for '
               f'{extrapolate_document_value(document)}')
 
 
@@ -80,20 +83,21 @@ def open_tab(browser, access_function, document):
         tab.click()
 
 
-def locate_document_search_tab(browser):
+def locate_document_search_tab(browser, document):
     try:
         document_search_tab_present = EC.element_to_be_clickable((By.ID, document_search_tab_id))
         WebDriverWait(browser, timeout).until(document_search_tab_present)
         document_search_tab = browser.find_element_by_id(document_search_tab_id)
         return document_search_tab
     except TimeoutException:
-        print("Browser timed out while trying to access the document search tab.")
+        print(f'Browser timed out trying to access the document search tab for '
+              f'{extrapolate_document_value(document)}')
 
 
-def get_document_search_tab(browser):
-    document_search_tab = get_parent_element(locate_document_search_tab(browser))
+def get_document_search_tab(browser, document):
+    document_search_tab = get_parent_element(locate_document_search_tab(browser, document))
     while document_search_tab is None:
-        document_search_tab = get_parent_element(locate_document_search_tab(browser))
+        document_search_tab = get_parent_element(locate_document_search_tab(browser, document))
     return document_search_tab
 
 
@@ -104,7 +108,7 @@ def locate_document_search_field(browser, document):
         document_search_field = browser.find_element_by_id(document_search_field_id)
         return document_search_field
     except TimeoutException:
-        print(f'Browser timed out while trying to locate document number field for '
+        print(f'Browser timed out trying to locate document number field for '
               f'{extrapolate_document_value(document)}.')
 
 
@@ -121,20 +125,21 @@ def enter_document_number(browser, document):
     enter_key_value(browser, document_search_field, document_value(document))
 
 
-def locate_book_and_page_search_tab(browser):
+def locate_book_and_page_search_tab(browser, document):
     try:
         book_and_page_search_tab_present = EC.element_to_be_clickable((By.ID, book_and_page_search_tab_id))
         WebDriverWait(browser, timeout).until(book_and_page_search_tab_present)
         book_and_page_search_tab = browser.find_element_by_id(book_and_page_search_tab_id)
         return book_and_page_search_tab
     except TimeoutException:
-        print("Browser timed out while trying to access the book and page search tab.")
+        print(f'Browser timed out while trying to access the book and page search tab for '
+              f'{extrapolate_document_value(document)}.')
 
 
-def get_book_and_page_search_tab(browser):
-    book_and_page_search_tab = get_parent_element(locate_book_and_page_search_tab(browser))
+def get_book_and_page_search_tab(browser, document):
+    book_and_page_search_tab = get_parent_element(locate_book_and_page_search_tab(browser, document))
     while book_and_page_search_tab is None:
-        book_and_page_search_tab = get_parent_element(locate_book_and_page_search_tab(browser))
+        book_and_page_search_tab = get_parent_element(locate_book_and_page_search_tab(browser, document))
     return book_and_page_search_tab
 
 
