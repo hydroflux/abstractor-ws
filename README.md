@@ -20,13 +20,11 @@
 - [ ] Create a selenium general_functions script to handle duplicable functions that require the webdriver in order to run
 - [ ] Create a "download_setup" series of functions where if download == yes: create_directory, get current files, change active directory, etc.
 - [ ] Circle back to leopard download after completing the above
+- [ ] Create a "big cat" repo to combine information that matches between tiger & leopard
 
 ### Leopard To Do
 
 - [ ] Update record function to handle multiple document results
-- [ ] Find a better way to handle opening search tabs without click nap click
-- [ ] Create a "big cat" repo to combine information that matches between tiger & leopard
-- [ ] Refactor convert_document_numbers
 - [ ] Consider adding naptime back into login--there is a stale element at each login & should just be surpassed
 
 ### Eagle To Do

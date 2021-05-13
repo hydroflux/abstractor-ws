@@ -18,17 +18,21 @@ from leopard.search import search
 print("execute", __name__)
 
 
+def handle_search_results(browser, county, target_directory, download, document_list, document, start_time, alt=None):
+    document_number = record_document(browser, dictionary, document)
+    if download:
+        if not download_document(browser, county, target_directory, document, document_number):
+            no_document_image(dictionary, document)
+    document_found(start_time, document_list, document)
+
+
 def search_documents_from_list(browser, county, target_directory, document_list, download):
     transform_document_list(document_list)
     for document in document_list:
         start_time = start_timer()
         search(browser, document)
         if open_document(browser, document):
-            document_number = record_document(browser, dictionary, document)
-            if download:
-                if not download_document(browser, county, target_directory, document, document_number):
-                    no_document_image(dictionary, document)
-            document_found(start_time, document_list, document)
+            handle_search_results(browser, county, target_directory, download, document_list, document, start_time)
         else:
             record_bad_search(dictionary, document)
             no_document_found(start_time, document_list, document)
