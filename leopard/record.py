@@ -51,7 +51,7 @@ def get_document_table_data(browser, document_information, document):
         document_table_data = document_information.find_element_by_tag_name(document_table_tag)
         return document_table_data
     except TimeoutException:
-        print(f'Browser timed out while getting table data for '
+        print(f'Browser timed out getting table data for '
               f'{extrapolate_document_value(document)}.')
 
 
@@ -62,7 +62,7 @@ def get_table_rows(browser, document_table, document):
         table_rows = document_table.find_elements_by_tag_name(table_row_tag)
         return table_rows
     except TimeoutException:
-        print(f'Browser timed out while getting table rows for '
+        print(f'Browser timed out getting table rows for '
               f'{extrapolate_document_value(document)}.')
 
 
@@ -152,15 +152,13 @@ def record_related_documents(rows, dictionary):
     if related_documents == not_applicable and alt_related_documents == not_applicable:
         dictionary["Related Documents"].append("")
     else:
-        if related_documents == alt_related_documents:
+        if related_documents == alt_related_documents or alt_related_documents == not_applicable:
             dictionary["Related Documents"].append(related_documents)
         elif related_documents == not_applicable:
             dictionary["Related Documents"].append(alt_related_documents)
-        elif alt_related_documents == not_applicable:
-            dictionary["Related Documents"].append(related_documents)
         else:
-            related_documents = f'{related_documents}\n{alt_related_documents}'
-            dictionary["Related Documents"].append(related_documents)
+            combined_related_documents = f'{related_documents}\n{alt_related_documents}'
+            dictionary["Related Documents"].append(combined_related_documents)
 
 
 def record_legal(rows, dictionary):
@@ -169,15 +167,13 @@ def record_legal(rows, dictionary):
     if legal == not_applicable and alt_legal == not_applicable:
         dictionary["Legal"].append("")
     else:
-        if legal == alt_legal:
+        if legal == alt_legal or alt_legal == not_applicable:
             dictionary["Legal"].append(legal)
         elif legal == not_applicable:
             dictionary["Legal"].append(alt_legal)
-        elif alt_legal == not_applicable:
-            dictionary["Legal"].append(legal)
         else:
-            legal = f'{legal}\n{alt_legal}'
-            dictionary["Legal"].append(legal)
+            combined_legal = f'{legal}\n{alt_legal}'
+            dictionary["Legal"].append(combined_legal)
 
 
 def record_comments(dictionary):
