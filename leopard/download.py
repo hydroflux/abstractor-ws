@@ -16,7 +16,7 @@ from leopard.leopard_variables import (download_button_id, stock_download,
 print("download", __name__)
 
 
-def locate_document_submenu(browser, document):
+def locate_download_submenu(browser, document):
     try:
         view_panel_present = EC.element_to_be_clickable((By.ID, view_panel_id))
         WebDriverWait(browser, timeout).until(view_panel_present)
@@ -27,20 +27,25 @@ def locate_document_submenu(browser, document):
               f'{extrapolate_document_value(document)}.')
 
 
-def open_document_submenu(browser, document):
-    view_document_button = locate_document_submenu(browser, document)
+def open_download_submenu(browser, document):
+    view_document_button = locate_download_submenu(browser, document)
     view_document_button.click()
 
 
-def execute_download(browser, document):
+def locate_download_button(browser, document):
     try:
         download_button_present = EC.element_to_be_clickable((By.ID, download_button_id))
         WebDriverWait(browser, timeout).until(download_button_present)
         download_button = browser.find_element_by_id(download_button_id)
-        download_button.click()
+        return download_button
     except TimeoutException:
         print(f'Browser timed out trying to click the download button for '
               f'{extrapolate_document_value(document)}.')
+
+
+def execute_download(browser, document):
+    download_button = locate_download_button(browser, document)
+    download_button.click()
 
 
 def download_document(browser, county, target_directory, document, document_number):
@@ -49,7 +54,7 @@ def download_document(browser, county, target_directory, document, document_numb
         return True
     else:
         number_files = len(os.listdir(document_directory))
-        open_document_submenu(browser, document)
+        open_download_submenu(browser, document)
         execute_download(browser, document)
         if update_download(browser, county, stock_download, document_directory, number_files, document_number):
             return True

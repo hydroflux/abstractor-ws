@@ -18,6 +18,8 @@
 - [ ] Create a time_management file in settings to handle sleeps, dates, & timers
 - [ ] Create a 'testing' script that imports all settings & variables & opens a browser instance so dev setup doesn't have to be completely manual
 - [ ] Create a selenium general_functions script to handle duplicable functions that require the webdriver in order to run
+- [ ] Create a "download_setup" series of functions where if download == yes: create_directory, get current files, change active directory, etc.
+- [ ] Circle back to leopard download after completing the above
 
 ### Leopard To Do
 
