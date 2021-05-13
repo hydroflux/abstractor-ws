@@ -1,6 +1,5 @@
-from os import access
-from leopard.record import get_document_content
-from selenium.common.exceptions import StaleElementReferenceException, TimeoutException
+from selenium.common.exceptions import (StaleElementReferenceException,
+                                        TimeoutException)
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
@@ -8,8 +7,8 @@ from settings.file_management import (document_type, document_value,
                                       extrapolate_document_value,
                                       split_book_and_page)
 from settings.general_functions import (check_active_class, get_parent_element,
-                                        javascript_script_execution, short_nap,
-                                        scroll_into_view, timeout)
+                                        javascript_script_execution,
+                                        scroll_into_view, short_nap, timeout)
 
 from leopard.leopard_variables import (book_and_page_search_button_id,
                                        book_and_page_search_tab_id,
@@ -74,10 +73,10 @@ def open_search(browser, document):
     assert search_title
 
 
-def open_tab(browser, access_tab_function, document):
-    tab = access_element(browser, access_tab_function, document, "tab")
+def open_tab(browser, access_function, document):
+    tab = access_element(browser, access_function, document, "search tab")
     while not check_active_class(tab):
-        tab = access_element(browser, access_tab_function, document, "tab")
+        tab = access_element(browser, access_function, document, "search tab")
         tab.click()
 
 
