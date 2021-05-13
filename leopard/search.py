@@ -1,3 +1,4 @@
+from leopard.record import get_document_content
 from selenium.common.exceptions import StaleElementReferenceException, TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -36,16 +37,16 @@ def locate_search_navigation(browser):
         print("Encountered a stale element reference exception while locating search navigation, trying again.")
 
 
-def access_search_navigation(browser):
-    search_navigation = locate_search_navigation(browser)
-    while search_navigation is None:
-        search_navigation = locate_search_navigation(browser)
-    return search_navigation
+def get_search_navigation_tab(browser):
+    search_navigation_tab = locate_search_navigation(browser)
+    while search_navigation_tab is None:
+        search_navigation_tab = locate_search_navigation(browser)
+    return search_navigation_tab
 
 
 def access_element(browser, access_function):
-    element = access_function(browser)
     try:
+        element = access_function(browser)
         return check_active_class(element)
     except StaleElementReferenceException:
         print("Encountered a stale element reference exception while trying to interact with element.")
@@ -60,7 +61,7 @@ def open_search(browser):
     javascript_script_execution(browser, search_script)
     # search_navigation = access_search_navigation(browser)
     # while not check_active_class(search_navigation):
-    while not access_element(browser, access_search_navigation):
+    while not access_element(browser, get_search_navigation_tab):
         # naptime()
         javascript_script_execution(browser, search_script)
         # search_navigation = access_search_navigation(browser)
@@ -77,15 +78,20 @@ def locate_document_search_tab(browser):
         print("Browser timed out while trying to access the document search tab.")
 
 
+def get_document_search_tab(browser):
+    document_search_tab = locate_document_search_tab(browser)
+    while document_search_tab is None:
+        document_search_tab = locate_document_search_tab(browser)
+    return document_search_tab
+
+
 def open_tab(browser, tab):
     while not check_active_class(get_parent_element(tab)):
         tab.click()
 
 
 def open_document_search_tab(browser):
-    document_search_tab = locate_document_search_tab(browser)
-    while document_search_tab is None:
-        document_search_tab = locate_document_search_tab(browser)
+    document_search_tab = get_document_search_tab(browser)
     open_tab(browser, document_search_tab)
 
 
