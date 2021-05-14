@@ -21,6 +21,7 @@
 - [ ] Create a "download_setup" series of functions where if download == yes: create_directory, get current files, change active directory, etc.
 - [ ] Circle back to leopard download after completing the above
 - [ ] Create a "big cat" repo to combine information that matches between tiger & leopard
+- [ ] Add date / year into the document class in order to add the option to sort by date
 
 ### Leopard To Do
 
@@ -34,6 +35,12 @@
 - [ ] Create a logout script to work with tiger -- again based on leopard primarily
 - [ ] Refactor environment to work with the new export, document_list, & execute functionality
 - [ ] Refactor the execute script
+- [ ] Refactor tiger search
+- [ ] Refactor tiger open_document
+- [ ] Refactor tiger record
+- [ ] Refactor tiger download
+- [ ] Update record (after refactoring) to work with multiple documents
+- [ ] Document.number_results should be spread across open, record, & execute
 
 ### Eagle To Do
 
@@ -51,3 +58,9 @@
 - [ ] Add a .strip() to Document class instance values when created in order to catch any numbers which were typed with extra space(s) on either side of the document value
 - [ ] Count results doesn't work if the search button has never been pressed, add a fallback procedure to account for this--occurs when the browser instance is offscreen during a search
 - [ ] If a grantor / grantee ends in a tag indicating more information is present, redo the search -- add to eagle record
+
+### Crocodile To Do
+
+- [ ] Create a new directory to work with the crocodile codebase
+- [ ] Add all crocodile scripts (execute, login, logout, search, open, record, download)
+- [ ] Integrate crocodile scripts to work with the top level environment file
