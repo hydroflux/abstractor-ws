@@ -64,3 +64,9 @@
 - [ ] Create a new directory to work with the crocodile codebase
 - [ ] Add all crocodile scripts (execute, login, logout, search, open, record, download)
 - [ ] Integrate crocodile scripts to work with the top level environment file
+
+### Iguana To Do
+
+- [ ] Create a new directory to work with the iguana codebase
+- [ ] Add all iguana scripts (execute, login, logout, search, open, record, download)
+- [ ] Integrate iguana scripts to work with the top level environment file
