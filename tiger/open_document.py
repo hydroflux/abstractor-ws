@@ -1,5 +1,3 @@
-from time import sleep
-
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -14,6 +12,7 @@ from tiger.tiger_variables import (first_result_tag, result_cell_tag,
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("open_document", __name__)
+
 
 def open_result_count(browser, document):
     try:

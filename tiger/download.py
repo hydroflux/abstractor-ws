@@ -12,6 +12,7 @@ from tiger.tiger_variables import (download_button_id, stock_download,
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("download", __name__)
 
+
 def open_document_submenu(browser, document_number):
     try:
         view_panel_present = EC.element_to_be_clickable((By.ID, view_panel_id))
