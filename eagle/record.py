@@ -1,14 +1,11 @@
 from time import sleep
 
 from selenium.common.exceptions import (ElementClickInterceptedException,
+                                        StaleElementReferenceException,
                                         TimeoutException)
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-
-# Use the following print statement to identify the best way to manage imports for Django vs the script folder
-print("record", __name__)
-
 from settings.export_settings import search_errors
 from settings.file_management import (check_length, drop_last_entry,
                                       extrapolate_document_value)
@@ -24,6 +21,9 @@ from eagle.eagle_variables import (document_information_id,
                                    pdf_viewer_load_id, related_table_class,
                                    result_button_tag, result_buttons_class)
 
+# Use the following print statement to identify the best way to manage imports for Django vs the script folder
+print("record", __name__)
+
 
 def pdf_load_status(browser):
     try:
@@ -36,7 +36,7 @@ def pdf_load_status(browser):
 
 def wait_for_pdf_to_load(browser):
     while pdf_load_status(browser).startswith(loading_status):
-        sleep(1) # Sleep increased from 0.5 seconds to 1 second in order to try & grab all related documents
+        sleep(1)  # Sleep increased from 0.5 seconds to 1 second in order to try & grab all related documents
         pdf_load_status(browser)
 
 
@@ -273,7 +273,7 @@ def click_result_button(browser, button):
     try:
         scroll_to_top(browser)
         button.click()
-        short_nap() # Nap is necessary, consider lengthening if app breaks at this point
+        short_nap()  # Nap is necessary, consider lengthening if app breaks at this point
     except ElementClickInterceptedException:
         print("Button click intercepted while trying to view previous / next result, trying again")
         naptime()
@@ -291,7 +291,8 @@ def next_result(browser, document):
 
 def record_document(browser, county, dataframe, document):
     wait_for_pdf_to_load(browser)
-    short_nap() # Added in an effort to make sure entire page loads -- test by checking related documents during review
+    short_nap()
+    # Added in an effort to make sure entire page loads -- test by checking related documents during review
     # Overall this is a bad practice because it's adding 1 - 2 seconds for a 0.1% chance it misses (based on testing)
     document_number = record_document_fields(browser, county, dataframe, document)
     check_length(dataframe)
