@@ -41,6 +41,7 @@
 - [ ] Refactor tiger download
 - [ ] Update record (after refactoring) to work with multiple documents
 - [ ] Document.number_results should be spread across open, record, & execute
+- [ ] Create a convert_document_numbers script to work like leopard, but with the tiger document lists
 
 ### Eagle To Do
 
@@ -58,15 +59,18 @@
 - [ ] Add a .strip() to Document class instance values when created in order to catch any numbers which were typed with extra space(s) on either side of the document value
 - [ ] Count results doesn't work if the search button has never been pressed, add a fallback procedure to account for this--occurs when the browser instance is offscreen during a search
 - [ ] If a grantor / grantee ends in a tag indicating more information is present, redo the search -- add to eagle record
+- [ ] Create a convert_document_numbers script to work like leopard, but with the eagle document lists
 
 ### Crocodile To Do
 
 - [ ] Create a new directory to work with the crocodile codebase
 - [ ] Add all crocodile scripts (execute, login, logout, search, open, record, download)
 - [ ] Integrate crocodile scripts to work with the top level environment file
+- [ ] Create a convert_document_numbers script
 
 ### Iguana To Do
 
 - [ ] Create a new directory to work with the iguana codebase
 - [ ] Add all iguana scripts (execute, login, logout, search, open, record, download)
 - [ ] Integrate iguana scripts to work with the top level environment file
+- [ ] Create a convert_document_numbers script
