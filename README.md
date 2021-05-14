@@ -29,6 +29,11 @@
 ### Tiger To Do
 
 - [ ] Update multiple_documents comment to include actual document numbers and / or book & page numbers
+- [ ] Re-design tiger to work with the code base for leopard
+- [ ] Refactor login
+- [ ] Create a logout script to work with tiger -- again based on leopard primarily
+- [ ] Refactor environment to work with the new export, document_list, & execute functionality
+- [ ] Refactor the execute script
 
 ### Eagle To Do
 
