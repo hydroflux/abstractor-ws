@@ -2,16 +2,11 @@ from settings.abstract_object import abstract_dictionary as dictionary
 from settings.bad_search import record_bad_search
 from settings.driver import create_webdriver
 from settings.export import export_document
-from settings.file_management import (bundle_project,
-                                      create_document_directory,
-                                      remaining_downloads)
+from settings.file_management import bundle_project, remaining_downloads
 from settings.general_functions import (get_county_data,
                                         javascript_script_execution, naptime)
 from settings.import_list import generate_document_list
 from settings.settings import web_directory
-
-# Use the following print statement to identify the best way to manage imports for Django vs the script folder
-print("execute", __name__)
 
 from tiger.download import download_document
 from tiger.login import account_login
@@ -19,6 +14,25 @@ from tiger.open_document import open_document
 from tiger.record import record_document
 from tiger.search import search
 from tiger.tiger_variables import search_script
+
+# Use the following print statement to identify the best way to manage imports for Django vs the script folder
+print("execute", __name__)
+
+
+def record_single_document():
+    pass
+
+
+def record_multiple_documents():
+    pass
+
+
+def review_multiple_documents():
+    pass
+
+
+def handle_search_results():
+    pass
 
 
 def search_documents_from_list(browser, county, target_directory, document_list, download):
@@ -39,10 +53,22 @@ def search_documents_from_list(browser, county, target_directory, document_list,
                   f'{remaining_downloads(document_list, document_number)} documents remaining.')
 
 
+def review_documents_from_list():
+    pass
+
+
 def create_abstraction(browser, county, target_directory, file_name, sheet_name, download):
     document_list = generate_document_list(target_directory, file_name, sheet_name)
     search_documents_from_list(browser, county, target_directory, document_list, download)
     return dictionary
+
+
+def execute_program():
+    pass
+
+
+def execute_review():
+    pass
 
 
 def execute_web_program(county, client, legal, upload_file):
