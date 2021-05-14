@@ -6,14 +6,13 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from settings.download_management import previously_downloaded, update_download
 from settings.file_management import create_document_directory
-
-# Use the following print statement to identify the best way to manage imports for Django vs the script folder
-print("download", __name__)
-
 from settings.general_functions import long_timeout, naptime
 
 from eagle.eagle_variables import (download_button_id, pdf_viewer_class_name,
                                    stock_download_suffix)
+
+# Use the following print statement to identify the best way to manage imports for Django vs the script folder
+print("download", __name__)
 
 
 def switch_into_frame(browser):
@@ -26,7 +25,7 @@ def switch_into_frame(browser):
     except TimeoutException:
         print("Browser timed out while trying to access the pdf viewer, refreshing the page to try again.")
         return False
-    
+
 
 def access_pdf_viewer(browser):
     while not switch_into_frame(browser):
