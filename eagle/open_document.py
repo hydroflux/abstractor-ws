@@ -1,15 +1,9 @@
-from selenium.common.exceptions import (ElementClickInterceptedException,
-                                        NoSuchElementException,
-                                        StaleElementReferenceException,
+from selenium.common.exceptions import (StaleElementReferenceException,
                                         TimeoutException)
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-
-# Use the following print statement to identify the best way to manage imports for Django vs the script folder
-print("open", __name__)
-
-from settings.file_management import document_value, extrapolate_document_value
+from settings.file_management import extrapolate_document_value
 from settings.general_functions import naptime, short_nap, timeout
 
 from eagle.eagle_variables import (currently_searching, failed_search,
@@ -19,6 +13,9 @@ from eagle.eagle_variables import (currently_searching, failed_search,
                                    search_result_class_name, search_status_tag,
                                    validation_class_name)
 from eagle.search import document_search, execute_search
+
+# Use the following print statement to identify the best way to manage imports for Django vs the script folder
+print("open", __name__)
 
 
 def validate_search(browser, document):
@@ -48,7 +45,8 @@ def get_search_status(browser):
     except TimeoutException:
         print("Browser timed out while trying to get current results.")
     except StaleElementReferenceException:
-        print("Encountered a stale element reference exception while trying to determine search status, refreshing & trying again.")
+        print('Encountered a stale element reference exception trying to determine search status, '
+              'refreshing & trying again.')
         browser.refresh()
         naptime()
         return None
@@ -56,7 +54,7 @@ def get_search_status(browser):
 
 def wait_for_results(browser):
     search_status = get_search_status(browser)
-    while search_status == currently_searching or search_status == None:
+    while search_status == currently_searching or search_status is None:
         short_nap()
         search_status = get_search_status(browser)
     return search_status
@@ -85,9 +83,7 @@ def count_results(browser, document):
     search_results = wait_for_results(browser)
     if search_results == failed_search:
         search_results = retry_execute_search(browser, document, search_results)
-    if search_results == no_results_message:
-        return 0 # If we start at 0 we don't need to return zero, only return what isn't 0
-    else:
+    if search_results != no_results_message:
         return int(len(get_search_results(browser)))
 
 
@@ -120,13 +116,14 @@ def open_document_description(browser, first_result):
 def open_document(browser, document):
     while not validate_search(browser, document):
         retry_search(browser, document)
-    if check_search_results(browser, document):    
+    if check_search_results(browser, document):
         try:
             first_result = get_search_results(browser)[0]
             open_document_description(browser, first_result)
-            # naptime() # Commented out for testing
-            short_nap() # Testing find without naptime, however hitting manual overrides more often; Use short_nap if it prevents the break
+            short_nap()
+            # Testing find without naptime, however hitting manual overrides more often;
+            # Use short_nap if it prevents the break
             return True
         except StaleElementReferenceException:
             print(f'Encountered a stale element exception while trying to open '
-                f'{extrapolate_document_value(document)}, trying again.')
+                  f'{extrapolate_document_value(document)}, trying again.')
