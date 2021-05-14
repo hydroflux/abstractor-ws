@@ -1,16 +1,10 @@
 #!/usr/bin/python3
-import os
-
-# Use the following print statement to identify the best way to manage imports for Django vs the script folder
-print("execute", __name__)
-
 from settings.abstract_object import abstract_dictionary
 from settings.bad_search import record_bad_search
 from settings.driver import create_webdriver
 from settings.export import export_document
 from settings.file_management import bundle_project
 from settings.general_functions import start_timer
-from settings.settings import web_directory
 from settings.user_prompts import document_found, no_document_found
 
 from eagle.download import download_document
@@ -19,19 +13,26 @@ from eagle.open_document import open_document
 from eagle.record import next_result, record_document
 from eagle.search import document_search
 
+# Use the following print statement to identify the best way to manage imports for Django vs the script folder
+print("execute", __name__)
 
-def record_single_document(browser, county, target_directory, download, abstract_dictionary, document_list, document, start_time):
+
+def record_single_document(browser, county, target_directory, download,
+                           abstract_dictionary, document_list, document, start_time):
     document_number = record_document(browser, county, abstract_dictionary, document)
     if download:
         download_document(browser, county, target_directory, document_number)
     document_found(start_time, document_list, document)
 
 
-def record_multiple_documents(browser, county, target_directory, download, abstract_dictionary, document_list, document, start_time):
-    record_single_document(browser, county, target_directory, download, abstract_dictionary, document_list, document, start_time)
+def record_multiple_documents(browser, county, target_directory, download,
+                              abstract_dictionary, document_list, document, start_time):
+    record_single_document(browser, county, target_directory, download,
+                           abstract_dictionary, document_list, document, start_time)
     for document_instance in range(0, (document.number_results - 1)):
         next_result(browser, document)
-        record_single_document(browser, county, target_directory, download, abstract_dictionary, document_list, document, start_time)
+        record_single_document(browser, county, target_directory, download,
+                               abstract_dictionary, document_list, document, start_time)
 
 
 def review_multiple_documents(browser, start_time, document_list, document):
@@ -41,12 +42,15 @@ def review_multiple_documents(browser, start_time, document_list, document):
         document_found(start_time, document_list, document, "review")
 
 
-def handle_search_results(browser, county, target_directory, download, document_list, document, start_time, alt=None):
+def handle_search_results(browser, county, target_directory, download,
+                          document_list, document, start_time, alt=None):
     if alt is None:
         if document.number_results > 1:
-            record_multiple_documents(browser, county, target_directory, download, abstract_dictionary, document_list, document, start_time)
+            record_multiple_documents(browser, county, target_directory, download,
+                                      abstract_dictionary, document_list, document, start_time)
         else:
-            record_single_document(browser, county, target_directory, download, abstract_dictionary, document_list, document, start_time)
+            record_single_document(browser, county, target_directory, download,
+                                   abstract_dictionary, document_list, document, start_time)
     elif alt == 'review':
         if document.number_results > 1:
             review_multiple_documents(browser, start_time, document_list, document)
@@ -59,15 +63,17 @@ def search_documents_from_list(browser, county, target_directory, document_list,
         start_time = start_timer()
         document_search(browser, document)
         if open_document(browser, document):
-            handle_search_results(browser, county, target_directory, download, document_list, document, start_time)
+            handle_search_results(browser, county, target_directory, download,
+                                  document_list, document, start_time)
         else:
             record_bad_search(abstract_dictionary, document)
             no_document_found(start_time, document_list, document)
-    return abstract_dictionary # Is this necessary ? ? ?
+    return abstract_dictionary  # Is this necessary ? ? ?
 
 
 def create_abstraction(browser, county, target_directory, document_list, file_name, download):
-    abstract_dictionary = search_documents_from_list(browser, county, target_directory, document_list, download) # Is the abstract_dictionary return necessary ? ? ?
+    abstract_dictionary = search_documents_from_list(browser, county, target_directory, document_list, download)
+    # Is the abstract_dictionary return necessary ? ? ?
     return export_document(county, target_directory, file_name, abstract_dictionary)
 
 
@@ -84,7 +90,8 @@ def review_documents_from_list(browser, county, target_directory, download, docu
         start_time = start_timer()
         document_search(browser, document)
         if open_document(browser, document):
-            handle_search_results(browser, county, target_directory, download, document_list, document, start_time, 'review')
+            handle_search_results(browser, county, target_directory, download,
+                                  document_list, document, start_time, 'review')
         else:
             no_document_found(start_time, document_list, document, "review")
 
