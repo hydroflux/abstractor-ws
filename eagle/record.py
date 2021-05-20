@@ -75,12 +75,12 @@ def get_informational_links(browser, document, document_information):
 def open_informational_link(browser, link):
     try:
         scroll_into_view(browser, link)
-        short_nap() # Using for testing
+        short_nap() # Using for testing -- does not work consistently
         link.click()
     except ElementClickInterceptedException:
         grandparent = link.find_element_by_xpath("../..")
         scroll_into_view(browser, grandparent)
-        short_nap() # Using for testing
+        short_nap() # Using for testing -- does not work consistently
         link.click()
 
 

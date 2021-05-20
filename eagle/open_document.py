@@ -81,9 +81,12 @@ def get_search_results(browser):
 
 def count_results(browser, document):
     search_results = wait_for_results(browser)
+    print(search_results)
     if search_results == failed_search:
         search_results = retry_execute_search(browser, document, search_results)
-    if search_results != no_results_message:
+    if search_results == no_results_message:
+        return 0
+    else:
         return int(len(get_search_results(browser)))
 
 
