@@ -72,16 +72,27 @@ def get_informational_links(browser, document, document_information):
         print(f'Browser timed out while trying to get informational links for {extrapolate_document_value(document)}.')
 
 
+def open_informational_grandparent(browser, link):
+    grandparent = link.find_element_by_xpath("../..")
+    scroll_into_view(browser, grandparent)
+    short_nap() # Using for testing -- does not work consistently
+    link.click()
+
+
+def open_by_link_text(browser):
+    pass
+
+
 def open_informational_link(browser, link):
     try:
         scroll_into_view(browser, link)
         short_nap() # Using for testing -- does not work consistently
         link.click()
     except ElementClickInterceptedException:
-        grandparent = link.find_element_by_xpath("../..")
-        scroll_into_view(browser, grandparent)
-        short_nap() # Using for testing -- does not work consistently
-        link.click()
+        try:
+            open_informational_grandparent(browser, link)
+        except ElementClickInterceptedException:
+            open_by_link_text(browser)
 
 
 def review_and_open_links(browser, links):
