@@ -80,7 +80,13 @@ def open_informational_grandparent(browser, link):
 
 
 def open_by_link_text(browser):
-    pass
+    try:
+        more_info_present = EC.element_to_be_clickable((By.LINK_TEXT, more_info))
+        WebDriverWait(browser, timeout).until(more_info_present)
+        more_info = browser.find_element_by_link_text(more_info)
+        more_info.click()
+    except TimeoutException:
+        print("Browser timed out while trying to show more info using link text, please review.")
 
 
 def open_informational_link(browser, link):
