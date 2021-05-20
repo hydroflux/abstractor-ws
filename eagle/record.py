@@ -81,10 +81,10 @@ def open_informational_grandparent(browser, link):
 
 def open_by_link_text(browser):
     try:
-        more_info_present = EC.element_to_be_clickable((By.LINK_TEXT, more_info))
-        WebDriverWait(browser, timeout).until(more_info_present)
-        more_info = browser.find_element_by_link_text(more_info)
-        more_info.click()
+        more_info_text_present = EC.element_to_be_clickable((By.LINK_TEXT, more_info))
+        WebDriverWait(browser, timeout).until(more_info_text_present)
+        more_info_text = browser.find_element_by_link_text(more_info)
+        more_info_text.click()
     except TimeoutException:
         print("Browser timed out while trying to show more info using link text, please review.")
 
@@ -92,7 +92,7 @@ def open_by_link_text(browser):
 def open_informational_link(browser, link):
     try:
         scroll_into_view(browser, link)
-        short_nap() # Using for testing -- does not work consistently
+        short_nap()  # Using for testing -- does not work consistently
         link.click()
     except ElementClickInterceptedException:
         try:
