@@ -4,6 +4,7 @@
 *.swo
 *.swp
 *.swn
+*.DS_Store
 
 # Directories #
 ###############
