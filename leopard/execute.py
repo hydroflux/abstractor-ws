@@ -3,7 +3,7 @@ from settings.bad_search import no_document_image, record_bad_search
 from settings.driver import create_webdriver
 from settings.export import export_document
 from settings.file_management import bundle_project, check_length
-from settings.general_functions import start_timer
+from settings.general_functions import short_nap, start_timer, naptime
 from settings.user_prompts import document_found, no_document_found
 
 from leopard.download import download_document
@@ -61,10 +61,15 @@ def search_documents_from_list(browser, county, target_directory, document_list,
     for document in document_list:
         start_time = start_timer()
         search(browser, document)
+        naptime()
         if open_document(browser, document):
+            naptime()
+            print(1)
             handle_search_results(browser, county, target_directory, download,
                                   document_list, document, start_time)
+            naptime()
         else:
+            print(2)
             record_bad_search(dictionary, document)
             no_document_found(start_time, document_list, document)
         check_length(dictionary)

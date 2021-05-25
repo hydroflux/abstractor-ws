@@ -91,7 +91,7 @@ def review_documents_from_list(browser, county, target_directory, download, docu
         # naptime()
         document_search(browser, document)
         if open_document(browser, document):
-            # naptime()
+            # naptime()  # Remove when done testing
             handle_search_results(browser, county, target_directory, download,
                                   document_list, document, start_time, 'review')
         else:
