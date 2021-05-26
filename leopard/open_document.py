@@ -30,10 +30,7 @@ def locate_result_count(browser, document):
 
 
 def count_total_results(browser, document):
-    print(3)
     result_count = locate_result_count(browser, document)
-    print(4)
-    print(result_count)
     return result_count.text.split(' ')[-1]
 
 
