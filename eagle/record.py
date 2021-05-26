@@ -198,7 +198,7 @@ def record_related_documents(document_table, dataframe):
     related_documents_info = list(map(access_table_body, related_table_rows))
     related_document_list = list(map(access_title_case_text, related_documents_info))
     related_documents = "\n".join(related_document_list)
-    dataframe["Related Documents"].append(related_documents)
+    dataframe["Related Documents"].append(drop_superfluous_information(related_documents))
 
 
 def record_notes(document_tables, dataframe):
