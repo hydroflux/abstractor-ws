@@ -188,8 +188,8 @@ def record_legal_data(document_table, dataframe):
         dataframe["Legal"].append(search_errors[2])
     else:
         legal = legal_data[-1].text
-        if legal.endswith("SEE RECORD"):
-            legal = legal[:-10]
+        if legal.endswith(search_errors[4]):
+            legal = legal[:-11]
         dataframe["Legal"].append(legal)
 
 
@@ -206,9 +206,7 @@ def record_notes(document_tables, dataframe):
         notes = access_field_body_no_title(document_tables[5])
         if notes == search_errors[3] or notes == search_errors[4]:
             pass
-        elif notes.startswith(search_errors[3]) or notes.startswith("$"):
-            pass
-        elif notes.endswith(search_errors[3]):
+        elif notes.startswith(search_errors[3]) or notes.endswith(search_errors[3]):
             pass
         else:
             notes = f'Notes: {notes}'
