@@ -3,7 +3,7 @@ from settings.bad_search import no_document_image, record_bad_search
 from settings.driver import create_webdriver
 from settings.export import export_document
 from settings.file_management import bundle_project, check_length
-from settings.general_functions import short_nap, start_timer, naptime
+from settings.general_functions import start_timer, naptime
 from settings.user_prompts import document_found, no_document_found
 
 from leopard.download import download_document
