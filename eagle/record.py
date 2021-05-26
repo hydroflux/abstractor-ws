@@ -189,7 +189,7 @@ def record_legal_data(document_table, dataframe):
     else:
         legal = legal_data[-1].text
         if legal.endswith(search_errors[4]):
-            legal = legal[:-11]
+            legal = legal[:-11]  # Might make more sense to make this a .strip with -10 rather than -11
         dataframe["Legal"].append(legal)
 
 
@@ -204,7 +204,7 @@ def record_related_documents(document_table, dataframe):
 def record_notes(document_tables, dataframe):
     try:
         notes = access_field_body_no_title(document_tables[5])
-        if notes == search_errors[3] or notes == search_errors[4]:
+        if notes == search_errors[3] or notes == search_errors[4] or notes == search_errors[5]:
             pass
         elif notes.startswith(search_errors[3]) or notes.endswith(search_errors[3]):
             pass
@@ -309,6 +309,7 @@ def next_result(browser, document):
 def record_document(browser, county, dataframe, document):
     wait_for_pdf_to_load(browser)
     short_nap()
+    naptime()  # Remove after running successful 'review' test
     # Added in an effort to make sure entire page loads -- test by checking related documents during review
     # Overall this is a bad practice because it's adding 1 - 2 seconds for a 0.1% chance it misses (based on testing)
     document_number = record_document_fields(browser, county, dataframe, document)
