@@ -117,6 +117,7 @@ def rename_documents_in_directory(county, directory):
 
 def create_project_folder(target_directory, abstraction):
     project_folder = f'{target_directory}/{abstraction}'
+    print(project_folder)
     create_folder(project_folder)
     return project_folder
 
