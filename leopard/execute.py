@@ -63,7 +63,7 @@ def search_documents_from_list(browser, county, target_directory, document_list,
         print(1)
         search(browser, document)
         print(2)
-        naptime()
+        # naptime() --- script runs without issues while this nap was in place
         if open_document(browser, document):
             # naptime()
             print(3)
@@ -94,9 +94,9 @@ def execute_program(headless, county, target_directory, document_list, file_name
     browser = create_webdriver(target_directory, headless)
     account_login(browser)
     dictionary = search_documents_from_list(browser, county, target_directory, document_list, download)
+    logout(browser)
     abstraction = export_document(county, target_directory, file_name, dictionary)
     bundle_project(target_directory, abstraction, download)
-    logout(browser)
     browser.close()
 
 
