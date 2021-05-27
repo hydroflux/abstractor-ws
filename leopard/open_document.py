@@ -5,7 +5,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from settings.file_management import (document_type, document_value,
                                       extrapolate_document_value,
                                       split_book_and_page)
-from settings.general_functions import (get_element_text, scroll_into_view, naptime,
+from settings.general_functions import (get_element_text, scroll_into_view,
                                         timeout)
 
 from leopard.leopard_variables import (result_cell_tag, result_row_class,
@@ -20,12 +20,9 @@ print("open_document", __name__)
 
 def locate_result_count(browser, document):
     try:
-        print(1)
         result_count_present = EC.presence_of_element_located((By.ID, results_count_id))
         WebDriverWait(browser, timeout).until(result_count_present)
-        print(2)
         result_count = browser.find_element_by_id(results_count_id)
-        print(3)
         return result_count
     except TimeoutException:
         print(f'Browser timed out trying to locate the number of results returned for '

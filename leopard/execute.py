@@ -65,13 +65,13 @@ def search_documents_from_list(browser, county, target_directory, document_list,
         print(2)
         naptime()
         if open_document(browser, document):
-            naptime()
+            # naptime()
             print(3)
             handle_search_results(browser, county, target_directory, download,
                                   document_list, document, start_time)
-            naptime()
+            # naptime()
         else:
-            print(2)
+            print(4)
             record_bad_search(dictionary, document)
             no_document_found(start_time, document_list, document)
         check_length(dictionary)
