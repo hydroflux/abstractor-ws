@@ -21,7 +21,7 @@ def short_nap():
 
 
 def medium_nap():
-    sleep(randint(15, 25))
+    sleep(randint(10, 20))
 
 
 def long_nap():
@@ -60,8 +60,8 @@ def scroll_into_view(browser, element):
 
 
 def javascript_script_execution(browser, script):
-    print("executed")
     browser.execute_script(script)
+    short_nap()
 
 
 def get_element_text(element):

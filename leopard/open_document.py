@@ -33,6 +33,7 @@ def count_total_results(browser, document):
     print("counting")
     result_count = locate_result_count(browser, document)
     print("counted", result_count)
+    #  If result count == none, perform a "re-search"
     return result_count.text.split(' ')[-1]
 
 

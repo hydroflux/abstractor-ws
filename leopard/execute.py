@@ -60,18 +60,12 @@ def search_documents_from_list(browser, county, target_directory, document_list,
     transform_document_list(document_list)
     for document in document_list:
         start_time = start_timer()
-        print(1)
         search(browser, document)
-        print(2)
-        # naptime() --- script runs without issues while this nap was in place
+        # naptime()  # --- script runs without issues while this nap was in place
         if open_document(browser, document):
-            # naptime()
-            print(3)
             handle_search_results(browser, county, target_directory, download,
                                   document_list, document, start_time)
-            # naptime()
         else:
-            print(4)
             record_bad_search(dictionary, document)
             no_document_found(start_time, document_list, document)
         check_length(dictionary)
