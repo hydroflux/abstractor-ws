@@ -6,7 +6,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from settings.file_management import (document_type, document_value,
                                       extrapolate_document_value,
                                       split_book_and_page)
-from settings.general_functions import (check_active_class, get_parent_element,
+from settings.general_functions import (check_active_class, get_parent_element, naptime,
                                         javascript_script_execution,
                                         scroll_into_view, timeout)
 
@@ -70,6 +70,7 @@ def open_search(browser, document):
     search_navigation_tab = access_element(browser, get_search_navigation_tab, document, "search navigation")
     while not wait_for_active(browser, search_navigation_tab):
         print("Navigation tab not active, attempting to connect again.")
+        naptime()  # Allows time for navigation to load
         search_navigation_tab = access_element(browser, get_search_navigation_tab, document, "search navigation")
     assert search_title
 
