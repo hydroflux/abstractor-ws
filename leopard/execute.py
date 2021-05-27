@@ -60,11 +60,13 @@ def search_documents_from_list(browser, county, target_directory, document_list,
     transform_document_list(document_list)
     for document in document_list:
         start_time = start_timer()
+        print(1)
         search(browser, document)
+        print(2)
         naptime()
         if open_document(browser, document):
             naptime()
-            print(1)
+            print(3)
             handle_search_results(browser, county, target_directory, download,
                                   document_list, document, start_time)
             naptime()

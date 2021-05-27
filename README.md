@@ -24,6 +24,10 @@
 - [ ] Add date / year into the document class in order to add the option to sort by date
 - [ ] Create a double-check option for eagle--possibly under the "review" as a switch in order to check for any related documents missing
 
+### Imports To Do
+
+- [ ] Allow user to review the imported excel document & choose the column / columns to run
+
 ### Leopard To Do
 
 - [ ] Update multiple_documents comment to include actual document numbers and / or book & page numbers
