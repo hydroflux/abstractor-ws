@@ -15,7 +15,7 @@ short_timeout = randint(5, 10)
 
 def naptime():
     # sleep(randint(3, 6))
-    sleep(randint(2, 3))
+    sleep(randint(3, 4))
 
 
 def short_nap():
@@ -62,6 +62,7 @@ def scroll_into_view(browser, element):
 
 
 def javascript_script_execution(browser, script):
+    print("executed")
     browser.execute_script(script)
 
 
