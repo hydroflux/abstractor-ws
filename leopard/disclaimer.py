@@ -7,7 +7,7 @@ from settings.general_functions import (javascript_script_execution, naptime,
 
 from leopard.leopard_variables import (disclaimer_active_class,
                                        disclaimer_button_id, disclaimer_id,
-                                       search_script)
+                                       open_script)
 
 
 def locate_disclaimer(browser):
@@ -31,7 +31,7 @@ def locate_disclaimer_button(browser):
 
 
 def handle_disclaimer(browser):
-    javascript_script_execution(browser, search_script)
+    javascript_script_execution(browser, open_script)
     disclaimer = locate_disclaimer(browser)
     if disclaimer.get_attribute('class') == disclaimer_active_class:
         disclaimer_button = locate_disclaimer_button(browser)

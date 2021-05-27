@@ -65,13 +65,17 @@ def wait_for_active(browser, element):
               'trying to access element class, trying again.')
 
 
+def access_search_navigation_tab(browser, document):
+    return access_element(browser, get_search_navigation_tab, document, "search navigation")
+
+
 def open_search(browser, document):
     javascript_script_execution(browser, search_script)
-    search_navigation_tab = access_element(browser, get_search_navigation_tab, document, "search navigation")
-    while not wait_for_active(browser, search_navigation_tab):
+    navigation_tab = access_search_navigation_tab(browser, document)
+    while not wait_for_active(browser, navigation_tab):
         print("Navigation tab not active, attempting to connect again.")
         naptime()  # Allows time for navigation to load
-        search_navigation_tab = access_element(browser, get_search_navigation_tab, document, "search navigation")
+        navigation_tab = access_search_navigation_tab(browser, document)
     assert search_title
 
 
