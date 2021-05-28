@@ -7,8 +7,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from settings.general_functions import timeout
 
-from eagle.eagle_variables import (credentials, login_button_class,
-                                   webpage_title, website)
+from eagle.eagle_variables import (credentials, logged_out_redirect_url,
+                                   login_button_class, webpage_title, website)
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("login", __name__)
@@ -52,6 +52,16 @@ def read_login_message(browser):
 def confirm_login(browser):
     while read_login_message(browser) != credentials[3]:
         sleep(0.5)
+
+
+def log_back_in(browser):
+    if browser.current_url == logged_out_redirect_url:
+        try:
+            open_login_prompt(browser)
+            enter_credentials(browser)
+            confirm_login(browser)
+        except TimeoutException:
+            print("Browser timed out while trying to log back in after logout.")
 
 
 def account_login(browser):
