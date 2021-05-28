@@ -55,13 +55,18 @@ def confirm_login(browser):
 
 
 def log_back_in(browser):
+    try:
+        open_login_prompt(browser)
+        enter_credentials(browser)
+        confirm_login(browser)
+    except TimeoutException:
+        print("Browser timed out while trying to log back in after logout.")
+
+
+def check_login_status(browser):
     if browser.current_url == logged_out_redirect_url:
-        try:
-            open_login_prompt(browser)
-            enter_credentials(browser)
-            confirm_login(browser)
-        except TimeoutException:
-            print("Browser timed out while trying to log back in after logout.")
+        print('Web driver timed out, attempting to log back in.')
+        log_back_in(browser)
 
 
 def account_login(browser):
