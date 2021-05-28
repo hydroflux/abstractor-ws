@@ -72,16 +72,28 @@ def search_documents_from_list(browser, county, target_directory, document_list,
     return dictionary
 
 
-def review_documents_from_list(browser, county, target_directory, download, document_list):
+def review_documents_from_list(browser, county, target_directory, document_list):
     transform_document_list(document_list)
     for document in document_list:
         start_time = start_timer()
         search(browser, document)
         if open_document(browser, document):
-            handle_search_results(browser, county, target_directory, download,
+            handle_search_results(browser, county, target_directory, False,
                                   document_list, document, start_time, "review")
         else:
             no_document_found(document_list, document, "review")
+
+
+def download_documents_from_list(browser, county, target_directory, document_list):
+    transform_document_list(document_list)
+    for document in document_list:
+        start_time = start_timer()
+        search(browser, document)
+        if open_document(browser, document):
+            handle_search_results(browser, county, target_directory, True,
+                                  document_list, document, start_time, "download")
+        else:
+            no_document_found(document_list, document, "download")
 
 
 def execute_program(headless, county, target_directory, document_list, file_name, sheet_name, download):
@@ -94,17 +106,17 @@ def execute_program(headless, county, target_directory, document_list, file_name
     browser.close()
 
 
-def execute_review(target_directory, document_list, file_name, sheet_name):
+def execute_review(county, target_directory, document_list):
     browser = create_webdriver(target_directory, False)
     account_login(browser)
-    review_documents_from_list(browser, document_list)
+    review_documents_from_list(browser, county, target_directory, document_list)
     logout(browser)
     browser.close()
 
 
-def execute_document_download(target_directory, document_list, file_name, sheet_name):
+def execute_document_download(county, target_directory, document_list):
     browser = create_webdriver(target_directory, False)
     account_login(browser)
-    review_documents_from_list(browser, document_list)
+    download_documents_from_list(browser, county, target_directory, document_list)
     logout(browser)
     browser.close()
