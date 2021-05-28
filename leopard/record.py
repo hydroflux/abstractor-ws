@@ -101,8 +101,12 @@ def row_title_check(rows):
             continue
 
 
+def locate_reception_number(rows):
+    return check_rows(rows, row_titles["reception_number"])
+
+
 def record_reception_number(rows, dictionary):
-    reception_number = check_rows(rows, row_titles["reception_number"])
+    reception_number = locate_reception_number(rows)
     dictionary["Reception Number"].append(reception_number)
     return reception_number
 
@@ -231,6 +235,11 @@ def next_result(browser, document):
     next_result_button = get_next_result_button(browser, document)
     scroll_to_top(browser)
     next_result_button.click()
+
+
+def get_reception_number(browser, dictionary, document):
+    rows = get_document_content(browser, document)
+    return locate_reception_number(rows)
 
 
 def record_document(browser, county, dictionary, document):
