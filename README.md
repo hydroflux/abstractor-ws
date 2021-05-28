@@ -24,7 +24,6 @@
 - [ ] Add date / year into the document class in order to add the option to sort by date
 - [ ] Create a double-check option for eagle--possibly under the "review" as a switch in order to check for any related documents missing
 - [ ] Best order of operations for file management should be to create the folder first & then put the documents folder inside of it, rather than bundling at the end
-- [ ] Add a function to check to see if the disclaimer has been passed if login is pressed too early
 
 ### Imports To Do
 
@@ -49,9 +48,11 @@
 - [ ] Update record (after refactoring) to work with multiple documents
 - [ ] Document.number_results should be spread across open, record, & execute
 - [ ] Create a convert_document_numbers script to work like leopard, but with the tiger document lists
+- [ ] Create a "download only" option for execution
 
 ### Eagle To Do
 
+- [ ] Add a function to check to see if the disclaimer has been passed if login is pressed too early--should tie into the "check for logged in" function
 - [ ] For some reason the ’s isn’t catching on entries when the grantor has to hit show more, please review
 - [ ] Update multiple_documents comment to include actual document numbers and / or book & page numbers
 - [ ] Verify results after clicking into the document page
@@ -67,6 +68,7 @@
 - [ ] Count results doesn't work if the search button has never been pressed, add a fallback procedure to account for this--occurs when the browser instance is offscreen during a search
 - [ ] If a grantor / grantee ends in a tag indicating more information is present, redo the search -- add to eagle record
 - [ ] Create a convert_document_numbers script to work like leopard, but with the eagle document lists
+- [ ] Create a "download only" option for execution
 
 ### Crocodile To Do
 
@@ -74,6 +76,7 @@
 - [ ] Add all crocodile scripts (execute, login, logout, search, open, record, download)
 - [ ] Integrate crocodile scripts to work with the top level environment file
 - [ ] Create a convert_document_numbers script
+- [ ] Create an "execution", "review", & "download only" option for execution
 
 ### Iguana To Do
 
@@ -81,3 +84,4 @@
 - [ ] Add all iguana scripts (execute, login, logout, search, open, record, download)
 - [ ] Integrate iguana scripts to work with the top level environment file
 - [ ] Create a convert_document_numbers script
+- [ ] Create an "execution", "review", & "download only" option for execution
