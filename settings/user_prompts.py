@@ -23,11 +23,14 @@ def get_program_type():
         user_input = input('What would you like to do? \n'
                            '[1] Execute Program \n'
                            '[2] Review Output \n'
+                           '[3] Download Documents \n'
                            )
     if user_input == "1":
         program_type = "execute"
     elif user_input == "2":
         program_type = "review"
+    elif user_input == "3":
+        program_type = "download"
     clear_terminal()
     return program_type
 

@@ -100,3 +100,11 @@ def execute_review(target_directory, document_list, file_name, sheet_name):
     review_documents_from_list(browser, document_list)
     logout(browser)
     browser.close()
+
+
+def execute_document_download(target_directory, document_list, file_name, sheet_name):
+    browser = create_webdriver(target_directory, False)
+    account_login(browser)
+    review_documents_from_list(browser, document_list)
+    logout(browser)
+    browser.close()
