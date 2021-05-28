@@ -310,7 +310,7 @@ def get_reception_number(browser, document):
     wait_for_pdf_to_load(browser)
     document_information = get_document_information(browser, document)
     document_tables = access_document_information_tables(browser, document, document_information)
-    reception_field = access_indexing_information(document_tables[1])[0]
+    reception_field, recording_date = access_indexing_information(document_tables[1])
     return split_reception_field(reception_field)[0]
 
 
@@ -318,7 +318,8 @@ def record_document(browser, county, dataframe, document):
     wait_for_pdf_to_load(browser)
     # short_nap() # Removing short_nap to test with naptime alone
     # naptime()  # Remove after running successful 'review' test
-    naptime()  # Remove after running successful 'review' test; two naptimes might be overkill but short_nap isn't capturing everything
+    naptime()  # Remove after running successful 'review' test;
+    # two naptimes might be overkill but short_nap isn't capturing everything
     # Added in an effort to make sure entire page loads -- test by checking related documents during review
     # Overall this is a bad practice because it's adding 1 - 2 seconds for a 0.1% chance it misses (based on testing)
     document_number = record_document_fields(browser, county, dataframe, document)

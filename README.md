@@ -25,6 +25,7 @@
 - [ ] Create a double-check option for eagle--possibly under the "review" as a switch in order to check for any related documents missing
 - [ ] Best order of operations for file management should be to create the folder first & then put the documents folder inside of it, rather than bundling at the end
 - [ ] I keep returning the reception number as a way to 'get' the document number--but if it matches (or if it can be stored a different way), this is completely redundant
+- [ ] Add program_type to  the 'started on...' line when starting a program (checks for cases where the wrong program type was chosen & logging in is time extensive)
 
 ### Imports To Do
 
