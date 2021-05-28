@@ -1,11 +1,10 @@
 #!/usr/bin/python3
-from leopard.execute import download_multiple_documents
 from settings.abstract_object import abstract_dictionary
 from settings.bad_search import record_bad_search
 from settings.driver import create_webdriver
 from settings.export import export_document
 from settings.file_management import bundle_project
-from settings.general_functions import start_timer, naptime
+from settings.general_functions import start_timer
 from settings.user_prompts import document_found, no_document_found
 
 from eagle.download import download_document
@@ -43,6 +42,20 @@ def review_multiple_documents(browser, start_time, document_list, document):
         document_found(start_time, document_list, document, "review")
 
 
+def download_single_document(browser, county, target_directory, document_list, document, start_time):
+    # Bad practice, create a different way to get the reception number
+    document_number = record_document(browser, county, abstract_dictionary, document)
+    download_document(browser, county, target_directory, document_number)
+    document_found(start_time, document_list, document)
+
+
+def download_multiple_documents(browser, county, target_directory, document_list, document, start_time):
+    download_single_document(browser, county, target_directory, document_list, document, start_time)
+    for document_instance in range(0, (document.number_results - 1)):
+        next_result(browser, document)
+        download_single_document(browser, county, target_directory, document_list, document, start_time)
+
+
 def handle_search_results(browser, county, target_directory, download,
                           document_list, document, start_time, alt=None):
     if alt is None:
@@ -59,11 +72,9 @@ def handle_search_results(browser, county, target_directory, download,
             document_found(start_time, document_list, document, "review")
     elif alt == "download":
         if document.number_results > 1:
-            pass
-            # download_multiple_documents()
+            download_multiple_documents(browser, county, target_directory, document_list, document, start_time)
         else:
-            # download_single_document()
-            pass
+            download_single_document(browser, county, target_directory, document_list, document, start_time)
 
 
 def search_documents_from_list(browser, county, target_directory, document_list, download):
