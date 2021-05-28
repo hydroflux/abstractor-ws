@@ -10,7 +10,7 @@ from settings.user_prompts import document_found, no_document_found
 from eagle.download import download_document
 from eagle.login import account_login
 from eagle.open_document import open_document
-from eagle.record import next_result, record_document
+from eagle.record import get_reception_number, next_result, record_document
 from eagle.search import document_search
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
@@ -43,8 +43,7 @@ def review_multiple_documents(browser, start_time, document_list, document):
 
 
 def download_single_document(browser, county, target_directory, document_list, document, start_time):
-    # Bad practice, create a different way to get the reception number
-    document_number = record_document(browser, county, abstract_dictionary, document)
+    document_number = get_reception_number(browser, document)
     download_document(browser, county, target_directory, document_number)
     document_found(start_time, document_list, document)
 
