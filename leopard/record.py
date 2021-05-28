@@ -237,7 +237,7 @@ def next_result(browser, document):
     next_result_button.click()
 
 
-def get_reception_number(browser, dictionary, document):
+def get_reception_number(browser, document):
     rows = get_document_content(browser, document)
     return locate_reception_number(rows)
 

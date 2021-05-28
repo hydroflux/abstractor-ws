@@ -10,7 +10,7 @@ from leopard.download import download_document
 from leopard.login import account_login
 from leopard.logout import logout
 from leopard.open_document import open_document
-from leopard.record import next_result, record_document
+from leopard.record import get_reception_number, next_result, record_document
 from leopard.search import search
 from leopard.transform_document_list import transform_document_list
 
@@ -27,8 +27,7 @@ def record_single_document(browser, county, target_directory, download, document
 
 
 def download_single_document(browser, county, target_directory, document_list, document, start_time):
-    # This is unnecessary & doesn't make sense just to get the document number out
-    document_number = record_document(browser, county, dictionary, document)
+    document_number = get_reception_number(browser, document)
     if not download_document(browser, county, target_directory, document, document_number):
         no_document_image(dictionary, document)
     document_found(start_time, document_list, document, "download")
