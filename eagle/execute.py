@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+from leopard.execute import download_multiple_documents
 from settings.abstract_object import abstract_dictionary
 from settings.bad_search import record_bad_search
 from settings.driver import create_webdriver
@@ -56,6 +57,13 @@ def handle_search_results(browser, county, target_directory, download,
             review_multiple_documents(browser, start_time, document_list, document)
         else:
             document_found(start_time, document_list, document, "review")
+    elif alt == "download":
+        if document.number_results > 1:
+            pass
+            # download_multiple_documents()
+        else:
+            # download_single_document()
+            pass
 
 
 def search_documents_from_list(browser, county, target_directory, document_list, download):
@@ -88,14 +96,23 @@ def execute_program(county, target_directory, document_list, file_name, download
 def review_documents_from_list(browser, county, target_directory, download, document_list):
     for document in document_list:
         start_time = start_timer()
-        # naptime()
         document_search(browser, document)
         if open_document(browser, document):
-            # naptime()  # Remove when done testing
             handle_search_results(browser, county, target_directory, download,
                                   document_list, document, start_time, 'review')
         else:
             no_document_found(start_time, document_list, document, "review")
+
+
+def download_documents_from_list(browser, county, target_directory, download, document_list):
+    for document in document_list:
+        start_time = start_timer()
+        document_search(browser, document)
+        if open_document(browser, document):
+            handle_search_results(browser, county, target_directory, download,
+                                  document_list, document, start_time, 'download')
+        else:
+            no_document_found(start_time, document_list, document)
 
 
 def execute_review(county, target_directory, document_list, download):
@@ -108,7 +125,7 @@ def execute_review(county, target_directory, document_list, download):
 def execute_document_download(county, target_directory, document_list, download):
     browser = create_webdriver(target_directory, False)
     account_login(browser)
-    # download_documents_from_list(browser, county, target_directory, download, document_list)
+    download_documents_from_list(browser, county, target_directory, download, document_list)
     browser.close()
 
 
