@@ -51,7 +51,7 @@ def get_search_navigation_tab(browser, document):
 def access_element(browser, access_function, document, element_type):
     try:
         element = access_function(browser, document)
-        print("element", element)
+        # print("element", element)
         return element
     except StaleElementReferenceException:
         print(f'Encountered a stale element reference exception '

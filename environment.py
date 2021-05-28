@@ -27,14 +27,14 @@ def execute_program_type(county, program_type, document_list):
             execute_eagle(county, target_directory, document_list, file_name, download)
         elif program_type == "review":
             review_eagle(county, target_directory, document_list, download)
-        # elif program_type == "download_document":
+        # elif program_type == "download":
         #     download_eagle()
     elif county.program == 'leopard':
         if program_type == "execute":
             execute_leopard(headless, county, target_directory, document_list, file_name, sheet_name, download)
         elif program_type == "review":
             review_leopard(county, target_directory, document_list)
-        elif program_type == "download_document":
+        elif program_type == "download":
             download_leopard(county, target_directory, document_list)
     # elif county.program == 'tiger':
     #     if program_type == 'execute':

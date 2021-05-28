@@ -72,9 +72,7 @@ def handle_search_results(browser, county, target_directory, download,
         if document.number_results > 1:
             download_multiple_documents(browser, county, target_directory, start_time, document_list, document)
         else:
-            if not download_document(browser, county, target_directory, document):
-                no_document_image(dictionary, document)
-            document_found(start_time, document_list, document, "download")
+            download_single_document(browser, county, target_directory, document_list, document, start_time)
 
 
 def search_documents_from_list(browser, county, target_directory, document_list, download):
@@ -102,7 +100,7 @@ def review_documents_from_list(browser, county, target_directory, document_list)
             handle_search_results(browser, county, target_directory, False,
                                   document_list, document, start_time, "review")
         else:
-            no_document_found(document_list, document, "review")
+            no_document_found(start_time, document_list, document, "review")
 
 
 def download_documents_from_list(browser, county, target_directory, document_list):
@@ -114,7 +112,7 @@ def download_documents_from_list(browser, county, target_directory, document_lis
             handle_search_results(browser, county, target_directory, True,
                                   document_list, document, start_time, "download")
         else:
-            no_document_found(document_list, document)
+            no_document_found(start_time, document_list, document)
 
 
 def execute_program(headless, county, target_directory, document_list, file_name, sheet_name, download):
