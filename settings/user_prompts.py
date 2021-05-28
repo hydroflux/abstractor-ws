@@ -100,6 +100,11 @@ def document_found(start_time, document_list, document, alt=None):
               'please review & press enter to continue... '
               f'({list_remaining_documents(document_list, document)}) '
               f'({report_execution_time(start_time)})')
+    elif alt == "download":
+        print('Document located at '
+              f'{extrapolate_document_value(document)} downloaded, '
+              f'{list_remaining_documents(document_list, document)} '
+              f'({report_execution_time(start_time)})')
 
 
 def no_document_found(start_time, document_list, document, alt=None):
@@ -113,6 +118,7 @@ def no_document_found(start_time, document_list, document, alt=None):
               'please review & press enter to continue... '
               f'({list_remaining_documents(document_list, document)}) '
               f'({report_execution_time(start_time)})')
+
 
 
 # Add an additional prompt for request for download

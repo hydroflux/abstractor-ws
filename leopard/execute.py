@@ -26,10 +26,12 @@ def record_single_document(browser, county, target_directory, download, document
     document_found(start_time, document_list, document)
 
 
-def download_single_document(browser, county, target_directory, document, document_number):
+def download_single_document(browser, county, target_directory, document_list, document, start_time):
+    # This is unnecessary & doesn't make sense just to get the document number out
+    document_number = record_document(browser, county, dictionary, document)
     if not download_document(browser, county, target_directory, document, document_number):
         no_document_image(dictionary, document)
-    # document_found(start_time, document_list, document, "download")
+    document_found(start_time, document_list, document, "download")
 
 
 def record_multiple_documents(browser, county, target_directory, download, document_list, document, start_time):
@@ -46,12 +48,11 @@ def review_multiple_documents(browser, start_time, document_list, document):
         document_found(start_time, document_list, document, "review")
 
 
-def download_multiple_documents(browser, county, target_directory, start_time, document_list,
-                                document, document_number):
-    download_single_document(browser, county, target_directory, document, document_number)
+def download_multiple_documents(browser, county, target_directory, start_time, document_list, document):
+    download_single_document(browser, county, target_directory, document)
     for document_instance in range(0, (document.number_results - 1)):
         next_result(browser, document)
-        download_single_document(browser, county, target_directory, document, document_number)
+        download_single_document(browser, county, target_directory, document)
 
 
 def handle_search_results(browser, county, target_directory, download,
@@ -69,15 +70,12 @@ def handle_search_results(browser, county, target_directory, download,
         else:
             document_found(start_time, document_list, document, "review")
     elif alt == "download":
-        document_number = record_document(browser, county, dictionary, document)
         if document.number_results > 1:
-            download_multiple_documents(browser, county, target_directory, start_time,
-                                        document_list, document, document_number)
+            download_multiple_documents(browser, county, target_directory, start_time, document_list, document)
         else:
-            # This is unnecessary & doesn't make sense just to get the document number out
-            if not download_document(browser, county, target_directory, document, document_number):
+            if not download_document(browser, county, target_directory, document):
                 no_document_image(dictionary, document)
-            # document_found(start_time, document_list, document, "download")
+            document_found(start_time, document_list, document, "download")
 
 
 def search_documents_from_list(browser, county, target_directory, document_list, download):
@@ -117,7 +115,7 @@ def download_documents_from_list(browser, county, target_directory, document_lis
             handle_search_results(browser, county, target_directory, True,
                                   document_list, document, start_time, "download")
         else:
-            no_document_found(document_list, document, "download")
+            no_document_found(document_list, document)
 
 
 def execute_program(headless, county, target_directory, document_list, file_name, sheet_name, download):
