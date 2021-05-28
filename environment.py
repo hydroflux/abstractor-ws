@@ -3,11 +3,12 @@ import sys
 sys.path.append(".")
 
 if __name__ == '__main__':
+    from eagle.execute import execute_document_download as download_eagle
     from eagle.execute import execute_program as execute_eagle
     from eagle.execute import execute_review as review_eagle
+    from leopard.execute import execute_document_download as download_leopard
     from leopard.execute import execute_program as execute_leopard
     from leopard.execute import execute_review as review_leopard
-    from leopard.execute import execute_document_download as download_leopard
     # from tiger.execute import execute_program as execute_tiger
     # from tiger.execute import execute_review as review_tiger
     from settings.general_functions import (get_county_data,
@@ -27,8 +28,8 @@ def execute_program_type(county, program_type, document_list):
             execute_eagle(county, target_directory, document_list, file_name, download)
         elif program_type == "review":
             review_eagle(county, target_directory, document_list, download)
-        # elif program_type == "download":
-        #     download_eagle()
+        elif program_type == "download":
+            download_eagle(county, target_directory, document_list, download)
     elif county.program == 'leopard':
         if program_type == "execute":
             execute_leopard(headless, county, target_directory, document_list, file_name, sheet_name, download)

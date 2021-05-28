@@ -120,7 +120,6 @@ def no_document_found(start_time, document_list, document, alt=None):
               f'({report_execution_time(start_time)})')
 
 
-
 # Add an additional prompt for request for download
 def request_more_information(current_target_directory, current_file_name, current_sheet_name):
     target_directory = target_directory_prompt(current_target_directory)

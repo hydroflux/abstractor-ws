@@ -105,6 +105,13 @@ def execute_review(county, target_directory, document_list, download):
     browser.close()
 
 
+def execute_document_download(county, target_directory, document_list, download):
+    browser = create_webdriver(target_directory, False)
+    account_login(browser)
+    # download_documents_from_list(browser, county, target_directory, download, document_list)
+    browser.close()
+
+
 # def execute_web_program(client, legal, upload_file):
 #     sheet_name = 'Documents'
 #     download = False
