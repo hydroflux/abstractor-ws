@@ -88,6 +88,13 @@ def open_tab(browser, access_function, document):
         tab.click()
 
 
+def check_for_browser_error(browser):
+    if browser.title == "Error":
+        print("Browser encountered an error during the search, refreshing the page to attempt to fix the problem.")
+        # Review after hitting this error again, browser needs to still be logged in during error to see if this works
+        browser.refresh()
+
+
 def locate_document_search_tab(browser, document):
     try:
         document_search_tab_present = EC.element_to_be_clickable((By.ID, document_search_tab_id))
@@ -97,6 +104,7 @@ def locate_document_search_tab(browser, document):
     except TimeoutException:
         print(f'Browser timed out trying to access the document search tab for '
               f'{extrapolate_document_value(document)}')
+        check_for_browser_error(browser)
 
 
 def get_document_search_tab(browser, document):
