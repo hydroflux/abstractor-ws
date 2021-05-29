@@ -1,6 +1,7 @@
 import os
-from time import sleep, time
+from time import sleep
 from settings.general_functions import naptime, long_nap
+from selenium.common.exceptions import NoSuchWindowException
 
 
 def previously_downloaded(county, document_directory, document_number):
@@ -11,26 +12,33 @@ def previously_downloaded(county, document_directory, document_number):
         return False
 
 
-def check_for_download_error(browser):
-    handles = browser.window_handles
-    number_windows = len(handles)
-    if number_windows > 1:
-        window_before_click = handles[0]
-        window_after_click = handles[1]
-        browser.switch_to_window(window_after_click)
+def check_for_download_error(browser, windows):
+    try:
         if browser.title == 'Error':
             browser.close()
-            browser.switch_to_window(window_before_click)
+            browser.switch_to_window(windows[0])
             return True
         else:
-            browser.switch_to_window(window_before_click)
+            browser.switch_to_window(windows[0])
+    except NoSuchWindowException:
+        print('Encountered a "no such window exception" error while trying to close the download window, '
+              'issue may have resolved itself, please review')
+        # Commented out in order to determine if the browser switches back automatically given this error
+        # browser.switch_to_window(windows[0])
+
+
+def check_browser_windows(browser):
+    windows = browser.window_handles
+    if len(windows) > 1:
+        browser.switch_to_window(windows[1])
+        check_for_download_error(browser, windows)
 
 
 def wait_for_download(browser, document_directory, download_path, number_files):
     download_wait = True
     while not os.path.exists(download_path) and download_wait:
         sleep(1)
-        check_for_download_error(browser)
+        check_browser_windows(browser)
         download_wait = False
         directory_files = os.listdir(document_directory)
         for file_name in directory_files:
