@@ -21,6 +21,7 @@ print("search", __name__)
 
 def open_search(browser):
     browser.get(search_url)
+    check_login_status(browser)  # Try here, if unsuccessful move to after open_search
     assert search_title
 
 
@@ -120,7 +121,6 @@ def execute_search(browser):
 
 
 def document_search(browser, document):
-    check_login_status(browser)
     open_search(browser)
     clear_search(browser)
     naptime()  # Consider testing without this nap to see if necessary
