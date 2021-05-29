@@ -22,9 +22,8 @@ def check_for_download_error(browser, windows):
             browser.switch_to_window(windows[0])
     except NoSuchWindowException:
         print('Encountered a "no such window exception" error while trying to close the download window, '
-              'issue may have resolved itself, please review')
-        # Commented out in order to determine if the browser switches back automatically given this error
-        # browser.switch_to_window(windows[0])
+              'switching back to the original window.')
+        browser.switch_to_window(windows[0])
 
 
 def check_browser_windows(browser):
@@ -37,7 +36,7 @@ def check_browser_windows(browser):
 def wait_for_download(browser, document_directory, download_path, number_files):
     download_wait = True
     while not os.path.exists(download_path) and download_wait:
-        sleep(1)
+        sleep(1)  # Increase to 2 seconds if still having issues with no such window exception
         check_browser_windows(browser)
         download_wait = False
         directory_files = os.listdir(document_directory)
