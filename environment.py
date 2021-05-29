@@ -50,7 +50,7 @@ def execute_abstractor():
     county = get_county_data(county_name)
     document_list = generate_document_list(target_directory, file_name, sheet_name)
     program_type = get_program_type()
-    start_time = start_program_timer(county)
+    start_time = start_program_timer(county, document_list)
     execute_program_type(county, program_type, document_list)
     stop_program_timer(start_time)
     quit()

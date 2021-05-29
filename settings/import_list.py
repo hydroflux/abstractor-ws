@@ -1,6 +1,7 @@
 import os
 import math
 import pandas as pd
+import numpy
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("import_list", __name__)
@@ -20,6 +21,11 @@ def get_sheet_rows(excel_object):
     return rows
 
 
+def is_missing(value):
+    if pd.isnull(value):
+        return True
+
+
 def is_empty_value(value):
     try:
         value_check = float(value)
@@ -30,7 +36,7 @@ def is_empty_value(value):
 
 def get_book_number(row):
     book = row['Book']
-    if is_empty_value(book):
+    if is_missing(book) or is_empty_value(book):
         return None
     else:
         try:
@@ -41,7 +47,7 @@ def get_book_number(row):
 
 def get_page_number(row):
     page = row['Page']
-    if is_empty_value(page):
+    if is_missing(page) or is_empty_value(page):
         return None
     else:
         try:
@@ -59,7 +65,7 @@ def get_document_number(columns, row):
         document_number = row['Reception Number']
     elif 'Reception Numbers' in columns:
         document_number = row['Reception Numbers']
-    if is_empty_value(document_number):
+    if is_missing(document_number) or is_empty_value(document_number):
         return None
     else:
         try:

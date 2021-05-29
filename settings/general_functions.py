@@ -44,10 +44,11 @@ def report_execution_time(start_time):
     return str(stop_timer(start_time))
 
 
-def start_program_timer(county):
+def start_program_timer(county, document_list):
     start_time = start_timer()
     print(f'{county} - {abstraction_type} started on: \n'
-          f'{str(start_time.strftime("%B %d, %Y %H:%M:%S"))}')
+          f'{str(start_time.strftime("%B %d, %Y %H:%M:%S"))}\n'
+          f'{len(document_list)} imported for processing.')
     return start_time
 
 
