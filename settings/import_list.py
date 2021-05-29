@@ -1,13 +1,10 @@
-import os
 import math
 import pandas as pd
-import numpy
+
+from settings.classes.Document import Document
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("import_list", __name__)
-
-from settings.settings import web_directory
-from settings.classes.Document import Document
 
 
 def get_sheet_columns(excel_object):
