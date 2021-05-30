@@ -1,7 +1,10 @@
 import os
 from time import sleep
-from settings.general_functions import naptime, long_nap
-from selenium.common.exceptions import NoSuchWindowException
+
+from selenium.common.exceptions import (NoSuchWindowException,
+                                        WebDriverException)
+
+from settings.general_functions import long_nap, naptime
 
 
 def previously_downloaded(county, document_directory, document_number):
@@ -24,6 +27,10 @@ def check_for_download_error(browser, windows):
         print('Encountered a "no such window exception" error while trying to close the download window, '
               'switching back to the original window.')
         browser.switch_to_window(windows[0])
+    except WebDriverException:
+        print('Encountered a "web driver exception" error while trying to close the download window, '
+              'switching back to the original window.')
+        browser.switch_to_window(windows[0])
 
 
 def check_browser_windows(browser):
@@ -36,8 +43,8 @@ def check_browser_windows(browser):
 def wait_for_download(browser, document_directory, download_path, number_files):
     download_wait = True
     while not os.path.exists(download_path) and download_wait:
-        sleep(1)  # Increase to 2 seconds if still having issues with no such window exception
         check_browser_windows(browser)
+        sleep(1)  # Increase to 2 seconds if still having issues with no such window exception
         download_wait = False
         directory_files = os.listdir(document_directory)
         for file_name in directory_files:
