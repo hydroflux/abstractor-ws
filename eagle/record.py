@@ -9,7 +9,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from settings.export_settings import search_errors
 from settings.file_management import (check_length, drop_last_entry,
                                       extrapolate_document_value)
-from settings.general_functions import (long_timeout, naptime,
+from settings.general_functions import (long_timeout, medium_nap, naptime,
                                         scroll_into_view, scroll_to_top,
                                         short_nap, timeout,
                                         update_sentence_case_extras)
@@ -316,11 +316,8 @@ def get_reception_number(browser, document):
 
 def record_document(browser, county, dataframe, document):
     wait_for_pdf_to_load(browser)
-    # short_nap() # Removing short_nap to test with naptime alone
-    # naptime()  # Remove after running successful 'review' test
-    naptime()  # Remove after running successful 'review' test;
-    # two naptimes might be overkill but short_nap isn't capturing everything
-    # Added in an effort to make sure entire page loads -- test by checking related documents during review
+    naptime()  # Remove after running successful 'review' test
+    medium_nap()  # Use for review
     # Overall this is a bad practice because it's adding 1 - 2 seconds for a 0.1% chance it misses (based on testing)
     document_number = record_document_fields(browser, county, dataframe, document)
     check_length(dataframe)
