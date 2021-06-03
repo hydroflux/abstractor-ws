@@ -18,6 +18,16 @@ print("open_document", __name__)
 # Script is SIMILAR, but not nearly identical, to tiger open_document
 
 
+def check_for_alert(browser):
+    try:
+        alert_present = EC.alert_is_present()
+        WebDriverWait(browser, timeout).until(alert_present)
+        alert = browser.switch_to.alert
+        alert.accept()
+    except TimeoutException:
+        print("Browser timed out while attempting to locate an alert, please review.")
+
+
 def locate_result_count(browser, document):
     try:
         result_count_present = EC.presence_of_element_located((By.ID, results_count_id))
@@ -27,6 +37,7 @@ def locate_result_count(browser, document):
     except TimeoutException:
         print(f'Browser timed out trying to locate the number of results returned for '
               f'{extrapolate_document_value(document)}.')
+        check_for_alert(browser)
 
 
 def count_total_results(browser, document):
