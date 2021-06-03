@@ -72,13 +72,20 @@ def check_file_size(download_path):
             return False
 
 
-def rename_download(document_directory, stock_download, document_number, download_path, new_download_name):
+def prepare_file_for_download(document_directory, stock_download, document_number, download_path, new_download_name):
     if check_file_size(download_path):
         os.rename(stock_download, new_download_name)
         os.chdir(document_directory)
         check_download_size(new_download_name, document_number)
     else:
         raise ValueError("%s isn't a file!" % download_path)
+
+
+def rename_download(document_directory, stock_download, document_number, download_path, new_download_name):
+    try:
+        prepare_file_for_download(document_directory, stock_download, document_number, download_path, new_download_name)
+    except FileNotFoundError:
+        print(f'File not found, please review stock download {stock_download} & new file name {new_download_name}')
 
 
 def check_for_rename(browser, document_directory, number_files, document_number, new_download_name):
