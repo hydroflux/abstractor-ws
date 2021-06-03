@@ -36,10 +36,14 @@ def locate_error_message(browser):
         print("Browser timed out while trying to locate error message after PDF failed to load, please review.")
 
 
-def check_for_error(browser):
+def check_for_error(browser, document):
     error_message = locate_error_message(browser)
     if error_message == error_message_text:
-        pass  # do something
+        print(f'An error occurred while opening the document located at '
+              f'${extrapolate_document_value(document)}, refreshing the page to try again.')
+        browser.refresh()
+        naptime()
+        return pdf_load_status
 
 
 def pdf_load_status(browser):
@@ -48,13 +52,14 @@ def pdf_load_status(browser):
         WebDriverWait(browser, long_timeout).until(pdf_viewer_loaded)
         return browser.find_element_by_id(pdf_viewer_load_id).text
     except TimeoutException:
-        print("Browser timed out while waiting for the PDF Viewer to load.")
-        check_for_error(browser)
+        print("Browser timed out while waiting for the PDF Viewer to load, checking for error.")
+        return check_for_error(browser)
 
 
 def wait_for_pdf_to_load(browser):
     while pdf_load_status(browser).startswith(loading_status):
-        sleep(1)  # Sleep increased from 0.5 seconds to 1 second in order to try & grab all related documents
+        sleep(2)  # Sleep increased from 1 second to 2 second in order to try & grab all related documents
+        # Consider changing to short_nap (or even naptime) ~~~ originally 0.5 second sleep
         pdf_load_status(browser)
 
 
