@@ -25,6 +25,10 @@ from eagle.eagle_variables import (document_information_id,
 print("record", __name__)
 
 
+def check_for_error(browser):
+    pass
+
+
 def pdf_load_status(browser):
     try:
         pdf_viewer_loaded = EC.presence_of_element_located((By.ID, pdf_viewer_load_id))
@@ -32,6 +36,7 @@ def pdf_load_status(browser):
         return browser.find_element_by_id(pdf_viewer_load_id).text
     except TimeoutException:
         print("Browser timed out while waiting for the PDF Viewer to load.")
+        check_for_error(browser)
 
 
 def wait_for_pdf_to_load(browser):
@@ -317,7 +322,7 @@ def get_reception_number(browser, document):
 def record_document(browser, county, dataframe, document):
     wait_for_pdf_to_load(browser)
     naptime()  # Remove after running successful 'review' test
-    medium_nap()  # Use for review
+    # medium_nap()  # Use for review
     # Overall this is a bad practice because it's adding 1 - 2 seconds for a 0.1% chance it misses (based on testing)
     document_number = record_document_fields(browser, county, dataframe, document)
     check_length(dataframe)
