@@ -1,5 +1,3 @@
-from time import sleep
-
 from selenium.common.exceptions import (ElementClickInterceptedException,
                                         StaleElementReferenceException,
                                         TimeoutException)
@@ -40,7 +38,7 @@ def check_for_error(browser, document):
     error_message = locate_error_message(browser)
     if error_message == error_message_text:
         print(f'An error occurred while opening the document located at '
-              f'${extrapolate_document_value(document)}, refreshing the page to try again.')
+              f'{extrapolate_document_value(document)}, refreshing the page to try again.')
         browser.refresh()
         naptime()
         return pdf_load_status
@@ -58,8 +56,10 @@ def pdf_load_status(browser):
 
 def wait_for_pdf_to_load(browser):
     while pdf_load_status(browser).startswith(loading_status):
-        sleep(2)  # Sleep increased from 1 second to 2 second in order to try & grab all related documents
-        # Consider changing to short_nap (or even naptime) ~~~ originally 0.5 second sleep
+        short_nap()  # using short_nap in order to try & grab all related documents
+        # Consider changing to even naptime ~~~ originally 0.5 second sleep
+        # Updating sleep time would be more efficient here because it would force a nap only
+        # If the  PDF hasn't loaded properly
         pdf_load_status(browser)
 
 
