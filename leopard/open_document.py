@@ -11,6 +11,7 @@ from settings.general_functions import (get_element_text, scroll_into_view,
 from leopard.leopard_variables import (result_cell_tag, result_row_class,
                                        results_body_tag, results_count_id,
                                        results_id)
+from leopard.search import search
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("open_document", __name__)
@@ -18,14 +19,23 @@ print("open_document", __name__)
 # Script is SIMILAR, but not nearly identical, to tiger open_document
 
 
-def check_for_alert(browser):
+def handle_alert(browser):
     try:
         alert_present = EC.alert_is_present()
         WebDriverWait(browser, timeout).until(alert_present)
         alert = browser.switch_to.alert
         alert.accept()
+        return True
     except TimeoutException:
         print("Browser timed out while attempting to locate an alert, please review.")
+
+
+def check_for_alert(browser, document):
+    print("Checking for browser alert related to search...")
+    if handle_alert(browser):
+        print("Alert located & handled, performing search execution again.")
+        search(browser, document)
+        return locate_result_count(browser, document)
 
 
 def locate_result_count(browser, document):
