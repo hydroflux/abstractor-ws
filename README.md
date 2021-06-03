@@ -36,6 +36,7 @@
 - [ ] Update multiple_documents comment to include actual document numbers and / or book & page numbers
 - [ ] HIGH PRIORITY -- refactor leopard execute
 - [ ] move "get_reception_number" around into download document--passing around 'document_number' is redundant & the document can't be downloaded unless it's on the page anyway
+- [ ] Remove anything with the "stock download" name before clicking the download button--avoid creating an issue with crash / restart
 
 ### Tiger To Do
 
