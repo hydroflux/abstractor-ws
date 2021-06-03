@@ -15,7 +15,8 @@ from settings.general_functions import (long_timeout, medium_nap, naptime,
                                         update_sentence_case_extras)
 
 from eagle.eagle_variables import (document_information_id,
-                                   document_table_class, index_table_tags,
+                                   document_table_class, error_message_class,
+                                   error_message_text, index_table_tags,
                                    information_links_class, less_info,
                                    loading_status, missing_values, more_info,
                                    pdf_viewer_load_id, related_table_class,
@@ -25,8 +26,20 @@ from eagle.eagle_variables import (document_information_id,
 print("record", __name__)
 
 
+def locate_error_message(browser):
+    try:
+        error_message_present = EC.presence_of_element_located((By.CLASS_NAME, error_message_class))
+        WebDriverWait(browser, timeout).until(error_message_present)
+        error_message = browser.find_element_by_class_name(error_message_class)
+        return error_message
+    except TimeoutException:
+        print("Browser timed out while trying to locate error message after PDF failed to load, please review.")
+
+
 def check_for_error(browser):
-    pass
+    error_message = locate_error_message(browser)
+    if error_message == error_message_text:
+        pass  # do something
 
 
 def pdf_load_status(browser):
