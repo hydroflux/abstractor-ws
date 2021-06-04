@@ -13,54 +13,34 @@ from settings.general_functions import (long_timeout, medium_nap, naptime,
                                         update_sentence_case_extras)
 
 from eagle.eagle_variables import (document_information_id,
-                                   document_table_class, error_message_class,
-                                   error_message_text, index_table_tags,
+                                   document_table_class, index_table_tags,
                                    information_links_class, less_info,
-                                   loading_status, missing_values, more_info,
+                                   loading_status, missing_values, more_info, error_message_text,
                                    pdf_viewer_load_id, related_table_class,
                                    result_button_tag, result_buttons_class)
+from eagle.error_handling import check_for_error
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("record", __name__)
-
-
-def locate_error_message(browser):
-    try:
-        error_message_present = EC.presence_of_element_located((By.CLASS_NAME, error_message_class))
-        WebDriverWait(browser, timeout).until(error_message_present)
-        error_message = browser.find_element_by_class_name(error_message_class)
-        return error_message
-    except TimeoutException:
-        print("Browser timed out while trying to locate error message after PDF failed to load, please review.")
-
-
-def check_for_error(browser, document):
-    error_message = locate_error_message(browser)
-    if error_message == error_message_text:
-        print(f'An error occurred while opening the document located at '
-              f'{extrapolate_document_value(document)}, refreshing the page to try again.')
-        browser.refresh()
-        naptime()
-        return pdf_load_status
 
 
 def pdf_load_status(browser):
     try:
         pdf_viewer_loaded = EC.presence_of_element_located((By.ID, pdf_viewer_load_id))
         WebDriverWait(browser, long_timeout).until(pdf_viewer_loaded)
-        return browser.find_element_by_id(pdf_viewer_load_id).text
+        load_status = browser.find_element_by_id(pdf_viewer_load_id).text
+        return load_status
     except TimeoutException:
         print("Browser timed out while waiting for the PDF Viewer to load, checking for error.")
         return check_for_error(browser)
 
 
 def wait_for_pdf_to_load(browser):
-    while pdf_load_status(browser).startswith(loading_status):
+    while pdf_load_status(browser).startswith(loading_status) or pdf_load_status == error_message_text:
         short_nap()  # using short_nap in order to try & grab all related documents
         # Consider changing to even naptime ~~~ originally 0.5 second sleep
         # Updating sleep time would be more efficient here because it would force a nap only
         # If the  PDF hasn't loaded properly
-        pdf_load_status(browser)
 
 
 def get_document_information(browser, document):
@@ -340,7 +320,7 @@ def get_reception_number(browser, document):
 def record_document(browser, county, dataframe, document):
     wait_for_pdf_to_load(browser)
     naptime()  # Remove after running successful 'review' test
-    # medium_nap()  # Use for review
+    medium_nap()  # Use for review
     # Overall this is a bad practice because it's adding 1 - 2 seconds for a 0.1% chance it misses (based on testing)
     document_number = record_document_fields(browser, county, dataframe, document)
     check_length(dataframe)

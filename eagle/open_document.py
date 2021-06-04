@@ -28,7 +28,7 @@ def validate_search(browser, document):
         else:
             return True
     except TimeoutException:
-        print(f'Browser timed out while trying to validate the search for {extrapolate_document_value(document)}')
+        print(f'Browser timed out trying to validate the search for {extrapolate_document_value(document)}')
 
 
 def retry_search(browser, document):

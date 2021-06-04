@@ -1,3 +1,4 @@
+from eagle.error_handling import check_for_error
 from selenium.common.exceptions import (ElementClickInterceptedException,
                                         TimeoutException)
 from selenium.webdriver.common.by import By
@@ -32,7 +33,8 @@ def get_clear_search_button(browser):
         clear_search_button = browser.find_element_by_id(clear_search_id)
         return clear_search_button
     except TimeoutException:
-        print("Browser timed out while trying to clear the search form.")
+        print("Browser timed out trying to clear the search form.")
+        check_for_error(browser)
 
 
 def execute_clear_search(browser, button):
