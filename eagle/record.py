@@ -13,27 +13,33 @@ from settings.general_functions import (long_timeout, medium_nap, naptime,
                                         update_sentence_case_extras)
 
 from eagle.eagle_variables import (document_information_id,
-                                   document_table_class, index_table_tags,
+                                   document_table_class, error_message_text,
+                                   image_container_id, index_table_tags,
                                    information_links_class, less_info,
-                                   loading_status, missing_values, more_info, error_message_text,
-                                   pdf_viewer_load_id, related_table_class,
-                                   result_button_tag, result_buttons_class)
+                                   loading_status, missing_values, more_info,
+                                   no_image_text, pdf_viewer_load_id,
+                                   related_table_class, result_button_tag,
+                                   result_buttons_class)
 from eagle.error_handling import check_for_error
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("record", __name__)
 
 
-def locate_image_container(browser):
-    pass
-
-
 def access_image_container(browser):
-    pass
+    try:
+        image_container_present = EC.presence_of_element_located((By.ID, image_container_id))
+        WebDriverWait(browser, timeout).until(image_container_present)
+        image_container = browser.find_element_by_id(image_container_id)
+        return image_container
+    except TimeoutException:
+        print("Browser timed out waiting for image container to load.")
 
 
 def document_image_exists(browser):
-    pass
+    image_container = access_image_container(browser)
+    if image_container.text != no_image_text:
+        return True
 
 
 def pdf_load_status(browser, document):
