@@ -63,6 +63,17 @@ def wait_for_pdf_to_load(browser, document):
         # If the  PDF hasn't loaded properly
 
 
+def handle_document_image_status(browser, document):
+    if document_image_exists(browser):
+        wait_for_pdf_to_load(browser, document)
+        naptime()  # Remove after running successful 'review' test
+        # medium_nap()  # Use for review
+        # Overall this is a bad practice because it's adding 1 - 2 seconds for a 0.1% chance it misses (based on testing)
+        
+    else:
+        medium_nap()
+
+
 def get_document_information(browser, document):
     try:
         document_information_present = EC.presence_of_element_located((By.ID, document_information_id))
@@ -251,35 +262,41 @@ def aggregate_document_information(document_tables, dataframe):
     return reception_number
 
 
-def record_comments(county, dataframe, document):
+def record_comments(county, dataframe, document, image_available):
     if document.number_results > 1:
         dataframe["Comments"].append(f'Multiple documents located at {extrapolate_document_value(document)}'
                                      f' on the {county} recording website; Each of the {document.number_results}'
                                      f' documents has been listed, please review')
     else:
         dataframe["Comments"].append("")
+    if not image_available:
+        no_image_comment = f'No document image available at {extrapolate_document_value(document)}, please review'
+        if dataframe["Comments"][-1] == "":
+            dataframe["Comments"][-1] == no_image_comment
+        else:
+            dataframe["Comments"][-1] = f'{dataframe["Comments"][-1]}; {no_image_comment}'
 
 
-def record_document_fields(browser, county, dataframe, document):
+def record_document_fields(browser, county, dataframe, document, image_available):
     document_information = get_document_information(browser, document)
     document_tables = access_document_information_tables(browser, document, document_information)
     display_all_information(browser, document)
     reception_number = aggregate_document_information(document_tables, dataframe)
-    record_comments(county, dataframe, document)
+    record_comments(county, dataframe, document, image_available)
     scroll_to_top(browser)
     return reception_number
 
 
-def review_entry(browser, county, dataframe, document):
+def review_entry(browser, county, dataframe, document, image_available):
     while dataframe["Grantor"][-1] == missing_values[0] and dataframe["Grantee"][-1] == missing_values[0]\
             and dataframe["Related Documents"][-1] == missing_values[1]:
         print("Recording of last document was processed incorrectly, attempting to record again.")
-        re_record_document_fields(browser, county, dataframe, document)
+        re_record_document_fields(browser, county, dataframe, document, image_available)
 
 
-def re_record_document_fields(browser, county, dataframe, document):
+def re_record_document_fields(browser, county, dataframe, document, image_available):
     drop_last_entry(dataframe)
-    record_document_fields(browser, county, dataframe, document)
+    record_document_fields(browser, county, dataframe, document, image_available)
 
 
 def get_result_buttons(browser, document):
@@ -338,15 +355,8 @@ def get_reception_number(browser, document):
 
 
 def record_document(browser, county, dataframe, document):
-    if document_image_exists(browser):
-        wait_for_pdf_to_load(browser, document)
-        naptime()  # Remove after running successful 'review' test
-        document_number = record_document_fields(browser, county, dataframe, document)
-        # medium_nap()  # Use for review
-    # Overall this is a bad practice because it's adding 1 - 2 seconds for a 0.1% chance it misses (based on testing)
-    else:
-        medium_nap()
-        document_number = record_document_fields(browser, county, dataframe, document, "alt")
+    image_available = handle_document_image_status(browser, document)
+    document_number = record_document_fields(browser, county, dataframe, document, image_available)
     check_length(dataframe)
-    review_entry(browser, county, dataframe, document)
+    review_entry(browser, county, dataframe, document, image_available)
     return document_number
