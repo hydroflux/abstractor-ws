@@ -26,7 +26,7 @@ def open_search(browser):
     assert search_title
 
 
-def get_clear_search_button(browser):
+def get_clear_search_button(browser, document):
     try:
         clear_search_button_present = EC.presence_of_element_located((By.ID, clear_search_id))
         WebDriverWait(browser, timeout).until(clear_search_button_present)
@@ -34,7 +34,7 @@ def get_clear_search_button(browser):
         return clear_search_button
     except TimeoutException:
         print("Browser timed out trying to clear the search form.")
-        check_for_error(browser)
+        check_for_error(browser, document)
 
 
 def execute_clear_search(browser, button):
@@ -48,10 +48,10 @@ def execute_clear_search(browser, button):
         return False
 
 
-def clear_search(browser):
+def clear_search(browser, document):
     clear = False
     while clear is not True:
-        clear_search_button = get_clear_search_button(browser)
+        clear_search_button = get_clear_search_button(browser, document)
         clear = execute_clear_search(browser, clear_search_button)
         if clear is False:
             browser.refresh()
@@ -124,7 +124,7 @@ def execute_search(browser):
 
 def document_search(browser, document):
     open_search(browser)
-    clear_search(browser)
+    clear_search(browser, document)
     naptime()  # Consider testing without this nap to see if necessary
     if document_type(document) == "document_number":
         enter_document_number(browser, document)
