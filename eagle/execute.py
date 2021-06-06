@@ -21,7 +21,7 @@ def record_single_document(browser, county, target_directory, download,
                            abstract_dictionary, document_list, document, start_time):
     document_number = record_document(browser, county, abstract_dictionary, document)
     if download:
-        download_document(browser, county, target_directory, document_number)
+        download_document(browser, county, abstract_dictionary, target_directory, document_number)
     document_found(start_time, document_list, document)
 
 
@@ -44,7 +44,7 @@ def review_multiple_documents(browser, start_time, document_list, document):
 
 def download_single_document(browser, county, target_directory, document_list, document, start_time):
     document_number = get_reception_number(browser, document)
-    download_document(browser, county, target_directory, document_number)
+    download_document(browser, county, abstract_dictionary, target_directory, document_number)
     document_found(start_time, document_list, document)
 
 

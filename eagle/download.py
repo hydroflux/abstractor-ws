@@ -1,3 +1,4 @@
+from eagle.record import document_image_exists
 import os
 
 from selenium.common.exceptions import TimeoutException
@@ -52,7 +53,7 @@ def determine_stock_download(document_number):
     return f'{document_number}-{stock_download_suffix}'
 
 
-def download_document(browser, county, target_directory, document_number):
+def download_document(browser, county, abstract_dictionary, target_directory, document_number):
     document_directory = create_document_directory(target_directory)
     if previously_downloaded(county, document_directory, document_number):
         return True

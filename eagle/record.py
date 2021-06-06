@@ -20,7 +20,7 @@ from eagle.eagle_variables import (document_information_id,
                                    no_image_text, pdf_viewer_load_id,
                                    related_table_class, result_button_tag,
                                    result_buttons_class)
-from eagle.error_handling import check_for_error
+from eagle.error_handling import check_for_error, no_image_comment
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("record", __name__)
@@ -69,7 +69,6 @@ def handle_document_image_status(browser, document):
         naptime()  # Remove after running successful 'review' test
         # medium_nap()  # Use for review
         # Overall this is a bad practice because it's adding 1 - 2 seconds for a 0.1% chance it misses (based on testing)
-        
     else:
         medium_nap()
 
@@ -270,11 +269,10 @@ def record_comments(county, dataframe, document, image_available):
     else:
         dataframe["Comments"].append("")
     if not image_available:
-        no_image_comment = f'No document image available at {extrapolate_document_value(document)}, please review'
         if dataframe["Comments"][-1] == "":
-            dataframe["Comments"][-1] == no_image_comment
+            dataframe["Comments"][-1] == no_image_comment(document)
         else:
-            dataframe["Comments"][-1] = f'{dataframe["Comments"][-1]}; {no_image_comment}'
+            dataframe["Comments"][-1] = f'{dataframe["Comments"][-1]}; {no_image_comment(document)}'
 
 
 def record_document_fields(browser, county, dataframe, document, image_available):
