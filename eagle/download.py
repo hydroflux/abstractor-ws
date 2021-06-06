@@ -11,9 +11,15 @@ from settings.general_functions import long_timeout, naptime
 
 from eagle.eagle_variables import (download_button_id, pdf_viewer_class_name,
                                    stock_download_suffix)
+from eagle.error_handling import no_image_comment
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("download", __name__)
+
+
+def download_available(abstract_dictionary, document):
+    if abstract_dictionary["Comments"][-1].endswith(no_image_comment(document)):
+        return False
 
 
 def switch_into_frame(browser):
@@ -53,15 +59,16 @@ def determine_stock_download(document_number):
     return f'{document_number}-{stock_download_suffix}'
 
 
-def download_document(browser, county, abstract_dictionary, target_directory, document_number):
-    document_directory = create_document_directory(target_directory)
-    if previously_downloaded(county, document_directory, document_number):
-        return True
-    else:
-        number_files = len(os.listdir(document_directory))
-        access_pdf_viewer(browser)
-        execute_download(browser)
-        switch_to_browser_window(browser)
-        stock_download = determine_stock_download(document_number)
-        if update_download(browser, county, stock_download, document_directory, number_files, document_number):
+def download_document(browser, county, abstract_dictionary, target_directory, document, document_number):
+    if download_available(abstract_dictionary, document):
+        document_directory = create_document_directory(target_directory)
+        if previously_downloaded(county, document_directory, document_number):
             return True
+        else:
+            number_files = len(os.listdir(document_directory))
+            access_pdf_viewer(browser)
+            execute_download(browser)
+            switch_to_browser_window(browser)
+            stock_download = determine_stock_download(document_number)
+            if update_download(browser, county, stock_download, document_directory, number_files, document_number):
+                return True
