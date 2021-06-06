@@ -53,6 +53,8 @@ def split_book_and_page(document):
     book = four_character_padding(document_value(document)[0])
     page = four_character_padding(document_value(document)[1])
     return book, page
+    # Check to see if the padding is affecting search results
+    # Consider only adding the padding when updating the document frame
 
 
 def drop_last_entry(dataframe):
