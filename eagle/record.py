@@ -24,6 +24,18 @@ from eagle.error_handling import check_for_error
 print("record", __name__)
 
 
+def locate_image_container(browser):
+    pass
+
+
+def access_image_container(browser):
+    pass
+
+
+def document_image_exists(browser):
+    pass
+
+
 def pdf_load_status(browser, document):
     try:
         pdf_viewer_loaded = EC.presence_of_element_located((By.ID, pdf_viewer_load_id))
