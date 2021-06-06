@@ -1,4 +1,3 @@
-from eagle.record import document_image_exists
 import os
 
 from selenium.common.exceptions import TimeoutException

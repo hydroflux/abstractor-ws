@@ -1,20 +1,19 @@
-from eagle.error_handling import check_for_error
 from selenium.common.exceptions import (ElementClickInterceptedException,
                                         TimeoutException)
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-
 from settings.file_management import (document_type, document_value,
                                       extrapolate_document_value,
                                       split_book_and_page)
 from settings.general_functions import (medium_nap, naptime, scroll_into_view,
                                         timeout)
-from eagle.login import check_login_status
 
 from eagle.eagle_variables import (book_search_id, clear_search_id,
                                    instrument_search_id, page_search_id,
                                    search_button_id, search_title, search_url)
+from eagle.error_handling import check_for_error
+from eagle.login import check_login_status
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("search", __name__)

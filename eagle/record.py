@@ -67,8 +67,9 @@ def handle_document_image_status(browser, document):
     if document_image_exists(browser):
         wait_for_pdf_to_load(browser, document)
         naptime()  # Remove after running successful 'review' test
-        # medium_nap()  # Use for review
-        # Overall this is a bad practice because it's adding 1 - 2 seconds for a 0.1% chance it misses (based on testing)
+        medium_nap()  # Use for review
+        # Overall this is a bad practice because it's adding 1 - 2 seconds for a
+        # 0.1% chance it misses (based on testing)
     else:
         medium_nap()
 
