@@ -38,7 +38,9 @@ def access_image_container(browser):
 
 def document_image_exists(browser):
     image_container = access_image_container(browser)
-    if image_container.text != no_image_text:
+    if image_container.text == no_image_text:
+        return False
+    else:
         return True
 
 
@@ -336,11 +338,15 @@ def get_reception_number(browser, document):
 
 
 def record_document(browser, county, dataframe, document):
-    wait_for_pdf_to_load(browser, document)
-    naptime()  # Remove after running successful 'review' test
-    # medium_nap()  # Use for review
+    if document_image_exists(browser):
+        wait_for_pdf_to_load(browser, document)
+        naptime()  # Remove after running successful 'review' test
+        document_number = record_document_fields(browser, county, dataframe, document)
+        # medium_nap()  # Use for review
     # Overall this is a bad practice because it's adding 1 - 2 seconds for a 0.1% chance it misses (based on testing)
-    document_number = record_document_fields(browser, county, dataframe, document)
+    else:
+        medium_nap()
+        document_number = record_document_fields(browser, county, dataframe, document, "alt")
     check_length(dataframe)
     review_entry(browser, county, dataframe, document)
     return document_number
