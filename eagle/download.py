@@ -19,6 +19,8 @@ print("download", __name__)
 def download_available(abstract_dictionary, document):
     if abstract_dictionary["Comments"][-1].endswith(no_image_comment(document)):
         return False
+    else:
+        return True
 
 
 def switch_into_frame(browser):
