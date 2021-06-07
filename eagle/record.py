@@ -70,8 +70,10 @@ def handle_document_image_status(browser, document):
         #  medium_nap()  # Use for review
         # Overall this is a bad practice because it's adding 1 - 2 seconds for a
         # 0.1% chance it misses (based on testing)
+        return True
     else:
         medium_nap()
+        return False
 
 
 def get_document_information(browser, document):
@@ -271,7 +273,7 @@ def record_comments(county, dataframe, document, image_available):
         dataframe["Comments"].append("")
     if not image_available:
         if dataframe["Comments"][-1] == "":
-            dataframe["Comments"][-1] == no_image_comment(document)
+            dataframe["Comments"][-1] = no_image_comment(document)
         else:
             dataframe["Comments"][-1] = f'{dataframe["Comments"][-1]}; {no_image_comment(document)}'
 
