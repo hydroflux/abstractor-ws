@@ -5,7 +5,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from settings.general_functions import timeout
 
-from crocodile.crocodile_variables import website, website_title, credentials
+from crocodile.crocodile_variables import website, website_title, credentials, submit_button_id
 
 
 def open_site(browser):
@@ -37,8 +37,19 @@ def submit_password(browser):
     enter_field_information(password_field, credentials[3])
 
 
+def locate_submit_button(browser):
+    try:
+        submit_button_present = EC.element_to_be_clickable((By.ID, submit_button_id))
+        WebDriverWait(browser, timeout).until(submit_button_present)
+        submit_button = browser.find_element_by_id(submit_button_id)
+        return submit_button
+    except TimeoutException:
+        print('Browser timed out trying to locate submit button, please review.')
+
+
 def execute_login(browser):
-    pass
+    submit_button = locate_submit_button(browser)
+    submit_button.click()
 
 
 def login(browser):
