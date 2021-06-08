@@ -8,6 +8,8 @@ from settings.general_functions import get_element_text, timeout
 
 from crocodile.crocodile_variables import results_table_id, results_statement_tag
 
+# def get_element_text(element):
+#     return element.text.strip()
 
 
 def locate_search_results_table(browser, document):
@@ -26,15 +28,25 @@ def locate_results_statement(browser, results_table, document):
         results_statement_present = EC.presence_of_element_located((By.TAG_NAME, results_statement_tag))
         WebDriverWait(results_table, timeout).until(results_statement_present)
         results_statement = results_table.find_element_by_tag_name(results_statement_tag)
-        return results_statement
+        return results_statement.text
     except TimeoutException:
         print(f'Browser timed out trying to locate results statement for '
               f'{extrapolate_document_value(document)}, please review.')
 
 
+def strip_total_results(results_statement):
+    return results_statement[(results_statement.find("of") + 2):results_statement.find("at")].strip()
+
+
+def update_number_results(document, total_results):
+    document.number_results = total_results
+
+
 def count_total_results(browser, results_table, document):
     results_statement = locate_results_statement(browser, results_table, document)
-    print(results_statement.text)
+    total_results = strip_total_results(results_statement)
+    update_number_results(document, total_results)
+    return total_results
 
 
 def open_document_link(browser):
@@ -47,5 +59,5 @@ def verify_results(browser, document):
 
 def open_document(browser, document):
     results_table = locate_search_results_table(browser, document)
-    count_total_results(browser, results_table, document)
+    total_results = count_total_results(browser, results_table, document)
     return verify_results(browser, document)
