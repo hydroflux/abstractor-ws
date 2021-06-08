@@ -8,7 +8,7 @@ from settings.general_functions import (get_element_text, timeout,
                                         update_number_results)
 
 from crocodile.crocodile_variables import (no_results_message, results_page_id,
-                                           results_statement_tag,
+                                           results_statement_tag, results_class_name,
                                            results_table_id)
 
 
@@ -43,7 +43,7 @@ def locate_search_results_table(browser, document):
               f'{extrapolate_document_value(document)}, please review.')
 
 
-def locate_results_statement(browser, results_table, document):
+def locate_results_statement(results_table, document):
     try:
         results_statement_present = EC.presence_of_element_located((By.TAG_NAME, results_statement_tag))
         WebDriverWait(results_table, timeout).until(results_statement_present)
@@ -55,22 +55,38 @@ def locate_results_statement(browser, results_table, document):
 
 
 def strip_total_results(results_statement):
-    return results_statement[(results_statement.find("of") + 2):results_statement.find("at")].strip()
+    return int(results_statement[(results_statement.find("of") + 2):results_statement.find("at")].strip())
 
 
-def count_total_results(browser, results_table, document):
-    results_statement = locate_results_statement(browser, results_table, document)
+def count_total_results(results_table, document):
+    results_statement = locate_results_statement(results_table, document)
     total_results = strip_total_results(results_statement)
     update_number_results(document, total_results)
     return total_results
 
 
-def open_document_link(browser):
+def locate_results(results_table, document):
+    try:
+        results_present = EC.presence_of_element_located((By.CLASS_NAME, results_class_name))
+        WebDriverWait(results_table, timeout).until(results_present)
+        results = results_table.find_elements_by_class_name(results_class_name)
+        return results
+    except TimeoutException:
+        print(f'Browser timed out trying to locate results for '
+              f'{extrapolate_document_value(document)}, please review.')
+
+
+def open_document_link(browser, document):
     pass
 
 
 def open_document(browser, document):
-    if check_for_results(browser):
+    if check_for_results(browser, document):
         results_table = locate_search_results_table(browser, document)
-        count_total_results(browser, results_table, document)
-        # return verify_results(browser, document)
+        if count_total_results(results_table, document) == 1:
+            open_document_link(results_table, document)
+        else:
+            print(f'{str(document.number_results)} results returned for '
+                  f'{extrapolate_document_value(document)}, please review.')
+            # Need to create an application path for multiple results
+            open_document_link(results_table, document)
