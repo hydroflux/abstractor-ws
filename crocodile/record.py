@@ -1,28 +1,31 @@
-from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import (NoSuchElementException,
+                                        NoSuchWindowException,
+                                        TimeoutException)
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from settings.export_settings import not_applicable
 from settings.file_management import extrapolate_document_value
 from settings.general_functions import (assert_window_title, get_element_text,
-                                        timeout, title_strip)
+                                        timeout, title_strip, zipped_list)
 
-from crocodile.crocodile_variables import (document_information_class,
-                                           document_title,
+from crocodile.crocodile_variables import (additional_legal_pages_class,
+                                           document_information_class,
+                                           document_title, row_header_tag,
                                            general_information_id, grantee_id,
                                            grantor_id, legal_id,
-                                           related_documents_id)
+                                           related_documents_id, row_data_tag,
+                                           table_row_tag)
 
-
-def locate_document_information(browser, document):
-    try:
-        document_information_present = EC.presence_of_element_located((By.CLASS_NAME, document_information_class))
-        WebDriverWait(browser, timeout).until(document_information_present)
-        document_information = browser.find_element_by_class_name(document_information_class)
-        return document_information
-    except TimeoutException:
-        print(f'Browser timed out trying to locate document page information for '
-              f'{extrapolate_document_value(document)}, please review.')
+# def locate_document_information(browser, document):
+#     try:
+#         document_information_present = EC.presence_of_element_located((By.CLASS_NAME, document_information_class))
+#         WebDriverWait(browser, timeout).until(document_information_present)
+#         document_information = browser.find_element_by_class_name(document_information_class)
+#         return document_information
+#     except TimeoutException:
+#         print(f'Browser timed out trying to locate document page information for '
+#               f'{extrapolate_document_value(document)}, please review.')
 
 
 def locate_general_information(document_information, document):
@@ -36,11 +39,6 @@ def locate_general_information(document_information, document):
               f'{extrapolate_document_value(document)}')
 
 
-def record_general_information(document_information, document):
-    general_information = locate_general_information(document_information, document)
-    print(general_information)
-
-
 def locate_document_table(browser, document, table_id, type):
     try:
         document_table_present = EC.presence_of_element_located((By.ID, table_id))
@@ -50,6 +48,36 @@ def locate_document_table(browser, document, table_id, type):
     except TimeoutException:
         print(f'Browser timed out trying to locate {type} document table for '
               f'{extrapolate_document_value(document)}, please review.')
+
+
+# Stripped straight from leopard
+def get_table_rows(browser, document_table, document):
+    try:
+        table_rows_present = EC.presence_of_element_located((By.TAG_NAME, table_row_tag))
+        WebDriverWait(browser, timeout).until(table_rows_present)
+        table_rows = document_table.find_elements_by_tag_name(table_row_tag)
+        return table_rows
+    except TimeoutException:
+        print(f'Browser timed out getting table rows for '
+              f'{extrapolate_document_value(document)}.')
+
+
+# This could be a generalized function
+def get_row_data(row, tag):
+    return row.find_elements_by_tag_name(tag)
+
+
+def get_general_information_data(browser, general_information_table, document):
+    general_information_rows = get_table_rows(browser, general_information_table, document)
+    headers = get_row_data(general_information_rows[0], row_header_tag)
+    data = get_row_data(general_information_rows[1], row_data_tag)
+    return zipped_list(headers, data)
+
+
+def record_general_information(browser, document):
+    general_information_table = locate_document_table(browser, document, general_information_id, "general information")
+    general_information_data = get_general_information_data(browser, general_information_table, document)
+    print(general_information_data)
 
 
 def join_column_without_title(string):
@@ -70,12 +98,28 @@ def record_grantee_information(browser, dictionary, document):
     print("grantee", grantee)
 
 
+def get_number_legal_pages(legal_table):
+    try:
+        legal_pages = legal_table.find_element_by_class_name(additional_legal_pages_class).text
+        return int(legal_pages[(legal_pages.rfind(" ") + 1):])
+    except NoSuchElementException:
+        return 1
+
+
+def handle_legal_tables(legal_table):
+    number_pages = get_number_legal_pages(legal_table)
+    if number_pages == 1:
+        return title_strip(join_column_without_title(legal_table))
+    else:
+        # Need to create a way to handle multiple pages of legal
+        pass
+
+
 def record_legal_information(browser, dictionary, document):
     legal_table = locate_document_table(browser, document, legal_id, "legal information")
-    legal = title_strip(join_column_without_title(legal_table))
-    dictionary["Legal"].append(legal)
-    # Need to create a way to handle multiple pages of legal
+    legal = handle_legal_tables(legal_table)
     print("legal", legal)
+    dictionary["Legal"].append(legal)
 
 
 def record_related_document_information(browser, dictionary, document):
@@ -91,7 +135,7 @@ def aggregate_document_information(browser, dictionary, document):
 
 def record_document(browser, county, dictionary, document):
     assert_window_title(browser, document_title)
-    document_information = locate_document_information(browser, document)
-    document_number = record_general_information(document_information, document)
+    # document_information = locate_document_information(browser, document)
+    document_number = record_general_information(browser, document)
     aggregate_document_information(browser, dictionary, document)
     return document_number
