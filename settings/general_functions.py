@@ -110,3 +110,7 @@ def get_parent_element(element):
 
 def four_character_padding(value):
     return value.zfill(4)
+
+
+def update_number_results(document, total_results):
+    document.number_results = total_results
