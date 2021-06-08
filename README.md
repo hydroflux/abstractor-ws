@@ -77,8 +77,7 @@
 
 ### Crocodile To Do
 
-- [ ] Create a new directory to work with the crocodile codebase
-- [ ] Add all crocodile scripts (execute, login, logout, search, open, record, download)
+- [ ] Add all crocodile scripts (execute, logout, search, open, record, download)
 - [ ] Integrate crocodile scripts to work with the top level environment file
 - [ ] Create a convert_document_numbers script
 - [ ] Create an "execution", "review", & "download only" option for execution
@@ -93,8 +92,8 @@
 
 ### Dolphin To Do
 
-- [ ] Create a new directory to work with the crocodile codebase
-- [ ] Add all crocodile scripts (execute, login, logout, search, open, record, download)
-- [ ] Integrate crocodile scripts to work with the top level environment file
+- [ ] Create a new directory to work with the dolphin codebase
+- [ ] Add all dolphin scripts (execute, login, logout, search, open, record, download)
+- [ ] Integrate dolphin scripts to work with the top level environment file
 - [ ] Create a convert_document_numbers script
 - [ ] Create an "execution", "review", & "download only" option for execution
