@@ -57,16 +57,21 @@ def clear_search(browser, document):
             medium_nap()
 
 
-def enter_document_number(browser, document):
+def locate_document_number_field(browser, document):
     try:
         instrument_search_field_present = EC.presence_of_element_located((By.ID, instrument_search_id))
         WebDriverWait(browser, timeout).until(instrument_search_field_present)
         instrument_search_field = browser.find_element_by_id(instrument_search_id)
-        instrument_search_field.clear()
-        instrument_search_field.send_keys(document_value(document))
+        return instrument_search_field
     except TimeoutException:
         print(f'Browser timed out while trying to fill document field for document number '
               f'{extrapolate_document_value(document)}.')
+
+
+def enter_document_number(browser, document):
+    instrument_search_field = locate_document_number_field(browser, document)
+    instrument_search_field.clear()
+    instrument_search_field.send_keys(document_value(document))
 
 
 def enter_book_number(browser, book):
