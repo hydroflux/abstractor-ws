@@ -50,6 +50,8 @@ def execute_search(browser):
 
 def document_search(browser, document):
     open_search(browser)
+    # May need to add additional flag here---
+    # need to make sure that the search field is caught properly
     if document_type(document) == "document_number":
         enter_document_number(browser, document)
         execute_search(browser)
