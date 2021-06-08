@@ -1,5 +1,4 @@
 from selenium.common.exceptions import (NoSuchElementException,
-                                        NoSuchWindowException,
                                         TimeoutException)
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -9,11 +8,11 @@ from settings.file_management import extrapolate_document_value
 from settings.general_functions import (assert_window_title, get_element_text,
                                         timeout, title_strip, zipped_list)
 
-from crocodile.crocodile_variables import (additional_legal_pages_class, row_titles,
-                                           document_information_class,
+from crocodile.crocodile_variables import (additional_legal_pages_class, row_titles, related_documents_buttons_class,
+                                           document_information_class, show_all_rows_text,
                                            document_title, row_header_tag,
                                            general_information_id, grantee_id,
-                                           grantor_id, legal_id,
+                                           grantor_id, legal_id, link_tag,
                                            related_documents_id, row_data_tag,
                                            table_row_tag)
 
@@ -156,31 +155,127 @@ def get_number_legal_pages(legal_table):
         return 1
 
 
-def handle_legal_tables(legal_table):
+def get_legal_table(browser):
+    try:
+        legal_table = browser.find_element_by_id(legal_id)
+        return legal_table
+    except NoSuchElementException:
+        return False
+
+
+def drop_last_line(string):
+    return string[:string.rfind("\n")]
+
+
+def locate_legal_buttons_row(legal_table, document):
+    try:
+        legal_buttons_present = legal_table.element_to_be_clickable((By.CLASS_NAME, additional_legal_pages_class))
+        WebDriverWait(legal_table, timeout).until(legal_buttons_present)
+        legal_buttons_row = legal_table.find_elements_by_tag_name(additional_legal_pages_class)
+        return legal_buttons_row
+    except TimeoutException:
+        print(f'Browser timed out trying to access legal table row containing page buttons for '
+              f'{extrapolate_document_value(document)}, please review.')
+
+
+def locate_legal_table_buttons(legal_buttons_row, document):
+    try:
+        legal_table_buttons_present = legal_buttons_row.element_to_be_clickable((By.TAG_NAME, link_tag))
+        WebDriverWait(legal_buttons_row, timeout).until(legal_table_buttons_present)
+        legal_table_buttons = legal_buttons_row.find_elements_by_tag_name(link_tag)
+        return legal_table_buttons
+    except TimeoutException:
+        print(f'Browser timed out trying to access supplemental legal data for '
+              f'{extrapolate_document_value(document)}, please review.')
+
+
+def next_legal_table(legal_table, document, current_page):
+    legal_buttons_row = locate_legal_buttons_row(legal_table, document)
+    legal_table_buttons = locate_legal_table_buttons(legal_buttons_row, document)
+    for button in legal_table_buttons:
+        if int(button.text) == current_page:
+            button.click()
+            return
+
+
+def multi_page_legal(browser, legal_table, document, number_pages):
+    legal_list = list(drop_last_line(title_strip(join_column_without_title(legal_table))))
+    for current_page in range(number_pages - 1):
+        next_legal_table(legal_table, document, current_page)
+        legal_table = get_legal_table(browser)
+        legal_list.append(drop_last_line(title_strip(join_column_without_title(legal_table))))
+
+
+def handle_legal_tables(browser, legal_table, document):
     number_pages = get_number_legal_pages(legal_table)
     if number_pages == 1:
         return title_strip(join_column_without_title(legal_table))
     else:
-        # Need to create a way to handle multiple pages of legal
-        pass
+        return multi_page_legal(browser, legal_table, document, number_pages)
 
 
 def record_legal_information(browser, dictionary, document):
-    legal_table = locate_document_table(browser, document, legal_id, "legal information")
-    legal = handle_legal_tables(legal_table)
-    print("legal", legal)
-    dictionary["Legal"].append(legal)
+    legal_table = get_legal_table(browser, document)
+    if not legal_table:
+        dictionary["Legal"].append("")
+    else:
+        legal = handle_legal_tables(browser, legal_table, document)
+        print("legal", legal)
+        dictionary["Legal"].append(legal)
+
+
+def get_related_documents_table(browser):
+    try:
+        related_documents_table = browser.find_element_by_id(related_documents_id)
+        return related_documents_table
+    except NoSuchElementException:
+        return False
+
+
+def locate_related_documents_buttons(browser, document):
+    try:
+        related_documents_buttons_present = EC.presence_of_element_located(
+            (By.CLASS_NAME, related_documents_buttons_class))
+        WebDriverWait(browser, timeout).until(related_documents_buttons_present)
+        related_documents_buttons = browser.find_element_by_class_name(related_documents_buttons_class)
+        return related_documents_buttons
+    except TimeoutException:
+        print(f'Browser timed out trying to locate related documents buttons for '
+              f'{extrapolate_document_value(document)}, please review.')
+
+
+def expand_all_rows(browser, buttons):
+    for button in buttons:
+        if button.text == show_all_rows_text:
+            button.click()
+            return
+
+
+def display_all_related_documents(browser, document):
+    related_documents_buttons = locate_related_documents_buttons(browser, document)
+    buttons = related_documents_buttons.find_elements_by_tag_name(link_tag)
+    expand_all_rows(browser, buttons)
 
 
 def record_related_document_information(browser, dictionary, document):
-    pass
+    related_documents_table = get_related_documents_table(browser)
+    if not related_documents_table:
+        dictionary["Related Documents"].append("")
+    else:
+        display_all_related_documents(browser, document)
+        # legal = handle_legal_tables(browser, legal_table, document)
+        # print("legal", legal)
+        # dictionary["Legal"].append(legal)
 
 
 def aggregate_document_information(browser, dictionary, document):
+    # If document_number == N/A, return book & page???
+    document_number = record_general_information(browser, dictionary, document)
     record_grantor_information(browser, dictionary, document)
     record_grantee_information(browser, dictionary, document)
     record_legal_information(browser, dictionary, document)
     record_related_document_information(browser, dictionary, document)
+    return document_number
 
 
 def record_document(browser, county, dictionary, document):
