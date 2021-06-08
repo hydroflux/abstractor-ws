@@ -4,7 +4,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from settings.general_functions import timeout
 
-from crocodile.crocodile_variables import logout_button_id
+from crocodile.crocodile_variables import logout_button_id, website_title
 
 
 def locate_logout_button(browser):
@@ -17,7 +17,15 @@ def locate_logout_button(browser):
         print("Browser timed out trying to locate logout button, please review.")
 
 
-def logout(browser):
+def execute_logout(browser):
     logout_button = locate_logout_button(browser)
     logout_button.click()
-    
+
+
+def verify_logout(browser):
+    assert website_title in browser.title.strip()
+
+
+def logout(browser):
+    execute_logout(browser)
+    verify_logout(browser)
