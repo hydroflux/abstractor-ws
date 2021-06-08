@@ -58,21 +58,23 @@ def join_column_without_title(string):
 
 def record_grantor_information(browser, dictionary, document):
     grantor_table = locate_document_table(browser, document, grantor_id, "grantor")
-    grantor = join_column_without_title(grantor_table)
+    grantor = title_strip(join_column_without_title(grantor_table))
     dictionary["Grantor"].append(grantor)
     print("grantor", grantor)
 
 
 def record_grantee_information(browser, dictionary, document):
     grantee_table = locate_document_table(browser, document, grantee_id, "grantee")
-    grantee = join_column_without_title(grantee_table)
+    grantee = title_strip(join_column_without_title(grantee_table))
     dictionary["Grantee"].append(grantee)
     print("grantee", grantee)
 
 
 def record_legal_information(browser, dictionary, document):
+    legal_table = locate_document_table(browser, document, legal_id, "legal information")
+    legal = title_strip(join_column_without_title(legal_table))
+    dictionary["Legal"].append(legal)
     # Need to create a way to handle multiple pages of legal
-    legal = locate_document_table(browser, document, legal_id, "legal information")
     print("legal", legal)
 
 
