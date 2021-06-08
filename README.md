@@ -37,6 +37,7 @@
 - [ ] HIGH PRIORITY -- refactor leopard execute
 - [ ] move "get_reception_number" around into download document--passing around 'document_number' is redundant & the document can't be downloaded unless it's on the page anyway
 - [ ] Remove anything with the "stock download" name before clicking the download button--avoid creating an issue with crash / restart
+- [ ] Update scripts with new general functions (i.e. assert_window_title)
 
 ### Tiger To Do
 
@@ -54,6 +55,7 @@
 - [ ] Document.number_results should be spread across open, record, & execute
 - [ ] Create a convert_document_numbers script to work like leopard, but with the tiger document lists
 - [ ] Create a "download only" option for execution
+- [ ] Update scripts with new general functions (i.e. assert_window_title)
 
 ### Eagle To Do
 
@@ -74,10 +76,11 @@
 - [ ] If a grantor / grantee ends in a tag indicating more information is present, redo the search -- add to eagle record
 - [ ] Create a convert_document_numbers script to work like leopard, but with the eagle document lists
 - [ ] Create a "download only" option for execution
+- [ ] Update scripts with new general functions (i.e. assert_window_title)
 
 ### Crocodile To Do
 
-- [ ] Add all crocodile scripts (execute, logout, search, open, record, download)
+- [ ] Add all crocodile scripts (execute, record, download)
 - [ ] Integrate crocodile scripts to work with the top level environment file
 - [ ] Create a convert_document_numbers script
 - [ ] Create an "execution", "review", & "download only" option for execution

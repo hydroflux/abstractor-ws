@@ -114,3 +114,7 @@ def four_character_padding(value):
 
 def update_number_results(document, total_results):
     document.number_results = int(total_results)
+
+
+def assert_window_title(browser, window_title):
+    assert window_title in browser.title.strip()

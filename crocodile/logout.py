@@ -2,7 +2,7 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-from settings.general_functions import timeout
+from settings.general_functions import assert_window_title, timeout
 
 from crocodile.crocodile_variables import logout_button_id, website_title
 
@@ -23,7 +23,7 @@ def execute_logout(browser):
 
 
 def verify_logout(browser):
-    assert website_title in browser.title.strip()
+    assert_window_title(browser, website_title)
 
 
 def logout(browser):

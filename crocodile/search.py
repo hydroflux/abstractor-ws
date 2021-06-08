@@ -4,7 +4,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from settings.file_management import (document_type, document_value,
                                       extrapolate_document_value)
-from settings.general_functions import timeout
+from settings.general_functions import assert_window_title, timeout
 
 from crocodile.crocodile_variables import (instrument_search_field_id,
                                            search_button_id, search_title,
@@ -13,7 +13,7 @@ from crocodile.crocodile_variables import (instrument_search_field_id,
 
 def open_search(browser):
     browser.get(search_url)
-    assert search_title
+    assert_window_title(browser, search_title)
 
 
 def locate_document_number_field(browser, document):
