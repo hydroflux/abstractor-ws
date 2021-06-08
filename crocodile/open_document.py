@@ -8,8 +8,8 @@ from settings.general_functions import (get_element_text, timeout,
                                         update_number_results)
 
 from crocodile.crocodile_variables import (no_results_message, results_page_id,
-                                           results_statement_tag, results_class_name,
-                                           results_table_id)
+                                           results_statement_tag, result_row_class_name,
+                                           results_table_id, link_tag)
 
 
 def locate_results_page_information(browser, document):
@@ -34,10 +34,10 @@ def check_for_results(browser, document):
 
 def locate_search_results_table(browser, document):
     try:
-        results_present = EC.presence_of_element_located((By.ID, results_table_id))
-        WebDriverWait(browser, timeout).until(results_present)
-        results = browser.find_element_by_id(results_table_id)
-        return results
+        results_table_present = EC.presence_of_element_located((By.ID, results_table_id))
+        WebDriverWait(browser, timeout).until(results_table_present)
+        results_table = browser.find_element_by_id(results_table_id)
+        return results_table
     except TimeoutException:
         print(f'Browser timed out trying to locate results for '
               f'{extrapolate_document_value(document)}, please review.')
@@ -65,12 +65,12 @@ def count_total_results(results_table, document):
     return total_results
 
 
-def locate_results(results_table, document):
+def locate_result_rows(results_table, document):
     try:
-        results_present = EC.presence_of_element_located((By.CLASS_NAME, results_class_name))
-        WebDriverWait(results_table, timeout).until(results_present)
-        results = results_table.find_elements_by_class_name(results_class_name)
-        return results
+        result_rows_present = EC.presence_of_element_located((By.CLASS_NAME, result_row_class_name))
+        WebDriverWait(results_table, timeout).until(result_rows_present)
+        result_rows = results_table.find_elements_by_class_name(result_row_class_name)
+        return result_rows
     except TimeoutException:
         print(f'Browser timed out trying to locate results for '
               f'{extrapolate_document_value(document)}, please review.')
@@ -83,23 +83,35 @@ def verify_result_count(document, total_results, results):
               f'{len(results)}, please review.')
 
 
-def open_document_link(results_table, document, total_results):
-    results = locate_results(results_table, document)
-    verify_result_count(document, total_results, results)
+def locate_document_link(row, document):
+    try:
+        document_link_present = EC.element_to_be_clickable((By.TAG_NAME, link_tag))
+        WebDriverWait(row, timeout).until(document_link_present)
+        document_link = row.find_element_by_tag_name(link_tag)
+        return document_link
+    except TimeoutException:
+        print(f'Browser timed out trying to open document link for '
+              f'{extrapolate_document_value(document)}, please review.')
 
 
-def handle_search_results(results_table, document):
-    total_results = count_total_results(results_table, document)
-    if total_results == 1:
-        open_document_link(results_table, document)
+def open_document_link(row, document):
+    document_link = locate_document_link(row, document)
+    document_link.click()
+
+
+def handle_search_results(result_rows, document):
+    if document.number_results == 1:
+        open_document_link(result_rows[0], document)
     else:
         print(f'{str(document.number_results)} results returned for '
               f'{extrapolate_document_value(document)}, please review.')
         # Need to create an application path for multiple results
-        open_document_link(results_table, document)
 
 
 def open_document(browser, document):
     if check_for_results(browser, document):
         results_table = locate_search_results_table(browser, document)
-        handle_search_results(results_table, document)
+        total_results = count_total_results(results_table, document)
+        result_rows = locate_result_rows(results_table, document)
+        verify_result_count(document, total_results, result_rows)
+        handle_search_results(result_rows, document)
