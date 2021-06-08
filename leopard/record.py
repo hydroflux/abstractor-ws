@@ -78,7 +78,7 @@ def get_row_data(row):
     return get_element_text(row_data[0]), get_element_text(row_data[1])
 
 
-# Coppied
+# Copied & audited in crocodile
 def check_rows(rows, title):
     for row in rows:
         try:
@@ -103,12 +103,14 @@ def row_title_check(rows):
             continue
 
 
-def locate_reception_number(rows):
-    return check_rows(rows, row_titles["reception_number"])
-
+# Pull this out, removed during crocodile development (don't see the purpose
+# )
+# def locate_reception_number(rows):
+#     return check_rows(rows, row_titles["reception_number"])
 
 def record_reception_number(rows, dictionary):
-    reception_number = locate_reception_number(rows)
+    # reception_number = locate_reception_number(rows)
+    reception_number = check_rows(rows, row_titles["reception_number"])
     dictionary["Reception Number"].append(reception_number)
     return reception_number
 

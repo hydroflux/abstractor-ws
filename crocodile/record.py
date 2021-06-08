@@ -9,7 +9,7 @@ from settings.file_management import extrapolate_document_value
 from settings.general_functions import (assert_window_title, get_element_text,
                                         timeout, title_strip, zipped_list)
 
-from crocodile.crocodile_variables import (additional_legal_pages_class,
+from crocodile.crocodile_variables import (additional_legal_pages_class, row_titles,
                                            document_information_class,
                                            document_title, row_header_tag,
                                            general_information_id, grantee_id,
@@ -74,34 +74,49 @@ def get_general_information_data(browser, general_information_table, document):
     return zipped_list(headers, data)
 
 
-def check_rows(rows, title):
-    for row in rows:
-        try:
-            row_title, row_content = get_row_data(row)
-            if row_title == title:
-                if row_content != "":
-                    return row_content
-                else:
-                    return not_applicable
-        except IndexError:
-            continue
-    return not_applicable
+# Copied & audited from leopard
+def check_list_elements(general_information, title):
+    for header, data in general_information:
+        if header == title:
+            if data != "":
+                return data
+            else:
+                return not_applicable
 
 
 def record_reception_number(general_information, dictionary):
-    pass
+    reception_number = check_list_elements(general_information, row_titles["reception_number"])
+    dictionary["Reception Number"].append(reception_number)
+    return reception_number
 
 
 def record_book_and_page(general_information, dictionary):
-    pass
+    book_and_page = check_list_elements(general_information, row_titles["book_and_page"])
+    if book_and_page == not_applicable:
+        dictionary["Book"].append(book_and_page)
+        dictionary["Page"].append(book_and_page)
+    else:
+        book, page = book_and_page.replace("/", "").split()
+        if book == "0":
+            dictionary["Book"].append(not_applicable)
+        else:
+            dictionary["Book"].append(book)
+        if page == "0":
+            dictionary["Page"].append(not_applicable)
+        else:
+            dictionary["Page"].append(page)
 
 
 def record_document_type(general_information, dictionary):
-    pass
+    document_type = check_list_elements(general_information, row_titles["document_type"])
+    if document_type == not_applicable:
+        document_type = check_list_elements(general_information, row_titles["alt_document_type"])
+    dictionary["Document Type"].append(title_strip(document_type))
 
 
 def record_recording_date(general_information, dictionary):
-    pass
+    recording_date = check_list_elements(general_information, row_titles["recording_date"])
+    dictionary["Recording Date"].append(recording_date[:10])
 
 
 def record_general_information(browser, dictionary, document):
