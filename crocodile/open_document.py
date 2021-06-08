@@ -76,17 +76,30 @@ def locate_results(results_table, document):
               f'{extrapolate_document_value(document)}, please review.')
 
 
-def open_document_link(browser, document):
-    pass
+def verify_result_count(document, total_results, results):
+    if not len(results) == total_results:
+        print(f'The total result count of {total_results} does not match the number of rows for '
+              f'{extrapolate_document_value(document)}, which returned '
+              f'{len(results)}, please review.')
+
+
+def open_document_link(results_table, document, total_results):
+    results = locate_results(results_table, document)
+    verify_result_count(document, total_results, results)
+
+
+def handle_search_results(results_table, document):
+    total_results = count_total_results(results_table, document)
+    if total_results == 1:
+        open_document_link(results_table, document)
+    else:
+        print(f'{str(document.number_results)} results returned for '
+              f'{extrapolate_document_value(document)}, please review.')
+        # Need to create an application path for multiple results
+        open_document_link(results_table, document)
 
 
 def open_document(browser, document):
     if check_for_results(browser, document):
         results_table = locate_search_results_table(browser, document)
-        if count_total_results(results_table, document) == 1:
-            open_document_link(results_table, document)
-        else:
-            print(f'{str(document.number_results)} results returned for '
-                  f'{extrapolate_document_value(document)}, please review.')
-            # Need to create an application path for multiple results
-            open_document_link(results_table, document)
+        handle_search_results(results_table, document)
