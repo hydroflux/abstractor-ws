@@ -53,7 +53,7 @@ def locate_document_table(browser, document, table_id, type):
 
 
 def join_column_without_title(string):
-    return '\n'.join(string.text.split()[1:])
+    return '\n'.join(string.text.split('\n')[1:])
 
 
 def record_grantor_information(browser, dictionary, document):
