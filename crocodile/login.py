@@ -63,6 +63,7 @@ def verify_login(browser):
 
 
 def login(browser):
+    open_site(browser)
     submit_username(browser)
     submit_password(browser)
     execute_login(browser)
