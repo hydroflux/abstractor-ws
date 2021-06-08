@@ -55,6 +55,7 @@ def get_document_table_data(browser, document_information, document):
               f'{extrapolate_document_value(document)}.')
 
 
+# Used in crocodile without any edits
 def get_table_rows(browser, document_table, document):
     try:
         table_rows_present = EC.presence_of_element_located((By.TAG_NAME, table_row_tag))
@@ -77,6 +78,7 @@ def get_row_data(row):
     return get_element_text(row_data[0]), get_element_text(row_data[1])
 
 
+# Coppied
 def check_rows(rows, title):
     for row in rows:
         try:

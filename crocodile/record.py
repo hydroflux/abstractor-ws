@@ -74,10 +74,45 @@ def get_general_information_data(browser, general_information_table, document):
     return zipped_list(headers, data)
 
 
-def record_general_information(browser, document):
+def check_rows(rows, title):
+    for row in rows:
+        try:
+            row_title, row_content = get_row_data(row)
+            if row_title == title:
+                if row_content != "":
+                    return row_content
+                else:
+                    return not_applicable
+        except IndexError:
+            continue
+    return not_applicable
+
+
+def record_reception_number(general_information, dictionary):
+    pass
+
+
+def record_book_and_page(general_information, dictionary):
+    pass
+
+
+def record_document_type(general_information, dictionary):
+    pass
+
+
+def record_recording_date(general_information, dictionary):
+    pass
+
+
+def record_general_information(browser, dictionary, document):
     general_information_table = locate_document_table(browser, document, general_information_id, "general information")
-    general_information_data = get_general_information_data(browser, general_information_table, document)
-    print(general_information_data)
+    general_information = get_general_information_data(browser, general_information_table, document)
+    document_number = record_reception_number(general_information, dictionary)
+    record_book_and_page(general_information, dictionary)
+    record_document_type(general_information, dictionary)
+    record_recording_date(general_information, dictionary)
+    print(general_information)
+    return document_number
 
 
 def join_column_without_title(string):

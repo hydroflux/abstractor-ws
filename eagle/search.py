@@ -1,4 +1,4 @@
-from selenium.common.exceptions import (ElementClickInterceptedException,
+from selenium.common.exceptions import (ElementClickInterceptedException, JavascriptException,
                                         TimeoutException)
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -43,6 +43,10 @@ def execute_clear_search(browser, button):
         return True
     except ElementClickInterceptedException:
         print('Encountered an element click interception exception while trying to clear the search form, '
+              'refreshing & trying again.')
+        return False
+    except JavascriptException:
+        print('Encountered an javascript exception while trying to clear the search form, '
               'refreshing & trying again.')
         return False
 
