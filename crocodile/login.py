@@ -5,7 +5,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from settings.general_functions import timeout
 
-from crocodile.crocodile_variables import website, website_title, credentials, submit_button_id
+from crocodile.crocodile_variables import website, website_title, credentials, submit_button_id, post_login_title
 
 
 def open_site(browser):
@@ -52,7 +52,17 @@ def execute_login(browser):
     submit_button.click()
 
 
+def verify_login(browser):
+    if browser.title == post_login_title:
+        print("Login successful, continuing program execution.")
+    else:
+        print("Browser failed to successfully login, exiting program.")
+        browser.quit()
+        exit()
+
+
 def login(browser):
     submit_username(browser)
     submit_password(browser)
     execute_login(browser)
+    verify_login(browser)
