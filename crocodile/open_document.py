@@ -4,12 +4,15 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from settings.file_management import (document_type, document_value,
                                       extrapolate_document_value)
-from settings.general_functions import (get_element_text, timeout,
-                                        update_number_results)
+from settings.general_functions import (assert_window_title, get_element_text,
+                                        timeout, update_number_results)
 
-from crocodile.crocodile_variables import (no_results_message, results_page_id,
-                                           results_statement_tag, result_row_class_name,
-                                           results_table_id, link_tag)
+from crocodile.crocodile_variables import (document_description_title,
+                                           link_tag, no_results_message,
+                                           result_row_class_name,
+                                           results_page_id,
+                                           results_statement_tag,
+                                           results_table_id)
 
 
 def locate_results_page_information(browser, document):
@@ -115,3 +118,5 @@ def open_document(browser, document):
         result_rows = locate_result_rows(results_table, document)
         verify_result_count(document, total_results, result_rows)
         handle_search_results(result_rows, document)
+        assert_window_title(browser, document_description_title)
+        return True

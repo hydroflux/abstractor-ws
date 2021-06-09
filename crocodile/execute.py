@@ -1,5 +1,7 @@
 from crocodile.login import account_login
 from crocodile.logout import logout
+from crocodile.search import search
+from crocodile.open_document import open_document
 from settings.abstract_object import abstract_dictionary
 from settings.bad_search import record_bad_search
 from settings.driver import create_webdriver
@@ -26,6 +28,8 @@ def search_documents_from_list(browser, county, target_directory, document_list)
     for document in document_list:
         start_time = start_timer()
         search(browser, document)
+        if open_document(browser, document):
+            pass
 
 
 def execute_program(county, target_directory, document_list, file_name):

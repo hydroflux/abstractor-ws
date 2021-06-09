@@ -4,13 +4,12 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from settings.export_settings import not_applicable
 from settings.file_management import extrapolate_document_value
-from settings.general_functions import (assert_window_title,
-                                        get_direct_children, get_element_text,
+from settings.general_functions import (get_direct_children, get_element_text,
                                         list_to_string, timeout, title_strip,
                                         zipped_list)
 
 from crocodile.crocodile_variables import (additional_legal_pages_class,
-                                           bad_document_types, document_title,
+                                           bad_document_types,
                                            general_information_id, grantee_id,
                                            grantor_id, inactive, legal_id,
                                            link_tag,
@@ -307,7 +306,6 @@ def aggregate_document_information(browser, dictionary, document):
     return document_number, document_image_available
 
 
-def record_document(browser, county, dictionary, document):
-    assert_window_title(browser, document_title)
+def record_document(browser, dictionary, document):
     document_number, document_image_available = aggregate_document_information(browser, dictionary, document)
     return document_number, document_image_available
