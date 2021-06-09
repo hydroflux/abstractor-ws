@@ -15,9 +15,9 @@ from crocodile.search import search
 
 
 def record_single_document(browser, county, target_directory, document_list, document, start_time):
-    document_number, document_link = record_document(browser, dictionary, document)
+    record_document(browser, dictionary, document)
     if download:
-        if not download_document(browser, county, target_directory, document, document_number):
+        if not download_document(browser, county, target_directory, document):
             no_document_image(dictionary, document)
     document_found(start_time, document_list, document)
 

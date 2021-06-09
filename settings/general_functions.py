@@ -134,3 +134,7 @@ def list_to_string(list):
 
 def set_reception_number(document, reception_number):
     document.reception_number = reception_number
+
+
+def set_document_link(document, link):
+    document.link = link

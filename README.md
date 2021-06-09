@@ -33,6 +33,7 @@
 ### Imports To Do
 
 - [ ] Allow user to review the imported excel document & choose the column / columns to run
+- [ ] Add download flag to document class & set at import in order to avoid passing the flag around
 
 ### Leopard To Do
 
@@ -41,6 +42,7 @@
 - [ ] move "get_reception_number" around into download document--passing around 'document_number' is redundant & the document can't be downloaded unless it's on the page anyway
 - [ ] Remove anything with the "stock download" name before clicking the download button--avoid creating an issue with crash / restart
 - [ ] Update scripts with new general functions (i.e. assert_window_title)
+- [ ] Update the record function to set the reception number rather than return it
 
 ### Tiger To Do
 
@@ -59,6 +61,7 @@
 - [ ] Create a convert_document_numbers script to work like leopard, but with the tiger document lists
 - [ ] Create a "download only" option for execution
 - [ ] Update scripts with new general functions (i.e. assert_window_title)
+- [ ] Update the record function to set the reception number rather than return it
 
 ### Eagle To Do
 
@@ -80,6 +83,7 @@
 - [ ] Create a convert_document_numbers script to work like leopard, but with the eagle document lists
 - [ ] Create a "download only" option for execution
 - [ ] Update scripts with new general functions (i.e. assert_window_title)
+- [ ] Update the record function to set the reception number rather than return it
 
 ### Crocodile To Do
 

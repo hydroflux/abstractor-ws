@@ -7,9 +7,9 @@ from selenium.webdriver.support.wait import WebDriverWait
 from settings.export_settings import not_applicable
 from settings.file_management import extrapolate_document_value
 from settings.general_functions import (get_direct_children, get_element_text,
-                                        list_to_string, set_reception_number,
-                                        short_nap, timeout, title_strip,
-                                        zipped_list)
+                                        list_to_string, set_document_link,
+                                        set_reception_number, short_nap,
+                                        timeout, title_strip, zipped_list)
 
 from crocodile.crocodile_variables import (additional_legal_pages_class,
                                            bad_document_types,
@@ -116,13 +116,14 @@ def record_recording_date(general_information, dictionary):
     dictionary["Recording Date"].append(recording_date[:10])
 
 
-def check_document_image_availability(browser, general_information):
+def check_document_image_availability(general_information, document):
     document_image = check_list_elements(general_information, row_titles["document_image"])
     document_link = document_image.find_element_by_tag_name(link_tag)
     if document_link.get_attribute(inactive) == "true":
         return None
     else:
-        return document_link.get_attribute("href")
+        image_link = document_link.get_attribute("href")
+        set_document_link(document, image_link)
 
 
 def record_general_information(browser, dictionary, document):
@@ -132,8 +133,7 @@ def record_general_information(browser, dictionary, document):
     record_book_and_page(general_information, dictionary)
     record_document_type(general_information, dictionary)
     record_recording_date(general_information, dictionary)
-    document_link = check_document_image_availability(browser, general_information)
-    return document_link
+    check_document_image_availability(general_information, document)
 
 
 def join_column_without_title(string):
@@ -325,17 +325,11 @@ def record_comments(dictionary):
     dictionary["Comments"].append("")
 
 
-def aggregate_document_information(browser, dictionary, document):
+def record_document(browser, dictionary, document):
     # If document_number == N/A, return book & page???
-    document_link = record_general_information(browser, dictionary, document)
+    record_general_information(browser, dictionary, document)
     record_grantor_information(browser, dictionary, document)
     record_grantee_information(browser, dictionary, document)
     record_legal_information(browser, dictionary, document)
     record_related_document_information(browser, dictionary, document)
     record_comments(dictionary)
-    return document_link
-
-
-def record_document(browser, dictionary, document):
-    document_link = aggregate_document_information(browser, dictionary, document)
-    return document_link
