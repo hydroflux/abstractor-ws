@@ -169,7 +169,7 @@ def drop_last_line(string):
     return string[:string.rfind("\n")]
 
 
-def locate_legal_buttons_row(legal_table, document):
+def locate_legal_buttons_row(browser, legal_table, document):
     try:
         legal_buttons_present = legal_table.element_to_be_clickable((By.CLASS_NAME, additional_legal_pages_class))
         WebDriverWait(legal_table, timeout).until(legal_buttons_present)
@@ -191,8 +191,8 @@ def locate_legal_table_buttons(legal_buttons_row, document):
               f'{extrapolate_document_value(document)}, please review.')
 
 
-def next_legal_table(legal_table, document, current_page):
-    legal_buttons_row = locate_legal_buttons_row(legal_table, document)
+def next_legal_table(browser, legal_table, document, current_page):
+    legal_buttons_row = locate_legal_buttons_row(browser, legal_table, document)
     legal_table_buttons = locate_legal_table_buttons(legal_buttons_row, document)
     for button in legal_table_buttons:
         if int(button.text) == current_page:
@@ -203,7 +203,7 @@ def next_legal_table(legal_table, document, current_page):
 def multi_page_legal(browser, legal_table, document, number_pages):
     legal_list = list(drop_last_line(title_strip(join_column_without_title(legal_table))))
     for current_page in range(number_pages - 1):
-        next_legal_table(legal_table, document, current_page)
+        next_legal_table(browser, legal_table, document, current_page)
         legal_table = get_legal_table(browser)
         legal_list.append(drop_last_line(title_strip(join_column_without_title(legal_table))))
 
@@ -217,7 +217,7 @@ def handle_legal_tables(browser, legal_table, document):
 
 
 def record_legal_information(browser, dictionary, document):
-    legal_table = get_legal_table(browser, document)
+    legal_table = get_legal_table(browser)
     if not legal_table:
         dictionary["Legal"].append("")
     else:
@@ -291,6 +291,10 @@ def record_related_document_information(browser, dictionary, document):
         dictionary["Related Documents"].append(related_documents)
 
 
+def record_comments(dictionary):
+    dictionary["Comments"].append("")
+
+
 def aggregate_document_information(browser, dictionary, document):
     # If document_number == N/A, return book & page???
     document_number = record_general_information(browser, dictionary, document)
@@ -298,6 +302,7 @@ def aggregate_document_information(browser, dictionary, document):
     record_grantee_information(browser, dictionary, document)
     record_legal_information(browser, dictionary, document)
     record_related_document_information(browser, dictionary, document)
+    record_comments(dictionary)
     return document_number
 
 
