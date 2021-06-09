@@ -122,3 +122,7 @@ def assert_window_title(browser, window_title):
 
 def zipped_list(list1, list2):
     return list(zip(list1, list2))
+
+
+def get_direct_children(element):
+    return element.find_elements_by_xpath("./*")

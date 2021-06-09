@@ -1,19 +1,22 @@
-from selenium.common.exceptions import (NoSuchElementException,
-                                        TimeoutException)
+from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from settings.export_settings import not_applicable
 from settings.file_management import extrapolate_document_value
-from settings.general_functions import (assert_window_title, get_element_text,
+from settings.general_functions import (assert_window_title, get_element_text, get_direct_children,
                                         timeout, title_strip, zipped_list)
 
-from crocodile.crocodile_variables import (additional_legal_pages_class, row_titles, related_documents_buttons_class,
-                                           document_information_class, show_all_rows_text,
-                                           document_title, row_header_tag,
+from crocodile.crocodile_variables import (additional_legal_pages_class,
+                                           bad_document_types,
+                                           document_information_class,
+                                           document_title,
                                            general_information_id, grantee_id,
                                            grantor_id, legal_id, link_tag,
+                                           related_documents_buttons_class,
                                            related_documents_id, row_data_tag,
+                                           row_header_tag, row_titles,
+                                           show_all_rows_text, table_body_tag,
                                            table_row_tag)
 
 # def locate_document_information(browser, document):
@@ -108,7 +111,7 @@ def record_book_and_page(general_information, dictionary):
 
 def record_document_type(general_information, dictionary):
     document_type = check_list_elements(general_information, row_titles["document_type"])
-    if document_type == not_applicable:
+    if document_type == not_applicable or document_type in bad_document_types:
         document_type = check_list_elements(general_information, row_titles["alt_document_type"])
     dictionary["Document Type"].append(title_strip(document_type))
 
@@ -257,15 +260,26 @@ def display_all_related_documents(browser, document):
     expand_all_rows(browser, buttons)
 
 
+def get_related_documents_rows(related_documents_table, document):
+    related_documents_sub_tables = related_documents_table.find_elements_by_tag_name(table_body_tag)
+    related_documents_data = related_documents_sub_tables[4]
+    return get_direct_children(related_documents_data)
+
+
+
+def handle_related_documents_table(related_documents_table, document):
+    related_documents_rows = get_related_documents_rows(related_documents_table, document)
+
+
 def record_related_document_information(browser, dictionary, document):
     related_documents_table = get_related_documents_table(browser)
     if not related_documents_table:
         dictionary["Related Documents"].append("")
     else:
-        display_all_related_documents(browser, document)
-        # legal = handle_legal_tables(browser, legal_table, document)
-        # print("legal", legal)
-        # dictionary["Legal"].append(legal)
+        display_all_related_documents(browser, document)  # Run a few tests once in production to see if  necessary
+        related_documents = handle_related_documents_table(related_documents_table, document)
+        print("related_documents", related_documents)
+        dictionary["Related Documents"].append(related_documents)
 
 
 def aggregate_document_information(browser, dictionary, document):
