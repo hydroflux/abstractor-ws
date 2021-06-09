@@ -7,9 +7,8 @@ from selenium.webdriver.support.wait import WebDriverWait
 from settings.export_settings import not_applicable
 from settings.file_management import extrapolate_document_value
 from settings.general_functions import (get_direct_children, get_element_text,
-                                        list_to_string, scroll_into_view,
-                                        short_nap, timeout, title_strip,
-                                        zipped_list)
+                                        list_to_string, short_nap, timeout,
+                                        title_strip, zipped_list)
 
 from crocodile.crocodile_variables import (additional_legal_pages_class,
                                            bad_document_types,
@@ -122,7 +121,7 @@ def check_document_image_availability(browser, general_information):
     if document_link.get_attribute(inactive) == "true":
         return None
     else:
-        return document_link
+        return document_link.get_attribute("href")
 
 
 def record_general_information(browser, dictionary, document):
