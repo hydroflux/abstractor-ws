@@ -130,3 +130,7 @@ def get_direct_children(element):
 
 def list_to_string(list):
     return "/n".join(list)
+
+
+def set_reception_number(document, reception_number):
+    document.reception_number = reception_number

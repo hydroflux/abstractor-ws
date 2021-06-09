@@ -28,6 +28,3 @@ def execute_download():
 
 def download_document():
     pass
-
-
-document_number, document_link = record_document(browser, dictionary, document)

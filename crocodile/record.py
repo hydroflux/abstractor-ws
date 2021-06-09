@@ -7,8 +7,9 @@ from selenium.webdriver.support.wait import WebDriverWait
 from settings.export_settings import not_applicable
 from settings.file_management import extrapolate_document_value
 from settings.general_functions import (get_direct_children, get_element_text,
-                                        list_to_string, short_nap, timeout,
-                                        title_strip, zipped_list)
+                                        list_to_string, set_reception_number,
+                                        short_nap, timeout, title_strip,
+                                        zipped_list)
 
 from crocodile.crocodile_variables import (additional_legal_pages_class,
                                            bad_document_types,
@@ -80,10 +81,10 @@ def check_list_elements(general_information, title):
                 return not_applicable
 
 
-def record_reception_number(general_information, dictionary):
+def record_reception_number(general_information, dictionary, document):
     reception_number = check_list_elements(general_information, row_titles["reception_number"])
+    set_reception_number(document, reception_number)
     dictionary["Reception Number"].append(reception_number)
-    return reception_number
 
 
 def record_book_and_page(general_information, dictionary):
@@ -127,12 +128,12 @@ def check_document_image_availability(browser, general_information):
 def record_general_information(browser, dictionary, document):
     general_information_table = locate_document_table(browser, document, general_information_id, "general information")
     general_information = get_general_information_data(browser, general_information_table, document)
-    document_number = record_reception_number(general_information, dictionary)
+    record_reception_number(general_information, dictionary, document)
     record_book_and_page(general_information, dictionary)
     record_document_type(general_information, dictionary)
     record_recording_date(general_information, dictionary)
     document_link = check_document_image_availability(browser, general_information)
-    return document_number, document_link
+    return document_link
 
 
 def join_column_without_title(string):
@@ -326,15 +327,15 @@ def record_comments(dictionary):
 
 def aggregate_document_information(browser, dictionary, document):
     # If document_number == N/A, return book & page???
-    document_number, document_link = record_general_information(browser, dictionary, document)
+    document_link = record_general_information(browser, dictionary, document)
     record_grantor_information(browser, dictionary, document)
     record_grantee_information(browser, dictionary, document)
     record_legal_information(browser, dictionary, document)
     record_related_document_information(browser, dictionary, document)
     record_comments(dictionary)
-    return document_number, document_link
+    return document_link
 
 
 def record_document(browser, dictionary, document):
-    document_number, document_link = aggregate_document_information(browser, dictionary, document)
-    return document_number, document_link
+    document_link = aggregate_document_information(browser, dictionary, document)
+    return document_link
