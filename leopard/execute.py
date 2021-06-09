@@ -76,7 +76,7 @@ def handle_search_results(browser, county, target_directory,
             download_single_document(browser, county, target_directory, document_list, document, start_time)
 
 
-def search_documents_from_list(browser, county, target_directory, document_list, download):
+def search_documents_from_list(browser, county, target_directory, document_list):
     transform_document_list(document_list)
     for document in document_list:
         start_time = start_timer()
@@ -116,13 +116,13 @@ def download_documents_from_list(browser, county, target_directory, document_lis
             no_document_found(start_time, document_list, document)
 
 
-def execute_program(headless, county, target_directory, document_list, file_name, sheet_name, download):
+def execute_program(headless, county, target_directory, document_list, file_name, sheet_name):
     browser = create_webdriver(target_directory, headless)
     account_login(browser)
-    dictionary = search_documents_from_list(browser, county, target_directory, document_list, download)
+    dictionary = search_documents_from_list(browser, county, target_directory, document_list)
     logout(browser)
     abstraction = export_document(county, target_directory, file_name, dictionary)
-    bundle_project(target_directory, abstraction, download)
+    bundle_project(target_directory, abstraction)
     browser.close()
 
 

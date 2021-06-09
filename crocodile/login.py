@@ -62,7 +62,7 @@ def verify_login(browser):
         exit()
 
 
-def login(browser):
+def account_login(browser):
     open_site(browser)
     submit_username(browser)
     submit_password(browser)
