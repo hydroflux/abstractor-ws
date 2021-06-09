@@ -1,11 +1,11 @@
-from selenium.common.exceptions import NoSuchElementException, TimeoutException
+from selenium.common.exceptions import NoSuchElementException, StaleElementReferenceException, TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from settings.export_settings import not_applicable
 from settings.file_management import extrapolate_document_value
 from settings.general_functions import (get_direct_children, get_element_text,
-                                        list_to_string, timeout, title_strip,
+                                        list_to_string, scroll_into_view, timeout, title_strip,
                                         zipped_list)
 
 from crocodile.crocodile_variables import (additional_legal_pages_class,
@@ -70,20 +70,22 @@ def get_general_information_data(browser, general_information_table, document):
 def check_list_elements(general_information, title):
     for header, data in general_information:
         if get_element_text(header) == title:
-            if get_element_text(data) != "":
+            if get_element_text(header) == row_titles["document_image"]:
                 return data
+            if get_element_text(data) != "":
+                return get_element_text(data)
             else:
                 return not_applicable
 
 
 def record_reception_number(general_information, dictionary):
-    reception_number = get_element_text(check_list_elements(general_information, row_titles["reception_number"]))
+    reception_number = check_list_elements(general_information, row_titles["reception_number"])
     dictionary["Reception Number"].append(reception_number)
     return reception_number
 
 
 def record_book_and_page(general_information, dictionary):
-    book_and_page = get_element_text(check_list_elements(general_information, row_titles["book_and_page"]))
+    book_and_page = check_list_elements(general_information, row_titles["book_and_page"])
     if book_and_page == not_applicable:
         dictionary["Book"].append(book_and_page)
         dictionary["Page"].append(book_and_page)
@@ -100,14 +102,14 @@ def record_book_and_page(general_information, dictionary):
 
 
 def record_document_type(general_information, dictionary):
-    document_type = get_element_text(check_list_elements(general_information, row_titles["document_type"]))
+    document_type = check_list_elements(general_information, row_titles["document_type"])
     if document_type == not_applicable or document_type in bad_document_types:
         document_type = check_list_elements(general_information, row_titles["alt_document_type"])
     dictionary["Document Type"].append(title_strip(document_type))
 
 
 def record_recording_date(general_information, dictionary):
-    recording_date = get_element_text(check_list_elements(general_information, row_titles["recording_date"]))
+    recording_date = check_list_elements(general_information, row_titles["recording_date"])
     dictionary["Recording Date"].append(recording_date[:10])
 
 
@@ -115,9 +117,9 @@ def check_document_image_availability(browser, general_information):
     document_image = check_list_elements(general_information, row_titles["document_image"])
     document_link = document_image.find_element_by_tag_name(link_tag)
     if document_link.get_attribute(inactive) == "true":
-        return False
+        return None
     else:
-        return True
+        return document_link
 
 
 def record_general_information(browser, dictionary, document):
@@ -127,8 +129,8 @@ def record_general_information(browser, dictionary, document):
     record_book_and_page(general_information, dictionary)
     record_document_type(general_information, dictionary)
     record_recording_date(general_information, dictionary)
-    document_image_available = check_document_image_availability(browser, general_information)
-    return document_number, document_image_available
+    document_link = check_document_image_availability(browser, general_information)
+    return document_number, document_link
 
 
 def join_column_without_title(string):
@@ -169,11 +171,11 @@ def drop_last_line(string):
     return string[:string.rfind("\n")]
 
 
-def locate_legal_buttons_row(browser, legal_table, document):
+def locate_legal_buttons_row(legal_table, document):
     try:
-        legal_buttons_present = legal_table.element_to_be_clickable((By.CLASS_NAME, additional_legal_pages_class))
+        legal_buttons_present = EC.element_to_be_clickable((By.CLASS_NAME, additional_legal_pages_class))
         WebDriverWait(legal_table, timeout).until(legal_buttons_present)
-        legal_buttons_row = legal_table.find_elements_by_tag_name(additional_legal_pages_class)
+        legal_buttons_row = legal_table.find_element_by_class_name(additional_legal_pages_class)
         return legal_buttons_row
     except TimeoutException:
         print(f'Browser timed out trying to access legal table row containing page buttons for '
@@ -182,7 +184,7 @@ def locate_legal_buttons_row(browser, legal_table, document):
 
 def locate_legal_table_buttons(legal_buttons_row, document):
     try:
-        legal_table_buttons_present = legal_buttons_row.element_to_be_clickable((By.TAG_NAME, link_tag))
+        legal_table_buttons_present = EC.element_to_be_clickable((By.TAG_NAME, link_tag))
         WebDriverWait(legal_buttons_row, timeout).until(legal_table_buttons_present)
         legal_table_buttons = legal_buttons_row.find_elements_by_tag_name(link_tag)
         return legal_table_buttons
@@ -191,8 +193,8 @@ def locate_legal_table_buttons(legal_buttons_row, document):
               f'{extrapolate_document_value(document)}, please review.')
 
 
-def next_legal_table(browser, legal_table, document, current_page):
-    legal_buttons_row = locate_legal_buttons_row(browser, legal_table, document)
+def next_legal_table(legal_table, document, current_page):
+    legal_buttons_row = locate_legal_buttons_row(legal_table, document)
     legal_table_buttons = locate_legal_table_buttons(legal_buttons_row, document)
     for button in legal_table_buttons:
         if int(button.text) == current_page:
@@ -201,11 +203,12 @@ def next_legal_table(browser, legal_table, document, current_page):
 
 
 def multi_page_legal(browser, legal_table, document, number_pages):
-    legal_list = list(drop_last_line(title_strip(join_column_without_title(legal_table))))
+    legal_data = drop_last_line(title_strip(join_column_without_title(legal_table)))
     for current_page in range(number_pages - 1):
-        next_legal_table(browser, legal_table, document, current_page)
+        next_legal_table(legal_table, document, (current_page + 2))
         legal_table = get_legal_table(browser)
-        legal_list.append(drop_last_line(title_strip(join_column_without_title(legal_table))))
+        legal_data = f'{legal_data}\n{drop_last_line(title_strip(join_column_without_title(legal_table)))}'
+        print(legal_data)
 
 
 def handle_legal_tables(browser, legal_table, document):
@@ -265,18 +268,42 @@ def get_related_documents_rows(related_documents_table):
     return get_direct_children(related_documents_data)
 
 
+# def locate_related_row_data(browser, row):
+#     try:
+
+#     except StaleElementReferenceException:
+#         scroll_into_view(browser, row)
+
+
 def get_related_row_data(row):
-    row_fields = get_direct_children(row)
-    related_document = f'{title_strip(row_fields[4].text)} {title_strip(row_fields[3].text)} {(row_fields[8].text)}'
-    print("related_document", related_document)
-    return related_document
+    try:
+        row_fields = get_direct_children(row)
+        related_document = f'{title_strip(row_fields[4].text)} {title_strip(row_fields[3].text)} {(row_fields[8].text)}'
+        print("related_document", related_document)
+        return related_document
+    except StaleElementReferenceException:
+        print("Encountered a stale element reference exception, trying again")
+        return None
 
 
-def handle_related_documents_table(related_documents_table, document):
+def aggregate_related_row_data(browser, related_documents_list, row):
+    row_data = get_related_row_data(row)
+    if row_data is None:
+        scroll_into_view(browser, row)
+        print("row", row)
+        row_data = get_related_row_data(row)
+    related_documents_list.append(get_related_row_data(row))
+
+
+def handle_related_documents_table(browser, related_documents_table, document):
     related_documents_rows = get_related_documents_rows(related_documents_table)
     related_documents_list = []
+    # for row in related_documents_rows:
+    #     print(related_documents_rows.index(row), row)
+    #     # get_related_row_data(row)
     for row in related_documents_rows:
-        related_documents_list.append(get_related_row_data(row))
+        print(related_documents_rows.index(row), row.text)
+        aggregate_related_row_data(browser, related_documents_list, row)
     return list_to_string(related_documents_list)
 
 
@@ -286,7 +313,7 @@ def record_related_document_information(browser, dictionary, document):
         dictionary["Related Documents"].append("")
     else:
         display_all_related_documents(browser, document)  # Run a few tests once in production to see if  necessary
-        related_documents = handle_related_documents_table(related_documents_table, document)
+        related_documents = handle_related_documents_table(browser, related_documents_table, document)
         print("related_documents", related_documents)
         dictionary["Related Documents"].append(related_documents)
 
@@ -297,15 +324,15 @@ def record_comments(dictionary):
 
 def aggregate_document_information(browser, dictionary, document):
     # If document_number == N/A, return book & page???
-    document_number, document_image_available = record_general_information(browser, dictionary, document)
+    document_number, document_link = record_general_information(browser, dictionary, document)
     record_grantor_information(browser, dictionary, document)
     record_grantee_information(browser, dictionary, document)
     record_legal_information(browser, dictionary, document)
     record_related_document_information(browser, dictionary, document)
     record_comments(dictionary)
-    return document_number, document_image_available
+    return document_number, document_link
 
 
 def record_document(browser, dictionary, document):
-    document_number, document_image_available = aggregate_document_information(browser, dictionary, document)
-    return document_number, document_image_available
+    document_number, document_link = aggregate_document_information(browser, dictionary, document)
+    return document_number, document_link

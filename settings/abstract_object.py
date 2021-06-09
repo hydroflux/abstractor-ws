@@ -13,61 +13,61 @@ abstract_dictionary = {
 }
 
 test_dictionary = {
-    "Grantor": 
+    "Grantor":
         [
             'Odinson, Loki',
             'Odinson, Thor',
             'No Record Found',
         ],
-    "Grantee": 
+    "Grantee":
         [
             'Borson, Odin',
             'Borson, Odin',
             'No Record Found',
         ],
-    "Book": 
+    "Book":
         [
             '999',
             '1029',
             'N/A',
         ],
-    "Page": 
+    "Page":
         [
             '898',
             '4',
             'N/A',
         ],
-    "Reception Number": 
+    "Reception Number":
         [
             '',
             '',
             '',
         ],
-    "Document Type": 
+    "Document Type":
         [
             'Birthright',
             'Birthright',
             'No Record Found',
         ],
-    "Recording Date": 
+    "Recording Date":
         [
             '12/01/2021',
             '12/15/2021',
             '01/01/1900',
         ],
-    "Legal": 
+    "Legal":
         [
             '',
             '',
             'N/A',
         ],
-    "Related Documents": 
+    "Related Documents":
         [
             '',
             '',
             '',
         ],
-    "Comments": 
+    "Comments":
         [
             '',
             'Multiple documents located',
