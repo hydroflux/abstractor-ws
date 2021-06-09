@@ -1,11 +1,14 @@
-from selenium.common.exceptions import NoSuchElementException, StaleElementReferenceException, TimeoutException
+from selenium.common.exceptions import (NoSuchElementException,
+                                        StaleElementReferenceException,
+                                        TimeoutException)
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from settings.export_settings import not_applicable
 from settings.file_management import extrapolate_document_value
 from settings.general_functions import (get_direct_children, get_element_text,
-                                        list_to_string, scroll_into_view, timeout, title_strip,
+                                        list_to_string, scroll_into_view,
+                                        short_nap, timeout, title_strip,
                                         zipped_list)
 
 from crocodile.crocodile_variables import (additional_legal_pages_class,
@@ -199,6 +202,7 @@ def next_legal_table(legal_table, document, current_page):
     for button in legal_table_buttons:
         if int(button.text) == current_page:
             button.click()
+            short_nap()
             return
 
 
@@ -289,10 +293,9 @@ def get_related_row_data(row):
 def aggregate_related_row_data(browser, related_documents_list, row):
     row_data = get_related_row_data(row)
     if row_data is None:
-        scroll_into_view(browser, row)
         print("row", row)
         row_data = get_related_row_data(row)
-    related_documents_list.append(get_related_row_data(row))
+    related_documents_list.append(row_data)
 
 
 def handle_related_documents_table(browser, related_documents_table, document):
@@ -312,7 +315,7 @@ def record_related_document_information(browser, dictionary, document):
     if not related_documents_table:
         dictionary["Related Documents"].append("")
     else:
-        display_all_related_documents(browser, document)  # Run a few tests once in production to see if  necessary
+        # display_all_related_documents(browser, document)  # Run a few tests once in production to see if  necessary
         related_documents = handle_related_documents_table(browser, related_documents_table, document)
         print("related_documents", related_documents)
         dictionary["Related Documents"].append(related_documents)
