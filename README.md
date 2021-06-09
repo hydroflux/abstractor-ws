@@ -26,6 +26,9 @@
 - [ ] Best order of operations for file management should be to create the folder first & then put the documents folder inside of it, rather than bundling at the end
 - [ ] I keep returning the reception number as a way to 'get' the document number--but if it matches (or if it can be stored a different way), this is completely redundant
 - [ ] Add program_type to  the 'started on...' line when starting a program (checks for cases where the wrong program type was chosen & logging in is time extensive)
+- [ ] Document number & document_image_available should be part of the document class--in addition to this, "download" could be an attribute of the document that is added when the document list is imported, & gets turned off if the document image isn't available
+- [ ] Create a class for the "abstraction" itself in order to avoid passing so many variables around between functions--would really clean up the code & make it easier to interact with documents when the code breaks
+- [ ] Add county to the document class as well to avoid passing county around to different functions
 
 ### Imports To Do
 
