@@ -4,30 +4,21 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from settings.export_settings import not_applicable
 from settings.file_management import extrapolate_document_value
-from settings.general_functions import (assert_window_title, get_element_text, list_to_string, get_direct_children,
-                                        timeout, title_strip, zipped_list)
+from settings.general_functions import (assert_window_title,
+                                        get_direct_children, get_element_text,
+                                        list_to_string, timeout, title_strip,
+                                        zipped_list)
 
 from crocodile.crocodile_variables import (additional_legal_pages_class,
-                                           bad_document_types,
-                                           document_information_class,
-                                           document_title,
+                                           bad_document_types, document_title,
                                            general_information_id, grantee_id,
-                                           grantor_id, legal_id, link_tag,
+                                           grantor_id, inactive, legal_id,
+                                           link_tag,
                                            related_documents_buttons_class,
                                            related_documents_id, row_data_tag,
                                            row_header_tag, row_titles,
                                            show_all_rows_text, table_body_tag,
                                            table_row_tag)
-
-# def locate_document_information(browser, document):
-#     try:
-#         document_information_present = EC.presence_of_element_located((By.CLASS_NAME, document_information_class))
-#         WebDriverWait(browser, timeout).until(document_information_present)
-#         document_information = browser.find_element_by_class_name(document_information_class)
-#         return document_information
-#     except TimeoutException:
-#         print(f'Browser timed out trying to locate document page information for '
-#               f'{extrapolate_document_value(document)}, please review.')
 
 
 def locate_general_information(document_information, document):
@@ -81,19 +72,19 @@ def check_list_elements(general_information, title):
     for header, data in general_information:
         if get_element_text(header) == title:
             if get_element_text(data) != "":
-                return get_element_text(data)
+                return data
             else:
                 return not_applicable
 
 
 def record_reception_number(general_information, dictionary):
-    reception_number = check_list_elements(general_information, row_titles["reception_number"])
+    reception_number = get_element_text(check_list_elements(general_information, row_titles["reception_number"]))
     dictionary["Reception Number"].append(reception_number)
     return reception_number
 
 
 def record_book_and_page(general_information, dictionary):
-    book_and_page = check_list_elements(general_information, row_titles["book_and_page"])
+    book_and_page = get_element_text(check_list_elements(general_information, row_titles["book_and_page"]))
     if book_and_page == not_applicable:
         dictionary["Book"].append(book_and_page)
         dictionary["Page"].append(book_and_page)
@@ -110,15 +101,24 @@ def record_book_and_page(general_information, dictionary):
 
 
 def record_document_type(general_information, dictionary):
-    document_type = check_list_elements(general_information, row_titles["document_type"])
+    document_type = get_element_text(check_list_elements(general_information, row_titles["document_type"]))
     if document_type == not_applicable or document_type in bad_document_types:
         document_type = check_list_elements(general_information, row_titles["alt_document_type"])
     dictionary["Document Type"].append(title_strip(document_type))
 
 
 def record_recording_date(general_information, dictionary):
-    recording_date = check_list_elements(general_information, row_titles["recording_date"])
+    recording_date = get_element_text(check_list_elements(general_information, row_titles["recording_date"]))
     dictionary["Recording Date"].append(recording_date[:10])
+
+
+def check_document_image_availability(browser, general_information):
+    document_image = check_list_elements(general_information, row_titles["document_image"])
+    document_link = document_image.find_element_by_tag_name(link_tag)
+    if document_link.get_attribute(inactive) == "true":
+        return False
+    else:
+        return True
 
 
 def record_general_information(browser, dictionary, document):
@@ -128,7 +128,8 @@ def record_general_information(browser, dictionary, document):
     record_book_and_page(general_information, dictionary)
     record_document_type(general_information, dictionary)
     record_recording_date(general_information, dictionary)
-    return document_number
+    document_image_available = check_document_image_availability(browser, general_information)
+    return document_number, document_image_available
 
 
 def join_column_without_title(string):
@@ -297,18 +298,16 @@ def record_comments(dictionary):
 
 def aggregate_document_information(browser, dictionary, document):
     # If document_number == N/A, return book & page???
-    document_number = record_general_information(browser, dictionary, document)
+    document_number, document_image_available = record_general_information(browser, dictionary, document)
     record_grantor_information(browser, dictionary, document)
     record_grantee_information(browser, dictionary, document)
     record_legal_information(browser, dictionary, document)
     record_related_document_information(browser, dictionary, document)
     record_comments(dictionary)
-    return document_number
+    return document_number, document_image_available
 
 
 def record_document(browser, county, dictionary, document):
     assert_window_title(browser, document_title)
-    # document_information = locate_document_information(browser, document)
-    document_number = record_general_information(browser, document)
-    aggregate_document_information(browser, dictionary, document)
-    return document_number
+    document_number, document_image_available = aggregate_document_information(browser, dictionary, document)
+    return document_number, document_image_available
