@@ -3,6 +3,8 @@ import sys
 sys.path.append(".")
 
 if __name__ == '__main__':
+    from crocodile.execute import execute_program as execute_crocodile
+    from crocodile.execute import execute_review as review_crocodile
     from eagle.execute import execute_document_download as download_eagle
     from eagle.execute import execute_program as execute_eagle
     from eagle.execute import execute_review as review_eagle
@@ -15,7 +17,7 @@ if __name__ == '__main__':
                                             start_program_timer,
                                             stop_program_timer)
     from settings.import_list import generate_document_list
-    from settings.settings import (county_name, download, file_name, headless,
+    from settings.settings import (county_name, file_name, headless,
                                    sheet_name, target_directory)
     from settings.user_prompts import get_program_type
 
@@ -23,16 +25,21 @@ print("environment", __name__)
 
 
 def execute_program_type(county, program_type, document_list):
-    if county.program == 'eagle':
+    if county.program == 'crocodile':
+        if program_type == 'execute':
+            execute_crocodile()
+        elif program_type == 'review':
+            review_crocodile()
+    elif county.program == 'eagle':
         if program_type == "execute":
-            execute_eagle(county, target_directory, document_list, file_name, download)
+            execute_eagle(county, target_directory, document_list, file_name)
         elif program_type == "review":
-            review_eagle(county, target_directory, document_list, download)
+            review_eagle(county, target_directory, document_list)
         elif program_type == "download":
-            download_eagle(county, target_directory, document_list, download)
+            download_eagle(county, target_directory, document_list)
     elif county.program == 'leopard':
         if program_type == "execute":
-            execute_leopard(headless, county, target_directory, document_list, file_name, sheet_name, download)
+            execute_leopard(headless, county, target_directory, document_list, file_name, sheet_name)
         elif program_type == "review":
             review_leopard(county, target_directory, document_list)
         elif program_type == "download":

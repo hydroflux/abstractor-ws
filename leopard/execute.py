@@ -4,6 +4,7 @@ from settings.driver import create_webdriver
 from settings.export import export_document
 from settings.file_management import bundle_project, check_length
 from settings.general_functions import start_timer
+from settings.settings import download
 from settings.user_prompts import document_found, no_document_found
 
 from leopard.download import download_document
@@ -18,7 +19,7 @@ from leopard.transform_document_list import transform_document_list
 print("execute", __name__)
 
 
-def record_single_document(browser, county, target_directory, download, document_list, document, start_time):
+def record_single_document(browser, county, target_directory, document_list, document, start_time):
     document_number = record_document(browser, county, dictionary, document)
     if download:
         if not download_document(browser, county, target_directory, document, document_number):
@@ -33,11 +34,11 @@ def download_single_document(browser, county, target_directory, document_list, d
     document_found(start_time, document_list, document, "download")
 
 
-def record_multiple_documents(browser, county, target_directory, download, document_list, document, start_time):
-    record_single_document(browser, county, target_directory, download, document_list, document, start_time)
+def record_multiple_documents(browser, county, target_directory, document_list, document, start_time):
+    record_single_document(browser, county, target_directory, document_list, document, start_time)
     for document_instance in range(0, (document.number_results - 1)):
         next_result(browser, document)
-        record_single_document(browser, county, target_directory, download, document_list, document, start_time)
+        record_single_document(browser, county, target_directory, document_list, document, start_time)
 
 
 def review_multiple_documents(browser, start_time, document_list, document):
@@ -54,14 +55,14 @@ def download_multiple_documents(browser, county, target_directory, start_time, d
         download_single_document(browser, county, target_directory, document)
 
 
-def handle_search_results(browser, county, target_directory, download,
+def handle_search_results(browser, county, target_directory,
                           document_list, document, start_time, alt=None):
     if alt is None:
         if document.number_results > 1:
-            record_multiple_documents(browser, county, target_directory, download,
+            record_multiple_documents(browser, county, target_directory,
                                       document_list, document, start_time)
         else:
-            record_single_document(browser, county, target_directory, download,
+            record_single_document(browser, county, target_directory,
                                    document_list, document, start_time)
     elif alt == 'review':
         if document.number_results > 1:
@@ -82,7 +83,7 @@ def search_documents_from_list(browser, county, target_directory, document_list,
         search(browser, document)
         # naptime()  # --- script runs without issues while this nap was in place
         if open_document(browser, document):
-            handle_search_results(browser, county, target_directory, download,
+            handle_search_results(browser, county, target_directory,
                                   document_list, document, start_time)
         else:
             record_bad_search(dictionary, document)

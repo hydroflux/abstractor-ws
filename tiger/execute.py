@@ -7,6 +7,7 @@ from settings.general_functions import (get_county_data,
                                         javascript_script_execution, naptime)
 from settings.import_list import generate_document_list
 from settings.settings import web_directory
+from settings.settings import download
 
 from tiger.download import download_document
 from tiger.login import account_login
@@ -35,7 +36,7 @@ def handle_search_results():
     pass
 
 
-def search_documents_from_list(browser, county, target_directory, document_list, download):
+def search_documents_from_list(browser, county, target_directory, document_list):
     for document_number in document_list:
         search(browser, document_number)
         if open_document(browser, document_number):
@@ -57,9 +58,9 @@ def review_documents_from_list():
     pass
 
 
-def create_abstraction(browser, county, target_directory, file_name, sheet_name, download):
+def create_abstraction(browser, county, target_directory, file_name, sheet_name):
     document_list = generate_document_list(target_directory, file_name, sheet_name)
-    search_documents_from_list(browser, county, target_directory, document_list, download)
+    search_documents_from_list(browser, county, target_directory, document_list)
     return dictionary
 
 
@@ -79,7 +80,7 @@ def execute_web_program(county, client, legal, upload_file):
     target_directory = web_directory
     browser = create_webdriver(target_directory, False)
     account_login(browser)
-    dictionary = create_abstraction(browser, county, target_directory, file_name, sheet_name, download)
+    dictionary = create_abstraction(browser, county, target_directory, file_name, sheet_name)
     export_document(target_directory, file_name, dictionary, client, legal)
     bundle_project(target_directory, file_name)
     browser.close()

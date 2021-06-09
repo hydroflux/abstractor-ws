@@ -5,6 +5,7 @@ from settings.driver import create_webdriver
 from settings.export import export_document
 from settings.file_management import bundle_project
 from settings.general_functions import start_timer
+from settings.settings import download
 from settings.user_prompts import document_found, no_document_found
 
 from eagle.download import download_document
@@ -17,7 +18,7 @@ from eagle.search import document_search
 print("execute", __name__)
 
 
-def record_single_document(browser, county, target_directory, download,
+def record_single_document(browser, county, target_directory,
                            abstract_dictionary, document_list, document, start_time):
     document_number = record_document(browser, county, abstract_dictionary, document)
     if download:
@@ -25,13 +26,13 @@ def record_single_document(browser, county, target_directory, download,
     document_found(start_time, document_list, document)
 
 
-def record_multiple_documents(browser, county, target_directory, download,
+def record_multiple_documents(browser, county, target_directory,
                               abstract_dictionary, document_list, document, start_time):
-    record_single_document(browser, county, target_directory, download,
+    record_single_document(browser, county, target_directory,
                            abstract_dictionary, document_list, document, start_time)
     for document_instance in range(0, (document.number_results - 1)):
         next_result(browser, document)
-        record_single_document(browser, county, target_directory, download,
+        record_single_document(browser, county, target_directory,
                                abstract_dictionary, document_list, document, start_time)
 
 
@@ -55,14 +56,14 @@ def download_multiple_documents(browser, county, target_directory, document_list
         download_single_document(browser, county, target_directory, document_list, document, start_time)
 
 
-def handle_search_results(browser, county, target_directory, download,
+def handle_search_results(browser, county, target_directory,
                           document_list, document, start_time, alt=None):
     if alt is None:
         if document.number_results > 1:
-            record_multiple_documents(browser, county, target_directory, download,
+            record_multiple_documents(browser, county, target_directory,
                                       abstract_dictionary, document_list, document, start_time)
         else:
-            record_single_document(browser, county, target_directory, download,
+            record_single_document(browser, county, target_directory,
                                    abstract_dictionary, document_list, document, start_time)
     elif alt == 'review':
         if document.number_results > 1:
@@ -76,12 +77,12 @@ def handle_search_results(browser, county, target_directory, download,
             download_single_document(browser, county, target_directory, document_list, document, start_time)
 
 
-def search_documents_from_list(browser, county, target_directory, document_list, download):
+def search_documents_from_list(browser, county, target_directory, document_list):
     for document in document_list:
         start_time = start_timer()
         document_search(browser, document)
         if open_document(browser, document):
-            handle_search_results(browser, county, target_directory, download,
+            handle_search_results(browser, county, target_directory,
                                   document_list, document, start_time)
         else:
             record_bad_search(abstract_dictionary, document)
@@ -89,53 +90,53 @@ def search_documents_from_list(browser, county, target_directory, document_list,
     return abstract_dictionary  # Is this necessary ? ? ?
 
 
-def create_abstraction(browser, county, target_directory, document_list, file_name, download):
+def create_abstraction(browser, county, target_directory, document_list, file_name):
     abstract_dictionary = search_documents_from_list(browser, county, target_directory, document_list, download)
     # Is the abstract_dictionary return necessary ? ? ?
     return export_document(county, target_directory, file_name, abstract_dictionary)
 
 
-def execute_program(county, target_directory, document_list, file_name, download):
+def execute_program(county, target_directory, document_list, file_name):
     browser = create_webdriver(target_directory, False)
     account_login(browser)
-    abstraction = create_abstraction(browser, county, target_directory, document_list, file_name, download)
+    abstraction = create_abstraction(browser, county, target_directory, document_list, file_name)
     browser.close()
-    bundle_project(target_directory, abstraction, download)
+    bundle_project(target_directory, abstraction)
 
 
-def review_documents_from_list(browser, county, target_directory, download, document_list):
+def review_documents_from_list(browser, county, target_directory, document_list):
     for document in document_list:
         start_time = start_timer()
         document_search(browser, document)
         if open_document(browser, document):
-            handle_search_results(browser, county, target_directory, download,
+            handle_search_results(browser, county, target_directory,
                                   document_list, document, start_time, 'review')
         else:
             no_document_found(start_time, document_list, document, "review")
 
 
-def download_documents_from_list(browser, county, target_directory, download, document_list):
+def download_documents_from_list(browser, county, target_directory, document_list):
     for document in document_list:
         start_time = start_timer()
         document_search(browser, document)
         if open_document(browser, document):
-            handle_search_results(browser, county, target_directory, download,
+            handle_search_results(browser, county, target_directory,
                                   document_list, document, start_time, 'download')
         else:
             no_document_found(start_time, document_list, document)
 
 
-def execute_review(county, target_directory, document_list, download):
+def execute_review(county, target_directory, document_list):
     browser = create_webdriver(target_directory, False)
     account_login(browser)
-    review_documents_from_list(browser, county, target_directory, download, document_list)
+    review_documents_from_list(browser, county, target_directory, document_list)
     browser.close()
 
 
-def execute_document_download(county, target_directory, document_list, download):
+def execute_document_download(county, target_directory, document_list):
     browser = create_webdriver(target_directory, False)
     account_login(browser)
-    download_documents_from_list(browser, county, target_directory, download, document_list)
+    download_documents_from_list(browser, county, target_directory, document_list)
     browser.close()
 
 
