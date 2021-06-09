@@ -4,7 +4,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from settings.export_settings import not_applicable
 from settings.file_management import extrapolate_document_value
-from settings.general_functions import (assert_window_title, get_element_text, get_direct_children,
+from settings.general_functions import (assert_window_title, get_element_text, list_to_string, get_direct_children,
                                         timeout, title_strip, zipped_list)
 
 from crocodile.crocodile_variables import (additional_legal_pages_class,
@@ -79,9 +79,9 @@ def get_general_information_data(browser, general_information_table, document):
 # Copied & audited from leopard
 def check_list_elements(general_information, title):
     for header, data in general_information:
-        if header == title:
-            if data != "":
-                return data
+        if get_element_text(header) == title:
+            if get_element_text(data) != "":
+                return get_element_text(data)
             else:
                 return not_applicable
 
@@ -128,7 +128,6 @@ def record_general_information(browser, dictionary, document):
     record_book_and_page(general_information, dictionary)
     record_document_type(general_information, dictionary)
     record_recording_date(general_information, dictionary)
-    print(general_information)
     return document_number
 
 
@@ -260,15 +259,25 @@ def display_all_related_documents(browser, document):
     expand_all_rows(browser, buttons)
 
 
-def get_related_documents_rows(related_documents_table, document):
+def get_related_documents_rows(related_documents_table):
     related_documents_sub_tables = related_documents_table.find_elements_by_tag_name(table_body_tag)
     related_documents_data = related_documents_sub_tables[4]
     return get_direct_children(related_documents_data)
 
 
+def get_related_row_data(row):
+    row_fields = get_direct_children(row)
+    related_document = f'{title_strip(row_fields[4].text)} {title_strip(row_fields[3].text)} {(row_fields[8].text)}'
+    print("related_document", related_document)
+    return related_document
+
 
 def handle_related_documents_table(related_documents_table, document):
-    related_documents_rows = get_related_documents_rows(related_documents_table, document)
+    related_documents_rows = get_related_documents_rows(related_documents_table)
+    related_documents_list = []
+    for row in related_documents_rows:
+        related_documents_list.append(get_related_row_data(row))
+    return list_to_string(related_documents_list)
 
 
 def record_related_document_information(browser, dictionary, document):

@@ -126,3 +126,7 @@ def zipped_list(list1, list2):
 
 def get_direct_children(element):
     return element.find_elements_by_xpath("./*")
+
+
+def list_to_string(list):
+    return "/n".join(list)
