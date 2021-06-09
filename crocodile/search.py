@@ -7,13 +7,13 @@ from settings.file_management import (document_type, document_value,
 from settings.general_functions import assert_window_title, timeout
 
 from crocodile.crocodile_variables import (instrument_search_field_id,
-                                           search_button_id, search_title,
+                                           search_button_id, document_search_title,
                                            search_url)
 
 
-def open_search(browser):
+def open_document_search(browser):
     browser.get(search_url)
-    assert_window_title(browser, search_title)
+    assert_window_title(browser, document_search_title)
 
 
 def locate_document_number_field(browser, document):
@@ -49,11 +49,15 @@ def execute_search(browser):
 
 
 def document_search(browser, document):
-    open_search(browser)
+    open_document_search(browser)
     # May need to add additional flag here---
     # need to make sure that the search field is caught properly
+    enter_document_number(browser, document)
+    execute_search(browser)
+
+
+def search(browser, document):
     if document_type(document) == "document_number":
-        enter_document_number(browser, document)
-        execute_search(browser)
+        document_search(browser, document)
     else:
         print(f'Unable to search {document_type(document)}, new search path needs to be developed.')

@@ -23,7 +23,9 @@ def handle_search_results(browser, county, target_directory, document_list, docu
 
 
 def search_documents_from_list(browser, county, target_directory, document_list):
-    pass
+    for document in document_list:
+        start_time = start_timer()
+        search(browser, document)
 
 
 def execute_program(county, target_directory, document_list, file_name):
