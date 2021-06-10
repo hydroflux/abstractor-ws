@@ -10,5 +10,6 @@ def check_login_status(browser, document):
         print(f'Browser appears to have encountered a logout error while searching '
               f'{extrapolate_document_value(document)}, attempting to log back in.')
         account_login(browser)
+        return True
     else:
         print('Browser has encountered an unknown error, please review.')
