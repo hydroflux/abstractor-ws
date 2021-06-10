@@ -87,12 +87,14 @@
 
 ### Crocodile To Do
 
-- [ ] Add all crocodile scripts (execute, record, download)
 - [ ] Integrate crocodile scripts to work with the top level environment file
-- [ ] Create a convert_document_numbers script
-- [ ] Create an "execution", "review", & "download only" option for execution
+- [ ] Create a convert_document_numbers script ??? need to see what an index looks like
+- [ ] Create an "review", & "download only" option for execution
 - [ ] Need to create an application path for multiple results
-- [ ] Create a fallback procedure to check for logout
+- [ ] Create a fallback procedure to check for logout in order to log back in
+- [ ] Test against as many document types as possible--documents don't appear to be consistent across different doc types
+- [ ] Initial open_search needs a delay or additional check--first reception number doesn't appear (likely will occur again)
+- [ ] Continuing above, the best case scenario may be to check the text field for the reception number & see if it matches the information attempted to be entered
 
 ### Iguana To Do
 
