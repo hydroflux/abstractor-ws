@@ -32,10 +32,21 @@ def locate_document_number_field(browser, document):
               f'{extrapolate_document_value(document)}.')
 
 
+# This could be used anytime a value is entered in a field as a confirmation
+def check_search_field(instrument_search_field, document):
+    search_field_value = instrument_search_field.get_attribute("value").strip()
+    if search_field_value == document_value(document):
+        return True
+    else:
+        return False
+
+
 def enter_document_number(browser, document):
     instrument_search_field = locate_document_number_field(browser, document)
     instrument_search_field.clear()
     instrument_search_field.send_keys(document_value(document))
+    while not check_search_field(instrument_search_field, document):
+        instrument_search_field.send_keys(document_value(document))
 
 
 def locate_search_button(browser):
