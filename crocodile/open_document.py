@@ -3,7 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from settings.file_management import extrapolate_document_value
-from settings.general_functions import (assert_window_title, get_element_text,
+from settings.general_functions import (assert_window_title, get_direct_children, get_element_text,
                                         timeout, update_number_results)
 
 from crocodile.crocodile_variables import (document_description_title,
@@ -34,7 +34,7 @@ def check_for_results(browser, document):
         return True
 
 
-def locate_search_results_table(browser, document):
+def locate_main_results_table(browser, document):
     try:
         results_table_present = EC.presence_of_element_located((By.ID, results_table_id))
         WebDriverWait(browser, timeout).until(results_table_present)
@@ -43,6 +43,14 @@ def locate_search_results_table(browser, document):
     except TimeoutException:
         print(f'Browser timed out trying to locate results for '
               f'{extrapolate_document_value(document)}, please review.')
+
+
+def locate_search_results_table(main_table, document):
+    pass
+
+
+def get_search_results(main_table):
+    return get_direct_children(get_direct_children(main_table)[2])
 
 
 def locate_results_statement(results_table, document):
@@ -60,28 +68,28 @@ def strip_total_search_results(results_statement):
     return int(results_statement[(results_statement.find("of") + 2):results_statement.find("at")].strip())
 
 
-def count_total_search_results(results_table, document):
-    results_statement = locate_results_statement(results_table, document)
+def count_total_search_results(main_table, document):
+    results_statement = locate_results_statement(main_table, document)
     total_search_results = strip_total_search_results(results_statement)
     return total_search_results
 
 
-def locate_result_rows(results_table, document):
-    try:
-        result_rows_present = EC.presence_of_element_located((By.CLASS_NAME, result_row_class_name))
-        WebDriverWait(results_table, timeout).until(result_rows_present)
-        result_rows = results_table.find_elements_by_class_name(result_row_class_name)
-        return result_rows
-    except TimeoutException:
-        print(f'Browser timed out trying to locate results for '
-              f'{extrapolate_document_value(document)}, please review.')
+# def locate_result_rows(results_table, document):
+#     try:
+#         result_rows_present = EC.presence_of_element_located((By.CLASS_NAME, result_row_class_name))
+#         WebDriverWait(results_table, timeout).until(result_rows_present)
+#         result_rows = results_table.find_elements_by_class_name(result_row_class_name)
+#         return result_rows
+#     except TimeoutException:
+#         print(f'Browser timed out trying to locate results for '
+#               f'{extrapolate_document_value(document)}, please review.')
 
 
-def verify_result_count(document, total_search_results, results):
-    if not len(results) == total_search_results:
+def verify_result_count(document, total_search_results, search_results):
+    if not len(search_results) == total_search_results:
         print(f'The total result count of {total_search_results} does not match the number of rows for '
               f'{extrapolate_document_value(document)}, which returned '
-              f'{len(results)}, please review.')
+              f'{len(search_results)}, please review.')
 
 
 def locate_document_link(row, document):
@@ -100,9 +108,9 @@ def open_document_link(row, document):
     document_link.click()
 
 
-def handle_search_results(result_rows, document):
+def handle_search_results(search_results, document):
     if document.number_results == 1:
-        open_document_link(result_rows[0], document)
+        open_document_link(search_results[0], document)
     else:
         print(f'{str(document.number_results)} results returned for '
               f'{extrapolate_document_value(document)}, please review.')
@@ -111,11 +119,11 @@ def handle_search_results(result_rows, document):
 
 def open_document(browser, document):
     if check_for_results(browser, document):
-        results_table = locate_search_results_table(browser, document)
-        total_search_results = count_total_search_results(results_table, document)
-        result_rows = locate_result_rows(results_table, document)
-        verify_result_count(document, total_search_results, result_rows)
-        handle_search_results(result_rows, document)
+        main_table = locate_main_results_table(browser, document)
+        total_search_results = count_total_search_results(main_table, document)
+        search_results = get_search_results(main_table)
+        verify_result_count(document, total_search_results, search_results)
+        handle_search_results(search_results, document)
         if assert_window_title(browser, document_description_title):
             return True
         else:
