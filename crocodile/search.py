@@ -16,6 +16,7 @@ def open_document_search(browser, document):
     if not assert_window_title(browser, document_search_title):
         print(f'Browser failed to open document image link for '
               f'{extrapolate_document_value(document)}, please review.')
+        check_login_status(browser, document)
 
 
 def locate_document_number_field(browser, document):
