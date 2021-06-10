@@ -56,15 +56,14 @@ def locate_results_statement(results_table, document):
               f'{extrapolate_document_value(document)}, please review.')
 
 
-def strip_total_results(results_statement):
+def strip_total_search_results(results_statement):
     return int(results_statement[(results_statement.find("of") + 2):results_statement.find("at")].strip())
 
 
-def count_total_results(results_table, document):
+def count_total_search_results(results_table, document):
     results_statement = locate_results_statement(results_table, document)
-    total_results = strip_total_results(results_statement)
-    update_number_results(document, total_results)
-    return total_results
+    total_search_results = strip_total_search_results(results_statement)
+    return total_search_results
 
 
 def locate_result_rows(results_table, document):
@@ -78,9 +77,9 @@ def locate_result_rows(results_table, document):
               f'{extrapolate_document_value(document)}, please review.')
 
 
-def verify_result_count(document, total_results, results):
-    if not len(results) == total_results:
-        print(f'The total result count of {total_results} does not match the number of rows for '
+def verify_result_count(document, total_search_results, results):
+    if not len(results) == total_search_results:
+        print(f'The total result count of {total_search_results} does not match the number of rows for '
               f'{extrapolate_document_value(document)}, which returned '
               f'{len(results)}, please review.')
 
@@ -113,9 +112,9 @@ def handle_search_results(result_rows, document):
 def open_document(browser, document):
     if check_for_results(browser, document):
         results_table = locate_search_results_table(browser, document)
-        total_results = count_total_results(results_table, document)
+        total_search_results = count_total_search_results(results_table, document)
         result_rows = locate_result_rows(results_table, document)
-        verify_result_count(document, total_results, result_rows)
+        verify_result_count(document, total_search_results, result_rows)
         handle_search_results(result_rows, document)
         if assert_window_title(browser, document_description_title):
             return True
