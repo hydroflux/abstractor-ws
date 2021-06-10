@@ -9,7 +9,9 @@ from settings.file_management import (create_document_directory,
                                       extrapolate_document_value)
 from settings.general_functions import javascript_script_execution, timeout
 
-from crocodile.crocodile_variables import download_menu_id, download_button_tag
+from crocodile.crocodile_variables import (download_button_tag,
+                                           download_confirmation_id,
+                                           download_menu_id, stock_download)
 
 
 def open_document_download_page(browser, document):
@@ -43,24 +45,40 @@ def get_download_button(browser, document):
     return locate_download_button(download_menu, document)
 
 
-def locate_download_confirmation_button():
-    pass
-
-
-def confirm_document_download():
-    pass
-
-
-def execute_download(browser, document):
+def open_document_submenu(browser, document):
     download_button = get_download_button(browser, document)
     download_button.click()
 
 
+def locate_download_confirmation_button(browser, document):
+    try:
+        download_confirmation_present = EC.element_to_be_clickable((By.ID, download_confirmation_id))
+        WebDriverWait(browser, timeout).until(download_confirmation_present)
+        download_confirmation_button = browser.find_element_by_id(download_confirmation_id)
+        return download_confirmation_button
+    except TimeoutException:
+        print(f'Browser timed out trying to locate download confirmation button for '
+              f'{extrapolate_document_value(document)}, please review.')
+
+
+def confirm_document_download(browser, document):
+    download_confirmation_button = locate_download_confirmation_button(browser, document)
+    download_confirmation_button.click()
+
+
+def execute_download(browser, document):
+    open_document_download_page(browser, document)
+    open_document_submenu(browser, document)
+    confirm_document_download(browser, document)
+
+
 def download_document(browser, county, target_directory, document):
     document_directory = create_document_directory(target_directory)
-    if previously_downloaded(county, document_directory, document.reception_number):
+    reception_number = document.reception_number
+    if previously_downloaded(county, document_directory, reception_number):
         return True
     else:
         number_files = len(os.listdir(document_directory))
-        open_document_download_page(browser, document)
-    pass
+        execute_download(browser, document)
+        if update_download(browser, county, stock_download, document_directory, number_files, reception_number):
+            return True
