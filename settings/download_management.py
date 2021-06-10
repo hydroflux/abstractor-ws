@@ -19,24 +19,24 @@ def check_for_download_error(browser, windows):
     try:
         if browser.title == 'Error':
             browser.close()
-            browser.switch_to_window(windows[0])
+            browser.switch_to.window(windows[0])
             return True
         else:
-            browser.switch_to_window(windows[0])
+            browser.switch_to.window(windows[0])
     except NoSuchWindowException:
         print('Encountered a "no such window exception" error while trying to close the download window, '
               'switching back to the original window.')
-        browser.switch_to_window(windows[0])
+        browser.switch_to.window(windows[0])
     except WebDriverException:
         print('Encountered a "web driver exception" error while trying to close the download window, '
               'switching back to the original window.')
-        browser.switch_to_window(windows[0])
+        browser.switch_to.window(windows[0])
 
 
 def check_browser_windows(browser):
     windows = browser.window_handles
     if len(windows) > 1:
-        browser.switch_to_window(windows[1])
+        browser.switch_to.window(windows[1])
         check_for_download_error(browser, windows)
 
 

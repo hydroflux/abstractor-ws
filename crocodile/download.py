@@ -7,15 +7,18 @@ from selenium.webdriver.support.wait import WebDriverWait
 from settings.download_management import previously_downloaded, update_download
 from settings.file_management import (create_document_directory,
                                       extrapolate_document_value)
-from settings.general_functions import javascript_script_execution, timeout
+from settings.general_functions import assert_window_title, javascript_script_execution, timeout
 
-from crocodile.crocodile_variables import (download_button_tag,
+from crocodile.crocodile_variables import (document_image_title,
+                                           download_button_tag,
                                            download_confirmation_id,
+                                           download_confirmation_title,
                                            download_menu_id, stock_download)
 
 
 def open_document_download_page(browser, document):
     javascript_script_execution(browser, document.link)
+    assert_window_title(browser, document_image_title)
 
 
 def locate_download_menu(browser, document):
@@ -72,6 +75,15 @@ def execute_download(browser, document):
     confirm_document_download(browser, document)
 
 
+def close_download_window(browser, document):
+    windows = browser.window_handles
+    if len(windows) > 1:
+        browser.switch_to.window(windows[1])
+        assert_window_title(browser, download_confirmation_title)
+        browser.close()
+        browser.switch_to_window(windows[0])
+
+
 def download_document(browser, county, target_directory, document):
     document_directory = create_document_directory(target_directory)
     reception_number = document.reception_number
@@ -81,4 +93,5 @@ def download_document(browser, county, target_directory, document):
         number_files = len(os.listdir(document_directory))
         execute_download(browser, document)
         if update_download(browser, county, stock_download, document_directory, number_files, reception_number):
+            close_download_window(browser, document)
             return True
