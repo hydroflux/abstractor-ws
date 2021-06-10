@@ -29,6 +29,8 @@
 - [ ] Document number & document_image_available should be part of the document class--in addition to this, "download" could be an attribute of the document that is added when the document list is imported, & gets turned off if the document image isn't available
 - [ ] Create a class for the "abstraction" itself in order to avoid passing so many variables around between functions--would really clean up the code & make it easier to interact with documents when the code breaks
 - [ ] Add county to the document class as well to avoid passing county around to different functions
+- [ ] If websites & logins are added to the county class the open_site function can be generalized across all scripts
+- [ ] Add a check to the environment file to make sure that the county information is entered correctly before starting the webdriver
 
 ### Imports To Do
 
@@ -95,6 +97,7 @@
 - [ ] Test against as many document types as possible--documents don't appear to be consistent across different doc types
 - [ ] Initial open_search needs a delay or additional check--first reception number doesn't appear (likely will occur again)
 - [ ] Continuing above, the best case scenario may be to check the text field for the reception number & see if it matches the information attempted to be entered
+- [ ] Crocodile should probably be changed to alligator
 
 ### Iguana To Do
 
