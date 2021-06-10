@@ -27,7 +27,7 @@ print("environment", __name__)
 def execute_program_type(county, program_type, document_list):
     if county.program == 'crocodile':
         if program_type == 'execute':
-            execute_crocodile()
+            execute_crocodile(county, target_directory, document_list, file_name)
         elif program_type == 'review':
             review_crocodile()
     elif county.program == 'eagle':

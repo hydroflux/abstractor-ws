@@ -61,5 +61,5 @@ def execute_program(county, target_directory, document_list, file_name):
     browser.close()
 
 
-def execute_review(county, target_directory, document_list, file_name):
+def execute_review():
     pass
