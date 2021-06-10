@@ -117,7 +117,10 @@ def update_number_results(document, total_results):
 
 
 def assert_window_title(browser, window_title):
-    assert window_title in browser.title.strip()
+    try:
+        assert window_title in browser.title.strip()
+    except AssertionError:
+        return False
 
 
 def zipped_list(list1, list2):

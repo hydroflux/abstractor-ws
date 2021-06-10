@@ -117,5 +117,8 @@ def open_document(browser, document):
         result_rows = locate_result_rows(results_table, document)
         verify_result_count(document, total_results, result_rows)
         handle_search_results(result_rows, document)
-        assert_window_title(browser, document_description_title)
-        return True
+        if assert_window_title(browser, document_description_title):
+            return True
+        else:
+            print(f'Browser failed to successfully open document description page for '
+                  f'{extrapolate_document_value(document)}, please review.')

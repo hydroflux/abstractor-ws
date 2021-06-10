@@ -11,9 +11,11 @@ from crocodile.crocodile_variables import (instrument_search_field_id,
                                            search_url)
 
 
-def open_document_search(browser):
+def open_document_search(browser, document):
     browser.get(search_url)
-    assert_window_title(browser, document_search_title)
+    if not assert_window_title(browser, document_search_title):
+        print(f'Browser failed to open document image link for '
+              f'{extrapolate_document_value(document)}, please review.')
 
 
 def locate_document_number_field(browser, document):
@@ -49,7 +51,7 @@ def execute_search(browser):
 
 
 def document_search(browser, document):
-    open_document_search(browser)
+    open_document_search(browser, document)
     # May need to add additional flag here---
     # need to make sure that the search field is caught properly
     enter_document_number(browser, document)

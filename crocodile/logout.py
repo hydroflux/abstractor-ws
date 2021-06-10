@@ -23,7 +23,8 @@ def execute_logout(browser):
 
 
 def verify_logout(browser):
-    assert_window_title(browser, website_title)
+    if not assert_window_title(browser, website_title):
+        print('Unable to verify logout, please review.')
 
 
 def logout(browser):

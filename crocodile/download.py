@@ -18,7 +18,9 @@ from crocodile.crocodile_variables import (document_image_title,
 
 def open_document_download_page(browser, document):
     javascript_script_execution(browser, document.link)
-    assert_window_title(browser, document_image_title)
+    if not assert_window_title(browser, document_image_title):
+        print(f'Browser failed to open document download page for '
+              f'{extrapolate_document_value(document)}, please review.')
 
 
 def locate_download_menu(browser, document):
@@ -79,9 +81,12 @@ def close_download_window(browser, document):
     windows = browser.window_handles
     if len(windows) > 1:
         browser.switch_to.window(windows[1])
-        assert_window_title(browser, download_confirmation_title)
-        browser.close()
-        browser.switch_to_window(windows[0])
+        if assert_window_title(browser, download_confirmation_title):
+            browser.close()
+            browser.switch_to_window(windows[0])
+        else:
+            print(f'Browser failed to close download window after downloading '
+                  f'{extrapolate_document_value(document)}, please review.')
 
 
 def download_document(browser, county, target_directory, document):

@@ -11,7 +11,10 @@ from crocodile.crocodile_variables import (credentials, post_login_title,
 
 def open_site(browser):
     browser.get(website)
-    assert_window_title(browser, website_title)
+    if not assert_window_title(browser, website_title):
+        print('Browser failed to successfully open site, please review.')
+        browser.close()
+        quit()
 
 
 def locate_login_field(browser, prompt_id, type):
