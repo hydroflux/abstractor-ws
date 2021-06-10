@@ -6,9 +6,10 @@ from settings.file_management import (document_type, document_value,
                                       extrapolate_document_value)
 from settings.general_functions import assert_window_title, timeout
 
-from crocodile.crocodile_variables import (instrument_search_field_id,
-                                           search_button_id, document_search_title,
-                                           search_url)
+from crocodile.crocodile_variables import (document_search_title,
+                                           instrument_search_field_id,
+                                           search_button_id, search_url)
+from crocodile.error_handling import check_login_status
 
 
 def open_document_search(browser, document):
