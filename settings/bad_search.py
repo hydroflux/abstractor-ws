@@ -40,6 +40,14 @@ def record_bad_search(dataframe, document):
     add_bad_search_message(dataframe, document)
 
 
+def unable_to_download(dataframe, document):
+    unable_to_download = f'Unable to download document image at {extrapolate_document_value(document)}, please review'
+    if dataframe["Comments"][-1] == "":
+        dataframe["Comments"][-1] = unable_to_download
+    else:
+        dataframe["Comments"][-1] = f'{dataframe["Comments"][-1]}; {unable_to_download}'
+
+
 def no_document_image(dataframe, document):
     if dataframe["Comments"][-1] == "":
         dataframe["Comments"][-1] = no_image_comment(document)

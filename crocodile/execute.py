@@ -1,6 +1,6 @@
 from crocodile.download import download_document
 from settings.abstract_object import abstract_dictionary as dictionary
-from settings.bad_search import no_document_image, record_bad_search
+from settings.bad_search import no_document_image, record_bad_search, unable_to_download
 from settings.driver import create_webdriver
 from settings.export import export_document
 from settings.file_management import bundle_project
@@ -19,9 +19,7 @@ def record_single_document(browser, county, target_directory, document_list, doc
     record_document(browser, dictionary, document)
     if download:
         if not download_document(browser, county, target_directory, document):
-            no_document_image(dictionary, document)
-            # This shouldn't be the no_document_image comment, this should be 'unable to download' or something similar
-            # with a 'please review' comment
+            unable_to_download(dictionary, document)
     document_found(start_time, document_list, document)
 
 
