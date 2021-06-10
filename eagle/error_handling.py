@@ -26,7 +26,3 @@ def check_for_error(browser, document):
         browser.refresh()
         naptime()
         return error_message_text
-
-
-def no_image_comment(document):
-    return f'No document image available at {extrapolate_document_value(document)}, please review'

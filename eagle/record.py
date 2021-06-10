@@ -1,3 +1,4 @@
+from settings.bad_search import no_document_image
 from selenium.common.exceptions import (ElementClickInterceptedException,
                                         StaleElementReferenceException,
                                         TimeoutException)
@@ -20,7 +21,8 @@ from eagle.eagle_variables import (document_information_id,
                                    no_image_text, pdf_viewer_load_id,
                                    related_table_class, result_button_tag,
                                    result_buttons_class)
-from eagle.error_handling import check_for_error, no_image_comment
+from eagle.error_handling import check_for_error
+
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("record", __name__)
@@ -272,10 +274,7 @@ def record_comments(county, dataframe, document, image_available):
     else:
         dataframe["Comments"].append("")
     if not image_available:
-        if dataframe["Comments"][-1] == "":
-            dataframe["Comments"][-1] = no_image_comment(document)
-        else:
-            dataframe["Comments"][-1] = f'{dataframe["Comments"][-1]}; {no_image_comment(document)}'
+        no_document_image(dataframe, document)
 
 
 def record_document_fields(browser, county, dataframe, document, image_available):

@@ -1,9 +1,10 @@
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("bad_search", __name__)
 
+from settings.error_handling import no_image_comment
+from settings.export_settings import search_errors
 from settings.file_management import (document_type, document_value,
                                       extrapolate_document_value)
-from settings.export_settings import search_errors
 
 
 def add_bad_search_key_values(dataframe, document):
@@ -40,5 +41,7 @@ def record_bad_search(dataframe, document):
 
 
 def no_document_image(dataframe, document):
-    dataframe["Comments"][-1] = ('No document image located at '
-                                 f'{extrapolate_document_value(document)}')
+    if dataframe["Comments"][-1] == "":
+        dataframe["Comments"][-1] = no_image_comment(document)
+    else:
+        dataframe["Comments"][-1] = f'{dataframe["Comments"][-1]}; {no_image_comment(document)}'

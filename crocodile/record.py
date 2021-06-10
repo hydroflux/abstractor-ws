@@ -1,3 +1,4 @@
+from settings.bad_search import no_document_image
 from selenium.common.exceptions import (NoSuchElementException,
                                         StaleElementReferenceException,
                                         TimeoutException)
@@ -321,8 +322,11 @@ def record_related_document_information(browser, dictionary, document):
         dictionary["Related Documents"].append(related_documents)
 
 
-def record_comments(dictionary):
+def record_comments(dictionary, document):
     dictionary["Comments"].append("")
+    if document.link is None:
+        no_document_image(dictionary, document)
+    # This is bad practice, no document image checks against the last comment
 
 
 def record_document(browser, dictionary, document):
@@ -332,4 +336,4 @@ def record_document(browser, dictionary, document):
     record_grantee_information(browser, dictionary, document)
     record_legal_information(browser, dictionary, document)
     record_related_document_information(browser, dictionary, document)
-    record_comments(dictionary)
+    record_comments(dictionary, document)
