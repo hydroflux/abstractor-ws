@@ -99,6 +99,7 @@
 - [ ] Continuing above, the best case scenario may be to check the text field for the reception number & see if it matches the information attempted to be entered
 - [ ] Crocodile should probably be changed to alligator
 - [ ] Create a function similar to the 'get_reception_number' function for matching book / page numbers in crocodile open_document
+- [ ] While working with multiple documents, figure out a way to store multiple document links with each result
 
 ### Iguana To Do
 

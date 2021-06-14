@@ -5,7 +5,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from settings.file_management import document_value, extrapolate_document_value
 from settings.general_functions import (assert_window_title,
                                         get_direct_children, get_element_text,
-                                        timeout)
+                                        set_document_link, timeout)
 
 from crocodile.crocodile_variables import (document_description_title,
                                            link_tag, no_results_message,
@@ -82,31 +82,42 @@ def verify_result_count(total_search_results, search_results, document):
               f'{len(search_results)}, please review.')
 
 
-def locate_document_link(row, document):
+def get_result_number(result):
+    # Create a similar function for matching book / page numbers
+    return get_direct_children(result)[8]
+
+
+def locate_document_link(result_number, document):
     try:
         document_link_present = EC.element_to_be_clickable((By.TAG_NAME, link_tag))
-        WebDriverWait(row, timeout).until(document_link_present)
-        document_link = row.find_element_by_tag_name(link_tag)
+        WebDriverWait(result_number, timeout).until(document_link_present)
+        document_link = result_number.find_element_by_tag_name(link_tag)
         return document_link
     except TimeoutException:
         print(f'Browser timed out trying to open document link for '
               f'{extrapolate_document_value(document)}, please review.')
 
 
-def open_document_link(row, document):
-    document_link = locate_document_link(row, document)
-    document_link.click()
+def get_direct_link(document_link):
+    return document_link.get_attribute("href")
 
 
-def get_reception_number(result):
-    # Create a similar function for matching book / page numbers
-    return get_element_text(get_direct_children(result)[8])
+def get_document_link(result_number, document):
+    document_link = locate_document_link(result_number, document)
+    set_document_link(document, document_link)
 
 
 def verify_search_results(search_results, document):
     for result in search_results:
-        if document_value(document) == get_reception_number(result):
+        result_number = get_result_number(result)
+        if document_value(document) == get_element_text(result_number):
+            get_document_link(result_number, document)
             document.number_results += 1
+
+
+def open_document_link(row, document):
+    document_link = locate_document_link(row, document)
+    document_link.click()
 
 
 def handle_search_results(search_results, document):
