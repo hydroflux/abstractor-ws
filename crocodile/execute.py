@@ -1,3 +1,4 @@
+from crocodile.document_list import create_document_list
 from settings.abstract_object import abstract_dictionary as dictionary
 from settings.bad_search import record_bad_search, unable_to_download
 from settings.driver import create_webdriver
@@ -69,7 +70,7 @@ def perform_name_search(browser, county, target_directory, search_name):
 def execute_name_search(county, target_directory, search_name):
     browser = create_webdriver(target_directory, headless)
     account_login(browser)
-    perform_name_search(browser, county, target_directory, search_name)
+    dictionary = perform_name_search(browser, county, target_directory, search_name)
     logout(browser)
     abstraction = export_document(county, target_directory, file_name, dictionary)
     bundle_project(target_directory, abstraction)

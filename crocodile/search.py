@@ -1,26 +1,27 @@
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.common.keys import Keys
 from settings.file_management import (document_type, document_value,
                                       extrapolate_document_value)
 from settings.general_functions import (assert_window_title, get_field_value,
                                         timeout)
 
-from crocodile.crocodile_variables import (document_search_field_id,
+from crocodile.crocodile_variables import (document_search_button_id,
+                                           document_search_field_id,
                                            document_search_title,
-                                           search_button_id, search_url)
+                                           document_search_url)
 from crocodile.error_handling import check_login_status
 
 
 def open_document_search(browser, document):
-    browser.get(search_url)
+    browser.get(document_search_url)
     if not assert_window_title(browser, document_search_title):
-        print(f'Browser failed to open document image link for '
+        print(f'Browser failed to open document search link for '
               f'{extrapolate_document_value(document)}, please review.')
         if check_login_status(browser, document):
-            browser.get(search_url)
+            browser.get(document_search_url)
 
 
 def locate_document_search_field(browser, document):
@@ -30,7 +31,7 @@ def locate_document_search_field(browser, document):
         document_search_field = browser.find_element_by_id(document_search_field_id)
         return document_search_field
     except TimeoutException:
-        print(f'Browser timed out trying to fill document field for document number '
+        print(f'Browser timed out trying to locate document field for document number '
               f'{extrapolate_document_value(document)}.')
 
 
@@ -53,9 +54,9 @@ def handle_document_search_field(browser, document):
 
 def locate_search_button(browser):
     try:
-        search_button_present = EC.element_to_be_clickable((By.ID, search_button_id))
+        search_button_present = EC.element_to_be_clickable((By.ID, document_search_button_id))
         WebDriverWait(browser, timeout).until(search_button_present)
-        search_button = browser.find_element_by_id(search_button_id)
+        search_button = browser.find_element_by_id(document_search_button_id)
         return search_button
     except TimeoutException:
         print("Browser timed out trying to locate search button.")
