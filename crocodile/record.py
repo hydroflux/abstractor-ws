@@ -71,15 +71,22 @@ def get_general_information_data(browser, general_information_table, document):
 
 
 # Copied & audited from leopard
-def check_list_elements(general_information, title):
+def check_list_elements(general_information, title_options):
+    print(1)
     for header, data in general_information:
-        if get_element_text(header) == title:
-            if get_element_text(header) == row_titles["document_image"]:
+        print(2)
+        if get_element_text(header) in title_options:
+            print(3)
+            if get_element_text(header) in row_titles["document_image"]:
+                print(4)
                 return data
             if get_element_text(data) != "":
+                print(5)
                 return get_element_text(data)
             else:
+                print(6)
                 return not_applicable
+    return 'No row title match found.'
 
 
 def record_reception_number(general_information, dictionary, document):
@@ -227,7 +234,14 @@ def handle_legal_tables(browser, legal_table, document):
 def record_legal_information(browser, dictionary, document):
     legal_table = get_legal_table(browser)
     if not legal_table:
-        dictionary["Legal"].append("")
+        # Needs to be refactored
+        general_information_table = locate_document_table(browser, document, general_information_id, "general information")
+        general_information = get_general_information_data(browser, general_information_table, document)
+        legal = check_list_elements(general_information, row_titles["legal"])
+        if legal == not_applicable:
+            dictionary["Legal"].append("")
+        else:
+            dictionary["Legal"].append(legal)
     else:
         legal = handle_legal_tables(browser, legal_table, document)
         print("legal", legal)

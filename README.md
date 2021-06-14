@@ -101,6 +101,8 @@
 - [ ] Create a function similar to the 'get_reception_number' function for matching book / page numbers in crocodile open_document
 - [ ] While working with multiple documents, figure out a way to store multiple document links with each result
 - [ ] Look into external link issue--shouldn't be opening a new window
+- [ ] Consolidate the different functions wrapping around crocodile open_document (probably create ~ 2 higher order functions for handling / verifying the results)
+- [ ] Refactor crocodile record---probably into a check_index function and an aggregate function
 
 ### Iguana To Do
 
