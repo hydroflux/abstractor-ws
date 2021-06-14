@@ -36,37 +36,50 @@ def locate_search_field(browser, search_name, field_id, type):
 
 
 def split_search_name(search_name):
-    pass
+    return search_name.split()
+
+
+def clear_last_name_field(browser, search_name):
+    while get_field_value(locate_search_field(
+            browser, search_name, last_name_search_field_id, "last name")) != '':
+        locate_search_field(
+            browser, search_name, last_name_search_field_id, "last name").clear()
+
+
+def enter_last_name(browser, search_name, last_name):
+    while get_field_value(locate_search_field(
+            browser, search_name, last_name_search_field_id, "last name")) != last_name:
+        locate_search_field(
+            browser, search_name, last_name_search_field_id, "last name").send_keys(Keys.UP + last_name)
+
+
+def handle_last_name_field(browser, search_name, last_name):
+    clear_last_name_field(browser, search_name)
+    enter_last_name(browser, search_name, last_name)
 
 
 def clear_first_name_field(browser, search_name):
     while get_field_value(locate_search_field(browser, search_name, first_name_search_field_id, "first name")) != '':
-        locate_search_field(browser, search_name, first_name_search_field_id, "first name").clear()
+        locate_search_field(
+            browser, search_name, first_name_search_field_id, "first name").clear()
 
 
 def enter_first_name(browser, search_name, first_name):
-    pass
+    while get_field_value(locate_search_field(
+            browser, search_name, first_name_search_field_id, "first name")) != first_name:
+        locate_search_field(
+            browser, search_name, first_name_search_field_id, "first name").send_keys(Keys.UP + first_name)
 
 
 def handle_first_name_field(browser, search_name, first_name):
-    pass
-
-
-def clear_last_name_field(browser, search_name):
-    while get_field_value(locate_search_field(browser, search_name, last_name_search_field_id, "last name")) != '':
-        locate_search_field(browser, search_name, last_name_search_field_id, "last name").clear()
-
-
-def enter_last_name(browser, search_name, last_name):
-    pass
-
-
-def handle_last_name_field(browser, search_name, last_name):
-    pass
+    clear_first_name_field(browser, search_name)
+    enter_first_name(browser, search_name, first_name)
 
 
 def enter_search_name(browser, search_name):
-    pass
+    first_name, last_name = split_search_name(search_name)
+    handle_last_name_field(browser, search_name, last_name)
+    handle_first_name_field(browser, search_name, first_name)
 
 
 def locate_search_button(browser):
