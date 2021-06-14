@@ -17,14 +17,16 @@ def get_program_type():
                        '[1] Execute Program \n'
                        '[2] Review Output \n'
                        '[3] Download Documents \n'
+                       '[4] Name Search \n'
                        )
     while user_input not in ["1", "2", "3"]:
         clear_terminal()
-        print(f'You entered {user_input} Please enter 1, 2, or 3:')
+        print(f'You entered {user_input} Please enter 1, 2, 3, or 4:')
         user_input = input('What would you like to do? \n'
                            '[1] Execute Program \n'
                            '[2] Review Output \n'
                            '[3] Download Documents \n'
+                           '[4] Name Search \n'
                            )
     if user_input == "1":
         program_type = "execute"
@@ -32,8 +34,16 @@ def get_program_type():
         program_type = "review"
     elif user_input == "3":
         program_type = "download"
+    elif user_input == "4":
+        program_type = "name_search"
     clear_terminal()
     return program_type
+
+
+def currently_unavailable(county, program_type):
+    print(f'There has not been a(n) "{program_type}" application path developed for '
+          f'{county} to date, please review your inputs.')
+    quit()
 
 
 def request_yes_or_no(prompt):

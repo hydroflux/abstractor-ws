@@ -19,7 +19,7 @@ if __name__ == '__main__':
     from settings.import_list import generate_document_list
     from settings.settings import (county_name, file_name, headless,
                                    sheet_name, target_directory)
-    from settings.user_prompts import get_program_type
+    from settings.user_prompts import get_program_type, currently_unavailable
 
 print("environment", __name__)
 
@@ -30,6 +30,8 @@ def execute_program_type(county, program_type, document_list):
             execute_crocodile(county, target_directory, document_list, file_name)
         elif program_type == 'review':
             review_crocodile()
+        elif program_type == 'name search':
+            pass
     elif county.program == 'eagle':
         if program_type == "execute":
             execute_eagle(county, target_directory, document_list, file_name)
@@ -37,6 +39,8 @@ def execute_program_type(county, program_type, document_list):
             review_eagle(county, target_directory, document_list)
         elif program_type == "download":
             download_eagle(county, target_directory, document_list)
+        else:
+            currently_unavailable(county, program_type)
     elif county.program == 'leopard':
         if program_type == "execute":
             execute_leopard(headless, county, target_directory, document_list, file_name, sheet_name)
@@ -44,6 +48,8 @@ def execute_program_type(county, program_type, document_list):
             review_leopard(county, target_directory, document_list)
         elif program_type == "download":
             download_leopard(county, target_directory, document_list)
+        else:
+            currently_unavailable(county, program_type)
     # elif county.program == 'tiger':
     #     if program_type == 'execute':
     #         execute_tiger()
