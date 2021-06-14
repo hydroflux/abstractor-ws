@@ -7,7 +7,7 @@ from settings.file_management import (document_type, document_value,
 from settings.general_functions import assert_window_title, timeout
 
 from crocodile.crocodile_variables import (document_search_title,
-                                           instrument_search_field_id,
+                                           document_search_field_id,
                                            search_button_id, search_url)
 from crocodile.error_handling import check_login_status
 
@@ -21,33 +21,45 @@ def open_document_search(browser, document):
             browser.get(search_url)
 
 
-def locate_document_number_field(browser, document):
+def locate_document_search_field(browser, document):
     try:
-        instrument_search_field_present = EC.element_to_be_clickable((By.ID, instrument_search_field_id))
-        WebDriverWait(browser, timeout).until(instrument_search_field_present)
-        instrument_search_field = browser.find_element_by_id(instrument_search_field_id)
-        return instrument_search_field
+        document_search_field_present = EC.element_to_be_clickable((By.ID, document_search_field_id))
+        WebDriverWait(browser, timeout).until(document_search_field_present)
+        document_search_field = browser.find_element_by_id(document_search_field_id)
+        return document_search_field
     except TimeoutException:
         print(f'Browser timed out trying to fill document field for document number '
               f'{extrapolate_document_value(document)}.')
 
 
-# This could be used anytime a value is entered in a field as a confirmation
-def check_search_field(instrument_search_field, document):
-    search_field_value = instrument_search_field.get_attribute("value").strip()
-    if search_field_value == document_value(document):
-        return True
-    else:
-        return False
+def get_field_value(field):
+    return field.get_attribute("value").strip()
 
 
-def enter_document_number(browser, document):
-    instrument_search_field = locate_document_number_field(browser, document)
-    instrument_search_field.clear()
-    instrument_search_field.send_keys(document_value(document))
-    # while not check_search_field(instrument_search_field, document):
-    #     instrument_search_field = locate_document_number_field(browser, document)  # Remove if the problem isn't fixed
-    #     instrument_search_field.send_keys(document_value(document))
+# def check_document_search_field(document_search_field, document):
+#     search_field_value = get_field_value(document_search_field)
+#     if search_field_value == document_value(document):
+#         return True
+#     else:
+#         return False
+
+
+def clear_document_search_field(document_search_field):
+    while get_field_value(document_search_field) != '':
+        document_search_field.clear()
+
+
+def enter_document_number(document_search_field, document):
+    while get_field_value(document_search_field) != document_value(document):
+        print(f'Entering document value for '
+              f'{extrapolate_document_value(document)}.')
+        document_search_field.send_keys(document_value(document))
+
+
+def handle_document_search_field(browser, document):
+    document_search_field = locate_document_search_field(browser, document)
+    clear_document_search_field(document_search_field)
+    enter_document_number(document_search_field, document)
 
 
 def locate_search_button(browser):
@@ -67,6 +79,7 @@ def execute_search(browser):
 
 def document_search(browser, document):
     open_document_search(browser, document)
+    handle_document_search_field(browser, document)
     # May need to add additional flag here---
     # need to make sure that the search field is caught properly
     enter_document_number(browser, document)
