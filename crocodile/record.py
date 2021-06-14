@@ -239,17 +239,24 @@ def join_column_without_title(string):
     return '\n'.join(string.text.split('\n')[1:])
 
 
+def drop_hyphen(text):
+    if text.startswith("-"):
+        return text[1:]
+    else:
+        return text
+
+
 def record_grantor_information(browser, dictionary, document):
     grantor_table = locate_document_table(browser, document, grantor_id, "grantor")
     grantor = title_strip(join_column_without_title(grantor_table))
-    dictionary["Grantor"].append(grantor)
+    dictionary["Grantor"].append(drop_hyphen(grantor))
     print("grantor", grantor)
 
 
 def record_grantee_information(browser, dictionary, document):
     grantee_table = locate_document_table(browser, document, grantee_id, "grantee")
     grantee = title_strip(join_column_without_title(grantee_table))
-    dictionary["Grantee"].append(grantee)
+    dictionary["Grantee"].append(drop_hyphen(grantee))
     print("grantee", grantee)
 
 
