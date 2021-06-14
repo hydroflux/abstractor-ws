@@ -7,17 +7,16 @@ from selenium.webdriver.support.wait import WebDriverWait
 from settings.download_management import previously_downloaded, update_download
 from settings.file_management import create_document_directory
 from settings.general_functions import long_timeout, naptime
+from settings.error_handling import no_image_comment
 
 from eagle.eagle_variables import (download_button_id, pdf_viewer_class_name,
                                    stock_download_suffix)
-from eagle.error_handling import no_image_comment
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("download", __name__)
 
 
 def download_available(abstract_dictionary, document):
-
     if abstract_dictionary["Comments"][-1].endswith(no_image_comment(document)):
         return False
     else:
