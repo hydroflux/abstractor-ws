@@ -24,23 +24,61 @@ def open_name_search(browser, search_name):
         #     browser.get(name_search_url)
 
 
-def locate_last_name_search_field(browser, search_name):
+def locate_search_field(browser, search_name, field_id, type):
     try:
-        last_name_search_field_present = EC.element_to_be_clickable((By.ID, last_name_search_field_id))
-        WebDriverWait(browser, timeout).until(last_name_search_field_present)
-        last_name_search_field = browser.find_element_by_id(last_name_search_field_id)
-        return last_name_search_field
+        search_field_present = EC.element_to_be_clickable((By.ID, field_id))
+        WebDriverWait(browser, timeout).until(search_field_present)
+        search_field = browser.find_element_by_id(field_id)
+        return search_field
     except TimeoutException:
-        print(f'Browser timed out trying to locate last name field for '
+        print(f'Browser timed out trying to locate {type} field for '
               f'{search_name}, please review.')
 
 
-def locate_first_name_search_field(browser, search_name):
-    try:
-        first_name_search_field_present = EC.element_to_be_clickable((By.ID, first_name_search_field_id))
-        WebDriverWait(browser, timeout).until(first_name_search_field_present)
-        first_name_search_field = browser.find_element_by_id(first_name_search_field_id)
-        return first_name_search_field
-    except TimeoutException:
-        print(f'Browser timed out trying to locate first name field for '
-              f'{search_name}, please review.')
+def split_search_name(search_name):
+    pass
+
+
+def clear_first_name_field(browser, search_name):
+    while get_field_value(locate_search_field(browser, search_name, first_name_search_field_id, "first name")) != '':
+        locate_search_field(browser, search_name, first_name_search_field_id, "first name").clear()
+
+
+def enter_first_name(browser, search_name, first_name):
+    pass
+
+
+def handle_first_name_field(browser, search_name, first_name):
+    pass
+
+
+def clear_last_name_field(browser, search_name):
+    while get_field_value(locate_search_field(browser, search_name, last_name_search_field_id, "last name")) != '':
+        locate_search_field(browser, search_name, last_name_search_field_id, "last name").clear()
+
+
+def enter_last_name(browser, search_name, last_name):
+    pass
+
+
+def handle_last_name_field(browser, search_name, last_name):
+    pass
+
+
+def enter_search_name(browser, search_name):
+    pass
+
+
+def locate_search_button(browser):
+    pass
+
+
+def execute_search(browser):
+    search_button = locate_search_button(browser)
+    search_button.click()
+
+
+def name_search(browser, search_name):
+    open_name_search(browser, search_name)
+    enter_search_name(browser, search_name)
+    execute_search(browser, search_name)
