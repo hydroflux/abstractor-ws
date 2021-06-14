@@ -42,22 +42,21 @@ def locate_document_search_field(browser, document):
 #         return False
 
 
-def clear_document_search_field(document_search_field):
-    while get_field_value(document_search_field) != '':
-        document_search_field.clear()
+def clear_document_search_field(browser, document):
+    while get_field_value(locate_document_search_field(browser, document)) != '':
+        locate_document_search_field(browser, document).clear()
 
 
-def enter_document_number(document_search_field, document):
-    while get_field_value(document_search_field) != document_value(document):
+def enter_document_number(browser, document):
+    while get_field_value(locate_document_search_field(browser, document)) != document_value(document):
         print(f'Entering document value for '
               f'{extrapolate_document_value(document)}.')
-        document_search_field.send_keys(Keys.UP + document_value(document))
+        locate_document_search_field(browser, document).send_keys(Keys.UP + document_value(document))
 
 
 def handle_document_search_field(browser, document):
-    document_search_field = locate_document_search_field(browser, document)
-    clear_document_search_field(document_search_field)
-    enter_document_number(document_search_field, document)
+    clear_document_search_field(browser, document)
+    enter_document_number(browser, document)
 
 
 def locate_search_button(browser):
