@@ -115,9 +115,9 @@ def open_document_link(browser, document):
     javascript_script_execution(browser, document.link)
 
 
-def handle_search_results(search_results, document):
+def handle_search_results(browser, document):
     if document.number_results == 1:
-        open_document_link(search_results[0], document)
+        open_document_link(browser, document)
     else:
         print(f'{str(document.number_results)} results returned for '
               f'{extrapolate_document_value(document)}, please review.')
@@ -136,7 +136,7 @@ def open_document(browser, document):
         search_results = get_search_results(main_table)
         verify_result_count(total_search_results, search_results, document)
         verify_search_results(search_results, document)
-        handle_search_results(search_results, document)
+        handle_search_results(browser, document)
         if assert_window_title(browser, document_description_title):
             return True
         else:
