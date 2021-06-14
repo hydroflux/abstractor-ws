@@ -75,17 +75,6 @@ def count_total_search_results(main_table, document):
     return total_search_results
 
 
-# def locate_result_rows(results_table, document):
-#     try:
-#         result_rows_present = EC.presence_of_element_located((By.CLASS_NAME, result_row_class_name))
-#         WebDriverWait(results_table, timeout).until(result_rows_present)
-#         result_rows = results_table.find_elements_by_class_name(result_row_class_name)
-#         return result_rows
-#     except TimeoutException:
-#         print(f'Browser timed out trying to locate results for '
-#               f'{extrapolate_document_value(document)}, please review.')
-
-
 def verify_result_count(document, total_search_results, search_results):
     if not len(search_results) == total_search_results:
         print(f'The total result count of {total_search_results} does not match the number of rows for '
@@ -115,6 +104,11 @@ def handle_search_results(search_results, document):
     else:
         print(f'{str(document.number_results)} results returned for '
               f'{extrapolate_document_value(document)}, please review.')
+        input()
+        # If number_results == 0
+        # do something
+        # elif number_results > 1
+        # do something
         # Need to create an application path for multiple results
 
 
