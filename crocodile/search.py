@@ -52,18 +52,19 @@ def handle_document_search_field(browser, document):
     enter_document_number(browser, document)
 
 
-def locate_search_button(browser):
+def locate_search_button(browser, document):
     try:
         search_button_present = EC.element_to_be_clickable((By.ID, document_search_button_id))
         WebDriverWait(browser, timeout).until(search_button_present)
         search_button = browser.find_element_by_id(document_search_button_id)
         return search_button
     except TimeoutException:
-        print("Browser timed out trying to locate search button.")
+        print(f'Browser timed out trying to locate search button for '
+              f'{extrapolate_document_value(document)}, please review.')
 
 
-def execute_search(browser):
-    search_button = locate_search_button(browser)
+def execute_search(browser, document):
+    search_button = locate_search_button(browser, document)
     search_button.click()
 
 
@@ -81,4 +82,5 @@ def search(browser, document):
         document_search(browser, document)
     else:
         print(f'Unable to search {document_type(document)}, new search path needs to be developed.')
+        print("Please press enter after reviewing the search parameters...")
         input()
