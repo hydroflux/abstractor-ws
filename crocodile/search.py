@@ -34,14 +34,6 @@ def locate_document_search_field(browser, document):
               f'{extrapolate_document_value(document)}.')
 
 
-# def check_document_search_field(document_search_field, document):
-#     search_field_value = get_field_value(document_search_field)
-#     if search_field_value == document_value(document):
-#         return True
-#     else:
-#         return False
-
-
 def clear_document_search_field(browser, document):
     while get_field_value(locate_document_search_field(browser, document)) != '':
         locate_document_search_field(browser, document).clear()
