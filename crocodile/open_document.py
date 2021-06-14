@@ -5,12 +5,13 @@ from selenium.webdriver.support.wait import WebDriverWait
 from settings.file_management import document_value, extrapolate_document_value
 from settings.general_functions import (assert_window_title,
                                         get_direct_children, get_direct_link,
-                                        get_element_text, javascript_script_execution, set_document_link,
-                                        timeout)
+                                        get_element_text,
+                                        javascript_script_execution,
+                                        set_document_link, timeout)
 
 from crocodile.crocodile_variables import (document_description_title,
-                                           link_tag, no_results_message,
-                                           results_page_id,
+                                           filter_list, link_tag,
+                                           no_results_message, results_page_id,
                                            results_statement_tag,
                                            results_table_id)
 
@@ -123,7 +124,7 @@ def open_document_link(browser, document):
     javascript_script_execution(browser, document.link)
 
 
-def handle_document_search_results(browser, document):
+def handle_search_results(browser, document):
     if document.number_results == 1:
         open_document_link(browser, document)
     else:
@@ -137,14 +138,22 @@ def handle_document_search_results(browser, document):
         # Need to create an application path for multiple results
 
 
-def handle_name_search_results(browser, search_name):
-    pass
+def get_result_type(result):
+    return get_element_text(get_direct_children(result)[2])
+
+
+def filter_search_results(browser, search_results, search_name):
+    document_list = []
+    for result in search_results:
+        if get_result_type(result) not in filter_list:
+            document_list.append(get_element_text(get_result_number(result)))
+    return document_list
 
 
 def create_document_list(browser, search_name):
     if check_for_results(browser, search_name):
         search_results = list_search_results(browser, search_name)
-        document_list = handle_name_search_results(browser, search_results, search_name)
+        document_list = filter_search_results(browser, search_results, search_name)
         return document_list
     else:
         print(f'No results found for '
@@ -156,7 +165,7 @@ def open_document(browser, document):
     if check_for_results(browser, document):
         search_results = list_search_results(browser, document)
         verify_search_results(search_results, document)
-        handle_document_search_results(browser, document)
+        handle_search_results(browser, document)
         if assert_window_title(browser, document_description_title):
             return True
         else:
