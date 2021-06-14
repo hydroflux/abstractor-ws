@@ -45,10 +45,13 @@ def document_value(document):
 
 def extrapolate_document_value(document):
     value = document_value(document)
-    if type(value) == list:
+    type = document_type(document)
+    if type == "book_and_page":
         return f'Book: {value[0]}, Page: {value[1]}'
-    elif type(value) == str:
+    elif type == "document_number":
         return f'Document number {value}'
+    elif type == "name":
+        return f'search name "{value}"'
 
 
 def split_book_and_page(document):

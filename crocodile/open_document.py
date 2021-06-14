@@ -54,6 +54,21 @@ def get_search_results(main_table):
     return get_direct_children(get_direct_children(main_table)[2])
 
 
+def verify_result_count(total_search_results, search_results, document):
+    if not len(search_results) == total_search_results:
+        print(f'The total result count of {total_search_results} does not match the number of rows for '
+              f'{extrapolate_document_value(document)}, which returned '
+              f'{len(search_results)}, please review.')
+
+
+def list_search_results(browser, document):
+    main_table = locate_main_results_table(browser, document)
+    total_results = count_total_results(main_table, document)
+    search_results = get_search_results(main_table)
+    verify_result_count(total_results, search_results, document)
+    return search_results
+
+
 def locate_results_statement(results_table, document):
     try:
         results_statement_present = EC.presence_of_element_located((By.TAG_NAME, results_statement_tag))
@@ -65,21 +80,14 @@ def locate_results_statement(results_table, document):
               f'{extrapolate_document_value(document)}, please review.')
 
 
-def strip_total_search_results(results_statement):
+def strip_total_results(results_statement):
     return int(results_statement[(results_statement.find("of") + 2):results_statement.find("at")].strip())
 
 
-def count_total_search_results(main_table, document):
+def count_total_results(main_table, document):
     results_statement = locate_results_statement(main_table, document)
-    total_search_results = strip_total_search_results(results_statement)
-    return total_search_results
-
-
-def verify_result_count(total_search_results, search_results, document):
-    if not len(search_results) == total_search_results:
-        print(f'The total result count of {total_search_results} does not match the number of rows for '
-              f'{extrapolate_document_value(document)}, which returned '
-              f'{len(search_results)}, please review.')
+    total_results = strip_total_results(results_statement)
+    return total_results
 
 
 def get_result_number(result):
@@ -115,7 +123,7 @@ def open_document_link(browser, document):
     javascript_script_execution(browser, document.link)
 
 
-def handle_search_results(browser, document):
+def handle_document_search_results(browser, document):
     if document.number_results == 1:
         open_document_link(browser, document)
     else:
@@ -129,23 +137,26 @@ def handle_search_results(browser, document):
         # Need to create an application path for multiple results
 
 
+def handle_name_search_results(browser, search_name):
+    pass
+
+
 def create_document_list(browser, search_name):
     if check_for_results(browser, search_name):
-        # rows = get_results_table_rows()
-        pass
+        search_results = list_search_results(browser, search_name)
+        document_list = handle_name_search_results(browser, search_results, search_name)
+        return document_list
     else:
-        print(f'No results found for "{search_name.value}", '
+        print(f'No results found for '
+              f'{extrapolate_document_value(search_name)}'
               f'please review search criteria & try again.')
 
 
 def open_document(browser, document):
     if check_for_results(browser, document):
-        main_table = locate_main_results_table(browser, document)
-        total_search_results = count_total_search_results(main_table, document)
-        search_results = get_search_results(main_table)
-        verify_result_count(total_search_results, search_results, document)
+        search_results = list_search_results(browser, document)
         verify_search_results(search_results, document)
-        handle_search_results(browser, document)
+        handle_document_search_results(browser, document)
         if assert_window_title(browser, document_description_title):
             return True
         else:
