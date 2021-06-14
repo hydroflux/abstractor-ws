@@ -142,3 +142,7 @@ def set_reception_number(document, reception_number):
 
 def set_document_link(document, link):
     document.link = link
+
+
+def get_direct_link(document_link):
+    return document_link.get_attribute("href")

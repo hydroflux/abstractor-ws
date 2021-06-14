@@ -4,12 +4,12 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from settings.file_management import document_value, extrapolate_document_value
 from settings.general_functions import (assert_window_title,
-                                        get_direct_children, get_element_text,
-                                        set_document_link, timeout)
+                                        get_direct_children, get_direct_link,
+                                        get_element_text, javascript_script_execution, set_document_link,
+                                        timeout)
 
 from crocodile.crocodile_variables import (document_description_title,
                                            link_tag, no_results_message,
-                                           result_row_class_name,
                                            results_page_id,
                                            results_statement_tag,
                                            results_table_id)
@@ -98,12 +98,8 @@ def locate_document_link(result_number, document):
               f'{extrapolate_document_value(document)}, please review.')
 
 
-def get_direct_link(document_link):
-    return document_link.get_attribute("href")
-
-
 def get_document_link(result_number, document):
-    document_link = locate_document_link(result_number, document)
+    document_link = get_direct_link(locate_document_link(result_number, document))
     set_document_link(document, document_link)
 
 
@@ -115,9 +111,8 @@ def verify_search_results(search_results, document):
             document.number_results += 1
 
 
-def open_document_link(row, document):
-    document_link = locate_document_link(row, document)
-    document_link.click()
+def open_document_link(browser, document):
+    javascript_script_execution(browser, document.link)
 
 
 def handle_search_results(search_results, document):
