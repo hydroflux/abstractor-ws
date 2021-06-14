@@ -66,7 +66,12 @@ def wait_for_pdf_to_load(browser, document):
 
 
 def handle_document_image_status(browser, document):
-    check_for_error(browser, document)
+    # check_for_error(browser, document)
+    #  This function doesn't work as expected because it creates a timeout EACH TIME
+    #  a document is opened -- need to wait until error occurs again in order to make correction
+    #  if this is done in a new way then the other check for error in "WAIT FOR PDF TO LOAD"
+    #  won't be necessary
+    #  Hint = see if the browser title changes
     if document_image_exists(browser):
         wait_for_pdf_to_load(browser, document)
         naptime()  # Remove after running successful 'review' test
