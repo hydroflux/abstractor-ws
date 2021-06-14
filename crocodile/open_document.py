@@ -142,23 +142,28 @@ def get_result_type(result):
     return get_element_text(get_direct_children(result)[2])
 
 
-def filter_search_results(browser, search_results, search_name):
+def filter_search_results(document_list, result):
+    if get_result_type(result) not in filter_list:
+        document_list.append(get_element_text(get_result_number(result)))
+
+
+def aggregate_search_results(search_results):
     document_list = []
     for result in search_results:
-        if get_result_type(result) not in filter_list:
-            document_list.append(get_element_text(get_result_number(result)))
+        filter_search_results(document_list, result)
     return document_list
 
 
 def create_document_list(browser, search_name):
     if check_for_results(browser, search_name):
         search_results = list_search_results(browser, search_name)
-        document_list = filter_search_results(browser, search_results, search_name)
-        return document_list
+        return aggregate_search_results(search_results)
     else:
         print(f'No results found for '
               f'{extrapolate_document_value(search_name)}'
               f'please review search criteria & try again.')
+        browser.quit()
+        exit()
 
 
 def open_document(browser, document):
