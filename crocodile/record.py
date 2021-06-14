@@ -89,6 +89,16 @@ def check_list_elements(general_information, title_options):
     return 'No row title match found.'
 
 
+def check_document_image_availability(general_information, document):
+    document_image = check_list_elements(general_information, row_titles["document_image"])
+    document_link = document_image.find_element_by_tag_name(link_tag)
+    if document_link.get_attribute(inactive) == "true":
+        return None
+    else:
+        image_link = document_link.get_attribute("href")
+        set_document_link(document, image_link)
+
+
 def record_reception_number(general_information, dictionary, document):
     reception_number = check_list_elements(general_information, row_titles["reception_number"])
     set_reception_number(document, reception_number)
@@ -122,44 +132,6 @@ def record_document_type(general_information, dictionary):
 def record_recording_date(general_information, dictionary):
     recording_date = check_list_elements(general_information, row_titles["recording_date"])
     dictionary["Recording Date"].append(recording_date[:10])
-
-
-def check_document_image_availability(general_information, document):
-    document_image = check_list_elements(general_information, row_titles["document_image"])
-    document_link = document_image.find_element_by_tag_name(link_tag)
-    if document_link.get_attribute(inactive) == "true":
-        return None
-    else:
-        image_link = document_link.get_attribute("href")
-        set_document_link(document, image_link)
-
-
-def record_general_information(browser, dictionary, document):
-    general_information_table = locate_document_table(browser, document, general_information_id, "general information")
-    general_information = get_general_information_data(browser, general_information_table, document)
-    record_reception_number(general_information, dictionary, document)
-    record_book_and_page(general_information, dictionary)
-    record_document_type(general_information, dictionary)
-    record_recording_date(general_information, dictionary)
-    check_document_image_availability(general_information, document)
-
-
-def join_column_without_title(string):
-    return '\n'.join(string.text.split('\n')[1:])
-
-
-def record_grantor_information(browser, dictionary, document):
-    grantor_table = locate_document_table(browser, document, grantor_id, "grantor")
-    grantor = title_strip(join_column_without_title(grantor_table))
-    dictionary["Grantor"].append(grantor)
-    print("grantor", grantor)
-
-
-def record_grantee_information(browser, dictionary, document):
-    grantee_table = locate_document_table(browser, document, grantee_id, "grantee")
-    grantee = title_strip(join_column_without_title(grantee_table))
-    dictionary["Grantee"].append(grantee)
-    print("grantee", grantee)
 
 
 def get_number_legal_pages(legal_table):
@@ -231,21 +203,54 @@ def handle_legal_tables(browser, legal_table, document):
         return multi_page_legal(browser, legal_table, document, number_pages)
 
 
-def record_legal_information(browser, dictionary, document):
+def check_for_additional_legal(browser, dictionary, document):
     legal_table = get_legal_table(browser)
-    if not legal_table:
-        # Needs to be refactored
-        general_information_table = locate_document_table(browser, document, general_information_id, "general information")
-        general_information = get_general_information_data(browser, general_information_table, document)
-        legal = check_list_elements(general_information, row_titles["legal"])
-        if legal == not_applicable:
+    if legal_table:
+        return handle_legal_tables(browser, legal_table, document)
+
+
+def record_legal_information(browser, general_information, dictionary, document):
+    legal = check_list_elements(general_information, row_titles["legal"])
+    additional_legal = check_for_additional_legal(browser, dictionary, document)
+    if not additional_legal:
+        if legal == not_applicable or legal in bad_document_types:
             dictionary["Legal"].append("")
         else:
             dictionary["Legal"].append(legal)
     else:
-        legal = handle_legal_tables(browser, legal_table, document)
-        print("legal", legal)
-        dictionary["Legal"].append(legal)
+        if legal == not_applicable or legal in bad_document_types:
+            dictionary["Legal"].append(additional_legal)
+        else:
+            dictionary["Legal"].append(f'{legal}\n{additional_legal}')
+
+
+def record_general_information(browser, dictionary, document):
+    general_information_table = locate_document_table(browser, document, general_information_id, "general information")
+    general_information = get_general_information_data(browser, general_information_table, document)
+    check_document_image_availability(general_information, document)
+    record_reception_number(general_information, dictionary, document)
+    record_book_and_page(general_information, dictionary)
+    record_document_type(general_information, dictionary)
+    record_recording_date(general_information, dictionary)
+    record_legal_information(browser, general_information, dictionary, document)
+
+
+def join_column_without_title(string):
+    return '\n'.join(string.text.split('\n')[1:])
+
+
+def record_grantor_information(browser, dictionary, document):
+    grantor_table = locate_document_table(browser, document, grantor_id, "grantor")
+    grantor = title_strip(join_column_without_title(grantor_table))
+    dictionary["Grantor"].append(grantor)
+    print("grantor", grantor)
+
+
+def record_grantee_information(browser, dictionary, document):
+    grantee_table = locate_document_table(browser, document, grantee_id, "grantee")
+    grantee = title_strip(join_column_without_title(grantee_table))
+    dictionary["Grantee"].append(grantee)
+    print("grantee", grantee)
 
 
 def get_related_documents_table(browser):
@@ -348,6 +353,5 @@ def record_document(browser, dictionary, document):
     record_general_information(browser, dictionary, document)
     record_grantor_information(browser, dictionary, document)
     record_grantee_information(browser, dictionary, document)
-    record_legal_information(browser, dictionary, document)
     record_related_document_information(browser, dictionary, document)
     record_comments(dictionary, document)
