@@ -19,7 +19,8 @@ if __name__ == '__main__':
     from settings.import_list import generate_document_list
     from settings.settings import (county_name, file_name, headless,
                                    sheet_name, target_directory)
-    from settings.user_prompts import get_program_type, currently_unavailable
+    from settings.user_prompts import (currently_unavailable, get_program_type,
+                                       prepare_name_search)
 
 print("environment", __name__)
 
@@ -31,7 +32,8 @@ def execute_program_type(county, program_type, document_list):
         elif program_type == 'review':
             review_crocodile()
         elif program_type == 'name search':
-            pass
+            search_name = prepare_name_search()
+            # do something
     elif county.program == 'eagle':
         if program_type == "execute":
             execute_eagle(county, target_directory, document_list, file_name)

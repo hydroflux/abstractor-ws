@@ -2,9 +2,9 @@ import os
 
 from settings.file_management import (extrapolate_document_value,
                                       list_remaining_documents)
-from settings.general_functions import report_execution_time
+from settings.general_functions import report_execution_time, title_strip
 from settings.import_list import generate_document_list
-from settings.settings import root
+from settings.settings import root, search_name
 
 
 def clear_terminal():
@@ -57,6 +57,20 @@ def request_yes_or_no(prompt):
         return True
     else:
         return False
+
+
+def request_new_name():
+    return input("Please enter the name you would like to search: \n")
+
+
+def prepare_name_search():
+    name = title_strip(search_name)
+    if name == '':
+        name = request_new_name()
+    while request_yes_or_no(f'The current name to be searched is "{name}", is this correct?') is False:
+        clear_terminal()
+        name = request_new_name()
+    return name
 
 
 def continue_prompt(current_target_directory, current_file_name, current_sheet_name):
