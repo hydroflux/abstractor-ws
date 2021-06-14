@@ -4,10 +4,11 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from settings.file_management import (document_type, document_value,
                                       extrapolate_document_value)
-from settings.general_functions import assert_window_title, timeout
+from settings.general_functions import (assert_window_title, get_field_value,
+                                        timeout)
 
-from crocodile.crocodile_variables import (document_search_title,
-                                           document_search_field_id,
+from crocodile.crocodile_variables import (document_search_field_id,
+                                           document_search_title,
                                            search_button_id, search_url)
 from crocodile.error_handling import check_login_status
 
@@ -30,10 +31,6 @@ def locate_document_search_field(browser, document):
     except TimeoutException:
         print(f'Browser timed out trying to fill document field for document number '
               f'{extrapolate_document_value(document)}.')
-
-
-def get_field_value(field):
-    return field.get_attribute("value").strip()
 
 
 # def check_document_search_field(document_search_field, document):
