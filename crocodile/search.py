@@ -2,6 +2,7 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.common.keys import Keys
 from settings.file_management import (document_type, document_value,
                                       extrapolate_document_value)
 from settings.general_functions import (assert_window_title, get_field_value,
@@ -50,7 +51,7 @@ def enter_document_number(document_search_field, document):
     while get_field_value(document_search_field) != document_value(document):
         print(f'Entering document value for '
               f'{extrapolate_document_value(document)}.')
-        document_search_field.send_keys(document_value(document))
+        document_search_field.send_keys(Keys.UP + document_value(document))
 
 
 def handle_document_search_field(browser, document):
