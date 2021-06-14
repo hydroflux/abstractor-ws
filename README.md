@@ -98,6 +98,7 @@
 - [ ] Initial open_search needs a delay or additional check--first reception number doesn't appear (likely will occur again)
 - [ ] Continuing above, the best case scenario may be to check the text field for the reception number & see if it matches the information attempted to be entered
 - [ ] Crocodile should probably be changed to alligator
+- [ ] Create a function similar to the 'get_reception_number' function for matching book / page numbers in crocodile open_document
 
 ### Iguana To Do
 

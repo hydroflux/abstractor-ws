@@ -99,7 +99,8 @@ def open_document_link(row, document):
 
 
 def get_reception_number(result):
-    pass
+    # Create a similar function for matching book / page numbers
+    return get_direct_children(result)[8].strip()
 
 
 def verify_search_results(search_results, document):
