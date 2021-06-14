@@ -1,6 +1,8 @@
 import os
 import shutil
 
+from settings.settings import download
+
 if __name__ == '__main__':
     from settings.general_functions import four_character_padding
 else:
@@ -128,14 +130,14 @@ def move_abstraction_into_project_folder(target_directory, project_folder, abstr
     shutil.move(f'{target_directory}/{abstraction}', project_folder)
 
 
-def move_downloaded_documents(target_directory, download, project_folder):
+def move_downloaded_documents(target_directory, project_folder):
     if download:
         shutil.move(f'{target_directory}/Documents', project_folder)
 
 
-def bundle_project(target_directory, abstraction, download):
+def bundle_project(target_directory, abstraction):
     os.chdir(target_directory)
     project_folder = create_project_folder(target_directory, abstraction)
     move_abstraction_into_project_folder(target_directory, project_folder, abstraction)
-    move_downloaded_documents(target_directory, download, project_folder)
+    move_downloaded_documents(target_directory, project_folder)
     # shutil.move(f'{target_directory}/{file_name}.xlsx', project_folder)
