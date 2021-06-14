@@ -129,6 +129,15 @@ def handle_search_results(browser, document):
         # Need to create an application path for multiple results
 
 
+def create_document_list(browser, search_name):
+    if check_for_results(browser, search_name):
+        # rows = get_results_table_rows()
+        pass
+    else:
+        print(f'No results found for "{search_name.value}", '
+              f'please review search criteria & try again.')
+
+
 def open_document(browser, document):
     if check_for_results(browser, document):
         main_table = locate_main_results_table(browser, document)

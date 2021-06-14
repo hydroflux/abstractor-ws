@@ -103,6 +103,7 @@
 - [ ] Look into external link issue--shouldn't be opening a new window
 - [ ] Consolidate the different functions wrapping around crocodile open_document (probably create ~ 2 higher order functions for handling / verifying the results)
 - [ ] Refactor crocodile record---probably into a check_index function and an aggregate function
+- [ ] Name search currently only works with a "first name" / "last name" split--needs to be more robust to work in multiple scenarios
 
 ### Iguana To Do
 

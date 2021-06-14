@@ -1,4 +1,4 @@
-from crocodile.document_list import create_document_list
+from crocodile.name_search import search_provided_name
 from settings.abstract_object import abstract_dictionary as dictionary
 from settings.bad_search import record_bad_search, unable_to_download
 from settings.driver import create_webdriver
@@ -63,6 +63,7 @@ def execute_program(county, target_directory, document_list, file_name):
 
 
 def perform_name_search(browser, county, target_directory, search_name):
+    search_provided_name(browser, search_name)
     document_list = create_document_list(browser, search_name)
     search_documents_from_list(browser, county, target_directory, document_list)
 

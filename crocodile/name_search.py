@@ -3,8 +3,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-from settings.file_management import (document_type, document_value,
-                                      extrapolate_document_value)
 from settings.general_functions import (assert_window_title, get_field_value,
                                         timeout)
 
@@ -12,14 +10,13 @@ from crocodile.crocodile_variables import (first_name_search_field_id,
                                            last_name_search_field_id,
                                            name_search_button_id,
                                            name_search_title, name_search_url)
-from crocodile.error_handling import check_login_status
 
 
 def open_name_search(browser, search_name):
     browser.get(name_search_url)
     if not assert_window_title(browser, name_search_title):
         print(f'Browser failed to open document image link for '
-              f'{search_name}, please review.')
+              f'{search_name.value}, please review.')
         # if check_login_status(browser, document):
         #     browser.get(name_search_url)
 
@@ -32,11 +29,14 @@ def locate_search_field(browser, search_name, field_id, type):
         return search_field
     except TimeoutException:
         print(f'Browser timed out trying to locate {type} field for '
-              f'{search_name}, please review.')
+              f'{search_name.value}, please review.')
 
 
 def split_search_name(search_name):
-    return search_name.split()
+    # Obviously this isn't going to work consistently,
+    # so it's working as a placeholder for now until it becomes necessary to
+    # expand
+    return search_name.value.split()
 
 
 def clear_last_name_field(browser, search_name):
@@ -82,16 +82,23 @@ def enter_search_name(browser, search_name):
     handle_first_name_field(browser, search_name, first_name)
 
 
-def locate_search_button(browser):
-    pass
+def locate_name_search_button(browser, search_name):
+    try:
+        name_search_button_present = EC.element_to_be_clickable((By.ID, name_search_button_id))
+        WebDriverWait(browser, timeout).until(name_search_button_present)
+        name_search_button = browser.find_element_by_id(name_search_button_id)
+        return name_search_button
+    except TimeoutException:
+        print(f'Browser timed out trying to locate search button performing a name search for '
+              f'{search_name.value}, please review.')
 
 
-def execute_search(browser):
-    search_button = locate_search_button(browser)
-    search_button.click()
+def execute_name_search(browser, search_name):
+    name_search_button = locate_name_search_button(browser, search_name)
+    name_search_button.click()
 
 
-def name_search(browser, search_name):
+def search_provided_name(browser, search_name):
     open_name_search(browser, search_name)
     enter_search_name(browser, search_name)
-    execute_search(browser, search_name)
+    execute_name_search(browser, search_name)
