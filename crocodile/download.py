@@ -83,7 +83,7 @@ def close_download_window(browser, document):
         browser.switch_to.window(windows[1])
         if assert_window_title(browser, download_confirmation_title):
             browser.close()
-            browser.switch_to_window(windows[0])
+            browser.switch_to.window(windows[0])
         else:
             print(f'Browser failed to close download window after downloading '
                   f'{extrapolate_document_value(document)}, please review.')
