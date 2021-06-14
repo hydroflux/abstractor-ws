@@ -2,10 +2,10 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-from settings.file_management import extrapolate_document_value
+from settings.file_management import document_value, extrapolate_document_value
 from settings.general_functions import (assert_window_title,
                                         get_direct_children, get_element_text,
-                                        timeout, update_number_results)
+                                        timeout)
 
 from crocodile.crocodile_variables import (document_description_title,
                                            link_tag, no_results_message,
@@ -75,7 +75,7 @@ def count_total_search_results(main_table, document):
     return total_search_results
 
 
-def verify_result_count(document, total_search_results, search_results):
+def verify_result_count(total_search_results, search_results, document):
     if not len(search_results) == total_search_results:
         print(f'The total result count of {total_search_results} does not match the number of rows for '
               f'{extrapolate_document_value(document)}, which returned '
@@ -98,6 +98,16 @@ def open_document_link(row, document):
     document_link.click()
 
 
+def get_reception_number(result):
+    pass
+
+
+def verify_search_results(search_results, document):
+    for result in search_results:
+        if document_value(document) == get_reception_number(result):
+            document.number_results += 1
+
+
 def handle_search_results(search_results, document):
     if document.number_results == 1:
         open_document_link(search_results[0], document)
@@ -117,7 +127,8 @@ def open_document(browser, document):
         main_table = locate_main_results_table(browser, document)
         total_search_results = count_total_search_results(main_table, document)
         search_results = get_search_results(main_table)
-        verify_result_count(document, total_search_results, search_results)
+        verify_result_count(total_search_results, search_results, document)
+        verify_search_results(search_results, document)
         handle_search_results(search_results, document)
         if assert_window_title(browser, document_description_title):
             return True
