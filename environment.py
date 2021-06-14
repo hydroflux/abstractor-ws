@@ -5,6 +5,7 @@ sys.path.append(".")
 if __name__ == '__main__':
     from crocodile.execute import execute_program as execute_crocodile
     from crocodile.execute import execute_review as review_crocodile
+    from crocodile.execute import execute_name_search as name_search_crocodile
     from eagle.execute import execute_document_download as download_eagle
     from eagle.execute import execute_program as execute_eagle
     from eagle.execute import execute_review as review_eagle
@@ -33,7 +34,7 @@ def execute_program_type(county, program_type, document_list):
             review_crocodile()
         elif program_type == 'name search':
             search_name = prepare_name_search()
-            # do something
+            name_search_crocodile(county, target_directory, search_name)
     elif county.program == 'eagle':
         if program_type == "execute":
             execute_eagle(county, target_directory, document_list, file_name)

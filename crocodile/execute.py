@@ -61,5 +61,20 @@ def execute_program(county, target_directory, document_list, file_name):
     browser.close()
 
 
+def perform_name_search(browser, county, target_directory, search_name):
+    document_list = create_document_list(browser, search_name)
+    search_documents_from_list(browser, county, target_directory, document_list)
+
+
+def execute_name_search(county, target_directory, search_name):
+    browser = create_webdriver(target_directory, headless)
+    account_login(browser)
+    perform_name_search(browser, county, target_directory, search_name)
+    logout(browser)
+    abstraction = export_document(county, target_directory, file_name, dictionary)
+    bundle_project(target_directory, abstraction)
+    browser.close()
+
+
 def execute_review():
     pass
