@@ -85,6 +85,33 @@ def target_directory_prompt(current_target_directory):
         return current_target_directory
 
 
+def state_prompt():
+    clear_terminal()
+    state_input = input('Please choose a state in which to create an abstraction?: \n'
+                        '[1] Colorado \n'
+                        '[2] Louisiana \n'
+                        '[3] Texas \n'
+                        '[4] Wyoming \n'
+                        )
+    while state_input not in ["1", "2", "3", "4"]:
+        clear_terminal()
+        print(f'You entered {state_input} Please enter 1, 2, 3, or 4:')
+        state_input = input('Please choose a state in which to create an abstraction?: \n'
+                            '[1] Colorado \n'
+                            '[2] Louisiana \n'
+                            '[3] Texas \n'
+                            '[4] Wyoming \n'
+                            )
+    if state_input == "1":
+        return 'CO'
+    elif state_input == "2":
+        return 'LA'
+    elif state_input == "3":
+        return 'TX'
+    elif state_input == "4":
+        return 'WY'
+
+
 def available_file_names(target_directory):
     os.listdir(target_directory)
 
