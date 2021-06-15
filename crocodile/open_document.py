@@ -115,7 +115,7 @@ def get_document_description_link(result_number, document):
     elif type(document.description_link) == str:
         document.description_link = [document.description_link, document_description_link]
     elif type(document_description_link) == list:
-        document.link = [*document.description_link, document_description_link]
+        document.description_link = [*document.description_link, document_description_link]
 
 
 def verify_search_results(search_results, document):
@@ -132,11 +132,11 @@ def open_document_link(browser, link):
 
 def handle_search_results(browser, document):
     if document.number_results == 1:
-        open_document_link(browser, document.link)
+        open_document_link(browser, document.description_link)
     else:
         print(f'{str(document.number_results)} results returned for '
               f'{extrapolate_document_value(document)}.')
-        open_document_link(browser, document.link[0])
+        open_document_link(browser, document.description_link[0])
         # If number_results == 0
         # do something
         # elif number_results > 1
