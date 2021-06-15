@@ -154,7 +154,7 @@ def aggregate_search_results(search_results):
     return document_list
 
 
-def create_document_list(browser, search_name):
+def create_name_document_list(browser, search_name):
     if check_for_results(browser, search_name):
         search_results = list_search_results(browser, search_name)
         return aggregate_search_results(search_results)

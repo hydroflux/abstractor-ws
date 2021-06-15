@@ -11,7 +11,7 @@ from crocodile.download import download_document
 from crocodile.login import account_login
 from crocodile.logout import logout
 from crocodile.name_search import search_provided_name
-from crocodile.open_document import open_document
+from crocodile.open_document import create_name_document_list, open_document
 from crocodile.record import record_document
 from crocodile.search import search
 
@@ -64,7 +64,7 @@ def execute_program(county, target_directory, document_list, file_name):
 
 def perform_name_search(browser, county, target_directory, search_name):
     search_provided_name(browser, search_name)
-    document_list = create_document_list(browser, search_name)
+    document_list = create_name_document_list(browser, search_name)
     search_documents_from_list(browser, county, target_directory, document_list)
 
 
@@ -73,6 +73,10 @@ def execute_name_search(county, target_directory, search_name):
     account_login(browser)
     dictionary = perform_name_search(browser, county, target_directory, search_name)
     logout(browser)
-    abstraction = export_document(county, target_directory, file_name, dictionary)
+    abstraction = export_document(county, target_directory, search_name, dictionary)
     bundle_project(target_directory, abstraction)
     browser.close()
+
+
+def execute_review():
+    pass

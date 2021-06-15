@@ -30,7 +30,7 @@ def transform_dictionary(dictionary):
 
 def create_output_file(file_name):
     abstraction_export = '-'.join(abstraction_type.upper().split(' '))
-    return f'{file_name}-{abstraction_export}.xlsx'
+    return f'{file_name.upper()}-{abstraction_export}.xlsx'
 
 
 def create_excel_writer(output_file):
