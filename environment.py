@@ -72,4 +72,8 @@ def execute_abstractor():
     quit()
 
 
+def execute_demo():
+    pass
+
+
 execute_abstractor()

@@ -1,19 +1,19 @@
-from crocodile.name_search import search_provided_name
 from settings.abstract_object import abstract_dictionary as dictionary
 from settings.bad_search import record_bad_search, unable_to_download
 from settings.driver import create_webdriver
 from settings.export import export_document
-from settings.file_management import bundle_project, check_length
+from settings.file_management import (bundle_project, check_length,
+                                      document_found, no_document_found)
 from settings.general_functions import start_timer
 from settings.settings import download, headless
-from settings.user_prompts import document_found, no_document_found
 
+from crocodile.download import download_document
 from crocodile.login import account_login
 from crocodile.logout import logout
+from crocodile.name_search import search_provided_name
 from crocodile.open_document import open_document
 from crocodile.record import record_document
 from crocodile.search import search
-from crocodile.download import download_document
 
 
 def record_single_document(browser, county, target_directory, document_list, document, start_time):
@@ -76,7 +76,3 @@ def execute_name_search(county, target_directory, search_name):
     abstraction = export_document(county, target_directory, file_name, dictionary)
     bundle_project(target_directory, abstraction)
     browser.close()
-
-
-def execute_review():
-    pass

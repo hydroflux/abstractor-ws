@@ -1,9 +1,7 @@
 import os
 
 from settings.classes import Document
-from settings.file_management import (extrapolate_document_value,
-                                      list_remaining_documents)
-from settings.general_functions import report_execution_time, title_strip
+from settings.general_functions import title_strip
 from settings.import_list import generate_document_list
 from settings.settings import root, search_name
 
@@ -112,37 +110,6 @@ def sheet_name_prompt(current_sheet_name):
         return f'{sheet_name_input}'
     else:
         return current_sheet_name
-
-
-def document_found(start_time, document_list, document, alt=None):
-    if alt is None:
-        print('Document located at '
-              f'{extrapolate_document_value(document)} recorded, '
-              f'{list_remaining_documents(document_list, document)} '
-              f'({report_execution_time(start_time)})')
-    elif alt == "review":
-        input(f'Document located at {extrapolate_document_value(document)} found,'
-              'please review & press enter to continue... '
-              f'({list_remaining_documents(document_list, document)}) '
-              f'({report_execution_time(start_time)})')
-    elif alt == "download":
-        print('Document located at '
-              f'{extrapolate_document_value(document)} downloaded, '
-              f'{list_remaining_documents(document_list, document)} '
-              f'({report_execution_time(start_time)})')
-
-
-def no_document_found(start_time, document_list, document, alt=None):
-    if alt is None:
-        print('No document found at '
-              f'{extrapolate_document_value(document)}, '
-              f'{list_remaining_documents(document_list, document)} '
-              f'({report_execution_time(start_time)})')
-    elif alt == "review":
-        input(f'No document found at {extrapolate_document_value(document)}, '
-              'please review & press enter to continue... '
-              f'({list_remaining_documents(document_list, document)}) '
-              f'({report_execution_time(start_time)})')
 
 
 # Add an additional prompt for request for download

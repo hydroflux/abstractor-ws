@@ -2,10 +2,10 @@ from settings.abstract_object import abstract_dictionary as dictionary
 from settings.bad_search import no_document_image, record_bad_search
 from settings.driver import create_webdriver
 from settings.export import export_document
-from settings.file_management import bundle_project, check_length
+from settings.file_management import (bundle_project, check_length,
+                                      document_found, no_document_found)
 from settings.general_functions import start_timer
 from settings.settings import download
-from settings.user_prompts import document_found, no_document_found
 
 from leopard.download import download_document
 from leopard.login import account_login

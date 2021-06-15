@@ -4,7 +4,7 @@ import shutil
 from settings.settings import download
 
 if __name__ == '__main__':
-    from settings.general_functions import four_character_padding
+    from settings.general_functions import four_character_padding, report_execution_time
 else:
     from .general_functions import four_character_padding
 
@@ -102,6 +102,37 @@ def check_length(dataframe):
         print("Legals: ", legals)
         print("Related Documents: ", related_documents)
         print("Comments: ", comments)
+
+
+def document_found(start_time, document_list, document, alt=None):
+    if alt is None:
+        print('Document located at '
+              f'{extrapolate_document_value(document)} recorded, '
+              f'{list_remaining_documents(document_list, document)} '
+              f'({report_execution_time(start_time)})')
+    elif alt == "review":
+        input(f'Document located at {extrapolate_document_value(document)} found,'
+              'please review & press enter to continue... '
+              f'({list_remaining_documents(document_list, document)}) '
+              f'({report_execution_time(start_time)})')
+    elif alt == "download":
+        print('Document located at '
+              f'{extrapolate_document_value(document)} downloaded, '
+              f'{list_remaining_documents(document_list, document)} '
+              f'({report_execution_time(start_time)})')
+
+
+def no_document_found(start_time, document_list, document, alt=None):
+    if alt is None:
+        print('No document found at '
+              f'{extrapolate_document_value(document)}, '
+              f'{list_remaining_documents(document_list, document)} '
+              f'({report_execution_time(start_time)})')
+    elif alt == "review":
+        input(f'No document found at {extrapolate_document_value(document)}, '
+              'please review & press enter to continue... '
+              f'({list_remaining_documents(document_list, document)}) '
+              f'({report_execution_time(start_time)})')
 
 
 def rename_documents_in_directory(county, directory):
