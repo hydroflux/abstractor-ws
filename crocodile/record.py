@@ -192,7 +192,7 @@ def multi_page_legal(browser, legal_table, document, number_pages):
         next_legal_table(legal_table, document, (current_page + 2))
         legal_table = get_legal_table(browser)
         legal_data = f'{legal_data}\n{drop_last_line(title_strip(join_column_without_title(legal_table)))}'
-        print(legal_data)
+        # print(legal_data)
 
 
 def handle_legal_tables(browser, legal_table, document):
@@ -250,14 +250,14 @@ def record_grantor_information(browser, dictionary, document):
     grantor_table = locate_document_table(browser, document, grantor_id, "grantor")
     grantor = title_strip(join_column_without_title(grantor_table))
     dictionary["Grantor"].append(drop_hyphen(grantor))
-    print("grantor", grantor)
+    # print("grantor", grantor)
 
 
 def record_grantee_information(browser, dictionary, document):
     grantee_table = locate_document_table(browser, document, grantee_id, "grantee")
     grantee = title_strip(join_column_without_title(grantee_table))
     dictionary["Grantee"].append(drop_hyphen(grantee))
-    print("grantee", grantee)
+    # print("grantee", grantee)
 
 
 def get_related_documents_table(browser):

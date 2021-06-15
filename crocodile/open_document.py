@@ -1,14 +1,15 @@
-from settings.classes.Document import Document
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+from settings.classes.Document import Document
 from settings.file_management import document_value, extrapolate_document_value
 from settings.general_functions import (assert_window_title,
                                         get_direct_children, get_direct_link,
                                         get_element_text,
                                         javascript_script_execution,
-                                        set_description_link, timeout)
+                                        set_description_link, short_nap,
+                                        timeout)
 
 from crocodile.crocodile_variables import (document_description_title,
                                            filter_list, link_tag,
@@ -128,7 +129,10 @@ def verify_search_results(search_results, document):
 
 def open_document_link(browser, link):
     javascript_script_execution(browser, link)
-    assert_window_title(browser, document_description_title)
+    if not assert_window_title(browser, document_description_title):
+        print(f'Browser failed to return to "{document_description_title}" page, trying again.')
+        short_nap()
+        javascript_script_execution(browser, link)
     # This needs to be handled differently... returned as True?
 
 
@@ -136,8 +140,8 @@ def handle_search_results(browser, document):
     if document.number_results == 1:
         open_document_link(browser, document.description_link)
     else:
-        print(f'{str(document.number_results)} results returned for '
-              f'{extrapolate_document_value(document)}.')
+        print(f'{extrapolate_document_value(document)} return '
+              f'{str(document.number_results)} results, checking each.')
         open_document_link(browser, document.description_link[0])
         # If number_results == 0
         # do something
