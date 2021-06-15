@@ -1,6 +1,7 @@
 import os
 
 from settings.classes import Document
+from settings.classes.counties import county_list
 from settings.general_functions import title_strip
 from settings.import_list import generate_document_list
 from settings.settings import root, search_name
@@ -110,6 +111,10 @@ def state_prompt():
         return 'TX'
     elif state_input == "4":
         return 'WY'
+
+
+def filter_counties(state):
+    return list(filter((lambda county: county.endswith(state)), county_list))
 
 
 def available_file_names(target_directory):
