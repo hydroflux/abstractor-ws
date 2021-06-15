@@ -1,3 +1,4 @@
+from settings.classes.Document import Document
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -144,7 +145,8 @@ def get_result_type(result):
 
 def filter_search_results(document_list, result):
     if get_result_type(result) not in filter_list:
-        document_list.append(get_element_text(get_result_number(result)))
+        search_result = get_element_text(get_result_number(result))
+        document_list.append(Document(type="document_number", value=search_result))
 
 
 def aggregate_search_results(search_results):
