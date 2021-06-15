@@ -3,9 +3,9 @@ import sys
 sys.path.append(".")
 
 if __name__ == '__main__':
+    from crocodile.execute import execute_name_search as name_search_crocodile
     from crocodile.execute import execute_program as execute_crocodile
     from crocodile.execute import execute_review as review_crocodile
-    from crocodile.execute import execute_name_search as name_search_crocodile
     from eagle.execute import execute_document_download as download_eagle
     from eagle.execute import execute_program as execute_eagle
     from eagle.execute import execute_review as review_eagle
@@ -20,7 +20,8 @@ if __name__ == '__main__':
     from settings.import_list import generate_document_list
     from settings.settings import (county_name, file_name, headless,
                                    sheet_name, target_directory)
-    from settings.user_prompts import (currently_unavailable, get_program_type,
+    from settings.user_prompts import (currently_unavailable,
+                                       get_demo_information, get_program_type,
                                        prepare_name_search)
 
 print("environment", __name__)
@@ -64,8 +65,8 @@ def execute_program_type(county, program_type, document_list):
 
 def execute_abstractor():
     county = get_county_data(county_name)
-    document_list = generate_document_list(target_directory, file_name, sheet_name)
     program_type = get_program_type()
+    document_list = generate_document_list(target_directory, file_name, sheet_name)
     start_time = start_program_timer(county, document_list)
     execute_program_type(county, program_type, document_list)
     stop_program_timer(start_time)
@@ -73,7 +74,9 @@ def execute_abstractor():
 
 
 def execute_demo():
-    pass
+    county = get_county_data(get_demo_information())
+    program_type = get_program_type()
+
 
 
 execute_abstractor()

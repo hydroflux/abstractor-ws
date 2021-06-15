@@ -19,7 +19,7 @@ def get_program_type():
                        '[3] Download Documents \n'
                        '[4] Name Search \n'
                        )
-    while user_input not in ["1", "2", "3"]:
+    while user_input not in ["1", "2", "3", "4"]:
         clear_terminal()
         print(f'You entered {user_input} Please enter 1, 2, 3, or 4:')
         user_input = input('What would you like to do? \n'
@@ -138,7 +138,7 @@ def get_county_name(county_options, county_input):
     return ' '.join(county_options[int(county_input) - 1].split()[1:])
 
 
-def county_prompt(county_options):
+def get_county_information(county_options):
     print('Please choose a county in which to create an abstraction:')
     list_county_options(county_options)
     county_input = input()
@@ -149,16 +149,18 @@ def county_prompt(county_options):
     return get_county_name(county_options, county_input)
 
 
-def get_county_information(state):
+def county_prompt(state):
     clear_terminal()
     county_options = get_county_options(state)
-    return county_prompt(county_options)
+    return get_county_information(county_options)
 
 
 def get_demo_information():
     state = state_prompt()
-    county = get_county_information(state)
-    print(f'Preparing an abstraction for {county}')
+    county = county_prompt(state)
+    clear_terminal()
+    print(f'Preparing an abstraction for "{county}"...')
+    return county.split()[0]
 
 
 def available_file_names(target_directory):
