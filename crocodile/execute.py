@@ -2,7 +2,7 @@ from settings.abstract_object import abstract_dictionary as dictionary
 from settings.bad_search import record_bad_search, unable_to_download
 from settings.driver import create_webdriver
 from settings.export import export_document
-from settings.file_management import (bundle_project, check_length,
+from settings.file_management import (bundle_project, check_length, display_document_list,
                                       document_found, no_document_found)
 from settings.general_functions import start_timer
 from settings.settings import download, headless
@@ -65,6 +65,7 @@ def execute_program(county, target_directory, document_list, file_name):
 def perform_name_search(browser, county, target_directory, search_name):
     search_provided_name(browser, search_name)
     document_list = create_name_document_list(browser, search_name)
+    display_document_list(document_list)
     search_documents_from_list(browser, county, target_directory, document_list)
 
 

@@ -62,6 +62,13 @@ def split_book_and_page(document):
     # Consider only adding the padding when updating the document frame
 
 
+def display_document_list(document_list):
+    print(f'{len(document_list)} documents to be recorded:')
+    for document in range(len(document_list)):
+        print(document_list[document])
+    print()
+
+
 def drop_last_entry(dataframe):
     dataframe["Grantor"].pop()
     dataframe["Grantee"].pop()
