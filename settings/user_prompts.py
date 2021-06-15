@@ -70,6 +70,7 @@ def prepare_name_search():
     while request_yes_or_no(f'The current name to be searched is "{name}", is this correct?') is False:
         clear_terminal()
         name = request_new_name()
+    clear_terminal()
     return Document(type="name", value=name)
 
 

@@ -65,7 +65,7 @@ def split_book_and_page(document):
 def display_document_list(document_list):
     print(f'{len(document_list)} documents to be recorded:')
     for document in range(len(document_list)):
-        print(document_list[document_value(document)])
+        print(document_value(document_list[document]))
     print()
 
 

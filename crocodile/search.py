@@ -74,7 +74,7 @@ def document_search(browser, document):
     # May need to add additional flag here---
     # need to make sure that the search field is caught properly
     enter_document_number(browser, document)
-    execute_search(browser)
+    execute_search(browser, document)
 
 
 def search(browser, document):
