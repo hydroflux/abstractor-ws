@@ -17,7 +17,7 @@ from crocodile.crocodile_variables import (document_image_title,
 
 
 def open_document_download_page(browser, document):
-    javascript_script_execution(browser, document.link)
+    javascript_script_execution(browser, document.image_link)
     if not assert_window_title(browser, document_image_title):
         print(f'Browser failed to open document download page for '
               f'{extrapolate_document_value(document)}, please review.')

@@ -147,8 +147,12 @@ def set_reception_number(document, reception_number):
     document.reception_number = reception_number
 
 
-def set_document_link(document, link):
-    document.link = link
+def set_description_link(document, link):
+    document.description_link = link
+
+
+def set_image_link(document, link):
+    document.image_link = link
 
 
 def get_direct_link(document_link):

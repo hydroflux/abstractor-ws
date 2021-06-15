@@ -8,7 +8,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from settings.export_settings import not_applicable
 from settings.file_management import extrapolate_document_value, multiple_documents_comment
 from settings.general_functions import (get_direct_children, get_element_text,
-                                        list_to_string, set_document_link,
+                                        list_to_string, set_image_link,
                                         set_reception_number, short_nap,
                                         timeout, title_strip, zipped_list)
 
@@ -91,12 +91,12 @@ def check_list_elements(general_information, title_options):
 
 def check_document_image_availability(general_information, document):
     document_image = check_list_elements(general_information, row_titles["document_image"])
-    document_link = document_image.find_element_by_tag_name(link_tag)
-    if document_link.get_attribute(inactive) == "true":
+    document_image_link = document_image.find_element_by_tag_name(link_tag)
+    if document_image_link.get_attribute(inactive) == "true":
         return None
     else:
-        image_link = document_link.get_attribute("href")
-        set_document_link(document, image_link)
+        image_link = document_image_link.get_attribute("href")
+        set_image_link(document, image_link)
 
 
 def record_reception_number(general_information, dictionary, document):
@@ -353,7 +353,7 @@ def record_comments(county, dictionary, document):
         dictionary["Comments"].append(multiple_documents_comment(county, document))
     else:
         dictionary["Comments"].append("")
-    if document.link is None:
+    if document.image_link is None:
         no_document_image(dictionary, document)
     # This is bad practice, no document image checks against the last comment
 

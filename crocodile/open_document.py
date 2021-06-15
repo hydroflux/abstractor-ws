@@ -8,7 +8,7 @@ from settings.general_functions import (assert_window_title,
                                         get_direct_children, get_direct_link,
                                         get_element_text,
                                         javascript_script_execution,
-                                        set_document_link, timeout)
+                                        set_description_link, timeout)
 
 from crocodile.crocodile_variables import (document_description_title,
                                            filter_list, link_tag,
@@ -97,32 +97,32 @@ def get_result_number(result):
     return get_direct_children(result)[8]
 
 
-def locate_document_link(result_number, document):
+def locate_document_description_link(result_number, document):
     try:
-        document_link_present = EC.element_to_be_clickable((By.TAG_NAME, link_tag))
-        WebDriverWait(result_number, timeout).until(document_link_present)
-        document_link = result_number.find_element_by_tag_name(link_tag)
-        return document_link
+        document_description_link_present = EC.element_to_be_clickable((By.TAG_NAME, link_tag))
+        WebDriverWait(result_number, timeout).until(document_description_link_present)
+        document_description_link = result_number.find_element_by_tag_name(link_tag)
+        return document_description_link
     except TimeoutException:
         print(f'Browser timed out trying to open document link for '
               f'{extrapolate_document_value(document)}, please review.')
 
 
-def get_document_link(result_number, document):
-    document_link = get_direct_link(locate_document_link(result_number, document))
-    if document.link is None:
-        set_document_link(document, document_link)
-    elif type(document_link) == str:
-        document.link = [document.link, document_link]
-    elif type(document_link) == list:
-        document.link = [*document.link, document_link]
+def get_document_description_link(result_number, document):
+    document_description_link = get_direct_link(locate_document_description_link(result_number, document))
+    if document.description_link is None:
+        set_description_link(document, document_description_link)
+    elif type(document.description_link) == str:
+        document.description_link = [document.description_link, document_description_link]
+    elif type(document_description_link) == list:
+        document.link = [*document.description_link, document_description_link]
 
 
 def verify_search_results(search_results, document):
     for result in search_results:
         result_number = get_result_number(result)
         if document_value(document) == get_element_text(result_number):
-            get_document_link(result_number, document)
+            get_document_description_link(result_number, document)
             document.number_results += 1
 
 

@@ -27,7 +27,7 @@ def record_single_document(browser, county, target_directory, document_list, doc
 def record_multiple_documents(browser, county, target_directory, document_list, document, start_time):
     record_single_document(browser, county, target_directory, document_list, document, start_time)
     for link_index in range(document.number_results - 1):
-        open_document_link(browser, document.link[link_index + 1])
+        open_document_link(browser, document.description_link[link_index + 1])
         record_single_document(browser, county, target_directory, document_list, document, start_time)
     # Create an application path for recording multiple documents
     # still need to handle the fact that related documents are returned on search
