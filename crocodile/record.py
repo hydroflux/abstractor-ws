@@ -6,7 +6,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from settings.export_settings import not_applicable
-from settings.file_management import extrapolate_document_value
+from settings.file_management import extrapolate_document_value, multiple_documents_comment
 from settings.general_functions import (get_direct_children, get_element_text,
                                         list_to_string, set_document_link,
                                         set_reception_number, short_nap,
@@ -348,17 +348,20 @@ def record_related_document_information(browser, dictionary, document):
         dictionary["Related Documents"].append(related_documents)
 
 
-def record_comments(dictionary, document):
-    dictionary["Comments"].append("")
+def record_comments(county, dictionary, document):
+    if document.number_results > 1:
+        dictionary["Comments"].append(multiple_documents_comment(county, document))
+    else:
+        dictionary["Comments"].append("")
     if document.link is None:
         no_document_image(dictionary, document)
     # This is bad practice, no document image checks against the last comment
 
 
-def record_document(browser, dictionary, document):
+def record_document(browser, county, dictionary, document):
     # If document_number == N/A, return book & page???
     record_general_information(browser, dictionary, document)
     record_grantor_information(browser, dictionary, document)
     record_grantee_information(browser, dictionary, document)
     record_related_document_information(browser, dictionary, document)
-    record_comments(dictionary, document)
+    record_comments(county, dictionary, document)

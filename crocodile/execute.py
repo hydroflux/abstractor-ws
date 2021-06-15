@@ -17,7 +17,7 @@ from crocodile.search import search
 
 
 def record_single_document(browser, county, target_directory, document_list, document, start_time):
-    record_document(browser, dictionary, document)
+    record_document(browser, county, dictionary, document)
     if download:
         if not download_document(browser, county, target_directory, document):
             unable_to_download(dictionary, document)
