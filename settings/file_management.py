@@ -43,7 +43,7 @@ def document_type(document):
 
 
 def document_value(document):
-    if document_type(document) == "document_number":
+    if document_type(document) == "document_number" or document_type(document) == "name":
         return str(document.value)
     elif document_type(document) == "book_and_page":
         return [str(document.value["Book"]), str(document.value["Page"])]

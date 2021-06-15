@@ -140,8 +140,8 @@ def handle_search_results(browser, document):
     if document.number_results == 1:
         open_document_link(browser, document.description_link)
     else:
-        print(f'{extrapolate_document_value(document)} return '
-              f'{str(document.number_results)} results, checking each.')
+        print(f'{extrapolate_document_value(document)} returned '
+              f'{str(document.number_results)} results, recording each to dataframe for review.')
         open_document_link(browser, document.description_link[0])
         # If number_results == 0
         # do something
