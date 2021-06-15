@@ -72,19 +72,19 @@ def get_general_information_data(browser, general_information_table, document):
 
 # Copied & audited from leopard
 def check_list_elements(general_information, title_options):
-    print(1)
+    # print(1)
     for header, data in general_information:
-        print(2)
+        # print(2)
         if get_element_text(header) in title_options:
-            print(3)
+            # print(3)
             if get_element_text(header) in row_titles["document_image"]:
-                print(4)
+                # print(4)
                 return data
             if get_element_text(data) != "":
-                print(5)
+                # print(5)
                 return get_element_text(data)
             else:
-                print(6)
+                # print(6)
                 return not_applicable
     return 'No row title match found.'
 
@@ -310,7 +310,7 @@ def get_related_row_data(row):
     try:
         row_fields = get_direct_children(row)
         related_document = f'{title_strip(row_fields[4].text)} {title_strip(row_fields[3].text)} {(row_fields[8].text)}'
-        print("related_document", related_document)
+        # print("related_document", related_document)
         return related_document
     except StaleElementReferenceException:
         print("Encountered a stale element reference exception, trying again")
@@ -320,7 +320,7 @@ def get_related_row_data(row):
 def aggregate_related_row_data(browser, related_documents_list, row):
     row_data = get_related_row_data(row)
     if row_data is None:
-        print("row", row)
+        # print("row", row)
         row_data = get_related_row_data(row)
     related_documents_list.append(row_data)
 
@@ -344,7 +344,7 @@ def record_related_document_information(browser, dictionary, document):
     else:
         # display_all_related_documents(browser, document)  # Run a few tests once in production to see if  necessary
         related_documents = handle_related_documents_table(browser, related_documents_table, document)
-        print("related_documents", related_documents)
+        # print("related_documents", related_documents)
         dictionary["Related Documents"].append(related_documents)
 
 
@@ -360,6 +360,7 @@ def record_comments(county, dictionary, document):
 
 def record_document(browser, county, dictionary, document):
     # If document_number == N/A, return book & page???
+    # create an error handling statement that checks to see if the page is correct
     record_general_information(browser, dictionary, document)
     record_grantor_information(browser, dictionary, document)
     record_grantee_information(browser, dictionary, document)

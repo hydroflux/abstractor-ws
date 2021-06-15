@@ -128,6 +128,8 @@ def verify_search_results(search_results, document):
 
 def open_document_link(browser, link):
     javascript_script_execution(browser, link)
+    assert_window_title(browser, document_description_title)
+    # This needs to be handled differently... returned as True?
 
 
 def handle_search_results(browser, document):
@@ -179,6 +181,8 @@ def open_document(browser, document):
         verify_search_results(search_results, document)
         handle_search_results(browser, document)
         if assert_window_title(browser, document_description_title):
+            #  Moving to open_document_link, making this redundant, but need to decide how to handle
+            #  the else: statement
             return True
         else:
             print(f'Browser failed to successfully open document description page for '
