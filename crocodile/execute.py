@@ -12,10 +12,12 @@ from crocodile.download import download_document
 from crocodile.login import account_login
 from crocodile.logout import logout
 from crocodile.name_search import search_provided_name
-from crocodile.open_document import (create_name_document_list, open_document,
+from crocodile.open_document import (create_name_document_list, next_result, open_document,
                                      open_document_link)
 from crocodile.record import record_document
 from crocodile.search import search
+
+from time import sleep
 
 
 def record_single_document(browser, county, target_directory, document_list, document, start_time):
@@ -29,8 +31,8 @@ def record_single_document(browser, county, target_directory, document_list, doc
 def record_multiple_documents(browser, county, target_directory, document_list, document, start_time):
     record_single_document(browser, county, target_directory, document_list, document, start_time)
     for link_index in range(document.number_results - 1):
-        browser.back()
-        open_document_link(browser, document.description_link[link_index + 1])
+        # next_document_link = document.description_link[link_index + 1]
+        next_result(browser, document, link_index)
         record_single_document(browser, county, target_directory, document_list, document, start_time)
     # Create an application path for recording multiple documents
     # still need to handle the fact that related documents are returned on search

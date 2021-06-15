@@ -1,3 +1,5 @@
+from crocodile.search import open_document_search
+from crocodile.name_search import open_name_search
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -132,9 +134,20 @@ def open_document_link(browser, link):
     if not assert_window_title(browser, document_description_title):
         print(f'Browser failed to return to "{document_description_title}" page, trying again.')
         browser.back()
-        short_nap()
+        # short_nap()
         javascript_script_execution(browser, link)
-    # This needs to be handled differently... returned as True?
+    # Overall not a great combination of functions, need to slow everything down to see where the issue is occuring
+
+
+def next_result(browser, document, index):
+    count = 0
+    while not assert_window_title(browser, document_description_title):
+        browser.back()
+        # short_nap()
+        count += 1
+        if count == 10:
+            break
+    open_document_link(browser, document.description_link[index + 1])
 
 
 def handle_search_results(browser, document):
