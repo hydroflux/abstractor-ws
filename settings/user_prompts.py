@@ -88,7 +88,7 @@ def target_directory_prompt(current_target_directory):
 
 def state_prompt():
     clear_terminal()
-    state_input = input('Please choose a state in which to create an abstraction?: \n'
+    state_input = input('Please choose a state in which to create an abstraction: \n'
                         '[1] Colorado \n'
                         '[2] Louisiana \n'
                         '[3] Texas \n'
@@ -115,6 +115,50 @@ def state_prompt():
 
 def filter_counties(state):
     return list(filter((lambda county: county.endswith(state)), county_list))
+
+
+def get_county_options(state):
+    available_counties = filter_counties(state)
+    return list(map((lambda option: f'[{available_counties.index(option) + 1}] {option}'), available_counties))
+
+
+def list_county_options(county_options):
+    for option in county_options:
+        print(option)
+
+
+def check_for_county_match(county_options, county_input):
+    for index, option in enumerate(county_options):
+        if county_input == str(index + 1):
+            return option
+    return False
+
+
+def get_county_name(county_options, county_input):
+    return ' '.join(county_options[int(county_input) - 1].split()[1:])
+
+
+def county_prompt(county_options):
+    print('Please choose a county in which to create an abstraction:')
+    list_county_options(county_options)
+    county_input = input()
+    while not check_for_county_match(county_options, county_input):
+        print(f'You entered "{county_input}", please choose an item from the list below:')
+        list_county_options(county_options)
+        county_input = input()
+    return get_county_name(county_options, county_input)
+
+
+def get_county_information(state):
+    clear_terminal()
+    county_options = get_county_options(state)
+    return county_prompt(county_options)
+
+
+def get_demo_information():
+    state = state_prompt()
+    county = get_county_information(state)
+    print(f'Preparing an abstraction for {county}')
 
 
 def available_file_names(target_directory):
