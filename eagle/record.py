@@ -7,7 +7,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from settings.export_settings import search_errors
 from settings.file_management import (check_length, drop_last_entry,
-                                      extrapolate_document_value)
+                                      extrapolate_document_value, multiple_documents_comment)
 from settings.general_functions import (long_timeout, medium_nap, naptime,
                                         scroll_into_view, scroll_to_top,
                                         short_nap, timeout,
@@ -275,9 +275,7 @@ def aggregate_document_information(document_tables, dataframe):
 
 def record_comments(county, dataframe, document, image_available):
     if document.number_results > 1:
-        dataframe["Comments"].append(f'Multiple documents located at {extrapolate_document_value(document)}'
-                                     f' on the {county} recording website; Each of the {document.number_results}'
-                                     f' documents has been listed, please review')
+        dataframe["Comments"].append(multiple_documents_comment(county, document))
     else:
         dataframe["Comments"].append("")
     if not image_available:

@@ -42,8 +42,8 @@ def clear_document_search_field(browser, document):
 
 def enter_document_number(browser, document):
     while get_field_value(locate_document_search_field(browser, document)) != document_value(document):
-        print(f'Entering document value for '
-              f'{extrapolate_document_value(document)}.')
+        # print(f'Entering document value for '
+        #       f'{extrapolate_document_value(document)}.')
         locate_document_search_field(browser, document).send_keys(Keys.UP + document_value(document))
 
 

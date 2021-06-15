@@ -32,6 +32,7 @@
 - [ ] If websites & logins are added to the county class the open_site function can be generalized across all scripts
 - [ ] Add a check to the environment file to make sure that the county information is entered correctly before starting the webdriver
 - [ ] If continuing to use the 'extrapolate_document_value' function with name_search, function & it's spin-offs should be renamed accordingly (criteria, value, etc.)
+- [ ] Demo prompts should have a "go back" option
 
 ### Imports To Do
 

@@ -110,7 +110,10 @@ def locate_document_link(result_number, document):
 
 def get_document_link(result_number, document):
     document_link = get_direct_link(locate_document_link(result_number, document))
-    set_document_link(document, document_link)
+    if document_link is None:
+        set_document_link(document, document_link)
+    else:
+        document.link = [*document.link, document_link]
 
 
 def verify_search_results(search_results, document):
@@ -121,17 +124,17 @@ def verify_search_results(search_results, document):
             document.number_results += 1
 
 
-def open_document_link(browser, document):
-    javascript_script_execution(browser, document.link)
+def open_document_link(browser, link):
+    javascript_script_execution(browser, link)
 
 
 def handle_search_results(browser, document):
     if document.number_results == 1:
-        open_document_link(browser, document)
+        open_document_link(browser, document.link)
     else:
         print(f'{str(document.number_results)} results returned for '
-              f'{extrapolate_document_value(document)}, please review.')
-        input()
+              f'{extrapolate_document_value(document)}.')
+        open_document_link(browser, document.link[0])
         # If number_results == 0
         # do something
         # elif number_results > 1
