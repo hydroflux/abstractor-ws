@@ -72,7 +72,7 @@ def perform_name_search(browser, county, target_directory, search_name):
     search_provided_name(browser, search_name)
     document_list = create_name_document_list(browser, search_name)
     display_document_list(document_list)
-    search_documents_from_list(browser, county, target_directory, document_list)
+    return search_documents_from_list(browser, county, target_directory, document_list)
 
 
 def execute_name_search(county, target_directory, search_name):
