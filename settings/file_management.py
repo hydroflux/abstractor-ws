@@ -6,7 +6,7 @@ from settings.settings import download
 if __name__ == '__main__':
     from settings.general_functions import four_character_padding, report_execution_time
 else:
-    from .general_functions import four_character_padding
+    from .general_functions import four_character_padding, report_execution_time
 
 
 def create_folder(directory):

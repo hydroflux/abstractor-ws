@@ -112,7 +112,9 @@ def get_document_link(result_number, document):
     document_link = get_direct_link(locate_document_link(result_number, document))
     if document.link is None:
         set_document_link(document, document_link)
-    else:
+    elif type(document_link) == str:
+        document.link = [document.link, document_link]
+    elif type(document_link) == list:
         document.link = [*document.link, document_link]
 
 
@@ -165,7 +167,7 @@ def create_name_document_list(browser, search_name):
         return aggregate_search_results(search_results)
     else:
         print(f'No results found for '
-              f'{extrapolate_document_value(search_name)}'
+              f'{extrapolate_document_value(search_name)} '
               f'please review search criteria & try again.')
         browser.quit()
         exit()
