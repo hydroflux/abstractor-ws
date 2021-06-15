@@ -110,7 +110,7 @@ def locate_document_link(result_number, document):
 
 def get_document_link(result_number, document):
     document_link = get_direct_link(locate_document_link(result_number, document))
-    if document_link is None:
+    if document.link is None:
         set_document_link(document, document_link)
     else:
         document.link = [*document.link, document_link]
