@@ -27,14 +27,13 @@ if __name__ == '__main__':
 print("environment", __name__)
 
 
-def execute_program_type(county, program_type):
+def execute_program_type(county, program_type, document_list=None, search_name=None):
     if county.program == 'crocodile':
         if program_type == 'execute':
             execute_crocodile(county, target_directory, document_list, file_name)
         elif program_type == 'review':
             review_crocodile()
         elif program_type == 'name search':
-            search_name = prepare_name_search()
             name_search_crocodile(county, target_directory, search_name)
     elif county.program == 'eagle':
         if program_type == "execute":
@@ -76,11 +75,17 @@ def execute_abstractor():
 def execute_demo():
     county = get_county_data(get_demo_information())
     program_type = get_program_type()
-    start_time = start_program_timer(county, document_list)
-    execute_program_type(county, program_type, document_list)
+    if program_type == "name search":
+        search_name = prepare_name_search()
+        start_time = start_program_timer(county)
+        execute_program_type(county, program_type, document_list=None, search_name=search_name)
+    else:
+        document_list = generate_document_list(target_directory, file_name, sheet_name)
+        start_time = start_program_timer(county)
+        execute_program_type(county, program_type, document_list)
     stop_program_timer(start_time)
     quit()
 
 
-
-execute_abstractor()
+# execute_abstractor()
+execute_demo()
