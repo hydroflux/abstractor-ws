@@ -27,7 +27,7 @@ if __name__ == '__main__':
 print("environment", __name__)
 
 
-def execute_program_type(county, program_type, document_list):
+def execute_program_type(county, program_type):
     if county.program == 'crocodile':
         if program_type == 'execute':
             execute_crocodile(county, target_directory, document_list, file_name)
@@ -76,6 +76,10 @@ def execute_abstractor():
 def execute_demo():
     county = get_county_data(get_demo_information())
     program_type = get_program_type()
+    start_time = start_program_timer(county, document_list)
+    execute_program_type(county, program_type, document_list)
+    stop_program_timer(start_time)
+    quit()
 
 
 

@@ -44,11 +44,18 @@ def report_execution_time(start_time):
     return str(stop_timer(start_time))
 
 
-def start_program_timer(county, document_list):
+def handle_document_list_option(document_list):
+    if document_list is not None:
+        return f'{len(document_list)} documents imported for processing.'
+    else:
+        return ''
+
+
+def start_program_timer(county, document_list=None):
     start_time = start_timer()
     print(f'{county} - {abstraction_type} started on: \n'
           f'{str(start_time.strftime("%B %d, %Y %H:%M:%S"))}\n\n'
-          f'{len(document_list)} documents imported for processing.')
+          f'{handle_document_list_option(document_list)}')
     return start_time
 
 
