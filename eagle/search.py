@@ -42,11 +42,11 @@ def execute_clear_search(browser, button):
         button.click()
         return True
     except ElementClickInterceptedException:
-        print('Encountered an element click interception exception while trying to clear the search form, '
+        print('Encountered an element click interception exception trying to clear the search form, '
               'refreshing & trying again.')
         return False
     except JavascriptException:
-        print('Encountered an javascript exception while trying to clear the search form, '
+        print('Encountered an javascript exception trying to clear the search form, '
               'refreshing & trying again.')
         return False
 
@@ -68,7 +68,7 @@ def locate_document_number_field(browser, document):
         instrument_search_field = browser.find_element_by_id(instrument_search_id)
         return instrument_search_field
     except TimeoutException:
-        print(f'Browser timed out while trying to fill document field for document number '
+        print(f'Browser timed out trying to fill document field for document number '
               f'{extrapolate_document_value(document)}.')
 
 
@@ -87,7 +87,7 @@ def enter_book_number(browser, book):
         book_search_field.send_keys(book)
         return True
     except TimeoutException:
-        print(f'Browser timed out while trying to fill document field for Book: {book}.')
+        print(f'Browser timed out trying to fill document field for Book: {book}.')
         return False
 
 
@@ -100,7 +100,7 @@ def enter_page_number(browser, page):
         page_search_field.send_keys(page)
         return True
     except TimeoutException:
-        print(f'Browser timed out while trying to fill document field for Page: {page}.')
+        print(f'Browser timed out trying to fill document field for Page: {page}.')
         return False
 
 
@@ -121,7 +121,7 @@ def locate_search_button(browser):
         search_button = browser.find_element_by_id(search_button_id)
         return search_button
     except TimeoutException:
-        print("Browser timed out while trying to execute search.")
+        print("Browser timed out trying to execute search.")
 
 
 def execute_search(browser):

@@ -65,7 +65,7 @@ def add_breakpoints(dataframe):
 
 
 def create_excel_object(target_directory, writer, dataframe, sheet_name):
-    add_hyperlinks(target_directory, dataframe)
+    # add_hyperlinks(target_directory, dataframe)
     add_breakpoints(dataframe)
     return dataframe.to_excel(
         writer,

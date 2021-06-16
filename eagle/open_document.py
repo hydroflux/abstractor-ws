@@ -32,6 +32,7 @@ def validate_search(browser, document):
 
 
 def retry_search(browser, document):
+    browser.refresh()
     naptime()
     document_search(browser, document)
 
@@ -43,7 +44,7 @@ def get_search_status(browser):
         search_status = browser.find_element_by_tag_name(search_status_tag).text
         return search_status
     except TimeoutException:
-        print("Browser timed out while trying to get current results.")
+        print("Browser timed out trying to get current results.")
     except StaleElementReferenceException:
         print('Encountered a stale element reference exception trying to determine search status, '
               'refreshing & trying again.')
@@ -60,36 +61,45 @@ def wait_for_results(browser):
     return search_status
 
 
-def retry_execute_search(browser, document, search_results):
-    while search_results == failed_search:
+def retry_execute_search(browser, document, search_status):
+    while search_status == failed_search:
         print(f'Search failed for {extrapolate_document_value(document)},'
               f' executing search again.')
         execute_search(browser)
         naptime()
-        search_results = wait_for_results(browser)
-    return search_results
+        search_status = wait_for_results(browser)
+    return search_status
 
 
-def get_search_results(browser):
+def locate_first_result(browser):
     try:
         first_result_present = EC.element_to_be_clickable((By.CLASS_NAME, search_result_class_name))
         WebDriverWait(browser, timeout).until(first_result_present)
-        return browser.find_elements_by_class_name(search_result_class_name)
+        first_result = browser.find_elements_by_class_name(search_result_class_name)
+        return first_result
     except TimeoutException:
-        print("Browser timed out while trying to retrieve the first result of the search.")
+        print("Browser timed out trying to retrieve the first result of the search.")
+
+
+def get_search_results(browser, document):
+    search_results = locate_first_result(browser)
+    while type(search_results) is None:
+        retry_search(browser, document)
+        search_results = locate_first_result(browser)
+    return search_results
 
 
 def count_results(browser, document):
-    search_results = wait_for_results(browser)
-    print(search_results)
-    if search_results == failed_search or type(search_results) is None:
+    search_status = wait_for_results(browser)
+    # if search_status == failed_search or type(search_results) is None:
+    if search_status == failed_search:
         print(f'Initial search failed, attempting to execute search again for '
               f'{extrapolate_document_value(document)}')
-        search_results = retry_execute_search(browser, document, search_results)
-    if search_results == no_results_message:
+        search_status = retry_execute_search(browser, document, search_status)
+    if search_status == no_results_message:
         return 0
     else:
-        return int(len(get_search_results(browser)))
+        return int(len(get_search_results(browser, document)))
 
 
 def check_search_results(browser, document):
@@ -123,7 +133,7 @@ def open_document(browser, document):
         retry_search(browser, document)
     if check_search_results(browser, document):
         try:
-            first_result = get_search_results(browser)[0]
+            first_result = get_search_results(browser, document)[0]
             open_document_description(browser, first_result)
             short_nap()
             # Testing find without naptime, however hitting manual overrides more often;
