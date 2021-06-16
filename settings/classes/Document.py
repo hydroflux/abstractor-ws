@@ -1,11 +1,12 @@
 class Document:
-    def __init__(self, type, value, number_results=0, reception_number=None,
-                 description_link=None, image_link=None, results=None, year=None):
+    def __init__(self, type, value, number_results=0, index_number=None, reception_number=None,
+                 description_link=None, image_link=None, multiple_results=None, year=None):
         self.type = type
         self.value = value
         self.number_results = number_results
+        self.index_number = index_number
         self.reception_number = reception_number
         self.description_link = description_link
         self.image_link = image_link
-        self.results = results
+        self.multiple_results = multiple_results
         self.year = year
