@@ -3,8 +3,8 @@ from settings.bad_search import record_bad_search, unable_to_download
 from settings.driver import create_webdriver
 from settings.export import export_document
 from settings.file_management import (bundle_project, check_length,
-                                      display_document_list, document_found, document_value,
-                                      no_document_found)
+                                      display_document_list, document_found,
+                                      document_value, no_document_found)
 from settings.general_functions import start_timer
 from settings.settings import download, headless
 
@@ -12,12 +12,10 @@ from crocodile.download import download_document
 from crocodile.login import account_login
 from crocodile.logout import logout
 from crocodile.name_search import search_provided_name
-from crocodile.open_document import (create_name_document_list, next_result, open_document,
-                                     open_document_link)
+from crocodile.open_document import (create_name_document_list, next_result,
+                                     open_document)
 from crocodile.record import record_document
 from crocodile.search import search
-
-from time import sleep
 
 
 def record_single_document(browser, county, target_directory, document_list, document, start_time):
@@ -84,6 +82,7 @@ def execute_name_search(county, target_directory, search_name):
     logout(browser)
     abstraction = export_document(county, target_directory, document_value(search_name), dictionary)
     bundle_project(target_directory, abstraction)
+    # sleep(8)
     browser.close()
 
 

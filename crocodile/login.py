@@ -2,7 +2,7 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-from settings.general_functions import timeout, assert_window_title
+from settings.general_functions import assert_window_title, timeout
 
 from crocodile.crocodile_variables import (credentials, post_login_title,
                                            submit_button_id, website,

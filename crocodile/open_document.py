@@ -1,5 +1,3 @@
-from crocodile.search import open_document_search
-from crocodile.name_search import open_name_search
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -10,8 +8,7 @@ from settings.general_functions import (assert_window_title,
                                         get_direct_children, get_direct_link,
                                         get_element_text,
                                         javascript_script_execution,
-                                        set_description_link, short_nap,
-                                        timeout)
+                                        set_description_link, timeout)
 
 from crocodile.crocodile_variables import (document_description_title,
                                            filter_list, link_tag,

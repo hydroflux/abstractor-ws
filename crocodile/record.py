@@ -1,12 +1,13 @@
-from settings.bad_search import no_document_image
 from selenium.common.exceptions import (NoSuchElementException,
                                         StaleElementReferenceException,
                                         TimeoutException)
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+from settings.bad_search import no_document_image
 from settings.export_settings import not_applicable
-from settings.file_management import extrapolate_document_value, multiple_documents_comment
+from settings.file_management import (extrapolate_document_value,
+                                      multiple_documents_comment)
 from settings.general_functions import (get_direct_children, get_element_text,
                                         list_to_string, set_image_link,
                                         set_reception_number, short_nap,
