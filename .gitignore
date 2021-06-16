@@ -19,6 +19,7 @@ eagle/eagle_variables.py
 leopard/leopard_variables.py
 crocodile/crocodile_variables.py
 settings/export_settings.py
+settings/hyperlink_settings.py
 settings/settings.py
 formatting/excel_export_format.py
 .vscode

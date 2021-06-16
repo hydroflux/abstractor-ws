@@ -1,4 +1,5 @@
 import os
+from settings.hyperlink import create_hyperlink
 from settings.export_settings import full_disclaimer
 
 from pandas import DataFrame, ExcelWriter
@@ -46,6 +47,16 @@ def add_column(dataframe, current_position, column):
     dataframe.insert(current_position, column.title, '')
 
 
+def add_hyperlinks(dataframe, target_directory):
+    hyperlink_column = dataframe[worksheet_properties["hyperlink"]]
+    print("hyperlink_column", hyperlink_column, "type", type(hyperlink_column))
+    for data in hyperlink_column:
+        print(hyperlink_column.index(data), data)
+        if data in os.listdir(target_directory):
+            print("match", data)
+            create_hyperlink(data)
+
+
 def add_breakpoints(dataframe):
     current_position = dataframe.columns.get_loc(worksheet_properties['breakpoint_start'])
     for column in worksheet_properties['breakpoints']:
@@ -53,7 +64,8 @@ def add_breakpoints(dataframe):
         current_position = current_position + column.position
 
 
-def create_excel_object(writer, dataframe, sheet_name):
+def create_excel_object(target_directory, writer, dataframe, sheet_name):
+    add_hyperlinks(target_directory, dataframe)
     add_breakpoints(dataframe)
     return dataframe.to_excel(
         writer,
@@ -64,10 +76,10 @@ def create_excel_object(writer, dataframe, sheet_name):
     )
 
 
-def create_xlsx_document(file_name, dataframe):
+def create_xlsx_document(target_directory, file_name, dataframe):
     output_file = create_output_file(file_name)
     writer = create_excel_writer(output_file)
-    create_excel_object(writer, dataframe, abstraction_type.upper())
+    create_excel_object(target_directory, writer, dataframe, abstraction_type.upper())
     return output_file, writer
 
 
@@ -241,13 +253,6 @@ def set_dataframe_format(worksheet, font_format):
         worksheet.set_column(column.column_range, column.width, font_format)
 
 
-# def set_footer_title(worksheet, last_row, font_format):
-    # footer_title_row = last_row + 1
-    # footer_title_range = f'A{footer_title_row}:{last_column(dataframe)}{footer_title_row}'
-    # worksheet.set_row(last_row, worksheet_properties['footer_title_height'])
-    # worksheet.merge_range(footer_title_range, worksheet_properties['footer_title_content'], font_format)
-
-
 def add_footer_row(dataframe, worksheet, font_format):
     footer_row = access_last_row(dataframe) + 1
     footer_range = f'A{footer_row}:{last_column(dataframe)}{footer_row}'
@@ -311,6 +316,6 @@ def finalize_xlsx_document(county, writer, dataframe, client=None, legal=None):
 def export_document(county, target_directory, file_name, dictionary, client=None, legal=None):
     prepare_output_environment(target_directory)
     dataframe = transform_dictionary(dictionary)
-    output_file, writer = create_xlsx_document(file_name, dataframe)
+    output_file, writer = create_xlsx_document(target_directory, file_name, dataframe)
     finalize_xlsx_document(county, writer, dataframe, client, legal)
     return output_file
