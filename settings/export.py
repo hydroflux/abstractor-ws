@@ -1,4 +1,5 @@
 import os
+from settings.export_settings import full_disclaimer
 
 from pandas import DataFrame, ExcelWriter
 
@@ -168,9 +169,9 @@ def add_limitations(dataframe, worksheet, font_format):
     worksheet.merge_range(f'A2:{last_column(dataframe)}2', worksheet_properties['limitations_content'], font_format)
 
 
-def add_disclaimer(dataframe, worksheet, font_format):
+def add_disclaimer(county, dataframe, worksheet, font_format):
     worksheet.set_row(2, worksheet_properties['disclaimer_height'])
-    worksheet.merge_range(f'A3:{last_column(dataframe)}3', worksheet_properties['disclaimer_content'], font_format)
+    worksheet.merge_range(f'A3:{last_column(dataframe)}3', full_disclaimer(county), font_format)
 
 
 def merge_primary_datatype_ranges(dataframe, worksheet, font_format):
@@ -263,7 +264,7 @@ def add_watermark(worksheet):
 def add_content(county, dataframe, worksheet, font_formats, client=None, legal=None):
     add_title_row(county, dataframe, worksheet, font_formats, client, legal)
     add_limitations(dataframe, worksheet, font_formats['limitations'])
-    add_disclaimer(dataframe, worksheet, font_formats['disclaimer'])
+    add_disclaimer(county, dataframe, worksheet, font_formats['disclaimer'])
     add_dataframe_headers(dataframe, worksheet, font_formats['datatype'])
     set_worksheet_border(dataframe, worksheet, font_formats['border'])
     add_footer_row(dataframe, worksheet, font_formats['footer'])
