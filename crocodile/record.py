@@ -71,21 +71,15 @@ def get_general_information_data(browser, general_information_table, document):
     return zipped_list(headers, data)
 
 
-# Copied & audited from leopard
+# Copied & edited from leopard
 def check_list_elements(general_information, title_options):
-    # print(1)
     for header, data in general_information:
-        # print(2)
         if get_element_text(header) in title_options:
-            # print(3)
             if get_element_text(header) in row_titles["document_image"]:
-                # print(4)
                 return data
             if get_element_text(data) != "":
-                # print(5)
                 return get_element_text(data)
             else:
-                # print(6)
                 return not_applicable
     return 'No row title match found.'
 
@@ -151,6 +145,7 @@ def get_legal_table(browser):
         return False
 
 
+# This could be a generalized function
 def drop_last_line(string):
     return string[:string.rfind("\n")]
 
@@ -356,7 +351,6 @@ def record_comments(county, dictionary, document):
         dictionary["Comments"].append("")
     if document.image_link is None:
         no_document_image(dictionary, document)
-    # This is bad practice, no document image checks against the last comment
 
 
 def record_document(browser, county, dictionary, document):

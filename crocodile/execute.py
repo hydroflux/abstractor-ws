@@ -29,12 +29,8 @@ def record_single_document(browser, county, target_directory, document_list, doc
 def record_multiple_documents(browser, county, target_directory, document_list, document, start_time):
     record_single_document(browser, county, target_directory, document_list, document, start_time)
     for link_index in range(document.number_results - 1):
-        # next_document_link = document.description_link[link_index + 1]
         next_result(browser, document, link_index)
         record_single_document(browser, county, target_directory, document_list, document, start_time)
-    # Create an application path for recording multiple documents
-    # still need to handle the fact that related documents are returned on search
-    # probably should just look for exact matches until finding a use case for multiple documents
 
 
 def handle_search_results(browser, county, target_directory, document_list, document, start_time):
@@ -50,7 +46,6 @@ def search_documents_from_list(browser, county, target_directory, document_list)
         search(browser, document)
         if open_document(browser, document):
             handle_search_results(browser, county, target_directory, document_list, document, start_time)
-            # Good practice for future use but still need to handle multiple documents returned in a search
         else:
             record_bad_search(dictionary, document)
             no_document_found(start_time, document_list, document)
@@ -82,7 +77,7 @@ def execute_name_search(county, target_directory, search_name):
     logout(browser)
     abstraction = export_document(county, target_directory, document_value(search_name), dictionary)
     bundle_project(target_directory, abstraction)
-    # sleep(8)
+    # sleep(8) <-- use for demo
     browser.close()
 
 
