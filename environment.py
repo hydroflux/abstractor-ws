@@ -64,6 +64,7 @@ def execute_program_type(county, program_type, document_list=None, search_name=N
 
 def execute_abstractor():
     county = get_county_data(county_name)
+    print(county)
     program_type = get_program_type()
     document_list = generate_document_list(target_directory, file_name, sheet_name)
     start_time = start_program_timer(county, document_list)
@@ -87,5 +88,5 @@ def execute_demo():
     quit()
 
 
-# execute_abstractor()
-execute_demo()
+execute_abstractor()
+# execute_demo()

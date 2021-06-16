@@ -29,7 +29,7 @@ def long_nap():
 
 
 def get_county_data(county_name):
-    return county_dictionary.get(county_name)
+    return county_dictionary.get(county_name.lower())
 
 
 def start_timer():
