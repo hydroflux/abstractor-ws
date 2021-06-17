@@ -91,12 +91,12 @@ def get_search_results(browser, document):
 
 def count_results(browser, document):
     search_status = wait_for_results(browser)
-    # if search_status == failed_search or type(search_results) is None:
     if search_status == failed_search:
         print(f'Initial search failed, attempting to execute search again for '
               f'{extrapolate_document_value(document)}')
         search_status = retry_execute_search(browser, document, search_status)
     if search_status == no_results_message:
+        print(f'No results located at {extrapolate_document_value(document)}, please review.')
         return 0
     else:
         return int(len(get_search_results(browser, document)))
