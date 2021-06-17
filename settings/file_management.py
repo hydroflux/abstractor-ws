@@ -22,8 +22,12 @@ def document_directory_exists(target_directory):
         return True
 
 
+def access_document_directory(target_directory):
+    return f'{target_directory}/Documents'
+
+
 def create_document_directory(target_directory):
-    document_directory = f'{target_directory}/Documents'
+    document_directory = access_document_directory(target_directory)
     create_folder(document_directory)
     os.chdir(document_directory)
     return document_directory

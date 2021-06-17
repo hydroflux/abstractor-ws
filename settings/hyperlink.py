@@ -1,6 +1,5 @@
 import os
-from settings.file_management import document_directory_exists
-import pandas as pd
+from settings.file_management import access_document_directory, document_directory_exists
 
 from settings.export_settings import worksheet_properties
 
@@ -14,17 +13,30 @@ def remove_file_suffix(file_name):
 
 
 def strip_document_number_from_file_name(file_name):
-    return remove_file_suffix(remove_prefix(file_name))
+    return remove_file_suffix(remove_prefix(file_name, "-"))
 
 
-def create_hyperlinks(target_directory, hyperlink_column):
+def get_directory_files(directory):
+    return os.listdir()
+
+
+def get_directory_file_numbers(document_directory):
+    return list(map(strip_document_number_from_file_name, get_directory_files(document_directory)))
+
+
+def create_hyperlink(data):
+    print("match", data)
+
+
+def create_hyperlinks(document_directory, hyperlink_column):
     for data in hyperlink_column:
-        if data in os.listdir(document_directory):
-            print("match", data)
+        directory_file_numbers = get_directory_file_numbers(document_directory)
+        if data in directory_file_numbers:
             create_hyperlink(data)
 
 
 def add_hyperlinks(target_directory, dataframe):
     if document_directory_exists(target_directory):
         hyperlink_column = dataframe[worksheet_properties["hyperlink"]]
-        create_hyperlinks(target_directory, hyperlink_column)
+        document_directory = access_document_directory(target_directory)
+        create_hyperlinks(document_directory, hyperlink_column)
