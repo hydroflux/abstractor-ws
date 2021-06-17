@@ -28,18 +28,27 @@ from eagle.error_handling import check_for_error
 print("record", __name__)
 
 
-def access_image_container(browser):
+def access_image_container(browser, document):
     try:
         image_container_present = EC.presence_of_element_located((By.ID, image_container_id))
         WebDriverWait(browser, timeout).until(image_container_present)
         image_container = browser.find_element_by_id(image_container_id)
         return image_container
     except TimeoutException:
-        print("Browser timed out waiting for image container to load.")
+        print('Browser timed out waiting for image container to load for '
+              f'{extrapolate_document_value(document)}, please review.')
+        return check_for_error(browser, document)
 
 
-def document_image_exists(browser):
-    image_container = access_image_container(browser)
+def get_image_container(browser, document):
+    image_container = access_image_container(browser, document)
+    while image_container == error_message_text:
+        image_container = access_image_container(browser, document)
+    return image_container
+
+
+def document_image_exists(browser, document):
+    image_container = get_image_container(browser, document)
     if image_container.text == no_image_text:
         return False
     else:
@@ -72,7 +81,7 @@ def handle_document_image_status(browser, document):
     #  if this is done in a new way then the other check for error in "WAIT FOR PDF TO LOAD"
     #  won't be necessary
     #  Hint = see if the browser title changes
-    if document_image_exists(browser):
+    if document_image_exists(browser, document):
         wait_for_pdf_to_load(browser, document)
         naptime()  # Remove after running successful 'review' test
         # naptime()  # Use for review
