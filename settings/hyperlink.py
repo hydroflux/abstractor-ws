@@ -33,7 +33,7 @@ def create_hyperlink_url(document_directory, data):
     directory_files = get_directory_files(document_directory)
     for file in directory_files:
         if strip_document_number_from_file_name(file) == data:
-            print(f'{document_directory}/{file}')
+            # Currently adding full path, may need to change to relative path after processing
             return f'{document_directory}/{file}'
 
 
@@ -46,8 +46,10 @@ def create_hyperlinks(dataframe, document_directory, hyperlink_column):
         directory_file_numbers = get_directory_file_numbers(document_directory)
         if data in directory_file_numbers:
             row = get_data_row(dataframe, hyperlink_column, data)
-            url = create_hyperlink_url()
+            url = create_hyperlink_url(document_directory, data)
             hyperlink = create_hyperlink(data, row, url)
+            hyperlink_column[row] = hyperlink
+            print(data)
             print(hyperlink)
 
 
