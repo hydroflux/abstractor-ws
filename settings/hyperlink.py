@@ -17,7 +17,7 @@ def strip_document_number_from_file_name(file_name):
 
 
 def get_directory_files(directory):
-    return os.listdir()
+    return os.listdir(directory)
 
 
 def get_directory_file_numbers(document_directory):
