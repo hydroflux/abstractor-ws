@@ -34,7 +34,7 @@ def create_hyperlink_url(document_directory, data):
     for file in directory_files:
         if strip_document_number_from_file_name(file) == data:
             # Currently adding full path, may need to change to relative path after processing
-            return f'{document_directory}/{file}'
+            return f'/Documents/{file}'
 
 
 def create_hyperlink(data, row, url):
@@ -51,10 +51,11 @@ def create_hyperlinks(dataframe, document_directory, hyperlink_column):
             hyperlink_column[row] = hyperlink
             print(data)
             print(hyperlink)
+            print(hyperlink_column[row])
 
 
 def add_hyperlinks(target_directory, dataframe):
     if document_directory_exists(target_directory):
         hyperlink_column = dataframe[worksheet_properties["hyperlink"]]
         document_directory = access_document_directory(target_directory)
-        create_hyperlinks(document_directory, hyperlink_column)
+        create_hyperlinks(dataframe, document_directory, hyperlink_column)

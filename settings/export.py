@@ -1,17 +1,13 @@
 import os
-from settings.hyperlink import create_hyperlink
+from settings.hyperlink import add_hyperlinks
 from settings.export_settings import full_disclaimer
-
+from settings.export_settings import authorship, text_formats, worksheet_properties
 from pandas import DataFrame, ExcelWriter
 
-if __name__ == '__main__':
-    from settings.settings import (abstraction_type, authorship, text_formats,
-                                   worksheet_properties)
-else:
-    from settings.export_settings import authorship, text_formats, worksheet_properties
-    from settings.settings import abstraction_type
 
-    # from .assets import draft_watermark as draft_watermark
+from settings.settings import abstraction_type
+
+# from .assets import draft_watermark as draft_watermark
 
 
 def prepare_output_environment(target_directory):
@@ -26,10 +22,7 @@ def create_dataframe(dictionary):
 
 def transform_dictionary(dictionary):
     dataframe = create_dataframe(dictionary)
-    dataframe.rename({"Legal": "Legal Description"}, axis=1)
-    # Why doesn't this work? -- should it be updated at a later point
-    # i.e. after the writer is created
-    return dataframe
+    return dataframe.rename({"Legal": "Legal Description"}, axis=1)
 
 
 def create_output_file(file_name):
@@ -299,15 +292,17 @@ def format_xlsx_document(county, writer, dataframe, client=None, legal=None):
 def close_workbook(workbook):
     workbook.close()
 
-
-def finalize_xlsx_document(county, writer, dataframe, client=None, legal=None):
-    workbook = format_xlsx_document(county, writer, dataframe, client, legal)
-    close_workbook(workbook)
+# def finalize_xlsx_document(county, writer, dataframe, client=None, legal=None):
+#     workbook = format_xlsx_document(county, writer, dataframe, client, legal)
+#     close_workbook(workbook)
 
 
 def export_document(county, target_directory, file_name, dictionary, client=None, legal=None):
     prepare_output_environment(target_directory)
     dataframe = transform_dictionary(dictionary)
+    # add_hyperlinks(target_directory, dataframe)
     output_file, writer = create_xlsx_document(target_directory, file_name, dataframe)
-    finalize_xlsx_document(county, writer, dataframe, client, legal)
+    workbook = format_xlsx_document(county, writer, dataframe, client, legal)
+    # finalize_xlsx_document(county, writer, dataframe, client, legal)
+    close_workbook(workbook)
     return output_file

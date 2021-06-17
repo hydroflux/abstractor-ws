@@ -42,7 +42,6 @@
 ### Exports To Do
 
 - [ ] Add hyperlinks before exporting (working on now)
-- [ ] Legal column isn't being renamed properly in export file
 
 ### Leopard To Do
 
