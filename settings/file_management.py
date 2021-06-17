@@ -17,6 +17,11 @@ def create_folder(directory):
         print('Error: Creating directory ' + directory)
 
 
+def document_directory_exists(target_directory):
+    if os.path.exists(f'{target_directory}/Documents'):
+        return True
+
+
 def create_document_directory(target_directory):
     document_directory = f'{target_directory}/Documents'
     create_folder(document_directory)

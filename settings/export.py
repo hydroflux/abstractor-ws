@@ -49,16 +49,6 @@ def add_column(dataframe, current_position, column):
     dataframe.insert(current_position, column.title, '')
 
 
-# def add_hyperlinks(dataframe, target_directory):
-#     hyperlink_column = dataframe[worksheet_properties["hyperlink"]]
-#     print("hyperlink_column", hyperlink_column, "type", type(hyperlink_column))
-#     for data in hyperlink_column:
-#         print(hyperlink_column.index(data), data)
-#         if data in os.listdir(target_directory):
-#             print("match", data)
-#             create_hyperlink(data)
-
-
 def add_breakpoints(dataframe):
     current_position = dataframe.columns.get_loc(worksheet_properties['breakpoint_start'])
     for column in worksheet_properties['breakpoints']:
