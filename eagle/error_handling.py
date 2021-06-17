@@ -13,12 +13,14 @@ def locate_error_message(browser):
         error_message_present = EC.presence_of_element_located((By.CLASS_NAME, error_message_class))
         WebDriverWait(browser, timeout).until(error_message_present)
         error_message = browser.find_element_by_class_name(error_message_class)
+        print("error_message", error_message)
         return error_message
     except TimeoutException:
         print("Browser timed out while trying to locate error message after PDF failed to load, please review.")
 
 
 def check_for_error(browser, document):
+    print(f'Checking for error during processing of {extrapolate_document_value(document)}...')
     error_message = locate_error_message(browser)
     if error_message == error_message_text:
         print(f'An error occurred while opening the document located at '
@@ -26,3 +28,6 @@ def check_for_error(browser, document):
         browser.refresh()
         naptime()
         return error_message_text
+    else:
+        print('No error appears to have occurred, please review.')
+        input()

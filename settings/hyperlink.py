@@ -29,16 +29,25 @@ def get_data_row(dataframe, column, data):
     return dataframe.index[column == data]
 
 
-def create_hyperlink(dataframe, hyperlink_column, data):
-    row = get_data_row(dataframe, hyperlink_column, data)
-    return Hyperlink(value=data, row=row, url="pass")
+def create_hyperlink_url(document_directory, data):
+    directory_files = get_directory_files(document_directory)
+    for file in directory_files:
+        if strip_document_number_from_file_name(file) == data:
+            print(f'{document_directory}/{file}')
+            return f'{document_directory}/{file}'
 
 
-def create_hyperlinks(document_directory, hyperlink_column):
+def create_hyperlink(data, row, url):
+    return Hyperlink(value=data, row=row, url=url)
+
+
+def create_hyperlinks(dataframe, document_directory, hyperlink_column):
     for data in hyperlink_column:
         directory_file_numbers = get_directory_file_numbers(document_directory)
         if data in directory_file_numbers:
-            hyperlink = create_hyperlink(data)
+            row = get_data_row(dataframe, hyperlink_column, data)
+            url = create_hyperlink_url()
+            hyperlink = create_hyperlink(data, row, url)
             print(hyperlink)
 
 
