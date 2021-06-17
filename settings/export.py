@@ -1,10 +1,10 @@
 import os
-from settings.hyperlink import add_hyperlinks
-from settings.export_settings import full_disclaimer
-from settings.export_settings import authorship, text_formats, worksheet_properties
+
 from pandas import DataFrame, ExcelWriter
 
-
+from settings.export_settings import (authorship, full_disclaimer,
+                                      text_formats, worksheet_properties)
+from settings.hyperlink import add_hyperlinks
 from settings.settings import abstraction_type
 
 # from .assets import draft_watermark as draft_watermark
