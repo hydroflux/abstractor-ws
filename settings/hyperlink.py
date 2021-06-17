@@ -1,4 +1,5 @@
 import os
+from settings.classes.Hyperlink import Hyperlink
 from settings.file_management import access_document_directory, document_directory_exists
 
 from settings.export_settings import worksheet_properties
@@ -24,15 +25,21 @@ def get_directory_file_numbers(document_directory):
     return list(map(strip_document_number_from_file_name, get_directory_files(document_directory)))
 
 
-def create_hyperlink(data):
-    print("match", data)
+def get_data_row(dataframe, column, data):
+    return dataframe.index[column == data]
+
+
+def create_hyperlink(dataframe, hyperlink_column, data):
+    row = get_data_row(dataframe, hyperlink_column, data)
+    return Hyperlink(value=data, row=row, url="pass")
 
 
 def create_hyperlinks(document_directory, hyperlink_column):
     for data in hyperlink_column:
         directory_file_numbers = get_directory_file_numbers(document_directory)
         if data in directory_file_numbers:
-            create_hyperlink(data)
+            hyperlink = create_hyperlink(data)
+            print(hyperlink)
 
 
 def add_hyperlinks(target_directory, dataframe):
