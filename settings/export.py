@@ -27,6 +27,8 @@ def create_dataframe(dictionary):
 def transform_dictionary(dictionary):
     dataframe = create_dataframe(dictionary)
     dataframe.rename({"Legal": "Legal Description"}, axis=1)
+    # Why doesn't this work? -- should it be updated at a later point
+    # i.e. after the writer is created
     return dataframe
 
 
@@ -47,14 +49,14 @@ def add_column(dataframe, current_position, column):
     dataframe.insert(current_position, column.title, '')
 
 
-def add_hyperlinks(dataframe, target_directory):
-    hyperlink_column = dataframe[worksheet_properties["hyperlink"]]
-    print("hyperlink_column", hyperlink_column, "type", type(hyperlink_column))
-    for data in hyperlink_column:
-        print(hyperlink_column.index(data), data)
-        if data in os.listdir(target_directory):
-            print("match", data)
-            create_hyperlink(data)
+# def add_hyperlinks(dataframe, target_directory):
+#     hyperlink_column = dataframe[worksheet_properties["hyperlink"]]
+#     print("hyperlink_column", hyperlink_column, "type", type(hyperlink_column))
+#     for data in hyperlink_column:
+#         print(hyperlink_column.index(data), data)
+#         if data in os.listdir(target_directory):
+#             print("match", data)
+#             create_hyperlink(data)
 
 
 def add_breakpoints(dataframe):

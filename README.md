@@ -39,6 +39,11 @@
 - [ ] Add download flag to document class & set at import in order to avoid passing the flag around
 - [ ] When creating document instances, leave an indication if a book and page instance & a document number instance are on the same line (use the index) in order to create more effective comments---set up for Document class just needs to be implemented
 
+### Exports To Do
+
+- [ ] Add hyperlinks before exporting (working on now)
+- [ ] Legal column isn't being renamed properly in export file
+
 ### Leopard To Do
 
 - [ ] Update multiple_documents comment to include actual document numbers and / or book & page numbers
