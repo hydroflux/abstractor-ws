@@ -4,7 +4,7 @@ from pandas import DataFrame, ExcelWriter
 
 from settings.export_settings import (authorship, full_disclaimer,
                                       text_formats, worksheet_properties)
-from settings.hyperlink import add_hyperlinks
+# from settings.hyperlink import add_hyperlinks
 from settings.settings import abstraction_type
 
 # from .assets import draft_watermark as draft_watermark
@@ -133,16 +133,16 @@ def set_title_format(dataframe, worksheet, font_format):
     worksheet.merge_range(f'A1:{last_column(dataframe)}1', '', font_format)
 
 
-def create_range_message(content):
-    return f'From {content["start_date"]} to {content["end_date"]} \n ({content["order"]})'
-    # start = dataframe[worksheet_properties["breakpoint_start"]]
-    # return f'From {start.iloc[0]} to {start.iloc[-1]} \n ({content["order"]})'
+def create_range_message(dataframe, content):
+    # return f'From {content["start_date"]} to {content["end_date"]} \n ({content["order"]})'
+    start = dataframe[worksheet_properties["breakpoint_start"]]
+    return f'From {start.iloc[0]} to {start.iloc[-1]} \n ({content["order"]})'
 
 
-def write_title_content(county, worksheet, font_formats, client=None, legal=None):
+def write_title_content(dataframe, county, worksheet, font_formats, client=None, legal=None):
     content = worksheet_properties['header_content']
     content['county'] = f'{county}\n'
-    range_message = create_range_message(content)
+    range_message = create_range_message(dataframe, content)
     if client is not None and legal is not None:
         content['user'] = f'{client}\n'
         content['scope'] = f'{legal}\n'
@@ -159,7 +159,7 @@ def write_title_content(county, worksheet, font_formats, client=None, legal=None
 
 def add_title_row(county, dataframe, worksheet, font_formats, client=None, legal=None):
     set_title_format(dataframe, worksheet, font_formats['header'])
-    write_title_content(county, worksheet, font_formats, client, legal)
+    write_title_content(dataframe, county, worksheet, font_formats, client, legal)
 
 
 def add_limitations(dataframe, worksheet, font_format):

@@ -77,7 +77,7 @@ def execute_name_search(county, target_directory, search_name):
     logout(browser)
     abstraction = export_document(county, target_directory, document_value(search_name), dictionary)
     bundle_project(target_directory, abstraction)
-    # sleep(8) <-- use for demo
+    # sleep(8)  #  <-- use for demo
     browser.close()
 
 

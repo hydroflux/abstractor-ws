@@ -88,5 +88,5 @@ def execute_demo():
     quit()
 
 
-execute_abstractor()
+# execute_abstractor()
 # execute_demo()
