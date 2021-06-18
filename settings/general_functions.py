@@ -36,7 +36,12 @@ def start_timer():
     return datetime.now()
 
 
+def bell():
+    print("\a")
+
+
 def stop_timer(start_time):
+    bell()
     return datetime.now() - start_time
 
 
