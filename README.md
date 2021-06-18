@@ -32,6 +32,7 @@
 - [ ] If continuing to use the 'extrapolate_document_value' function with name_search, function & it's spin-offs should be renamed accordingly (criteria, value, etc.)
 - [ ] Demo prompts should have a "go back" option
 - [ ] There is a function in export_settings to create the full_disclaimer---ideally there should be no functions in settings files
+- [ ] Change "Document Found" so that it lists either "recorded" or "recorded & downloaded" instead of located
 
 ### Imports To Do
 
