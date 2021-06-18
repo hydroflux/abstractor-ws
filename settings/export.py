@@ -92,7 +92,8 @@ def set_font_formats(workbook):
         'disclaimer': workbook.add_format(text_formats['disclaimer']),
         'footer': workbook.add_format(text_formats['footer']),
         'no_record': workbook.add_format(text_formats['no_record']),
-        'multiple_documents': workbook.add_format(text_formats['multiple_documents'])
+        'multiple_documents': workbook.add_format(text_formats['multiple_documents']),
+        'no_document_image': workbook.add_format(text_formats['no_document_image']),
     }
 
 
@@ -274,10 +275,17 @@ def add_multiple_document_format(worksheet, worksheet_range, font_format):
     worksheet.conditional_format(worksheet_range, multi_documents_format)
 
 
+def add_no_document_image_format(worksheet, worksheet_range, font_format):
+    no_document_image_format = worksheet_properties['conditional_formats']['no_image_format']
+    no_document_image_format['format'] = font_format
+    worksheet.conditional_format(worksheet_range, no_document_image_format)
+
+
 def add_conditional_formatting(dataframe, worksheet, font_formats):
     worksheet_range = get_worksheet_range(dataframe)
     add_no_record_format(worksheet, worksheet_range, font_formats['no_record'])
     add_multiple_document_format(worksheet, worksheet_range, font_formats['multiple_documents'])
+    add_no_document_image_format(worksheet, worksheet_range, font_formats['no_document_image'])
 
 
 def format_xlsx_document(county, writer, dataframe, client=None, legal=None):
