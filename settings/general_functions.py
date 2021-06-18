@@ -45,6 +45,10 @@ def stop_timer(start_time):
     return datetime.now() - start_time
 
 
+def report_execution_time(start_time):
+    return str(stop_timer(start_time))
+
+
 def throw_alert():
     print("Please review webdriver status.")
     for _ in range(3):
@@ -56,10 +60,6 @@ def throw_alert():
 def repeat(function, times):
     for _ in range(times):
         function()
-
-
-def report_execution_time(start_time):
-    return str(stop_timer(start_time))
 
 
 def handle_document_list_option(document_list):
