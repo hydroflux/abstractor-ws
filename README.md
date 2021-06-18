@@ -33,6 +33,8 @@
 - [ ] Demo prompts should have a "go back" option
 - [ ] There is a function in export_settings to create the full_disclaimer---ideally there should be no functions in settings files
 - [ ] Change "Document Found" so that it lists either "recorded" or "recorded & downloaded" instead of located
+- [ ] Look into github vulnerability link that's broken
+- [ ] Convert notes from demo into a proper README
 
 ### Imports To Do
 
@@ -43,6 +45,7 @@
 ### Exports To Do
 
 - [ ] Add hyperlinks before exporting (working on now)
+- [ ] Create separate "hyperlink" sheet with export until able to figure out how to properly 'replace' file numbers with links
 
 ### Leopard To Do
 
