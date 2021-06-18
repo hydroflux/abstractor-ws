@@ -53,6 +53,11 @@ def throw_alert():
     input()
 
 
+def repeat(function, times):
+    for _ in range(times):
+        function()
+
+
 def report_execution_time(start_time):
     return str(stop_timer(start_time))
 
