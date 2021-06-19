@@ -21,7 +21,7 @@ def locate_error_message(browser):
 def check_for_error(browser, document):
     print(f'Checking for error during processing of {extrapolate_document_value(document)}...')
     error_message = locate_error_message(browser)
-    if type(error_message) is not None and error_message.text.startswith(error_message_text):
+    if type(error_message) is not None or error_message.text.startswith(error_message_text):
         print(f'An error occurred while opening the document located at '
               f'{extrapolate_document_value(document)}, refreshing the page to try again.')
         browser.refresh()
