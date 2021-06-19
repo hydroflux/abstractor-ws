@@ -263,11 +263,12 @@ def record_notes(document_tables, dataframe):
         elif notes.startswith(search_errors[3]) or notes.endswith(search_errors[3]):
             pass
         else:
-            notes = f'Notes: {notes}'
-            if dataframe["Legal"][-1] == "":
-                dataframe["Legal"][-1] = notes
-            else:
-                dataframe["Legal"][-1] = f'{dataframe["Legal"][-1]}\n{notes}'
+            if notes.strip() != "":
+                notes = f'Notes: {notes}'
+                if dataframe["Legal"][-1] == "":
+                    dataframe["Legal"][-1] = notes
+                else:
+                    dataframe["Legal"][-1] = f'{dataframe["Legal"][-1]}\n{notes}'
     except IndexError:
         pass
 
