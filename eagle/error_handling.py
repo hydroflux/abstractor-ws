@@ -3,7 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from settings.file_management import extrapolate_document_value
-from settings.general_functions import naptime, timeout
+from settings.general_functions import naptime, throw_alert, timeout
 
 from eagle.eagle_variables import error_message_class, error_message_text
 
@@ -16,6 +16,7 @@ def locate_error_message(browser):
         return error_message
     except TimeoutException:
         print("Browser timed out while trying to locate error message after PDF failed to load, please review.")
+        throw_alert()
 
 
 def check_for_error(browser, document):
@@ -29,4 +30,5 @@ def check_for_error(browser, document):
         return error_message_text
     else:
         print('No error appears to have occurred, please review.')
+        throw_alert()
         input()
