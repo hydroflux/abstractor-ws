@@ -57,8 +57,11 @@ def clear_search(browser, document):
         clear_search_button = get_clear_search_button(browser, document)
         clear = execute_clear_search(browser, clear_search_button)
         if clear is False:
-            browser.refresh()
+            # browser.refresh()  #  Commented out on June 22, 2021
+            # medium_nap()  #  Commented out on June 22, 2021
+            browser.back()  # Should work for JS exceptions--don't know about Element Click Interceptions
             medium_nap()
+            open_search()
 
 
 def locate_document_number_field(browser, document):
