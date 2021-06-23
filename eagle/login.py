@@ -22,8 +22,8 @@ def open_site(browser):
 
 def locate_disclaimer(browser):
     try:
-        disclaimer_present = EC.presence_of_element_located((By.ID, disclaimer_id))
-        WebDriverWait(browser, timeout).until(disclaimer_present)
+        # disclaimer_present = EC.presence_of_element_located((By.ID, disclaimer_id))
+        # WebDriverWait(browser, timeout).until(disclaimer_present)
         disclaimer = browser.find_element_by_id(disclaimer_id)
         return disclaimer
     except NoSuchElementException:
@@ -31,11 +31,13 @@ def locate_disclaimer(browser):
 
 
 def handle_disclaimer(browser):
-    if not locate_disclaimer(browser):
+    disclaimer = locate_disclaimer(browser)
+    if not disclaimer:
         return True
-    elif locate_disclaimer(browser).get_attribute(inaccessible) is not None:
+    elif disclaimer.get_attribute(inaccessible) is not None:
         return False
-    elif locate_disclaimer(browser).get_attribute(inaccessible) is None:
+    elif disclaimer.get_attribute(inaccessible) is None:
+        disclaimer.click()
         return True
 
 
