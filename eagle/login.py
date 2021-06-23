@@ -7,7 +7,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from settings.general_functions import timeout
 
-from eagle.eagle_variables import (credentials, logged_out_redirect_url, disclaimer_id,
+from eagle.eagle_variables import (credentials, logged_out_redirect_url, disclaimer_class_name,
                                    login_button_class, webpage_title, website)
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
@@ -22,9 +22,9 @@ def open_site(browser):
 
 def handle_disclaimer(browser):
     try:
-        disclaimer_present = EC.presence_of_element_located((By.ID, disclaimer_id))
+        disclaimer_present = EC.presence_of_element_located((By.CLASS_NAME, disclaimer_class_name))
         WebDriverWait(browser, timeout).until(disclaimer_present)
-        disclaimer = browser.find_element_by_id(disclaimer_id)
+        disclaimer = browser.find_element_by_class_name(disclaimer_class_name)
         print(disclaimer.text)
         return True
     except NoSuchElementException:
@@ -33,7 +33,7 @@ def handle_disclaimer(browser):
 
 def check_for_disclaimer(browser):
     while not handle_disclaimer(browser):
-        input('Browser has located an issue that needs to be handled manually, please press enter after handling')
+        input('Browser has located an issue that needs to be handled manually, please press enter after handling.')
 
 
 def open_login_prompt(browser):
