@@ -97,12 +97,10 @@ def wait_for_pdf_to_load(browser, document):
 def handle_document_image_status(browser, document):
     if document_image_exists(browser, document):
         wait_for_pdf_to_load(browser, document)
-        # naptime()
+        # naptime()   # Part of test 2 & test 3
         if execution_review:
             medium_nap()   # Adding a flag instead of having to comment the line our every time for review
             # should probably be it's own function if continue using in this manner
-        # IMPORTANT NOTES
-        # 3) Procedurally, if download is in repository, OR  download is "FALSE", the wait should be longer
         return True
     else:
         # This medium nap strategy seems to be the best way to handle no document image
