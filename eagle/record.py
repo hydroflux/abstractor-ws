@@ -68,20 +68,37 @@ def pdf_load_status(browser, document):
 
 def wait_for_pdf_to_load(browser, document):
     while pdf_load_status(browser, document).startswith(loading_status) or pdf_load_status == error_message_text:
-        short_nap()  # using short_nap in order to try & grab all related documents
+        medium_nap()
+        # Status Quo as of 06/23/21 changing to try & work with related documents issue
+        # short_nap()  # using short_nap in order to try & grab all related documents
         # Consider changing to even naptime ~~~ originally 0.5 second sleep
         # Updating sleep time would be more efficient here because it would force a nap only
         # If the  PDF hasn't loaded properly
 
 
+# RUNNING 3 SEPARATE TESTS
+# 1st Test:
+# medium_nap for wait_for_pdf_to_load
+# no_nap for document_image_exists
+
+# 2nd Test:
+# naptime for wait_for_pdf_to_load
+# naptime for document_image_exists
+
+# 3rd Test
+# medium_nap for wait_for_pdf_to_load
+# naptime for document_image_exists
+
+# UNDER ALL THREE TESTS, A REVIEW IS TO BE DONE FOR
+# handle_document_image_status with a medium nap added
+
+
 def handle_document_image_status(browser, document):
     if document_image_exists(browser, document):
         wait_for_pdf_to_load(browser, document)
-        naptime()  # Remove after running successful 'review' test
+        # naptime()
         # medium_nap()  # Use for review
         # IMPORTANT NOTES
-        # 1) Naptime + medium nap seems to capture EVERYTHING IF there are no downloads
-        # 2) Naptime by itself MAY capture everything if the download is executed (this is most commonly the case)
         # 3) Procedurally, if download is in repository, OR  download is "FALSE", the wait should be longer
         return True
     else:
@@ -362,7 +379,7 @@ def get_reception_number(browser, document):
     wait_for_pdf_to_load(browser, document)
     document_information = get_document_information(browser, document)
     document_tables = access_document_information_tables(browser, document, document_information)
-    reception_field, recording_date = access_indexing_information(document_tables[1])
+    reception_field, _ = access_indexing_information(document_tables[1])
     return split_reception_field(reception_field)[0]
 
 
