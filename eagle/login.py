@@ -33,15 +33,15 @@ def locate_disclaimer(browser):
 def handle_disclaimer(browser):
     if not locate_disclaimer(browser):
         return True
-    elif locate_disclaimer(browser).get_attribute(inaccessible) is None:
+    elif locate_disclaimer(browser).get_attribute(inaccessible) is not None:
         return False
-    else:
+    elif locate_disclaimer(browser).get_attribute(inaccessible) is None:
         return True
 
 
 def check_for_disclaimer(browser):
     while not handle_disclaimer(browser):
-        input('Browser has located an issue that needs to be handled manually, please press enter after resolving.')
+        input('Disclaimer has not been handled properly, please press enter after resolving.')
 
 
 def open_login_prompt(browser):
