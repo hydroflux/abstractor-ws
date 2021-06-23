@@ -75,24 +75,19 @@ def wait_for_pdf_to_load(browser, document):
 
 
 def handle_document_image_status(browser, document):
-    # check_for_error(browser, document)
-    #  This function doesn't work as expected because it creates a timeout EACH TIME
-    #  a document is opened -- need to wait until error occurs again in order to make correction
-    #  if this is done in a new way then the other check for error in "WAIT FOR PDF TO LOAD"
-    #  won't be necessary
-    #  Hint = see if the browser title changes
     if document_image_exists(browser, document):
         wait_for_pdf_to_load(browser, document)
         naptime()  # Remove after running successful 'review' test
         medium_nap()  # Use for review
-        # If there is NOT a download being retrieve, two "naptimes" still does not guaranteed capture
-        # Therefore there needs to be some practice in place where the record is slowed down to a medium nap (or shorter)
+        # IMPORTANT NOTES
+        # 1) Naptime + medium nap seems to capture EVERYTHING IF there are no downloads
         # If there is no download just to make sure that everything is captured. Period. Otherwise the current "naptime" seems to be
         # Doing the trip appropriately--running another full scale test to double check again
         # Overall this is a bad practice because it's adding 1 - 2 seconds for a
-        # 0.1% chance it misses (based on testing)
         return True
     else:
+        # This medium nap strategy seems to be the best way to handle no document image
+        # there have been no issues so far, but also < 100 test cases with no image
         medium_nap()
         return False
 
