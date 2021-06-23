@@ -69,12 +69,22 @@ def check_login_status(browser):
         log_back_in(browser)
 
 
-def account_login(browser):
-    print("Initialized.")
+def execute_login_process(browser):
     try:
         open_site(browser)
         open_login_prompt(browser)
         enter_credentials(browser)
         confirm_login(browser)
+        return True
     except TimeoutException:
         print("Browser timed out while trying to execute login sequence.")
+        return False
+
+
+def account_login(browser):
+    print("\nWebdriver initialized, attempting to login...")
+    if not execute_login_process(browser):
+        print("Login sequence failed, attempting again before closing out.")
+        if not execute_login_process(browser):
+            browser.quit()
+            exit()
