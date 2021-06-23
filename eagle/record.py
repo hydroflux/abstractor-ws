@@ -6,6 +6,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from settings.export_settings import search_errors
+from settings.settings import execution_review
 from settings.file_management import (check_length, drop_last_entry,
                                       extrapolate_document_value, multiple_documents_comment)
 from settings.general_functions import (long_timeout, medium_nap, naptime,
@@ -97,7 +98,9 @@ def handle_document_image_status(browser, document):
     if document_image_exists(browser, document):
         wait_for_pdf_to_load(browser, document)
         # naptime()
-        # medium_nap()  # Use for review
+        if execution_review:
+            medium_nap()   # Adding a flag instead of having to comment the line our every time for review
+            # should probably be it's own function if continue using in this manner
         # IMPORTANT NOTES
         # 3) Procedurally, if download is in repository, OR  download is "FALSE", the wait should be longer
         return True
