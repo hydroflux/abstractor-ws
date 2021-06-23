@@ -69,6 +69,7 @@ def pdf_load_status(browser, document):
 
 def wait_for_pdf_to_load(browser, document):
     while pdf_load_status(browser, document).startswith(loading_status) or pdf_load_status == error_message_text:
+        print(f'hitting wait_for_pdf_to_load at {extrapolate_document_value(document)}')
         medium_nap()
         # Status Quo as of 06/23/21 changing to try & work with related documents issue
         # short_nap()  # using short_nap in order to try & grab all related documents
