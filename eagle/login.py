@@ -86,5 +86,6 @@ def account_login(browser):
     if not execute_login_process(browser):
         print("Login sequence failed, attempting again before closing out.")
         if not execute_login_process(browser):
+            print("Browser failed to properly login, please review & try again later.")
             browser.quit()
             exit()

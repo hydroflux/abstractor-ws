@@ -78,7 +78,7 @@ def handle_document_image_status(browser, document):
     if document_image_exists(browser, document):
         wait_for_pdf_to_load(browser, document)
         naptime()  # Remove after running successful 'review' test
-        medium_nap()  # Use for review
+        # medium_nap()  # Use for review
         # IMPORTANT NOTES
         # 1) Naptime + medium nap seems to capture EVERYTHING IF there are no downloads
         # If there is no download just to make sure that everything is captured. Period. Otherwise the current "naptime" seems to be
