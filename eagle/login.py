@@ -7,8 +7,9 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from settings.general_functions import timeout
 
-from eagle.eagle_variables import (credentials, logged_out_redirect_url, disclaimer_id, inaccessible, 
-                                   login_button_class, webpage_title, website)
+from eagle.eagle_variables import (credentials, disclaimer_id, inaccessible,
+                                   logged_out_redirect_url, login_button_class,
+                                   webpage_title, website)
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("login", __name__)

@@ -81,9 +81,8 @@ def handle_document_image_status(browser, document):
         # medium_nap()  # Use for review
         # IMPORTANT NOTES
         # 1) Naptime + medium nap seems to capture EVERYTHING IF there are no downloads
-        # If there is no download just to make sure that everything is captured. Period. Otherwise the current "naptime" seems to be
-        # Doing the trip appropriately--running another full scale test to double check again
-        # Overall this is a bad practice because it's adding 1 - 2 seconds for a
+        # 2) Naptime by itself MAY capture everything if the download is executed (this is most commonly the case)
+        # 3) Procedurally, if download is in repository, OR  download is "FALSE", the wait should be longer
         return True
     else:
         # This medium nap strategy seems to be the best way to handle no document image
