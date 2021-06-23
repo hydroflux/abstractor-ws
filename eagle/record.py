@@ -71,7 +71,7 @@ def wait_for_pdf_to_load(browser, document):
     while pdf_load_status(browser, document).startswith(loading_status) or pdf_load_status == error_message_text:
         print(f'hitting wait_for_pdf_to_load at {extrapolate_document_value(document)}')
         medium_nap()
-        # Status Quo as of 06/23/21 changing to try & work with related documents issue
+        # Status Quo (below) as of 06/23/21 changing to try & work with related documents issue
         # short_nap()  # using short_nap in order to try & grab all related documents
         # Consider changing to even naptime ~~~ originally 0.5 second sleep
         # Updating sleep time would be more efficient here because it would force a nap only
@@ -93,6 +93,9 @@ def wait_for_pdf_to_load(browser, document):
 
 # UNDER ALL THREE TESTS, A REVIEW IS TO BE DONE FOR
 # handle_document_image_status with a medium nap added
+# Keep all webdriver instances off screen in order to remain consistent
+# Remember to capture 1) total time & 2) number of matches / mistakes
+# Anything over 0 mistakes gets thrown out
 
 
 def handle_document_image_status(browser, document):
