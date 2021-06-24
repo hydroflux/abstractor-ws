@@ -3,10 +3,11 @@ from selenium.common.exceptions import (ElementClickInterceptedException, Javasc
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.common.keys import Keys
 from settings.file_management import (document_type, document_value,
                                       extrapolate_document_value,
                                       split_book_and_page)
-from settings.general_functions import (medium_nap, naptime, scroll_into_view,
+from settings.general_functions import (get_field_value, medium_nap, naptime, scroll_into_view,
                                         timeout)
 
 from eagle.eagle_variables import (book_search_id, clear_search_id,
@@ -83,10 +84,21 @@ def handle_document_number_search_field(browser, document):
     return instrument_search_field
 
 
+# This should certainly be relegated to general_functions
+# Process should be repeated for clear_search_field
+def fill_search_field(browser, handle_field_function, document, value):
+    while get_field_value(handle_field_function(browser, document)) != value:
+        handle_field_function(browser, document).send_keys(Keys.UP + value)
+
+
 def enter_document_number(browser, document):
     instrument_search_field = handle_document_number_search_field(browser, document)
     instrument_search_field.clear()
-    instrument_search_field.send_keys(document_value(document))
+    # If this works properly, it would seem that the best way to move forward is with a
+    # 'clear_search_field' function, otherwise returning a search field variable is unnecessary
+    # instrument_search_field.send_keys(document_value(document))
+    fill_search_field(browser, handle_document_number_search_field(browser, document),
+                      document, document_value(document))
 
 
 def locate_book_search_field(browser, book):
