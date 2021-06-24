@@ -90,7 +90,7 @@ def wait_for_pdf_to_load(browser, document):
 # naptime for wait_for_pdf_to_load
 # naptime for document_image_exists
 # RESULT: wait_for_pdf_to_load hit (2744994, 2644930)
-# COMMENTS: 
+# COMMENTS:
 
 # 3rd Test
 # medium_nap for wait_for_pdf_to_load
