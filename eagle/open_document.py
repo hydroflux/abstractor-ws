@@ -90,6 +90,17 @@ def get_search_results(browser, document):
 
 
 def count_results(browser, document):
+    try:
+        search_results = get_search_results(browser, document)
+        number_results = len(search_results)
+        return int(number_results)
+    except TypeError:
+        print(f'Encountered a "TypeError" trying to count search results for '
+              f'{extrapolate_document_value(document)}, please review.')
+        return None
+
+
+def handle_result_count(browser, document):
     search_status = wait_for_results(browser)
     if search_status == failed_search:
         print(f'Initial search failed, attempting to execute search again for '
@@ -99,11 +110,18 @@ def count_results(browser, document):
         print(f'No results located at {extrapolate_document_value(document)}, please review.')
         return 0
     else:
-        return int(len(get_search_results(browser, document)))
+        return count_results(browser, document)
+
+
+def process_result_count_from_search(browser, document):
+    result_count = handle_result_count(browser, document)
+    while result_count is None:
+        print(f'Result count returned "None" for '
+              f'{extrapolate_document_value(document)}, trying to execute search again.')
 
 
 def check_search_results(browser, document):
-    number_results = count_results(browser, document)
+    number_results = process_result_count_from_search(browser, document)
     document.number_results = number_results
     if number_results == 0:
         return False
