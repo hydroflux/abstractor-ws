@@ -104,6 +104,12 @@ def wait_for_pdf_to_load(browser, document):
 # Remember to capture 1) total time & 2) number of matches / mistakes
 # Anything over 0 mistakes gets thrown out
 
+# RESULTS OVERVIEW
+# keep medium nap for wait_for_pdf_to_load --- doesn't get hit that often & if the PDF isn't loaded
+# there's certainly going to be a low chance that the full document is loaded--adding a few extra seconds might be just
+# what is needed---still need to see the results of all tests to confirm what is going to work best
+# overall worst-case scenario is keep medium nap in document_image_exists, but will SEVERELY slow program execution
+
 
 def handle_document_image_status(browser, document):
     if document_image_exists(browser, document):
