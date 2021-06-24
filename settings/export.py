@@ -93,7 +93,8 @@ def set_font_formats(workbook):
         'footer': workbook.add_format(text_formats['footer']),
         'no_record': workbook.add_format(text_formats['no_record']),
         'multiple_documents': workbook.add_format(text_formats['multiple_documents']),
-        'no_document_image': workbook.add_format(text_formats['no_document_image']),
+        'no_image': workbook.add_format(text_formats['no_image']),
+        'out_of_county': workbook.add_format(text_formats['out_of_county'])
     }
 
 
@@ -281,11 +282,18 @@ def add_no_document_image_format(worksheet, worksheet_range, font_format):
     worksheet.conditional_format(worksheet_range, no_document_image_format)
 
 
+def add_out_of_county_format(worksheet, worksheet_range, font_format):
+    out_of_county_format = worksheet_properties['conditional_formats']['out_of_county_format']
+    out_of_county_format['format'] = font_format
+    worksheet.conditional_format(worksheet_range, out_of_county_format)
+
+
 def add_conditional_formatting(dataframe, worksheet, font_formats):
     worksheet_range = get_worksheet_range(dataframe)
     add_no_record_format(worksheet, worksheet_range, font_formats['no_record'])
     add_multiple_document_format(worksheet, worksheet_range, font_formats['multiple_documents'])
-    add_no_document_image_format(worksheet, worksheet_range, font_formats['no_document_image'])
+    add_no_document_image_format(worksheet, worksheet_range, font_formats['no_image'])
+    add_out_of_county_format(worksheet, worksheet_range, font_formats['out_of_county'])
 
 
 def format_xlsx_document(county, writer, dataframe, client=None, legal=None):
