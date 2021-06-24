@@ -70,7 +70,7 @@ def pdf_load_status(browser, document):
 def wait_for_pdf_to_load(browser, document):
     while pdf_load_status(browser, document).startswith(loading_status) or pdf_load_status == error_message_text:
         print(f'hitting wait_for_pdf_to_load at {extrapolate_document_value(document)}')
-        medium_nap()
+        naptime()
         # Status Quo (below) as of 06/23/21 changing to try & work with related documents issue
         # short_nap()  # using short_nap in order to try & grab all related documents
         # Consider changing to even naptime ~~~ originally 0.5 second sleep
@@ -83,7 +83,8 @@ def wait_for_pdf_to_load(browser, document):
 # medium_nap for wait_for_pdf_to_load
 # no_nap for document_image_exists
 # RESULT:
-# COMMENTS:
+# COMMENTS: One image container timeout (2976452 seen) which was handled without issue;
+        # NO WAIT FOR PDF TO LOAD HIT (so far);
 
 # 2nd Test:
 # naptime for wait_for_pdf_to_load
@@ -107,7 +108,7 @@ def wait_for_pdf_to_load(browser, document):
 def handle_document_image_status(browser, document):
     if document_image_exists(browser, document):
         wait_for_pdf_to_load(browser, document)
-        # naptime()   # Part of test 2 & test 3
+        naptime()   # Part of test 2 & test 3
         if execution_review:
             medium_nap()   # Adding a flag instead of having to comment the line our every time for review
             # should probably be it's own function if continue using in this manner
