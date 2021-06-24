@@ -114,6 +114,12 @@ def wait_for_pdf_to_load(browser, document):
 # loop encountered---possibly a fail timer or a jump back procedure, test for login, & then add an input to wait
 # for the user before moving forward
 
+# second screenshot has the "checking for error during processing" comment when hitting the login screen
+# quickest fix is to throw in the 'check_for_logout' ??? (can't remember if that's an actual function) or the
+# check for disclaimer from login as an alternative after 'browser timed out while trying to locate error message
+# also need to update the 'browser timed out while trying to locate error message after PDF load, because that
+# isn't the correct notation, following the pattern of timeouts; follow the timeout messages in the script
+# in order to determine the order of events that could have caused the base feedback messages to be sent
 
 def handle_document_image_status(browser, document):
     if document_image_exists(browser, document):
