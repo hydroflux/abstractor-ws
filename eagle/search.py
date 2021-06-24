@@ -80,6 +80,7 @@ def handle_document_number_field(browser, document):
     while type(instrument_search_field) is None:
         check_for_error(browser, document)
         instrument_search_field = locate_document_number_field(browser, document)
+    return instrument_search_field
 
 
 def enter_document_number(browser, document):
@@ -103,6 +104,7 @@ def handle_book_number_field(browser, document, book):
     while type(book_search_field) is None:
         check_for_error(browser, document)
         book_search_field = locate_book_search_field(browser, document)
+    return book_search_field
 
 
 def enter_book_number(browser, book):
