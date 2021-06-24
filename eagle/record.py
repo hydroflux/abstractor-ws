@@ -110,6 +110,10 @@ def wait_for_pdf_to_load(browser, document):
 # what is needed---still need to see the results of all tests to confirm what is going to work best
 # overall worst-case scenario is keep medium nap in document_image_exists, but will SEVERELY slow program execution
 
+# additionally, review the screen shot from 06/23 in order to determine the best fallback procedure for the infinite
+# loop encountered---possibly a fail timer or a jump back procedure, test for login, & then add an input to wait
+# for the user before moving forward
+
 
 def handle_document_image_status(browser, document):
     if document_image_exists(browser, document):
