@@ -135,6 +135,7 @@ def handle_document_image_status(browser, document):
     else:
         # This medium nap strategy seems to be the best way to handle no document image
         # there have been no issues so far, but also < 100 test cases with no image
+        # No document image exists print statement?
         medium_nap()
         return False
 

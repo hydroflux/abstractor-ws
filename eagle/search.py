@@ -61,7 +61,7 @@ def clear_search(browser, document):
             # medium_nap()  #  Commented out on June 22, 2021
             browser.back()  # Should work for JS exceptions--don't know about Element Click Interceptions
             medium_nap()
-            open_search()
+            open_search(browser)
 
 
 def locate_document_number_field(browser, document):
