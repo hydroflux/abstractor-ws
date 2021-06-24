@@ -75,8 +75,15 @@ def locate_document_number_field(browser, document):
               f'{extrapolate_document_value(document)}.')
 
 
-def enter_document_number(browser, document):
+def handle_document_number_field(browser, document):
     instrument_search_field = locate_document_number_field(browser, document)
+    while type(instrument_search_field) is None:
+        check_for_error(browser, document)
+        instrument_search_field = locate_document_number_field(browser, document)
+
+
+def enter_document_number(browser, document):
+    instrument_search_field = handle_document_number_field(browser, document)
     instrument_search_field.clear()
     instrument_search_field.send_keys(document_value(document))
 

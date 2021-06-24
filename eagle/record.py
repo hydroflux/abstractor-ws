@@ -84,7 +84,7 @@ def wait_for_pdf_to_load(browser, document):
 # no_nap for document_image_exists
 # RESULT:
 # COMMENTS: One image container timeout (2976452 seen) which was handled without issue;
-        # NO WAIT FOR PDF TO LOAD HIT (so far);
+    # wait_for_pdf_to_load @ 2948172, 3385344, 3492953
 
 # 2nd Test:
 # naptime for wait_for_pdf_to_load
@@ -127,7 +127,7 @@ def wait_for_pdf_to_load(browser, document):
 def handle_document_image_status(browser, document):
     if document_image_exists(browser, document):
         wait_for_pdf_to_load(browser, document)
-        naptime()   # Part of test 2 & test 3
+        # naptime()   # Part of test 2 & test 3
         if execution_review:
             medium_nap()   # Adding a flag instead of having to comment the line our every time for review
             # should probably be it's own function if continue using in this manner
