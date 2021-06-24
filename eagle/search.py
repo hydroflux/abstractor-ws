@@ -88,17 +88,32 @@ def enter_document_number(browser, document):
     instrument_search_field.send_keys(document_value(document))
 
 
-def enter_book_number(browser, book):
+def locate_book_search_field(browser, book):
     try:
         book_search_field_present = EC.presence_of_element_located((By.ID, book_search_id))
         WebDriverWait(browser, timeout).until(book_search_field_present)
         book_search_field = browser.find_element_by_id(book_search_id)
-        book_search_field.clear()
-        book_search_field.send_keys(book)
-        return True
+        return book_search_field
     except TimeoutException:
         print(f'Browser timed out trying to fill document field for Book: {book}.')
-        return False
+
+
+def handle_book_number_field(browser, document, book):
+    book_search_field = locate_book_search_field(browser, book)
+    while type(book_search_field) is None:
+        check_for_error(browser, document)
+        book_search_field = locate_book_search_field(browser, document)
+
+
+def enter_book_number(browser, book):
+    book_search_field = handle_book_number_field(browser, book)
+    book_search_field.clear()
+    book_search_field.send_keys(book)
+    # Why was this originally returning True or False???
+    #     return True
+    # except TimeoutException:
+    #     print(f'Browser timed out trying to fill document field for Book: {book}.')
+    #     return False
 
 
 def enter_page_number(browser, page):
