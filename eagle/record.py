@@ -82,14 +82,20 @@ def wait_for_pdf_to_load(browser, document):
 # 1st Test:
 # medium_nap for wait_for_pdf_to_load
 # no_nap for document_image_exists
+# RESULT:
+# COMMENTS:
 
 # 2nd Test:
 # naptime for wait_for_pdf_to_load
 # naptime for document_image_exists
+# RESULT:
+# COMMENTS:
 
 # 3rd Test
 # medium_nap for wait_for_pdf_to_load
 # naptime for document_image_exists
+# RESULT:
+# COMMENTS:
 
 # UNDER ALL THREE TESTS, A REVIEW IS TO BE DONE FOR
 # handle_document_image_status with a medium nap added
