@@ -99,7 +99,7 @@ def locate_book_search_field(browser, book):
         print(f'Browser timed out trying to fill document field for Book: {book}.')
 
 
-def handle_book_number_field(browser, document, book):
+def handle_book_search_field(browser, document, book):
     book_search_field = locate_book_search_field(browser, book)
     while type(book_search_field) is None:
         check_for_error(browser, document)
@@ -107,35 +107,43 @@ def handle_book_number_field(browser, document, book):
     return book_search_field
 
 
-def enter_book_number(browser, book):
-    book_search_field = handle_book_number_field(browser, book)
+def enter_book_number(browser, document, book):
+    book_search_field = handle_book_search_field(browser, document, book)
     book_search_field.clear()
     book_search_field.send_keys(book)
-    # Why was this originally returning True or False???
-    #     return True
-    # except TimeoutException:
-    #     print(f'Browser timed out trying to fill document field for Book: {book}.')
-    #     return False
+    return True  # This is dumb
 
 
-def enter_page_number(browser, page):
+def locate_page_search_field(browser, page):
     try:
         page_search_field_present = EC.presence_of_element_located((By.ID, page_search_id))
         WebDriverWait(browser, timeout).until(page_search_field_present)
         page_search_field = browser.find_element_by_id(page_search_id)
-        page_search_field.clear()
-        page_search_field.send_keys(page)
-        return True
+        return page_search_field
     except TimeoutException:
         print(f'Browser timed out trying to fill document field for Page: {page}.')
-        return False
+
+
+def handle_page_search_field(browser, document, page):
+    page_search_field = locate_book_search_field(browser, page)
+    while type(page_search_field) is None:
+        check_for_error(browser, document)
+        page_search_field = locate_page_search_field(browser, page)
+    return page_search_field
+
+
+def enter_page_number(browser, document, page):
+    page_search_field = handle_page_search_field(browser, document, page)
+    page_search_field.clear()
+    page_search_field.send_keys(page)
+    return True  # This is dumb
 
 
 def prepare_book_and_page_search(browser, document):
     book, page = split_book_and_page(document)
     ready = False
     while not ready:
-        if enter_book_number(browser, book) and enter_page_number(browser, page):
+        if enter_book_number(browser, document, book) and enter_page_number(browser, document, page):
             ready = True
         else:
             open_search(browser)
