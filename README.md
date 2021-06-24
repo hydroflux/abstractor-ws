@@ -35,6 +35,7 @@
 - [ ] Change "Document Found" so that it lists either "recorded" or "recorded & downloaded" instead of located
 - [ ] Look into github vulnerability link that's broken
 - [ ] Convert notes from demo into a proper README
+- [ ] Eagle browser can't handle x requests in y time period---perform tests across multiple computers (& more specifically IP addresses) in order to determine whether its the IP or the user account that is overworking the server
 
 ### Imports To Do
 

@@ -121,6 +121,9 @@ def wait_for_pdf_to_load(browser, document):
 # isn't the correct notation, following the pattern of timeouts; follow the timeout messages in the script
 # in order to determine the order of events that could have caused the base feedback messages to be sent
 
+# can't run multiple "tests" because of the number of requests per second / minute, however a REVIEW is possible to run
+# at the same time as an abstraction (something to remember when running multiple abstractions at once)
+
 def handle_document_image_status(browser, document):
     if document_image_exists(browser, document):
         wait_for_pdf_to_load(browser, document)
