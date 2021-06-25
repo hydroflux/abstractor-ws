@@ -83,14 +83,11 @@ def wait_for_pdf_to_load(browser, document):
 # medium_nap for wait_for_pdf_to_load
 # no_nap for document_image_exists
 # RESULT:
-# COMMENTS: One image container timeout (2976452 seen) which was handled without issue;
-    # wait_for_pdf_to_load @ 2948172, 3385344, 3492953, 2908161
 
 # 2nd Test:
 # naptime for wait_for_pdf_to_load
 # naptime for document_image_exists
-# RESULT: wait_for_pdf_to_load hit (2744994, 2644930)
-# COMMENTS:
+# RESULT:
 
 # 3rd Test
 # medium_nap for wait_for_pdf_to_load
