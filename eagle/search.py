@@ -155,6 +155,13 @@ def prepare_book_and_page_search(browser, document):
     enter_page_number(browser, document, page)
 
 
+def prepare_search(browser, document):
+    if document_type(document) == "document_number":
+        enter_document_number(browser, document)
+    elif document_type(document) == "book_and_page":
+        prepare_book_and_page_search(browser, document)
+
+
 def locate_search_button(browser):
     try:
         search_button_present = EC.element_to_be_clickable((By.ID, search_button_id))
@@ -175,8 +182,5 @@ def search(browser, document):
     open_search(browser)
     clear_search(browser, document)
     naptime()  # Consider testing without this nap to see if necessary
-    if document_type(document) == "document_number":
-        enter_document_number(browser, document)
-    elif document_type(document) == "book_and_page":
-        prepare_book_and_page_search(browser, document)
+    prepare_search(browser, document)
     execute_search(browser)
