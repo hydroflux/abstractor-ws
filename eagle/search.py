@@ -122,7 +122,7 @@ def enter_book_number(browser, document, book):
     book_search_field = handle_book_search_field(browser, document, book)
     book_search_field.clear()
     book_search_field.send_keys(book)
-    return True  # This is dumb
+    fill_search_field(handle_book_search_field(browser, document), book)
 
 
 def locate_page_search_field(browser, page):
@@ -146,8 +146,7 @@ def handle_page_search_field(browser, document, page):
 def enter_page_number(browser, document, page):
     page_search_field = handle_page_search_field(browser, document, page)
     page_search_field.clear()
-    page_search_field.send_keys(page)
-    return True  # This is dumb
+    fill_search_field(handle_page_search_field(browser, document), page)
 
 
 def prepare_book_and_page_search(browser, document):
