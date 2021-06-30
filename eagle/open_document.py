@@ -12,7 +12,7 @@ from eagle.eagle_variables import (currently_searching, failed_search,
                                    search_actions_class_name,
                                    search_result_class_name, search_status_tag,
                                    validation_class_name)
-from eagle.search import document_search, execute_search
+from eagle.search import search, execute_search
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("open", __name__)
@@ -34,7 +34,7 @@ def validate_search(browser, document):
 def retry_search(browser, document):
     browser.refresh()
     naptime()
-    document_search(browser, document)
+    search(browser, document)
 
 
 def get_search_status(browser):

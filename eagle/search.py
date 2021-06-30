@@ -72,7 +72,7 @@ def locate_document_number_search_field(browser, document):
         instrument_search_field = browser.find_element_by_id(instrument_search_id)
         return instrument_search_field
     except TimeoutException:
-        print(f'Browser timed out trying to locate document field for document number '
+        print(f'Browser timed out trying to locate search field for '
               f'{extrapolate_document_value(document)}.')
 
 
@@ -167,6 +167,8 @@ def execute_search(browser):
 def search(browser, document):
     open_search(browser)
     clear_search(browser, document)   # This can probably be dropped if clear_search_field is working properly
+    # but additional adjustments need to be made in order to handle the same exceptions that are processed
+    # with clear search
     naptime()  # Consider testing without this nap to see if necessary
     prepare_search(browser, document)
     execute_search(browser)
