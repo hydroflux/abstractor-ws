@@ -2,6 +2,7 @@ from datetime import datetime
 from pprint import pprint
 from random import randint
 from time import sleep
+from selenium.webdriver.common.keys import Keys
 
 from settings.classes.counties import county_dictionary
 from settings.settings import abstraction_type
@@ -179,3 +180,8 @@ def get_direct_link(document_link):
 
 def get_field_value(field):
     return field.get_attribute("value").strip()
+
+
+def fill_search_field(handle_field_function, value):
+    while get_field_value(handle_field_function) != value:
+        handle_field_function.send_keys(Keys.UP + value)

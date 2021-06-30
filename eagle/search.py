@@ -3,11 +3,10 @@ from selenium.common.exceptions import (ElementClickInterceptedException, Javasc
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.common.keys import Keys
 from settings.file_management import (document_type, document_value,
                                       extrapolate_document_value,
                                       split_book_and_page)
-from settings.general_functions import (get_field_value, medium_nap, naptime, scroll_into_view,
+from settings.general_functions import (medium_nap, naptime, scroll_into_view, fill_search_field,
                                         timeout)
 
 from eagle.eagle_variables import (book_search_id, clear_search_id,
@@ -82,13 +81,6 @@ def handle_document_number_search_field(browser, document):
         check_for_error(browser, document)
         instrument_search_field = locate_document_number_search_field(browser, document)
     return instrument_search_field
-
-
-# This should certainly be relegated to general_functions
-# Process should be repeated for clear_search_field
-def fill_search_field(handle_field_function, value):
-    while get_field_value(handle_field_function) != value:
-        handle_field_function.send_keys(Keys.UP + value)
 
 
 def enter_document_number(browser, document):
