@@ -182,6 +182,11 @@ def get_field_value(field):
     return field.get_attribute("value").strip()
 
 
+def clear_search_field(handle_field_function):
+    while get_field_value(handle_field_function) != "":
+        handle_field_function.clear()
+
+
 def fill_search_field(handle_field_function, value):
     while get_field_value(handle_field_function) != value:
         handle_field_function.send_keys(Keys.UP + value)

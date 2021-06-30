@@ -1,12 +1,13 @@
-from selenium.common.exceptions import (ElementClickInterceptedException, JavascriptException,
-                                        TimeoutException)
+from selenium.common.exceptions import (ElementClickInterceptedException,
+                                        JavascriptException, TimeoutException)
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from settings.file_management import (document_type, document_value,
                                       extrapolate_document_value,
                                       split_book_and_page)
-from settings.general_functions import (medium_nap, naptime, scroll_into_view, fill_search_field,
+from settings.general_functions import (clear_search_field, fill_search_field,
+                                        medium_nap, naptime, scroll_into_view,
                                         timeout)
 
 from eagle.eagle_variables import (book_search_id, clear_search_id,
@@ -71,7 +72,7 @@ def locate_document_number_search_field(browser, document):
         instrument_search_field = browser.find_element_by_id(instrument_search_id)
         return instrument_search_field
     except TimeoutException:
-        print(f'Browser timed out trying to fill document field for document number '
+        print(f'Browser timed out trying to locate document field for document number '
               f'{extrapolate_document_value(document)}.')
 
 
@@ -84,11 +85,7 @@ def handle_document_number_search_field(browser, document):
 
 
 def enter_document_number(browser, document):
-    instrument_search_field = handle_document_number_search_field(browser, document)
-    instrument_search_field.clear()
-    # If this works properly, it would seem that the best way to move forward is with a
-    # 'clear_search_field' function, otherwise returning a search field variable is unnecessary
-    # instrument_search_field.send_keys(document_value(document))
+    clear_search_field(handle_document_number_search_field(browser, document))
     fill_search_field(handle_document_number_search_field(browser, document), document_value(document))
 
 
@@ -99,7 +96,7 @@ def locate_book_search_field(browser, book):
         book_search_field = browser.find_element_by_id(book_search_id)
         return book_search_field
     except TimeoutException:
-        print(f'Browser timed out trying to fill document field for Book: {book}.')
+        print(f'Browser timed out trying to locate document field for Book: {book}.')
 
 
 def handle_book_search_field(browser, document, book):
@@ -111,9 +108,7 @@ def handle_book_search_field(browser, document, book):
 
 
 def enter_book_number(browser, document, book):
-    book_search_field = handle_book_search_field(browser, document, book)
-    book_search_field.clear()
-    book_search_field.send_keys(book)
+    clear_search_field(handle_book_search_field(browser, document))
     fill_search_field(handle_book_search_field(browser, document), book)
 
 
@@ -136,8 +131,7 @@ def handle_page_search_field(browser, document, page):
 
 
 def enter_page_number(browser, document, page):
-    page_search_field = handle_page_search_field(browser, document, page)
-    page_search_field.clear()
+    clear_search_field(handle_page_search_field(browser, document))
     fill_search_field(handle_page_search_field(browser, document), page)
 
 
@@ -172,7 +166,7 @@ def execute_search(browser):
 
 def search(browser, document):
     open_search(browser)
-    clear_search(browser, document)
+    clear_search(browser, document)   # This can probably be dropped if clear_search_field is working properly
     naptime()  # Consider testing without this nap to see if necessary
     prepare_search(browser, document)
     execute_search(browser)
