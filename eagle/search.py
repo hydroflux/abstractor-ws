@@ -151,14 +151,8 @@ def enter_page_number(browser, document, page):
 
 def prepare_book_and_page_search(browser, document):
     book, page = split_book_and_page(document)
-    ready = False
-    while not ready:
-        if enter_book_number(browser, document, book) and enter_page_number(browser, document, page):
-            ready = True
-        else:
-            # Comment added 21/06/26 -- remove if determined unnecessary during testing
-            print("Book & page search fields prepared incorrectly, trying again.")
-            open_search(browser)
+    enter_book_number(browser, document, book)
+    enter_page_number(browser, document, page)
 
 
 def locate_search_button(browser):
