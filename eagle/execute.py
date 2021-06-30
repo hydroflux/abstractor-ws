@@ -12,7 +12,7 @@ from eagle.download import download_document
 from eagle.login import account_login
 from eagle.open_document import open_document
 from eagle.record import get_reception_number, next_result, record_document
-from eagle.search import document_search
+from eagle.search import search
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("execute", __name__)
@@ -80,7 +80,7 @@ def handle_search_results(browser, county, target_directory,
 def search_documents_from_list(browser, county, target_directory, document_list):
     for document in document_list:
         start_time = start_timer()
-        document_search(browser, document)
+        search(browser, document)
         if open_document(browser, document):
             handle_search_results(browser, county, target_directory,
                                   document_list, document, start_time)
@@ -107,7 +107,7 @@ def execute_program(county, target_directory, document_list, file_name):
 def review_documents_from_list(browser, county, target_directory, document_list):
     for document in document_list:
         start_time = start_timer()
-        document_search(browser, document)
+        search(browser, document)
         if open_document(browser, document):
             handle_search_results(browser, county, target_directory,
                                   document_list, document, start_time, 'review')
@@ -118,7 +118,7 @@ def review_documents_from_list(browser, county, target_directory, document_list)
 def download_documents_from_list(browser, county, target_directory, document_list):
     for document in document_list:
         start_time = start_timer()
-        document_search(browser, document)
+        search(browser, document)
         if open_document(browser, document):
             handle_search_results(browser, county, target_directory,
                                   document_list, document, start_time, 'download')

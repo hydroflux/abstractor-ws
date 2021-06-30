@@ -171,7 +171,7 @@ def execute_search(browser):
     search_button.click()
 
 
-def document_search(browser, document):
+def search(browser, document):
     open_search(browser)
     clear_search(browser, document)
     naptime()  # Consider testing without this nap to see if necessary
