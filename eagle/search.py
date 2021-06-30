@@ -86,9 +86,9 @@ def handle_document_number_search_field(browser, document):
 
 # This should certainly be relegated to general_functions
 # Process should be repeated for clear_search_field
-def fill_search_field(browser, handle_field_function, document, value):
-    while get_field_value(handle_field_function(browser, document)) != value:
-        handle_field_function(browser, document).send_keys(Keys.UP + value)
+def fill_search_field(handle_field_function, value):
+    while get_field_value(handle_field_function) != value:
+        handle_field_function.send_keys(Keys.UP + value)
 
 
 def enter_document_number(browser, document):
@@ -97,8 +97,7 @@ def enter_document_number(browser, document):
     # If this works properly, it would seem that the best way to move forward is with a
     # 'clear_search_field' function, otherwise returning a search field variable is unnecessary
     # instrument_search_field.send_keys(document_value(document))
-    fill_search_field(browser, handle_document_number_search_field(browser, document),
-                      document, document_value(document))
+    fill_search_field(handle_document_number_search_field(browser, document), document_value(document))
 
 
 def locate_book_search_field(browser, book):
