@@ -2,7 +2,7 @@ import os
 
 from pandas import DataFrame, ExcelWriter
 
-from settings.export_settings import (authorship, full_disclaimer,
+from settings.export_settings import (authorship, full_disclaimer, source,
                                       text_formats, worksheet_properties)
 # from settings.hyperlink import add_hyperlinks
 from settings.settings import abstraction_type
@@ -27,7 +27,7 @@ def transform_dictionary(dictionary):
 
 def create_output_file(file_name):
     abstraction_export = '-'.join(abstraction_type.upper().split(' '))
-    return f'{file_name.upper()}-{abstraction_export}.xlsx'
+    return f'{source}-{file_name.upper()}-{abstraction_export}.xlsx'
 
 
 def create_excel_writer(output_file):
