@@ -11,6 +11,10 @@ def drop_ds_store(file):
         return True
 
 
+def create_hyperlink_path(document_directory, file):
+    return f'{document_directory}/{file}'
+
+
 def write_hyperlink_url():
     pass
 
@@ -18,4 +22,5 @@ def write_hyperlink_url():
 def write_temporary_hyperlinks(county, document_directory, hyperlink_sheet, hyperlink_format):
     for file in sorted(os.listdir(document_directory)):
         if not drop_ds_store(file):
-            write_hyperlink_url()
+            path = create_hyperlink_path(document_directory, file)
+            write_hyperlink_url(path)
