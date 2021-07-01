@@ -205,3 +205,7 @@ def remove_prefix(string, prefix):
 
 def remove_file_suffix(file_name):
     return file_name[:file_name.rfind(".")]
+
+
+def strip_document_number_from_file_name(file_name):
+    return remove_file_suffix(remove_prefix(file_name, "-"))

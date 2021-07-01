@@ -1,4 +1,5 @@
 import os
+from settings.file_management import strip_document_number_from_file_name
 
 # The purposed of this script is to create hyperlinks for abstract exports
 # it's "temporary" because the ideal situation will be to add hyperlinks directly into
@@ -23,14 +24,10 @@ def create_hyperlink_cell(row):
     return f'A{row}'
 
 
-def create_hyperlink_name():
-    pass
-
-
 def write_hyperlink_url(document_directory, file, sheet, format, row):
     path = create_hyperlink_path(document_directory, file)
     cell = create_hyperlink_cell(row)
-    name = create_hyperlink_name()
+    name = strip_document_number_from_file_name(file)
     sheet.write_url(cell, path, format, name)
 
 
