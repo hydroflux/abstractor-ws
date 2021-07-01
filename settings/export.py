@@ -2,10 +2,10 @@ import os
 
 from pandas import DataFrame, ExcelWriter
 
-from settings.export_settings import (authorship, full_disclaimer, source,
+from settings.export_settings import (authorship, full_disclaimer,
                                       text_formats, worksheet_properties)
 # from settings.hyperlink import add_hyperlinks
-from settings.settings import abstraction_type
+from settings.settings import abstraction_type, source
 
 # from .assets import draft_watermark as draft_watermark
 
