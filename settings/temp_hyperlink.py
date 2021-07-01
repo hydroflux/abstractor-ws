@@ -27,17 +27,17 @@ def create_hyperlink_name():
     pass
 
 
-def write_hyperlink_url(document_directory, file, hyperlink_sheet, hyperlink_format):
+def write_hyperlink_url(document_directory, file, sheet, format, row):
     path = create_hyperlink_path(document_directory, file)
-    cell = create_hyperlink_cell()
+    cell = create_hyperlink_cell(row)
     name = create_hyperlink_name()
-    hyperlink_sheet.write_url(cell, path, hyperlink_format, name)
+    sheet.write_url(cell, path, format, name)
 
 
-def write_temporary_hyperlinks(county, document_directory, hyperlink_sheet, hyperlink_format):
+def write_temporary_hyperlinks(document_directory, sheet, format):
     sorted_directory = get_sorted_directory(document_directory)
     for file in sorted_directory:
         row = 1
         if not drop_ds_store(file):
-            write_hyperlink_url(document_directory, file, hyperlink_sheet, hyperlink_format, row)
+            write_hyperlink_url(document_directory, file, sheet, format, row)
             row += 1

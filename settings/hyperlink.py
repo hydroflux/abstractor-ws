@@ -1,16 +1,8 @@
 import os
 from settings.classes.Hyperlink import Hyperlink
-from settings.file_management import access_document_directory, document_directory_exists
+from settings.file_management import access_document_directory, document_directory_exists, remove_file_suffix, remove_prefix
 
 from settings.export_settings import worksheet_properties
-
-
-def remove_prefix(string, prefix):
-    return string[(string.find(prefix) + 1):]
-
-
-def remove_file_suffix(file_name):
-    return file_name[:file_name.rfind(".")]
 
 
 def strip_document_number_from_file_name(file_name):

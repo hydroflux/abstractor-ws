@@ -311,12 +311,12 @@ def create_hyperlink_sheet(workbook):
     return workbook.add_worksheet("Hyperlink").set_column('A:A', 20)
 
 
-def add_hyperlink_sheet(county, target_directory, workbook):
+def add_hyperlink_sheet(target_directory, workbook):
     if document_directory_exists(target_directory):
         hyperlink_format = workbook.add_format(text_formats['hyperlink'])
         hyperlink_sheet = create_hyperlink_sheet(workbook)
         document_directory = access_document_directory(target_directory)
-        write_temporary_hyperlinks(county, document_directory, hyperlink_sheet, hyperlink_format)
+        write_temporary_hyperlinks(document_directory, hyperlink_sheet, hyperlink_format)
         os.chdir(target_directory)  # Is this necessary?
 
 
@@ -334,7 +334,7 @@ def export_document(county, target_directory, file_name, dictionary, client=None
     # add_hyperlinks(target_directory, dataframe)
     output_file, writer = create_xlsx_document(target_directory, file_name, dataframe)
     workbook = format_xlsx_document(county, writer, dataframe, client, legal)
-    add_hyperlink_sheet(county, target_directory, workbook)
+    add_hyperlink_sheet(target_directory, workbook)
     # finalize_xlsx_document(county, writer, dataframe, client, legal)
     close_workbook(workbook)
     return output_file

@@ -197,3 +197,11 @@ def bundle_project(target_directory, abstraction):
     move_abstraction_into_project_folder(target_directory, project_folder, abstraction)
     move_downloaded_documents(target_directory, project_folder)
     # shutil.move(f'{target_directory}/{file_name}.xlsx', project_folder)
+
+
+def remove_prefix(string, prefix):
+    return string[(string.find(prefix) + 1):]
+
+
+def remove_file_suffix(file_name):
+    return file_name[:file_name.rfind(".")]
