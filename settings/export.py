@@ -1,4 +1,5 @@
 import os
+from settings.temp_hyperlink import write_temporary_hyperlinks
 
 from pandas import DataFrame, ExcelWriter
 
@@ -305,6 +306,11 @@ def format_xlsx_document(county, writer, dataframe, client=None, legal=None):
     return workbook
 
 
+def add_hyperlink_sheet(workbook):
+    hyperlink_sheet = workbook.add_worksheet()
+    write_temporary_hyperlinks(hyperlink_sheet)
+
+
 def close_workbook(workbook):
     workbook.close()
 
@@ -319,6 +325,7 @@ def export_document(county, target_directory, file_name, dictionary, client=None
     # add_hyperlinks(target_directory, dataframe)
     output_file, writer = create_xlsx_document(target_directory, file_name, dataframe)
     workbook = format_xlsx_document(county, writer, dataframe, client, legal)
+    add_hyperlink_sheet(workbook)
     # finalize_xlsx_document(county, writer, dataframe, client, legal)
     close_workbook(workbook)
     return output_file
