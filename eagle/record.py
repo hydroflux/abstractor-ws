@@ -70,57 +70,14 @@ def pdf_load_status(browser, document):
 def wait_for_pdf_to_load(browser, document):
     while pdf_load_status(browser, document).startswith(loading_status) or pdf_load_status == error_message_text:
         print(f'hitting wait_for_pdf_to_load at {extrapolate_document_value(document)}')
-        # medium_nap()
-        naptime()
+        medium_nap()
+        # naptime()
         # Status Quo (below) as of 06/23/21 changing to try & work with related documents issue
         # short_nap()  # using short_nap in order to try & grab all related documents
         # Consider changing to even naptime ~~~ originally 0.5 second sleep
         # Updating sleep time would be more efficient here because it would force a nap only
         # If the  PDF hasn't loaded properly
 
-
-# RUNNING 3 SEPARATE TESTS
-# 1st Test:
-# medium_nap for wait_for_pdf_to_load
-# no_nap for document_image_exists
-# RESULT:
-
-# 2nd Test:
-# naptime for wait_for_pdf_to_load
-# naptime for document_image_exists
-# RESULT:
-
-# 3rd Test
-# medium_nap for wait_for_pdf_to_load
-# naptime for document_image_exists
-# RESULT:
-# COMMENTS:
-
-# UNDER ALL THREE TESTS, A REVIEW IS TO BE DONE FOR
-# handle_document_image_status with a medium nap added
-# Keep all webdriver instances off screen in order to remain consistent
-# Remember to capture 1) total time & 2) number of matches / mistakes
-# Anything over 0 mistakes gets thrown out
-
-# RESULTS OVERVIEW
-# keep medium nap for wait_for_pdf_to_load --- doesn't get hit that often & if the PDF isn't loaded
-# there's certainly going to be a low chance that the full document is loaded--adding a few extra seconds might be just
-# what is needed---still need to see the results of all tests to confirm what is going to work best
-# overall worst-case scenario is keep medium nap in document_image_exists, but will SEVERELY slow program execution
-
-# additionally, review the screen shot from 06/23 in order to determine the best fallback procedure for the infinite
-# loop encountered---possibly a fail timer or a jump back procedure, test for login, & then add an input to wait
-# for the user before moving forward
-
-# second screenshot has the "checking for error during processing" comment when hitting the login screen
-# quickest fix is to throw in the 'check_for_logout' ??? (can't remember if that's an actual function) or the
-# check for disclaimer from login as an alternative after 'browser timed out while trying to locate error message
-# also need to update the 'browser timed out while trying to locate error message after PDF load, because that
-# isn't the correct notation, following the pattern of timeouts; follow the timeout messages in the script
-# in order to determine the order of events that could have caused the base feedback messages to be sent
-
-# can't run multiple "tests" because of the number of requests per second / minute, however a REVIEW is possible to run
-# at the same time as an abstraction (something to remember when running multiple abstractions at once)
 
 def handle_document_image_status(browser, document):
     if document_image_exists(browser, document):
