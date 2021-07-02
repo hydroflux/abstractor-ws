@@ -7,7 +7,7 @@ from pandas import DataFrame, ExcelWriter
 from settings.export_settings import (authorship, full_disclaimer,
                                       text_formats, worksheet_properties)
 # from settings.hyperlink import add_hyperlinks
-from settings.settings import abstraction_type, source
+from settings.settings import abstraction_type
 
 # from .assets import draft_watermark as draft_watermark
 
@@ -29,7 +29,7 @@ def transform_dictionary(dictionary):
 
 def create_output_file(file_name):
     abstraction_export = '-'.join(abstraction_type.upper().split(' '))
-    return f'{source}-{file_name.upper()}-{abstraction_export}.xlsx'
+    return f'{file_name.upper()}-{abstraction_export}.xlsx'
 
 
 def create_excel_writer(output_file):
@@ -308,7 +308,9 @@ def format_xlsx_document(county, writer, dataframe, client=None, legal=None):
 
 
 def create_hyperlink_sheet(workbook):
-    return workbook.add_worksheet("Hyperlink").set_column('A:A', 20)
+    hyperlink_sheet = workbook.add_worksheet("Hyperlink")
+    hyperlink_sheet.set_column('A:A', 20)
+    return hyperlink_sheet
 
 
 def add_hyperlink_sheet(target_directory, workbook):

@@ -5,6 +5,9 @@ from settings.file_management import strip_document_number_from_file_name
 # it's "temporary" because the ideal situation will be to add hyperlinks directly into
 # final product, but hit a roadblock which needs to be addressed later
 
+# Note that this is creating a hyperlink for each file in the directory, rather than
+# based on the document frame
+
 
 def get_sorted_directory(directory):
     return sorted(os.listdir(directory))
@@ -32,8 +35,8 @@ def write_hyperlink_url(document_directory, file, sheet, format, row):
 
 
 def write_temporary_hyperlinks(document_directory, sheet, format):
+    row = 1
     for file in get_sorted_directory(document_directory):
-        row = 1
         if not drop_ds_store(file):
             write_hyperlink_url(document_directory, file, sheet, format, row)
             row += 1
