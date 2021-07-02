@@ -96,6 +96,7 @@ def check_login_status(browser):
         if read_login_message(browser) != credentials[3]:
             print('Browser logged out, attempting to log back in.')
             log_back_in(browser)
+            return True
 
 
 def execute_login_process(browser):
