@@ -1,10 +1,10 @@
-# Use the following print statement to identify the best way to manage imports for Django vs the script folder
-print("bad_search", __name__)
-
 from settings.error_handling import no_image_comment
 from settings.export_settings import search_errors
 from settings.file_management import (document_type, document_value,
                                       extrapolate_document_value)
+
+# Use the following print statement to identify the best way to manage imports for Django vs the script folder
+print("bad_search", __name__)
 
 
 def add_bad_search_key_values(dataframe, document):
