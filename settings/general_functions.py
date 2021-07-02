@@ -42,7 +42,6 @@ def bell():
 
 
 def stop_timer(start_time):
-    bell()
     return datetime.now() - start_time
 
 
