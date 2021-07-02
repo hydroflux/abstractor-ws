@@ -92,7 +92,7 @@ def log_back_in(browser):
 
 def check_login_status(browser):
     while browser.current_url == logged_out_redirect_url:
-        print('Web driver timed out, checking login status...')
+        print('Browser redirected to login screen, checking login status & returning to search.')
         if read_login_message(browser) != credentials[3]:
             print('Browser logged out, attempting to log back in.')
             log_back_in(browser)
