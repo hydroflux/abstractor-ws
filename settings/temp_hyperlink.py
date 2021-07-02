@@ -21,19 +21,18 @@ def create_hyperlink_path(document_directory, file):
 
 
 def create_hyperlink_cell(row):
-    return f'A{row}'
+    return f'A{str(row)}'
 
 
 def write_hyperlink_url(document_directory, file, sheet, format, row):
-    path = create_hyperlink_path(document_directory, file)
     cell = create_hyperlink_cell(row)
+    path = create_hyperlink_path(document_directory, file)
     name = strip_document_number_from_file_name(file)
     sheet.write_url(cell, path, format, name)
 
 
 def write_temporary_hyperlinks(document_directory, sheet, format):
-    sorted_directory = get_sorted_directory(document_directory)
-    for file in sorted_directory:
+    for file in get_sorted_directory(document_directory):
         row = 1
         if not drop_ds_store(file):
             write_hyperlink_url(document_directory, file, sheet, format, row)

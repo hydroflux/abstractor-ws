@@ -3,7 +3,8 @@ import os
 from settings.classes.Hyperlink import Hyperlink
 from settings.export_settings import worksheet_properties
 from settings.file_management import (access_document_directory,
-                                      document_directory_exists, strip_document_number_from_file_name)
+                                      document_directory_exists,
+                                      strip_document_number_from_file_name)
 
 
 def get_directory_files(directory):
