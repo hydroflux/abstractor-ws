@@ -19,17 +19,21 @@ def drop_ds_store(file):
         return True
 
 
-def create_hyperlink_path(document_directory, file):
-    return f'{document_directory}/{file}'
-
-
 def create_hyperlink_cell(row):
     return f'A{str(row)}'
 
 
-def write_hyperlink_url(document_directory, file, sheet, format, row):
+def get_current_folder_name():
+    return os.getcwd().split('/')[-1]
+
+
+def create_hyperlink_path(file):
+    return f'{get_current_folder_name()}/{file}'
+
+
+def write_hyperlink_url(file, sheet, format, row):
     cell = create_hyperlink_cell(row)
-    path = create_hyperlink_path(document_directory, file)
+    path = create_hyperlink_path(file)
     name = strip_document_number_from_file_name(file)
     sheet.write_url(cell, path, format, name)
 
@@ -38,5 +42,5 @@ def write_temporary_hyperlinks(document_directory, sheet, format):
     row = 1
     for file in get_sorted_directory(document_directory):
         if not drop_ds_store(file):
-            write_hyperlink_url(document_directory, file, sheet, format, row)
+            write_hyperlink_url(file, sheet, format, row)
             row += 1
