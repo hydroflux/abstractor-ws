@@ -9,7 +9,7 @@ from settings.general_functions import timeout
 
 from eagle.eagle_variables import (credentials, disclaimer_id, inaccessible,
                                    logged_out_redirect_url, login_button_class,
-                                   webpage_title, website)
+                                   fallback_search_url, webpage_title, website)
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("login", __name__)
@@ -91,12 +91,12 @@ def log_back_in(browser):
 
 
 def check_login_status(browser):
-    if browser.current_url == logged_out_redirect_url:
+    while browser.current_url == logged_out_redirect_url:
         print('Web driver timed out, checking login status...')
         if read_login_message(browser) != credentials[3]:
             print('Browser logged out, attempting to log back in.')
             log_back_in(browser)
-            return True
+        browser.get(fallback_search_url)
 
 
 def execute_login_process(browser):

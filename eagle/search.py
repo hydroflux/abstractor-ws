@@ -22,8 +22,7 @@ print("search", __name__)
 
 def open_search(browser):
     browser.get(search_url)
-    if not check_login_status(browser):
-        browser.get(search_url)  # Try here, if unsuccessful move to after open_search
+    check_login_status(browser)  # Try here, if unsuccessful move to after open_search
     assert search_title
 
 
