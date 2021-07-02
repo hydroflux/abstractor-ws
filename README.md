@@ -46,7 +46,6 @@
 ### Exports To Do
 
 - [ ] Add hyperlinks before exporting (working on now)
-- [ ] Create separate "hyperlink" sheet with export until able to figure out how to properly 'replace' file numbers with links
 
 ### Leopard To Do
 
