@@ -82,7 +82,7 @@ def wait_for_pdf_to_load(browser, document):
 def handle_document_image_status(browser, document):
     if document_image_exists(browser, document):
         wait_for_pdf_to_load(browser, document)
-        naptime()   # Part of test 2 & test 3
+        # naptime()   # Part of test 2 & test 3
         if execution_review:
             medium_nap()   # Adding a flag instead of having to comment the line our every time for review
             # should probably be it's own function if continue using in this manner
@@ -243,7 +243,8 @@ def record_legal_data(document_table, dataframe):
     else:
         legal = legal_data[-1].text
         if legal.endswith(search_errors[4]):
-            legal = legal[:-11]  # Might make more sense to make this a .strip with -10 rather than -11
+            legal = legal.strip()  # Running along with test 1
+            # legal = legal[:-11] # Might make more sense to make this a .strip with -10 rather than -11
         dataframe["Legal"].append(legal)
 
 
