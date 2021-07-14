@@ -39,16 +39,6 @@ def execute_login(browser):
     assert_window_title(browser, post_login_title)
 
 
-def locate_disclaimer_button(browser):
-    try:
-        disclaimer_button_present = EC.element_to_be_clickable((By.ID, disclaimer_button_id))
-        WebDriverWait(browser, timeout).until(disclaimer_button_present)
-        disclaimer_button = browser.find_element_by_id(disclaimer_button_id)
-        return disclaimer_button
-    except TimeoutException:
-        print('Browser timed out trying to locate disclaimer button, please review.')
-
-
 def handle_disclaimer(browser):
     switch_to_main_frame(browser)
     javascript_script_execution(browser, disclaimer_script)
@@ -69,6 +59,10 @@ def verify_login(browser):
     welcome_message = locate_post_login_message(browser)
     if welcome_message.text == post_login_text:
         print('\nLogin successful, continuing program execution.')
+    else:
+        print('\nBrowser failed to successfully login, exiting program.')
+        browser.quit()
+        exit()
 
 
 def account_login(browser):
