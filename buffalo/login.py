@@ -1,3 +1,7 @@
+from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.wait import WebDriverWait
 from settings.general_functions import assert_window_title, timeout
 
 from buffalo.buffalo_variables import (credentials, website, website_title)
@@ -9,3 +13,13 @@ def open_site(browser):
         print('Browser failed to successfully open site, please review.')
         browser.close()
         quit()
+
+
+def locate_login_field(browser, prompt_name, type):
+    try:
+        login_prompt_present = EC.presence_of_element_located((By.NAME, prompt_name))
+        WebDriverWait(browser, timeout).until(login_prompt_present)
+        login_prompt = browser.find_element_by_name(prompt_name)
+        return login_prompt
+    except TimeoutException:
+        print(f'Browser timed out trying to locate {type} prompt, please review.')
