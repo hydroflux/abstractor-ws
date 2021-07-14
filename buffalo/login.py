@@ -2,9 +2,9 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-from settings.general_functions import assert_window_title, fill_search_field, timeout
+from settings.general_functions import assert_window_title, fill_search_field, javascript_script_execution, timeout
 
-from buffalo.buffalo_variables import (credentials, website, website_title)
+from buffalo.buffalo_variables import (credentials, website, website_title, login_script, disclaimer_button_id)
 
 
 def open_site(browser):
@@ -34,7 +34,22 @@ def submit_password(browser):
 
 
 def execute_login(browser):
-    pass
+    javascript_script_execution(browser, login_script)
+
+
+def locate_disclaimer_button(browser):
+    try:
+        disclaimer_button_present = EC.element_to_be_clickable((By.ID, disclaimer_button_id))
+        WebDriverWait(browser, timeout).until(disclaimer_button_present)
+        disclaimer_button = browser.find_element_by_id(disclaimer_button_id)
+        return disclaimer_button
+    except TimeoutException:
+        print('Browser timed out trying to locate disclaimer button, please review.')
+
+
+def handle_disclaimer(browser):
+    disclaimer_button = locate_disclaimer_button(browser)
+    disclaimer_button.click()
 
 
 def verify_login(browser):
