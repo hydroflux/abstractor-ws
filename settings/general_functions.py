@@ -189,3 +189,9 @@ def clear_search_field(handle_field_function):
 def fill_search_field(handle_field_function, value):
     while get_field_value(handle_field_function) != value:
         handle_field_function.send_keys(Keys.UP + value)
+
+
+# Used for crocodile, performing the same function as "fill_search_field" but not as effectively
+# please review
+def enter_field_information(field, information):
+    field.send_keys(information)
