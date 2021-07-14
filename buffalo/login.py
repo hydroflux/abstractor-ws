@@ -1,11 +1,15 @@
-from buffalo.frame_handling import switch_to_main_frame
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-from settings.general_functions import assert_window_title, fill_search_field, javascript_script_execution, timeout
+from settings.general_functions import (assert_window_title, fill_search_field,
+                                        javascript_script_execution, timeout)
 
-from buffalo.buffalo_variables import (credentials, website, website_title, login_script, disclaimer_button_id, disclaimer_script, post_login_title, post_login_text, welcome_message_id)
+from buffalo.buffalo_variables import (credentials, disclaimer_script,
+                                       login_script, post_login_text,
+                                       post_login_title, website,
+                                       website_title, welcome_message_id)
+from buffalo.frame_handling import switch_to_main_frame
 
 
 def open_site(browser):
