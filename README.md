@@ -115,6 +115,14 @@
 - [ ] Refactor crocodile record---probably into a check_index function and an aggregate function
 - [ ] Name search currently only works with a "first name" / "last name" split--needs to be more robust to work in multiple scenarios
 
+### Buffalo To Do
+
+- [ ] Add all buffalo scripts (execute, logout, search, open, record, download)
+- [ ] Integrate buffalo scripts to work with the top level environment file
+- [ ] Create a convert_document_numbers script
+- [ ] Create an "execution", "review", & "download only" option for execution
+- [ ] Update buffalo error_handling with use cases -- currently has none
+
 ### Iguana To Do
 
 - [ ] Create a new directory to work with the iguana codebase
