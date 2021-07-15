@@ -22,6 +22,6 @@ def switch_to_default_content(browser):
 
 
 def switch_to_main_frame(browser):
-    browser.switch_to.default_content()
+    switch_to_default_content(browser)
     main_frame = locate_iframe_by_name(browser, main_frame_name)
     browser.switch_to.frame(main_frame)
