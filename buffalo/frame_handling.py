@@ -17,6 +17,10 @@ def locate_iframe_by_name(browser, iframe_name):
         print(f'Browser timed out trying to locate {iframe_name}, please review.')
 
 
+def switch_to_default_content(browser):
+    browser.switch_to.default_content()
+
+
 def switch_to_main_frame(browser):
     browser.switch_to.default_content()
     main_frame = locate_iframe_by_name(browser, main_frame_name)
