@@ -1,10 +1,11 @@
+from time import sleep
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from settings.file_management import document_type, document_value, extrapolate_document_value
-from settings.general_functions import (get_element_class, get_field_value, javascript_script_execution,
+from settings.general_functions import (get_element_class, get_field_value, javascript_script_execution, naptime, short_nap,
                                         timeout)
 
 from buffalo.buffalo_variables import (document_search_menu_id, document_search_script,
@@ -27,6 +28,7 @@ def locate_search_page_button(browser, document):
 
 
 def open_search_page(browser, document):
+    browser.refresh()
     switch_to_main_frame(browser)
     search_page_button = locate_search_page_button(browser, document)
     search_page_button.click()
@@ -90,6 +92,7 @@ def enter_document_number(browser, document):
 def handle_document_search_field(browser, document):
     clear_document_search_field(browser, document)
     enter_document_number(browser, document)
+    naptime()
 
 
 def execute_search(browser):
@@ -99,10 +102,11 @@ def execute_search(browser):
 
 def document_search(browser, document):
     handle_document_search_field(browser, document)
-    execute_search(browser, document)
+    execute_search(browser)
 
 
 def search(browser, document):
+    open_search_page(browser, document)
     if document_type(document) == "document_number":
         document_search(browser, document)
     else:
