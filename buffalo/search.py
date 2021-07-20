@@ -1,14 +1,30 @@
+from buffalo.frame_handling import switch_to_main_frame
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+from settings.file_management import document_type, extrapolate_document_value
+from settings.general_functions import get_field_value, timeout
 
-from settings.file_management import document_type
+from buffalo.buffalo_variables import search_page_button_id
 
 
-def open_search(browser, document):
-    pass
+def locate_search_page_button(browser, document):
+    try:
+        search_page_button_present = EC.presence_of_element_located((By.ID, search_page_button_id))
+        WebDriverWait(browser, timeout).until(search_page_button_present)
+        search_page_button = browser.find_element_by_id(search_page_button_id)
+        return search_page_button
+    except TimeoutException:
+        print(f'Browser timed out trying to open search for document '
+              f'{extrapolate_document_value(document)}, please review.')
+
+
+def open_search_page(browser, document):
+    switch_to_main_frame(browser)
+    search_page_button = locate_search_page_button(browser, document)
+    search_page_button.click()
 
 
 def open_document_search_menu(browser, document):
