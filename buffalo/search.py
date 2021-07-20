@@ -39,7 +39,7 @@ def locate_document_search_menu(browser, document):
 
 
 def menu_is_active(menu):
-    if get_element_class(menu) == search_menu_active_class:
+    if get_element_class(menu).endswith(search_menu_active_class):
         return True
 
 
