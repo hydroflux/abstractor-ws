@@ -95,25 +95,18 @@ def enter_document_number(browser, document):
         get_document_search_field(browser, document).send_keys(Keys.UP + document_value(document))
 
 
-def click_document_search_field(browser, document):
-    document_search_field = get_document_search_field(browser, document)
-    document_search_field.click()
-
-
 def handle_document_search_field(browser, document):
     clear_document_search_field(browser, document)
     enter_document_number(browser, document)
-    click_document_search_field(browser, document)
 
 
-def execute_search(browser):
-    switch_to_search_menu_frame(browser)
-    javascript_script_execution(browser, document_search_script)
+def execute_search(browser, document):
+    get_document_search_field(browser, document).send_keys(Keys.RETURN)
 
 
 def document_search(browser, document):
     handle_document_search_field(browser, document)
-    execute_search(browser)
+    execute_search(browser, document)
 
 
 def search(browser, document):
