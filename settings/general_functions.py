@@ -18,7 +18,10 @@ def naptime():
 
 
 def micro_nap():
-    sleep(randint(0.25, 0.5))
+    if randint(0,1) == 0:
+        sleep(0.25)
+    else:
+        sleep(0.5)
 
 
 def short_nap():
