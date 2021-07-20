@@ -7,17 +7,17 @@ from selenium.webdriver.support.wait import WebDriverWait
 from settings.file_management import document_type, extrapolate_document_value
 from settings.general_functions import get_field_value, timeout
 
-from buffalo.buffalo_variables import search_page_button_id
+from buffalo.buffalo_variables import search_page_button_id, document_search_menu_id
 
 
 def locate_search_page_button(browser, document):
     try:
-        search_page_button_present = EC.presence_of_element_located((By.ID, search_page_button_id))
+        search_page_button_present = EC.element_to_be_clickable((By.ID, search_page_button_id))
         WebDriverWait(browser, timeout).until(search_page_button_present)
         search_page_button = browser.find_element_by_id(search_page_button_id)
         return search_page_button
     except TimeoutException:
-        print(f'Browser timed out trying to open search for document '
+        print(f'Browser timed out trying to locate search page button for document '
               f'{extrapolate_document_value(document)}, please review.')
 
 
@@ -27,8 +27,21 @@ def open_search_page(browser, document):
     search_page_button.click()
 
 
+def locate_document_search_menu(browser, document):
+    try:
+        document_search_menu_present = EC.element_to_be_clickable((By.ID, document_search_menu_id))
+        WebDriverWait(browser, timeout).until(document_search_menu_present)
+        document_search_menu = browser.find_element_by_id(document_search_menu_id)
+        return document_search_menu
+    except TimeoutException:
+        print(f'Browser timed out trying to locate document search menu for document '
+              f'{extrapolate_document_value(document)}, please review.')
+
+
 def open_document_search_menu(browser, document):
-    pass
+    switch_to_main_frame(browser)
+    document_search_menu = locate_document_search_menu(browser, document)
+    document_search_menu.click()
 
 
 def clear_document_search_field(browser, document):
