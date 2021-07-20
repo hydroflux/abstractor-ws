@@ -3,7 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-from settings.file_management import document_type, extrapolate_document_value
+from settings.file_management import document_type, document_value, extrapolate_document_value
 from settings.general_functions import (get_element_class, get_field_value,
                                         timeout)
 
@@ -77,13 +77,15 @@ def clear_document_search_field(browser, document):
         locate_document_search_field(browser, document).clear()
 
 
+# Same as crocodile
 def enter_document_number(browser, document):
-    pass
+    while get_field_value(locate_document_search_field(browser, document)) != document_value(document):
+        locate_document_search_field(browser, document).send_keys(Keys.UP + document_value(document))
 
 
 def handle_document_search_field(browser, document):
-    enter_document_number(browser, document)
     clear_document_search_field(browser, document)
+    enter_document_number(browser, document)
 
 
 def execute_search(browser, document):
