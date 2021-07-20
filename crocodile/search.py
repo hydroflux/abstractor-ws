@@ -73,7 +73,6 @@ def document_search(browser, document):
     handle_document_search_field(browser, document)
     # May need to add additional flag here---
     # need to make sure that the search field is caught properly
-    enter_document_number(browser, document)
     execute_search(browser, document)
 
 
