@@ -95,17 +95,13 @@ def enter_document_number(browser, document):
         get_document_search_field(browser, document).send_keys(Keys.UP + document_value(document))
 
 
-def handle_document_search_field(browser, document):
-    clear_document_search_field(browser, document)
-    enter_document_number(browser, document)
-
-
 def execute_search(browser, document):
     get_document_search_field(browser, document).send_keys(Keys.RETURN)
 
 
 def document_search(browser, document):
-    handle_document_search_field(browser, document)
+    clear_document_search_field(browser, document)
+    enter_document_number(browser, document)
     execute_search(browser, document)
 
 
