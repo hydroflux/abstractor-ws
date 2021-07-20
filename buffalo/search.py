@@ -1,4 +1,4 @@
-from buffalo.frame_handling import switch_to_main_frame, switch_to_search_frame
+from buffalo.frame_handling import switch_to_main_frame, switch_to_search_menu_frame, switch_to_search_input_frame
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -50,7 +50,7 @@ def handle_document_search_menu(browser, document):
 
 
 def open_document_search_menu(browser, document):
-    switch_to_search_frame(browser)
+    switch_to_search_menu_frame(browser)
     handle_document_search_menu(browser, document)
 
 

@@ -4,7 +4,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from settings.general_functions import timeout
 
-from buffalo.buffalo_variables import main_frame_name, search_frame_name
+from buffalo.buffalo_variables import main_frame_name, search_menu_frame_name, search_input_frame_name
 
 
 def locate_iframe_by_name(browser, iframe_name):
@@ -27,7 +27,13 @@ def switch_to_main_frame(browser):
     browser.switch_to.frame(main_frame)
 
 
-def switch_to_search_frame(browser):
+def switch_to_search_menu_frame(browser):
     switch_to_main_frame(browser)
-    search_frame = locate_iframe_by_name(browser, search_frame_name)
-    browser.switch_to.frame(search_frame)
+    search_menu_frame = locate_iframe_by_name(browser, search_menu_frame_name)
+    browser.switch_to.frame(search_menu_frame)
+
+
+def switch_to_search_input_frame(browser):
+    switch_to_main_frame(browser)
+    search_input_frame = locate_iframe_by_name(browser, search_input_frame_name)
+    browser.switch_to.frame(search_input_frame)
