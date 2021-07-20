@@ -1,15 +1,16 @@
-from time import sleep
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-from settings.file_management import document_type, document_value, extrapolate_document_value
-from settings.general_functions import (get_element_class, get_field_value, javascript_script_execution, micro_nap, naptime, short_nap,
+from settings.file_management import (document_type, document_value,
+                                      extrapolate_document_value)
+from settings.general_functions import (get_element_class, get_field_value,
                                         timeout)
 
-from buffalo.buffalo_variables import (document_search_menu_id, document_search_script,
-                                       search_menu_active_class, document_search_field_class_name,
+from buffalo.buffalo_variables import (document_search_field_class_name,
+                                       document_search_menu_id,
+                                       search_menu_active_class,
                                        search_page_button_id)
 from buffalo.frame_handling import (switch_to_main_frame,
                                     switch_to_search_input_frame,
@@ -63,7 +64,8 @@ def open_document_search_menu(browser, document):
 
 def locate_document_search_field(browser, document):
     try:
-        document_search_field_present = EC.presence_of_element_located((By.CLASS_NAME, document_search_field_class_name))
+        document_search_field_present = EC.presence_of_element_located((
+            By.CLASS_NAME, document_search_field_class_name))
         WebDriverWait(browser, timeout).until(document_search_field_present)
         document_search_field = browser.find_element_by_class_name(document_search_field_class_name)
         return document_search_field
