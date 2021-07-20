@@ -117,7 +117,8 @@ def process_result_count_from_search(browser, document):
     result_count = handle_result_count(browser, document)
     while result_count is None:
         print(f'Result count returned "None" for '
-              f'{extrapolate_document_value(document)}, trying to execute search again.')
+              f'{extrapolate_document_value(document)}, attempting to execute search again.')
+        retry_search(browser, document)  # Should correct for TypeError; doesn't account for fill_search_field failing
         result_count = handle_result_count(browser, document)
     return result_count
 
