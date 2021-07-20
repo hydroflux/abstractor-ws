@@ -7,7 +7,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from settings.file_management import document_type, extrapolate_document_value
 from settings.general_functions import get_field_value, timeout, get_element_class
 
-from buffalo.buffalo_variables import search_page_button_id, document_search_menu_id
+from buffalo.buffalo_variables import search_page_button_id, document_search_menu_id, search_menu_active_class
 
 
 def locate_search_page_button(browser, document):
@@ -38,13 +38,20 @@ def locate_document_search_menu(browser, document):
               f'{extrapolate_document_value(document)}, please review.')
 
 
+def menu_is_active(menu):
+    if get_element_class(menu) == search_menu_active_class:
+        return True
+
+
 def handle_document_search_menu(browser, document):
     document_search_menu = locate_document_search_menu(browser, document)
-    document_search_menu.click()
+    while not menu_is_active(document_search_menu):
+        document_search_menu.click()
 
 
 def open_document_search_menu(browser, document):
     switch_to_search_frame(browser)
+    handle_document_search_menu(browser, document)
 
 
 def clear_document_search_field(browser, document):
