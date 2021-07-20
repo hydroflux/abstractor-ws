@@ -4,10 +4,10 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from settings.file_management import document_type, document_value, extrapolate_document_value
-from settings.general_functions import (get_element_class, get_field_value,
+from settings.general_functions import (get_element_class, get_field_value, javascript_script_execution,
                                         timeout)
 
-from buffalo.buffalo_variables import (document_search_menu_id,
+from buffalo.buffalo_variables import (document_search_menu_id, document_search_script,
                                        search_menu_active_class, document_search_field_class_name,
                                        search_page_button_id)
 from buffalo.frame_handling import (switch_to_main_frame,
@@ -75,11 +75,13 @@ def get_document_search_field(browser, document):
     return locate_document_search_field(browser, document)
 
 
+# Nearly identical to crocodile clear_document_search_field
 def clear_document_search_field(browser, document):
     while get_field_value(get_document_search_field(browser, document)) != '':
         get_document_search_field(browser, document).clear()
 
 
+# Nearly identical to crocodile enter_document_number
 def enter_document_number(browser, document):
     while get_field_value(get_document_search_field(browser, document)) != document_value(document):
         get_document_search_field(browser, document).send_keys(Keys.UP + document_value(document))
@@ -90,8 +92,9 @@ def handle_document_search_field(browser, document):
     enter_document_number(browser, document)
 
 
-def execute_search(browser, document):
-    pass
+def execute_search(browser):
+    switch_to_search_menu_frame(browser)
+    javascript_script_execution(browser, document_search_script)
 
 
 def document_search(browser, document):
