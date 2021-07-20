@@ -8,7 +8,7 @@ from settings.general_functions import (get_element_class, get_field_value,
                                         timeout)
 
 from buffalo.buffalo_variables import (document_search_menu_id,
-                                       search_menu_active_class,
+                                       search_menu_active_class, document_search_field_id,
                                        search_page_button_id)
 from buffalo.frame_handling import (switch_to_main_frame,
                                     switch_to_search_input_frame,
@@ -57,6 +57,17 @@ def handle_document_search_menu(browser, document):
 def open_document_search_menu(browser, document):
     switch_to_search_menu_frame(browser)
     handle_document_search_menu(browser, document)
+
+
+def locate_document_search_field(browser, document):
+    try:
+        document_search_field_present = EC.element_to_be_clickable((By.ID, document_search_field_id))
+        WebDriverWait(browser, timeout).until(document_search_field_present)
+        document_search_field = browser.find_element_by_id(document_search_field_id)
+        return document_search_field
+    except TimeoutException:
+        print(f'Browser timed out trying to locate document field for '
+              f'{extrapolate_document_value(document)}.')
 
 
 def clear_document_search_field(browser, document):

@@ -36,6 +36,6 @@ def switch_to_search_menu_frame(browser):
 
 
 def switch_to_search_input_frame(browser):
-    switch_to_main_frame(browser)
+    switch_to_search_menu_frame(browser)
     search_input_frame = locate_iframe_by_name(browser, search_input_frame_name)
     browser.switch_to.frame(search_input_frame)

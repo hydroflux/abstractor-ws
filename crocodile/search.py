@@ -31,7 +31,7 @@ def locate_document_search_field(browser, document):
         document_search_field = browser.find_element_by_id(document_search_field_id)
         return document_search_field
     except TimeoutException:
-        print(f'Browser timed out trying to locate document field for document number '
+        print(f'Browser timed out trying to locate document field for '
               f'{extrapolate_document_value(document)}.')
 
 
