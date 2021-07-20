@@ -4,7 +4,9 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from settings.general_functions import timeout
 
-from buffalo.buffalo_variables import main_frame_name, search_menu_frame_name, search_input_frame_name
+from buffalo.buffalo_variables import (main_frame_name,
+                                       search_input_frame_name,
+                                       search_menu_frame_name)
 
 
 def locate_iframe_by_name(browser, iframe_name):

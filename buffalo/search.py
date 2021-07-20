@@ -1,13 +1,18 @@
-from buffalo.frame_handling import switch_to_main_frame, switch_to_search_menu_frame, switch_to_search_input_frame
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from settings.file_management import document_type, extrapolate_document_value
-from settings.general_functions import get_field_value, timeout, get_element_class
+from settings.general_functions import (get_element_class, get_field_value,
+                                        timeout)
 
-from buffalo.buffalo_variables import search_page_button_id, document_search_menu_id, search_menu_active_class
+from buffalo.buffalo_variables import (document_search_menu_id,
+                                       search_menu_active_class,
+                                       search_page_button_id)
+from buffalo.frame_handling import (switch_to_main_frame,
+                                    switch_to_search_input_frame,
+                                    switch_to_search_menu_frame)
 
 
 def locate_search_page_button(browser, document):
