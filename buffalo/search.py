@@ -83,11 +83,16 @@ def clear_document_search_field(browser, document):
         get_document_search_field(browser, document).clear()
 
 
-# Nearly identical to crocodile enter_document_number
+def clear_double_entry(browser, document):
+    value = document_value(document)
+    if get_field_value(get_document_search_field(browser, document)) == f'{value}{value}':
+        clear_document_search_field(browser, document)
+
+
 def enter_document_number(browser, document):
     while get_field_value(get_document_search_field(browser, document)) != document_value(document):
+        clear_double_entry(browser, document)
         get_document_search_field(browser, document).send_keys(Keys.UP + document_value(document))
-        micro_nap()
 
 
 def click_document_search_field(browser, document):
