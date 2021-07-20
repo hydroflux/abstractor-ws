@@ -17,6 +17,10 @@ def naptime():
     sleep(randint(3, 4))  # Consider adding an additional second if running into issues while using naps
 
 
+def micro_nap():
+    sleep(randint(0.25, 0.5))
+
+
 def short_nap():
     sleep(randint(1, 2))
 

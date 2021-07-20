@@ -5,7 +5,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from settings.file_management import document_type, document_value, extrapolate_document_value
-from settings.general_functions import (get_element_class, get_field_value, javascript_script_execution, naptime, short_nap,
+from settings.general_functions import (get_element_class, get_field_value, javascript_script_execution, micro_nap, naptime, short_nap,
                                         timeout)
 
 from buffalo.buffalo_variables import (document_search_menu_id, document_search_script,
@@ -87,12 +87,18 @@ def clear_document_search_field(browser, document):
 def enter_document_number(browser, document):
     while get_field_value(get_document_search_field(browser, document)) != document_value(document):
         get_document_search_field(browser, document).send_keys(Keys.UP + document_value(document))
+        micro_nap()
+
+
+def click_document_search_field(browser, document):
+    document_search_field = get_document_search_field(browser, document)
+    document_search_field.click()
 
 
 def handle_document_search_field(browser, document):
     clear_document_search_field(browser, document)
     enter_document_number(browser, document)
-    naptime()
+    click_document_search_field(browser, document)
 
 
 def execute_search(browser):
