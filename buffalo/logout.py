@@ -6,7 +6,7 @@ from buffalo.frame_handling import switch_to_default_content
 
 
 def log_out_user(browser):
-    switch_to_default_content(browser)    
+    switch_to_default_content(browser)
     javascript_script_execution(browser, logout_script)
 
 

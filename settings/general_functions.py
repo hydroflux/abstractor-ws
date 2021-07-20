@@ -189,6 +189,7 @@ def clear_search_field(handle_field_function):
 def fill_search_field(handle_field_function, value):
     while get_field_value(handle_field_function) != value:
         handle_field_function.send_keys(Keys.UP + value)
+        print(get_field_value(handle_field_function))  # Running into issues with eagle not filling field properly
 
 
 # Used for crocodile, performing the same function as "fill_search_field" but not as effectively
