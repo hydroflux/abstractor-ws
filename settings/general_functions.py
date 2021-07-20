@@ -2,6 +2,7 @@ from datetime import datetime
 from pprint import pprint
 from random import randint
 from time import sleep
+
 from selenium.webdriver.common.keys import Keys
 
 from settings.classes.counties import county_dictionary
@@ -18,7 +19,7 @@ def naptime():
 
 
 def micro_nap():
-    if randint(0,1) == 0:
+    if randint(0, 1) == 0:
         sleep(0.25)
     else:
         sleep(0.5)
