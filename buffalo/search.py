@@ -70,17 +70,19 @@ def locate_document_search_field(browser, document):
               f'{extrapolate_document_value(document)}.')
 
 
-# Same as crocodile
-def clear_document_search_field(browser, document):
+def get_document_search_field(browser, document):
     switch_to_search_input_frame(browser)
-    while get_field_value(locate_document_search_field(browser, document)) != '':
-        locate_document_search_field(browser, document).clear()
+    return locate_document_search_field(browser, document)
 
 
-# Same as crocodile
+def clear_document_search_field(browser, document):
+    while get_field_value(get_document_search_field(browser, document)) != '':
+        get_document_search_field(browser, document).clear()
+
+
 def enter_document_number(browser, document):
-    while get_field_value(locate_document_search_field(browser, document)) != document_value(document):
-        locate_document_search_field(browser, document).send_keys(Keys.UP + document_value(document))
+    while get_field_value(get_document_search_field(browser, document)) != document_value(document):
+        get_document_search_field(browser, document).send_keys(Keys.UP + document_value(document))
 
 
 def handle_document_search_field(browser, document):
