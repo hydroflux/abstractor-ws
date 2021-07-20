@@ -15,7 +15,8 @@ def locate_error_message(browser):
         error_message = browser.find_element_by_class_name(error_message_class)
         return error_message
     except TimeoutException:
-        print("Browser timed out while trying to locate error message after PDF failed to load, please review.")
+        print("Browser timed out trying to locate error message after PDF failed to load, please review.")
+        # Refreshing fixed the issue; count = 1
         throw_alert()
 
 
@@ -29,6 +30,5 @@ def check_for_error(browser, document):
         naptime()
         return error_message_text
     else:
-        print('No error appears to have occurred, please review.')
+        print('No error appear to have occurred, please review.')
         throw_alert()
-        input()
