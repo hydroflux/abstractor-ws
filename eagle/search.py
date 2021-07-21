@@ -123,7 +123,7 @@ def locate_page_search_field(browser, page):
 
 
 def handle_page_search_field(browser, document, page):
-    page_search_field = locate_book_search_field(browser, page)
+    page_search_field = locate_page_search_field(browser, page)
     while type(page_search_field) is None:
         check_for_error(browser, document)
         page_search_field = locate_page_search_field(browser, page)
