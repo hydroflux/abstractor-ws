@@ -138,10 +138,19 @@ def open_informational_link(browser, link):  # needs to be updated to work on a 
     link.click()
 
 
-def review_and_open_links(browser, links):
-    for link in links:
+def handle_information_links(browser, link):
+    try:
         while link.text == more_info:
             open_informational_link(browser, link)
+    except StaleElementReferenceException:
+        print('Encountered StaleElementReferenceException '
+              'while handling information links, please review.')
+        input()
+
+
+def review_and_open_links(browser, links):
+    for link in links:
+        handle_information_links(browser, link)
 
 
 def display_all_information(browser, document):
