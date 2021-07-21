@@ -67,9 +67,9 @@ def get_document_number(columns, row):
         return None
     else:
         try:
-            return str(int(document_number))
+            return str(int(document_number)).strip()
         except ValueError:
-            return str(document_number)
+            return str(document_number).strip()
 
 
 def store_document(document_list, type, value):
@@ -89,7 +89,7 @@ def create_book_and_page_object(document_list, row):
 
 
 def create_document_number_object(document_list, columns, row):
-    document_number = get_document_number(columns, row).strip()
+    document_number = get_document_number(columns, row)
     if document_number is not None:
         store_document(document_list, "document_number", document_number)
 
