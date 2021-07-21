@@ -9,7 +9,7 @@ from settings.export_settings import search_errors
 from settings.settings import execution_review
 from settings.file_management import (check_length, drop_last_entry,
                                       extrapolate_document_value, multiple_documents_comment)
-from settings.general_functions import (long_timeout, medium_nap, naptime,
+from settings.general_functions import (center_element, long_timeout, medium_nap, naptime,
                                         scroll_into_view, scroll_to_top,
                                         short_nap, timeout,
                                         update_sentence_case_extras)
@@ -133,26 +133,13 @@ def open_informational_grandparent(browser, link):
     link.click()
 
 
-def open_by_link_text(browser):  # this doesn't work
-    try:
-        more_info_text_present = EC.element_to_be_clickable((By.LINK_TEXT, more_info))
-        WebDriverWait(browser, timeout).until(more_info_text_present)
-        more_info_text = browser.find_element_by_link_text(more_info)
-        more_info_text.click()
-    except TimeoutException:
-        print("Browser timed out while trying to show more info using link text, please review.")
-
-
 def open_informational_link(browser, link):  # needs to be updated to work on a smaller screen
     try:
-        scroll_into_view(browser, link)
-        short_nap()  # Using for testing -- does not work consistently
+        center_element(browser, link)
+        # short_nap()  # Using for testing -- does not work consistently
         link.click()
     except ElementClickInterceptedException:
-        try:
-            open_informational_grandparent(browser, link)
-        except ElementClickInterceptedException:
-            open_by_link_text(browser)  # this doesn't work, need to try something else
+        open_informational_grandparent(browser, link)
 
 
 def review_and_open_links(browser, links):
