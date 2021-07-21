@@ -40,7 +40,7 @@ def get_book_number(row):
         try:
             return int(book)
         except ValueError:
-            return str(book)
+            return str(book).strip()
 
 
 def get_page_number(row):
@@ -51,7 +51,7 @@ def get_page_number(row):
         try:
             return int(page)
         except ValueError:
-            return str(page)
+            return str(page).strip()
 
 
 def get_document_number(columns, row):
@@ -78,8 +78,8 @@ def store_document(document_list, type, value):
 
 
 def create_book_and_page_object(document_list, row):
-    book = get_book_number(row).strip()
-    page = get_page_number(row).strip()
+    book = get_book_number(row)
+    page = get_page_number(row)
     if book is not None and page is not None:
         book_and_page = {
             "Book": book,
