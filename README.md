@@ -77,17 +77,11 @@
 
 ### Eagle To Do
 
-- [ ] Add a function to check to see if the disclaimer has been passed if login is pressed too early--should tie into the "check for logged in" function
-- [ ] For some reason the ’s isn’t catching on entries when the grantor has to hit show more, please review
 - [ ] Update multiple_documents comment to include actual document numbers and / or book & page numbers
 - [ ] Verify results after clicking into the document page
-- [ ] Create a check that if there is anything in the “related” box, throw an extra nap in to make sure that the related documents are grabbed—this will also be an extra verification to make sure that all related documents are grabbed
-- [ ] Add additional checks & balances for adding additional reception numbers (locating multiple documents)
 - [ ] Auto generate hyperlinks—probably requires auditing the entire ‘reception_numbers’ page & doing a comparison against what’s in the document folder
-- [ ] Add a semi-colon between the reporting of the success / failure of the document & remaining documents
 - [ ] Create a check to add comments for multiple documents coming from the same line of the index—i.e. if book & page for a line item hits nothing, make sure the comment says to check the reception number document that comes through—alternatively, do it whether it hits or not
 - [ ] Similar to the above line, create a check that ensures that if the book & page & the reception number document that returns is identical, the document is not duplicated on the run sheet
-- [ ] Add “look for link text” to record—if the program is moving too fast it misses some links that don’t generate right away
 - [ ] Implement 'medium_nap()'s when refreshing the page after encountering an exception
 - [ ] Add a .strip() to Document class instance values when created in order to catch any numbers which were typed with extra space(s) on either side of the document value
 - [ ] Create a "download only" option for execution
