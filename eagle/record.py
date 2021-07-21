@@ -249,12 +249,13 @@ def locate_related_documents_table_rows(browser, document_table, dataframe):
     except StaleElementReferenceException:
         print(f'Browser encountered StaleElementReferenceException trying to '
               f'located related documents table rows for '
-              f'{extrapolate_document_value(dataframe["Reception Number"][-1])}')
+              f'{extrapolate_document_value(dataframe["Reception Number"][-1])}, trying again.')
+        return False
 
 
 def get_related_documents_table_rows(browser, document_table, dataframe):
     related_documents_table_rows = locate_related_documents_table_rows(browser, document_table, dataframe)
-    while related_documents_table_rows is None:
+    while related_documents_table_rows is False:
         center_element(browser, document_table)
         related_documents_table_rows = locate_related_documents_table_rows(browser, document_table, dataframe)
     return related_documents_table_rows
