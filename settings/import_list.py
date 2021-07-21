@@ -78,8 +78,8 @@ def store_document(document_list, type, value):
 
 
 def create_book_and_page_object(document_list, row):
-    book = get_book_number(row)
-    page = get_page_number(row)
+    book = get_book_number(row).strip()
+    page = get_page_number(row).strip()
     if book is not None and page is not None:
         book_and_page = {
             "Book": book,
@@ -89,7 +89,7 @@ def create_book_and_page_object(document_list, row):
 
 
 def create_document_number_object(document_list, columns, row):
-    document_number = get_document_number(columns, row)
+    document_number = get_document_number(columns, row).strip()
     if document_number is not None:
         store_document(document_list, "document_number", document_number)
 

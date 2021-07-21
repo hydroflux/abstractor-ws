@@ -240,10 +240,10 @@ def record_legal_data(document_table, dataframe):
         dataframe["Legal"].append(legal)
 
 
-def locate_related_documents_table_rows(document_table, dataframe):
+def locate_related_documents_table_rows(browser, document_table, dataframe):
     try:
         related_documents_table_rows_present = EC.presence_of_element_located((By.CLASS_NAME, related_table_class))
-        WebDriverWait(document_table, timeout).until(related_documents_table_rows_present)
+        WebDriverWait(browser, timeout).until(related_documents_table_rows_present)
         related_table_rows = document_table.find_elements_by_class_name(related_table_class)
         return related_table_rows
     except StaleElementReferenceException:
@@ -253,10 +253,10 @@ def locate_related_documents_table_rows(document_table, dataframe):
 
 
 def get_related_documents_table_rows(browser, document_table, dataframe):
-    related_documents_table_rows = locate_related_documents_table_rows(document_table, dataframe)
+    related_documents_table_rows = locate_related_documents_table_rows(browser, document_table, dataframe)
     while related_documents_table_rows is None:
         center_element(browser, document_table)
-        related_documents_table_rows = locate_related_documents_table_rows(document_table, dataframe)
+        related_documents_table_rows = locate_related_documents_table_rows(browser, document_table, dataframe)
     return related_documents_table_rows
 
 
