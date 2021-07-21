@@ -240,8 +240,21 @@ def record_legal_data(document_table, dataframe):
         dataframe["Legal"].append(legal)
 
 
-def record_related_documents(document_table, dataframe):
-    related_table_rows = document_table.find_elements_by_class_name(related_table_class)
+def locate_related_documents_table_rows(document_table, dataframe):
+    try:
+        related_documents_table_rows_present = EC.presence_of_element_located((By.CLASS_NAME, related_table_class))
+        WebDriverWait(document_table, timeout).until(related_documents_table_rows_present)
+        related_table_rows = document_table.find_elements_by_class_name(related_table_class)
+        return related_table_rows
+    except StaleElementReferenceException:
+        print(f'Browser encountered StaleElementReferenceException trying to '
+              f'located related documents table rows for '
+              f'{extrapolate_document_value(dataframe["Reception Number"][-1])}')
+
+
+def record_related_documents(browser, document_table, dataframe):
+    center_element(browser, document_table)
+    related_table_rows = locate_related_documents_table_rows(document_table, dataframe)
     related_documents_info = list(map(access_table_body, related_table_rows))
     related_document_list = list(map(access_title_case_text, related_documents_info))
     related_documents = "\n".join(related_document_list)
@@ -266,12 +279,12 @@ def record_notes(document_tables, dataframe):
         pass
 
 
-def aggregate_document_information(document_tables, dataframe):
+def aggregate_document_information(browser, document_tables, dataframe):
     reception_number = record_indexing_data(document_tables[1], dataframe)
     record_document_type(document_tables[0], dataframe)
     record_name_data(document_tables[2], dataframe)
     record_legal_data(document_tables[4], dataframe)
-    record_related_documents(document_tables[-2], dataframe)
+    record_related_documents(browser, document_tables[-2], dataframe)
     record_notes(document_tables, dataframe)
     return reception_number
 
@@ -289,7 +302,7 @@ def record_document_fields(browser, county, dataframe, document, image_available
     document_information = get_document_information(browser, document)
     document_tables = access_document_information_tables(browser, document, document_information)
     display_all_information(browser, document)
-    reception_number = aggregate_document_information(document_tables, dataframe)
+    reception_number = aggregate_document_information(browser, document_tables, dataframe)
     record_comments(county, dataframe, document, image_available)
     scroll_to_top(browser)
     return reception_number
