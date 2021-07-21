@@ -347,19 +347,26 @@ def click_result_button(browser, button):
         scroll_to_top(browser)
         button.click()
         short_nap()  # Nap is necessary, consider lengthening if app breaks at this point
+        return True
     except ElementClickInterceptedException:
         print("Button click intercepted while trying to view previous / next result, trying again")
-        naptime()
-        button.click()
+        # naptime()
+        # button.click()
     except StaleElementReferenceException:
         print("Stale element reference exception encountered while trying to view previous / next result, trying again")
+        # naptime()
+        # button.click()
+
+
+def handle_click_next_result_button(browser, document, button):
+    while not click_result_button(browser, button):
         naptime()
-        button.click()
+        button = get_next_result_button(browser, document)
 
 
 def next_result(browser, document):
     next_result_button = get_next_result_button(browser, document)
-    click_result_button(browser, next_result_button)
+    handle_click_next_result_button(browser, next_result_button)
 
 
 def get_reception_number(browser, document):
