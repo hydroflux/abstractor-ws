@@ -108,8 +108,8 @@ def handle_book_search_field(browser, document, book):
 
 
 def enter_book_number(browser, document, book):
-    clear_search_field(handle_book_search_field(browser, document))
-    fill_search_field(handle_book_search_field(browser, document), book)
+    clear_search_field(handle_book_search_field(browser, document, book))
+    fill_search_field(handle_book_search_field(browser, document, book), book)
 
 
 def locate_page_search_field(browser, page):
@@ -131,8 +131,8 @@ def handle_page_search_field(browser, document, page):
 
 
 def enter_page_number(browser, document, page):
-    clear_search_field(handle_page_search_field(browser, document))
-    fill_search_field(handle_page_search_field(browser, document), page)
+    clear_search_field(handle_page_search_field(browser, document, page))
+    fill_search_field(handle_page_search_field(browser, document, page), page)
 
 
 def prepare_book_and_page_search(browser, document):
