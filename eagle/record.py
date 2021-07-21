@@ -127,7 +127,7 @@ def get_informational_links(browser, document, document_information):
 
 
 def open_informational_grandparent(browser, link):
-    grandparent = link.find_element_by_xpath("../..")
+    grandparent = link.find_element_by_xpath("../../..")
     scroll_into_view(browser, grandparent)
     short_nap()  # Using for testing -- does not work consistently
     link.click()
