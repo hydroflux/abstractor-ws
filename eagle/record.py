@@ -1,18 +1,19 @@
-from settings.bad_search import no_document_image
 from selenium.common.exceptions import (ElementClickInterceptedException,
                                         StaleElementReferenceException,
                                         TimeoutException)
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+from settings.bad_search import no_document_image
 from settings.export_settings import search_errors
-from settings.settings import execution_review
 from settings.file_management import (check_length, drop_last_entry,
-                                      extrapolate_document_value, multiple_documents_comment)
-from settings.general_functions import (center_element, long_timeout, medium_nap, naptime,
-                                        scroll_into_view, scroll_to_top,
+                                      extrapolate_document_value,
+                                      multiple_documents_comment)
+from settings.general_functions import (center_element, long_timeout,
+                                        medium_nap, naptime, scroll_to_top,
                                         short_nap, timeout,
                                         update_sentence_case_extras)
+from settings.settings import execution_review
 
 from eagle.eagle_variables import (document_information_id,
                                    document_table_class, error_message_text,
@@ -23,7 +24,6 @@ from eagle.eagle_variables import (document_information_id,
                                    related_table_class, result_button_tag,
                                    result_buttons_class)
 from eagle.error_handling import check_for_error
-
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("record", __name__)
