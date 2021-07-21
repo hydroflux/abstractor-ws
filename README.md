@@ -90,9 +90,6 @@
 - [ ] Add “look for link text” to record—if the program is moving too fast it misses some links that don’t generate right away
 - [ ] Implement 'medium_nap()'s when refreshing the page after encountering an exception
 - [ ] Add a .strip() to Document class instance values when created in order to catch any numbers which were typed with extra space(s) on either side of the document value
-- [ ] Count results doesn't work if the search button has never been pressed, add a fallback procedure to account for this--occurs when the browser instance is offscreen during a search
-- [ ] If a grantor / grantee ends in a tag indicating more information is present, redo the search -- add to eagle record
-- [ ] Create a convert_document_numbers script to work like leopard, but with the eagle document lists
 - [ ] Create a "download only" option for execution
 - [ ] Update scripts with new general functions (i.e. assert_window_title)
 - [ ] Update the record function to set the reception number rather than return it
