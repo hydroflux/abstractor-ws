@@ -1,15 +1,18 @@
 from time import sleep
 
-from selenium.common.exceptions import NoSuchElementException, TimeoutException, StaleElementReferenceException
+from selenium.common.exceptions import (NoSuchElementException,
+                                        StaleElementReferenceException,
+                                        TimeoutException)
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from settings.general_functions import timeout
 
-from eagle.eagle_variables import (credentials, disclaimer_id, inaccessible,
+from eagle.eagle_variables import (credentials, disclaimer_id,
+                                   fallback_search_url, inaccessible,
                                    logged_out_redirect_url, login_button_class,
-                                   fallback_search_url, webpage_title, website)
+                                   webpage_title, website)
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("login", __name__)
