@@ -1,6 +1,6 @@
 from time import sleep
 
-from selenium.common.exceptions import NoSuchElementException, TimeoutException
+from selenium.common.exceptions import NoSuchElementException, TimeoutException, StaleElementReferenceException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
@@ -65,13 +65,23 @@ def enter_credentials(browser):
         print("Browser timed out while trying to enter login credentials.")
 
 
-def read_login_message(browser):
+def locate_login_message(browser):
     try:
         login_message_present = EC.presence_of_element_located((By.ID, credentials[4]))
         WebDriverWait(browser, timeout).until(login_message_present)
-        return browser.find_element_by_id(credentials[4]).text
+        login_message = browser.find_element_by_id(credentials[4])
+        return login_message
     except TimeoutException:
         print("Browser timed out while trying to read login message.")
+
+
+def read_login_message(browser):
+    try:
+        login_message = locate_login_message(browser)
+        return login_message.text
+    except StaleElementReferenceException:
+        print('Encountered StaleElementReferenceException '
+              'attempting to read login message, trying again.')
 
 
 def confirm_login(browser):
