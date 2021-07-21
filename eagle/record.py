@@ -366,7 +366,7 @@ def handle_click_next_result_button(browser, document, button):
 
 def next_result(browser, document):
     next_result_button = get_next_result_button(browser, document)
-    handle_click_next_result_button(browser, next_result_button)
+    handle_click_next_result_button(browser, document, next_result_button)
 
 
 def get_reception_number(browser, document):

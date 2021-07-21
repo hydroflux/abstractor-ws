@@ -96,6 +96,7 @@
 - [ ] Create a "download only" option for execution
 - [ ] Update scripts with new general functions (i.e. assert_window_title)
 - [ ] Update the record function to set the reception number rather than return it
+- [ ] Move the logic for next result / previous result into its own script
 
 ### Crocodile To Do
 
