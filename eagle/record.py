@@ -252,9 +252,16 @@ def locate_related_documents_table_rows(document_table, dataframe):
               f'{extrapolate_document_value(dataframe["Reception Number"][-1])}')
 
 
+def get_related_documents_table_rows(browser, document_table, dataframe):
+    related_documents_table_rows = locate_related_documents_table_rows(document_table, dataframe)
+    while related_documents_table_rows is None:
+        center_element(browser, document_table)
+        related_documents_table_rows = locate_related_documents_table_rows(document_table, dataframe)
+    return related_documents_table_rows
+
+
 def record_related_documents(browser, document_table, dataframe):
-    center_element(browser, document_table)
-    related_table_rows = locate_related_documents_table_rows(document_table, dataframe)
+    related_table_rows = get_related_documents_table_rows(browser, document_table, dataframe)
     related_documents_info = list(map(access_table_body, related_table_rows))
     related_document_list = list(map(access_title_case_text, related_documents_info))
     related_documents = "\n".join(related_document_list)
