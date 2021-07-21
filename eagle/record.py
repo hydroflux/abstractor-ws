@@ -242,8 +242,6 @@ def record_legal_data(document_table, dataframe):
 
 def locate_related_documents_table_rows(browser, document_table, dataframe):
     try:
-        related_documents_table_rows_present = EC.presence_of_element_located((By.CLASS_NAME, related_table_class))
-        WebDriverWait(browser, timeout).until(related_documents_table_rows_present)
         related_table_rows = document_table.find_elements_by_class_name(related_table_class)
         return related_table_rows
     except StaleElementReferenceException:
@@ -262,6 +260,7 @@ def get_related_documents_table_rows(browser, document_table, dataframe):
 
 
 def record_related_documents(browser, document_table, dataframe):
+    # If none then ... ? conditional -- need to test with some print statements to see general feedback first
     related_table_rows = get_related_documents_table_rows(browser, document_table, dataframe)
     related_documents_info = list(map(access_table_body, related_table_rows))
     related_document_list = list(map(access_title_case_text, related_documents_info))
