@@ -13,7 +13,7 @@ from eagle.login import account_login
 from eagle.open_document import open_document
 from eagle.record import get_reception_number, next_result, record_document
 from eagle.search import search
-z
+
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("execute", __name__)
 
