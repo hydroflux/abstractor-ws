@@ -102,6 +102,7 @@ def execute_search(browser, document):
 
 
 def document_search(browser, document):
+    open_document_search_menu(browser, document)
     clear_document_search_field(browser, document)
     enter_document_number(browser, document)
     execute_search(browser, document)
