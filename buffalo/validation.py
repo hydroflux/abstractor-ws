@@ -22,3 +22,12 @@ def header_validation(browser, validation_text):
     switch_to_header_frame(browser)
     header_text_element = locate_header_text(browser).text
     return header_text_element.startswith(validation_text)
+
+
+def page_is_loaded(browser, validation_text):
+    if not header_validation(browser, validation_text):
+        print(f'Browser indicates that it has not properly loaded '
+              f'"{validation_text}", please review webdriver before continuing...')
+        input()
+    else:
+        return True
