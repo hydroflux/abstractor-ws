@@ -142,6 +142,7 @@ def handle_information_links(browser, link):
     try:
         while link.text == more_info:
             open_informational_link(browser, link)
+            short_nap()
     except StaleElementReferenceException:
         print('Encountered StaleElementReferenceException '
               'while handling information links, please review.')
@@ -379,6 +380,7 @@ def handle_click_next_result_button(browser, document, button):
 def next_result(browser, document):
     next_result_button = get_next_result_button(browser, document)
     handle_click_next_result_button(browser, document, next_result_button)
+    naptime()  # DO NOT REMOVE NAP -- slow server speeds can cause duplicate recordings of the same document
 
 
 def get_reception_number(browser, document):
