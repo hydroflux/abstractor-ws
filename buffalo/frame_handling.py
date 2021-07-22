@@ -5,7 +5,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from settings.general_functions import timeout
 
 from buffalo.buffalo_variables import (main_frame_name,
-                                       search_input_frame_name, result_frame_name,
+                                       search_input_frame_name, result_frame_name, result_list_frame_name,
                                        search_menu_frame_name)
 
 
@@ -45,3 +45,9 @@ def switch_to_search_result_frame(browser):
     switch_to_main_frame(browser)
     result_frame = locate_iframe_by_name(browser, result_frame_name)
     browser.switch_to_frame(result_frame)
+
+
+def switch_to_search_result_list_frame(browser):
+    switch_to_search_result_frame(browser)
+    result_list_frame = locate_iframe_by_name(browser, result_list_frame_name)
+    browser.switch_to_frame(result_list_frame)
