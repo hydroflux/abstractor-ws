@@ -10,11 +10,13 @@ from settings.general_functions import (get_element_class, get_field_value,
 
 from buffalo.buffalo_variables import (document_search_field_class_name,
                                        document_search_menu_id,
+                                       search_input_header_text,
                                        search_menu_active_class,
                                        search_page_button_id)
 from buffalo.frame_handling import (switch_to_main_frame,
                                     switch_to_search_input_frame,
                                     switch_to_search_menu_frame)
+from buffalo.validation import page_is_loaded
 
 
 def locate_search_page_button(browser, document):
@@ -110,6 +112,7 @@ def document_search(browser, document):
 
 def search(browser, document):
     open_search_page(browser, document)
+    page_is_loaded(browser, search_input_header_text)
     if document_type(document) == "document_number":
         document_search(browser, document)
     else:
