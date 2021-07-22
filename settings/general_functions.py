@@ -2,6 +2,7 @@ from datetime import datetime
 from pprint import pprint
 from random import randint
 from time import sleep
+from selenium.common.exceptions import StaleElementReferenceException
 
 from selenium.webdriver.common.keys import Keys
 
@@ -207,10 +208,17 @@ def clear_search_field(handle_field_function):
         handle_field_function.clear()
 
 
+def enter_field_value(handle_field_function, value):
+    try:
+        handle_field_function.send_keys(Keys.UP + value)
+    except StaleElementReferenceException:
+        print(f'Encountered a StaleElementReferenceException trying to '
+              f'enter "{value}" value into appropriate field, trying again...')
+
+
 def fill_search_field(handle_field_function, value):
     while get_field_value(handle_field_function) != value:
-        handle_field_function.send_keys(Keys.UP + value)
-        print(get_field_value(handle_field_function))  # Running into issues with eagle not filling field properly
+        enter_field_value(handle_field_function, value)
 
 
 # Used for crocodile, performing the same function as "fill_search_field" but not as effectively
