@@ -110,12 +110,16 @@ def document_search(browser, document):
     execute_search(browser, document)
 
 
-def search(browser, document):
-    open_search_page(browser, document)
-    page_is_loaded(browser, search_input_header_text)
+def process_document_search(browser, document):
     if document_type(document) == "document_number":
         document_search(browser, document)
     else:
         print(f'Unable to search {document_type(document)}, new search path needs to be developed.')
         print("Please press enter after reviewing the search parameters...")
         input()
+
+
+def search(browser, document):
+    open_search_page(browser, document)
+    if page_is_loaded(browser, search_input_header_text):
+        process_document_search(browser, document)
