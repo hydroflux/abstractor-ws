@@ -43,6 +43,7 @@
 - [ ] Add download flag to document class & set at import in order to avoid passing the flag around
 - [ ] When creating document instances, leave an indication if a book and page instance & a document number instance are on the same line (use the index) in order to create more effective comments---set up for Document class just needs to be implemented
 - [ ] If 0 documents are imported, close the program and send a message
+- [ ] If download is true and the document is already located in the target document directory, add a medium nap for eagle--in order to do so, add "downloaded" or something similar to the Document class for imports
 
 ### Exports To Do
 
