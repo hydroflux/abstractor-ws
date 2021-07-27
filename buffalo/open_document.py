@@ -23,9 +23,13 @@ def locate_first_result(browser, document):
               f'{extrapolate_document_value(document)}, please review.')
 
 
-def verify_first_result(browser, document):
+def get_first_result(browser, document):
     switch_to_search_result_list_frame(browser)
-    first_result = locate_first_result(browser, document)
+    return locate_first_result(browser, document)
+
+
+def verify_first_result(browser, document):
+    
 
 
 def open_document_number(browser, document):
