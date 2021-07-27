@@ -3,12 +3,13 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-from buffalo.frame_handling import switch_to_search_result_list_frame
 from settings.file_management import document_type, extrapolate_document_value
 from settings.general_functions import timeout
 
+from buffalo.buffalo_variables import (first_result_id,
+                                       search_results_header_text)
+from buffalo.frame_handling import switch_to_search_result_list_frame
 from buffalo.validation import page_is_loaded
-from buffalo.buffalo_variables import search_results_header_text, first_result_id
 
 
 def locate_first_result(browser, document):
