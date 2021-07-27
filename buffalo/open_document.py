@@ -3,7 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-from settings.file_management import document_type, extrapolate_document_value
+from settings.file_management import document_type, document_value, extrapolate_document_value
 from settings.general_functions import timeout
 
 from buffalo.buffalo_variables import (first_result_id,
@@ -29,7 +29,9 @@ def get_first_result(browser, document):
 
 
 def verify_first_result(browser, document):
-    
+    first_result = get_first_result(browser, document)
+    if first_result == document_value(document):
+        return True
 
 
 def open_document_number(browser, document):
