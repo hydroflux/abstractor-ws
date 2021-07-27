@@ -20,6 +20,7 @@ def locate_first_result(browser, document):
     except TimeoutException:
         print(f'Browser timed out trying to locate first search result for '
               f'{extrapolate_document_value(document)}, please review.')
+        input()
 
 
 def get_first_result(browser, document):
@@ -39,6 +40,7 @@ def open_document_number(browser, document):
     else:
         print(f'First search result located does not match the searched document '
               f'{extrapolate_document_value(document)}, please review')
+        input()
 
 
 def process_open_document(browser, document):
