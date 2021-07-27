@@ -1,6 +1,5 @@
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from settings.file_management import document_type, document_value, extrapolate_document_value
@@ -28,14 +27,18 @@ def get_first_result(browser, document):
     return locate_first_result(browser, document)
 
 
-def verify_first_result(browser, document):
+def verify_first_document_search_result(browser, document):
     first_result = get_first_result(browser, document)
     if first_result == document_value(document):
         return True
 
 
 def open_document_number(browser, document):
-    pass
+    if verify_first_document_search_result(browser, document):
+        get_first_result(browser, document).click()
+    else:
+        print(f'First search result located does not match the searched document '
+              f'{extrapolate_document_value(document)}, please review')
 
 
 def process_open_document(browser, document):
