@@ -159,6 +159,10 @@ def four_character_padding(value):
     return value.zfill(4)
 
 
+def eight_character_padding(value):
+    return value.zfill(8)
+
+
 def update_number_results(document, total_results):
     document.number_results = int(total_results)
 
