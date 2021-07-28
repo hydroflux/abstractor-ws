@@ -55,3 +55,4 @@ def process_open_document(browser, document):
 def open_document(browser, document):
     if page_is_loaded(browser, search_results_header_text):
         process_open_document(browser, document)
+        return True

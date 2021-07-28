@@ -1,9 +1,9 @@
 #!/usr/bin/python3
-from settings.abstract_object import abstract_dictionary
+from settings.abstract_object import abstract_dictionary as dictionary
 from settings.bad_search import record_bad_search
 from settings.driver import create_webdriver
 from settings.export import export_document
-from settings.file_management import (bundle_project, document_found,
+from settings.file_management import (bundle_project, check_length, document_found,
                                       no_document_found)
 from settings.general_functions import start_timer
 from settings.settings import download
@@ -22,8 +22,18 @@ def handle_search_results(browser, county, target_directory, document_list, docu
     pass
 
 
+# Identical to crocodile search_documents_from_list
 def search_documents_from_list(browser, county, target_directory, document_list):
-    pass
+    for document in document_list:
+        start_time = start_timer()
+        search(browser, document)
+        if open_document(browser, document):
+            handle_search_results(browser, county, target_directory, document_list, document, start_time)
+        else:
+            record_bad_search(dictionary, document)
+            no_document_found(start_time, document_list, document)
+        check_length(dictionary)
+    return dictionary
 
 
 # Identical to crocodile execute_program
