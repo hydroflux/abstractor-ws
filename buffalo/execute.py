@@ -13,3 +13,18 @@ from buffalo.logout import logout
 from buffalo.open_document import open_document
 from buffalo.search import search
 
+
+def record_single_document(browser, county, target_directory, document_list, document, start_time):
+    pass
+
+
+def handle_search_results(browser, county, target_directory, document_list, document, start_time):
+    pass
+
+
+def search_documents_from_list(browser, county, target_directory, document_list):
+    pass
+
+
+def execute_program(county, target_directory, document_list, file_name):
+    pass
