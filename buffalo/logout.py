@@ -20,6 +20,6 @@ def verify_logout(browser):
 
 def logout(browser):
     log_out_user(browser)
-    # if verify_logout(browser):
-    #     browser.quit()
-    #     exit()
+    if verify_logout(browser):
+        browser.quit()
+        exit()
