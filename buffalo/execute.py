@@ -3,7 +3,7 @@ from settings.abstract_object import abstract_dictionary as dictionary
 from settings.bad_search import record_bad_search
 from settings.driver import create_webdriver
 from settings.export import export_document
-from settings.file_management import (bundle_project, check_length, document_found,
+from settings.file_management import (bundle_project, check_length, document_found, extrapolate_document_value,
                                       no_document_found)
 from settings.general_functions import start_timer
 from settings.settings import download
@@ -19,7 +19,13 @@ def record_single_document(browser, county, target_directory, document_list, doc
 
 
 def handle_search_results(browser, county, target_directory, document_list, document, start_time):
-    pass
+    if document.number_results == 1:
+        record_single_document(browser, county, target_directory, document_list, document, start_time)
+    elif document.number_results > 1:
+        print(f'Browser located multiple results for '
+              f'{extrapolate_document_value(document)}; '
+              f'No currently process built to handle multiple documents, please review.')
+        input()
 
 
 # Identical to crocodile search_documents_from_list
