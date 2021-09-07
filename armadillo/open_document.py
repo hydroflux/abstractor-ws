@@ -5,7 +5,10 @@ from selenium.webdriver.support.wait import WebDriverWait
 from settings.file_management import document_value, extrapolate_document_value
 from settings.general_functions import assert_window_title, timeout
 
-from armadillo.armadillo_variables import number_results_class, search_results_id, document_search_results_title, single_result_message
+from armadillo.armadillo_variables import (document_search_results_title,
+                                           number_results_class,
+                                           search_results_id,
+                                           single_result_message)
 
 
 def verify_successful_search(browser, document):
