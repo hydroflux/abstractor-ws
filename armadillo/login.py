@@ -1,0 +1,41 @@
+from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.wait import WebDriverWait
+from settings.general_functions import (assert_window_title, fill_search_field,
+                                        timeout)
+
+from armadillo.armadillio_variables import (credentials, post_login_title,
+                                            website, website_title)
+
+
+def open_site(browser):
+    pass
+
+
+def locate_login_field(browser, prompt_name, type):
+    pass
+
+
+def submit_username(browser):
+    pass
+
+
+def submit_password(password):
+    pass
+
+
+def execute_login(browser):
+    pass
+
+
+def verify_login(browser):
+    pass
+
+
+def account_login(browser):
+    open_site(browser)
+    submit_username(browser)
+    submit_password(browser)
+    execute_login(browser)
+    verify_login(browser)
