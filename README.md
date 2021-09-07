@@ -119,10 +119,11 @@
 
 ### Armadillo To Do
 
-- [ ] Add all armadillo scripts (execute, login, logout, search, open, record, download)
+- [ ] Add all armadillo scripts (execute, record, download)
 - [ ] Integrate armadillo scripts to work with the top level environment file
 - [ ] Create a convert_document_numbers script
 - [ ] Create an "execution", "review", & "download only" option for execution
+- [ ] Create document number validation functions in the validation script prior to opening a document
 
 ### Iguana To Do
 
