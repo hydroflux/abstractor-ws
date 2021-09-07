@@ -6,7 +6,7 @@ from settings.general_functions import (assert_window_title, fill_search_field,
                                         timeout)
 
 from armadillo.armadillo_variables import (credentials, post_login_title,
-                                            website, website_title)
+                                           website, website_title)
 
 
 # Identical to buffalo open_site
@@ -27,6 +27,7 @@ def locate_login_input(browser, input_name, type):
         return login_prompt
     except TimeoutException:
         print(f'Browser timed out trying to locate {type} input, please review.')
+
 
 # Matches buffalo submit_password
 def submit_username(browser):
