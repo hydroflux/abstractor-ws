@@ -111,7 +111,7 @@
 
 ### Buffalo To Do
 
-- [ ] Add all buffalo scripts (execute, logout, search, open, record, download)
+- [ ] Add all buffalo scripts (execute, record, download)
 - [ ] Integrate buffalo scripts to work with the top level environment file
 - [ ] Create a convert_document_numbers script
 - [ ] Create an "execution", "review", & "download only" option for execution
