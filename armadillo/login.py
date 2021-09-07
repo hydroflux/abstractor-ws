@@ -1,3 +1,4 @@
+from armadillo.validation import validate_login
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -53,9 +54,7 @@ def verify_login(browser):
     if browser.title == post_login_title:
         print('\nLogin successful, continuing program execution.')
     else:
-        print('\nBrowser failed to successfully login, exiting program.')
-        browser.quit()
-        exit()
+        validate_login(browser)
 
 
 def account_login(browser):
