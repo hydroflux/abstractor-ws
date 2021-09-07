@@ -117,6 +117,14 @@
 - [ ] Create an "execution", "review", & "download only" option for execution
 - [ ] Update buffalo error_handling with use cases -- currently has none
 
+### Armadillo To Do
+
+- [ ] Create a new directory to work with the iguana codebase
+- [ ] Add all iguana scripts (execute, login, logout, search, open, record, download)
+- [ ] Integrate iguana scripts to work with the top level environment file
+- [ ] Create a convert_document_numbers script
+- [ ] Create an "execution", "review", & "download only" option for execution
+
 ### Iguana To Do
 
 - [ ] Create a new directory to work with the iguana codebase
