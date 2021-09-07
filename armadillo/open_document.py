@@ -1,15 +1,17 @@
-from armadillo.validation import validate_search_result
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-from settings.file_management import document_value, extrapolate_document_value
-from settings.general_functions import assert_window_title, get_direct_link, set_description_link, timeout
+from settings.file_management import extrapolate_document_value
+from settings.general_functions import (assert_window_title, get_direct_link,
+                                        set_description_link, timeout)
 
 from armadillo.armadillo_variables import (document_search_results_title,
+                                           first_result_tag_name,
                                            number_results_class,
                                            search_results_id,
-                                           single_result_message, first_result_tag_name)
+                                           single_result_message)
+from armadillo.validation import validate_search_result
 
 
 def verify_successful_search(browser, document):
