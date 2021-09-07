@@ -1,4 +1,3 @@
-from armadillo.validation import validate_login
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -8,6 +7,7 @@ from settings.general_functions import (assert_window_title, fill_search_field,
 
 from armadillo.armadillo_variables import (credentials, post_login_title,
                                            website, website_title)
+from armadillo.validation import validate_login
 
 
 # Identical to buffalo open_site
@@ -49,7 +49,6 @@ def execute_login(browser):
     submit_button.click()
 
 
-# Matches verify login from crocodile
 def verify_login(browser):
     if browser.title == post_login_title:
         print('\nLogin successful, continuing program execution.')

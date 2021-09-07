@@ -4,7 +4,9 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from settings.general_functions import timeout
 
-from armadillo.armadillo_variables import login_validation_text_id, bad_login_text, login_validation_form_name
+from armadillo.armadillo_variables import (bad_login_text,
+                                           login_validation_form_name,
+                                           login_validation_text_id)
 
 
 def get_login_validation_text(browser):
