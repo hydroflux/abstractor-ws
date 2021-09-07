@@ -123,7 +123,6 @@
 - [ ] Integrate armadillo scripts to work with the top level environment file
 - [ ] Create a convert_document_numbers script
 - [ ] Create an "execution", "review", & "download only" option for execution
-- [ ] Create document number validation functions in the validation script prior to opening a document
 
 ### Iguana To Do
 

@@ -4,7 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from settings.file_management import document_value, extrapolate_document_value
-from settings.general_functions import assert_window_title, timeout
+from settings.general_functions import assert_window_title, get_direct_link, set_description_link, timeout
 
 from armadillo.armadillo_variables import (document_search_results_title,
                                            number_results_class,
@@ -71,7 +71,9 @@ def get_first_result(browser, document):
 def open_first_result(browser, document):
     first_result = get_first_result(browser, document)
     if validate_search_result(first_result, document):
-        print("success")
+        document_link = get_direct_link(first_result)
+        set_description_link(document, document_link)
+        browser.get(document.description_link)
 
 
 def handle_search_results(browser, document):
