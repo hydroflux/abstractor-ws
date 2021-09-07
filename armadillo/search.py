@@ -3,10 +3,15 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-from settings.general_functions import assert_window_title, get_field_value, javascript_script_execution, timeout
-from settings.file_management import document_type, document_value, extrapolate_document_value
+from settings.file_management import (document_type, document_value,
+                                      extrapolate_document_value)
+from settings.general_functions import (assert_window_title, get_field_value,
+                                        javascript_script_execution, timeout)
 
-from armadillo.armadillo_variables import document_search_url, document_search_title, document_search_field_id, execute_document_search_script
+from armadillo.armadillo_variables import (document_search_field_id,
+                                           document_search_title,
+                                           document_search_url,
+                                           execute_document_search_script)
 
 
 def open_document_search(browser, document):
