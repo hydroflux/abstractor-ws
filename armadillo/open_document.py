@@ -1,3 +1,4 @@
+from armadillo.validation import validate_search_result
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -8,7 +9,7 @@ from settings.general_functions import assert_window_title, timeout
 from armadillo.armadillo_variables import (document_search_results_title,
                                            number_results_class,
                                            search_results_id,
-                                           single_result_message)
+                                           single_result_message, first_result_tag_name)
 
 
 def verify_successful_search(browser, document):
@@ -51,9 +52,26 @@ def locate_search_results(browser, document):
               f'{extrapolate_document_value(document)}, please review.')
 
 
-def open_first_result(browser, document):
+def locate_first_result(search_results, document):
+    try:
+        first_result_present = EC.element_to_be_clickable((By.TAG_NAME, first_result_tag_name))
+        WebDriverWait(search_results, timeout).until(first_result_present)
+        first_result = search_results.find_element_by_tag_name(first_result_tag_name)
+        return first_result
+    except TimeoutException:
+        print(f'Browser timed out trying to locate first search result of '
+              f'{extrapolate_document_value(document)}, please review.')
+
+
+def get_first_result(browser, document):
     search_results = locate_search_results(browser, document)
-    print(search_results)
+    return locate_first_result(search_results, document)
+
+
+def open_first_result(browser, document):
+    first_result = get_first_result(browser, document)
+    if validate_search_result(first_result, document):
+        print("success")
 
 
 def handle_search_results(browser, document):

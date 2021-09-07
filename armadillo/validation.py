@@ -2,6 +2,7 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+from settings.file_management import document_value
 from settings.general_functions import timeout
 
 from armadillo.armadillo_variables import (bad_login_text,
@@ -39,3 +40,7 @@ def validate_login(browser):
     login_validation_text = get_login_validation_text(browser)
     if login_validation_text.startswith(bad_login_text):
         return execute_login_form_validation(browser)
+
+
+def validate_search_result(search_result, document):
+    return search_result.text.endswith(document_value(document))
