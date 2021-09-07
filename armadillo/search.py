@@ -3,7 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-from settings.general_functions import assert_window_title, get_field_value, timeout
+from settings.general_functions import assert_window_title, get_field_value, javascript_script_execution, timeout
 from settings.file_management import document_type, document_value, extrapolate_document_value
 
 from armadillo.armadillo_variables import document_search_url, document_search_title, document_search_field_id, execute_document_search_script
@@ -41,20 +41,16 @@ def enter_document_number(browser, document):
         locate_document_search_field(browser, document).send_keys(Keys.UP + document_value(document))
 
 
+# Matches crocodile handle_document_search_field
 def handle_document_search_field(browser, document):
-    pass
-
-
-def locate_search_button(browser, document):
-    pass
-
-
-def execute_search(browser, document):
-    pass
+    clear_document_search_field(browser, document)
+    enter_document_number(browser, document)
 
 
 def document_search(browser, document):
-    pass
+    open_document_search(browser, document)
+    handle_document_search_field(browser, document)
+    javascript_script_execution(browser, execute_document_search_script)
 
 
 # Matches crocodile 'search'
