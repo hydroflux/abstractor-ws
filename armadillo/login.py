@@ -53,8 +53,12 @@ def execute_login(browser):
 def verify_login(browser):
     if browser.title == post_login_title:
         print('\nLogin successful, continuing program execution.')
+    elif validate_login(browser):
+        print('\nLogin successful after validating login, continuing program execution.')
     else:
-        validate_login(browser)
+        print('\nBrowser failed to successfully login, exiting program.')
+        browser.quit()
+        exit()
 
 
 def account_login(browser):
