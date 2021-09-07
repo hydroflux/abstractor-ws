@@ -14,7 +14,7 @@ logs/
 # Specific files #
 ##################
 variables.py
-armadillo/armadillio_variables.py
+armadillo/armadillo_variables.py
 buffalo/buffalo_variables.py
 tiger/tiger_variables.py
 eagle/eagle_variables.py
