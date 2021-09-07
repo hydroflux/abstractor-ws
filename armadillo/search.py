@@ -40,4 +40,9 @@ def document_search(browser, document):
 
 # Matches crocodile 'search'
 def search(browser, document):
-    pass
+    if document_type(document) == 'document_number':
+        document_search(browser, document)
+    else:
+        print(f'Unable to search {document_type(document)}, new search path needs to be developed.')
+        print("Please press enter after reviewing the search parameters...")
+        input()
