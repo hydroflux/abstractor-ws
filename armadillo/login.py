@@ -19,26 +19,31 @@ def open_site(browser):
 
 
 # Identical to buffalo open_site
-def locate_login_field(browser, prompt_name, type):
+def locate_login_input(browser, input_name, type):
     try:
-        login_prompt_present = EC.presence_of_element_located((By.NAME, prompt_name))
+        login_prompt_present = EC.presence_of_element_located((By.NAME, input_name))
         WebDriverWait(browser, timeout).until(login_prompt_present)
-        login_prompt = browser.find_element_by_name(prompt_name)
+        login_prompt = browser.find_element_by_name(input_name)
         return login_prompt
     except TimeoutException:
-        print(f'Browser timed out trying to locate {type} prompt, please review.')
+        print(f'Browser timed out trying to locate {type} input, please review.')
 
 
 def submit_username(browser):
-    pass
+    fill_search_field(
+        locate_login_input(browser, credentials[0], "username"),
+        credentials[1])
 
 
-def submit_password(password):
-    pass
+def submit_password(browser):
+    fill_search_field(
+        locate_login_input(browser, credentials[2], "password"),
+        credentials[3])
 
 
 def execute_login(browser):
-    pass
+    submit_button = locate_login_input(browser, credentials[4], 'submit')
+    submit_button.click()
 
 
 def verify_login(browser):
