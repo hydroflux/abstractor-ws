@@ -29,12 +29,16 @@ def locate_document_search_field(browser, document):
               f'{extrapolate_document_value(document)}.')
 
 
+# Matches crocodile clear_document_search_field
 def clear_document_search_field(browser, document):
-    pass
+    while get_field_value(locate_document_search_field(browser, document)) != '':
+        locate_document_search_field(browser, document).clear()
 
 
+# Matches crocodile enter_document_number
 def enter_document_number(browser, document):
-    pass
+    while get_field_value(locate_document_search_field(browser, document)) != document_value(document):
+        locate_document_search_field(browser, document).send_keys(Keys.UP + document_value(document))
 
 
 def handle_document_search_field(browser, document):
