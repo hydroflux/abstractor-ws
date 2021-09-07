@@ -28,13 +28,14 @@ def locate_login_input(browser, input_name, type):
     except TimeoutException:
         print(f'Browser timed out trying to locate {type} input, please review.')
 
-
+# Matches buffalo submit_password
 def submit_username(browser):
     fill_search_field(
         locate_login_input(browser, credentials[0], "username"),
         credentials[1])
 
 
+# Matches buffalo submit_password
 def submit_password(browser):
     fill_search_field(
         locate_login_input(browser, credentials[2], "password"),
@@ -46,8 +47,14 @@ def execute_login(browser):
     submit_button.click()
 
 
+# Matches verify login from crocodile
 def verify_login(browser):
-    pass
+    if browser.title == post_login_title:
+        print('\nLogin successful, continuing program execution.')
+    else:
+        print('\nBrowser failed to successfully login, exiting program.')
+        browser.quit()
+        exit()
 
 
 def account_login(browser):
