@@ -5,9 +5,8 @@ from selenium.webdriver.support.wait import WebDriverWait
 from settings.general_functions import (assert_window_title, fill_search_field,
                                         timeout)
 
-from armadillo.armadillo_variables import (county_site, credentials,
-                                           post_login_title, website,
-                                           website_title)
+from armadillo.armadillo_variables import (credentials, post_login_title,
+                                           website, website_title)
 from armadillo.validation import validate_login
 
 
@@ -61,14 +60,9 @@ def verify_login(browser):
         exit()
 
 
-def open_county_site(browser):
-    browser.get(county_site)
-
-
 def account_login(browser):
     open_site(browser)
     submit_username(browser)
     submit_password(browser)
     execute_login(browser)
     verify_login(browser)
-    open_county_site(browser)
