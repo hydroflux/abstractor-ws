@@ -7,7 +7,7 @@ from settings.general_functions import date_from_string, timeout
 
 from armadillo.armadillo_variables import (bad_login_text,
                                            login_validation_form_name,
-                                           login_validation_text_id, recording_date_text)
+                                           login_validation_text_id)
 
 
 def get_login_validation_text(browser):
