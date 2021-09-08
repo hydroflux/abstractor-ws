@@ -42,5 +42,5 @@ def validate_login(browser):
         return execute_login_form_validation(browser)
 
 
-def validate_search_result(search_result, document):
-    return search_result.text.endswith(document_value(document))
+def validate_reception_number(field, document):
+    return field.text.endswith(document_value(document))

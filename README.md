@@ -35,7 +35,9 @@
 - [ ] Change "Document Found" so that it lists either "recorded" or "recorded & downloaded" instead of located
 - [ ] Look into github vulnerability link that's broken
 - [ ] Convert notes from demo into a proper README
-- [ ] Eagle browser can't handle x requests in y time period---perform tests across multiple computers (& more specifically IP addresses) in order to determine whether its the IP or the user account that is overworking the server
+- [ ] Separate imports for each file based on source location (settings, main directory, outside imports, etc.)
+- [ ] Add input() to every timeout which doesn't have a natural resolution in order to pause the program at each exception (& create a correction)
+- [ ] Consider creating an error_handling function for exceptions which takes a screenshot & throws an input together with the above suggestion
 
 ### Imports To Do
 
@@ -90,6 +92,7 @@
 - [ ] Update scripts with new general functions (i.e. assert_window_title)
 - [ ] Update the record function to set the reception number rather than return it
 - [ ] Move the logic for next result / previous result into its own script
+- [ ] Eagle browser can't handle x requests in y time period---perform tests across multiple computers (& more specifically IP addresses) in order to determine whether its the IP or the user account that is overworking the server
 
 ### Crocodile To Do
 

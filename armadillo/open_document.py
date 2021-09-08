@@ -11,7 +11,7 @@ from armadillo.armadillo_variables import (document_search_results_title,
                                            number_results_class,
                                            search_results_id,
                                            single_result_message)
-from armadillo.validation import validate_search_result
+from armadillo.validation import validate_reception_number
 
 
 def verify_successful_search(browser, document):
@@ -72,7 +72,7 @@ def get_first_result(browser, document):
 
 def open_first_result(browser, document):
     first_result = get_first_result(browser, document)
-    if validate_search_result(first_result, document):
+    if validate_reception_number(first_result, document):
         document_link = get_direct_link(first_result)
         set_description_link(document, document_link)
         browser.get(document.description_link)
