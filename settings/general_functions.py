@@ -116,6 +116,10 @@ def title_strip(text):
     return text.title().strip()
 
 
+def element_title_strip(element):
+    return element.text.title().strip()
+
+
 def update_sentence_case_extras(text):
     return (text.replace("'S ", "'s ")
             .replace("1St ", "1st ")
@@ -185,6 +189,10 @@ def get_direct_children(element):
 
 def list_to_string(list):
     return "/n".join(list)
+
+
+def newline_split(string):
+    return string.split('\n')
 
 
 def set_reception_number(document, reception_number):

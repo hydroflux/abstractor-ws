@@ -72,7 +72,7 @@ def get_first_result(browser, document):
 
 def open_first_result(browser, document):
     first_result = get_first_result(browser, document)
-    if validate_reception_number(first_result, document):
+    if validate_reception_number(first_result.text, document):
         document_link = get_direct_link(first_result)
         set_description_link(document, document_link)
         browser.get(document.description_link)
