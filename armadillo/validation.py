@@ -3,11 +3,11 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from settings.file_management import document_value
-from settings.general_functions import timeout
+from settings.general_functions import date_from_string, timeout
 
 from armadillo.armadillo_variables import (bad_login_text,
                                            login_validation_form_name,
-                                           login_validation_text_id)
+                                           login_validation_text_id, recording_date_text)
 
 
 def get_login_validation_text(browser):
@@ -44,3 +44,7 @@ def validate_login(browser):
 
 def validate_reception_number(text, document):
     return text.endswith(document_value(document))
+
+
+def validate_date(text):
+    return len(text) == 10 and date_from_string(text) == text
