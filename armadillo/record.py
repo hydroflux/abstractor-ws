@@ -62,22 +62,27 @@ def locate_document_information_tables(browser, document):
         input()
 
 
-def access_recording_date(recording_date_text, document):
-    if validate_date(recording_date_text):
-        return date_from_string(recording_date_text)
+def access_date(date_text, document, type):
+    if validate_date(date_text):
+        return date_from_string(date_text)
     else:
-        print(f'Browser failed to validate recording date for '
+        print(f'Browser failed to validate {type} date for '
               f'{extrapolate_document_value(document)} instead finding '
-              f'"{recording_date_text}", please review before continuing...')
+              f'"{date_text}", please review before continuing...')
         input()
 
 
+def access_book_and_page():
+    pass
+
+
 def record_indexing_information(document_table, dataframe, document):
-    recording_date = access_recording_date(title_strip(document_table[3]), document)
+    recording_date = access_date(title_strip(document_table[3]), document, "recording")
+    document_date = access_date(title_strip(document_table[-1]), document, "document")
     dataframe['Recording Date'].append(recording_date)
     # dataframe["Book"].append(book)
     # dataframe["Page"].append(page)
-    # dataframe["Document Date"].append(document_date)
+    dataframe["Document Date"].append(document_date)
 
 
 def record_grantor(browser, document):
