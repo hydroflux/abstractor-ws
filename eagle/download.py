@@ -1,4 +1,5 @@
 import os
+from settings.iframe_handling import switch_to_default_content
 
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
@@ -52,10 +53,6 @@ def execute_download(browser):
         print("Browser timed out while trying to click the download button.")
 
 
-def switch_to_browser_window(browser):
-    browser.switch_to.default_content()
-
-
 def build_stock_download(document_number):
     return f'{document_number}-{stock_download_suffix}'
 
@@ -70,6 +67,6 @@ def download_document(browser, county, abstract_dictionary, target_directory, do
             stock_download = build_stock_download(document_number)
             access_pdf_viewer(browser)
             execute_download(browser)
-            switch_to_browser_window(browser)
+            switch_to_default_content(browser)
             if update_download(browser, county, stock_download, document_directory, number_files, document_number):
                 return True
