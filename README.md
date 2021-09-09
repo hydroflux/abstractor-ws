@@ -4,6 +4,7 @@
 
 ### General To Do
 
+- [ ] Handle 'Document Date' added to the abstract_dictionary across all recording scripts--maybe make a new utility settings script which handles 'Document Date'
 - [ ] Create a fully built-out README
 - [ ] Add watermark
 - [ ] In the same vein as the two above, create an indicator for any instances that are repeated (don't necessarily remove them)

@@ -5,6 +5,7 @@ abstract_dictionary = {
     "Page": [],
     "Reception Number": [],
     "Document Type": [],
+    "Document Date": [],
     "Recording Date": [],
     "Legal": [],
     # "Notes": [],

@@ -48,9 +48,9 @@ def access_document_type_and_number(document_type_and_number_text, document):
         input()
 
 
-def record_document_type_and_number(document_information, dataframe, document):
+def record_document_type_and_number(browser, dataframe, document):
     document_type_and_number_fields = get_document_type_and_number_fields(
-        document_information)
+        browser, document)
     document_type, reception_number = access_document_type_and_number(
         document_type_and_number_fields[0], document)
     dataframe['Reception Number'].append(reception_number)
