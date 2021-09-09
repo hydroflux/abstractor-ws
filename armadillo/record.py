@@ -5,7 +5,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 
 from settings.file_management import extrapolate_document_value
 from settings.general_functions import (date_from_string, element_title_strip,
-                                        list_to_string, newline_split, set_reception_number, timeout,
+                                        list_to_string, newline_split, print_list_by_index, set_reception_number, timeout,
                                         title_strip)
 
 from armadillo.armadillo_variables import (book_and_page_text,
@@ -38,9 +38,22 @@ def get_document_type_and_number_fields(browser, document):
     return access_table_information(type_and_number_table)
 
 
+def handle_document_type_and_number_text(document_type_and_number_text, document):
+    type_and_number_pieces = document_type_and_number_text.split(' - ')
+    if len(type_and_number_pieces) == 2:
+        return type_and_number_pieces
+    elif len(type_and_number_pieces) == 3:
+        return (' - ').join(type_and_number_pieces[:2]), type_and_number_pieces[2]
+    else:
+        print(f'Browser is unable to parse document type and number for '
+              f'{extrapolate_document_value(document)}, please review: \n'
+              f'{print_list_by_index(type_and_number_pieces)}')
+        input()
+
+
 def access_document_type_and_number(document_type_and_number_text, document):
     if validate_reception_number(document_type_and_number_text, document):
-        return document_type_and_number_text.split(' - ')
+        return handle_document_type_and_number_text(document_type_and_number_text, document)
     else:
         print(f'Browser failed to validate reception number for '
               f'{extrapolate_document_value(document)} instead finding '

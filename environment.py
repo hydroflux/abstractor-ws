@@ -36,7 +36,7 @@ def execute_program_type(county, program_type, document_list=None, search_name=N
             execute_armadillo(county, target_directory, document_list, file_name)
         else:
             currently_unavailable(county, program_type)
-    if county.program == 'crocodile':
+    elif county.program == 'crocodile':
         if program_type == 'execute':
             execute_crocodile(county, target_directory, document_list, file_name)
         elif program_type == 'review':
@@ -69,7 +69,7 @@ def execute_program_type(county, program_type, document_list=None, search_name=N
     #     elif program_type == 'review':
     #         review_tiger()
     else:
-        print(f'{county} does not match available execution options, please review.')
+        print(f'"{county}" does not match available execution options, please review.')
 
 
 def execute_abstractor():

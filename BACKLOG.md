@@ -130,6 +130,7 @@
 
 - [ ] Create an "review", & "download only" option for execution
 - [ ] Create a final prompt before logging out & closing the browser in order to review documents IF PAID & checkout
+- [ ] Update export settings 'Book' to 'Volume' for armadillo
 
 ### Iguana To Do
 
