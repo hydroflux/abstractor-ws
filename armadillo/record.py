@@ -7,7 +7,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 
 from settings.general_functions import date_from_string, element_title_strip, list_to_string, newline_split, timeout, title_strip
 
-from armadillo.armadillo_variables import type_and_number_table_id, document_tables_class, book_and_page_text, midpoint_text
+from armadillo.armadillo_variables import type_and_number_table_id, document_tables_class, book_and_page_text, party_midpoint_text, related_documents_text, related_types
 
 
 def locate_document_type_and_number_table(browser, document):
@@ -92,13 +92,13 @@ def record_indexing_information(document_table, dataframe, document):
 
 
 def get_party_midpoint(document_table):
-    return document_table.index(midpoint_text)
+    return document_table.index(party_midpoint_text)
 
 
 def access_party_information(document_table):
-    midpoint = get_party_midpoint(document_table)
-    grantor = list(map(title_strip, (document_table[1:midpoint])))
-    grantee = list(map(title_strip, (document_table[(midpoint + 1):])))
+    party_midpoint = get_party_midpoint(document_table)
+    grantor = list(map(title_strip, (document_table[1:party_midpoint])))
+    grantee = list(map(title_strip, (document_table[(party_midpoint + 1):])))
     return list_to_string(grantor), list_to_string(grantee)
 
 
@@ -108,11 +108,31 @@ def record_party_information(document_table, dataframe):
     dataframe['Grantee'].append(grantee)
 
 
+def get_related_document_fields(document_table):
+    return document_table[document_table.index(related_documents_text) + 1:]
+
+
+def build_related_documents(related_string):
+    related_document_array = []
+    index = 0
+    for element in related_string.split('  '):
+        if element != '' and element != ' ':
+            related_document_array.append(f'{related_types[index]}: {element}')
+        index += 1
+    return (', ').join(related_document_array)
+
+
+def access_related_documents(related_documents_fields):
+    return list_to_string(list(map(build_related_documents, related_documents_fields)))
+
+
+def record_related_documents(document_table, dataframe):
+    related_documents_fields = get_related_document_fields(document_table)
+    related_documents = access_related_documents(related_documents_fields)
+    dataframe['Related Documents'].append(related_documents)
+
+
 def record_legal(browser, document):
-    pass
-
-
-def record_related_documents(browser, document):
     pass
 
 
@@ -125,6 +145,7 @@ def aggregate_document_information(browser, dataframe, document):
     document_tables = locate_document_information_tables(browser, document)
     record_indexing_information(access_table_information(document_tables[0]), dataframe, document)
     record_party_information(access_table_information(document_tables[1]), dataframe)
+    record_related_documents(newline_split(document_tables[2].text), dataframe)
 
 
 def record_document_fields(browser, county, dataframe, document):
