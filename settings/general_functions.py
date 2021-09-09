@@ -242,3 +242,10 @@ def fill_search_field(handle_field_function, value):
 # please review
 def enter_field_information(field, information):
     field.send_keys(information)
+
+
+def print_list_by_index(list, web_element=None):
+    if web_element is None:
+        return [print(list.index(element), element, '\n---------------\n') for element in list]
+    else:
+        return [print(list.index(element), element.text, '\n---------------\n') for element in list]
