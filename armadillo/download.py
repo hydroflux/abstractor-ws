@@ -1,19 +1,20 @@
-from settings.iframe_handling import access_iframe_by_tag
-from buffalo.frame_handling import locate_iframe_by_name, switch_to_default_content
-from armadillo.validation import validate_download_link
-import os
-
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
 from settings.download_management import previously_downloaded, update_download
-from settings.file_management import create_document_directory, extrapolate_document_value
-from settings.general_functions import get_direct_link, long_timeout, naptime, newline_split, timeout
+from settings.file_management import (create_document_directory,
+                                      extrapolate_document_value)
+from settings.general_functions import (get_direct_link, long_timeout, naptime,
+                                        newline_split, timeout)
+from settings.iframe_handling import (access_iframe_by_tag,
+                                      switch_to_default_content)
 # from settings.error_handling import no_image_comment
 
-from armadillo.armadillo_variables import download_page_class_name, download_content_id
+from armadillo.armadillo_variables import (download_content_id,
+                                           download_page_class_name, download_prefix)
+from armadillo.validation import validate_download_link
 
 
 def locate_download_page(browser, document):
@@ -57,19 +58,21 @@ def access_download_content(browser, document):
     return locate_download_content(browser, document)
 
 
-def verify_download(browser, document):
-    download_content = access_download_content(browser, document)
-    if validate_download_link(document, newline_split(download_content.text)[0]):
-        switch_to_default_content(browser)
+def access_listed_download_name(download_content):
+    return newline_split(download_content.text)[0]
+
+
+def verify_download(browser, document, download_content):
+    listed_download_name = access_listed_download_name(download_content)
+    if validate_download_link(document, listed_download_name):
         return True
 
 
-def build_stock_download(document_number):
-    pass
+def build_stock_download(document):
+    return f'{download_prefix}{document.reception_number.replace("-", "_")}'
 
 
 def free_download(browser):
-    pass
     return True
 
 
@@ -78,11 +81,13 @@ def add_to_cart(browser, document):
     return True
 
 
-def execute_download(browser, document_directory, document, download_type):
+def execute_download(browser, document_directory, document, download_type, download_content):
     if download_type == 'free':
-        return free_download(browser, document_directory, document)
+        return free_download(browser, document_directory, document, download_content)
     elif download_type == 'paid':
+        switch_to_default_content(browser)
         return add_to_cart(browser, document)
+
 
 def download(browser, county, target_directory, document, download_type):
     document_directory = create_document_directory(target_directory)
@@ -90,5 +95,6 @@ def download(browser, county, target_directory, document, download_type):
         return True
     else:
         open_download_page(browser, document)
+        download_content = access_download_content(browser, document)
         if verify_download(browser, document):
-            return execute_download(browser, document_directory, document, download_type)
+            return execute_download(browser, document_directory, document, download_type, download_content)
