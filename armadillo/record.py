@@ -5,15 +5,18 @@ from selenium.webdriver.support.wait import WebDriverWait
 
 from settings.file_management import extrapolate_document_value
 from settings.general_functions import (date_from_string, element_title_strip,
-                                        list_to_string, newline_split, print_list_by_index, set_reception_number, timeout,
+                                        list_to_string, newline_split,
+                                        print_list_by_index,
+                                        set_reception_number, timeout,
                                         title_strip)
 
 from armadillo.armadillo_variables import (book_and_page_text,
                                            document_tables_tag,
                                            party_midpoint_text,
+                                           reception_number_prefix,
                                            related_documents_text,
                                            related_types,
-                                           type_and_number_table_id, reception_number_prefix)
+                                           type_and_number_table_id)
 from armadillo.validation import validate_date, validate_reception_number
 
 
@@ -63,7 +66,7 @@ def access_document_type_and_number(document_type_and_number_text, document):
 
 def update_reception_number(document, reception_number):
     if reception_number.startswith(reception_number_prefix) and reception_number.endswith(document.value):
-        reception_number = reception_number[len(reception_number_prefix):]
+        reception_number = reception_number[len(reception_number_prefix):].replace('-', '')
         return reception_number
     else:
         print(f'Reception number "{reception_number}" does not match the expected format for '

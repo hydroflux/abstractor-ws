@@ -188,7 +188,7 @@ def get_direct_children(element):
 
 
 def list_to_string(list):
-    return "/n".join(list)
+    return "\n".join(list)
 
 
 def newline_split(string):

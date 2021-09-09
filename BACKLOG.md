@@ -131,6 +131,8 @@
 - [ ] Create an "review", & "download only" option for execution
 - [ ] Create a final prompt before logging out & closing the browser in order to review documents IF PAID & checkout
 - [ ] Update export settings 'Book' to 'Volume' for armadillo
+- [ ] Create some consistency between 'document.reception_number' & 'document.value' in order to avoid constantly updating
+- [ ] Eliminate the 'Effective Date' column in export--maybe only add 'Document Date' into the abstract if it appears???
 
 ### Iguana To Do
 
