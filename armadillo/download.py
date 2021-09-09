@@ -4,20 +4,21 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+
 from settings.download_management import previously_downloaded, update_download
 from settings.file_management import (create_document_directory,
                                       extrapolate_document_value)
-from settings.general_functions import center_element, get_direct_link, newline_split, timeout
+from settings.general_functions import (center_element, get_direct_link,
+                                        newline_split, timeout)
 from settings.iframe_handling import (access_iframe_by_tag,
                                       switch_to_default_content)
 
-from armadillo.armadillo_variables import (download_content_id,
+from armadillo.armadillo_variables import (add_to_cart_name,
+                                           download_content_id,
                                            download_page_class_name,
                                            download_prefix,
-                                           free_download_button_tag,
-                                           add_to_cart_name)
+                                           free_download_button_tag)
 from armadillo.validation import validate_download_link
-# from settings.error_handling import no_image_comment
 
 
 def locate_download_page(browser, document):
