@@ -209,3 +209,7 @@ def remove_file_suffix(file_name):
 
 def strip_document_number_from_file_name(file_name):
     return remove_file_suffix(remove_prefix(file_name, "-"))
+
+
+def clear_dictionary(dictionary):
+    dictionary.clear()
