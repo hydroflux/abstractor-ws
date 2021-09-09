@@ -4,7 +4,6 @@
 
 - [ ] Handle 'Document Date' added to the abstract_dictionary across all recording scripts--maybe make a new utility settings script which handles 'Document Date'
 - [ ] Create a breakdown of adding a new county ('skeleton structures', 'general_functions', etc.)
-- [ ] Add 'download_type' to Document class (specifically for armadillo scripts)
 - [ ] Change 'file_management' to 'dataframe_management' & split out functions into multiple utility scripts
 - [ ] Create directory for objects & split abstract_objects into separate scripts
 - [ ] Create a fully built-out README
@@ -127,7 +126,6 @@
 
 ### Armadillo To Do
 
-- [ ] Audit armadillo reception numbers to match index numbers input
 - [ ] Integrate armadillo scripts to work with the top level environment file
 - [ ] Create a convert_document_numbers script
 - [ ] Create an "execution", "review", & "download only" option for execution

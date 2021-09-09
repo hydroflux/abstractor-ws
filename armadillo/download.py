@@ -136,7 +136,7 @@ def execute_download(browser, county, document_directory, document):
 
 def download(browser, county, target_directory, document):
     document_directory = create_document_directory(target_directory)
-    if previously_downloaded(county, document_directory, document.reception_number):
+    if previously_downloaded(county, document_directory, document.reception_number.replace('-', '')):
         return True
     else:
         open_download_page(browser, document)
