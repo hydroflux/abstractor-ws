@@ -7,7 +7,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 
 from settings.general_functions import date_from_string, element_title_strip, newline_split, timeout, title_strip
 
-from armadillo.armadillo_variables import type_and_number_table_id, document_tables_class
+from armadillo.armadillo_variables import type_and_number_table_id, document_tables_class, book_and_page_text
 
 
 def locate_document_type_and_number_table(browser, document):
@@ -72,17 +72,23 @@ def access_date(date_text, document, type):
         input()
 
 
-def access_book_and_page():
-    pass
+def get_book_and_page_field(document_table):
+    return document_table[document_table.index(book_and_page_text) + 1]
+
+
+def access_book_and_page(document_table):
+    book_and_page_field = get_book_and_page_field(document_table)
+    return book_and_page_field.split(' ')[2], book_and_page_field.split(' ')[4]
 
 
 def record_indexing_information(document_table, dataframe, document):
     recording_date = access_date(title_strip(document_table[3]), document, "recording")
     document_date = access_date(title_strip(document_table[-1]), document, "document")
+    book, page = access_book_and_page(document_table)
     dataframe['Recording Date'].append(recording_date)
-    # dataframe["Book"].append(book)
-    # dataframe["Page"].append(page)
     dataframe["Document Date"].append(document_date)
+    dataframe["Book"].append(book)
+    dataframe["Page"].append(page)
 
 
 def record_grantor(browser, document):
