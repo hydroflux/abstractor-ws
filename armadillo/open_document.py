@@ -34,7 +34,7 @@ def locate_result_count(browser, document):
 
 def count_results(browser, document):
     result_count = locate_result_count(browser, document)
-    if result_count == single_result_message:
+    if result_count.text == single_result_message:
         document.number_results += 1
     else:
         print(f'Browser located multiple search results for '
