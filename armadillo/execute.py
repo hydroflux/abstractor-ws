@@ -18,7 +18,7 @@ from settings.settings import download
 def record_single_document(browser, county, target_directory, document_list, document, start_time):
     record(browser, dataframe, document)
     if download:
-        if not download(browser, county, target_directory, document, download_type):
+        if not download(browser, county, target_directory, document):
             unable_to_download(dataframe, document)
     document_found(start_time, document_list, document)
 

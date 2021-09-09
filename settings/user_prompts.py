@@ -3,8 +3,7 @@ import os
 from settings.classes.Document import Document
 from settings.classes.counties import county_list
 from settings.general_functions import title_strip
-from settings.import_list import generate_document_list
-from settings.settings import root, search_name
+from settings.settings import root, search_name, download
 
 
 def clear_terminal():
@@ -191,11 +190,39 @@ def sheet_name_prompt(current_sheet_name):
         return current_sheet_name
 
 
+def download_type_prompt(county):
+    print(f'You are currently accessing "{county}", and have a choice between free or paid downloads.')
+    input_statement = ('Would you prefer paid or free downloads: \n'
+                       '[1] Free \n'
+                       '[2] Paid \n'
+                       )
+    download_type_input = input(input_statement).lower()
+    while download_type_input not in ['1', 'f', 'free', '2', 'p', 'paid']:
+        clear_terminal()
+        print(f'You entered {download_type_input} Please choose from the following options')
+        download_type_input = input(input_statement).lower()
+    if download_type_input in ['1', 'f', 'free']:
+        return 'free'
+    elif download_type_input in ['2', 'p', 'paid']:
+        return 'paid'
+
+
+def update_document_download_types(download_type, document_list):
+    for document in document_list:
+        document.download_type = download_type
+
+
+def add_download_types(county, document_list):
+    if download:
+        download_type = download_type_prompt(county)
+        update_document_download_types(download_type, document_list)
+
+
 # Add an additional prompt for request for download
-def request_more_information(current_target_directory, current_file_name, current_sheet_name):
-    target_directory = target_directory_prompt(current_target_directory)
-    available_file_names(target_directory)
-    file_name, sheet_name = file_name_prompt(current_file_name)
-    available_sheet_names()
-    sheet_name = sheet_name_prompt(current_sheet_name)
-    return generate_document_list(target_directory, file_name, sheet_name)
+# def request_more_information(current_target_directory, current_file_name, current_sheet_name):
+#     target_directory = target_directory_prompt(current_target_directory)
+#     available_file_names(target_directory)
+#     file_name, sheet_name = file_name_prompt(current_file_name)
+#     available_sheet_names()
+#     sheet_name = sheet_name_prompt(current_sheet_name)
+#     return generate_document_list(target_directory, file_name, sheet_name)
