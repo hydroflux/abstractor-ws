@@ -152,25 +152,32 @@ def record_related_documents(document_table, dataframe):
     dataframe['Related Documents'].append(related_documents)
 
 
-def record_legal(browser, document):
-    pass
+def access_legal(document_table):
+    return document_table[1].split('  ')[0]
 
 
-def record_comments(browser, document):
-    pass
+def record_legal(document_table, dataframe):
+    legal = access_legal(document_table)
+    dataframe['Legal'].append(legal)
 
 
-def aggregate_document_information(browser, dataframe, document):
-    record_document_type_and_number(browser, dataframe, document)
+def aggregate_document_table_information(browser, dataframe, document):
     document_tables = locate_document_information_tables(browser, document)
     record_indexing_information(access_table_information(document_tables[1]), dataframe, document)
     record_party_information(access_table_information(document_tables[3]), dataframe)
     record_related_documents(newline_split(document_tables[6].text), dataframe)
+    record_legal(newline_split(document_tables[8].text), dataframe)
 
 
-def record_document_fields(browser, county, dataframe, document):
-    pass
+def record_comments(dataframe):
+    dataframe['Comments'].append('')
 
 
-def record(browser, county, dataframe, document):
-    pass
+def record_document_fields(browser, dataframe, document):
+    record_document_type_and_number(browser, dataframe, document)
+    aggregate_document_table_information(browser, dataframe, document)
+    record_comments(dataframe)
+
+
+def record(browser, dataframe, document):
+    record_document_fields(browser, dataframe, document)
