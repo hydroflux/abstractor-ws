@@ -13,7 +13,7 @@ from armadillo.armadillo_variables import (book_and_page_text,
                                            party_midpoint_text,
                                            related_documents_text,
                                            related_types,
-                                           type_and_number_table_id)
+                                           type_and_number_table_id, document_tables_tag)
 from armadillo.validation import validate_date, validate_reception_number
 
 
@@ -59,14 +59,27 @@ def record_document_type_and_number(browser, dataframe, document):
 
 def locate_document_information_tables(browser, document):
     try:
-        information_tables_present = EC.presence_of_element_located((By.CLASS_NAME, document_tables_class))
+        information_tables_present = EC.presence_of_element_located((By.TAG_NAME, document_tables_tag))
         WebDriverWait(browser, timeout).until(information_tables_present)
-        information_tables = browser.find_elements_by_class_name(document_tables_class)
+        information_tables = browser.find_elements_by_tag_name(document_tables_tag)
         return information_tables
     except TimeoutException:
         print(f'Browser timed out trying to get document information tables for '
               f'{extrapolate_document_value(document)}, please review.')
         input()
+
+# Substituted document_tables_class for document_tables_tag => testing for result solvency
+
+# def locate_document_information_tables(browser, document):
+#     try:
+#         information_tables_present = EC.presence_of_element_located((By.CLASS_NAME, document_tables_class))
+#         WebDriverWait(browser, timeout).until(information_tables_present)
+#         information_tables = browser.find_elements_by_class_name(document_tables_class)
+#         return information_tables
+#     except TimeoutException:
+#         print(f'Browser timed out trying to get document information tables for '
+#               f'{extrapolate_document_value(document)}, please review.')
+#         input()
 
 
 def access_date(date_text, document, type):
@@ -150,9 +163,9 @@ def record_comments(browser, document):
 def aggregate_document_information(browser, dataframe, document):
     record_document_type_and_number(browser, dataframe, document)
     document_tables = locate_document_information_tables(browser, document)
-    record_indexing_information(access_table_information(document_tables[0]), dataframe, document)
-    record_party_information(access_table_information(document_tables[1]), dataframe)
-    record_related_documents(newline_split(document_tables[2].text), dataframe)
+    record_indexing_information(access_table_information(document_tables[1]), dataframe, document)
+    record_party_information(access_table_information(document_tables[3]), dataframe)
+    record_related_documents(newline_split(document_tables[6].text), dataframe)
 
 
 def record_document_fields(browser, county, dataframe, document):
