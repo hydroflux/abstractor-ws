@@ -32,7 +32,7 @@ print("environment", __name__)
 def execute_program_type(county, program_type, document_list=None, search_name=None):
     if county.program == 'armadillo':
         if program_type == 'execute':
-            add_download_types(document_list)
+            add_download_types(county, document_list)
             execute_armadillo(county, target_directory, document_list, file_name)
         else:
             currently_unavailable(county, program_type)

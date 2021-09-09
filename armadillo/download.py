@@ -134,7 +134,7 @@ def execute_download(browser, county, document_directory, document):
         return add_to_cart(browser, document)
 
 
-def download(browser, county, target_directory, document):
+def download_document(browser, county, target_directory, document):
     document_directory = create_document_directory(target_directory)
     if previously_downloaded(county, document_directory, document.reception_number.replace('-', '')):
         return True

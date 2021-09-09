@@ -7,8 +7,9 @@ from settings.file_management import (bundle_project, check_length,
                                       extrapolate_document_value,
                                       no_document_found)
 from settings.general_functions import start_timer
-from settings.settings import download
+from settings.settings import download, headless
 
+from armadillo.download import download_document
 from armadillo.login import account_login
 from armadillo.logout import logout
 from armadillo.open_document import open_document
@@ -20,7 +21,7 @@ from armadillo.transform_document_list import transform_document_list
 def record_single_document(browser, county, target_directory, document_list, document, start_time):
     record(browser, dataframe, document)
     if download:
-        if not download(browser, county, target_directory, document):
+        if not download_document(browser, county, target_directory, document):
             unable_to_download(dataframe, document)
     document_found(start_time, document_list, document)
 
@@ -49,7 +50,7 @@ def search_documents_from_list(browser, county, target_directory, document_list)
 
 
 def execute_program(county, target_directory, document_list, file_name):
-    browser = create_webdriver(target_directory, False)
+    browser = create_webdriver(target_directory, headless)
     transform_document_list(document_list)
     account_login(browser)
     abstraction = export_document(

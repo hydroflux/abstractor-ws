@@ -86,7 +86,7 @@ def open_result_link(browser, document, result):
 def open_first_result(browser, document):
     first_result = get_first_result(browser, document)
     if validate_reception_number(first_result.text, document):
-        return open_result_link(browser, document)
+        return open_result_link(browser, document, first_result)
 
 
 def handle_search_results(browser, document):

@@ -12,7 +12,7 @@ from armadillo.armadillo_variables import (bad_login_text,
 
 def get_login_validation_text(browser):
     try:
-        login_validation_text_present = EC.presence_of_element_locate((By.ID, login_validation_text_id))
+        login_validation_text_present = EC.presence_of_element_located((By.ID, login_validation_text_id))
         WebDriverWait(browser, timeout).until(login_validation_text_present)
         login_validation_text = browser.find_element_by_id(login_validation_text_id)
         return login_validation_text
@@ -37,8 +37,8 @@ def execute_login_form_validation(browser):
 
 
 def validate_login(browser):
-    login_validation_text = get_login_validation_text(browser)
-    if login_validation_text.startswith(bad_login_text):
+    login_validation_information = get_login_validation_text(browser)
+    if login_validation_information.text.startswith(bad_login_text):
         return execute_login_form_validation(browser)
 
 

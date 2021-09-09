@@ -116,6 +116,7 @@
 - [ ] Consolidate the different functions wrapping around crocodile open_document (probably create ~ 2 higher order functions for handling / verifying the results)
 - [ ] Refactor crocodile record---probably into a check_index function and an aggregate function
 - [ ] Name search currently only works with a "first name" / "last name" split--needs to be more robust to work in multiple scenarios
+- [ ] Add 'download' decision to Document class & document instances
 
 ### Buffalo To Do
 
@@ -128,6 +129,7 @@
 ### Armadillo To Do
 
 - [ ] Create an "review", & "download only" option for execution
+- [ ] Create a final prompt before logging out & closing the browser in order to review documents IF PAID & checkout
 
 ### Iguana To Do
 
