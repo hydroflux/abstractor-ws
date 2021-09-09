@@ -7,14 +7,15 @@ from selenium.webdriver.support.wait import WebDriverWait
 from settings.download_management import previously_downloaded, update_download
 from settings.file_management import (create_document_directory,
                                       extrapolate_document_value)
-from settings.general_functions import get_direct_link, newline_split, timeout
+from settings.general_functions import center_element, get_direct_link, newline_split, timeout
 from settings.iframe_handling import (access_iframe_by_tag,
                                       switch_to_default_content)
 
 from armadillo.armadillo_variables import (download_content_id,
                                            download_page_class_name,
                                            download_prefix,
-                                           free_download_button_tag)
+                                           free_download_button_tag,
+                                           add_to_cart_name)
 from armadillo.validation import validate_download_link
 # from settings.error_handling import no_image_comment
 
@@ -98,8 +99,22 @@ def free_download(browser, document):
     browser.get(free_download_link)
 
 
+def locate_add_to_cart_form(browser, document):
+    try:
+        add_to_cart_form_present = EC.presence_of_element_located((By.NAME, add_to_cart_name))
+        WebDriverWait(browser, timeout).until(add_to_cart_form_present)
+        add_to_cart_form = browser.find_element_by_name(add_to_cart_name)
+        return add_to_cart_form
+    except TimeoutException:
+        print(f'Browser timed out trying to locate "Add to Cart" form for '
+              f'{extrapolate_document_value(document)}, please review.')
+        input()
+
+
 def add_to_cart(browser, document):
-    pass
+    add_to_cart_form = locate_add_to_cart_form(browser, document)
+    center_element(browser, add_to_cart_form)
+    add_to_cart_form.submit()
     return True
 
 
