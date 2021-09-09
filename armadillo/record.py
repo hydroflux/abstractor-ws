@@ -5,9 +5,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-from settings.general_functions import date_from_string, element_title_strip, newline_split, timeout, title_strip
+from settings.general_functions import date_from_string, element_title_strip, list_to_string, newline_split, timeout, title_strip
 
-from armadillo.armadillo_variables import type_and_number_table_id, document_tables_class, book_and_page_text
+from armadillo.armadillo_variables import type_and_number_table_id, document_tables_class, book_and_page_text, midpoint_text
 
 
 def locate_document_type_and_number_table(browser, document):
@@ -91,12 +91,21 @@ def record_indexing_information(document_table, dataframe, document):
     dataframe["Page"].append(page)
 
 
-def record_grantor(browser, document):
-    pass
+def get_party_midpoint(document_table):
+    return document_table.index(midpoint_text)
 
 
-def record_grantee(browser, document):
-    pass
+def access_party_information(document_table):
+    midpoint = get_party_midpoint(document_table)
+    grantor = list(map(title_strip, (document_table[1:midpoint])))
+    grantee = list(map(title_strip, (document_table[(midpoint + 1):])))
+    return list_to_string(grantor), list_to_string(grantee)
+
+
+def record_party_information(document_table, dataframe):
+    grantor, grantee = access_party_information(document_table)
+    dataframe['Grantor'].append(grantor)
+    dataframe['Grantee'].append(grantee)
 
 
 def record_legal(browser, document):
@@ -115,6 +124,7 @@ def aggregate_document_information(browser, dataframe, document):
     record_document_type_and_number(browser, dataframe, document)
     document_tables = locate_document_information_tables(browser, document)
     record_indexing_information(access_table_information(document_tables[0]), dataframe, document)
+    record_party_information(access_table_information(document_tables[1]), dataframe)
 
 
 def record_document_fields(browser, county, dataframe, document):
