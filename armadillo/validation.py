@@ -48,3 +48,7 @@ def validate_reception_number(text, document):
 
 def validate_date(text):
     return len(text) == 10 and date_from_string(text) == text
+
+
+def validate_download_link(document, text):
+    return f'{document.reception_number}.pdf' == text

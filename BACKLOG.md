@@ -96,6 +96,7 @@
 - [ ] Move the logic for next result / previous result into its own script
 - [ ] Eagle browser can't handle x requests in y time period---perform tests across multiple computers (& more specifically IP addresses) in order to determine whether its the IP or the user account that is overworking the server
 - [ ] Clean up download_document--switch to download, get the frame switches together under a single function, & handle number of documents & stock download separately
+- [ ] In addition to above, no need to even look at the download if it's been previously downloaded
 
 ### Crocodile To Do
 
