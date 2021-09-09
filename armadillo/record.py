@@ -13,7 +13,7 @@ from armadillo.armadillo_variables import (book_and_page_text,
                                            party_midpoint_text,
                                            related_documents_text,
                                            related_types,
-                                           type_and_number_table_id)
+                                           type_and_number_table_id, reception_number_prefix)
 from armadillo.validation import validate_date, validate_reception_number
 
 
@@ -48,14 +48,30 @@ def access_document_type_and_number(document_type_and_number_text, document):
         input()
 
 
+def update_reception_number(document, reception_number):
+    if reception_number.startswith(reception_number_prefix) and reception_number.endswith(document.value):
+        reception_number = reception_number[len(reception_number_prefix):]
+        return reception_number
+    else:
+        print(f'Reception number "{reception_number}" does not match the expected format for '
+              f'{extrapolate_document_value(document)}, please review...')
+        input()
+        return reception_number
+
+
+def handle_reception_number(dataframe, document, reception_number):
+    reception_number = update_reception_number(document, reception_number)
+    set_reception_number(document, reception_number)
+    dataframe['Reception Number'].append(reception_number)
+
+
 def record_document_type_and_number(browser, dataframe, document):
     document_type_and_number_fields = get_document_type_and_number_fields(
         browser, document)
     document_type, reception_number = access_document_type_and_number(
         document_type_and_number_fields[0], document)
-    set_reception_number(document, reception_number)
-    dataframe['Reception Number'].append(reception_number)
     dataframe['Document Type'].append(document_type)
+    handle_reception_number(dataframe, document, reception_number)
 
 
 def locate_document_information_tables(browser, document):
