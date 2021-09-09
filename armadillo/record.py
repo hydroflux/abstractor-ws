@@ -9,11 +9,11 @@ from settings.general_functions import (date_from_string, element_title_strip,
                                         title_strip)
 
 from armadillo.armadillo_variables import (book_and_page_text,
-                                           document_tables_class,
+                                           document_tables_tag,
                                            party_midpoint_text,
                                            related_documents_text,
                                            related_types,
-                                           type_and_number_table_id, document_tables_tag)
+                                           type_and_number_table_id)
 from armadillo.validation import validate_date, validate_reception_number
 
 

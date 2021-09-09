@@ -1,16 +1,16 @@
-from settings.bad_search import record_bad_search
-from armadillo.record import record
-from buffalo.execute import handle_search_results
-from armadillo.open_document import open_document
-from settings.general_functions import start_timer
-from armadillo.search import search
-from settings.file_management import bundle_project, check_length, no_document_found
-from settings.export import export_document
-from settings.driver import create_webdriver
 from settings.abstract_object import abstract_dictionary as dataframe
+from settings.bad_search import record_bad_search
+from settings.driver import create_webdriver
+from settings.export import export_document
+from settings.file_management import (bundle_project, check_length,
+                                      no_document_found)
+from settings.general_functions import start_timer
 
 from armadillo.login import account_login
 from armadillo.logout import logout
+from armadillo.open_document import open_document
+from armadillo.record import record
+from armadillo.search import search
 
 
 def search_documents_from_list(browser, document_list):
