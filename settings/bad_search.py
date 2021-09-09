@@ -34,6 +34,7 @@ def record_bad_search(dataframe, document):
     dataframe["Grantor"].append(search_errors[0])
     dataframe["Grantee"].append(search_errors[0])
     dataframe["Document Type"].append(search_errors[0])
+    dataframe["Document Date"].append(search_errors[1])
     dataframe["Recording Date"].append(search_errors[1])
     dataframe["Legal"].append(search_errors[2])
     dataframe["Related Documents"].append(search_errors[2])
