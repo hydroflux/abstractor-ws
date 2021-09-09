@@ -95,6 +95,7 @@
 - [ ] Update the record function to set the reception number rather than return it
 - [ ] Move the logic for next result / previous result into its own script
 - [ ] Eagle browser can't handle x requests in y time period---perform tests across multiple computers (& more specifically IP addresses) in order to determine whether its the IP or the user account that is overworking the server
+- [ ] Clean up download_document--switch to download, get the frame switches together under a single function, & handle number of documents & stock download separately
 
 ### Crocodile To Do
 
@@ -124,7 +125,7 @@
 
 ### Armadillo To Do
 
-- [ ] Add all armadillo scripts (execute, record, download)
+- [ ] Audit armadillo reception numbers to match index numbers input
 - [ ] Integrate armadillo scripts to work with the top level environment file
 - [ ] Create a convert_document_numbers script
 - [ ] Create an "execution", "review", & "download only" option for execution

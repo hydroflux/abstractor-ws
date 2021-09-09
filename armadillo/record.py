@@ -5,7 +5,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 
 from settings.file_management import extrapolate_document_value
 from settings.general_functions import (date_from_string, element_title_strip,
-                                        list_to_string, newline_split, timeout,
+                                        list_to_string, newline_split, set_reception_number, timeout,
                                         title_strip)
 
 from armadillo.armadillo_variables import (book_and_page_text,
@@ -53,6 +53,7 @@ def record_document_type_and_number(browser, dataframe, document):
         browser, document)
     document_type, reception_number = access_document_type_and_number(
         document_type_and_number_fields[0], document)
+    set_reception_number(document, reception_number)
     dataframe['Reception Number'].append(reception_number)
     dataframe['Document Type'].append(document_type)
 

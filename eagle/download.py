@@ -56,7 +56,7 @@ def switch_to_browser_window(browser):
     browser.switch_to.default_content()
 
 
-def determine_stock_download(document_number):
+def build_stock_download(document_number):
     return f'{document_number}-{stock_download_suffix}'
 
 
@@ -67,9 +67,9 @@ def download_document(browser, county, abstract_dictionary, target_directory, do
             return True
         else:
             number_files = len(os.listdir(document_directory))
+            stock_download = build_stock_download(document_number)
             access_pdf_viewer(browser)
             execute_download(browser)
             switch_to_browser_window(browser)
-            stock_download = determine_stock_download(document_number)
             if update_download(browser, county, stock_download, document_directory, number_files, document_number):
                 return True

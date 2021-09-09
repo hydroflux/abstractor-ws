@@ -70,25 +70,37 @@ def get_first_result(browser, document):
     return locate_first_result(search_results, document)
 
 
+def open_result_link(browser, document, result):
+    try:
+        document_link = get_direct_link(result)
+        set_description_link(document, document_link)
+        browser.get(document.description_link)
+        return True
+    except TimeoutException:
+        print(f'Browser timed out trying to open result link for '
+              f'{extrapolate_document_value(document)}, please review.')
+        input()
+        return False
+
+
 def open_first_result(browser, document):
     first_result = get_first_result(browser, document)
     if validate_reception_number(first_result.text, document):
-        document_link = get_direct_link(first_result)
-        set_description_link(document, document_link)
-        browser.get(document.description_link)
+        return open_result_link(browser, document)
 
 
 def handle_search_results(browser, document):
     if document.number_results == 1:
-        open_first_result(browser, document)
+        return open_first_result(browser, document)
     else:
         print(f'Document instance indicates that more or less than 1 result were located searching '
               f'{extrapolate_document_value(document)}, please review (should not have reached this stage)')
         print("Please press enter after reviewing the search parameters...")
         input()
+        return False
 
 
 def open_document(browser, document):
     verify_successful_search(browser, document)
     count_results(browser, document)
-    handle_search_results(browser, document)
+    return handle_search_results(browser, document)

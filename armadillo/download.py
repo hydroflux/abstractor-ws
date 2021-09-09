@@ -13,13 +13,28 @@ from settings.general_functions import long_timeout, naptime
 from armadillo.armadillo_variables import download_page_class_name
 
 
+def build_stock_download(document):
+    pass
+
+
 def free_download(browser):
     pass
 
 
-def add_to_cart(browser):
+def add_to_cart(browser, document):
     pass
 
 
-def download(browser):
-    pass
+def execute_download(browser, document_directory, document, download_type):
+    if download_type == 'free':
+        return free_download(browser, document_directory, document)
+    elif download_type == 'paid':
+        return add_to_cart(browser, document)
+
+
+def download(browser, county, target_directory, document, download_type):
+    document_directory = create_document_directory(target_directory)
+    if previously_downloaded(county, document_directory, document.reception_number):
+        return True
+    else:
+        return execute_download(browser, document_directory, document, download_type)
