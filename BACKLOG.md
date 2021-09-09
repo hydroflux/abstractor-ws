@@ -48,6 +48,7 @@
 - [ ] When creating document instances, leave an indication if a book and page instance & a document number instance are on the same line (use the index) in order to create more effective comments---set up for Document class just needs to be implemented
 - [ ] If 0 documents are imported, close the program and send a message
 - [ ] If download is true and the document is already located in the target document directory, add a medium nap for eagle--in order to do so, add "downloaded" or something similar to the Document class for imports
+- [ ] Armadillo, leopard & tiger use convert_document_numbers, maybe make a workspace level script that checks counties against individual 'convert_document_numbers'
 
 ### Exports To Do
 
@@ -126,9 +127,7 @@
 
 ### Armadillo To Do
 
-- [ ] Integrate armadillo scripts to work with the top level environment file
-- [ ] Create a convert_document_numbers script
-- [ ] Create an "execution", "review", & "download only" option for execution
+- [ ] Create an "review", & "download only" option for execution
 
 ### Iguana To Do
 

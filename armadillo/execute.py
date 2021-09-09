@@ -2,17 +2,19 @@ from settings.abstract_object import abstract_dictionary as dataframe
 from settings.bad_search import record_bad_search, unable_to_download
 from settings.driver import create_webdriver
 from settings.export import export_document
-from settings.file_management import (bundle_project, check_length, document_found, extrapolate_document_value,
+from settings.file_management import (bundle_project, check_length,
+                                      document_found,
+                                      extrapolate_document_value,
                                       no_document_found)
 from settings.general_functions import start_timer
+from settings.settings import download
 
 from armadillo.login import account_login
 from armadillo.logout import logout
 from armadillo.open_document import open_document
 from armadillo.record import record
 from armadillo.search import search
-
-from settings.settings import download
+from armadillo.transform_document_list import transform_document_list
 
 
 def record_single_document(browser, county, target_directory, document_list, document, start_time):
@@ -48,6 +50,7 @@ def search_documents_from_list(browser, county, target_directory, document_list)
 
 def execute_program(county, target_directory, document_list, file_name):
     browser = create_webdriver(target_directory, False)
+    transform_document_list(document_list)
     account_login(browser)
     abstraction = export_document(
         county,
