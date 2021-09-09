@@ -119,8 +119,8 @@ def add_to_cart(browser, document):
     return True
 
 
-def execute_download(browser, county, document_directory, document, download_type):
-    if download_type == 'free':
+def execute_download(browser, county, document_directory, document):
+    if document.download_type == 'free':
         free_download(browser, document)
         return update_download(
             browser,
@@ -130,11 +130,11 @@ def execute_download(browser, county, document_directory, document, download_typ
             len(os.listdir(document_directory)),
             document.reception_number.replace('-', '')
             )
-    elif download_type == 'paid':
+    elif document.download_type == 'paid':
         return add_to_cart(browser, document)
 
 
-def download(browser, county, target_directory, document, download_type):
+def download(browser, county, target_directory, document):
     document_directory = create_document_directory(target_directory)
     if previously_downloaded(county, document_directory, document.reception_number):
         return True
@@ -142,4 +142,4 @@ def download(browser, county, target_directory, document, download_type):
         open_download_page(browser, document)
         if verify_download(browser, document):
             switch_to_default_content(browser)
-            return execute_download(browser, county, document_directory, document, download_type)
+            return execute_download(browser, county, document_directory, document)
