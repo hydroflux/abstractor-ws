@@ -2,9 +2,10 @@ from settings.abstract_object import abstract_dictionary as dataframe
 from settings.bad_search import record_bad_search, unable_to_download
 from settings.driver import create_webdriver
 from settings.export import export_document
-from settings.file_management import (bundle_project, check_length, document_downloaded,
-                                      document_found,
-                                      extrapolate_document_value, no_document_downloaded,
+from settings.file_management import (bundle_project, check_length,
+                                      document_downloaded, document_found,
+                                      extrapolate_document_value,
+                                      no_document_downloaded,
                                       no_document_found)
 from settings.general_functions import start_timer
 from settings.settings import download, headless
@@ -24,7 +25,12 @@ def record_single_document(browser, document_list, document, start_time, review)
 
 
 def download_single_document(browser, county, target_directory, document_list, document, start_time):
-    if not download_document(browser, county, target_directory, document):
+    if not download_document(
+        browser,
+        county,
+        target_directory,
+        document
+    ):
         unable_to_download(dataframe, document)
         no_document_downloaded(document_list, document, start_time)
     else:
@@ -32,14 +38,35 @@ def download_single_document(browser, county, target_directory, document_list, d
 
 
 def handle_single_document(browser, county, target_directory, document_list, document, start_time, review):
-    record_single_document(browser, document_list, document, start_time, review)
+    record_single_document(
+        browser,
+        document_list,
+        document,
+        start_time,
+        review
+    )
     if download and not review:
-        download_single_document(browser, county, target_directory, document)
+        download_single_document(
+            browser,
+            county,
+            target_directory,
+            document_list,
+            document,
+            start_time
+        )
 
 
-def handle_search_results(browser, county, target_directory, document_list, document, start_time):
+def handle_search_results(browser, county, target_directory, document_list, document, start_time, review):
     if document.number_results == 1:
-        handle_single_document(browser, county, target_directory, document_list, document, start_time)
+        handle_single_document(
+            browser,
+            county,
+            target_directory,
+            document_list,
+            document,
+            start_time,
+            review
+        )
     elif document.number_results > 1:
         print(f'Browser located multiple results for '
               f'{extrapolate_document_value(document)}; '
@@ -52,7 +79,15 @@ def search_documents_from_list(browser, county, target_directory, document_list,
         start_time = start_timer()
         search(browser, document)
         if open_document(browser, document):
-            handle_search_results(browser, county, target_directory, document_list, document, start_time, review)
+            handle_search_results(
+                browser,
+                county,
+                target_directory,
+                document_list,
+                document,
+                start_time,
+                review
+            )
         else:
             record_bad_search(dataframe, document)
             no_document_found(start_time, document_list, document, review)
