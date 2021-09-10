@@ -8,6 +8,7 @@ from settings.general_functions import (assert_window_title, date_from_string,
                                         timeout)
 
 from armadillo.armadillo_variables import (bad_login_text,
+                                           document_information_title,
                                            document_search_results_title,
                                            login_validation_form_name,
                                            login_validation_text_id)
@@ -48,6 +49,13 @@ def validate_login(browser):
 def verify_search_page_loaded(browser, document):
     if not assert_window_title(browser, document_search_results_title):
         print(f'Browser failed to successfully execute search for '
+              f'{extrapolate_document_value(document)}, please review.')
+        input()
+
+
+def verify_results_page_loaded(browser, document):
+    if not assert_window_title(browser, document_information_title):
+        print(f'Browser failed to successfully open results page for '
               f'{extrapolate_document_value(document)}, please review.')
         input()
 

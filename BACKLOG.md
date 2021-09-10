@@ -38,7 +38,7 @@
 - [ ] Look into github vulnerability link that's broken
 - [ ] Convert notes from demo into a proper README
 - [ ] Separate imports for each file based on source location (settings, main directory, outside imports, etc.)
-- [ ] Add input() to every timeout which doesn't have a natural resolution in order to pause the program at each exception (& create a correction)
+- [ ] Add input() to every timeout which doesn't have a natural resolution in order to pause the program at each exception (& create a correction)--maybe something to follow up 'extrapolate_document_value', like 'input(, please review.\nPlease press enter after reviewing error)' + a screenshot
 - [ ] Consider creating an error_handling function for exceptions which takes a screenshot & throws an input together with the above suggestion
 - [ ] Create 'master' scripts after breaking out directory scripts into smaller pieces--i.e. 'login' can be a 'master' script; 'fill_search_field' & the like can be built out further as well
 

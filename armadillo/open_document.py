@@ -33,7 +33,7 @@ def count_results(browser, document):
     else:
         print(f'Browser located multiple search results for '
               f'{extrapolate_document_value(document)}, new logic path needs to be developed.')
-        print("Please press enter after reviewing the search parameters...")
+        print("Please press enter after reviewing the search results...")
         input()
 
 

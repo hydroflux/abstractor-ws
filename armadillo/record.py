@@ -17,7 +17,8 @@ from armadillo.armadillo_variables import (book_and_page_text,
                                            related_documents_text,
                                            related_types,
                                            type_and_number_table_id)
-from armadillo.validation import validate_date, validate_reception_number
+from armadillo.validation import (validate_date, validate_reception_number,
+                                  verify_results_page_loaded)
 
 
 def locate_document_type_and_number_table(browser, document):
@@ -213,4 +214,5 @@ def record_document_fields(browser, dataframe, document):
 
 
 def record(browser, dataframe, document):
+    verify_results_page_loaded(browser, document)
     record_document_fields(browser, dataframe, document)

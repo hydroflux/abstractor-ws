@@ -64,6 +64,7 @@ def search(browser, document):
     if document_type(document) == 'document_number':
         document_search(browser, document)
     else:
-        print(f'Unable to search {document_type(document)}, new search path needs to be developed.')
+        print(f'Unable to search document type "{document_type(document)}", '
+              f'a new search path needs to be developed in order to continue.\n')
         print("Please press enter after reviewing the search parameters...")
         input()
