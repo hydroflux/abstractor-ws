@@ -69,7 +69,7 @@ def validate_date(text):
 
 
 def validate_download_link(document, string):
-    return f'{document.reception_number.replace("-", "_")}.pdf' == string
+    return f'{document.value.replace("-", "_")}.pdf' == string
 
 
 '''

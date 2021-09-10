@@ -12,6 +12,7 @@
 - [ ] Figure out how to send cookies through to browser instances in order to get faster page load times
 - [ ] Entire header should be created in the settings block, rather than relying on first & last recording dates in the dataframe
 - [ ] Remove an additional space when dropping "see record" in order to cut the new line character out
+- [ ] Update 'document.value' to 'document.search_value' to create a better differentiation between 'document.reception_number'???
 - [ ] Consider an "append_text" function to go in general functions / file management which would strip, title case, & replace any unwanted information
 - [ ] Compare parallel scripts from leopard & eagle in order to help refactoring
 - [ ] Review all scripts for "standardized" functions that might be extrapolated
@@ -41,6 +42,7 @@
 - [ ] Add input() to every timeout which doesn't have a natural resolution in order to pause the program at each exception (& create a correction)--maybe something to follow up 'extrapolate_document_value', like 'input(, please review.\nPlease press enter after reviewing error)' + a screenshot
 - [ ] Consider creating an error_handling function for exceptions which takes a screenshot & throws an input together with the above suggestion
 - [ ] Create 'master' scripts after breaking out directory scripts into smaller pieces--i.e. 'login' can be a 'master' script; 'fill_search_field' & the like can be built out further as well
+- [ ] Create an explanation .md file to define & explain the differences between 'locate', 'get', 'access', 'build', 'handle', etc. functions--'access' & 'get' functions have some overlap, & specifically defining differences would be incredibly beneficial
 
 ### Imports To Do
 
@@ -135,6 +137,7 @@
 - [ ] Create some consistency between 'document.reception_number' & 'document.value' in order to avoid constantly updating
 - [ ] Eliminate the 'Effective Date' column in export--maybe only add 'Document Date' into the abstract if it appears???
 - [ ] Update the validation file with the proper use of 'verify' & 'validate' (definitions have been added)
+- [ ] Delete 'record' comment block accessing document tables after 09/17 (assuming active testing is done in the meantime)
 
 ### Iguana To Do
 

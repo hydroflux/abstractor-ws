@@ -65,12 +65,16 @@ def access_document_type_and_number(document_type_and_number_text, document):
         input()
 
 
+def access_reception_number(reception_number):
+    return reception_number[len(reception_number_prefix):].replace('-', '')
+
+
 def update_reception_number(document, reception_number):
-    if reception_number.startswith(reception_number_prefix) and reception_number.endswith(document.value):
-        reception_number = reception_number[len(reception_number_prefix):].replace('-', '')
+    if reception_number.startswith(reception_number_prefix) and validate_reception_number(reception_number, document):
+        reception_number = access_reception_number(reception_number)
         return reception_number
     else:
-        print(f'Reception number "{reception_number}" does not match the expected format for '
+        print(f'Reception number "{reception_number}" does not match the expected result format for '
               f'{extrapolate_document_value(document)}, please review...')
         input()
         return reception_number
@@ -126,6 +130,7 @@ def access_date(date_text, document, type):
         input()
 
 
+# Should this be 'access' instead of 'get'?
 def get_book_and_page_field(document_table):
     return document_table[document_table.index(book_and_page_text) + 1]
 
