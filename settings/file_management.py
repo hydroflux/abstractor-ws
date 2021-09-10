@@ -133,7 +133,7 @@ def document_found(start_time, document_list, document, review):
               f'{list_remaining_documents(document_list, document)} '
               f'({report_execution_time(start_time)})')
     elif review is True:
-        input(f'Document located at {extrapolate_document_value(document)} found,'
+        input(f'Document located at {extrapolate_document_value(document)} found, '
               'please review & press enter to continue... '
               f'({list_remaining_documents(document_list, document)}) '
               f'({report_execution_time(start_time)})')

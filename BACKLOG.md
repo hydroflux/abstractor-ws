@@ -61,6 +61,9 @@
 ### Exports To Do
 
 - [ ] Add hyperlinks before exporting (working on now)
+- [ ] Update date formatting to named months input at the beginning
+- [ ] Consider throwing a trigger requesting the dates
+- [ ] Consider lengthening grantor / grantee fields for armadillo
 
 ### Leopard To Do
 

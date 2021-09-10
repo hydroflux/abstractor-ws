@@ -11,8 +11,8 @@ from settings.general_functions import (date_from_string, element_title_strip,
                                         title_strip)
 
 from armadillo.armadillo_variables import (book_and_page_text,
-                                           document_tables_tag,
-                                           parties_midpoint_text,
+                                           document_tables_tag, legal_text,
+                                           legal_update, parties_midpoint_text,
                                            reception_number_prefix,
                                            related_documents_text,
                                            related_types,
@@ -209,8 +209,14 @@ def access_legal(document_table):
     return document_table[1].split('  ')[0]
 
 
+def legal_updates(legal, i=0):
+    while i < len(legal_text):
+        legal.replace(legal_text[i], legal_update[i])
+    return legal
+
+
 def record_legal(document_table, dataframe):
-    legal = access_legal(document_table)
+    legal = legal_updates(access_legal(document_table))
     dataframe['Legal'].append(legal)
 
 
