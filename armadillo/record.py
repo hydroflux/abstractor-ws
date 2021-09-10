@@ -132,7 +132,7 @@ def access_date(date_text, document, type):
 
 def record_date(row, dataframe, document, type):
     date = access_date(title_strip(row), document, type)
-    dataframe[f'{type.upper()} Date'].append(date)
+    dataframe[f'{type.title()} Date'].append(date)
 
 
 # Should this be 'access' instead of 'get'?

@@ -157,18 +157,16 @@ def no_document_found(start_time, document_list, document, review):
               f'({report_execution_time(start_time)})')
 
 
-def document_downloaded(document_list, document, start_time):
+def document_downloaded(document_list, document):
     print(f'Document located at '
           f'{extrapolate_document_value(document)} downloaded, '
-          f'{list_remaining_documents(document_list, document)} '
-          f'({report_execution_time(start_time)})')
+          f'{list_remaining_documents(document_list, document)}')
 
 
-def no_document_downloaded(document_list, document, start_time):
+def no_document_downloaded(document_list, document):
     print(f'Unable to download document at '
           f'{extrapolate_document_value(document)}, '
-          f'{list_remaining_documents(document_list, document)} '
-          f'({report_execution_time(start_time)})')
+          f'{list_remaining_documents(document_list, document)}')
 
 
 def rename_documents_in_directory(county, directory):

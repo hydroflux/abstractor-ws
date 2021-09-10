@@ -24,7 +24,7 @@ def record_single_document(browser, document_list, document, start_time, review)
     document_found(start_time, document_list, document, review)
 
 
-def download_single_document(browser, county, target_directory, document_list, document, start_time):
+def download_single_document(browser, county, target_directory, document_list, document):
     if not download_document(
         browser,
         county,
@@ -32,9 +32,9 @@ def download_single_document(browser, county, target_directory, document_list, d
         document
     ):
         unable_to_download(dataframe, document)
-        no_document_downloaded(document_list, document, start_time)
+        no_document_downloaded(document_list, document)
     else:
-        document_downloaded(document_list, document, start_time)
+        document_downloaded(document_list, document)
 
 
 def handle_single_document(browser, county, target_directory, document_list, document, start_time, review):
@@ -51,8 +51,7 @@ def handle_single_document(browser, county, target_directory, document_list, doc
             county,
             target_directory,
             document_list,
-            document,
-            start_time
+            document
         )
 
 
