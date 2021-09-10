@@ -136,18 +136,19 @@ def record_date(row, dataframe, document, type):
 
 
 # Should this be 'access' instead of 'get'?
-def get_book_and_page_field(document_table):
+def get_book_volume_page_field(document_table):
     return document_table[document_table.index(book_and_page_text) + 1]
 
 
-def access_book_and_page(document_table):
-    book_and_page_field = get_book_and_page_field(document_table)
-    return book_and_page_field.split(' ')[2], book_and_page_field.split(' ')[4]
+def access_book_volume_page(document_table):
+    book_volume_page_field = get_book_volume_page_field(document_table)
+    return book_volume_page_field.split(' ')[0], book_volume_page_field.split(' ')[2], book_volume_page_field.split(' ')[4]
 
 
-def record_book_and_page(document_table, dataframe):
-    book, page = access_book_and_page(document_table)
+def record_book_volume_page(document_table, dataframe):
+    book, volume, page = access_book_volume_page(document_table)
     dataframe["Book"].append(book)
+    dataframe["Volume"].append(volume)
     dataframe["Page"].append(page)
 
 
@@ -158,7 +159,7 @@ def record_indexing_information(document_table, dataframe, document):
     # document_date = access_date(title_strip(document_table[-1]), document, "document")
     # dataframe['Recording Date'].append(recording_date)
     # dataframe["Document Date"].append(document_date)
-    record_book_and_page(document_table, dataframe)
+    record_book_volume_page(document_table, dataframe)
     # book, page = access_book_and_page(document_table)
     # dataframe["Book"].append(book)
     # dataframe["Page"].append(page)
@@ -227,7 +228,7 @@ def record_legal(document_table, dataframe):
 
 def aggregate_document_table_information(browser, dataframe, document):
     document_tables = locate_document_information_tables(browser, document)
-    record_indexing_information(access_table_information(document_tables[1]), dataframe, document)
+    record_indexing_information(newline_split(document_tables[1].text), dataframe, document)
     record_parties_information(access_table_information(document_tables[3]), dataframe)
     record_related_documents(newline_split(document_tables[6].text), dataframe)
     record_legal(newline_split(document_tables[8].text), dataframe)
