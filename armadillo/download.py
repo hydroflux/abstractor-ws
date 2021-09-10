@@ -90,7 +90,7 @@ def access_free_download_button(download_content, document):
 
 
 def build_stock_download(document):
-    return f'{download_prefix}{document.reception_number.replace("-", "_")}.pdf'
+    return f'{download_prefix}{document.value.replace("-", "_")}.pdf'
 
 
 def free_download(browser, document):
@@ -128,7 +128,7 @@ def execute_download(browser, county, document_directory, document):
             build_stock_download(document),
             document_directory,
             len(os.listdir(document_directory)),
-            document.reception_number.replace('-', '')
+            document.reception_number
             )
     elif document.download_type == 'paid':
         return add_to_cart(browser, document)
@@ -136,7 +136,7 @@ def execute_download(browser, county, document_directory, document):
 
 def download_document(browser, county, target_directory, document):
     document_directory = create_document_directory(target_directory)
-    if previously_downloaded(county, document_directory, document.reception_number.replace('-', '')):
+    if previously_downloaded(county, document_directory, document.reception_number):
         return True
     else:
         open_download_page(browser, document)
