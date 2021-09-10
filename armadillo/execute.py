@@ -18,17 +18,25 @@ from armadillo.search import search
 from armadillo.transform_document_list import transform_document_list
 
 
-def record_single_document(browser, county, target_directory, document_list, document, start_time):
+def record_single_document(browser, document_list, document, start_time, review):
     record(browser, dataframe, document)
-    if download:
-        if not download_document(browser, county, target_directory, document):
-            unable_to_download(dataframe, document)
-    document_found(start_time, document_list, document)
+    document_found(start_time, document_list, document, review)
+
+
+def download_single_document(browser, county, target_directory, document):
+    if not download_document(browser, county, target_directory, document):
+        unable_to_download(dataframe, document)
+
+
+def handle_single_document(browser, county, target_directory, document_list, document, start_time, review):
+    record_single_document(browser, document_list, document, start_time, review)
+    if download and not review:
+        download_single_document(browser, county, target_directory, document)
 
 
 def handle_search_results(browser, county, target_directory, document_list, document, start_time):
     if document.number_results == 1:
-        record_single_document(browser, county, target_directory, document_list, document, start_time)
+        handle_single_document(browser, county, target_directory, document_list, document, start_time)
     elif document.number_results > 1:
         print(f'Browser located multiple results for '
               f'{extrapolate_document_value(document)}; '
@@ -36,20 +44,20 @@ def handle_search_results(browser, county, target_directory, document_list, docu
         input()
 
 
-def search_documents_from_list(browser, county, target_directory, document_list):
+def search_documents_from_list(browser, county, target_directory, document_list, review):
     for document in document_list:
         start_time = start_timer()
         search(browser, document)
         if open_document(browser, document):
-            handle_search_results(browser, county, target_directory, document_list, document, start_time)
+            handle_search_results(browser, county, target_directory, document_list, document, start_time, review)
         else:
             record_bad_search(dataframe, document)
-            no_document_found(start_time, document_list, document)
+            no_document_found(start_time, document_list, document, review)
         check_length(dataframe)
     return dataframe
 
 
-def execute_program(county, target_directory, document_list, file_name):
+def execute_program(county, target_directory, document_list, file_name, review=False):
     browser = create_webdriver(target_directory, headless)
     transform_document_list(document_list)
     account_login(browser)
@@ -57,7 +65,13 @@ def execute_program(county, target_directory, document_list, file_name):
         county,
         target_directory,
         file_name,
-        search_documents_from_list(browser, county, target_directory, document_list)
+        search_documents_from_list(
+            browser,
+            county,
+            target_directory,
+            document_list,
+            review
+        )
     )
     logout(browser)
     bundle_project(target_directory, abstraction)

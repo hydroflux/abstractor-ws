@@ -43,6 +43,7 @@
 - [ ] Consider creating an error_handling function for exceptions which takes a screenshot & throws an input together with the above suggestion
 - [ ] Create 'master' scripts after breaking out directory scripts into smaller pieces--i.e. 'login' can be a 'master' script; 'fill_search_field' & the like can be built out further as well
 - [ ] Create an explanation .md file to define & explain the differences between 'locate', 'get', 'access', 'build', 'handle', etc. functions--'access' & 'get' functions have some overlap, & specifically defining differences would be incredibly beneficial
+- [ ] Add 'county' as an instance variable to document class---could be handled in 'transform_document_list' functions & wouldn't need to be passed around as often
 
 ### Imports To Do
 
@@ -65,6 +66,8 @@
 - [ ] Remove anything with the "stock download" name before clicking the download button--avoid creating an issue with crash / restart
 - [ ] Update scripts with new general functions (i.e. assert_window_title)
 - [ ] Update the record function to set the reception number rather than return it
+
+- [ ] Update 'review' loop so that 'review' comes in as True or False, rather than an 'alt' argument
 
 ### Tiger To Do
 
@@ -139,6 +142,7 @@
 - [ ] Update the validation file with the proper use of 'verify' & 'validate' (definitions have been added)
 - [ ] Delete 'record' comment block accessing document tables after 09/17 (assuming active testing is done in the meantime)
 - [ ] Get clarification around 'Document Date' vs. 'Effective Date' for formatting
+- [ ] Get clarification around 'Book' vs. 'Volume' for formatting
 
 ### Iguana To Do
 

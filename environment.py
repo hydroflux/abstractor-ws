@@ -1,3 +1,4 @@
+from settings.file_management import display_document_list
 from settings.user_prompts import add_download_types
 import sys
 
@@ -34,6 +35,8 @@ def execute_program_type(county, program_type, document_list=None, search_name=N
         if program_type == 'execute':
             add_download_types(county, document_list)
             execute_armadillo(county, target_directory, document_list, file_name)
+        elif program_type == 'review':
+            execute_armadillo(county, target_directory, document_list, file_name, True)
         else:
             currently_unavailable(county, program_type)
     elif county.program == 'crocodile':
@@ -72,11 +75,13 @@ def execute_program_type(county, program_type, document_list=None, search_name=N
         print(f'"{county}" does not match available execution options, please review.')
 
 
+# Break these out into simpler functions
 def execute_abstractor():
     county = get_county_data(county_name)
     print(county)
     program_type = get_program_type()
     document_list = generate_document_list(target_directory, file_name, sheet_name)
+    display_document_list(document_list)
     start_time = start_program_timer(county, document_list)
     execute_program_type(county, program_type, document_list)
     stop_program_timer(start_time)
