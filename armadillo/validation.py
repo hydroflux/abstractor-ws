@@ -2,13 +2,15 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+
 from settings.file_management import extrapolate_document_value
-from settings.general_functions import assert_window_title, date_from_string, timeout
+from settings.general_functions import (assert_window_title, date_from_string,
+                                        timeout)
 
 from armadillo.armadillo_variables import (bad_login_text,
+                                           document_search_results_title,
                                            login_validation_form_name,
-                                           login_validation_text_id,
-                                           document_search_results_title)
+                                           login_validation_text_id)
 
 
 def get_login_validation_text(browser):
