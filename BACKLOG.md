@@ -60,6 +60,7 @@
 
 ### Exports To Do
 
+- [ ] Add volume & document date (effective date for now) to the dataframe at outset, then remove for each county not needed in "transform"
 - [ ] Add hyperlinks before exporting (working on now)
 - [ ] Update date formatting to named months input at the beginning
 - [ ] Consider throwing a trigger requesting the dates
