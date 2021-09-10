@@ -12,7 +12,7 @@ from settings.general_functions import (date_from_string, element_title_strip,
 
 from armadillo.armadillo_variables import (book_and_page_text,
                                            document_tables_tag,
-                                           party_midpoint_text,
+                                           parties_midpoint_text,
                                            reception_number_prefix,
                                            related_documents_text,
                                            related_types,
@@ -130,6 +130,11 @@ def access_date(date_text, document, type):
         input()
 
 
+def record_date(row, dataframe, document, type):
+    date = access_date(title_strip(row), document, type)
+    dataframe[f'{type.upper()} Date'].append(date)
+
+
 # Should this be 'access' instead of 'get'?
 def get_book_and_page_field(document_table):
     return document_table[document_table.index(book_and_page_text) + 1]
@@ -140,29 +145,38 @@ def access_book_and_page(document_table):
     return book_and_page_field.split(' ')[2], book_and_page_field.split(' ')[4]
 
 
-def record_indexing_information(document_table, dataframe, document):
-    recording_date = access_date(title_strip(document_table[3]), document, "recording")
-    document_date = access_date(title_strip(document_table[-1]), document, "document")
+def record_book_and_page(document_table, dataframe):
     book, page = access_book_and_page(document_table)
-    dataframe['Recording Date'].append(recording_date)
-    dataframe["Document Date"].append(document_date)
     dataframe["Book"].append(book)
     dataframe["Page"].append(page)
 
 
-def get_party_midpoint(document_table):
-    return document_table.index(party_midpoint_text)
+def record_indexing_information(document_table, dataframe, document):
+    record_date(document_table[3], dataframe, document, "recording")
+    record_date(document_table[-1], dataframe, document, "document")
+    # recording_date = access_date(title_strip(document_table[3]), document, "recording")
+    # document_date = access_date(title_strip(document_table[-1]), document, "document")
+    # dataframe['Recording Date'].append(recording_date)
+    # dataframe["Document Date"].append(document_date)
+    record_book_and_page(document_table, dataframe)
+    # book, page = access_book_and_page(document_table)
+    # dataframe["Book"].append(book)
+    # dataframe["Page"].append(page)
 
 
-def access_party_information(document_table):
-    party_midpoint = get_party_midpoint(document_table)
-    grantor = list(map(title_strip, (document_table[1:party_midpoint])))
-    grantee = list(map(title_strip, (document_table[(party_midpoint + 1):])))
+def get_parties_midpoint(document_table):
+    return document_table.index(parties_midpoint_text)
+
+
+def access_parties_information(document_table):
+    parties_midpoint = get_parties_midpoint(document_table)
+    grantor = list(map(title_strip, (document_table[1:parties_midpoint])))
+    grantee = list(map(title_strip, (document_table[(parties_midpoint + 1):])))
     return list_to_string(grantor), list_to_string(grantee)
 
 
-def record_party_information(document_table, dataframe):
-    grantor, grantee = access_party_information(document_table)
+def record_parties_information(document_table, dataframe):
+    grantor, grantee = access_parties_information(document_table)
     dataframe['Grantor'].append(grantor)
     dataframe['Grantee'].append(grantee)
 
@@ -203,7 +217,7 @@ def record_legal(document_table, dataframe):
 def aggregate_document_table_information(browser, dataframe, document):
     document_tables = locate_document_information_tables(browser, document)
     record_indexing_information(access_table_information(document_tables[1]), dataframe, document)
-    record_party_information(access_table_information(document_tables[3]), dataframe)
+    record_parties_information(access_table_information(document_tables[3]), dataframe)
     record_related_documents(newline_split(document_tables[6].text), dataframe)
     record_legal(newline_split(document_tables[8].text), dataframe)
 

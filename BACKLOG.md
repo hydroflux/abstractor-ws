@@ -138,6 +138,7 @@
 - [ ] Eliminate the 'Effective Date' column in export--maybe only add 'Document Date' into the abstract if it appears???
 - [ ] Update the validation file with the proper use of 'verify' & 'validate' (definitions have been added)
 - [ ] Delete 'record' comment block accessing document tables after 09/17 (assuming active testing is done in the meantime)
+- [ ] Get clarification around 'Document Date' vs. 'Effective Date' for formatting
 
 ### Iguana To Do
 
