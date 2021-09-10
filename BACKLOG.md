@@ -40,6 +40,7 @@
 - [ ] Separate imports for each file based on source location (settings, main directory, outside imports, etc.)
 - [ ] Add input() to every timeout which doesn't have a natural resolution in order to pause the program at each exception (& create a correction)
 - [ ] Consider creating an error_handling function for exceptions which takes a screenshot & throws an input together with the above suggestion
+- [ ] Create 'master' scripts after breaking out directory scripts into smaller pieces--i.e. 'login' can be a 'master' script; 'fill_search_field' & the like can be built out further as well
 
 ### Imports To Do
 
@@ -133,6 +134,7 @@
 - [ ] Update export settings 'Book' to 'Volume' for armadillo
 - [ ] Create some consistency between 'document.reception_number' & 'document.value' in order to avoid constantly updating
 - [ ] Eliminate the 'Effective Date' column in export--maybe only add 'Document Date' into the abstract if it appears???
+- [ ] Update the validation file with the proper use of 'verify' & 'validate' (definitions have been added)
 
 ### Iguana To Do
 

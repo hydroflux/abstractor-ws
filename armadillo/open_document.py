@@ -2,23 +2,17 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-from settings.file_management import extrapolate_document_value
-from settings.general_functions import (assert_window_title, get_direct_link,
-                                        set_description_link, timeout)
 
-from armadillo.armadillo_variables import (document_search_results_title,
-                                           first_result_tag_name,
+from settings.file_management import extrapolate_document_value
+from settings.general_functions import (get_direct_link, set_description_link,
+                                        timeout)
+
+from armadillo.armadillo_variables import (first_result_tag_name,
                                            number_results_class,
                                            search_results_id,
                                            single_result_message)
-from armadillo.validation import validate_reception_number
-
-
-def verify_successful_search(browser, document):
-    if not assert_window_title(browser, document_search_results_title):
-        print(f'Browser failed to successfully execute search for '
-              f'{extrapolate_document_value(document)}, please review.')
-        input()
+from armadillo.validation import (validate_reception_number,
+                                  verify_search_page_loaded)
 
 
 def locate_result_count(browser, document):
@@ -85,7 +79,8 @@ def open_result_link(browser, document, result):
 
 def open_first_result(browser, document):
     first_result = get_first_result(browser, document)
-    if validate_reception_number(first_result.text, document):
+    first_result_text = first_result.text
+    if validate_reception_number(first_result_text, document):
         return open_result_link(browser, document, first_result)
 
 
@@ -101,6 +96,6 @@ def handle_search_results(browser, document):
 
 
 def open_document(browser, document):
-    verify_successful_search(browser, document)
+    verify_search_page_loaded(browser, document)
     count_results(browser, document)
     return handle_search_results(browser, document)
