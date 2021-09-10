@@ -157,6 +157,20 @@ def no_document_found(start_time, document_list, document, review):
               f'({report_execution_time(start_time)})')
 
 
+def document_downloaded(document_list, document, start_time):
+    print(f'Document located at '
+          f'{extrapolate_document_value(document)} downloaded, '
+          f'{list_remaining_documents(document_list, document)} '
+          f'({report_execution_time(start_time)})')
+
+
+def no_document_downloaded(document_list, document, start_time):
+    print(f'Unable to download document at '
+          f'{extrapolate_document_value(document)}, '
+          f'{list_remaining_documents(document_list, document)} '
+          f'({report_execution_time(start_time)})')
+
+
 def rename_documents_in_directory(county, directory):
     os.chdir(directory)
     for pdf in os.listdir(directory):

@@ -2,9 +2,9 @@ from settings.abstract_object import abstract_dictionary as dataframe
 from settings.bad_search import record_bad_search, unable_to_download
 from settings.driver import create_webdriver
 from settings.export import export_document
-from settings.file_management import (bundle_project, check_length,
+from settings.file_management import (bundle_project, check_length, document_downloaded,
                                       document_found,
-                                      extrapolate_document_value,
+                                      extrapolate_document_value, no_document_downloaded,
                                       no_document_found)
 from settings.general_functions import start_timer
 from settings.settings import download, headless
@@ -23,9 +23,12 @@ def record_single_document(browser, document_list, document, start_time, review)
     document_found(start_time, document_list, document, review)
 
 
-def download_single_document(browser, county, target_directory, document):
+def download_single_document(browser, county, target_directory, document_list, document, start_time):
     if not download_document(browser, county, target_directory, document):
         unable_to_download(dataframe, document)
+        no_document_downloaded(document_list, document, start_time)
+    else:
+        document_downloaded(document_list, document, start_time)
 
 
 def handle_single_document(browser, county, target_directory, document_list, document, start_time, review):

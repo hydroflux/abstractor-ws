@@ -41,9 +41,10 @@
 - [ ] Separate imports for each file based on source location (settings, main directory, outside imports, etc.)
 - [ ] Add input() to every timeout which doesn't have a natural resolution in order to pause the program at each exception (& create a correction)--maybe something to follow up 'extrapolate_document_value', like 'input(, please review.\nPlease press enter after reviewing error)' + a screenshot
 - [ ] Consider creating an error_handling function for exceptions which takes a screenshot & throws an input together with the above suggestion
-- [ ] Create 'master' scripts after breaking out directory scripts into smaller pieces--i.e. 'login' can be a 'master' script; 'fill_search_field' & the like can be built out further as well
+- [ ] Create 'master' scripts after breaking out directory scripts into smaller pieces--i.e. 'login' can be a 'master' script; 'fill_search_field' & the like can be built out further as well; 'execution' as well
 - [ ] Create an explanation .md file to define & explain the differences between 'locate', 'get', 'access', 'build', 'handle', etc. functions--'access' & 'get' functions have some overlap, & specifically defining differences would be incredibly beneficial
 - [ ] Add 'county' as an instance variable to document class---could be handled in 'transform_document_list' functions & wouldn't need to be passed around as often
+- [ ] Update parameter (and then argument) order for all instances of 'document_found' and 'no_document_found'
 
 ### Imports To Do
 
