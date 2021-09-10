@@ -205,18 +205,23 @@ def record_related_documents(document_table, dataframe):
     dataframe['Related Documents'].append(related_documents)
 
 
-def access_legal(document_table):
-    return document_table[1].split('  ')[0]
-
-
 def legal_updates(legal, i=0):
     while i < len(legal_text):
-        legal.replace(legal_text[i], legal_update[i])
+        legal = legal.replace(legal_text[i], legal_update[i])
+        i += 1
     return legal
 
 
+def access_legal(legal_row):
+    return legal_updates(legal_row.split('  ')[0])
+
+
+def aggregate_legal_description(document_table):
+    return list_to_string(list(map(access_legal, (document_table[1:]))))
+
+
 def record_legal(document_table, dataframe):
-    legal = legal_updates(access_legal(document_table))
+    legal = aggregate_legal_description(document_table)
     dataframe['Legal'].append(legal)
 
 
