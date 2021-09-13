@@ -1,5 +1,5 @@
 import os
-from datetime import date
+from datetime import datetime
 from rattlesnake.validation import verify_document_image_page_loaded
 
 from selenium.common.exceptions import TimeoutException
@@ -51,7 +51,7 @@ def free_download(browser, document):
 
 
 def build_stock_download(document):
-    return f'{download_prefix}{date.today().strftime("%Y%m%d")}'
+    return f'{download_prefix}{"{dt.year}{dt.month}{dt.day}".format(dt=datetime.now())}'
 
 
 def add_to_cart(browser, document):

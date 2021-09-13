@@ -33,6 +33,9 @@ def set_download_path(document_directory, stock_download, document_number, alt):
     else:
         if stock_download_matches == 1:
             return get_stock_download_path(document_directory, stock_download)
+        else:
+            print('Unable to locate correct document path, please review.')
+            input()
 
 
 def check_for_download_error(browser, windows):
