@@ -6,21 +6,18 @@ from selenium.webdriver.support.wait import WebDriverWait
 
 from settings.file_management import (document_type, document_value,
                                       extrapolate_document_value)
-from settings.general_functions import (assert_window_title, get_field_value,
+from settings.general_functions import (get_field_value,
                                         javascript_script_execution, timeout)
 
 from armadillo.armadillo_variables import (document_search_field_id,
-                                           document_search_title,
                                            document_search_url,
                                            execute_document_search_script)
+from armadillo.validation import verify_document_search_page_loaded
 
 
 def open_document_search(browser, document):
     browser.get(document_search_url)
-    if not assert_window_title(browser, document_search_title):
-        print(f'Browser failed to open document search link for '
-              f'{extrapolate_document_value(document)}, please review.')
-        input()
+    verify_document_search_page_loaded(browser, document)
 
 
 # Matches crocodile locate_document_search_field

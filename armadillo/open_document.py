@@ -12,7 +12,7 @@ from armadillo.armadillo_variables import (first_result_tag_name,
                                            search_results_id,
                                            single_result_message)
 from armadillo.validation import (validate_reception_number,
-                                  verify_search_page_loaded)
+                                  verify_search_results_loaded)
 
 
 def locate_result_count(browser, document):
@@ -96,6 +96,6 @@ def handle_search_results(browser, document):
 
 
 def open_document(browser, document):
-    verify_search_page_loaded(browser, document)
+    verify_search_results_loaded(browser, document)
     count_results(browser, document)
     return handle_search_results(browser, document)

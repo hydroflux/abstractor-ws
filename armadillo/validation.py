@@ -10,6 +10,7 @@ from settings.general_functions import (assert_window_title, date_from_string,
 from armadillo.armadillo_variables import (bad_login_text,
                                            document_information_title,
                                            document_search_results_title,
+                                           document_search_title,
                                            login_validation_form_name,
                                            login_validation_text_id,
                                            post_login_title)
@@ -58,7 +59,14 @@ def verify_login(browser):
         exit()
 
 
-def verify_search_page_loaded(browser, document):
+def verify_document_search_page_loaded(browser, document):
+    if not assert_window_title(browser, document_search_title):
+        print(f'Browser failed to open document search link for '
+              f'{extrapolate_document_value(document)}, please review.')
+        input()
+
+
+def verify_search_results_loaded(browser, document):
     if not assert_window_title(browser, document_search_results_title):
         print(f'Browser failed to successfully execute search for '
               f'{extrapolate_document_value(document)}, please review.')
