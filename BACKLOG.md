@@ -143,7 +143,7 @@
 
 ### Armadillo To Do
 
-- [ ] Create an "review", & "download only" option for execution
+- [ ] Create a "download only" option for execution
 - [ ] Create a final prompt before logging out & closing the browser in order to review documents IF PAID & checkout
 - [ ] Update export settings 'Book' to 'Volume' for armadillo
 - [ ] Create some consistency between 'document.reception_number' & 'document.value' in order to avoid constantly updating
@@ -171,11 +171,12 @@
 
 ### Rattlesnake To Do
 
-- [ ] Add all rattlesnake scripts (execute, open, record, download)
+- [ ] Add all rattlesnake scripts (execute, download)
 - [ ] Integrate rattlesnake scripts to work with the top level environment file
 - [ ] Create a convert_document_numbers script
 - [ ] Fix login & search loops for return to home
 - [ ] Create an "execution", "review", & "download only" option for execution
+- [ ] Update the validation file with the proper use of 'verify' & 'validate' (definitions have been added)
 
 ### Testing Script To Do
 

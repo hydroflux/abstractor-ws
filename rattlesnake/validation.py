@@ -81,3 +81,24 @@ def verify_document_description_page_loaded(browser, document):
     if not assert_window_title(browser, document_description_page_title):
         print(f'Browser failed to open document description page for '
               f'{extrapolate_document_value(document)}')
+
+
+def validate_reception_number(document, value):
+    return document.value == value
+
+
+'''
+Validate vs. Verify
+
+Validation is the process of checking whether the specification
+captures the customer's requirements, while verification is the
+process of checking that the software meets specifications.
+
+~~ VERIFICATION ~~
+A test of a system to prove that it meets all its specified
+requirements at a particular stage of its development.
+
+~~ VALIDATION ~~
+An activity that ensures that an end product stakeholder’s
+true needs and expectations are met.
+'''

@@ -4,10 +4,10 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-from settings.general_functions import timeout
+from settings.general_functions import get_field_value, timeout
 
-from rattlesnake.validation import verify_document_description_page_loaded
-from rattlesnake.rattlesnake_variables import document_description_table_id, document_tables_tag, row_tag_name, row_data_tag_name, reception_number_id, volume_id, page_id, effective_date_id, recording_date_id, document_type_id, legal_id
+from rattlesnake.validation import validate_reception_number, verify_document_description_page_loaded
+from rattlesnake.rattlesnake_variables import document_description_table_id, document_tables_tag, row_tag_name, row_data_tag_name, reception_number_id, volume_id, page_id, effective_date_id, recording_date_id, document_type_id, legal_id, empty_value_fields
 
 
 # def locate_document_description_table(browser, document):
@@ -58,65 +58,58 @@ from rattlesnake.rattlesnake_variables import document_description_table_id, doc
 # def access_table_rows(table, document):
 #     pass
 
-def locate_reception_number():
+def locate_information_field(browser, document, id, field_type):
+    try:
+        field_present = EC.presence_of_element_located((By.ID, id))
+        WebDriverWait(browser, timeout).until(field_present)
+        field = browser.find_element_by_id(id)
+        return field
+    except TimeoutException:
+        print(f'Browser timed out trying to locate "{field_type}" field for '
+              f'{extrapolate_document_value(document)}, please review.')
+        input()
+
+
+def access_field_value(browser, document, id, field_type):
+    field = locate_information_field(browser, document, id, field_type)
+    return get_field_value(field)
+
+
+def record_reception_number(browser, dataframe, document):
+    reception_number = access_field_value(browser, document, reception_number_id, 'reception number')
+    if validate_reception_number(document, reception_number):
+        dataframe['Reception Number'].append(reception_number)
+
+
+def record_volume(browser, dataframe, document):
+    volume = access_field_value(browser, document, volume_id, 'volume')
+    if volume not in empty_value_fields:
+        dataframe['Volume'].append(volume)
+    else:
+        dataframe['Volume'].append(empty_value_fields[-1])
+
+
+def record_page(browser, dataframe, document):
+    page = access_field_value(browser, document, page_id, 'page')
+    if page not in empty_value_fields:
+        dataframe['Page'].append(page)
+    else:
+        dataframe['Page'].append(empty_value_fields[-1])
+
+
+def record_effective_date(browser, dataframe, document):
     pass
 
 
-def record_reception_number():
+def record_recording_date(browser, dataframe, document):
     pass
 
 
-def locate_volume():
+def record_document_type(browser, dataframe, document):
     pass
 
 
-def record_volume():
-    pass
-
-
-def locate_page():
-    pass
-
-
-def record_page():
-    pass
-
-
-def locate_effective_date():
-    pass
-
-
-def record_effective_date():
-    pass
-
-
-def locate_recording_date():
-    pass
-
-
-def record_recording_date():
-    pass
-
-
-# def record_indexing_information(table, dataframe, document):
-#     rows = locate_table_rows(table, document)
-#     record_location_information(rows[0], dataframe, document)
-#     record_date_information(rows[1], dataframe, document)
-
-
-def locate_document_type():
-    pass
-
-
-def record_document_type():
-    pass
-
-
-def locate_legal():
-    pass
-
-
-def record_legal():
+def record_legal(browser, dataframe, document):
     pass
 
 
