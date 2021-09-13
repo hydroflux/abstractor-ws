@@ -1,3 +1,4 @@
+from rattlesnake.validation import verify_document_search_page_loaded
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -15,8 +16,10 @@ from armadillo.armadillo_variables import (document_search_field_id,
                                            execute_document_search_script)
 
 
-def open_document_search():
-    pass
+# Matched armadillo open_document_search
+def open_document_search(browser, document):
+    browser.get(document_search_url)
+    verify_document_search_page_loaded(browser, document)
 
 
 def locate_document_search_field():
