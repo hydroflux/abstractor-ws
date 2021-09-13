@@ -48,7 +48,7 @@ def validate_login(browser):
 
 
 def verify_login(browser):
-    if browser.title == post_login_title:
+    if assert_window_title(browser, post_login_title):
         print('\nLogin successful, continuing program execution.')
     elif validate_login(browser):
         print('\nLogin successful after validating login, continuing program execution.')

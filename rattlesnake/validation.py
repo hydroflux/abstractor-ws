@@ -7,7 +7,7 @@ from settings.file_management import extrapolate_document_value
 from settings.general_functions import (assert_window_title, date_from_string,
                                         timeout)
 
-from rattlesnake.rattlesnake_variables import bad_login_title
+from rattlesnake.rattlesnake_variables import bad_login_title, post_login_title
 
 
 def validate_login(browser, login):
@@ -18,7 +18,7 @@ def validate_login(browser, login):
 
 # Consolidate validate_login & check_for_bad_login after testing for additional fallbacks
 def check_for_bad_login(browser):
-    if browser.title == bad_login_title:
+    if assert_window_title(browser, post_login_title):
         print('Server returned a bad login response, trying again...')
         return True
     else:
