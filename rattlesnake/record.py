@@ -1,5 +1,4 @@
 from settings.file_management import extrapolate_document_value
-from rattlesnake.validation import verify_document_description_page_loaded
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -7,6 +6,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 
 from settings.general_functions import timeout
 
+from rattlesnake.validation import verify_document_description_page_loaded
 from rattlesnake.rattlesnake_variables import document_description_table_id, document_tables_tag
 
 
@@ -42,11 +42,8 @@ def get_document_information_tables(browser, document):
 def access_document_information_tables(browser, document):
     return get_document_information_tables(browser, document)[2:]
 
-def record_grantor():
-    pass
 
-
-def record_grantee():
+def record_reception_number():
     pass
 
 
@@ -58,14 +55,6 @@ def record_page():
     pass
 
 
-def record_reception_number():
-    pass
-
-
-def record_document_type():
-    pass
-
-
 def record_effective_date():
     pass
 
@@ -74,25 +63,52 @@ def record_recording_date():
     pass
 
 
+def record_indexing_information():
+    pass
+
+
+def record_document_type():
+    pass
+
+
 def record_legal():
     pass
 
 
-def record_related_documents():
+def record_type_and_legal():
     pass
 
 
-def record_comments():
+def record_grantor():
     pass
 
 
-def aggregate_document_information(browser, document):
+def record_grantee():
+    pass
+
+
+def record_parties_information():
+    pass
+
+
+def aggregate_document_table_information(browser, document):
     document_tables = access_document_information_tables(browser, document)
 
 
-def record_document_fields():
-    pass
+def record_related_documents(dataframe):
+    dataframe['Related Documents'].append('')
 
 
-def record(browser, document):
+def record_comments(dataframe):
+    dataframe['Comments'].append('')
+
+
+def record_document_fields(browser, dataframe, document):
+    aggregate_document_table_information(browser, dataframe, document)
+    record_related_documents(dataframe)
+    record_comments(dataframe)
+
+
+def record(browser, dataframe, document):
     verify_document_description_page_loaded(browser, document)
+    record_document_fields(browser, dataframe, document)
