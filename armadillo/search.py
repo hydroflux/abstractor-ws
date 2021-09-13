@@ -51,13 +51,13 @@ def handle_document_search_field(browser, document):
 
 
 def document_search(browser, document):
-    open_document_search(browser, document)
     handle_document_search_field(browser, document)
     javascript_script_execution(browser, execute_document_search_script)
 
 
-# Matches crocodile 'search'
+# Matches rattlesnake 'search'
 def search(browser, document):
+    open_document_search(browser, document)
     if document_type(document) == 'document_number':
         document_search(browser, document)
     else:
