@@ -16,7 +16,7 @@ from armadillo.armadillo_variables import (document_search_field_id,
                                            execute_document_search_script)
 
 
-# Matched armadillo open_document_search
+# This needs to be a loop in order to check against the server error
 def open_document_search(browser, document):
     browser.get(document_search_url)
     verify_document_search_page_loaded(browser, document)

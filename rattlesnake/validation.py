@@ -7,7 +7,7 @@ from settings.file_management import extrapolate_document_value
 from settings.general_functions import (assert_window_title, date_from_string,
                                         timeout)
 
-from rattlesnake.rattlesnake_variables import bad_login_title, post_login_title, document_search_title, home_page_url, home_page_title
+from rattlesnake.rattlesnake_variables import bad_login_title, post_login_title, document_search_title, home_page_url, home_page_title, post_logout_title
 
 
 def verify_home_page(browser, document):
@@ -43,7 +43,7 @@ def check_for_bad_server_response(browser):
 
 
 def verify_login(browser, login):
-    if browser.title == post_login_title:
+    if assert_window_title(browser, post_login_title):
         print('\nLogin successful, continuing program execution.')
     elif validate_login(browser, login):
         print('\nLogin successful after validating login, continuing program execution.')
@@ -51,6 +51,12 @@ def verify_login(browser, login):
         print('\nBrowser failed to successfully login, exiting program.')
         browser.quit()
         exit()
+
+
+def verify_logout(browser):
+    if not assert_window_title(browser, post_logout_title):
+        print('Browser failed to log out of county system successfully, please review.')
+        input()
 
 
 def verify_document_search_page_loaded(browser, document):

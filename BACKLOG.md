@@ -174,6 +174,7 @@
 - [ ] Add all rattlesnake scripts (execute, logout, search, open, record, download)
 - [ ] Integrate rattlesnake scripts to work with the top level environment file
 - [ ] Create a convert_document_numbers script
+- [ ] Fix login & search loops for return to home
 - [ ] Create an "execution", "review", & "download only" option for execution
 
 ### Testing Script To Do
