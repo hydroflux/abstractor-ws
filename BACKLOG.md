@@ -177,6 +177,7 @@
 - [ ] Fix login & search loops for return to home
 - [ ] Create an "execution", "review", & "download only" option for execution
 - [ ] Update the validation file with the proper use of 'verify' & 'validate' (definitions have been added)
+- [ ] Extrapolate access / recording functions in record further to streamline the process further ("id=" will help)
 
 ### Testing Script To Do
 
