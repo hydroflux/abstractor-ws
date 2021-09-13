@@ -4,7 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-from settings.general_functions import date_from_string, get_field_value, timeout
+from settings.general_functions import date_from_string, get_field_value, timeout, title_strip
 
 from rattlesnake.validation import validate_date, validate_reception_number, verify_document_description_page_loaded
 from rattlesnake.rattlesnake_variables import document_description_table_id, document_tables_tag, row_tag_name, row_data_tag_name, reception_number_id, volume_id, page_id, effective_date_id, recording_date_id, document_type_id, legal_id, empty_value_fields
@@ -125,12 +125,20 @@ def record_recording_date(browser, dataframe, document, field_type='recording da
         record_empty_value(dataframe, field_type)
 
 
-def record_document_type(browser, dataframe, document):
-    pass
+def record_document_type(browser, dataframe, document, field_type='document type'):
+    document_type = access_field_value(browser, document, document_type_id, field_type)
+    if document_type not in empty_value_fields:
+        record_field_value(dataframe, title_strip(document_type), field_type)
+    else:
+        record_null_value(dataframe, field_type)
 
 
-def record_legal(browser, dataframe, document):
-    pass
+def record_legal(browser, dataframe, document, field_type='legal'):
+    legal = access_field_value(browser, document, legal_id, field_type)
+    if legal not in empty_value_fields:
+        record_field_value(dataframe, legal, field_type)
+    else:
+        record_empty_value(dataframe, field_type)
 
 
 def record_grantor():
