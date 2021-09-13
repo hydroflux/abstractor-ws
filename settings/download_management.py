@@ -15,6 +15,26 @@ def previously_downloaded(county, document_directory, document_number):
         return False
 
 
+def stock_download_matches(document_directory, stock_download, count=0):
+    for document in os.listdir(document_directory):
+        if document.startswith(stock_download):
+            count += 1
+
+
+def get_stock_download_path(document_directory, stock_download):
+    for document in os.listdir(document_directory):
+        if document.startswith(stock_download):
+            return f'{document_directory}/{document}'
+
+
+def set_download_path(document_directory, stock_download, document_number, alt):
+    if alt is None:
+        return f'{document_directory}/{stock_download}'
+    else:
+        if stock_download_matches == 1:
+            return get_stock_download_path(document_directory, stock_download)
+
+
 def check_for_download_error(browser, windows):
     try:
         if browser.title == 'Error':
@@ -98,8 +118,8 @@ def check_for_rename(browser, document_directory, number_files, document_number,
         raise ValueError("%s isn't a file!" % rename_path)
 
 
-def update_download(browser, county, stock_download, document_directory, number_files, document_number):
-    download_path = f'{document_directory}/{stock_download}'
+def update_download(browser, county, stock_download, document_directory, number_files, document_number, alt=None):
+    download_path = set_download_path(document_directory, stock_download, document_number, alt)
     if wait_for_download(browser, document_directory, download_path, number_files):
         return False
     else:
