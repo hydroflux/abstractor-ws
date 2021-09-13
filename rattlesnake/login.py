@@ -42,9 +42,14 @@ def submit_password(browser):
         credentials[3])
 
 
-def execute_login():
-    pass
+def execute_login(browser):
+    submit_button = locate_login_input(browser, credentials[4], 'submit')
+    submit_button.click()
 
 
-def account_login():
-    pass
+def account_login(browser):
+    open_site(browser)
+    submit_username(browser)
+    submit_password(browser)
+    execute_login(browser)
+    # verify_login(browser)
