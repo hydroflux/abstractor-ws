@@ -3,8 +3,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-from settings.general_functions import (assert_window_title, fill_search_field, timeout)
+from settings.general_functions import (assert_window_title, fill_search_field, naptime, timeout)
 
+from rattlesnake.validation import verify_login
 from rattlesnake_variables import (credentials, website, website_title)
 
 
@@ -43,13 +44,15 @@ def submit_password(browser):
 
 
 def execute_login(browser):
+    naptime()
     submit_button = locate_login_input(browser, credentials[4], 'submit')
     submit_button.click()
 
 
+# Matches the armadillo account_login function
 def account_login(browser):
     open_site(browser)
     submit_username(browser)
     submit_password(browser)
     execute_login(browser)
-    # verify_login(browser)
+    verify_login(browser, account_login(browser))
