@@ -65,6 +65,7 @@
 - [ ] Update date formatting to named months input at the beginning
 - [ ] Consider throwing a trigger requesting the dates
 - [ ] Consider lengthening grantor / grantee fields for armadillo
+- [ ] If there is a file matching the created file (i.e. xxxx-Base-Runsheet) which exists, pause and get input to see what the user wants to do
 
 ### Leopard To Do
 

@@ -22,9 +22,17 @@ def create_dataframe(dictionary):
     return dataframe
 
 
+def rename_legal_description(dataframe):
+    return dataframe.rename({"Legal": "Legal Description"}, axis=1)
+
+
+def rename_effective_date(dataframe):
+    return dataframe.rename({"Effective Date": "Document Effective Date"}, axis=1)
+
+
 def transform_dictionary(dictionary):
     dataframe = create_dataframe(dictionary)
-    return dataframe.rename({"Legal": "Legal Description"}, axis=1)
+    return rename_legal_description(rename_effective_date(dataframe))
 
 
 def create_output_file(file_name):
@@ -47,6 +55,9 @@ def add_column(dataframe, current_position, column):
 def add_breakpoints(dataframe):
     current_position = dataframe.columns.get_loc(worksheet_properties['breakpoint_start'])
     for column in worksheet_properties['breakpoints']:
+        print('current_position', current_position)
+        print('column', column)
+        print(dataframe.columns)
         add_column(dataframe, current_position, column)
         current_position = current_position + column.position
 
@@ -139,7 +150,7 @@ def set_title_format(dataframe, worksheet, font_format):
 
 def create_range_message(dataframe, content):
     # return f'From {content["start_date"]} to {content["end_date"]} \n ({content["order"]})'
-    start = dataframe[worksheet_properties["breakpoint_start"]]
+    start = dataframe[worksheet_properties["date_range"]]
     return f'From {start.iloc[0]} to {start.iloc[-1]} \n ({content["order"]})'
 
 

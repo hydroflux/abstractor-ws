@@ -142,7 +142,11 @@ def get_book_volume_page_field(document_table):
 
 def access_book_volume_page(document_table):
     book_volume_page_field = get_book_volume_page_field(document_table)
-    return book_volume_page_field.split(' ')[0], book_volume_page_field.split(' ')[2], book_volume_page_field.split(' ')[4]
+    return (
+        book_volume_page_field.split(' ')[0],
+        book_volume_page_field.split(' ')[2],
+        book_volume_page_field.split(' ')[4]
+        )
 
 
 def record_book_volume_page(document_table, dataframe):
@@ -154,7 +158,7 @@ def record_book_volume_page(document_table, dataframe):
 
 def record_indexing_information(document_table, dataframe, document):
     record_date(document_table[3], dataframe, document, "recording")
-    record_date(document_table[-1], dataframe, document, "document")
+    record_date(document_table[-1], dataframe, document, "effective")
     # recording_date = access_date(title_strip(document_table[3]), document, "recording")
     # document_date = access_date(title_strip(document_table[-1]), document, "document")
     # dataframe['Recording Date'].append(recording_date)
