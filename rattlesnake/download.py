@@ -1,6 +1,5 @@
 import os
 from datetime import datetime
-from rattlesnake.validation import verify_document_image_page_loaded
 
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
@@ -10,10 +9,13 @@ from selenium.webdriver.support.wait import WebDriverWait
 from settings.download_management import previously_downloaded, update_download
 from settings.file_management import (create_document_directory,
                                       extrapolate_document_value)
-from settings.general_functions import (center_element, get_direct_link,
-                                        newline_split, timeout)
+from settings.general_functions import timeout
 
-from rattlesnake.rattlesnake_variables import download_page_id, free_download_button_id, add_to_cart_button_id, download_prefix
+from rattlesnake.rattlesnake_variables import (add_to_cart_button_id,
+                                               download_page_id,
+                                               download_prefix,
+                                               free_download_button_id)
+from rattlesnake.validation import verify_document_image_page_loaded
 
 
 def locate_download_page(browser, document):

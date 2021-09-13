@@ -1,3 +1,4 @@
+from rattlesnake.download import download_document
 from rattlesnake.record import record
 from rattlesnake.open_document import open_document
 from rattlesnake.search import search
@@ -109,5 +110,5 @@ def execute_program(county, target_directory, document_list, file_name, review=F
         )
     )
     logout(browser)
-    # bundle
-    # close
+    bundle_project(target_directory, abstraction)
+    # browser.close()
