@@ -11,7 +11,8 @@ from armadillo.armadillo_variables import (bad_login_text,
                                            document_information_title,
                                            document_search_results_title,
                                            login_validation_form_name,
-                                           login_validation_text_id)
+                                           login_validation_text_id,
+                                           post_login_title)
 
 
 def get_login_validation_text(browser):
@@ -44,6 +45,17 @@ def validate_login(browser):
     login_validation_information = get_login_validation_text(browser)
     if login_validation_information.text.startswith(bad_login_text):
         return execute_login_form_validation(browser)
+
+
+def verify_login(browser):
+    if browser.title == post_login_title:
+        print('\nLogin successful, continuing program execution.')
+    elif validate_login(browser):
+        print('\nLogin successful after validating login, continuing program execution.')
+    else:
+        print('\nBrowser failed to successfully login, exiting program.')
+        browser.quit()
+        exit()
 
 
 def verify_search_page_loaded(browser, document):

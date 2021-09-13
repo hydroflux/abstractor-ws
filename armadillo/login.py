@@ -6,9 +6,8 @@ from selenium.webdriver.support.wait import WebDriverWait
 from settings.general_functions import (assert_window_title, fill_search_field,
                                         timeout)
 
-from armadillo.armadillo_variables import (credentials, post_login_title,
-                                           website, website_title)
-from armadillo.validation import validate_login
+from armadillo.armadillo_variables import credentials, website, website_title
+from armadillo.validation import verify_login
 
 
 # Identical to buffalo open_site
@@ -48,17 +47,6 @@ def submit_password(browser):
 def execute_login(browser):
     submit_button = locate_login_input(browser, credentials[4], 'submit')
     submit_button.click()
-
-
-def verify_login(browser):
-    if browser.title == post_login_title:
-        print('\nLogin successful, continuing program execution.')
-    elif validate_login(browser):
-        print('\nLogin successful after validating login, continuing program execution.')
-    else:
-        print('\nBrowser failed to successfully login, exiting program.')
-        browser.quit()
-        exit()
 
 
 def account_login(browser):
