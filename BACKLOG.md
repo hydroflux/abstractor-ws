@@ -171,8 +171,7 @@
 
 ### Rattlesnake To Do
 
-- [ ] Create a new directory to work with the rattlesnake codebase
-- [ ] Add all rattlesnake scripts (execute, login, logout, search, open, record, download)
+- [ ] Add all rattlesnake scripts (execute, logout, search, open, record, download)
 - [ ] Integrate rattlesnake scripts to work with the top level environment file
 - [ ] Create a convert_document_numbers script
 - [ ] Create an "execution", "review", & "download only" option for execution
