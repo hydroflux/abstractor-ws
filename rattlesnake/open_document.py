@@ -35,6 +35,7 @@ def locate_search_result_rows(search_results, document):
         input()
 
 
+# Search results can also be used to identify the number of results pages
 def get_search_result_rows(browser, document):
     search_results = locate_search_results(browser, document)
     result_rows = locate_search_result_rows(search_results, document)
@@ -43,6 +44,8 @@ def get_search_result_rows(browser, document):
 
 def count_results(browser, document):
     result_rows = get_search_result_rows(browser, document)
+    for row in result_rows:
+        document.number_results += 1
 
 
 def locate_first_result():
@@ -65,5 +68,6 @@ def handle_search_results():
     pass
 
 
-def open_document():
-    pass
+def open_document(browser, document):
+    count_results(browser, document)
+    return handle_search_results(browser, document)
