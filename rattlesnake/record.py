@@ -210,6 +210,10 @@ def record_parties_information(browser, dataframe, document):
     record_grantee(dataframe, list_to_string(grantee))
 
 
+def record_book(dataframe):
+    dataframe['Book'].append('')
+
+
 def record_related_documents(dataframe):
     dataframe['Related Documents'].append('')
 
@@ -226,6 +230,7 @@ def record_document_fields(browser, dataframe, document):
     record_recording_date(browser, dataframe, document)
     record_legal(browser, dataframe, document)
     record_parties_information(browser, dataframe, document)
+    record_book(dataframe)
     record_related_documents(dataframe)
     record_comments(dataframe)
 
