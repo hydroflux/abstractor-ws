@@ -1,4 +1,5 @@
 import os
+from rattlesnake.validation import verify_document_image_page_loaded
 
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
@@ -15,11 +16,20 @@ from rattlesnake.rattlesnake_variables import download_page_id, free_download_id
 
 
 def locate_download_page(browser, document):
-    pass
+    try:
+        download_page_present = EC.presence_of_element_located((By.ID, download_page_id))
+        WebDriverWait(browser, timeout).until(download_page_present)
+        download_page = browser.find_element_by_id(download_page_id)
+        return download_page
+    except TimeoutException:
+        print(f'Browser timed out trying to locate download page for '
+              f'{extrapolate_document_value(document)}, please review.')
+        input()
 
 
-def open_download_page():
-    pass
+def open_download_page(browser, document):
+    download_page = locate_download_page(browser, document)
+    download_page.click()
 
 
 def free_download():
@@ -34,5 +44,6 @@ def execute_download():
     pass
 
 
-def download_document():
-    pass
+def download_document(browser, document):
+    open_download_page(browser, document)
+    verify_document_image_page_loaded(browser, document)

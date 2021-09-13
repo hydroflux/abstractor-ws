@@ -1,8 +1,8 @@
 from settings.file_management import extrapolate_document_value
-from settings.general_functions import (assert_window_title, date_from_string,
-                                        timeout)
+from settings.general_functions import assert_window_title, date_from_string
 
 from rattlesnake.rattlesnake_variables import (document_description_page_title,
+                                               document_image_page_title,
                                                document_search_title,
                                                home_page_title, home_page_url,
                                                post_login_title,
@@ -11,7 +11,7 @@ from rattlesnake.rattlesnake_variables import (document_description_page_title,
 
 def verify_home_page(browser):
     if not assert_window_title(browser, home_page_title):
-        print(f'Browser failed to return home, please review.')
+        print('Browser failed to return home, please review.')
         input()
     else:
         return True
@@ -80,7 +80,8 @@ def validate_result_reception_number(result, document):
 def verify_document_description_page_loaded(browser, document):
     if not assert_window_title(browser, document_description_page_title):
         print(f'Browser failed to open document description page for '
-              f'{extrapolate_document_value(document)}')
+              f'{extrapolate_document_value(document)}, please review')
+        input()
 
 
 def validate_reception_number(document, value):
@@ -90,6 +91,15 @@ def validate_reception_number(document, value):
 # Copied directory from armadillo validation (should probably extrapolate to general_functions)
 def validate_date(text):
     return len(text) == 10 and date_from_string(text) == text
+
+
+def verify_document_image_page_loaded(browser, document):
+    if not assert_window_title(browser, document_image_page_title):
+        print(f'Browser failed to open document image page for '
+              f'{extrapolate_document_value(document)}, please review.')
+        input()
+    else:
+        return True
 
 
 '''
