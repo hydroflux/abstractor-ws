@@ -17,6 +17,7 @@ if __name__ == '__main__':
     from leopard.execute import execute_review as review_leopard
     # from tiger.execute import execute_program as execute_tiger
     # from tiger.execute import execute_review as review_tiger
+    from rattlesnake.execute import execute_program as execute_rattlesnake
     from settings.general_functions import (get_county_data,
                                             start_program_timer,
                                             stop_program_timer)
@@ -71,6 +72,14 @@ def execute_program_type(county, program_type, document_list=None, search_name=N
     #         execute_tiger()
     #     elif program_type == 'review':
     #         review_tiger()
+    if county.program == 'rattlesnake':
+        if program_type == 'execute':
+            add_download_types(county, document_list)
+            execute_rattlesnake(county, target_directory, document_list, file_name)
+        elif program_type == 'review':
+            execute_rattlesnake(county, target_directory, document_list, file_name, True)
+        else:
+            currently_unavailable(county, program_type)
     else:
         print(f'"{county}" does not match available execution options, please review.')
 

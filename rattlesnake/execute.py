@@ -1,7 +1,3 @@
-from rattlesnake.download import download_document
-from rattlesnake.record import record
-from rattlesnake.open_document import open_document
-from rattlesnake.search import search
 from settings.abstract_object import abstract_dictionary as dataframe
 from settings.bad_search import record_bad_search, unable_to_download
 from settings.driver import create_webdriver
@@ -14,8 +10,12 @@ from settings.file_management import (bundle_project, check_length,
 from settings.general_functions import start_timer
 from settings.settings import download, headless
 
+from rattlesnake.download import download_document
 from rattlesnake.login import account_login
 from rattlesnake.logout import logout
+from rattlesnake.open_document import open_document
+from rattlesnake.record import record
+from rattlesnake.search import search
 
 
 def record_single_document(browser, document_list, document, start_time, review):
