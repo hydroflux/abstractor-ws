@@ -6,10 +6,10 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
 from settings.file_management import extrapolate_document_value
-from settings.general_functions import (get_direct_link, set_description_link,
+from settings.general_functions import (get_direct_link, javascript_script_execution, set_description_link,
                                         timeout)
 
-from rattlesnake.rattlesnake_variables import results_table_id, result_row_tag_name
+from rattlesnake.rattlesnake_variables import results_table_id, result_row_tag_name, result_link_tag
 
 
 def locate_search_results(browser, document):
@@ -53,12 +53,34 @@ def get_first_result(browser, document):
     return get_search_result_rows(browser, document)[0]
 
 
-def locate_first_result_reception_number(first_result, document):
-    pass
+def locate_result_link(result, document):
+    try:
+        result_link_present = EC.element_to_be_clickable((By.TAG_NAME, result_link_tag))
+        WebDriverWait(result, timeout).until(result_link_present)
+        result_link = result.find_element_by_tag_name(result_link_tag)
+        return result_link
+    except TimeoutException:
+        print(f'Browser timed out trying to locate result link for '
+              f'{extrapolate_document_value(document)}, please review.')
+        input()
 
 
-def open_result_link(browser, document, first_result):
-    pass
+def get_result_link(result, document):
+    result_link = locate_result_link(result, document)
+    return get_direct_link(result_link)
+
+
+def open_result_link(browser, document, result):
+    try:
+        document_link = get_result_link(result, document)
+        set_description_link(document, document_link)
+        javascript_script_execution(browser, document.description_link)
+        return True
+    except TimeoutException:
+        print(f'Browser timed out trying to open result link for '
+              f'{extrapolate_document_value(document)}, please review')
+        input()
+        return False
 
 
 # Almost matches crocodile open_first_result

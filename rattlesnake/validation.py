@@ -10,10 +10,9 @@ from settings.general_functions import (assert_window_title, date_from_string,
 from rattlesnake.rattlesnake_variables import bad_login_title, post_login_title, document_search_title, home_page_url, home_page_title, post_logout_title
 
 
-def verify_home_page(browser, document):
+def verify_home_page(browser):
     if not assert_window_title(browser, home_page_title):
-        print(f'Browser failed to open document search link for '
-              f'{extrapolate_document_value(document)}, please review.')
+        print(f'Browser failed to return home, please review.')
         input()
     else:
         return True
