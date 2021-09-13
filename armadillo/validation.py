@@ -84,6 +84,7 @@ def validate_reception_number(string, document):
     return string.endswith(document.value)
 
 
+# Used again for rattlesnake
 def validate_date(text):
     return len(text) == 10 and date_from_string(text) == text
 

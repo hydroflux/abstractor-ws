@@ -87,6 +87,11 @@ def validate_reception_number(document, value):
     return document.value == value
 
 
+# Copied directory from armadillo validation (should probably extrapolate to general_functions)
+def validate_date(text):
+    return len(text) == 10 and date_from_string(text) == text
+
+
 '''
 Validate vs. Verify
 

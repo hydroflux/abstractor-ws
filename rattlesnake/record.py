@@ -4,9 +4,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-from settings.general_functions import get_field_value, timeout
+from settings.general_functions import date_from_string, get_field_value, timeout
 
-from rattlesnake.validation import validate_reception_number, verify_document_description_page_loaded
+from rattlesnake.validation import validate_date, validate_reception_number, verify_document_description_page_loaded
 from rattlesnake.rattlesnake_variables import document_description_table_id, document_tables_tag, row_tag_name, row_data_tag_name, reception_number_id, volume_id, page_id, effective_date_id, recording_date_id, document_type_id, legal_id, empty_value_fields
 
 
@@ -75,34 +75,54 @@ def access_field_value(browser, document, id, field_type):
     return get_field_value(field)
 
 
-def record_reception_number(browser, dataframe, document):
-    reception_number = access_field_value(browser, document, reception_number_id, 'reception number')
+def record_field_value(dataframe, value, field_type):
+    dataframe[f'{field_type.title()}'].append(value)
+
+
+def record_reception_number(browser, dataframe, document, field_type='reception_number'):
+    reception_number = access_field_value(browser, document, reception_number_id, field_type)
     if validate_reception_number(document, reception_number):
-        dataframe['Reception Number'].append(reception_number)
+        record_field_value(dataframe, reception_number, field_type)
 
 
-def record_volume(browser, dataframe, document):
-    volume = access_field_value(browser, document, volume_id, 'volume')
+def record_null_value(dataframe, field_type):
+    dataframe[f'{field_type.title()}'].append(empty_value_fields[-1])
+
+
+def record_empty_value(dataframe, field_type):
+    dataframe[f'{field_type.title()}'].append(empty_value_fields[0])
+
+
+def record_volume(browser, dataframe, document, field_type='volume'):
+    volume = access_field_value(browser, document, volume_id, field_type)
     if volume not in empty_value_fields:
-        dataframe['Volume'].append(volume)
+        record_field_value(dataframe, volume, field_type)
     else:
-        dataframe['Volume'].append(empty_value_fields[-1])
+        record_empty_value(dataframe, field_type)
 
 
-def record_page(browser, dataframe, document):
-    page = access_field_value(browser, document, page_id, 'page')
+def record_page(browser, dataframe, document, field_type='page'):
+    page = access_field_value(browser, document, page_id, field_type)
     if page not in empty_value_fields:
-        dataframe['Page'].append(page)
+        record_field_value(dataframe, page, field_type)
     else:
-        dataframe['Page'].append(empty_value_fields[-1])
+        record_empty_value(dataframe, field_type)
 
 
-def record_effective_date(browser, dataframe, document):
-    pass
+def record_effective_date(browser, dataframe, document, field_type='effective date'):
+    effective_date = date_from_string(access_field_value(browser, document, effective_date_id, field_type))
+    if validate_date(effective_date):
+        record_field_value(dataframe, effective_date, field_type)
+    else:
+        record_empty_value(dataframe, field_type)
 
 
-def record_recording_date(browser, dataframe, document):
-    pass
+def record_recording_date(browser, dataframe, document, field_type='recording date'):
+    recording_date = date_from_string(access_field_value(browser, document, recording_date_id, field_type).split()[0])
+    if validate_date(recording_date):
+        record_field_value(dataframe, recording_date, field_type)
+    else:
+        record_empty_value(dataframe, field_type)
 
 
 def record_document_type(browser, dataframe, document):
