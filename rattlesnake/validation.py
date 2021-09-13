@@ -1,13 +1,12 @@
-from selenium.common.exceptions import TimeoutException
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.wait import WebDriverWait
-
 from settings.file_management import extrapolate_document_value
 from settings.general_functions import (assert_window_title, date_from_string,
                                         timeout)
 
-from rattlesnake.rattlesnake_variables import bad_login_title, post_login_title, document_search_title, home_page_url, home_page_title, post_logout_title
+from rattlesnake.rattlesnake_variables import (document_description_page_title,
+                                               document_search_title,
+                                               home_page_title, home_page_url,
+                                               post_login_title,
+                                               post_logout_title)
 
 
 def verify_home_page(browser):
@@ -76,3 +75,9 @@ def validate_document_search_page(browser, search):
 
 def validate_result_reception_number(result, document):
     return document.value in result.text.split()
+
+
+def verify_document_description_page_loaded(browser, document):
+    if not assert_window_title(browser, document_description_page_title):
+        print(f'Browser failed to open document description page for '
+              f'{extrapolate_document_value(document)}')

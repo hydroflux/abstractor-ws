@@ -1,15 +1,17 @@
-from rattlesnake.validation import validate_result_reception_number
-from rattlesnake.search import locate_search_button
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
 from settings.file_management import extrapolate_document_value
-from settings.general_functions import (get_direct_link, javascript_script_execution, set_description_link,
-                                        timeout)
+from settings.general_functions import (get_direct_link,
+                                        javascript_script_execution,
+                                        set_description_link, timeout)
 
-from rattlesnake.rattlesnake_variables import results_table_id, result_row_tag_name, result_link_tag
+from rattlesnake.rattlesnake_variables import (result_link_tag,
+                                               result_row_tag_name,
+                                               results_table_id)
+from rattlesnake.validation import validate_result_reception_number
 
 
 def locate_search_results(browser, document):
