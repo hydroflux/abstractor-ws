@@ -49,15 +49,35 @@ def free_download(browser, document):
     free_download_button.click()
 
 
+def build_stock_download(document):
+    pass
+
+
 def add_to_cart(browser, document):
     add_to_cart_button = locate_button(browser, document, add_to_cart_button_id, 'free download')
     add_to_cart_button.click()
 
 
-def execute_download():
-    pass
+def execute_download(browser, county, document_directory, document):
+    if document.download_type == 'free':
+        free_download(browser, document)
+        return update_download(
+            browser,
+            county,
+            build_stock_download(document),
+            document_directory,
+            len(os.listdir(document_directory)),
+            document.reception_number
+            )
+    elif document.download_type == 'paid':
+        return add_to_cart(browser, document)
 
 
-def download_document(browser, document):
-    open_download_page(browser, document)
-    verify_document_image_page_loaded(browser, document)
+def download_document(browser, county, target_directory, document):
+    document_directory = create_document_directory(target_directory)
+    if previously_downloaded(county, document_directory, document.value):
+        return True
+    else:
+        open_download_page(browser, document)
+        if verify_document_image_page_loaded(browser, document):
+            return execute_download(browser, county, document_directory, document)
