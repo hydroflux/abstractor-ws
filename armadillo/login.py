@@ -30,7 +30,7 @@ def locate_login_input(browser, input_name, type):
         print(f'Browser timed out trying to locate {type} input, please review.')
 
 
-# Matches buffalo submit_password
+# Matches buffalo submit_username
 def submit_username(browser):
     fill_search_field(
         locate_login_input(browser, credentials[0], "username"),

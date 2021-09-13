@@ -8,20 +8,38 @@ from settings.general_functions import (assert_window_title, fill_search_field, 
 from rattlesnake_variables import (credentials, website, website_title)
 
 
+# Identical to buffalo & armadillo open_site
 def open_site(browser):
-    pass
+    browser.get(website)
+    if not assert_window_title(browser, website_title):
+        print('Browser failed to successfully open site, please review.')
+        browser.close()
+        quit()
 
 
-def locate_login_input():
-    pass
+# Identical to buffalo & armadillo open_site
+def locate_login_input(browser, input_name, type):
+    try:
+        login_prompt_present = EC.presence_of_element_located((By.NAME, input_name))
+        WebDriverWait(browser, timeout).until(login_prompt_present)
+        login_prompt = browser.find_element_by_name(input_name)
+        return login_prompt
+    except TimeoutException:
+        print(f'Browser timed out trying to locate {type} input, please review.')
 
 
-def submit_username():
-    pass
+# Matches buffalo & armadillo submit username
+def submit_username(browser):
+    fill_search_field(
+        locate_login_input(browser, credentials[0], "username"),
+        credentials[1])
 
 
-def submit_password():
-    pass
+# Matches buffalo & armadillo submit_password
+def submit_password(browser):
+    fill_search_field(
+        locate_login_input(browser, credentials[2], "password"),
+        credentials[3])
 
 
 def execute_login():
