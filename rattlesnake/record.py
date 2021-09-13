@@ -1,14 +1,24 @@
-from settings.file_management import extrapolate_document_value
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-from settings.general_functions import date_from_string, element_title_strip, get_field_value, list_to_string, timeout, title_strip
+from settings.file_management import extrapolate_document_value
+from settings.general_functions import (date_from_string, element_title_strip,
+                                        get_field_value, list_to_string,
+                                        timeout, title_strip)
 
-from rattlesnake.validation import validate_date, validate_reception_number, verify_document_description_page_loaded
-from rattlesnake.rattlesnake_variables import document_description_table_id, document_tables_tag, row_tag_name, row_data_tag_name, reception_number_id, volume_id, page_id, effective_date_id, recording_date_id, document_type_id, legal_id, empty_value_fields, parties_id, party_rows_tag_name, grantor_text, grantee_text
-
+from rattlesnake.rattlesnake_variables import (document_type_id,
+                                               effective_date_id,
+                                               empty_value_fields,
+                                               grantee_text, grantor_text,
+                                               legal_id, page_id, parties_id,
+                                               party_rows_tag_name,
+                                               reception_number_id,
+                                               recording_date_id,
+                                               row_data_tag_name, volume_id)
+from rattlesnake.validation import (validate_date, validate_reception_number,
+                                    verify_document_description_page_loaded)
 
 # def locate_document_description_table(browser, document):
 #     try:
