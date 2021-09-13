@@ -1,3 +1,4 @@
+from rattlesnake.validation import validate_result_reception_number
 from rattlesnake.search import locate_search_button
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
@@ -44,28 +45,38 @@ def get_search_result_rows(browser, document):
 
 def count_results(browser, document):
     result_rows = get_search_result_rows(browser, document)
-    for row in result_rows:
+    for _ in result_rows:
         document.number_results += 1
 
 
-def locate_first_result():
+def get_first_result(browser, document):
+    return get_search_result_rows(browser, document)[0]
+
+
+def locate_first_result_reception_number(first_result, document):
     pass
 
 
-def get_first_result():
+def open_result_link(browser, document, first_result):
     pass
 
 
-def open_result_link():
-    pass
+# Almost matches crocodile open_first_result
+def open_first_result(browser, document):
+    first_result = get_first_result(browser, document)
+    if validate_result_reception_number(first_result, document):
+        return open_result_link(browser, document, first_result)
 
 
-def open_first_result():
-    pass
-
-
-def handle_search_results():
-    pass
+def handle_search_results(browser, document):
+    if document.number_results == 1:
+        return open_first_result(browser, document)
+    else:
+        print(f'Document instance indicates that more or less than 1 result were located searching '
+              f'{extrapolate_document_value(document)}, please review (should not have reached this stage)')
+        print("Please press enter after reviewing the search parameters...")
+        input()
+        return False
 
 
 def open_document(browser, document):

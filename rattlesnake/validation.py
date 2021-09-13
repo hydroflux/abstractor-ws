@@ -73,3 +73,7 @@ def validate_document_search_page(browser, search):
         return_home(browser)
         search
         return True
+
+
+def validate_result_reception_number(result, document):
+    return document.value in result.text.split()
