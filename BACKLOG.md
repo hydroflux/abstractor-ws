@@ -138,6 +138,7 @@
 - [ ] Refactor crocodile record---probably into a check_index function and an aggregate function
 - [ ] Name search currently only works with a "first name" / "last name" split--needs to be more robust to work in multiple scenarios
 - [ ] Add 'download' decision to Document class & document instances
+- [ ] Add 'start_time' as an optional argument for document found depending on download state
 
 ### Buffalo To Do
 
@@ -159,6 +160,7 @@
 - [ ] Get clarification around 'Document Date' vs. 'Effective Date' for formatting
 - [ ] Get clarification around 'Book' vs. 'Volume' for formatting
 - [ ] Create a 'no results' handler
+- [ ] Add 'start_time' as an optional argument for document found depending on download state
 
 ### Iguana To Do
 
@@ -188,6 +190,7 @@
 - [ ] Consolidate 'validation' functions in 'validation' script
 - [ ] Update 'get downloaded file name' procedure to check for any documents that don't match the correct format in order to avoid renaming the wrong documents
 - [ ] Add 'multiple_documents' logic
+- [ ] Add 'start_time' as an optional argument for document found depending on download state
 
 ### Testing Script To Do
 

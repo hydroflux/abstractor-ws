@@ -105,9 +105,11 @@ def drop_last_entry(dataframe):
     dataframe["Grantor"].pop()
     dataframe["Grantee"].pop()
     dataframe["Book"].pop()
+    dataframe["Volume"].pop()
     dataframe["Page"].pop()
     dataframe["Reception Number"].pop()
     dataframe["Document Type"].pop()
+    dataframe["Effective Date"].pop()
     dataframe["Recording Date"].pop()
     dataframe["Legal"].pop()
     dataframe["Related Documents"].pop()
@@ -118,25 +120,29 @@ def check_length(dataframe):
     grantors = len(dataframe["Grantor"])
     grantees = len(dataframe["Grantee"])
     books = len(dataframe["Book"])
+    volumes = len(dataframe["Volume"])
     pages = len(dataframe["Page"])
     reception_numbers = len(dataframe["Reception Number"])
     document_types = len(dataframe["Document Type"])
+    effective_dates = len(dataframe["Effective Date"])
     recording_dates = len(dataframe["Recording Date"])
     legals = len(dataframe["Legal"])
     related_documents = len(dataframe["Related Documents"])
     comments = len(dataframe["Comments"])
-    if (grantors == grantees == books == pages
+    if (grantors == grantees == books == volumes == pages
             == reception_numbers == document_types
-            == recording_dates == legals == related_documents
-            == comments):
+            == effective_dates == recording_dates == legals
+            == related_documents == comments):
         pass
     else:
         print("Grantors: ", grantors)
         print("Grantees: ", grantees)
         print("Books: ", books)
+        print("Volumes: ", volumes)
         print("Pages: ", pages)
         print("Reception Numbers: ", reception_numbers)
         print("Document Types: ", document_types)
+        print("Effective Dates: ", effective_dates)
         print("Recording Dates: ", recording_dates)
         print("Legals: ", legals)
         print("Related Documents: ", related_documents)
