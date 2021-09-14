@@ -173,14 +173,13 @@
 
 ### Rattlesnake To Do
 
-- [ ] Add all rattlesnake scripts (execute, download)
-- [ ] Integrate rattlesnake scripts to work with the top level environment file
-- [ ] Create a convert_document_numbers script
 - [ ] Fix login & search loops for return to home
-- [ ] Create an "execution", "review", & "download only" option for execution
-- [ ] Update the validation file with the proper use of 'verify' & 'validate' (definitions have been added)
-- [ ] Extrapolate access / recording functions in record further to streamline the process further ("id=" will help)
 - [ ] Reset the login structure to go home before going to the login
+- [ ] Create a 'volume' & 'page' search
+- [ ] Extrapolate access / recording functions in record further to streamline the process further ("id=" will help)
+- [ ] Create a convert_document_numbers script
+- [ ] Create a "download only" option for execution
+- [ ] Update the validation file with the proper use of 'verify' & 'validate' (definitions have been added)
 
 ### Testing Script To Do
 
