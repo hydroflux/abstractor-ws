@@ -49,6 +49,34 @@ def handle_document_search_field(browser, document):
     enter_document_number(browser, document)
 
 
+def clear_volume_search_field(browser, document):
+    pass
+
+
+def enter_volume_number(browser, document):
+    pass
+
+
+def handle_volume_number_search_field(browser, document):
+    pass
+
+
+def clear_page_search_field(browser, document):
+    pass
+
+
+def enter_page_number(browser, document):
+    pass
+
+
+def handle_page_number_search_field(browser, document):
+    pass
+
+
+def handle_volume_page_search_fields(browser, document):
+    pass
+
+
 def locate_search_button(browser, document):
     try:
         search_button_present = EC.element_to_be_clickable((By.ID, search_button_id))
@@ -71,11 +99,17 @@ def document_search(browser, document):
     execute_search(browser, document)
 
 
-# Matches armadillo 'search'
+def volume_and_page_search(browser, document):
+    handle_volume_page_search_fields(browser, document)
+    execute_search(browser, document)
+
+
 def search(browser, document):
     open_document_search(browser, document)
     if document_type(document) == 'document_number':
         document_search(browser, document)
+    elif document_type(document) == 'volume_and_page':
+        volume_and_page_search(browser, document)
     else:
         print(f'Unable to search document type "{document_type(document)}", '
               f'a new search path needs to be developed in order to continue.\n')
