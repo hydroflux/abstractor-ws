@@ -11,11 +11,13 @@ def add_bad_search_key_values(dataframe, document):
     if document_type(document) == "document_number":
         document_number = document_value(document)
         dataframe["Book"].append(search_errors[2])
+        dataframe["Volume"].append(search_errors[2])
         dataframe["Page"].append(search_errors[2])
         dataframe["Reception Number"].append(document_number)
     elif document_type(document) == "book_and_page":
         book, page = document_value(document)
         dataframe["Book"].append(book)
+        dataframe["Volume"].append(search_errors[2])
         dataframe["Page"].append(page)
         dataframe["Reception Number"].append(search_errors[2])
 
@@ -34,7 +36,7 @@ def record_bad_search(dataframe, document):
     dataframe["Grantor"].append(search_errors[0])
     dataframe["Grantee"].append(search_errors[0])
     dataframe["Document Type"].append(search_errors[0])
-    dataframe["Document Date"].append(search_errors[1])
+    dataframe["Effective Date"].append(search_errors[1])
     dataframe["Recording Date"].append(search_errors[1])
     dataframe["Legal"].append(search_errors[2])
     dataframe["Related Documents"].append(search_errors[2])

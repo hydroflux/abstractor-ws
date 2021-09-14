@@ -13,6 +13,8 @@ from armadillo.armadillo_variables import (bad_login_text,
                                            document_search_title,
                                            login_validation_form_name,
                                            login_validation_text_id,
+                                           no_results_message,
+                                           no_results_text_class,
                                            post_login_title)
 
 
@@ -66,11 +68,34 @@ def verify_document_search_page_loaded(browser, document):
         input()
 
 
-def verify_search_results_loaded(browser, document):
+def verify_search_results_page_loaded(browser, document):
     if not assert_window_title(browser, document_search_results_title):
         print(f'Browser failed to successfully execute search for '
               f'{extrapolate_document_value(document)}, please review.')
         input()
+
+
+def locate_no_results_text(browser, document):
+    try:
+        no_results_text_present = EC.presence_of_element_located((By.CLASS_NAME, no_results_text_class))
+        WebDriverWait(browser, timeout).until(no_results_text_present)
+        no_results_text = browser.find_element_by_class_name(no_results_text_class)
+        return no_results_text
+    except TimeoutException:
+        print(f'Browser timed out trying to locate no results text for '
+              f'{extrapolate_document_value(document)}, please review.')
+        input()
+
+
+def access_no_results_text(browser, document):
+    no_results_element = locate_no_results_text(browser, document)
+    return no_results_element.text
+
+
+def verify_results_loaded(browser, document):
+    no_results_text = access_no_results_text(browser, document)
+    if no_results_text != no_results_message:
+        return True
 
 
 def verify_results_page_loaded(browser, document):
