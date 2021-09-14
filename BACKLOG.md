@@ -187,6 +187,7 @@
 - [ ] Add 'else' logic for 'record' validation
 - [ ] Consolidate 'validation' functions in 'validation' script
 - [ ] Update 'get downloaded file name' procedure to check for any documents that don't match the correct format in order to avoid renaming the wrong documents
+- [ ] Add 'multiple_documents' logic
 
 ### Testing Script To Do
 

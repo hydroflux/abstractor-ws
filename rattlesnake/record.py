@@ -36,7 +36,7 @@ def locate_information_field(browser, document, id, field_type):
 def access_field_value(browser, document, id, field_type):
     field = locate_information_field(browser, document, id, field_type)
     if field_type.endswith('date'):
-        return date_from_string(get_field_value(field))
+        return date_from_string(get_field_value(field).split(' ')[0])
     elif field_type == 'document type':
         return title_strip(get_field_value(field))
     else:
@@ -187,7 +187,7 @@ def record_document_fields(browser, dataframe, document):
     record_value(browser, dataframe, document, 'volume', id=volume_id, alt='null')  # Volume
     record_value(browser, dataframe, document, 'page', id=page_id, alt='null')  # Page
     record_value(browser, dataframe, document, 'effective date', id=effective_date_id, alt='empty')  # Effective Date
-    record_value(browser, dataframe, document, 'recording date', id=recording_date_id, alt='empty')  # REcording Date
+    record_value(browser, dataframe, document, 'recording date', id=recording_date_id, alt='empty')  # Recording Date
     record_value(browser, dataframe, document, 'document type', id=document_type_id)  # Document Type
     record_value(browser, dataframe, document, 'legal', id=legal_id, alt='null')  # Legal
     record_parties_information(browser, dataframe, document)  # Grantor / Grantee

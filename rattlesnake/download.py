@@ -73,7 +73,7 @@ def execute_download(browser, county, document_directory, document):
 
 def download_document(browser, county, target_directory, document):
     document_directory = create_document_directory(target_directory)
-    if previously_downloaded(county, document_directory, document.value):
+    if previously_downloaded(county, document_directory, document.reception_number):
         return True
     else:
         open_download_page(browser, document)
