@@ -11,7 +11,6 @@ if __name__ == '__main__':
     from crocodile.execute import execute_review as review_crocodile
     from eagle.execute import execute_document_download as download_eagle
     from eagle.execute import execute_program as execute_eagle
-    from eagle.execute import execute_review as review_eagle
     from leopard.execute import execute_document_download as download_leopard
     from leopard.execute import execute_program as execute_leopard
     from leopard.execute import execute_review as review_leopard
@@ -53,7 +52,7 @@ def execute_program_type(county, program_type, document_list=None, search_name=N
         if program_type == "execute":
             execute_eagle(county, target_directory, document_list, file_name)
         elif program_type == "review":
-            review_eagle(county, target_directory, document_list)
+            execute_eagle(county, target_directory, document_list, file_name, True)
         elif program_type == "download":
             download_eagle(county, target_directory, document_list)
         else:

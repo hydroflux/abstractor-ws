@@ -119,6 +119,9 @@
 - [ ] Eagle browser can't handle x requests in y time period---perform tests across multiple computers (& more specifically IP addresses) in order to determine whether its the IP or the user account that is overworking the server
 - [ ] Clean up download_document--switch to download, get the frame switches together under a single function, & handle number of documents & stock download separately
 - [ ] In addition to above, no need to even look at the download if it's been previously downloaded
+- [ ] Rebuild 'download_list' function from eagle execute--torn apart from consolidating review function
+- [ ] Add 'start_time' as an optional argument for document found depending on download state
+- [ ] Create create option in 'handle_search_results' to account for 'else'
 
 ### Crocodile To Do
 
@@ -191,6 +194,7 @@
 - [ ] Update 'get downloaded file name' procedure to check for any documents that don't match the correct format in order to avoid renaming the wrong documents
 - [ ] Add 'multiple_documents' logic
 - [ ] Add 'start_time' as an optional argument for document found depending on download state
+- [ ] Create create option in 'handle_search_results' to account for 'else'
 
 ### Testing Script To Do
 
