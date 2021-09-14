@@ -17,7 +17,7 @@ from rattlesnake.rattlesnake_variables import (document_type_id,
                                                reception_number_id,
                                                recording_date_id,
                                                row_data_tag_name, volume_id)
-from rattlesnake.validation import (validate_date, validate_reception_number,
+from rattlesnake.validation import (validate_date, validate_reception_number, validate_volume_and_page_numbers,
                                     verify_document_description_page_loaded)
 
 # def locate_document_description_table(browser, document):
@@ -85,14 +85,26 @@ def access_field_value(browser, document, id, field_type):
     return get_field_value(field)
 
 
+def handle_document_type_verification(browser, document):
+    if document.type == 'reception_number':
+        reception_number = access_field_value(browser, document, reception_number_id, 'reception number')
+        validate_reception_number(document, reception_number)
+    elif document.type == 'volume_and_page':
+        page = access_field_value(browser, document, page_id, 'page')
+        volume = access_field_value(browser, document, volume_id, 'volume')
+        validate_volume_and_page_numbers(document, volume, page)
+    else:
+        print(f'Document type "{document.type}" for "{document.value}" could not be validated, please review.')
+        input()
+
+
 def record_field_value(dataframe, value, field_type):
     dataframe[f'{field_type.title()}'].append(value)
 
 
 def record_reception_number(browser, dataframe, document, field_type='reception number'):
     reception_number = access_field_value(browser, document, reception_number_id, field_type)
-    if validate_reception_number(document, reception_number):
-        record_field_value(dataframe, reception_number, field_type)
+    record_field_value(dataframe, reception_number, field_type)
 
 
 def record_null_value(dataframe, field_type):
@@ -248,4 +260,5 @@ def record_document_fields(browser, dataframe, document):
 
 def record(browser, dataframe, document):
     verify_document_description_page_loaded(browser, document)
+    handle_document_type_verification(browser, document)
     record_document_fields(browser, dataframe, document)

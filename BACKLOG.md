@@ -48,6 +48,7 @@
 - [ ] CREATE AN ABSTRACTION OBJECT WHICH HOLDS DOCUMENT LIST, TARGET DIRECTORY, COUNTY, REVIEW TRIGGER, AND DOWNLOAD TRIGGER
 - [ ] Exception review could include a 'continue?' option that could close out the browser
 - [ ] Replace all 'scroll' functions with 'center element'
+- [ ] Drop 'document_type' and 'document_value' functions if possible & replace with instance variables they are returning--will simplify in the long run
 
 ### Imports To Do
 

@@ -3,7 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-from settings.file_management import document_type, document_value, extrapolate_document_value
+from settings.file_management import extrapolate_document_value
 from settings.general_functions import (get_direct_link,
                                         javascript_script_execution,
                                         set_description_link, timeout)
@@ -86,13 +86,13 @@ def open_result_link(browser, document, result):
 
 
 def handle_result_document_type(browser, result, document):
-    if document_type(document) == 'document_number' and validate_result_reception_number(result, document):
+    if document.type == 'document_number' and validate_result_reception_number(result, document):
         return open_result_link(browser, document, result)
-    elif document_type(document) == 'volume_and_page' and validate_result_volume_and_page_numbers(result, document):
+    elif document.type == 'volume_and_page' and validate_result_volume_and_page_numbers(result, document):
         return open_result_link(browser, document, result)
     else:
         print(f'Browser encountered issues validating document type '
-              f'"{document_type(document)}" for "{document_value(document)}", please review.')
+              f'"{document.type}" for "{document.value}", please review.')
         input()
 
 

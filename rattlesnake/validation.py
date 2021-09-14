@@ -100,6 +100,10 @@ def validate_reception_number(document, value):
     return document.value == value
 
 
+def validate_volume_and_page_numbers(document, volume, page):
+    return document.value['Volume'] == volume and document.value['Page'] == page
+
+
 # Copied directory from armadillo validation (should probably extrapolate to general_functions)
 def validate_date(text):
     return len(text) == 10 and date_from_string(text) == text
