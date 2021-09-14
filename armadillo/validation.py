@@ -1,4 +1,4 @@
-from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
@@ -77,19 +77,16 @@ def verify_search_results_page_loaded(browser, document):
 
 def locate_no_results_text(browser, document):
     try:
-        no_results_text_present = EC.presence_of_element_located((By.CLASS_NAME, no_results_text_class))
-        WebDriverWait(browser, timeout).until(no_results_text_present)
         no_results_text = browser.find_element_by_class_name(no_results_text_class)
         return no_results_text
-    except TimeoutException:
-        print(f'Browser timed out trying to locate no results text for '
-              f'{extrapolate_document_value(document)}, please review.')
-        input()
+    except NoSuchElementException:
+        return None
 
 
 def access_no_results_text(browser, document):
     no_results_element = locate_no_results_text(browser, document)
-    return no_results_element.text
+    if no_results_element is not None:
+        return no_results_element.text
 
 
 def verify_results_loaded(browser, document):
