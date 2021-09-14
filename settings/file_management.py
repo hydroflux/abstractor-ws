@@ -56,6 +56,11 @@ def document_value(document):
         return str(document.value)
     elif document_type(document) == "book_and_page":
         return [str(document.value["Book"]), str(document.value["Page"])]
+    elif document_type(document) == "volume_and_page":
+        return [str(document.value["Volume"]), str(document.value["Page"])]
+    else:
+        print('Unable to identify document type while attempting to identify "document value", please review.')
+        return None
 
 
 def extrapolate_document_value(document):
@@ -63,10 +68,15 @@ def extrapolate_document_value(document):
     type = document_type(document)
     if type == "book_and_page":
         return f'Book: {value[0]}, Page: {value[1]}'
+    elif type == "volume_and_page":
+        return f'Volume: {value[0]}, Page: {value[1]}'
     elif type == "document_number":
         return f'Document number {value}'
     elif type == "name":
         return f'search name "{value}"'
+    else:
+        print('Unable to identify document type while attempting to "extrapolate document value", please review.')
+        return None
 
 
 # Consolidate split_book_and_page & split_volume_and_page
