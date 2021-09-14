@@ -20,53 +20,6 @@ from rattlesnake.rattlesnake_variables import (document_type_id,
 from rattlesnake.validation import (validate_date, validate_reception_number, validate_volume_and_page_numbers,
                                     verify_document_description_page_loaded)
 
-# def locate_document_description_table(browser, document):
-#     try:
-#         document_description_table_present = EC.presence_of_element_located((By.ID, document_description_table_id))
-#         WebDriverWait(browser, timeout).until(document_description_table_present)
-#         document_description_table = browser.find_element_by_id(document_description_table_id)
-#         return document_description_table
-#     except TimeoutException:
-#         print(f'Browser timed out trying to locate document description table for '
-#               f'{extrapolate_document_value(document)}, please review.')
-#         input()
-
-
-# def locate_document_information_tables(document_description_table, document):
-#     try:
-#         information_tables_present = EC.presence_of_element_located((By.TAG_NAME, document_tables_tag))
-#         WebDriverWait(document_description_table, timeout).until(information_tables_present)
-#         information_tables = document_description_table.find_elements_by_tag_name(document_tables_tag)
-#         return information_tables
-#     except TimeoutException:
-#         print(f'Browser timed out trying to get document information tables for '
-#               f'{extrapolate_document_value(document)}, please review.')
-#         input()
-
-
-# def get_document_information_tables(browser, document):
-#     document_description_table = locate_document_description_table(browser, document)
-#     return locate_document_information_tables(document_description_table, document)
-
-
-# def access_document_information_tables(browser, document):
-#     return get_document_information_tables(browser, document)[2:]
-
-
-# def locate_table_rows(table, document):
-#     try:
-#         table_rows_present = EC.presence_of_element_located((By.TAG_NAME, row_tag_name))
-#         WebDriverWait(table, timeout).until(table_rows_present)
-#         table_rows = table.find_elements_by_tag_name(row_tag_name)
-#         return table_rows
-#     except TimeoutException:
-#         print(f'Browser timed out trying to locate table rows for '
-#               f'{extrapolate_document_value(document)}, please review.')
-#         input()
-
-
-# def access_table_rows(table, document):
-#     pass
 
 def locate_information_field(browser, document, id, field_type):
     try:
@@ -82,7 +35,12 @@ def locate_information_field(browser, document, id, field_type):
 
 def access_field_value(browser, document, id, field_type):
     field = locate_information_field(browser, document, id, field_type)
-    return get_field_value(field)
+    if field_type.endswith('date'):
+        return date_from_string(get_field_value(field))
+    elif field_type == 'document type':
+        return title_strip(get_field_value(field))
+    else:
+        return get_field_value(field)
 
 
 def handle_document_type_verification(browser, document):
@@ -102,11 +60,6 @@ def record_field_value(dataframe, value, field_type):
     dataframe[f'{field_type.title()}'].append(value)
 
 
-def record_reception_number(browser, dataframe, document, field_type='reception number'):
-    reception_number = access_field_value(browser, document, reception_number_id, field_type)
-    record_field_value(dataframe, reception_number, field_type)
-
-
 def record_null_value(dataframe, field_type):
     dataframe[f'{field_type.title()}'].append(empty_value_fields[-1])
 
@@ -115,52 +68,49 @@ def record_empty_value(dataframe, field_type):
     dataframe[f'{field_type.title()}'].append(empty_value_fields[0])
 
 
-def record_volume(browser, dataframe, document, field_type='volume'):
-    volume = access_field_value(browser, document, volume_id, field_type)
-    if volume not in empty_value_fields:
-        record_field_value(dataframe, volume, field_type)
-    else:
+def record_bad_value(dataframe, document, field_type, alt):
+    if alt is None:
+        print(f'No alternative trigger provided to record a bad value found in the '
+              f'"{field_type}" field for "{extrapolate_document_value(document)}", please review')
+        input()
+    elif alt == 'empty':
         record_empty_value(dataframe, field_type)
-
-
-def record_page(browser, dataframe, document, field_type='page'):
-    page = access_field_value(browser, document, page_id, field_type)
-    if page not in empty_value_fields:
-        record_field_value(dataframe, page, field_type)
-    else:
-        record_empty_value(dataframe, field_type)
-
-
-def record_effective_date(browser, dataframe, document, field_type='effective date'):
-    effective_date = date_from_string(access_field_value(browser, document, effective_date_id, field_type))
-    if validate_date(effective_date):
-        record_field_value(dataframe, effective_date, field_type)
-    else:
-        record_empty_value(dataframe, field_type)
-
-
-def record_recording_date(browser, dataframe, document, field_type='recording date'):
-    recording_date = date_from_string(access_field_value(browser, document, recording_date_id, field_type).split()[0])
-    if validate_date(recording_date):
-        record_field_value(dataframe, recording_date, field_type)
-    else:
-        record_empty_value(dataframe, field_type)
-
-
-def record_document_type(browser, dataframe, document, field_type='document type'):
-    document_type = access_field_value(browser, document, document_type_id, field_type)
-    if document_type not in empty_value_fields:
-        record_field_value(dataframe, title_strip(document_type), field_type)
-    else:
+    elif alt == 'null':
         record_null_value(dataframe, field_type)
-
-
-def record_legal(browser, dataframe, document, field_type='legal'):
-    legal = access_field_value(browser, document, legal_id, field_type)
-    if legal not in empty_value_fields:
-        record_field_value(dataframe, legal, field_type)
     else:
-        record_empty_value(dataframe, field_type)
+        print(f'Encountered an unexpected problem trying to record a bad value found in the '
+              f'"{field_type}" field for "{extrapolate_document_value(document)}" '
+              f'with the alternative trigger "{alt}", please review.')
+        input()
+
+
+def check_dates(field_type, value):
+    if field_type.endswith('date'):
+        if validate_date(value):
+            return True
+    else:
+        return True
+
+
+def handle_value_content(dataframe, document, field_type, value, alt):
+    if value not in empty_value_fields:
+        if check_dates(field_type, value):
+            record_field_value(dataframe, value, field_type)
+        else:
+            record_bad_value(dataframe, document, field_type, alt)
+    elif value in empty_value_fields:
+        record_bad_value(dataframe, document, field_type, alt)
+    else:
+        print(f'Encountered an issue with "{field_type}" field for '
+              f'{extrapolate_document_value(document)}, which found a value of '
+              f'"{value}" in the "{field_type}" field, please review.')
+        input()
+
+
+def record_value(browser, dataframe, document, field_type, id=None, value=None, alt=None):
+    if value is None:
+        value = access_field_value(browser, document, id, field_type)
+    handle_value_content(dataframe, document, field_type, value, alt)
 
 
 def locate_parties_rows(parties_table, document):
@@ -212,24 +162,10 @@ def aggregate_party_information(browser, document):
     return map_party_information(rows, document)
 
 
-def record_grantor(dataframe, grantor, field_type='grantor'):
-    if grantor not in empty_value_fields:
-        record_field_value(dataframe, grantor, field_type)
-    else:
-        record_empty_value(dataframe, field_type)
-
-
-def record_grantee(dataframe, grantee, field_type='grantee'):
-    if grantee not in empty_value_fields:
-        record_field_value(dataframe, grantee, field_type)
-    else:
-        record_empty_value(dataframe, field_type)
-
-
 def record_parties_information(browser, dataframe, document):
     grantor, grantee = aggregate_party_information(browser, document)
-    record_grantor(dataframe, list_to_string(grantor))
-    record_grantee(dataframe, list_to_string(grantee))
+    record_value(browser, dataframe, document, 'grantor', value=list_to_string(grantor), alt='empty')  # Grantor
+    record_value(browser, dataframe, document, 'grantee', value=list_to_string(grantee), alt='empty')  # Grantee
 
 
 def record_book(dataframe):
@@ -245,17 +181,17 @@ def record_comments(dataframe):
 
 
 def record_document_fields(browser, dataframe, document):
-    record_reception_number(browser, dataframe, document)
-    record_volume(browser, dataframe, document)
-    record_page(browser, dataframe, document)
-    record_document_type(browser, dataframe, document)
-    record_effective_date(browser, dataframe, document)
-    record_recording_date(browser, dataframe, document)
-    record_legal(browser, dataframe, document)
-    record_parties_information(browser, dataframe, document)
-    record_book(dataframe)
-    record_related_documents(dataframe)
-    record_comments(dataframe)
+    record_value(browser, dataframe, document, 'reception number', id=reception_number_id)  # Reception Number
+    record_value(browser, dataframe, document, 'volume', id=volume_id, alt='null')  # Volume
+    record_value(browser, dataframe, document, 'page', id=page_id, alt='null')  # Page
+    record_value(browser, dataframe, document, 'effective date', id=effective_date_id, alt='empty')  # Effective Date
+    record_value(browser, dataframe, document, 'recording date', id=recording_date_id, alt='empty')  # REcording Date
+    record_value(browser, dataframe, document, 'document type', id=document_type_id)  # Document Type
+    record_value(browser, dataframe, document, 'legal', id=legal_id, alt='null')  # Legal
+    record_parties_information(browser, dataframe, document)  # Grantor / Grantee
+    record_book(dataframe)  # Book
+    record_related_documents(dataframe)  # Related Documents
+    record_comments(dataframe)  # Comments
 
 
 def record(browser, dataframe, document):
