@@ -296,6 +296,14 @@ def aggregate_document_information(browser, document_tables, dataframe, document
     record_notes(document_tables, dataframe)
 
 
+def record_effective_date(dataframe):
+    dataframe['Effective Date'].append('')
+
+
+def record_volume(dataframe):
+    dataframe['Volume'].append('')
+
+
 def record_comments(county, dataframe, document, image_available):
     if document.number_results > 1:
         dataframe["Comments"].append(multiple_documents_comment(county, document))
@@ -310,6 +318,8 @@ def record_document_fields(browser, county, dataframe, document, image_available
     document_tables = access_document_information_tables(browser, document, document_information)
     display_all_information(browser, document)
     aggregate_document_information(browser, document_tables, dataframe, document)
+    record_effective_date(dataframe)
+    record_volume(dataframe)
     record_comments(county, dataframe, document, image_available)
     scroll_to_top(browser)
 
