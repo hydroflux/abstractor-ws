@@ -116,19 +116,35 @@ def create_document_number_object(document_list, columns, row):
         store_document(document_list, "document_number", document_number)
 
 
+def build_book_volume_page_into_list(document_list, columns, row):
+    if 'Book' in columns and 'Page' in columns:
+        create_book_and_page_object(document_list, row)
+    if 'Volume' in columns and 'Page' in columns:
+        create_volume_and_page_object(document_list, row)
+
+
+def build_document_number_into_list(document_list, columns, row):
+    if 'Document' in columns or 'Documents' in columns or \
+                                'Reception Number' in columns or \
+                                'Reception Numbers' in columns:
+        create_document_number_object(document_list, columns, row)
+
+
 def create_document_list(excel_object):
     document_list = []
     columns = get_sheet_columns(excel_object)
     rows = get_sheet_rows(excel_object)
     for row in rows:
-        if 'Book' in columns and 'Page' in columns:
-            create_book_and_page_object(document_list, row)
-        if 'Volume' in columns and 'Page' in columns:
-            create_volume_and_page_object(document_list, row)
-        if 'Document' in columns or 'Documents' in columns or \
-                                    'Reception Number' in columns or \
-                                    'Reception Numbers' in columns:
-            create_document_number_object(document_list, columns, row)
+        build_book_volume_page_into_list(document_list, columns, row)
+        build_document_number_into_list(document_list, columns, row)
+        # if 'Book' in columns and 'Page' in columns:
+        #     create_book_and_page_object(document_list, row)
+        # if 'Volume' in columns and 'Page' in columns:
+        #     create_volume_and_page_object(document_list, row)
+        # if 'Document' in columns or 'Documents' in columns or \
+        #                             'Reception Number' in columns or \
+        #                             'Reception Numbers' in columns:
+        #     create_document_number_object(document_list, columns, row)
     return document_list
 
 
