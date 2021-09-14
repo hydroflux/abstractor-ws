@@ -22,52 +22,25 @@ def open_document_search(browser, document):
     verify_document_search_page_loaded(browser, document)
 
 
-# Matches matches crocodile & armadillo locate_document_search_field
-def locate_document_search_field(browser, document):
+def locate_search_field(browser, document, id, type):
     try:
-        document_search_field_present = EC.element_to_be_clickable((By.ID, document_search_field_id))
-        WebDriverWait(browser, timeout).until(document_search_field_present)
-        document_search_field = browser.find_element_by_id(document_search_field_id)
-        return document_search_field
+        search_field_present = EC.element_to_be_clickable((By.ID, id))
+        WebDriverWait(browser, timeout).until(search_field_present)
+        search_field = browser.find_element_by_id(id)
+        return search_field
     except TimeoutException:
-        print(f'Browser timed out trying to locate document field for '
+        print(f'Browser timed out trying to locate "{type}" field for '
               f'{extrapolate_document_value(document)}.')
 
 
-# Matches matches crocodile & armadillo locate_document_search_field
-def locate_volume_search_field(browser, document):
-    try:
-        volume_search_field_present = EC.element_to_be_clickable((By.ID, volume_search_field_id))
-        WebDriverWait(browser, timeout).until(volume_search_field_present)
-        volume_search_field = browser.find_element_by_id(volume_search_field_id)
-        return volume_search_field
-    except TimeoutException:
-        print(f'Browser timed out trying to locate volume field for '
-              f'{extrapolate_document_value(document)}.')
-
-
-# Matches matches crocodile & armadillo locate_document_search_field
-def locate_page_search_field(browser, document):
-    try:
-        page_search_field_present = EC.element_to_be_clickable((By.ID, page_search_field_id))
-        WebDriverWait(browser, timeout).until(page_search_field_present)
-        page_search_field = browser.find_element_by_id(page_search_field_id)
-        return page_search_field
-    except TimeoutException:
-        print(f'Browser timed out trying to locate document field for '
-              f'{extrapolate_document_value(document)}.')
-
-
-# Matches crocodile & armadillo clear_document_search_field
 def clear_document_search_field(browser, document):
-    while get_field_value(locate_document_search_field(browser, document)) != '':
-        locate_document_search_field(browser, document).clear()
+    while get_field_value(locate_search_field(browser, document, document_search_field_id, 'reception number')) != '':
+        locate_search_field(browser, document, document_search_field_id, 'reception number').clear()
 
 
-# Matches crocodile & armadillo enter_document_number
 def enter_document_number(browser, document):
-    while get_field_value(locate_document_search_field(browser, document)) != document_value(document):
-        locate_document_search_field(browser, document).send_keys(Keys.UP + document_value(document))
+    while get_field_value(locate_search_field(browser, document, document_search_field_id, 'reception number')) != document_value(document):
+        locate_search_field(browser, document, document_search_field_id, 'reception number').send_keys(Keys.UP + document_value(document))
 
 
 def handle_document_search_field(browser, document):
@@ -76,7 +49,8 @@ def handle_document_search_field(browser, document):
 
 
 def clear_volume_search_field(browser, document):
-    pass
+    while get_field_value(locate_search_field(browser, document, volume_search_field_id, 'volume')) != '':
+        locate_search_field(browser, document, volume_search_field_id, 'volume').clear()
 
 
 def enter_volume_number(browser, document):
@@ -84,11 +58,12 @@ def enter_volume_number(browser, document):
 
 
 def handle_volume_number_search_field(browser, document):
-    pass
+    clear_volume_search_field(browser, document)
 
 
 def clear_page_search_field(browser, document):
-    pass
+    while get_field_value(locate_search_field(browser, document, page_search_field_id, 'page')) != '':
+        locate_search_field(browser, document, page_search_field_id, 'page').clear()
 
 
 def enter_page_number(browser, document):
@@ -96,7 +71,7 @@ def enter_page_number(browser, document):
 
 
 def handle_page_number_search_field(browser, document):
-    pass
+    clear_page_search_field(browser, document)
 
 
 def handle_volume_page_search_fields(browser, document):
