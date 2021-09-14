@@ -5,7 +5,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
 from settings.file_management import (document_type, document_value,
-                                      extrapolate_document_value)
+                                      extrapolate_document_value, split_volume_and_page)
 from settings.general_functions import get_field_value, timeout
 
 from rattlesnake.rattlesnake_variables import (document_search_field_id,
@@ -39,8 +39,10 @@ def clear_document_search_field(browser, document):
 
 
 def enter_document_number(browser, document):
-    while get_field_value(locate_search_field(browser, document, document_search_field_id, 'reception number')) != document_value(document):
-        locate_search_field(browser, document, document_search_field_id, 'reception number').send_keys(Keys.UP + document_value(document))
+    while get_field_value(locate_search_field(browser, document, document_search_field_id, 'reception number')) != \
+          document_value(document):
+        (locate_search_field(browser, document, document_search_field_id, 'reception number')
+         .send_keys(Keys.UP + document_value(document)))
 
 
 def handle_document_search_field(browser, document):
@@ -53,11 +55,12 @@ def clear_volume_search_field(browser, document):
         locate_search_field(browser, document, volume_search_field_id, 'volume').clear()
 
 
-def enter_volume_number(browser, document):
-    pass
+def enter_volume_number(browser, document, volume):
+    while get_field_value(locate_search_field(browser, document, volume_search_field_id, 'volume')) != volume:
+        locate_search_field(browser, document, document_search_field_id, 'volume').send_keys(Keys.UP + volume)
 
 
-def handle_volume_number_search_field(browser, document):
+def handle_volume_number_search_field(browser, document, volume):
     clear_volume_search_field(browser, document)
 
 
@@ -66,17 +69,19 @@ def clear_page_search_field(browser, document):
         locate_search_field(browser, document, page_search_field_id, 'page').clear()
 
 
-def enter_page_number(browser, document):
-    pass
+def enter_page_number(browser, document, page):
+    while get_field_value(locate_search_field(browser, document, page_search_field_id, 'page')) != page:
+        locate_search_field(browser, document, document_search_field_id, 'page').send_keys(Keys.UP + page)
 
 
-def handle_page_number_search_field(browser, document):
+def handle_page_number_search_field(browser, document, page):
     clear_page_search_field(browser, document)
 
 
 def handle_volume_page_search_fields(browser, document):
-    handle_volume_number_search_field(browser, document)
-    handle_page_number_search_field(browser, document)
+    volume, page = split_volume_and_page(document)
+    handle_volume_number_search_field(browser, document, volume)
+    handle_page_number_search_field(browser, document, page)
 
 
 def locate_search_button(browser, document):

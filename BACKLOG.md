@@ -68,6 +68,10 @@
 - [ ] If there is a file matching the created file (i.e. xxxx-Base-Runsheet) which exists, pause and get input to see what the user wants to do
 - [ ] Get rid of print statements in export
 
+### File Management To Do
+
+- [ ] Consolidate 'split_book_and_page' and 'split_volume_and_page' functions
+
 ### Leopard To Do
 
 - [ ] Update multiple_documents comment to include actual document numbers and / or book & page numbers
