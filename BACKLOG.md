@@ -174,7 +174,6 @@
 ### Rattlesnake To Do
 
 - [ ] Fix login & search loops for return to home
-- [ ] Reset the login structure to go home before going to the login
 - [ ] Create a 'volume' & 'page' search
 - [ ] Extrapolate access / recording functions in record further to streamline the process further ("id=" will help)
 - [ ] Create a convert_document_numbers script

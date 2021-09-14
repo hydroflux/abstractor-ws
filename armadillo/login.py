@@ -19,7 +19,7 @@ def open_site(browser):
         quit()
 
 
-# Identical to buffalo open_site
+# Identical to buffalo locate_login_input
 def locate_login_input(browser, input_name, type):
     try:
         login_prompt_present = EC.presence_of_element_located((By.NAME, input_name))
