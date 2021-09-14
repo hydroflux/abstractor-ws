@@ -178,6 +178,7 @@
 - [ ] Create an "execution", "review", & "download only" option for execution
 - [ ] Update the validation file with the proper use of 'verify' & 'validate' (definitions have been added)
 - [ ] Extrapolate access / recording functions in record further to streamline the process further ("id=" will help)
+- [ ] Reset the login structure to go home before going to the login
 
 ### Testing Script To Do
 

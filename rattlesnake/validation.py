@@ -1,7 +1,9 @@
 from settings.file_management import extrapolate_document_value
-from settings.general_functions import assert_window_title, date_from_string
+from settings.general_functions import (assert_window_title, date_from_string,
+                                        naptime)
 
-from rattlesnake.rattlesnake_variables import (document_description_page_title,
+from rattlesnake.rattlesnake_variables import (bad_login_title,
+                                               document_description_page_title,
                                                document_image_page_title,
                                                document_search_title,
                                                home_page_title, home_page_url,
@@ -22,22 +24,23 @@ def return_home(browser):
     return verify_home_page(browser)
 
 
-# Consolidate validate_login & validate_document_search_page after testing for additional fallbacks
-def validate_login(browser, login):
-    if check_for_bad_server_response(browser):
-        return_home(browser)
-        login
-        return True
-
-
 # Consolidate validate_login & check_for_bad_login after testing for additional fallbacks
 def check_for_bad_server_response(browser):
-    if assert_window_title(browser, post_login_title):
+    if assert_window_title(browser, bad_login_title):
         print('Server returned a bad login response, trying again...')
         return True
     else:
         print('Failed login does not match prepared expectations, please review and try again.')
         input()
+
+
+# Consolidate validate_login & validate_document_search_page after testing for additional fallbacks
+def validate_login(browser, login):
+    if check_for_bad_server_response(browser):
+        return_home(browser)
+        naptime()
+        login
+        return True
 
 
 def verify_login(browser, login):

@@ -4,7 +4,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from settings.general_functions import timeout
 
-from rattlesnake.logout import verify_logout
+from rattlesnake.validation import verify_logout
 from rattlesnake.rattlesnake_variables import logout_button_id
 
 

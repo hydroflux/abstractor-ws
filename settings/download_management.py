@@ -1,5 +1,5 @@
 import os
-from time import sleep
+from time import sleep, time
 
 from selenium.common.exceptions import (NoSuchWindowException,
                                         WebDriverException)
@@ -15,10 +15,43 @@ def previously_downloaded(county, document_directory, document_number):
         return False
 
 
-def stock_download_matches(document_directory, stock_download, count=0):
-    for document in os.listdir(document_directory):
-        if document.startswith(stock_download):
-            count += 1
+def close_download_window(browser):
+    windows = browser.window_handles
+    if len(windows) > 1:
+        browser.switch_to.window(windows[1])
+        browser.close()
+        browser.switch_to.window(windows[0])
+
+
+def get_downloaded_file_name(browser, wait_time=300):
+    browser.execute_script("window.open()")
+    # switch to new tab
+    browser.switch_to.window(browser.window_handles[-1])
+    # navigate to chrome downloads
+    browser.get('chrome://downloads')
+    # define the endTime
+    endTime = time() + wait_time
+    while True:
+        # try:
+        # get downloaded percentage
+        downloadPercentage = browser.execute_script(
+            "return document.querySelector('downloads-manager').shadowRoot.querySelector('#downloadsList downloads-item').shadowRoot.querySelector('#progress').value")
+        # check if downloadPercentage is 100 (otherwise the script will keep waiting)
+        if downloadPercentage == 100:
+            # return the file name once the download is completed
+
+            return browser.execute_script("return document.querySelector('downloads-manager').shadowRoot.querySelector('#downloadsList downloads-item').shadowRoot.querySelector('div#content  #file-link').text")
+        # except:
+        #     pass
+        sleep(1)
+        if time() > endTime:
+            break
+
+
+# def stock_download_matches(document_directory, stock_download, count=0):
+#     for document in os.listdir(document_directory):
+#         if document.startswith(stock_download):
+#             count += 1
 
 
 def get_stock_download_path(document_directory, stock_download):
@@ -27,15 +60,14 @@ def get_stock_download_path(document_directory, stock_download):
             return f'{document_directory}/{document}'
 
 
-def set_download_path(document_directory, stock_download, document_number, alt):
+def set_download_path(browser, document_directory, stock_download, alt):
     if alt is None:
-        return f'{document_directory}/{stock_download}'
+        return f'{document_directory}/{stock_download}', stock_download
     else:
-        if stock_download_matches == 1:
-            return get_stock_download_path(document_directory, stock_download)
-        else:
-            print('Unable to locate correct document path, please review.')
-            input()
+        file = get_downloaded_file_name(browser)
+        close_download_window(browser)
+        # This will not work long term--this is a bandaid that needs surgery
+        return f'{document_directory}/{file}', file
 
 
 def check_for_download_error(browser, windows):
@@ -95,20 +127,23 @@ def check_file_size(download_path):
             return False
 
 
-def prepare_file_for_download(document_directory, stock_download, document_number, download_path, new_download_name):
+def prepare_file_for_download(document_directory, current_download, document_number, download_path, new_download_name):
     if check_file_size(download_path):
-        os.rename(stock_download, new_download_name)
+        print('prepare', current_download, new_download_name)
+        os.rename(current_download, new_download_name)
         os.chdir(document_directory)
         check_download_size(new_download_name, document_number)
     else:
         raise ValueError("%s isn't a file!" % download_path)
 
 
-def rename_download(document_directory, stock_download, document_number, download_path, new_download_name):
+def rename_download(document_directory, current_download, document_number, download_path, new_download_name):
     try:
-        prepare_file_for_download(document_directory, stock_download, document_number, download_path, new_download_name)
+        print('download path', download_path)
+        print('current download', current_download)
+        prepare_file_for_download(document_directory, current_download, document_number, download_path, new_download_name)
     except FileNotFoundError:
-        print(f'File not found, please review stock download {stock_download} & new file name {new_download_name}')
+        print(f'File not found, please review stock download {current_download} & new file name {new_download_name}')
 
 
 def check_for_rename(browser, document_directory, number_files, document_number, new_download_name):
@@ -122,13 +157,13 @@ def check_for_rename(browser, document_directory, number_files, document_number,
 
 
 def update_download(browser, county, stock_download, document_directory, number_files, document_number, alt=None):
-    download_path = set_download_path(document_directory, stock_download, document_number, alt)
+    download_path, current_download = set_download_path(browser, document_directory, stock_download, alt)
     if wait_for_download(browser, document_directory, download_path, number_files):
         return False
     else:
         naptime()
         new_download_name = f'{county.prefix}-{document_number}.pdf'
-        rename_download(document_directory, stock_download, document_number, download_path, new_download_name)
+        rename_download(document_directory, current_download, document_number, download_path, new_download_name)
         # naptime()
         check_for_rename(browser, document_directory, number_files, document_number, new_download_name)
         return True

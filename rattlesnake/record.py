@@ -236,6 +236,7 @@ def record_document_fields(browser, dataframe, document):
     record_reception_number(browser, dataframe, document)
     record_volume(browser, dataframe, document)
     record_page(browser, dataframe, document)
+    record_document_type(browser, dataframe, document)
     record_effective_date(browser, dataframe, document)
     record_recording_date(browser, dataframe, document)
     record_legal(browser, dataframe, document)

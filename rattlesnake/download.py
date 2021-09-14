@@ -13,7 +13,6 @@ from settings.general_functions import timeout
 
 from rattlesnake.rattlesnake_variables import (add_to_cart_button_id,
                                                download_page_id,
-                                               download_prefix,
                                                free_download_button_id)
 from rattlesnake.validation import verify_document_image_page_loaded
 
@@ -52,10 +51,6 @@ def free_download(browser, document):
     free_download_button.click()
 
 
-def build_stock_download(document):
-    return f'{download_prefix}{"{dt.year}{dt.month}{dt.day}".format(dt=datetime.now())}'
-
-
 def add_to_cart(browser, document):
     add_to_cart_button = locate_button(browser, document, add_to_cart_button_id, 'free download')
     add_to_cart_button.click()
@@ -67,10 +62,10 @@ def execute_download(browser, county, document_directory, document):
         return update_download(
             browser,
             county,
-            build_stock_download(document),
+            '',
             document_directory,
             len(os.listdir(document_directory)),
-            document.reception_number,
+            document.value,
             'alt'
             )
     elif document.download_type == 'paid':

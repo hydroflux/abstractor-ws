@@ -6,7 +6,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from settings.general_functions import (assert_window_title, fill_search_field, naptime, timeout)
 
 from rattlesnake.validation import verify_login
-from rattlesnake_variables import (credentials, website, website_title)
+from rattlesnake.rattlesnake_variables import (credentials, website, website_title)
 
 
 # Identical to buffalo & armadillo open_site
@@ -55,4 +55,4 @@ def account_login(browser):
     submit_username(browser)
     submit_password(browser)
     execute_login(browser)
-    verify_login(browser, account_login(browser))
+    verify_login(browser, account_login)
