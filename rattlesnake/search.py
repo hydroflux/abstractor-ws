@@ -10,7 +10,9 @@ from settings.general_functions import get_field_value, timeout
 
 from rattlesnake.rattlesnake_variables import (document_search_field_id,
                                                document_search_url,
-                                               search_button_id)
+                                               page_search_field_id,
+                                               search_button_id,
+                                               volume_search_field_id)
 from rattlesnake.validation import verify_document_search_page_loaded
 
 
@@ -27,6 +29,30 @@ def locate_document_search_field(browser, document):
         WebDriverWait(browser, timeout).until(document_search_field_present)
         document_search_field = browser.find_element_by_id(document_search_field_id)
         return document_search_field
+    except TimeoutException:
+        print(f'Browser timed out trying to locate document field for '
+              f'{extrapolate_document_value(document)}.')
+
+
+# Matches matches crocodile & armadillo locate_document_search_field
+def locate_volume_search_field(browser, document):
+    try:
+        volume_search_field_present = EC.element_to_be_clickable((By.ID, volume_search_field_id))
+        WebDriverWait(browser, timeout).until(volume_search_field_present)
+        volume_search_field = browser.find_element_by_id(volume_search_field_id)
+        return volume_search_field
+    except TimeoutException:
+        print(f'Browser timed out trying to locate volume field for '
+              f'{extrapolate_document_value(document)}.')
+
+
+# Matches matches crocodile & armadillo locate_document_search_field
+def locate_page_search_field(browser, document):
+    try:
+        page_search_field_present = EC.element_to_be_clickable((By.ID, page_search_field_id))
+        WebDriverWait(browser, timeout).until(page_search_field_present)
+        page_search_field = browser.find_element_by_id(page_search_field_id)
+        return page_search_field
     except TimeoutException:
         print(f'Browser timed out trying to locate document field for '
               f'{extrapolate_document_value(document)}.')
@@ -74,7 +100,8 @@ def handle_page_number_search_field(browser, document):
 
 
 def handle_volume_page_search_fields(browser, document):
-    pass
+    handle_volume_number_search_field(browser, document)
+    handle_page_number_search_field(browser, document)
 
 
 def locate_search_button(browser, document):
