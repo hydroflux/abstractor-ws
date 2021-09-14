@@ -1,7 +1,7 @@
 import os
 from time import sleep, time
 
-from selenium.common.exceptions import (NoSuchWindowException,
+from selenium.common.exceptions import (NoSuchWindowException, JavascriptException,
                                         WebDriverException)
 
 from settings.general_functions import long_nap, naptime
@@ -32,17 +32,21 @@ def get_downloaded_file_name(browser, wait_time=300):
     # define the endTime
     endTime = time() + wait_time
     while True:
-        # try:
-        # get downloaded percentage
-        downloadPercentage = browser.execute_script(
-            "return document.querySelector('downloads-manager').shadowRoot.querySelector('#downloadsList downloads-item').shadowRoot.querySelector('#progress').value")
-        # check if downloadPercentage is 100 (otherwise the script will keep waiting)
-        if downloadPercentage == 100:
-            # return the file name once the download is completed
-
-            return browser.execute_script("return document.querySelector('downloads-manager').shadowRoot.querySelector('#downloadsList downloads-item').shadowRoot.querySelector('div#content  #file-link').text")
-        # except:
-        #     pass
+        try:
+            # get downloaded percentage
+            download_percentage_script = ("return document.querySelector('downloads-manager')"
+                                          ".shadowRoot.querySelector('#downloadsList downloads-item')"
+                                          ".shadowRoot.querySelector('#progress').value")
+            downloadPercentage = browser.execute_script(download_percentage_script)
+            # check if downloadPercentage is 100 (otherwise the script will keep waiting)
+            if downloadPercentage == 100:
+                # return the file name once the download is completed
+                download_name_script = ("return document.querySelector('downloads-manager')"
+                                        ".shadowRoot.querySelector('#downloadsList downloads-item')"
+                                        ".shadowRoot.querySelector('div#content  #file-link').text ")
+                return browser.execute_script(download_name_script)
+        except JavascriptException:  # Document already downloaded
+            return browser.execute_script(download_name_script)
         sleep(1)
         if time() > endTime:
             break

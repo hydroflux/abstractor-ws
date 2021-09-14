@@ -40,6 +40,8 @@ def access_field_value(browser, document, id, field_type):
     elif field_type == 'document type':
         return title_strip(get_field_value(field))
     else:
+        if field_type == 'reception number':
+            document.reception_number = get_field_value(field)
         return get_field_value(field)
 
 

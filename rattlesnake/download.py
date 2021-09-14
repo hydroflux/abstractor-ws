@@ -64,7 +64,7 @@ def execute_download(browser, county, document_directory, document):
             '',
             document_directory,
             len(os.listdir(document_directory)),
-            document.value,
+            document.reception_number,
             'alt'
             )
     elif document.download_type == 'paid':
