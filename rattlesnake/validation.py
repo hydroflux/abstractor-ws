@@ -1,4 +1,4 @@
-from settings.file_management import extrapolate_document_value
+from settings.file_management import extrapolate_document_value, split_volume_and_page
 from settings.general_functions import (assert_window_title, date_from_string,
                                         naptime)
 
@@ -83,6 +83,10 @@ def verify_document_search_page_loaded(browser, document, search):
 
 def validate_result_reception_number(result, document):
     return document.value in result.text.split()
+
+
+def validate_result_volume_and_page_numbers(result, document):
+    return all(value in result.text.split() for value in split_volume_and_page(document))
 
 
 def verify_document_description_page_loaded(browser, document):

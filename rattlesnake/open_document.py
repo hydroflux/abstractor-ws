@@ -3,7 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-from settings.file_management import extrapolate_document_value
+from settings.file_management import document_type, document_value, extrapolate_document_value
 from settings.general_functions import (get_direct_link,
                                         javascript_script_execution,
                                         set_description_link, timeout)
@@ -11,7 +11,7 @@ from settings.general_functions import (get_direct_link,
 from rattlesnake.rattlesnake_variables import (result_link_tag,
                                                result_row_tag_name,
                                                results_table_id)
-from rattlesnake.validation import validate_result_reception_number
+from rattlesnake.validation import validate_result_reception_number, validate_result_volume_and_page_numbers
 
 
 def locate_search_results(browser, document):
@@ -85,11 +85,21 @@ def open_result_link(browser, document, result):
         return False
 
 
+def handle_result_document_type(browser, result, document):
+    if document_type(document) == 'document_number' and validate_result_reception_number(result, document):
+        return open_result_link(browser, document, result)
+    elif document_type(document) == 'volume_and_page' and validate_result_volume_and_page_numbers(result, document):
+        return open_result_link(browser, document, result)
+    else:
+        print(f'Browser encountered issues validating document type '
+              f'"{document_type(document)}" for "{document_value(document)}", please review.')
+        input()
+
+
 # Almost matches crocodile open_first_result
 def open_first_result(browser, document):
     first_result = get_first_result(browser, document)
-    if validate_result_reception_number(first_result, document):
-        return open_result_link(browser, document, first_result)
+    handle_result_document_type(browser, first_result, document)
 
 
 def handle_search_results(browser, document):
