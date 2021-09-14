@@ -103,7 +103,9 @@ def open_first_result(browser, document):
 
 
 def handle_search_results(browser, document):
-    if document.number_results == 1:
+    if document.number_results == 0:
+        return False
+    elif document.number_results == 1:
         return open_first_result(browser, document)
     else:
         print(f'Document instance indicates that more or less than 1 result were located searching '

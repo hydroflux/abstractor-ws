@@ -20,13 +20,19 @@ def add_bad_search_key_values(dataframe, document):
         dataframe["Volume"].append(search_errors[2])
         dataframe["Page"].append(page)
         dataframe["Reception Number"].append(search_errors[2])
+    elif document_type(document) == "volume_and_page":
+        volume, page = document_value(document)
+        dataframe["Book"].append(search_errors[2])
+        dataframe["Volume"].append(volume)
+        dataframe["Page"].append(page)
+        dataframe["Reception Number"].append(search_errors[2])
 
 
 def add_bad_search_message(dataframe, document):
     if document_type(document) == "document_number":
         document_number = document_value(document)
         bad_search_message = f'No document located at reception number {document_number}, please review'
-    elif document_type(document) == "book_and_page":
+    elif document_type(document) == "book_and_page" or document_type(document) == "volume_and_page":
         bad_search_message = f'No document located at {extrapolate_document_value(document)}, please review'
     dataframe["Comments"].append(bad_search_message)
 

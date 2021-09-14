@@ -90,7 +90,9 @@ def validate_result_volume_and_page_numbers(result, document):
 
 
 def verify_document_description_page_loaded(browser, document):
-    if not assert_window_title(browser, document_description_page_title):
+    if assert_window_title(browser, document_description_page_title):
+        return True
+    else:
         print(f'Browser failed to open document description page for '
               f'{extrapolate_document_value(document)}, please review')
         input()
@@ -101,7 +103,7 @@ def validate_reception_number(document, value):
 
 
 def validate_volume_and_page_numbers(document, volume, page):
-    return document.value['Volume'] == volume and document.value['Page'] == page
+    return document.value['Volume'] == int(volume) and document.value['Page'] == int(page)
 
 
 # Copied directory from armadillo validation (should probably extrapolate to general_functions)

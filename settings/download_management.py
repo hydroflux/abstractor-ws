@@ -32,18 +32,18 @@ def get_downloaded_file_name(browser, wait_time=300):
     # define the endTime
     endTime = time() + wait_time
     while True:
+        download_percentage_script = ("return document.querySelector('downloads-manager')"
+                                      ".shadowRoot.querySelector('#downloadsList downloads-item')"
+                                      ".shadowRoot.querySelector('#progress').value")
+        download_name_script = ("return document.querySelector('downloads-manager')"
+                                ".shadowRoot.querySelector('#downloadsList downloads-item')"
+                                ".shadowRoot.querySelector('div#content  #file-link').text ")
         try:
             # get downloaded percentage
-            download_percentage_script = ("return document.querySelector('downloads-manager')"
-                                          ".shadowRoot.querySelector('#downloadsList downloads-item')"
-                                          ".shadowRoot.querySelector('#progress').value")
             downloadPercentage = browser.execute_script(download_percentage_script)
             # check if downloadPercentage is 100 (otherwise the script will keep waiting)
             if downloadPercentage == 100:
                 # return the file name once the download is completed
-                download_name_script = ("return document.querySelector('downloads-manager')"
-                                        ".shadowRoot.querySelector('#downloadsList downloads-item')"
-                                        ".shadowRoot.querySelector('div#content  #file-link').text ")
                 return browser.execute_script(download_name_script)
         except JavascriptException:  # Document already downloaded
             return browser.execute_script(download_name_script)
@@ -133,7 +133,6 @@ def check_file_size(download_path):
 
 def prepare_file_for_download(document_directory, current_download, document_number, download_path, new_download_name):
     if check_file_size(download_path):
-        print('prepare', current_download, new_download_name)
         os.rename(current_download, new_download_name)
         os.chdir(document_directory)
         check_download_size(new_download_name, document_number)
@@ -143,9 +142,13 @@ def prepare_file_for_download(document_directory, current_download, document_num
 
 def rename_download(document_directory, current_download, document_number, download_path, new_download_name):
     try:
-        print('download path', download_path)
-        print('current download', current_download)
-        prepare_file_for_download(document_directory, current_download, document_number, download_path, new_download_name)
+        prepare_file_for_download(
+            document_directory,
+            current_download,
+            document_number,
+            download_path,
+            new_download_name
+        )
     except FileNotFoundError:
         print(f'File not found, please review stock download {current_download} & new file name {new_download_name}')
 
