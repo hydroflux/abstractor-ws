@@ -16,7 +16,6 @@ from rattlesnake.rattlesnake_variables import (document_search_field_id,
 from rattlesnake.validation import verify_document_search_page_loaded
 
 
-# This needs to be a loop in order to check against the server error
 def open_document_search(browser):
     browser.get(document_search_url)
 
@@ -32,51 +31,30 @@ def locate_search_field(browser, document, id, type):
               f'{extrapolate_document_value(document)}.')
 
 
-def clear_document_search_field(browser, document):
-    while get_field_value(locate_search_field(browser, document, document_search_field_id, 'reception number')) != '':
-        locate_search_field(browser, document, document_search_field_id, 'reception number').clear()
+def clear_search_field(browser, document, type, id):
+    while get_field_value(locate_search_field(browser, document, id, type)) != '':
+        locate_search_field(browser, document, id, type).clear()
 
 
-def enter_document_number(browser, document):
-    while get_field_value(locate_search_field(browser, document, document_search_field_id, 'reception number')) != \
-          document_value(document):
-        (locate_search_field(browser, document, document_search_field_id, 'reception number')
-         .send_keys(Keys.UP + document_value(document)))
+def enter_value_number(browser, document, type, id, value):
+    while get_field_value(locate_search_field(browser, document, id, type)) != value:
+        locate_search_field(browser, document, id, type).send_keys(Keys.UP + value)
 
 
-def handle_document_search_field(browser, document):
-    clear_document_search_field(browser, document)
-    enter_document_number(browser, document)
+def handle_document_search_field(browser, document, type="reception number", id=document_search_field_id):
+    value = document_value(document)
+    clear_search_field(browser, document, type, id)
+    enter_value_number(browser, document, type, id, value)
 
 
-def clear_volume_search_field(browser, document):
-    while get_field_value(locate_search_field(browser, document, volume_search_field_id, 'volume')) != '':
-        locate_search_field(browser, document, volume_search_field_id, 'volume').clear()
+def handle_volume_number_search_field(browser, document, volume, type="volume", id=volume_search_field_id):
+    clear_search_field(browser, document, type, id)
+    enter_value_number(browser, document, type, id, volume)
 
 
-def enter_volume_number(browser, document, volume):
-    while get_field_value(locate_search_field(browser, document, volume_search_field_id, 'volume')) != volume:
-        locate_search_field(browser, document, volume_search_field_id, 'volume').send_keys(Keys.UP + volume)
-
-
-def handle_volume_number_search_field(browser, document, volume):
-    clear_volume_search_field(browser, document)
-    enter_volume_number(browser, document, volume)
-
-
-def clear_page_search_field(browser, document):
-    while get_field_value(locate_search_field(browser, document, page_search_field_id, 'page')) != '':
-        locate_search_field(browser, document, page_search_field_id, 'page').clear()
-
-
-def enter_page_number(browser, document, page):
-    while get_field_value(locate_search_field(browser, document, page_search_field_id, 'page')) != page:
-        locate_search_field(browser, document, page_search_field_id, 'page').send_keys(Keys.UP + page)
-
-
-def handle_page_number_search_field(browser, document, page):
-    clear_page_search_field(browser, document)
-    enter_page_number(browser, document, page)
+def handle_page_number_search_field(browser, document, page, type="page", id=page_search_field_id):
+    clear_search_field(browser, document, type, id)
+    enter_value_number(browser, document, type, id, page)
 
 
 def handle_volume_page_search_fields(browser, document):
