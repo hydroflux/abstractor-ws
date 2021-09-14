@@ -122,6 +122,8 @@
 - [ ] Rebuild 'download_list' function from eagle execute--torn apart from consolidating review function
 - [ ] Add 'start_time' as an optional argument for document found depending on download state
 - [ ] Create create option in 'handle_search_results' to account for 'else'
+- [ ] Create a validation script for eagle
+- [ ] Scrub comments from scripts
 
 ### Crocodile To Do
 

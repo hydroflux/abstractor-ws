@@ -212,14 +212,14 @@ def split_reception_field(reception_field):
     return reception_number, book, page
 
 
-def record_indexing_data(document_table, dataframe):
+def record_indexing_data(document_table, dataframe, document):
     reception_field, recording_date = access_indexing_information(document_table)
     reception_number, book, page = split_reception_field(reception_field)
+    document.reception_number = reception_number
     dataframe["Reception Number"].append(reception_number)
     dataframe["Book"].append(book)
     dataframe["Page"].append(page)
     dataframe["Recording Date"].append(recording_date[:10])
-    return reception_number
 
 
 def record_name_data(document_table, dataframe):
@@ -287,14 +287,13 @@ def record_notes(document_tables, dataframe):
         pass
 
 
-def aggregate_document_information(browser, document_tables, dataframe):
-    reception_number = record_indexing_data(document_tables[1], dataframe)
+def aggregate_document_information(browser, document_tables, dataframe, document):
+    record_indexing_data(document_tables[1], dataframe, document)
     record_document_type(document_tables[0], dataframe)
     record_name_data(document_tables[2], dataframe)
     record_legal_data(document_tables[4], dataframe)
     record_related_documents(browser, document_tables[-2], dataframe)
     record_notes(document_tables, dataframe)
-    return reception_number
 
 
 def record_comments(county, dataframe, document, image_available):
@@ -310,10 +309,9 @@ def record_document_fields(browser, county, dataframe, document, image_available
     document_information = get_document_information(browser, document)
     document_tables = access_document_information_tables(browser, document, document_information)
     display_all_information(browser, document)
-    reception_number = aggregate_document_information(browser, document_tables, dataframe)
+    aggregate_document_information(browser, document_tables, dataframe, document)
     record_comments(county, dataframe, document, image_available)
     scroll_to_top(browser)
-    return reception_number
 
 
 def review_entry(browser, county, dataframe, document, image_available):
@@ -393,7 +391,6 @@ def get_reception_number(browser, document):
 
 def record_document(browser, county, dataframe, document):
     image_available = handle_document_image_status(browser, document)
-    document_number = record_document_fields(browser, county, dataframe, document, image_available)
+    record_document_fields(browser, county, dataframe, document, image_available)
     check_length(dataframe)
     review_entry(browser, county, dataframe, document, image_available)
-    return document_number

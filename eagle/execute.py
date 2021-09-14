@@ -54,7 +54,8 @@ def download_single_document(browser, county, target_directory, document_list, d
         no_document_downloaded(document_list, document)
     else:
         document_downloaded(document_list, document)
-        # document_found(start_time, document_list, document) => this is probably a leftover from 'download document list'
+        # document_found(start_time, document_list, document)
+        # => this is probably a leftover from 'download document list'
 
 
 # def download_multiple_documents(browser, county, target_directory, document_list, document, start_time):
