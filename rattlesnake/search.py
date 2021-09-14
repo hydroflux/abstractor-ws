@@ -17,9 +17,8 @@ from rattlesnake.validation import verify_document_search_page_loaded
 
 
 # This needs to be a loop in order to check against the server error
-def open_document_search(browser, document):
+def open_document_search(browser):
     browser.get(document_search_url)
-    verify_document_search_page_loaded(browser, document)
 
 
 def locate_search_field(browser, document, id, type):
@@ -57,11 +56,12 @@ def clear_volume_search_field(browser, document):
 
 def enter_volume_number(browser, document, volume):
     while get_field_value(locate_search_field(browser, document, volume_search_field_id, 'volume')) != volume:
-        locate_search_field(browser, document, document_search_field_id, 'volume').send_keys(Keys.UP + volume)
+        locate_search_field(browser, document, volume_search_field_id, 'volume').send_keys(Keys.UP + volume)
 
 
 def handle_volume_number_search_field(browser, document, volume):
     clear_volume_search_field(browser, document)
+    enter_volume_number(browser, document, volume)
 
 
 def clear_page_search_field(browser, document):
@@ -71,11 +71,12 @@ def clear_page_search_field(browser, document):
 
 def enter_page_number(browser, document, page):
     while get_field_value(locate_search_field(browser, document, page_search_field_id, 'page')) != page:
-        locate_search_field(browser, document, document_search_field_id, 'page').send_keys(Keys.UP + page)
+        locate_search_field(browser, document, page_search_field_id, 'page').send_keys(Keys.UP + page)
 
 
 def handle_page_number_search_field(browser, document, page):
     clear_page_search_field(browser, document)
+    enter_page_number(browser, document, page)
 
 
 def handle_volume_page_search_fields(browser, document):
@@ -112,7 +113,8 @@ def volume_and_page_search(browser, document):
 
 
 def search(browser, document):
-    open_document_search(browser, document)
+    open_document_search(browser)
+    verify_document_search_page_loaded(browser, document, open_document_search)
     if document_type(document) == 'document_number':
         document_search(browser, document)
     elif document_type(document) == 'volume_and_page':

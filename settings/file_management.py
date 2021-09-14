@@ -89,8 +89,8 @@ def split_book_and_page(document):
 
 
 def split_volume_and_page(document):
-    volume = four_character_padding(document_value(document)[0])
-    page = four_character_padding(document_value(document)[1])
+    volume = document_value(document)[0]
+    page = document_value(document)[1]
     return volume, page
 
 

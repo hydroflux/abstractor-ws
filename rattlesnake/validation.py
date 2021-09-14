@@ -42,15 +42,13 @@ def validate_login(browser, login):
         return_home(browser)
         naptime()
         login(browser)
-        print(1)
         return True
 
 
 def verify_login(browser, login):
     if assert_window_title(browser, post_login_title):
         print('\nLogin successful, continuing program execution.')
-    elif validate_login(browser, login):
-        print(2)
+    elif validate_login(browser, login) and assert_window_title(browser, post_login_title):
         print('\nLogin successful after validating login, continuing program execution.')
     else:
         print('\nBrowser failed to successfully login, exiting program.')
@@ -64,20 +62,23 @@ def verify_logout(browser):
         input()
 
 
-def verify_document_search_page_loaded(browser, document):
-    if not assert_window_title(browser, document_search_title):
+def validate_document_search_page(browser, document, search):
+    if check_for_bad_server_response(browser):
+        return_home(browser)
+        search(browser)
+        return True
+
+
+def verify_document_search_page_loaded(browser, document, search):
+    if assert_window_title(browser, document_search_title):
+        return True
+    elif (validate_document_search_page(browser, document, search) and
+          assert_window_title(browser, document_search_title)):
+        print('Browser failed to open search page on initial attempt, continuing after validation.')
+    else:
         print(f'Browser failed to open document search link for '
               f'{extrapolate_document_value(document)}, please review.')
         input()
-    else:
-        return True
-
-
-def validate_document_search_page(browser, search):
-    if check_for_bad_server_response(browser):
-        return_home(browser)
-        search
-        return True
 
 
 def validate_result_reception_number(result, document):
