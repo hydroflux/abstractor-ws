@@ -99,7 +99,7 @@ def handle_result_document_type(browser, result, document):
 # Almost matches crocodile open_first_result
 def open_first_result(browser, document):
     first_result = get_first_result(browser, document)
-    handle_result_document_type(browser, first_result, document)
+    return handle_result_document_type(browser, first_result, document)
 
 
 def handle_search_results(browser, document):

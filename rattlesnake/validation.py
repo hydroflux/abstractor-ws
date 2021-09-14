@@ -62,10 +62,10 @@ def verify_logout(browser):
         input()
 
 
-def validate_document_search_page(browser, document, search):
+def validate_document_search_page(browser, document, open_search):
     if check_for_bad_server_response(browser):
         return_home(browser)
-        search(browser)
+        open_search(browser)
         return True
 
 
@@ -109,13 +109,22 @@ def validate_date(text):
     return len(text) == 10 and date_from_string(text) == text
 
 
+def validate_document_image_page(browser, document):
+    if check_for_bad_server_response(browser):
+        return_home(browser)
+        browser.get(document.description_link)
+        return True
+
+
 def verify_document_image_page_loaded(browser, document):
-    if not assert_window_title(browser, document_image_page_title):
+    if assert_window_title(browser, document_image_page_title):
+        return True
+    elif validate_document_image_page(browser, document) and assert_window_title(browser, document_image_page_title):
+        print('Browser failed to open document image page on initial attempt, continuing after validation.')
+    else:
         print(f'Browser failed to open document image page for '
               f'{extrapolate_document_value(document)}, please review.')
         input()
-    else:
-        return True
 
 
 '''

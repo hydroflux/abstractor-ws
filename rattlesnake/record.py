@@ -46,11 +46,11 @@ def access_field_value(browser, document, id, field_type):
 def handle_document_type_verification(browser, document):
     if document.type == 'reception_number':
         reception_number = access_field_value(browser, document, reception_number_id, 'reception number')
-        validate_reception_number(document, reception_number)
+        return validate_reception_number(document, reception_number)
     elif document.type == 'volume_and_page':
         page = access_field_value(browser, document, page_id, 'page')
         volume = access_field_value(browser, document, volume_id, 'volume')
-        validate_volume_and_page_numbers(document, volume, page)
+        return validate_volume_and_page_numbers(document, volume, page)
     else:
         print(f'Document type "{document.type}" for "{document.value}" could not be validated, please review.')
         input()
@@ -195,6 +195,8 @@ def record_document_fields(browser, dataframe, document):
 
 
 def record(browser, dataframe, document):
-    verify_document_description_page_loaded(browser, document)
-    handle_document_type_verification(browser, document)
-    record_document_fields(browser, dataframe, document)
+    if verify_document_description_page_loaded(browser, document):
+        if handle_document_type_verification(browser, document):
+            document.description_link = browser.current_url
+            record_document_fields(browser, dataframe, document)
+    # need to add else statement handlers

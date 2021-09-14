@@ -184,6 +184,8 @@
 - [ ] Create a convert_document_numbers script
 - [ ] Create a "download only" option for execution
 - [ ] Update the validation file with the proper use of 'verify' & 'validate' (definitions have been added)
+- [ ] Add 'else' logic for 'record' validation
+- [ ] Consolidate 'validation' functions in 'validation' script
 
 ### Testing Script To Do
 
