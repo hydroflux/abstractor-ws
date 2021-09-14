@@ -43,6 +43,17 @@ def get_book_number(row):
             return str(book).strip()
 
 
+def get_volume_number(row):
+    volume = row['Volume']
+    if is_missing(volume) or is_empty_value(volume):
+        return None
+    else:
+        try:
+            return int(volume)
+        except ValueError:
+            return str(volume).strip()
+
+
 def get_page_number(row):
     page = row['Page']
     if is_missing(page) or is_empty_value(page):
@@ -88,6 +99,17 @@ def create_book_and_page_object(document_list, row):
         store_document(document_list, "book_and_page", book_and_page)
 
 
+def create_volume_and_page_object(document_list, row):
+    volume = get_volume_number(row)
+    page = get_page_number(row)
+    if volume is not None and page is not None:
+        volume_and_page = {
+            "Volume": volume,
+            "Page": page
+        }
+        store_document(document_list, "volume_and_page", volume_and_page)
+
+
 def create_document_number_object(document_list, columns, row):
     document_number = get_document_number(columns, row)
     if document_number is not None:
@@ -101,6 +123,8 @@ def create_document_list(excel_object):
     for row in rows:
         if 'Book' in columns and 'Page' in columns:
             create_book_and_page_object(document_list, row)
+        if 'Volume' in columns and 'Page' in columns:
+            create_volume_and_page_object(document_list, row)
         if 'Document' in columns or 'Documents' in columns or \
                                     'Reception Number' in columns or \
                                     'Reception Numbers' in columns:
