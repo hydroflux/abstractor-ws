@@ -17,8 +17,8 @@ from eagle.eagle_variables import (download_button_id, pdf_viewer_class_name,
 print("download", __name__)
 
 
-def download_available(abstract_dictionary, document):
-    if abstract_dictionary["Comments"][-1].endswith(no_image_comment(document)):
+def download_available(dataframe, document):
+    if dataframe["Comments"][-1].endswith(no_image_comment(document)):
         return False
     else:
         return True
@@ -57,16 +57,23 @@ def build_stock_download(document_number):
     return f'{document_number}-{stock_download_suffix}'
 
 
-def download_document(browser, county, abstract_dictionary, target_directory, document, document_number):
-    if download_available(abstract_dictionary, document):
+def download_document(browser, county, dataframe, target_directory, document):
+    if download_available(dataframe, document):
         document_directory = create_document_directory(target_directory)
-        if previously_downloaded(county, document_directory, document_number):
+        if previously_downloaded(county, document_directory, document.reception_number):
             return True
         else:
             number_files = len(os.listdir(document_directory))
-            stock_download = build_stock_download(document_number)
+            stock_download = build_stock_download(document.reception_number)
             access_pdf_viewer(browser)
             execute_download(browser)
             switch_to_default_content(browser)
-            if update_download(browser, county, stock_download, document_directory, number_files, document_number):
+            if update_download(
+                browser,
+                county,
+                stock_download,
+                document_directory,
+                number_files,
+                document.reception_number
+            ):
                 return True

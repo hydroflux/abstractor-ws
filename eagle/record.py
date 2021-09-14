@@ -386,7 +386,7 @@ def get_reception_number(browser, document):
     document_information = get_document_information(browser, document)
     document_tables = access_document_information_tables(browser, document, document_information)
     reception_field, _ = access_indexing_information(document_tables[1])
-    return split_reception_field(reception_field)[0]
+    document.reception_number = split_reception_field(reception_field)[0]
 
 
 def record_document(browser, county, dataframe, document):
