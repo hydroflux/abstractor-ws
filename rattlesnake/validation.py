@@ -29,6 +29,8 @@ def check_for_bad_server_response(browser):
     if assert_window_title(browser, bad_login_title):
         print('Server returned a bad login response, trying again...')
         return True
+    elif assert_window_title(browser, post_login_title):
+        pass
     else:
         print('Failed login does not match prepared expectations, please review and try again.')
         input()
@@ -39,7 +41,8 @@ def validate_login(browser, login):
     if check_for_bad_server_response(browser):
         return_home(browser)
         naptime()
-        login
+        login(browser)
+        print(1)
         return True
 
 
@@ -47,6 +50,7 @@ def verify_login(browser, login):
     if assert_window_title(browser, post_login_title):
         print('\nLogin successful, continuing program execution.')
     elif validate_login(browser, login):
+        print(2)
         print('\nLogin successful after validating login, continuing program execution.')
     else:
         print('\nBrowser failed to successfully login, exiting program.')
