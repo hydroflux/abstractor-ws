@@ -3,16 +3,13 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-from settings.file_management import extrapolate_document_value
-from settings.general_functions import (get_direct_link, set_description_link,
-                                        timeout)
+from settings.general_functions import get_direct_link, timeout
 
 from armadillo.armadillo_variables import (first_result_class_name, link_tag,
                                            number_results_class,
                                            search_results_id,
                                            single_result_message)
-from armadillo.validation import (validate_first_result,
-                                  verify_results_loaded,
+from armadillo.validation import (validate_first_result, verify_results_loaded,
                                   verify_search_results_page_loaded)
 
 
@@ -88,7 +85,7 @@ def access_result_link(document, result):
 def open_result_link(browser, document, result):
     try:
         document_link = access_result_link(document, result)
-        set_description_link(document, document_link)
+        document.description_link = document_link
         browser.get(document.description_link)
         return True
     except TimeoutException:
