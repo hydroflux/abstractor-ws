@@ -97,6 +97,7 @@ def volume_and_page_search(browser, document):
 def search(browser, document):
     open_document_search(browser)
     verify_document_search_page_loaded(browser, document, open_document_search)
+    clear_search(browser, document)
     if document.type == 'document_number':
         document_search(browser, document)
     elif document.type == 'volume_and_page':
