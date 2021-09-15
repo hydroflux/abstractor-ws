@@ -90,7 +90,7 @@ def access_free_download_button(download_content, document):
 
 
 def build_stock_download(document):
-    return f'{download_prefix}{document.value.replace("-", "_")}.pdf'
+    return f'{download_prefix}{document.download_value}.pdf'
 
 
 def free_download(browser, document):

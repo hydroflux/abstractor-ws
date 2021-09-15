@@ -83,7 +83,7 @@ def access_reception_number(reception_number):
 
 def update_reception_number(document, reception_number):
     if reception_number.startswith(reception_number_prefix) and handle_document_validation(document, reception_number):
-        access_download_value(reception_number)
+        access_download_value(document, reception_number)
         reception_number = access_reception_number(reception_number)
         return reception_number
     else:
@@ -164,14 +164,15 @@ def access_book_volume_page(document_table):
 
 def handle_book_volume_page(document_table, document):
     book, volume, page = access_book_volume_page(document_table)
-    if handle_document_validation(document, volume, page):
+    if handle_document_validation(document, volume=volume, page=page):
         return book, volume, page
     else:
         print(f'Browser failed to validate volume & page for '
-              f'{document.extrapolate_value()} instead finding '
+              f'{document.extrapolate_value()}, instead finding '
               f'"Book: {book}, Volume: {volume}, Page: {page}", '
               f'please review before continuing...')
         input()
+        return book, volume, page
 
 
 def record_book_volume_page(document_table, dataframe, document):
