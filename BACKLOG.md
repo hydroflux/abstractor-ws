@@ -168,6 +168,7 @@
 - [ ] Get clarification around 'Book' vs. 'Volume' for formatting
 - [ ] Create a 'no results' handler
 - [ ] Add 'start_time' as an optional argument for document found depending on download state
+- [ ] Update validation & verification functions to a similar structure used for rattlesnake
 
 ### Iguana To Do
 

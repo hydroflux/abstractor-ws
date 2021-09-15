@@ -4,7 +4,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-from settings.file_management import document_value, extrapolate_document_value
+from settings.file_management import document_value, extrapolate_document_value, split_volume_and_page
 from settings.general_functions import (get_field_value,
                                         javascript_script_execution, timeout)
 
@@ -48,13 +48,50 @@ def handle_document_search_field(browser, document):
     enter_document_number(browser, document)
 
 
-def document_search(browser, document):
-    handle_document_search_field(browser, document)
+def execute_search(browser):
     javascript_script_execution(browser, execute_document_search_script)
 
 
-def volume_and_page_search(browser, document):
+def document_search(browser, document):
+    handle_document_search_field(browser, document)
+    execute_search(browser)
+
+
+def clear_volume_number_search_field(browser, document, volume):
     pass
+
+
+def enter_volume_number_search_field(browser, document, volume):
+    pass
+
+
+def clear_page_number_search_field(browser, document, page):
+    pass
+
+
+def enter_page_number_search_field(browser, document, page):
+    pass
+
+
+def handle_volume_number_search_field(browser, document, volume):
+    clear_volume_number_search_field(browser, document, volume)
+    enter_volume_number_search_field(browser, document, volume)
+
+
+def handle_page_number_search_field(browser, document, page):
+    clear_page_number_search_field(browser, document, page)
+    enter_page_number_search_field(browser, document, page)
+
+
+def handle_volume_and_page_search_fields(browser, document):
+    volume, page = split_volume_and_page(document)
+    handle_volume_number_search_field(browser, document, volume)
+    handle_page_number_search_field(browser, document, page)
+
+
+def volume_and_page_search(browser, document):
+    handle_volume_and_page_search_fields(browser, document)
+    execute_search(browser)
 
 
 # Matches rattlesnake 'search'
