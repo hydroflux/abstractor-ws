@@ -124,7 +124,7 @@ def validate_date(text):
 
 
 def validate_download_link(document, string):
-    return f'{document.value.replace("-", "_")}.pdf' == string
+    return f'{document.download_value}.pdf' == string
 
 
 '''

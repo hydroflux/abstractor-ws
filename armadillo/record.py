@@ -73,13 +73,17 @@ def access_document_type_and_number(document, document_type_and_number_text):
         input()
 
 
+def access_download_value(document, reception_number):
+    document.download_value = reception_number[len(reception_number_prefix):].replace('-', '_')
+
+
 def access_reception_number(reception_number):
     return reception_number[len(reception_number_prefix):].replace('-', '')
 
 
 def update_reception_number(document, reception_number):
-    print('reception_number', reception_number)
     if reception_number.startswith(reception_number_prefix) and handle_document_validation(document, reception_number):
+        access_download_value(reception_number)
         reception_number = access_reception_number(reception_number)
         return reception_number
     else:
