@@ -8,7 +8,7 @@ from settings.file_management import document_value, extrapolate_document_value,
 from settings.general_functions import (get_field_value,
                                         javascript_script_execution, timeout)
 
-from armadillo.armadillo_variables import (document_search_field_id,
+from armadillo.armadillo_variables import (document_search_field_id, volume_search_field_id, page_search_field_id,
                                            document_search_url,
                                            execute_document_search_script)
 from armadillo.validation import verify_document_search_page_loaded
@@ -18,34 +18,31 @@ def open_document_search(browser):
     browser.get(document_search_url)
 
 
-# Matches crocodile locate_document_search_field
-def locate_document_search_field(browser, document):
+def locate_search_field(browser, document, id, type):
     try:
-        document_search_field_present = EC.element_to_be_clickable((By.ID, document_search_field_id))
-        WebDriverWait(browser, timeout).until(document_search_field_present)
-        document_search_field = browser.find_element_by_id(document_search_field_id)
-        return document_search_field
+        search_field_present = EC.element_to_be_clickable((By.ID, id))
+        WebDriverWait(browser, timeout).until(search_field_present)
+        search_field = browser.find_element_by_id(id)
+        return search_field
     except TimeoutException:
-        print(f'Browser timed out trying to locate document field for '
+        print(f'Browser timed out trying to locate "{type}" field for '
               f'{extrapolate_document_value(document)}.')
 
 
-# Matches crocodile clear_document_search_field
-def clear_document_search_field(browser, document):
-    while get_field_value(locate_document_search_field(browser, document)) != '':
-        locate_document_search_field(browser, document).clear()
+def clear_search_field(browser, document, type, id):
+    while get_field_value(locate_search_field(browser, document, id, type)) != '':
+        locate_search_field(browser, document, id, type).clear()
 
 
-# Matches crocodile enter_document_number
-def enter_document_number(browser, document):
-    while get_field_value(locate_document_search_field(browser, document)) != document_value(document):
-        locate_document_search_field(browser, document).send_keys(Keys.UP + document_value(document))
+def enter_value_number(browser, document, type, id, value):
+    while get_field_value(locate_search_field(browser, document, id, type)) != value:
+        locate_search_field(browser, document, id, type).send_keys(Keys.UP + value)
 
 
-# Matches crocodile handle_document_search_field
-def handle_document_search_field(browser, document):
-    clear_document_search_field(browser, document)
-    enter_document_number(browser, document)
+def handle_document_search_field(browser, document, type="reception number", id=document_search_field_id):
+    value = document_value(document)
+    clear_search_field(browser, document, type, id)
+    enter_value_number(browser, document, type, id, value)
 
 
 def execute_search(browser):
@@ -57,30 +54,14 @@ def document_search(browser, document):
     execute_search(browser)
 
 
-def clear_volume_number_search_field(browser, document, volume):
-    pass
+def handle_volume_number_search_field(browser, document, volume, type="volume", id=volume_search_field_id):
+    clear_search_field(browser, document, type, id)
+    enter_value_number(browser, document, type, id, volume)
 
 
-def enter_volume_number_search_field(browser, document, volume):
-    pass
-
-
-def clear_page_number_search_field(browser, document, page):
-    pass
-
-
-def enter_page_number_search_field(browser, document, page):
-    pass
-
-
-def handle_volume_number_search_field(browser, document, volume):
-    clear_volume_number_search_field(browser, document, volume)
-    enter_volume_number_search_field(browser, document, volume)
-
-
-def handle_page_number_search_field(browser, document, page):
-    clear_page_number_search_field(browser, document, page)
-    enter_page_number_search_field(browser, document, page)
+def handle_page_number_search_field(browser, document, page, type="page", id=page_search_field_id):
+    clear_search_field(browser, document, type, id)
+    enter_value_number(browser, document, type, id, page)
 
 
 def handle_volume_and_page_search_fields(browser, document):
