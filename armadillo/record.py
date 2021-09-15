@@ -17,7 +17,7 @@ from armadillo.armadillo_variables import (book_and_page_text,
                                            related_documents_text,
                                            related_types,
                                            type_and_number_table_id)
-from armadillo.validation import (validate_date, validate_reception_number,
+from armadillo.validation import (validate_date, validate_reception_number, validate_volume_page,
                                   verify_results_page_loaded)
 
 
@@ -42,7 +42,7 @@ def get_document_type_and_number_fields(browser, document):
     return access_table_information(type_and_number_table)
 
 
-def handle_document_type_and_number_text(document_type_and_number_text, document):
+def handle_document_type_and_number_text(document, document_type_and_number_text):
     type_and_number_pieces = document_type_and_number_text.split(' - ')
     if len(type_and_number_pieces) == 2:
         return type_and_number_pieces
@@ -55,9 +55,9 @@ def handle_document_type_and_number_text(document_type_and_number_text, document
         input()
 
 
-def access_document_type_and_number(document_type_and_number_text, document):
-    if validate_reception_number(document_type_and_number_text, document):
-        return handle_document_type_and_number_text(document_type_and_number_text, document)
+def access_document_type_and_number(document, document_type_and_number_text):
+    if validate_reception_number(document, document_type_and_number_text):
+        return handle_document_type_and_number_text(document, document_type_and_number_text)
     else:
         print(f'Browser failed to validate reception number for '
               f'{extrapolate_document_value(document)} instead finding '
@@ -90,7 +90,7 @@ def record_document_type_and_number(browser, dataframe, document):
     document_type_and_number_fields = get_document_type_and_number_fields(
         browser, document)
     document_type, reception_number = access_document_type_and_number(
-        document_type_and_number_fields[0], document)
+        document, document_type_and_number_fields[0])
     dataframe['Document Type'].append(document_type)
     handle_reception_number(dataframe, document, reception_number)
 
@@ -149,8 +149,20 @@ def access_book_volume_page(document_table):
         )
 
 
-def record_book_volume_page(document_table, dataframe):
+def handle_book_volume_page(document_table, document):
     book, volume, page = access_book_volume_page(document_table)
+    if validate_volume_page(document, volume, page):
+        return book, volume, page
+    else:
+        print(f'Browser failed to validate reception number for '
+              f'{extrapolate_document_value(document)} instead finding '
+              f'"Book: {book}, Volume: {volume}, Page: {page}", '
+              f'please review before continuing...')
+        input()
+
+
+def record_book_volume_page(document_table, dataframe, document):
+    book, volume, page = handle_book_volume_page(document_table)
     dataframe["Book"].append(book)
     dataframe["Volume"].append(volume)
     dataframe["Page"].append(page)
@@ -163,7 +175,7 @@ def record_indexing_information(document_table, dataframe, document):
     # document_date = access_date(title_strip(document_table[-1]), document, "document")
     # dataframe['Recording Date'].append(recording_date)
     # dataframe["Document Date"].append(document_date)
-    record_book_volume_page(document_table, dataframe)
+    record_book_volume_page(document_table, dataframe, document)
     # book, page = access_book_and_page(document_table)
     # dataframe["Book"].append(book)
     # dataframe["Page"].append(page)
