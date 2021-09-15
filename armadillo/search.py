@@ -1,6 +1,7 @@
 from selenium.webdriver.common.keys import Keys
 
-from selenium_utilities.search import locate_search_field_by_id as locate_search_field
+from selenium_utilities.search import \
+    locate_search_field_by_id as locate_search_field
 
 from settings.file_management import document_value
 from settings.general_functions import (get_field_value,
