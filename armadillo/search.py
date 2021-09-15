@@ -34,6 +34,12 @@ def clear_search_field(browser, document, type, id):
         locate_search_field(browser, document, id, type).clear()
 
 
+def clear_search(browser, document):
+    clear_search_field(browser, document, "reception number", document_search_field_id)
+    clear_search_field(browser, document, "volume", volume_search_field_id)
+    clear_search_field(browser, document, "page", page_search_field_id)
+
+
 def enter_value_number(browser, document, type, id, value):
     while get_field_value(locate_search_field(browser, document, id, type)) != value:
         locate_search_field(browser, document, id, type).send_keys(Keys.UP + value)
@@ -41,7 +47,6 @@ def enter_value_number(browser, document, type, id, value):
 
 def handle_document_search_field(browser, document, type="reception number", id=document_search_field_id):
     value = document_value(document)
-    clear_search_field(browser, document, type, id)
     enter_value_number(browser, document, type, id, value)
 
 
@@ -55,12 +60,10 @@ def document_search(browser, document):
 
 
 def handle_volume_number_search_field(browser, document, volume, type="volume", id=volume_search_field_id):
-    clear_search_field(browser, document, type, id)
     enter_value_number(browser, document, type, id, volume)
 
 
 def handle_page_number_search_field(browser, document, page, type="page", id=page_search_field_id):
-    clear_search_field(browser, document, type, id)
     enter_value_number(browser, document, type, id, page)
 
 
@@ -79,6 +82,7 @@ def volume_and_page_search(browser, document):
 def search(browser, document):
     open_document_search(browser)
     verify_document_search_page_loaded(browser, document)
+    clear_search(browser, document)
     if document.type == 'document_number':
         document_search(browser, document)
     elif document.type == 'volume_and_page':
