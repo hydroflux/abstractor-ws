@@ -52,6 +52,7 @@
 - [ ] Consolidate the prepare, & check functions in download management--had a case where a 500+ page document was clicked & downloaded properly, but 173 in update, 145 in rename, & 140 in prepare raised a value error that it wasn't a file, even though circling back indicated that it was downloaded properly, and with the expected name
 - [ ] Along with above, the new function for waiting for a download & then renaming it could probably be worked together in a new logic path
 - [ ] All of the document value functions can be added as instance methods on the Document class
+- [ ] Add book / volume / page / reception number to value extrapolation in Document class??
 
 ### Imports To Do
 

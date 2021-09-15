@@ -11,7 +11,7 @@ from armadillo.armadillo_variables import (first_result_class_name,
                                            number_results_class,
                                            search_results_id,
                                            single_result_message)
-from armadillo.validation import (validate_reception_number,
+from armadillo.validation import (validate_first_result,
                                   verify_results_loaded,
                                   verify_search_results_page_loaded)
 
@@ -80,8 +80,8 @@ def open_result_link(browser, document, result):
 
 def open_first_result(browser, document):
     first_result = get_first_result(browser, document)
-    first_result_text = first_result.text
-    if validate_reception_number(first_result_text, document):
+    first_result_text = first_result.text.split('\n')
+    if validate_first_result(first_result_text, document):
         return open_result_link(browser, document, first_result)
 
 

@@ -102,8 +102,19 @@ def verify_results_page_loaded(browser, document):
         input()
 
 
-def validate_reception_number(string, document):
-    return string.endswith(document.value)
+def validate_reception_number(text, document):
+    return text.endswith(document.value)
+
+
+def validate_volume_page(text, document):
+    return text[2] == document.document_value()[0] and text[4] == document.document_value()[1]
+
+
+def validate_first_result(text, document):
+    if document.type == 'document_number':
+        return validate_reception_number(text[1], document)
+    elif document.type == 'volume_and_page':
+        return validate_volume_page(text[3].split(' '), document)
 
 
 # Used again for rattlesnake
