@@ -4,8 +4,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-from settings.file_management import (document_type, document_value,
-                                      extrapolate_document_value)
+from settings.file_management import document_value, extrapolate_document_value
 from settings.general_functions import (get_field_value,
                                         javascript_script_execution, timeout)
 
@@ -15,9 +14,8 @@ from armadillo.armadillo_variables import (document_search_field_id,
 from armadillo.validation import verify_document_search_page_loaded
 
 
-def open_document_search(browser, document):
+def open_document_search(browser):
     browser.get(document_search_url)
-    verify_document_search_page_loaded(browser, document)
 
 
 # Matches crocodile locate_document_search_field
@@ -55,13 +53,20 @@ def document_search(browser, document):
     javascript_script_execution(browser, execute_document_search_script)
 
 
+def volume_and_page_search(browser, document):
+    pass
+
+
 # Matches rattlesnake 'search'
 def search(browser, document):
-    open_document_search(browser, document)
-    if document_type(document) == 'document_number':
+    open_document_search(browser)
+    verify_document_search_page_loaded(browser, document)
+    if document.type == 'document_number':
         document_search(browser, document)
+    elif document.type == 'volume_and_page':
+        volume_and_page_search(browser, document)
     else:
-        print(f'Unable to search document type "{document_type(document)}", '
+        print(f'Unable to search document type "{document.type}", '
               f'a new search path needs to be developed in order to continue.\n')
         print("Please press enter after reviewing the search parameters...")
         input()

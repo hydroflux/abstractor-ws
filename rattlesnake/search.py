@@ -4,8 +4,9 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-from settings.file_management import (document_type, document_value,
-                                      extrapolate_document_value, split_volume_and_page)
+from settings.file_management import (document_value,
+                                      extrapolate_document_value,
+                                      split_volume_and_page)
 from settings.general_functions import get_field_value, timeout
 
 from rattlesnake.rattlesnake_variables import (document_search_field_id,
@@ -93,12 +94,12 @@ def volume_and_page_search(browser, document):
 def search(browser, document):
     open_document_search(browser)
     verify_document_search_page_loaded(browser, document, open_document_search)
-    if document_type(document) == 'document_number':
+    if document.type == 'document_number':
         document_search(browser, document)
-    elif document_type(document) == 'volume_and_page':
+    elif document.type == 'volume_and_page':
         volume_and_page_search(browser, document)
     else:
-        print(f'Unable to search document type "{document_type(document)}", '
+        print(f'Unable to search document type "{document.type}", '
               f'a new search path needs to be developed in order to continue.\n')
         print("Please press enter after reviewing the search parameters...")
         input()
