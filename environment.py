@@ -1,5 +1,3 @@
-from settings.file_management import display_document_list
-from settings.user_prompts import add_download_types
 import sys
 
 sys.path.append(".")
@@ -17,13 +15,15 @@ if __name__ == '__main__':
     # from tiger.execute import execute_program as execute_tiger
     # from tiger.execute import execute_review as review_tiger
     from rattlesnake.execute import execute_program as execute_rattlesnake
+    from settings.file_management import display_document_list
     from settings.general_functions import (get_county_data,
                                             start_program_timer,
                                             stop_program_timer)
     from settings.import_list import generate_document_list
     from settings.settings import (county_name, file_name, headless,
                                    sheet_name, target_directory)
-    from settings.user_prompts import (currently_unavailable,
+    from settings.user_prompts import (add_download_types,
+                                       currently_unavailable,
                                        get_demo_information, get_program_type,
                                        prepare_name_search)
 
