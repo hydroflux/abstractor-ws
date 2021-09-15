@@ -3,7 +3,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-from settings.file_management import extrapolate_document_value
 from settings.general_functions import (assert_window_title, date_from_string,
                                         timeout)
 
@@ -64,14 +63,14 @@ def verify_login(browser):
 def verify_document_search_page_loaded(browser, document):
     if not assert_window_title(browser, document_search_title):
         print(f'Browser failed to open document search link for '
-              f'{extrapolate_document_value(document)}, please review.')
+              f'{document.extrapolate_value()}, please review.')
         input()
 
 
 def verify_search_results_page_loaded(browser, document):
     if not assert_window_title(browser, document_search_results_title):
         print(f'Browser failed to successfully execute search for '
-              f'{extrapolate_document_value(document)}, please review.')
+              f'{document.extrapolate_value()}, please review.')
         input()
 
 
@@ -98,7 +97,7 @@ def verify_results_loaded(browser, document):
 def verify_results_page_loaded(browser, document):
     if not assert_window_title(browser, document_information_title):
         print(f'Browser failed to successfully open results page for '
-              f'{extrapolate_document_value(document)}, please review.')
+              f'{document.extrapolate_value()}, please review.')
         input()
 
 
