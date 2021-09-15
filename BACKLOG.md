@@ -49,6 +49,8 @@
 - [ ] Exception review could include a 'continue?' option that could close out the browser
 - [ ] Replace all 'scroll' functions with 'center element'
 - [ ] Drop 'document_type' and 'document_value' functions if possible & replace with instance variables they are returning--will simplify in the long run
+- [ ] Consolidate the prepare, & check functions in download management--had a case where a 500+ page document was clicked & downloaded properly, but 173 in update, 145 in rename, & 140 in prepare raised a value error that it wasn't a file, even though circling back indicated that it was downloaded properly, and with the expected name
+- [ ] Along with above, the new function for waiting for a download & then renaming it could probably be worked together in a new logic path
 
 ### Imports To Do
 
