@@ -7,7 +7,7 @@ from settings.file_management import extrapolate_document_value
 from settings.general_functions import (get_direct_link, set_description_link,
                                         timeout)
 
-from armadillo.armadillo_variables import (first_result_tag_name,
+from armadillo.armadillo_variables import (first_result_class_name,
                                            number_results_class,
                                            search_results_id,
                                            single_result_message)
@@ -51,9 +51,9 @@ def locate_search_results(browser, document):
 
 def locate_first_result(search_results, document):
     try:
-        first_result_present = EC.element_to_be_clickable((By.TAG_NAME, first_result_tag_name))
+        first_result_present = EC.element_to_be_clickable((By.CLASS_NAME, first_result_class_name))
         WebDriverWait(search_results, timeout).until(first_result_present)
-        first_result = search_results.find_element_by_tag_name(first_result_tag_name)
+        first_result = search_results.find_element_by_class_name(first_result_class_name)
         return first_result
     except TimeoutException:
         print(f'Browser timed out trying to locate first search result of '
