@@ -3,11 +3,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-from settings.file_management import extrapolate_document_value
 from settings.general_functions import (date_from_string, element_title_strip,
                                         list_to_string, newline_split,
-                                        print_list_by_index,
-                                        set_reception_number, timeout,
+                                        print_list_by_index, timeout,
                                         title_strip)
 
 from armadillo.armadillo_variables import (book_and_page_text,
@@ -17,7 +15,8 @@ from armadillo.armadillo_variables import (book_and_page_text,
                                            related_documents_text,
                                            related_types,
                                            type_and_number_table_id)
-from armadillo.validation import (validate_date, validate_reception_number, validate_volume_page,
+from armadillo.validation import (validate_date, validate_reception_number,
+                                  validate_volume_page,
                                   verify_results_page_loaded)
 
 
@@ -29,7 +28,7 @@ def locate_document_type_and_number_table(browser, document):
         return type_and_number_table
     except TimeoutException:
         print(f'Browser timed out trying to access document type and number table for '
-              f'{extrapolate_document_value(document)}, please review.')
+              f'{document.extrapolate_value()}, please review.')
         input()
 
 
@@ -50,7 +49,7 @@ def handle_document_type_and_number_text(document, document_type_and_number_text
         return (' - ').join(type_and_number_pieces[:2]), type_and_number_pieces[2]
     else:
         print(f'Browser is unable to parse document type and number for '
-              f'{extrapolate_document_value(document)}, please review: \n'
+              f'{document.extrapolate_value()}, please review: \n'
               f'{print_list_by_index(type_and_number_pieces)}')
         input()
 
@@ -60,7 +59,7 @@ def access_document_type_and_number(document, document_type_and_number_text):
         return handle_document_type_and_number_text(document, document_type_and_number_text)
     else:
         print(f'Browser failed to validate reception number for '
-              f'{extrapolate_document_value(document)} instead finding '
+              f'{document.extrapolate_value()} instead finding '
               f'{document_type_and_number_text}, please review before continuing...')
         input()
 
@@ -75,14 +74,14 @@ def update_reception_number(document, reception_number):
         return reception_number
     else:
         print(f'Reception number "{reception_number}" does not match the expected result format for '
-              f'{extrapolate_document_value(document)}, please review...')
+              f'{document.extrapolate_value()}, please review...')
         input()
         return reception_number
 
 
 def handle_reception_number(dataframe, document, reception_number):
     reception_number = update_reception_number(document, reception_number)
-    set_reception_number(document, reception_number)
+    document.reception_number = reception_number
     dataframe['Reception Number'].append(reception_number)
 
 
@@ -103,7 +102,7 @@ def locate_document_information_tables(browser, document):
         return information_tables
     except TimeoutException:
         print(f'Browser timed out trying to get document information tables for '
-              f'{extrapolate_document_value(document)}, please review.')
+              f'{document.extrapolate_value()}, please review.')
         input()
 
 # Substituted document_tables_class for document_tables_tag => testing for result solvency
@@ -116,7 +115,7 @@ def locate_document_information_tables(browser, document):
 #         return information_tables
 #     except TimeoutException:
 #         print(f'Browser timed out trying to get document information tables for '
-#               f'{extrapolate_document_value(document)}, please review.')
+#               f'{document.extrapolate_value()}, please review.')
 #         input()
 
 
@@ -125,7 +124,7 @@ def access_date(date_text, document, type):
         return date_from_string(date_text)
     else:
         print(f'Browser failed to validate {type} date for '
-              f'{extrapolate_document_value(document)} instead finding '
+              f'{document.extrapolate_value()} instead finding '
               f'"{date_text}", please review before continuing...')
         input()
 
@@ -155,7 +154,7 @@ def handle_book_volume_page(document_table, document):
         return book, volume, page
     else:
         print(f'Browser failed to validate reception number for '
-              f'{extrapolate_document_value(document)} instead finding '
+              f'{document.extrapolate_value()} instead finding '
               f'"Book: {book}, Volume: {volume}, Page: {page}", '
               f'please review before continuing...')
         input()
