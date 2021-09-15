@@ -171,6 +171,7 @@
 - [ ] Create a 'no results' handler
 - [ ] Add 'start_time' as an optional argument for document found depending on download state
 - [ ] Update validation & verification functions to a similar structure used for rattlesnake
+- [ ] Refactor 'record' functions, in particular the way that the validation is being handled
 
 ### Iguana To Do
 

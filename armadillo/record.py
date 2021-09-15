@@ -54,13 +54,22 @@ def handle_document_type_and_number_text(document, document_type_and_number_text
         input()
 
 
+def handle_document_validation(document, reception_number=None, volume=None, page=None):
+    if document.type == 'document_number' and reception_number is not None:
+        return validate_reception_number(document, reception_number)
+    elif document.type == 'volume_and_page' and reception_number is None:
+        return validate_volume_page(document, volume, page)
+    else:
+        return True
+
+
 def access_document_type_and_number(document, document_type_and_number_text):
-    if validate_reception_number(document, document_type_and_number_text):
+    if handle_document_validation(document, reception_number=document_type_and_number_text):
         return handle_document_type_and_number_text(document, document_type_and_number_text)
     else:
         print(f'Browser failed to validate reception number for '
               f'{document.extrapolate_value()} instead finding '
-              f'{document_type_and_number_text}, please review before continuing...')
+              f'"{document_type_and_number_text}", please review before continuing...')
         input()
 
 
@@ -69,7 +78,8 @@ def access_reception_number(reception_number):
 
 
 def update_reception_number(document, reception_number):
-    if reception_number.startswith(reception_number_prefix) and validate_reception_number(reception_number, document):
+    print('reception_number', reception_number)
+    if reception_number.startswith(reception_number_prefix) and handle_document_validation(document, reception_number):
         reception_number = access_reception_number(reception_number)
         return reception_number
     else:
@@ -150,10 +160,10 @@ def access_book_volume_page(document_table):
 
 def handle_book_volume_page(document_table, document):
     book, volume, page = access_book_volume_page(document_table)
-    if validate_volume_page(document, volume, page):
+    if handle_document_validation(document, volume, page):
         return book, volume, page
     else:
-        print(f'Browser failed to validate reception number for '
+        print(f'Browser failed to validate volume & page for '
               f'{document.extrapolate_value()} instead finding '
               f'"Book: {book}, Volume: {volume}, Page: {page}", '
               f'please review before continuing...')
@@ -161,7 +171,7 @@ def handle_book_volume_page(document_table, document):
 
 
 def record_book_volume_page(document_table, dataframe, document):
-    book, volume, page = handle_book_volume_page(document_table)
+    book, volume, page = handle_book_volume_page(document_table, document)
     dataframe["Book"].append(book)
     dataframe["Volume"].append(volume)
     dataframe["Page"].append(page)
