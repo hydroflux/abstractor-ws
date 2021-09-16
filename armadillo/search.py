@@ -3,7 +3,6 @@
 from selenium_utilities.search import clear_input, enter_input_value
 from selenium_utilities.search import locate_input_by_id as locate_input
 
-from settings.file_management import document_value
 from settings.general_functions import javascript_script_execution
 
 from armadillo.armadillo_variables import (document_search_url,
@@ -23,7 +22,7 @@ def clear_search(browser, document):
 
 
 def handle_document_value_numbers(browser, document):
-    value = document_value(document)
+    value = document.document_value()
     if document.type == 'document_number':
         enter_input_value(browser, document, locate_input, document.type, document.input_ids["Reception Number"], value)
     elif document.type == 'volume_and_page':

@@ -53,6 +53,8 @@
 - [ ] Along with above, the new function for waiting for a download & then renaming it could probably be worked together in a new logic path
 - [ ] All of the document value functions can be added as instance methods on the Document class
 - [ ] Add book / volume / page / reception number to value extrapolation in Document class??
+- [ ] Generalize 'clear_search' functions to use a loop of the input ids
+- [ ] In order to make the above work, 'button ids' need to be separate from 'input ids' in 'transform_document_list' functions and 'Document' class
 
 ### Imports To Do
 
