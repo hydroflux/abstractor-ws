@@ -50,8 +50,8 @@ def count_results(browser, document):
         document.number_results += 1
 
 
-def get_first_result(browser, document):
-    return get_search_result_rows(browser, document)[0]
+def get_result(browser, document, result_number=0):
+    return get_search_result_rows(browser, document)[result_number]
 
 
 def locate_result_link(result, document):
@@ -91,29 +91,25 @@ def handle_result_document_type(browser, result, document):
         return open_result_link(browser, document, result)
     else:
         print(f'Browser encountered issues validating document type '
-              f'"{document.type}" for "{document.value}", please review.')
+              f'"{document.type}" for "{document.document_value()}", please review.')
         input()
 
 
-# Almost matches crocodile open_first_result
-def open_first_result(browser, document):
-    first_result = get_first_result(browser, document)
-    return handle_result_document_type(browser, first_result, document)
+def open_result(browser, document, result_number=0):
+    result = get_result(browser, document, result_number)
+    return handle_result_document_type(browser, result, document)
 
 
-def handle_search_results(browser, document):
+def handle_search_results(browser, document, result_number=None):
     if document.number_results == 0:
         return False
     elif document.number_results == 1:
-        return open_first_result(browser, document)
+        return open_result(browser, document)
     else:
-        print(f'Document instance indicates that more or less than 1 result were located searching '
-              f'{document.extrapolate_value()}, please review (should not have reached this stage)')
-        print("Please press enter after reviewing the search parameters...")
-        input()
-        return False
+        return open_result(browser, document, result_number)
 
 
-def open_document(browser, document, result=None):
-    count_results(browser, document)
-    return handle_search_results(browser, document)
+def open_document(browser, document, result_number=None):
+    if result_number is None:
+        count_results(browser, document)
+    return handle_search_results(browser, document, result_number)

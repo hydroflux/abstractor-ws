@@ -55,9 +55,9 @@ def handle_single_document(browser, county, target_directory, document_list, doc
 
 
 def handle_multiple_documents(browser, county, target_directory, document_list, document, start_time, review):
-    for result in range(1, document.number_results):
+    for result_number in range(1, document.number_results):
         search(browser, document)
-        open_document(browser, document, result)
+        open_document(browser, document, result_number)
         handle_single_document(
             browser,
             county,
