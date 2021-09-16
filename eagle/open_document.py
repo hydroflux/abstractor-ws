@@ -149,17 +149,21 @@ def open_document_description(browser, first_result):
     browser.get(search_actions[1].get_attribute("href"))
 
 
+def handle_search_results(browser, document):
+    try:
+        first_result = get_search_results(browser, document)[0]
+        open_document_description(browser, first_result)
+        short_nap()
+        # Testing find without naptime, however hitting manual overrides more often;
+        # Use short_nap if it prevents the break
+        return True
+    except StaleElementReferenceException:
+        print(f'Encountered a stale element exception while trying to open '
+              f'{document.extrapolate_value()}, trying again.')
+
+
 def open_document(browser, document):
     while not validate_search(browser, document):
         retry_search(browser, document)
     if check_search_results(browser, document):
-        try:
-            first_result = get_search_results(browser, document)[0]
-            open_document_description(browser, first_result)
-            short_nap()
-            # Testing find without naptime, however hitting manual overrides more often;
-            # Use short_nap if it prevents the break
-            return True
-        except StaleElementReferenceException:
-            print(f'Encountered a stale element exception while trying to open '
-                  f'{document.extrapolate_value()}, trying again.')
+        handle_search_results(browser, document)

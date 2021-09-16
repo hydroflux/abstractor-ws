@@ -71,7 +71,7 @@ def handle_multiple_documents(browser, county, target_directory, document_list, 
         start_time,
         review
     )
-    for _ in range(0, (document.number_results - 1)):
+    for _ in range(1, document.number_results):
         next_result(browser, document)
         handle_single_document(
             browser,

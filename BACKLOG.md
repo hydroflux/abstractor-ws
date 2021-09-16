@@ -56,6 +56,12 @@
 - [ ] Generalize 'clear_search' functions to use a loop of the input ids
 - [ ] In order to make the above work, 'button ids' need to be separate from 'input ids' in 'transform_document_list' functions and 'Document' class
 
+### Class To Do
+
+#### Document Class To Do
+
+- [ ] Add 'start_time' as a 'Document' class attribute
+
 ### Imports To Do
 
 - [ ] Allow user to review the imported excel document & choose the column / columns to run
@@ -87,7 +93,6 @@
 - [ ] Remove anything with the "stock download" name before clicking the download button--avoid creating an issue with crash / restart
 - [ ] Update scripts with new general functions (i.e. assert_window_title)
 - [ ] Update the record function to set the reception number rather than return it
-
 - [ ] Update 'review' loop so that 'review' comes in as True or False, rather than an 'alt' argument
 
 ### Tiger To Do
