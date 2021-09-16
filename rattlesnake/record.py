@@ -191,7 +191,7 @@ def record_document_fields(browser, dataframe, document):
     record_value(browser, dataframe, document, 'page', id=page_id, alt='null')  # Page
     record_value(browser, dataframe, document, 'effective date', id=effective_date_id, alt='empty')  # Effective Date
     record_value(browser, dataframe, document, 'recording date', id=recording_date_id, alt='empty')  # Recording Date
-    record_value(browser, dataframe, document, 'document type', id=document_type_id)  # Document Type
+    record_value(browser, dataframe, document, 'document type', id=document_type_id, alt='null')  # Document Type
     record_value(browser, dataframe, document, 'legal', id=legal_id, alt='null')  # Legal
     record_parties_information(browser, dataframe, document)  # Grantor / Grantee
     record_book(dataframe)  # Book

@@ -214,6 +214,7 @@
 - [ ] Create create option in 'handle_search_results' to account for 'else'
 - [ ] Refactor 'open_document' selenium functions into selenium utilities directory
 - [ ] Refactor 'record' selenium functions into selenium utilities directory
+- [ ] Add a method for handling "NO DOCUMENT TYPES"
 
 ### Testing Script To Do
 

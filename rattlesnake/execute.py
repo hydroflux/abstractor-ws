@@ -1,5 +1,5 @@
 from settings.abstract_object import abstract_dictionary as dataframe
-from settings.bad_search import no_document_image, record_bad_search, unable_to_download
+from settings.bad_search import no_document_image, record_bad_search
 from settings.driver import create_webdriver
 from settings.export import export_document
 from settings.file_management import (bundle_project, check_length,
@@ -111,6 +111,7 @@ def execute_program(county, target_directory, document_list, file_name, review=F
             county,
             target_directory,
             file_name,
+            dataframe
         )
         bundle_project(target_directory, abstraction)
     logout(browser)
