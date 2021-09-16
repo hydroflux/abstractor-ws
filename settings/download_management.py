@@ -52,13 +52,14 @@ def get_downloaded_file_name(browser, wait_time=300):
             break
 
 
-def set_download_path(browser, document_directory, document):
+def set_download_path_and_name_values(browser, document_directory, document):
+    document.new_name = f'{document.county.prefix}-{document.reception_number}.pdf'
     if document.download_value is not None:
-        return f'{document_directory}/{document.download_value}', document.download_value
+        document.download_path = f'{document_directory}/{document.download_value}'
     else:
-        file = get_downloaded_file_name(browser)
+        document.download_value = get_downloaded_file_name(browser)
         close_download_window(browser)
-        return f'{document_directory}/{file}', file
+        document.download_path = f'{document_directory}/{document.download_value}'
 
 
 def check_for_download_error(browser, windows):
@@ -86,9 +87,9 @@ def check_browser_windows(browser):
         check_for_download_error(browser, windows)
 
 
-def wait_for_download(browser, document_directory, download_path, number_files):
+def wait_for_download(browser, document_directory, document, number_files):
     download_wait = True
-    while not os.path.exists(download_path) and download_wait:
+    while not os.path.exists(document.download_path) and download_wait:
         check_browser_windows(browser)
         sleep(1)  # Increase to 2 seconds if still having issues with no such window exception
         download_wait = False
@@ -118,46 +119,37 @@ def check_file_size(download_path):
             return False
 
 
-def prepare_file_for_download(document_directory, document, current_download, download_path, new_download_name):
-    if check_file_size(download_path):
-        os.rename(current_download, new_download_name)
+def prepare_file_for_download(document_directory, document):
+    if check_file_size(document.download_path):
+        os.rename(document.download_value, document.new_name)
         os.chdir(document_directory)
-        check_download_size(new_download_name, document)
+        check_download_size(document.new_name, document)
     else:
-        raise ValueError("%s isn't a file!" % download_path)
+        raise ValueError("%s isn't a file!" % document.download_path)
 
 
-def rename_download(document_directory, document, current_download, download_path, new_download_name):
+def rename_download(document_directory, document):
     try:
-        prepare_file_for_download(
-            document_directory,
-            document,
-            current_download,
-            download_path,
-            new_download_name
-        )
+        prepare_file_for_download(document_directory, document)
     except FileNotFoundError:
-        print(f'File not found, please review stock download {current_download} & new file name {new_download_name}')
+        print(f'File not found, please review stock download '
+              f'"{document.download_value}" & new file name "{document.new_name}"')
+        input()
 
 
-def check_for_rename(document_directory, document, new_download_name):
-    rename_path = f'{document_directory}/{new_download_name}'
-    # wait_for_download(browser, document_directory, rename_path, number_files)
+def check_for_rename(document_directory, document):
+    rename_path = f'{document_directory}/{document.new_name}'
     if os.path.isfile(rename_path):
         os.chdir(document_directory)
-        check_download_size(new_download_name, document)
+        check_download_size(document.new_name, document)
     else:
         raise ValueError("%s isn't a file!" % rename_path)
 
 
 def update_download(browser, document_directory, document, number_files):
-    download_path, current_download = set_download_path(browser, document_directory, document)
-    if wait_for_download(browser, document_directory, download_path, number_files):
-        return False
-    else:
-        naptime()
-        new_download_name = f'{document.county.prefix}-{document.reception_number}.pdf'
-        rename_download(document_directory, document, current_download, download_path, new_download_name)
-        # naptime()
-        check_for_rename(document_directory, document, new_download_name)
-        return True
+    set_download_path_and_name_values(browser, document_directory, document)
+    wait_for_download(browser, document_directory, document, number_files)
+    naptime()
+    rename_download(document_directory, document)
+    check_for_rename(document_directory, document)
+    return True
