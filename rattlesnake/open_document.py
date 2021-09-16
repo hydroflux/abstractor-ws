@@ -114,6 +114,6 @@ def handle_search_results(browser, document):
         return False
 
 
-def open_document(browser, document):
+def open_document(browser, document, result=None):
     count_results(browser, document)
     return handle_search_results(browser, document)

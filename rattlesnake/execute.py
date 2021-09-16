@@ -36,7 +36,7 @@ def download_single_document(browser, county, target_directory, document_list, d
         document_downloaded(document_list, document)
 
 
-def handle_single_document(browser, county, target_directory, document_list, document, start_time, review, result=None):
+def handle_single_document(browser, county, target_directory, document_list, document, start_time, review):
     record_single_document(
         browser,
         document_list,
@@ -54,22 +54,10 @@ def handle_single_document(browser, county, target_directory, document_list, doc
         )
 
 
-def handle_search_results(browser, county, target_directory, document_list, document, start_time, review):
-    if open_document(browser, document):
-            handle_search_results(
-                browser,
-                county,
-                target_directory,
-                document_list,
-                document,
-                start_time,
-                review
-            )
-        else:
-            record_bad_search(dataframe, document)
-            no_document_found(start_time, document_list, document, review)
-
-    if document.number_results == 1:
+def handle_multiple_documents(browser, county, target_directory, document_list, document, start_time, review):
+    for result in range(1, document.number_results):
+        search(browser, document)
+        open_document(browser, document, result)
         handle_single_document(
             browser,
             county,
@@ -79,18 +67,32 @@ def handle_search_results(browser, county, target_directory, document_list, docu
             start_time,
             review
         )
-    elif document.number_results > 1:
-        for result in range(1, document.number_results):
-            handle_single_document(
+
+
+def handle_search_results(browser, county, target_directory, document_list, document, start_time, review):
+    if open_document(browser, document):
+        handle_single_document(
+            browser,
+            county,
+            target_directory,
+            document_list,
+            document,
+            start_time,
+            review
+        )
+        if document.number_results > 1:
+            handle_multiple_documents(
                 browser,
                 county,
                 target_directory,
                 document_list,
                 document,
                 start_time,
-                review,
-                result
+                review
             )
+    else:
+        record_bad_search(dataframe, document)
+        no_document_found(start_time, document_list, document, review)
 
 
 def search_documents_from_list(browser, county, target_directory, document_list, review):
