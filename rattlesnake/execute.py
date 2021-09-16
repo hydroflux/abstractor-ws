@@ -1,4 +1,3 @@
-from armadillo.transform_document_list import transform_document_list
 from settings.abstract_object import abstract_dictionary as dataframe
 from settings.bad_search import record_bad_search, unable_to_download
 from settings.driver import create_webdriver
@@ -16,6 +15,7 @@ from rattlesnake.logout import logout
 from rattlesnake.open_document import open_document
 from rattlesnake.record import record
 from rattlesnake.search import search
+from rattlesnake.transform_document_list import transform_document_list
 
 
 def record_single_document(browser, document_list, document, start_time, review):

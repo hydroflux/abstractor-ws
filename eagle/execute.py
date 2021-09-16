@@ -25,22 +25,6 @@ def record_single_document(browser, county, document_list, document, start_time,
     document_found(start_time, document_list, document, review)
 
 
-# def review_multiple_documents(browser, start_time, document_list, document):
-#     document_found(start_time, document_list, document, "review")
-#     for document_instance in range(0, (document.number_results - 1)):
-#         next_result(browser, document)
-#         document_found(start_time, document_list, document, "review")
-
-
-# def record_multiple_documents(browser, county, target_directory,
-#                               dataframe, document_list, document, start_time):
-#     record_single_document(browser, county, target_directory, document_list, document, start_time)
-#     for _ in range(0, (document.number_results - 1)):
-#         next_result(browser, document)
-#         record_single_document(browser, county, target_directory,
-#                                dataframe, document_list, document, start_time)
-
-
 def download_single_document(browser, county, target_directory, document_list, document):
     # document_number = get_reception_number(browser, document)
     if not download_document(
@@ -56,13 +40,6 @@ def download_single_document(browser, county, target_directory, document_list, d
         document_downloaded(document_list, document)
         # document_found(start_time, document_list, document)
         # => this is probably a leftover from 'download document list'
-
-
-# def download_multiple_documents(browser, county, target_directory, document_list, document, start_time):
-#     download_single_document(browser, county, target_directory, document_list, document, start_time)
-#     for document_instance in range(0, (document.number_results - 1)):
-#         next_result(browser, document)
-#         download_single_document(browser, county, target_directory, document_list, document, start_time)
 
 
 def handle_single_document(browser, county, target_directory, document_list, document, start_time, review):
