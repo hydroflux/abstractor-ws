@@ -1,5 +1,6 @@
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
@@ -20,3 +21,8 @@ def locate_input_by_id(browser, document, id, type):
 def clear_input(browser, document, input_function, type, id):
     while get_field_value(input_function(browser, document, id, type)) != '':
         input_function(browser, document, id, type).clear()
+
+
+def enter_input_value(browser, document, input_function, type, id, value):
+    while get_field_value(input_function(browser, document, id, type)) != value:
+        input_function(browser, document, id, type).send_keys(Keys.UP + value)
