@@ -30,7 +30,7 @@ def count_results(browser, document):
     if result_count.text == single_result_message:
         document.number_results += 1
     else:
-        print(f'Browser located multiple search results for '
+        print(f'Browser located more or less than 1 search results for '
               f'{document.extrapolate_value()}, new logic path needs to be developed.')
         print("Please press enter after reviewing the search results...")
         input()
@@ -103,7 +103,9 @@ def open_first_result(browser, document):
 
 
 def handle_search_results(browser, document):
-    if document.number_results == 1:
+    if document.number_results == 0:
+        return False
+    elif document.number_results == 1:
         return open_first_result(browser, document)
     else:
         print(f'Document instance indicates that more or less than 1 result were located searching '

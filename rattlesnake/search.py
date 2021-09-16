@@ -1,6 +1,6 @@
 from selenium_utilities.search import (clear_input, click_button,
                                        enter_input_value)
-from selenium_utilities.search import locate_input_by_id as locate_input
+from selenium_utilities.search import locate_element_by_id as locate_input
 
 from rattlesnake.rattlesnake_variables import document_search_url
 from rattlesnake.validation import verify_document_search_page_loaded

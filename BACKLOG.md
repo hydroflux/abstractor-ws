@@ -174,6 +174,8 @@
 - [ ] Add 'start_time' as an optional argument for document found depending on download state
 - [ ] Update validation & verification functions to a similar structure used for rattlesnake
 - [ ] Refactor 'record' functions, in particular the way that the validation is being handled
+- [ ] Refactor 'open_document' selenium functions into selenium utilities directory
+- [ ] Refactor 'record' selenium functions into selenium utilities directory
 
 ### Iguana To Do
 
@@ -205,6 +207,8 @@
 - [ ] Add 'multiple_documents' logic
 - [ ] Add 'start_time' as an optional argument for document found depending on download state
 - [ ] Create create option in 'handle_search_results' to account for 'else'
+- [ ] Refactor 'open_document' selenium functions into selenium utilities directory
+- [ ] Refactor 'record' selenium functions into selenium utilities directory
 
 ### Testing Script To Do
 

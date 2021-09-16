@@ -7,7 +7,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from settings.general_functions import get_field_value, timeout
 
 
-def locate_input_by_id(browser, document, id, type):
+def locate_element_by_id(browser, document, id, type):
     try:
         input_present = EC.element_to_be_clickable((By.ID, id))
         WebDriverWait(browser, timeout).until(input_present)
