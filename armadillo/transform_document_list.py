@@ -1,6 +1,6 @@
-from armadillo.armadillo_variables import (page_search_field_id,
-                                           reception_number_search_field_id,
-                                           volume_search_field_id)
+from armadillo.armadillo_variables import (page_input_id,
+                                           reception_number_input_id,
+                                           volume_input_id)
 
 
 def convert_document_numbers(document_list):
@@ -10,15 +10,15 @@ def convert_document_numbers(document_list):
             document.value = f'{document.year}-{document.value[4:]}'
 
 
-def update_search_field_ids(document_list):
+def update_input_ids(document_list):
     for document in document_list:
-        document.search_field_ids = {
-            "Reception Number": reception_number_search_field_id,
-            "Volume": volume_search_field_id,
-            "Page": page_search_field_id
+        document.input_ids = {
+            "Reception Number": reception_number_input_id,
+            "Volume": volume_input_id,
+            "Page": page_input_id
             }
 
 
 def transform_document_list(document_list):
     convert_document_numbers(document_list)
-    update_search_field_ids(document_list)
+    update_input_ids(document_list)

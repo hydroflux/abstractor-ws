@@ -1,13 +1,10 @@
-from selenium.webdriver.common.keys import Keys
-
-from selenium_utilities.search import locate_input_by_id as locate_input
+from selenium_utilities.search import clear_input, click_button, locate_input_by_id as locate_input
 
 from settings.general_functions import get_field_value
 
 from rattlesnake.rattlesnake_variables import (document_search_field_id,
                                                document_search_url,
                                                page_search_field_id,
-                                               search_button_id,
                                                volume_search_field_id)
 from rattlesnake.validation import verify_document_search_page_loaded
 
@@ -17,20 +14,10 @@ def open_document_search(browser):
     browser.get(document_search_url)
 
 
-def clear_search_field(browser, document, type, id):
-    while get_field_value(locate_input(browser, document, id, type)) != '':
-        locate_input(browser, document, id, type).clear()
-
-
 def clear_search(browser, document):
-    clear_search_field(browser, document, "reception number", document_search_field_id)
-    clear_search_field(browser, document, "volume", volume_search_field_id)
-    clear_search_field(browser, document, "page", page_search_field_id)
-
-
-def enter_value_number(browser, document, type, id, value):
-    while get_field_value(locate_input(browser, document, id, type)) != value:
-        locate_input(browser, document, id, type).send_keys(Keys.UP + value)
+    clear_input(browser, document, locate_input, "reception number", document.input_ids["Reception Number"])
+    clear_input(browser, document, locate_input, "volume", document.input_ids["Volume"])
+    clear_input(browser, document, locate_input, "page", document.input_ids["Page"])
 
 
 def handle_document_search_field(browser, document, type="reception number", id=document_search_field_id):
@@ -53,8 +40,7 @@ def handle_volume_page_search_fields(browser, document):
 
 
 def execute_search(browser, document):
-    search_button = locate_input(browser, document, search_button_id, "search button")
-    search_button.click()
+    click_button(browser, document, document.search_field_id["Submit Button"], "submit button")
 
 
 def document_search(browser, document):

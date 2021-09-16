@@ -22,10 +22,6 @@ def clear_search(browser, document):
     clear_input(browser, document, locate_input, "page", document.input_ids["Page"])
 
 
-def execute_search(browser):
-    javascript_script_execution(browser, execute_document_search_script)
-
-
 def handle_document_value_numbers(browser, document):
     value = document_value(document)
     if document.type == 'document_number':
@@ -38,6 +34,10 @@ def handle_document_value_numbers(browser, document):
               f'a new search path needs to be developed in order to continue.\n')
         print("Please press enter after reviewing the search parameters...")
         input()
+
+
+def execute_search(browser):
+    javascript_script_execution(browser, execute_document_search_script)
 
 
 def document_search(browser, document):

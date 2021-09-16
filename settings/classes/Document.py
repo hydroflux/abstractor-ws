@@ -1,7 +1,7 @@
 class Document:
     def __init__(self, type, value, number_results=0, index_number=None, reception_number=None,
                  description_link=None, image_link=None, multiple_results=None, year=None, download_type=None,
-                 download_value=None, search_field_ids=None):
+                 download_value=None, input_ids=None):
         self.type = type
         self.value = value
         self.number_results = number_results
@@ -13,7 +13,7 @@ class Document:
         self.year = year
         self.download_type = download_type
         self.download_value = download_value
-        self.search_field_ids = search_field_ids
+        self.input_ids = input_ids
 
     def document_value(self):
         if self.type == "document_number" or self.type == "name":
