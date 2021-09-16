@@ -1,5 +1,5 @@
 from settings.abstract_object import abstract_dictionary as dataframe
-from settings.bad_search import record_bad_search, unable_to_download
+from settings.bad_search import no_document_image, record_bad_search, unable_to_download
 from settings.driver import create_webdriver
 from settings.export import export_document
 from settings.file_management import (bundle_project, check_length,
@@ -27,10 +27,9 @@ def download_recorded_document(browser, target_directory, document_list, documen
     if not download_document(
         browser,
         target_directory,
-        dataframe,
         document
     ):
-        unable_to_download(dataframe, document)
+        no_document_image(dataframe, document)
         no_document_downloaded(document_list, document)
     else:
         document_downloaded(document_list, document)

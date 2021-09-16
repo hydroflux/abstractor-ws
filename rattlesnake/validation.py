@@ -1,4 +1,3 @@
-from settings.bad_search import no_document_image
 from settings.general_functions import (assert_window_title, date_from_string,
                                         naptime)
 
@@ -130,9 +129,9 @@ def verify_document_image_page_loaded(browser, document):
         input()
 
 
-def verify_valid_download(browser, dataframe, document):
+def verify_valid_download(browser):
     if assert_window_title(browser, bad_download_title):
-        no_document_image(dataframe, document)
+        return False
     else:
         return True
 

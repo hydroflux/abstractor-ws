@@ -53,8 +53,8 @@ def execute_program_type(county, program_type, document_list=None, search_name=N
             execute_eagle(county, target_directory, document_list, file_name)
         elif program_type == "review":
             execute_eagle(county, target_directory, document_list, file_name, True)
-        elif program_type == "download":
-            download_eagle(county, target_directory, document_list)
+        # elif program_type == "download":
+        #     download_eagle(county, target_directory, document_list)
         else:
             currently_unavailable(county, program_type)
     elif county.program == 'leopard':

@@ -54,11 +54,11 @@ def add_to_cart(browser, document):
     add_to_cart_button.click()
 
 
-def execute_download(browser, dataframe, document_directory, document):
+def execute_download(browser, document_directory, document):
     if document.download_type == 'free':
         number_files = len(os.listdir(document_directory))
         free_download(browser, document)
-        if verify_valid_download(browser, dataframe, document):
+        if verify_valid_download(browser):
             return update_download(
                 browser,
                 document_directory,
@@ -69,11 +69,11 @@ def execute_download(browser, dataframe, document_directory, document):
         return add_to_cart(browser, document)
 
 
-def download_document(browser, target_directory, dataframe, document):
+def download_document(browser, target_directory, document):
     document_directory = create_document_directory(target_directory)
     if previously_downloaded(document_directory, document):
         return True
     else:
         open_download_page(browser, document)
         if verify_document_image_page_loaded(browser, document):
-            return execute_download(browser, dataframe, document_directory, document)
+            return execute_download(browser, document_directory, document)
