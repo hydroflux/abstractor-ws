@@ -19,9 +19,9 @@ from armadillo.search import search
 from armadillo.transform_document_list import transform_document_list
 
 
-def record_single_document(browser, document_list, document, start_time, review):
+def record_single_document(browser, document_list, document, review):
     record(browser, dataframe, document)
-    document_found(start_time, document_list, document, review)
+    document_found(document_list, document, review)
 
 
 def download_single_document(browser, county, target_directory, document_list, document):
@@ -37,12 +37,11 @@ def download_single_document(browser, county, target_directory, document_list, d
         document_downloaded(document_list, document)
 
 
-def handle_single_document(browser, county, target_directory, document_list, document, start_time, review):
+def handle_single_document(browser, county, target_directory, document_list, document, review):
     record_single_document(
         browser,
         document_list,
         document,
-        start_time,
         review
     )
     if download and not review:
@@ -55,7 +54,7 @@ def handle_single_document(browser, county, target_directory, document_list, doc
         )
 
 
-def handle_search_results(browser, county, target_directory, document_list, document, start_time, review):
+def handle_search_results(browser, county, target_directory, document_list, document, review):
     if document.number_results == 1:
         handle_single_document(
             browser,
@@ -63,7 +62,6 @@ def handle_search_results(browser, county, target_directory, document_list, docu
             target_directory,
             document_list,
             document,
-            start_time,
             review
         )
     elif document.number_results > 1:
@@ -75,7 +73,7 @@ def handle_search_results(browser, county, target_directory, document_list, docu
 
 def search_documents_from_list(browser, county, target_directory, document_list, review):
     for document in document_list:
-        start_time = start_timer()
+        document.start_time = start_timer()
         search(browser, document)
         if open_document(browser, document):
             handle_search_results(
@@ -84,12 +82,11 @@ def search_documents_from_list(browser, county, target_directory, document_list,
                 target_directory,
                 document_list,
                 document,
-                start_time,
                 review
             )
         else:
             record_bad_search(dataframe, document)
-            no_document_found(start_time, document_list, document, review)
+            no_document_found(document_list, document, review)
         check_length(dataframe)
     return dataframe
 

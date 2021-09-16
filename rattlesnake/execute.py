@@ -18,9 +18,9 @@ from rattlesnake.search import search
 from rattlesnake.transform_document_list import transform_document_list
 
 
-def record_document(browser, document_list, document, start_time, review, result_number):
+def record_document(browser, document_list, document, review, result_number):
     record(browser, dataframe, document, result_number)
-    document_found(start_time, document_list, document, review)
+    document_found(document_list, document, review)
 
 
 def download_recorded_document(browser, county, target_directory, document_list, document):
@@ -36,12 +36,11 @@ def download_recorded_document(browser, county, target_directory, document_list,
         document_downloaded(document_list, document)
 
 
-def handle_single_document(browser, county, target_directory, document_list, document, start_time, review, result_number=None):
+def handle_single_document(browser, county, target_directory, document_list, document, review, result_number=None):
     record_document(
         browser,
         document_list,
         document,
-        start_time,
         review,
         result_number
     )
@@ -55,7 +54,7 @@ def handle_single_document(browser, county, target_directory, document_list, doc
         )
 
 
-def handle_multiple_documents(browser, county, target_directory, document_list, document, start_time, review):
+def handle_multiple_documents(browser, county, target_directory, document_list, document, review):
     for result_number in range(1, document.number_results):
         search(browser, document)
         open_document(browser, document, result_number)
@@ -65,13 +64,12 @@ def handle_multiple_documents(browser, county, target_directory, document_list, 
             target_directory,
             document_list,
             document,
-            start_time,
             review,
             result_number
         )
 
 
-def handle_search_results(browser, county, target_directory, document_list, document, start_time, review):
+def handle_search_results(browser, county, target_directory, document_list, document, review):
     if open_document(browser, document):
         handle_single_document(
             browser,
@@ -79,7 +77,6 @@ def handle_search_results(browser, county, target_directory, document_list, docu
             target_directory,
             document_list,
             document,
-            start_time,
             review
         )
         if document.number_results > 1:
@@ -89,17 +86,16 @@ def handle_search_results(browser, county, target_directory, document_list, docu
                 target_directory,
                 document_list,
                 document,
-                start_time,
                 review
             )
     else:
         record_bad_search(dataframe, document)
-        no_document_found(start_time, document_list, document, review)
+        no_document_found(document_list, document, review)
 
 
 def search_documents_from_list(browser, county, target_directory, document_list, review):
     for document in document_list:
-        start_time = start_timer()
+        document.start_time = start_timer()
         search(browser, document)
         handle_search_results(
             browser,
@@ -107,7 +103,6 @@ def search_documents_from_list(browser, county, target_directory, document_list,
             target_directory,
             document_list,
             document,
-            start_time,
             review
         )
         check_length(dataframe)

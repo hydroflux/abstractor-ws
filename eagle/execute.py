@@ -20,9 +20,9 @@ from eagle.search import search
 print("execute", __name__)
 
 
-def record_single_document(browser, county, document_list, document, start_time, review):
+def record_single_document(browser, county, document_list, document, review):
     record_document(browser, county, dataframe, document)  # why does county need to be passed in
-    document_found(start_time, document_list, document, review)
+    document_found(document_list, document, review)
 
 
 def download_single_document(browser, county, target_directory, document_list, document):
@@ -38,17 +38,16 @@ def download_single_document(browser, county, target_directory, document_list, d
         no_document_downloaded(document_list, document)
     else:
         document_downloaded(document_list, document)
-        # document_found(start_time, document_list, document)
+        # document_found document_list, document)
         # => this is probably a leftover from 'download document list'
 
 
-def handle_single_document(browser, county, target_directory, document_list, document, start_time, review):
+def handle_single_document(browser, county, target_directory, document_list, document, review):
     record_single_document(
         browser,
         county,
         document_list,
         document,
-        start_time,
         review
     )
     if download and not review:
@@ -61,14 +60,13 @@ def handle_single_document(browser, county, target_directory, document_list, doc
         )
 
 
-def handle_multiple_documents(browser, county, target_directory, document_list, document, start_time, review):
+def handle_multiple_documents(browser, county, target_directory, document_list, document, review):
     handle_single_document(
         browser,
         county,
         target_directory,
         document_list,
         document,
-        start_time,
         review
     )
     for _ in range(1, document.number_results):
@@ -79,13 +77,12 @@ def handle_multiple_documents(browser, county, target_directory, document_list, 
             target_directory,
             document_list,
             document,
-            start_time,
             review
         )
 
 
 def handle_search_results(browser, county, target_directory,
-                          document_list, document, start_time, review):
+                          document_list, document, review):
     if document.number_results == 1:
         handle_single_document(
             browser,
@@ -93,7 +90,6 @@ def handle_search_results(browser, county, target_directory,
             target_directory,
             document_list,
             document,
-            start_time,
             review
         )
     elif document.number_results > 1:
@@ -103,14 +99,13 @@ def handle_search_results(browser, county, target_directory,
             target_directory,
             document_list,
             document,
-            start_time,
             review
         )
     # elif alt == 'review':
     #     if document.number_results > 1:
-    #         review_multiple_documents(browser, start_time, document_list, document)
+    #         review_multiple_documents(browser, document_list, document)
     #     else:
-    #         document_found(start_time, document_list, document, "review")
+    #         document_found document_list, document, "review")
     # elif alt == "download":
     #     if document.number_results > 1:
     #         download_multiple_documents(browser, county, target_directory, document_list, document, start_time)
@@ -120,7 +115,7 @@ def handle_search_results(browser, county, target_directory,
 
 def search_documents_from_list(browser, county, target_directory, document_list, review):
     for document in document_list:
-        start_time = start_timer()
+        document.start_time = start_timer()
         search(browser, document)
         if open_document(browser, document):
             handle_search_results(
@@ -129,12 +124,11 @@ def search_documents_from_list(browser, county, target_directory, document_list,
                 target_directory,
                 document_list,
                 document,
-                start_time,
                 review
             )
         else:
             record_bad_search(dataframe, document)
-            no_document_found(start_time, document_list, document, review)
+            no_document_found(document_list, document, review)
         check_length(dataframe)
     return dataframe  # Is this necessary ? ? ?
 
@@ -159,7 +153,6 @@ def execute_program(county, target_directory, document_list, file_name, review=F
             document_list,
             review
         )
-
     )
     # logout ???
     # create_abstraction(browser, county, target_directory, document_list, file_name)
@@ -173,20 +166,20 @@ def execute_program(county, target_directory, document_list, file_name, review=F
 #         search(browser, document)
 #         if open_document(browser, document):
 #             handle_search_results(browser, county, target_directory,
-#                                   document_list, document, start_time, 'review')
+#                                   document_list, document, 'review')
 #         else:
-#             no_document_found(start_time, document_list, document, "review")
+#             no_document_found document_list, document, "review")
 
 
 def download_documents_from_list(browser, county, target_directory, document_list):
     for document in document_list:
-        start_time = start_timer()
+        document.start_time = start_timer()
         search(browser, document)
         if open_document(browser, document):
             handle_search_results(browser, county, target_directory,
-                                  document_list, document, start_time, 'download')
+                                  document_list, document, 'download')
         else:
-            no_document_found(start_time, document_list, document)
+            no_document_found(document_list, document)
 
 
 # def execute_review(county, target_directory, document_list):
