@@ -1,6 +1,6 @@
 from selenium.webdriver.common.keys import Keys
 
-from selenium_utilities.search import locate_input_by_id
+from selenium_utilities.search import locate_input_by_id as locate_input
 
 from settings.file_management import document_value
 from settings.general_functions import (get_field_value,
@@ -11,13 +11,14 @@ from armadillo.armadillo_variables import (document_search_url,
 from armadillo.validation import verify_document_search_page_loaded
 
 
+# Armadillo & rattlesnake identical
 def open_document_search(browser):
     browser.get(document_search_url)
 
 
 def clear_search_field(browser, document, type, id):
-    while get_field_value(locate_input_by_id(browser, document, id, type)) != '':
-        locate_input_by_id(browser, document, id, type).clear()
+    while get_field_value(locate_input(browser, document, id, type)) != '':
+        locate_input(browser, document, id, type).clear()
 
 
 def clear_search(browser, document):
@@ -31,8 +32,8 @@ def execute_search(browser):
 
 
 def enter_value_number(browser, document, type, id, value):
-    while get_field_value(locate_input_by_id(browser, document, id, type)) != value:
-        locate_input_by_id(browser, document, id, type).send_keys(Keys.UP + value)
+    while get_field_value(locate_input(browser, document, id, type)) != value:
+        locate_input(browser, document, id, type).send_keys(Keys.UP + value)
 
 
 def handle_document_value_numbers(browser, document):

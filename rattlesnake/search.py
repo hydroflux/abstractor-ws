@@ -1,10 +1,8 @@
-from selenium.common.exceptions import TimeoutException
-from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.wait import WebDriverWait
 
-from settings.general_functions import get_field_value, timeout
+from selenium_utilities.search import locate_input_by_id as locate_input
+
+from settings.general_functions import get_field_value
 
 from rattlesnake.rattlesnake_variables import (document_search_field_id,
                                                document_search_url,
@@ -19,20 +17,9 @@ def open_document_search(browser):
     browser.get(document_search_url)
 
 
-def locate_search_field(browser, document, id, type):
-    try:
-        search_field_present = EC.element_to_be_clickable((By.ID, id))
-        WebDriverWait(browser, timeout).until(search_field_present)
-        search_field = browser.find_element_by_id(id)
-        return search_field
-    except TimeoutException:
-        print(f'Browser timed out trying to locate "{type}" field for '
-              f'{document.extrapolate_value()}.')
-
-
 def clear_search_field(browser, document, type, id):
-    while get_field_value(locate_search_field(browser, document, id, type)) != '':
-        locate_search_field(browser, document, id, type).clear()
+    while get_field_value(locate_input(browser, document, id, type)) != '':
+        locate_input(browser, document, id, type).clear()
 
 
 def clear_search(browser, document):
@@ -42,8 +29,8 @@ def clear_search(browser, document):
 
 
 def enter_value_number(browser, document, type, id, value):
-    while get_field_value(locate_search_field(browser, document, id, type)) != value:
-        locate_search_field(browser, document, id, type).send_keys(Keys.UP + value)
+    while get_field_value(locate_input(browser, document, id, type)) != value:
+        locate_input(browser, document, id, type).send_keys(Keys.UP + value)
 
 
 def handle_document_search_field(browser, document, type="reception number", id=document_search_field_id):
@@ -65,20 +52,8 @@ def handle_volume_page_search_fields(browser, document):
     handle_page_number_search_field(browser, document, page)
 
 
-def locate_search_button(browser, document):
-    try:
-        search_button_present = EC.element_to_be_clickable((By.ID, search_button_id))
-        WebDriverWait(browser, timeout).until(search_button_present)
-        search_button = browser.find_element_by_id(search_button_id)
-        return search_button
-    except TimeoutException:
-        print(f'Browser failed to locate search button for '
-              f'{document.extrapolate_value()}, please review.')
-        input()
-
-
 def execute_search(browser, document):
-    search_button = locate_search_button(browser, document)
+    search_button = locate_input(browser, document, search_button_id, "search button")
     search_button.click()
 
 
