@@ -18,8 +18,8 @@ from rattlesnake.search import search
 from rattlesnake.transform_document_list import transform_document_list
 
 
-def record_document(browser, document_list, document, start_time, review):
-    record(browser, dataframe, document)
+def record_document(browser, document_list, document, start_time, review, result_number):
+    record(browser, dataframe, document, result_number)
     document_found(start_time, document_list, document, review)
 
 
@@ -36,13 +36,14 @@ def download_recorded_document(browser, county, target_directory, document_list,
         document_downloaded(document_list, document)
 
 
-def handle_single_document(browser, county, target_directory, document_list, document, start_time, review):
+def handle_single_document(browser, county, target_directory, document_list, document, start_time, review, result_number=None):
     record_document(
         browser,
         document_list,
         document,
         start_time,
-        review
+        review,
+        result_number
     )
     if download and not review:
         download_recorded_document(
@@ -65,7 +66,8 @@ def handle_multiple_documents(browser, county, target_directory, document_list, 
             document_list,
             document,
             start_time,
-            review
+            review,
+            result_number
         )
 
 

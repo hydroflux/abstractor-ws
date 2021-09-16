@@ -195,7 +195,7 @@ def record_document_fields(browser, dataframe, document):
     record_comments(dataframe)  # Comments
 
 
-def record(browser, dataframe, document):
+def record(browser, dataframe, document, result_number=None):
     if verify_document_description_page_loaded(browser, document):
         if handle_document_type_verification(browser, document):
             document.description_link = browser.current_url
