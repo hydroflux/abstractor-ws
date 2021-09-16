@@ -157,7 +157,7 @@ def search_documents_from_list(browser, county, target_directory, document_list,
             )
         else:
             record_bad_search(dataframe, document)
-            no_document_found(start_time, document_list, document)
+            no_document_found(start_time, document_list, document, review)
         check_length(dataframe)
     return dataframe  # Is this necessary ? ? ?
 
