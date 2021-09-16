@@ -46,7 +46,7 @@ def access_field_value(browser, document, id, field_type):
 
 
 def handle_document_type_verification(browser, document):
-    if document.type == 'reception_number':
+    if document.type == 'document_number':
         reception_number = access_field_value(browser, document, reception_number_id, 'reception number')
         return validate_reception_number(document, reception_number)
     elif document.type == 'volume_and_page':

@@ -166,4 +166,4 @@ def open_document(browser, document):
     while not validate_search(browser, document):
         retry_search(browser, document)
     if check_search_results(browser, document):
-        handle_search_results(browser, document)
+        return handle_search_results(browser, document)
