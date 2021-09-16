@@ -1,10 +1,9 @@
 from settings.abstract_object import abstract_dictionary as dataframe
-from settings.bad_search import record_bad_search, unable_to_download
+from settings.bad_search import no_document_image, record_bad_search
 from settings.driver import create_webdriver
 from settings.export import export_document
 from settings.file_management import (bundle_project, check_length,
                                       document_downloaded, document_found,
-                                      extrapolate_document_value,
                                       no_document_downloaded,
                                       no_document_found)
 from settings.general_functions import start_timer
@@ -30,7 +29,7 @@ def download_recorded_document(browser, target_directory, document_list, documen
         target_directory,
         document
     ):
-        unable_to_download(dataframe, document)
+        no_document_image(dataframe, document)
         no_document_downloaded(document_list, document)
     else:
         document_downloaded(document_list, document)
@@ -52,8 +51,10 @@ def handle_single_document(browser, target_directory, document_list, document, r
         )
 
 
-def handle_search_results(browser, target_directory, document_list, document, review):
-    if document.number_results == 1:
+def handle_multiple_documents(browser, target_directory, document_list, document, review):
+    for result_number in range(1, document.number_results):
+        search(browser, document)
+        open_document(browser, document, result_number)
         handle_single_document(
             browser,
             target_directory,
@@ -61,28 +62,41 @@ def handle_search_results(browser, target_directory, document_list, document, re
             document,
             review
         )
-    elif document.number_results > 1:
-        print(f'Browser located multiple results for '
-              f'{extrapolate_document_value(document)}; '
-              f'No currently process built to handle multiple documents, please review.')
-        input()
 
 
-def search_documents_from_list(browser, target_directory, document_list, review):
-    for document in document_list:
-        document.start_time = start_timer()
-        search(browser, document)
-        if open_document(browser, document):
-            handle_search_results(
+def handle_search_results(browser, target_directory, document_list, document, review):
+    if open_document(browser, document):
+        handle_single_document(
+            browser,
+            target_directory,
+            document_list,
+            document,
+            review
+        )
+        if document.number_results > 1:
+            handle_multiple_documents(
                 browser,
                 target_directory,
                 document_list,
                 document,
                 review
             )
-        else:
-            record_bad_search(dataframe, document)
-            no_document_found(document_list, document, review)
+    else:
+        record_bad_search(dataframe, document)
+        no_document_found(document_list, document, review)
+
+
+def search_documents_from_list(browser, target_directory, document_list, review):
+    for document in document_list:
+        document.start_time = start_timer()
+        search(browser, document)
+        handle_search_results(
+            browser,
+            target_directory,
+            document_list,
+            document,
+            review
+        )
         check_length(dataframe)
     return dataframe
 
