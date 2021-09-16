@@ -1,3 +1,4 @@
+from settings.file_management import multiple_documents_comment
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -264,14 +265,17 @@ def aggregate_document_table_information(browser, dataframe, document):
     record_legal(newline_split(document_tables[8].text), dataframe)
 
 
-def record_comments(dataframe):
-    dataframe['Comments'].append('')
+def record_comments(dataframe, document):
+    if document.number_results == 1:
+        dataframe['Comments'].append('')
+    elif document.number_results > 1:
+        dataframe["Comments"].append(multiple_documents_comment(document))
 
 
 def record_document_fields(browser, dataframe, document):
     record_document_type_and_number(browser, dataframe, document)
     aggregate_document_table_information(browser, dataframe, document)
-    record_comments(dataframe)
+    record_comments(dataframe, document)
 
 
 def record(browser, dataframe, document):
