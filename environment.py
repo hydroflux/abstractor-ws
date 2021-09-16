@@ -71,7 +71,7 @@ def execute_program_type(county, program_type, document_list=None, search_name=N
     #         execute_tiger()
     #     elif program_type == 'review':
     #         review_tiger()
-    if county.program == 'rattlesnake':
+    elif county.program == 'rattlesnake':
         if program_type == 'execute':
             add_download_types(county, document_list)
             execute_rattlesnake(county, target_directory, document_list, file_name)

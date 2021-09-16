@@ -6,8 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
 from settings.download_management import previously_downloaded, update_download
-from settings.file_management import (create_document_directory,
-                                      extrapolate_document_value)
+from settings.file_management import create_document_directory
 from settings.general_functions import timeout
 
 from rattlesnake.rattlesnake_variables import (add_to_cart_button_id,
@@ -24,7 +23,7 @@ def locate_download_page(browser, document):
         return download_page
     except TimeoutException:
         print(f'Browser timed out trying to locate download page for '
-              f'{extrapolate_document_value(document)}, please review.')
+              f'{document.extrapolate_value()}, please review.')
         input()
 
 
@@ -41,7 +40,7 @@ def locate_button(browser, document, id, button_type):
         return button
     except TimeoutException:
         print(f'Browser timed out trying to locate "{button_type}" button for '
-              f'{extrapolate_document_value(document)}, please review.')
+              f'{document.extrapolate_value()}, please review.')
         input()
 
 

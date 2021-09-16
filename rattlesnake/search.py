@@ -4,9 +4,6 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-from settings.file_management import (document_value,
-                                      extrapolate_document_value,
-                                      split_volume_and_page)
 from settings.general_functions import get_field_value, timeout
 
 from rattlesnake.rattlesnake_variables import (document_search_field_id,
@@ -29,7 +26,7 @@ def locate_search_field(browser, document, id, type):
         return search_field
     except TimeoutException:
         print(f'Browser timed out trying to locate "{type}" field for '
-              f'{extrapolate_document_value(document)}.')
+              f'{document.extrapolate_value()}.')
 
 
 def clear_search_field(browser, document, type, id):
@@ -49,7 +46,7 @@ def enter_value_number(browser, document, type, id, value):
 
 
 def handle_document_search_field(browser, document, type="reception number", id=document_search_field_id):
-    value = document_value(document)
+    value = document.document_value()
     enter_value_number(browser, document, type, id, value)
 
 
@@ -62,7 +59,7 @@ def handle_page_number_search_field(browser, document, page, type="page", id=pag
 
 
 def handle_volume_page_search_fields(browser, document):
-    volume, page = split_volume_and_page(document)
+    volume, page = document.document_value()
     handle_volume_number_search_field(browser, document, volume)
     handle_page_number_search_field(browser, document, page)
 
@@ -75,7 +72,7 @@ def locate_search_button(browser, document):
         return search_button
     except TimeoutException:
         print(f'Browser failed to locate search button for '
-              f'{extrapolate_document_value(document)}, please review.')
+              f'{document.extrapolate_value()}, please review.')
         input()
 
 

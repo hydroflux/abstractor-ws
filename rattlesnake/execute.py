@@ -4,7 +4,6 @@ from settings.driver import create_webdriver
 from settings.export import export_document
 from settings.file_management import (bundle_project, check_length,
                                       document_downloaded, document_found,
-                                      extrapolate_document_value,
                                       no_document_downloaded,
                                       no_document_found)
 from settings.general_functions import start_timer
@@ -67,7 +66,7 @@ def handle_search_results(browser, county, target_directory, document_list, docu
         )
     elif document.number_results > 1:
         print(f'Browser located multiple results for '
-              f'{extrapolate_document_value(document)}; '
+              f'{document.extrapolate_value()}; '
               f'No currently process built to handle multiple documents, please review.')
         input()
 

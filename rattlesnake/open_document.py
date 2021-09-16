@@ -3,7 +3,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-from settings.file_management import extrapolate_document_value
 from settings.general_functions import (get_direct_link,
                                         javascript_script_execution,
                                         set_description_link, timeout)
@@ -22,7 +21,7 @@ def locate_search_results(browser, document):
         return search_results
     except TimeoutException:
         print(f'Browser timed out trying to locate search results for '
-              f'{extrapolate_document_value(document)}, please review.')
+              f'{document.extrapolate_value()}, please review.')
         input()
 
 
@@ -34,7 +33,7 @@ def locate_search_result_rows(search_results, document):
         return result_rows
     except TimeoutException:
         print(f'Browser timed out trying to locate search result rows for '
-              f'{extrapolate_document_value(document)}, please review.')
+              f'{document.extrapolate_value()}, please review.')
         input()
 
 
@@ -63,7 +62,7 @@ def locate_result_link(result, document):
         return result_link
     except TimeoutException:
         print(f'Browser timed out trying to locate result link for '
-              f'{extrapolate_document_value(document)}, please review.')
+              f'{document.extrapolate_value()}, please review.')
         input()
 
 
@@ -80,7 +79,7 @@ def open_result_link(browser, document, result):
         return True
     except TimeoutException:
         print(f'Browser timed out trying to open result link for '
-              f'{extrapolate_document_value(document)}, please review')
+              f'{document.extrapolate_value()}, please review')
         input()
         return False
 
@@ -109,7 +108,7 @@ def handle_search_results(browser, document):
         return open_first_result(browser, document)
     else:
         print(f'Document instance indicates that more or less than 1 result were located searching '
-              f'{extrapolate_document_value(document)}, please review (should not have reached this stage)')
+              f'{document.extrapolate_value()}, please review (should not have reached this stage)')
         print("Please press enter after reviewing the search parameters...")
         input()
         return False

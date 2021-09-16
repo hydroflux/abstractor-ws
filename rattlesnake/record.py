@@ -3,7 +3,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-from settings.file_management import extrapolate_document_value
 from settings.general_functions import (date_from_string, element_title_strip,
                                         get_field_value, list_to_string,
                                         timeout, title_strip)
@@ -29,7 +28,7 @@ def locate_information_field(browser, document, id, field_type):
         return field
     except TimeoutException:
         print(f'Browser timed out trying to locate "{field_type}" field for '
-              f'{extrapolate_document_value(document)}, please review.')
+              f'{document.extrapolate_value()}, please review.')
         input()
 
 
@@ -73,7 +72,7 @@ def record_empty_value(dataframe, field_type):
 def record_bad_value(dataframe, document, field_type, alt):
     if alt is None:
         print(f'No alternative trigger provided to record a bad value found in the '
-              f'"{field_type}" field for "{extrapolate_document_value(document)}", please review')
+              f'"{field_type}" field for "{document.extrapolate_value()}", please review')
         input()
     elif alt == 'empty':
         record_empty_value(dataframe, field_type)
@@ -81,7 +80,7 @@ def record_bad_value(dataframe, document, field_type, alt):
         record_null_value(dataframe, field_type)
     else:
         print(f'Encountered an unexpected problem trying to record a bad value found in the '
-              f'"{field_type}" field for "{extrapolate_document_value(document)}" '
+              f'"{field_type}" field for "{document.extrapolate_value()}" '
               f'with the alternative trigger "{alt}", please review.')
         input()
 
@@ -104,7 +103,7 @@ def handle_value_content(dataframe, document, field_type, value, alt):
         record_bad_value(dataframe, document, field_type, alt)
     else:
         print(f'Encountered an issue with "{field_type}" field for '
-              f'{extrapolate_document_value(document)}, which found a value of '
+              f'{document.extrapolate_value()}, which found a value of '
               f'"{value}" in the "{field_type}" field, please review.')
         input()
 
@@ -123,7 +122,7 @@ def locate_parties_rows(parties_table, document):
         return party_rows
     except TimeoutException:
         print(f'Browser timed out trying to locate document party rows for '
-              f'{extrapolate_document_value(document)}, please review.')
+              f'{document.extrapolate_value()}, please review.')
         input()
 
 
@@ -140,7 +139,7 @@ def locate_row_data(row, document):
         return row_data
     except TimeoutException:
         print(f'Browser timed out trying to locate row data for '
-              f'{extrapolate_document_value(document)} row "{row.text}", please review.')
+              f'{document.extrapolate_value()} row "{row.text}", please review.')
         input()
 
 
