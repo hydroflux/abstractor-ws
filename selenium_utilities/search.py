@@ -3,7 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-from settings.general_functions import timeout
+from settings.general_functions import get_field_value, timeout
 
 
 def locate_input_by_id(browser, document, id, type):
@@ -15,3 +15,8 @@ def locate_input_by_id(browser, document, id, type):
     except TimeoutException:
         print(f'Browser timed out trying to locate "{type}" input for '
               f'{document.extrapolate_value()}.')
+
+
+def clear_input(browser, document, input_function, type, id):
+    while get_field_value(input_function(browser, document, id, type)) != '':
+        input_function(browser, document, id, type).clear()
