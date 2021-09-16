@@ -95,12 +95,12 @@ def handle_result_document_type(browser, result, document):
         input()
 
 
-def open_result(browser, document, result_number=0):
+def open_result(browser, document, result_number):
     result = get_result(browser, document, result_number)
     return handle_result_document_type(browser, result, document)
 
 
-def handle_search_results(browser, document, result_number=0):
+def handle_search_results(browser, document, result_number):
     if document.number_results == 0:
         return False
     else:

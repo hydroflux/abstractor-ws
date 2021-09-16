@@ -2,14 +2,13 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-
 from settings.general_functions import get_direct_link, timeout
 
-from armadillo.armadillo_variables import (first_result_class_name, link_tag,
-                                           number_results_class,
+from armadillo.armadillo_variables import (link_tag, number_results_class,
+                                           result_class_names,
                                            search_results_id,
                                            single_result_message)
-from armadillo.validation import (validate_first_result, verify_results_loaded,
+from armadillo.validation import (validate_result, verify_results_loaded,
                                   verify_search_results_page_loaded)
 
 
@@ -36,7 +35,7 @@ def count_results(browser, document):
         input()
 
 
-def locate_search_results(browser, document):
+def locate_search_results_table(browser, document):
     try:
         search_results_present = EC.presence_of_element_located((By.ID, search_results_id))
         WebDriverWait(browser, timeout).until(search_results_present)
@@ -48,21 +47,31 @@ def locate_search_results(browser, document):
         input()
 
 
-def locate_first_result(search_results, document):
+def locate_results(search_results, document, results_class):
     try:
-        first_result_present = EC.element_to_be_clickable((By.CLASS_NAME, first_result_class_name))
-        WebDriverWait(search_results, timeout).until(first_result_present)
-        first_result = search_results.find_element_by_class_name(first_result_class_name)
-        return first_result
+        results_present = EC.element_to_be_clickable((By.CLASS_NAME, results_class))
+        WebDriverWait(search_results, timeout).until(results_present)
+        results = search_results.find_elements_by_class_name(results_class)
+        return results
     except TimeoutException:
         print(f'Browser timed out trying to locate first search result of '
               f'{document.extrapolate_value()}, please review.')
         input()
 
 
-def get_first_result(browser, document):
-    search_results = locate_search_results(browser, document)
-    return locate_first_result(search_results, document)
+def determine_results_class(result_number):
+    return result_class_names[result_number % 2]
+
+
+def get_results(browser, document, result_number):
+    search_results_table = locate_search_results_table(browser, document)
+    results_class = determine_results_class(result_number)
+    return locate_results(search_results_table, document, results_class)
+
+
+def access_result(browser, document, result_number):
+    results = get_results(browser, document, result_number)
+    return results[int(result_number/2)]
 
 
 def locate_result_link(document, result):
@@ -95,30 +104,25 @@ def open_result_link(browser, document, result):
         return False
 
 
-def open_first_result(browser, document):
-    first_result = get_first_result(browser, document)
-    first_result_text = first_result.text.split('\n')
-    if validate_first_result(first_result_text, document):
-        return open_result_link(browser, document, first_result)
+def open_result(browser, document, result_number):
+    result = access_result(browser, document, result_number)
+    result_text = result.text.split('\n')
+    if validate_result(result_text, document):
+        return open_result_link(browser, document, result)
 
 
-def handle_search_results(browser, document):
+def handle_search_results(browser, document, result_number):
     if document.number_results == 0:
         return False
-    elif document.number_results == 1:
-        return open_first_result(browser, document)
     else:
-        print(f'Document instance indicates that more or less than 1 result were located searching '
-              f'{document.extrapolate_value()}, please review (should not have reached this stage)')
-        print("Please press enter after reviewing the search parameters...")
-        input()
-        return False
+        return open_result(browser, document, result_number)
 
 
-def open_document(browser, document):
+def open_document(browser, document, result_number=0):
     verify_search_results_page_loaded(browser, document)
     if verify_results_loaded(browser, document):
-        count_results(browser, document)
-        return handle_search_results(browser, document)
+        if result_number == 0:
+            count_results(browser, document)
+        return handle_search_results(browser, document, result_number)
     else:
         return False

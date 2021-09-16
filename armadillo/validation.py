@@ -109,7 +109,7 @@ def validate_volume_page(document, volume, page):
     return volume == document.document_value()[0] and page == document.document_value()[1]
 
 
-def validate_first_result(text, document):
+def validate_result(text, document):
     if document.type == 'document_number':
         return validate_reception_number(document, text[1])
     elif document.type == 'volume_and_page':
