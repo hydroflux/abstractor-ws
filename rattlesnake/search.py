@@ -14,6 +14,7 @@ from rattlesnake.rattlesnake_variables import (document_search_field_id,
 from rattlesnake.validation import verify_document_search_page_loaded
 
 
+# Armadillo & rattlesnake identical
 def open_document_search(browser):
     browser.get(document_search_url)
 

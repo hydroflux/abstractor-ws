@@ -1,7 +1,6 @@
 from selenium.webdriver.common.keys import Keys
 
-from selenium_utilities.search import \
-    locate_search_field_by_id as locate_search_field
+from selenium_utilities.search import locate_input_by_id
 
 from settings.file_management import document_value
 from settings.general_functions import (get_field_value,
@@ -17,8 +16,8 @@ def open_document_search(browser):
 
 
 def clear_search_field(browser, document, type, id):
-    while get_field_value(locate_search_field(browser, document, id, type)) != '':
-        locate_search_field(browser, document, id, type).clear()
+    while get_field_value(locate_input_by_id(browser, document, id, type)) != '':
+        locate_input_by_id(browser, document, id, type).clear()
 
 
 def clear_search(browser, document):
@@ -32,8 +31,8 @@ def execute_search(browser):
 
 
 def enter_value_number(browser, document, type, id, value):
-    while get_field_value(locate_search_field(browser, document, id, type)) != value:
-        locate_search_field(browser, document, id, type).send_keys(Keys.UP + value)
+    while get_field_value(locate_input_by_id(browser, document, id, type)) != value:
+        locate_input_by_id(browser, document, id, type).send_keys(Keys.UP + value)
 
 
 def handle_document_value_numbers(browser, document):
