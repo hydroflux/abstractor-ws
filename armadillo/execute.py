@@ -24,10 +24,9 @@ def record_single_document(browser, document_list, document, review):
     document_found(document_list, document, review)
 
 
-def download_single_document(browser, county, target_directory, document_list, document):
+def download_single_document(browser, target_directory, document_list, document):
     if not download_document(
         browser,
-        county,
         target_directory,
         document
     ):
@@ -37,7 +36,7 @@ def download_single_document(browser, county, target_directory, document_list, d
         document_downloaded(document_list, document)
 
 
-def handle_single_document(browser, county, target_directory, document_list, document, review):
+def handle_single_document(browser, target_directory, document_list, document, review):
     record_single_document(
         browser,
         document_list,
@@ -47,18 +46,16 @@ def handle_single_document(browser, county, target_directory, document_list, doc
     if download and not review:
         download_single_document(
             browser,
-            county,
             target_directory,
             document_list,
             document
         )
 
 
-def handle_search_results(browser, county, target_directory, document_list, document, review):
+def handle_search_results(browser, target_directory, document_list, document, review):
     if document.number_results == 1:
         handle_single_document(
             browser,
-            county,
             target_directory,
             document_list,
             document,
@@ -71,14 +68,13 @@ def handle_search_results(browser, county, target_directory, document_list, docu
         input()
 
 
-def search_documents_from_list(browser, county, target_directory, document_list, review):
+def search_documents_from_list(browser, target_directory, document_list, review):
     for document in document_list:
         document.start_time = start_timer()
         search(browser, document)
         if open_document(browser, document):
             handle_search_results(
                 browser,
-                county,
                 target_directory,
                 document_list,
                 document,
@@ -93,7 +89,7 @@ def search_documents_from_list(browser, county, target_directory, document_list,
 
 def execute_program(county, target_directory, document_list, file_name, review=False):
     browser = create_webdriver(target_directory, headless)
-    transform_document_list(document_list)
+    transform_document_list(document_list, county)
     account_login(browser)
     abstraction = export_document(
         county,
@@ -101,7 +97,6 @@ def execute_program(county, target_directory, document_list, file_name, review=F
         file_name,
         search_documents_from_list(
             browser,
-            county,
             target_directory,
             document_list,
             review

@@ -399,7 +399,7 @@ def get_reception_number(browser, document):
     document.reception_number = split_reception_field(reception_field)[0]
 
 
-def record_document(browser, dataframe, document):
+def record(browser, dataframe, document):
     image_available = handle_document_image_status(browser, document)
     record_document_fields(browser, dataframe, document, image_available)
     check_length(dataframe)

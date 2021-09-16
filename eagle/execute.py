@@ -21,16 +21,14 @@ from eagle.search import search
 print("execute", __name__)
 
 
-def record_single_document(browser, county, document_list, document, review):
-    record_document(browser, county, dataframe, document)  # why does county need to be passed in
+def record_single_document(browser, document_list, document, review):
+    record_document(browser, dataframe, document)
     document_found(document_list, document, review)
 
 
-def download_single_document(browser, county, target_directory, document_list, document):
-    # document_number = get_reception_number(browser, document)
+def download_single_document(browser, target_directory, document_list, document):
     if not download_document(
         browser,
-        county,
         dataframe,
         target_directory,
         document
@@ -43,10 +41,9 @@ def download_single_document(browser, county, target_directory, document_list, d
         # => this is probably a leftover from 'download document list'
 
 
-def handle_single_document(browser, county, target_directory, document_list, document, review):
+def handle_single_document(browser, target_directory, document_list, document, review):
     record_single_document(
         browser,
-        county,
         document_list,
         document,
         review
@@ -54,17 +51,15 @@ def handle_single_document(browser, county, target_directory, document_list, doc
     if download and not review:
         download_single_document(
             browser,
-            county,
             target_directory,
             document_list,
             document
         )
 
 
-def handle_multiple_documents(browser, county, target_directory, document_list, document, review):
+def handle_multiple_documents(browser, target_directory, document_list, document, review):
     handle_single_document(
         browser,
-        county,
         target_directory,
         document_list,
         document,
@@ -74,7 +69,6 @@ def handle_multiple_documents(browser, county, target_directory, document_list, 
         next_result(browser, document)
         handle_single_document(
             browser,
-            county,
             target_directory,
             document_list,
             document,
@@ -82,12 +76,11 @@ def handle_multiple_documents(browser, county, target_directory, document_list, 
         )
 
 
-def handle_search_results(browser, county, target_directory,
+def handle_search_results(browser, target_directory,
                           document_list, document, review):
     if document.number_results == 1:
         handle_single_document(
             browser,
-            county,
             target_directory,
             document_list,
             document,
@@ -96,32 +89,20 @@ def handle_search_results(browser, county, target_directory,
     elif document.number_results > 1:
         handle_multiple_documents(
             browser,
-            county,
             target_directory,
             document_list,
             document,
             review
         )
-    # elif alt == 'review':
-    #     if document.number_results > 1:
-    #         review_multiple_documents(browser, document_list, document)
-    #     else:
-    #         document_found document_list, document, "review")
-    # elif alt == "download":
-    #     if document.number_results > 1:
-    #         download_multiple_documents(browser, county, target_directory, document_list, document, start_time)
-    #     else:
-    #         download_single_document(browser, county, target_directory, document_list, document, start_time)
 
 
-def search_documents_from_list(browser, county, target_directory, document_list, review):
+def search_documents_from_list(browser, target_directory, document_list, review):
     for document in document_list:
         document.start_time = start_timer()
         search(browser, document)
         if open_document(browser, document):
             handle_search_results(
                 browser,
-                county,
                 target_directory,
                 document_list,
                 document,
@@ -134,12 +115,6 @@ def search_documents_from_list(browser, county, target_directory, document_list,
     return dataframe  # Is this necessary ? ? ?
 
 
-# def create_abstraction(browser, county, target_directory, document_list, file_name):
-#     dataframe = search_documents_from_list(browser, county, target_directory, document_list)
-#     # Is the dataframe return necessary ? ? ?
-#     return export_document(county, target_directory, file_name, dataframe)
-
-
 def execute_program(county, target_directory, document_list, file_name, review=False):
     browser = create_webdriver(target_directory, False)
     transform_document_list(document_list, county)
@@ -150,53 +125,14 @@ def execute_program(county, target_directory, document_list, file_name, review=F
         file_name,
         search_documents_from_list(
             browser,
-            county,
             target_directory,
             document_list,
             review
         )
     )
     # logout ???
-    # create_abstraction(browser, county, target_directory, document_list, file_name)
     bundle_project(target_directory, abstraction)
     browser.close()
-
-
-# def review_documents_from_list(browser, county, target_directory, document_list):
-#     for document in document_list:
-#         start_time = start_timer()
-#         search(browser, document)
-#         if open_document(browser, document):
-#             handle_search_results(browser, county, target_directory,
-#                                   document_list, document, 'review')
-#         else:
-#             no_document_found document_list, document, "review")
-
-
-def download_documents_from_list(browser, county, target_directory, document_list):
-    for document in document_list:
-        document.start_time = start_timer()
-        transform_document_list(document_list, county)
-        search(browser, document)
-        if open_document(browser, document):
-            handle_search_results(browser, county, target_directory,
-                                  document_list, document, 'download')
-        else:
-            no_document_found(document_list, document)
-
-
-# def execute_review(county, target_directory, document_list):
-#     browser = create_webdriver(target_directory, False)
-#     account_login(browser)
-#     review_documents_from_list(browser, county, target_directory, document_list)
-#     browser.close()
-
-
-# def execute_document_download(county, target_directory, document_list):
-#     browser = create_webdriver(target_directory, False)
-#     account_login(browser)
-#     download_documents_from_list(browser, county, target_directory, document_list)
-#     browser.close()
 
 
 # def execute_web_program(client, legal, upload_file):

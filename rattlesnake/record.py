@@ -1,3 +1,4 @@
+from settings.file_management import multiple_documents_comment
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -177,12 +178,11 @@ def record_related_documents(dataframe):
     dataframe['Related Documents'].append('')
 
 
-def record_comments(dataframe):
+def record_comments(dataframe, document):
     if document.number_results == 1:
         dataframe['Comments'].append('')
     elif document.number_results > 1:
-        dataframe["Comments"].append(multiple_documents_comment(county, document))
-
+        dataframe["Comments"].append(multiple_documents_comment(document))
 
 
 def record_document_fields(browser, dataframe, document):
@@ -196,10 +196,10 @@ def record_document_fields(browser, dataframe, document):
     record_parties_information(browser, dataframe, document)  # Grantor / Grantee
     record_book(dataframe)  # Book
     record_related_documents(dataframe)  # Related Documents
-    record_comments(dataframe)  # Comments
+    record_comments(dataframe, document)  # Comments
 
 
-def record(browser, dataframe, document, result_number=None):
+def record(browser, dataframe, document):
     if verify_document_description_page_loaded(browser, document):
         if handle_document_type_verification(browser, document):
             document.description_link = browser.current_url

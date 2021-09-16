@@ -23,10 +23,9 @@ def record_document(browser, document_list, document, review, result_number):
     document_found(document_list, document, review)
 
 
-def download_recorded_document(browser, county, target_directory, document_list, document):
+def download_recorded_document(browser, target_directory, document_list, document):
     if not download_document(
         browser,
-        county,
         target_directory,
         document
     ):
@@ -36,7 +35,7 @@ def download_recorded_document(browser, county, target_directory, document_list,
         document_downloaded(document_list, document)
 
 
-def handle_single_document(browser, county, target_directory, document_list, document, review, result_number=None):
+def handle_single_document(browser, target_directory, document_list, document, review, result_number=None):
     record_document(
         browser,
         document_list,
@@ -47,20 +46,18 @@ def handle_single_document(browser, county, target_directory, document_list, doc
     if download and not review:
         download_recorded_document(
             browser,
-            county,
             target_directory,
             document_list,
             document
         )
 
 
-def handle_multiple_documents(browser, county, target_directory, document_list, document, review):
+def handle_multiple_documents(browser, target_directory, document_list, document, review):
     for result_number in range(1, document.number_results):
         search(browser, document)
         open_document(browser, document, result_number)
         handle_single_document(
             browser,
-            county,
             target_directory,
             document_list,
             document,
@@ -69,11 +66,10 @@ def handle_multiple_documents(browser, county, target_directory, document_list, 
         )
 
 
-def handle_search_results(browser, county, target_directory, document_list, document, review):
+def handle_search_results(browser, target_directory, document_list, document, review):
     if open_document(browser, document):
         handle_single_document(
             browser,
-            county,
             target_directory,
             document_list,
             document,
@@ -82,7 +78,6 @@ def handle_search_results(browser, county, target_directory, document_list, docu
         if document.number_results > 1:
             handle_multiple_documents(
                 browser,
-                county,
                 target_directory,
                 document_list,
                 document,
@@ -93,13 +88,12 @@ def handle_search_results(browser, county, target_directory, document_list, docu
         no_document_found(document_list, document, review)
 
 
-def search_documents_from_list(browser, county, target_directory, document_list, review):
+def search_documents_from_list(browser, target_directory, document_list, review):
     for document in document_list:
         document.start_time = start_timer()
         search(browser, document)
         handle_search_results(
             browser,
-            county,
             target_directory,
             document_list,
             document,
@@ -119,7 +113,6 @@ def execute_program(county, target_directory, document_list, file_name, review=F
         file_name,
         search_documents_from_list(
             browser,
-            county,
             target_directory,
             document_list,
             review
