@@ -3,9 +3,7 @@ from selenium.common.exceptions import (ElementClickInterceptedException,
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-from settings.file_management import (document_type, document_value,
-                                      extrapolate_document_value,
-                                      split_book_and_page)
+
 from settings.general_functions import (clear_search_field, fill_search_field,
                                         medium_nap, naptime, scroll_into_view,
                                         timeout)
@@ -73,7 +71,7 @@ def locate_document_number_search_field(browser, document):
         return instrument_search_field
     except TimeoutException:
         print(f'Browser timed out trying to locate search field for '
-              f'{extrapolate_document_value(document)}.')
+              f'{document.extrapolate_value()}.')
 
 
 def handle_document_number_search_field(browser, document):
@@ -86,7 +84,7 @@ def handle_document_number_search_field(browser, document):
 
 def enter_document_number(browser, document):
     clear_search_field(handle_document_number_search_field(browser, document))
-    fill_search_field(handle_document_number_search_field(browser, document), document_value(document))
+    fill_search_field(handle_document_number_search_field(browser, document), document.document_value())
 
 
 def locate_book_search_field(browser, book):
@@ -136,15 +134,14 @@ def enter_page_number(browser, document, page):
 
 
 def prepare_book_and_page_search(browser, document):
-    book, page = split_book_and_page(document)
-    enter_book_number(browser, document, book)
-    enter_page_number(browser, document, page)
+    enter_book_number(browser, document, document.document_value()[0])
+    enter_page_number(browser, document, document.document_value()[1])
 
 
 def prepare_search(browser, document):
-    if document_type(document) == "document_number":
+    if document.type == "document_number":
         enter_document_number(browser, document)
-    elif document_type(document) == "book_and_page":
+    elif document.type == "book_and_page":
         prepare_book_and_page_search(browser, document)
 
 

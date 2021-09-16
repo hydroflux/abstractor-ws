@@ -2,7 +2,7 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-from settings.file_management import extrapolate_document_value
+
 from settings.general_functions import naptime, throw_alert, timeout
 
 from eagle.eagle_variables import error_message_class, error_message_text
@@ -21,11 +21,11 @@ def locate_error_message(browser):
 
 
 def check_for_error(browser, document):
-    print(f'Checking for error during processing of {extrapolate_document_value(document)}...')
+    print(f'Checking for error during processing of {document.extrapolate_value()}...')
     error_message = locate_error_message(browser)
     if type(error_message) is not None or error_message.text.startswith(error_message_text):
         print(f'An error occurred while opening the document located at '
-              f'{extrapolate_document_value(document)}, refreshing the page to try again.')
+              f'{document.extrapolate_value()}, refreshing the page to try again.')
         browser.refresh()
         naptime()
         return error_message_text

@@ -3,7 +3,7 @@ from selenium.common.exceptions import (StaleElementReferenceException,
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-from settings.file_management import extrapolate_document_value
+
 from settings.general_functions import naptime, short_nap, timeout
 
 from eagle.eagle_variables import (currently_searching, failed_search,
@@ -28,7 +28,7 @@ def validate_search(browser, document):
         else:
             return True
     except TimeoutException:
-        print(f'Browser timed out trying to validate the search for {extrapolate_document_value(document)}')
+        print(f'Browser timed out trying to validate the search for {document.extrapolate_value()}')
 
 
 def retry_search(browser, document):
@@ -63,7 +63,7 @@ def wait_for_results(browser):
 
 def retry_execute_search(browser, document, search_status):
     while search_status == failed_search:
-        print(f'Search failed for {extrapolate_document_value(document)},'
+        print(f'Search failed for {document.extrapolate_value()},'
               f' executing search again.')
         execute_search(browser)
         naptime()
@@ -96,7 +96,7 @@ def count_results(browser, document):
         return int(number_results)
     except TypeError:
         print(f'Encountered a "TypeError" trying to count search results for '
-              f'{extrapolate_document_value(document)}, please review.')
+              f'{document.extrapolate_value()}, please review.')
         return None
 
 
@@ -104,10 +104,10 @@ def handle_result_count(browser, document):
     search_status = wait_for_results(browser)
     if search_status == failed_search:
         print(f'Initial search failed, attempting to execute search again for '
-              f'{extrapolate_document_value(document)}')
+              f'{document.extrapolate_value()}')
         search_status = retry_execute_search(browser, document, search_status)
     if search_status == no_results_message:
-        print(f'No results located at {extrapolate_document_value(document)}, please review.')
+        print(f'No results located at {document.extrapolate_value()}, please review.')
         return 0
     else:
         return count_results(browser, document)
@@ -117,7 +117,7 @@ def process_result_count_from_search(browser, document):
     result_count = handle_result_count(browser, document)
     while result_count is None:
         print(f'Result count returned "None" for '
-              f'{extrapolate_document_value(document)}, attempting to execute search again.')
+              f'{document.extrapolate_value()}, attempting to execute search again.')
         retry_search(browser, document)  # Should correct for TypeError; doesn't account for fill_search_field failing
         result_count = handle_result_count(browser, document)
     return result_count
@@ -130,7 +130,7 @@ def check_search_results(browser, document):
         return False
     else:
         if number_results > 1:
-            print(f'{number_results} documents returned while searching {extrapolate_document_value(document)}.')
+            print(f'{number_results} documents returned while searching {document.extrapolate_value()}.')
         return True
 
 
@@ -162,4 +162,4 @@ def open_document(browser, document):
             return True
         except StaleElementReferenceException:
             print(f'Encountered a stale element exception while trying to open '
-                  f'{extrapolate_document_value(document)}, trying again.')
+                  f'{document.extrapolate_value()}, trying again.')

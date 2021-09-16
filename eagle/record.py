@@ -4,10 +4,10 @@ from selenium.common.exceptions import (ElementClickInterceptedException,
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+
 from settings.bad_search import no_document_image
 from settings.export_settings import search_errors
 from settings.file_management import (check_length, drop_last_entry,
-                                      extrapolate_document_value,
                                       multiple_documents_comment)
 from settings.general_functions import (center_element, long_timeout,
                                         medium_nap, naptime, scroll_to_top,
@@ -37,7 +37,7 @@ def access_image_container(browser, document):
         return image_container
     except TimeoutException:
         print('Browser timed out waiting for image container to load for '
-              f'{extrapolate_document_value(document)}, please review.')
+              f'{document.extrapolate_value()}, please review.')
         return check_for_error(browser, document)
 
 
@@ -69,7 +69,7 @@ def pdf_load_status(browser, document):
 
 def wait_for_pdf_to_load(browser, document):
     while pdf_load_status(browser, document).startswith(loading_status) or pdf_load_status == error_message_text:
-        print(f'hitting wait_for_pdf_to_load at {extrapolate_document_value(document)}')
+        print(f'hitting wait_for_pdf_to_load at {document.extrapolate_value()}')
         medium_nap()
         # naptime()
         # Status Quo (below) as of 06/23/21 changing to try & work with related documents issue
@@ -89,7 +89,7 @@ def handle_document_image_status(browser, document):
         return True
     else:
         print(f'No document image exists for '
-              f'{extrapolate_document_value(document)}, please review.')
+              f'{document.extrapolate_value()}, please review.')
         medium_nap()
         return False
 
@@ -102,7 +102,7 @@ def get_document_information(browser, document):
         return document_information
     except TimeoutException:
         print(f'Browser timed out while trying to get document information for '
-              f'{extrapolate_document_value(document)}.')
+              f'{document.extrapolate_value()}.')
 
 
 def access_document_information_tables(browser, document, document_information):
@@ -113,7 +113,7 @@ def access_document_information_tables(browser, document, document_information):
         return document_tables
     except TimeoutException:
         print(f'Browser timed out while trying to access document table information for '
-              f'{extrapolate_document_value(document)}.')
+              f'{document.extrapolate_value()}.')
 
 
 def get_informational_links(browser, document, document_information):
@@ -123,7 +123,7 @@ def get_informational_links(browser, document, document_information):
         informational_links = document_information.find_elements_by_class_name(information_links_class)
         return informational_links
     except TimeoutException:
-        print(f'Browser timed out while trying to get informational links for {extrapolate_document_value(document)}.')
+        print(f'Browser timed out while trying to get informational links for {document.extrapolate_value()}.')
 
 
 # def open_informational_grandparent(browser, link):
@@ -241,28 +241,28 @@ def record_legal_data(document_table, dataframe):
         dataframe["Legal"].append(legal)
 
 
-def locate_related_documents_table_rows(browser, document_table, dataframe):
+def locate_related_documents_table_rows(document, document_table):
     try:
         related_table_rows = document_table.find_elements_by_class_name(related_table_class)
         return related_table_rows
     except StaleElementReferenceException:
         print(f'Browser encountered StaleElementReferenceException trying to '
               f'located related documents table rows for '
-              f'{extrapolate_document_value(dataframe["Reception Number"][-1])}, trying again.')
+              f'{document.extrapolate_value()}, trying again.')
         return False
 
 
-def get_related_documents_table_rows(browser, document_table, dataframe):
-    related_documents_table_rows = locate_related_documents_table_rows(browser, document_table, dataframe)
+def get_related_documents_table_rows(browser, document_table, document):
+    related_documents_table_rows = locate_related_documents_table_rows(document, document_table)
     while related_documents_table_rows is False:
         center_element(browser, document_table)
-        related_documents_table_rows = locate_related_documents_table_rows(browser, document_table, dataframe)
+        related_documents_table_rows = locate_related_documents_table_rows(document, document_table)
     return related_documents_table_rows
 
 
-def record_related_documents(browser, document_table, dataframe):
+def record_related_documents(browser, document_table, dataframe, document):
     # If none then ... ? conditional -- need to test with some print statements to see general feedback first
-    related_table_rows = get_related_documents_table_rows(browser, document_table, dataframe)
+    related_table_rows = get_related_documents_table_rows(browser, document_table, document)
     related_documents_info = list(map(access_table_body, related_table_rows))
     related_document_list = list(map(access_title_case_text, related_documents_info))
     related_documents = "\n".join(related_document_list)
@@ -292,7 +292,7 @@ def aggregate_document_information(browser, document_tables, dataframe, document
     record_document_type(document_tables[0], dataframe)
     record_name_data(document_tables[2], dataframe)
     record_legal_data(document_tables[4], dataframe)
-    record_related_documents(browser, document_tables[-2], dataframe)
+    record_related_documents(browser, document_tables[-2], dataframe, document)
     record_notes(document_tables, dataframe)
 
 
@@ -343,7 +343,7 @@ def get_result_buttons(browser, document):
         result_buttons = browser.find_element_by_class_name(result_buttons_class)
         return result_buttons
     except TimeoutException:
-        print(f'Browser timed out while trying to locate result buttons for {extrapolate_document_value(document)}.')
+        print(f'Browser timed out while trying to locate result buttons for {document.extrapolate_value()}.')
 
 
 def get_previous_result_button(browser, document):
