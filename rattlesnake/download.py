@@ -12,7 +12,7 @@ from settings.general_functions import timeout
 from rattlesnake.rattlesnake_variables import (add_to_cart_button_id,
                                                download_page_id,
                                                free_download_button_id)
-from rattlesnake.validation import verify_document_image_page_loaded
+from rattlesnake.validation import verify_document_image_page_loaded, verify_valid_download
 
 
 def locate_download_page(browser, document):
@@ -54,25 +54,26 @@ def add_to_cart(browser, document):
     add_to_cart_button.click()
 
 
-def execute_download(browser, document_directory, document):
+def execute_download(browser, dataframe, document_directory, document):
     if document.download_type == 'free':
         number_files = len(os.listdir(document_directory))
         free_download(browser, document)
-        return update_download(
-            browser,
-            document_directory,
-            document,
-            number_files
-            )
+        if verify_valid_download(browser, dataframe, document):
+            return update_download(
+                browser,
+                document_directory,
+                document,
+                number_files
+                )
     elif document.download_type == 'paid':
         return add_to_cart(browser, document)
 
 
-def download_document(browser, target_directory, document):
+def download_document(browser, target_directory, dataframe, document):
     document_directory = create_document_directory(target_directory)
     if previously_downloaded(document_directory, document):
         return True
     else:
         open_download_page(browser, document)
         if verify_document_image_page_loaded(browser, document):
-            return execute_download(browser, document_directory, document)
+            return execute_download(browser, dataframe, document_directory, document)

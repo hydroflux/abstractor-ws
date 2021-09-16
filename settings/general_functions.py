@@ -216,8 +216,11 @@ def get_field_value(field):
 
 
 def date_from_string(string):
-    format = '%m/%d/%Y'
-    return datetime.strptime(string, format).strftime(format)
+    try:
+        format = '%m/%d/%Y'
+        return datetime.strptime(string, format).strftime(format)
+    except ValueError:
+        return string
 
 
 def clear_search_field(handle_field_function):

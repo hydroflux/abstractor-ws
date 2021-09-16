@@ -1,8 +1,9 @@
-from settings.file_management import extrapolate_document_value, split_volume_and_page
+from settings.bad_search import no_document_image
 from settings.general_functions import (assert_window_title, date_from_string,
                                         naptime)
 
-from rattlesnake.rattlesnake_variables import (bad_login_title,
+from rattlesnake.rattlesnake_variables import (bad_download_title,
+                                               bad_login_title,
                                                document_description_page_title,
                                                document_image_page_title,
                                                document_search_title,
@@ -77,7 +78,7 @@ def verify_document_search_page_loaded(browser, document, search):
         print('Browser failed to open search page on initial attempt, continuing after validation.')
     else:
         print(f'Browser failed to open document search link for '
-              f'{extrapolate_document_value(document)}, please review.')
+              f'{document.extrapolate_value()}, please review.')
         input()
 
 
@@ -86,7 +87,7 @@ def validate_result_reception_number(result, document):
 
 
 def validate_result_volume_and_page_numbers(result, document):
-    return all(value in result.text.split() for value in split_volume_and_page(document))
+    return all(value in result.text.split() for value in document.document_value())
 
 
 def verify_document_description_page_loaded(browser, document):
@@ -94,7 +95,7 @@ def verify_document_description_page_loaded(browser, document):
         return True
     else:
         print(f'Browser failed to open document description page for '
-              f'{extrapolate_document_value(document)}, please review')
+              f'{document.extrapolate_value()}, please review')
         input()
 
 
@@ -125,8 +126,15 @@ def verify_document_image_page_loaded(browser, document):
         print('Browser failed to open document image page on initial attempt, continuing after validation.')
     else:
         print(f'Browser failed to open document image page for '
-              f'{extrapolate_document_value(document)}, please review.')
+              f'{document.extrapolate_value()}, please review.')
         input()
+
+
+def verify_valid_download(browser, dataframe, document):
+    if assert_window_title(browser, bad_download_title):
+        no_document_image(dataframe, document)
+    else:
+        return True
 
 
 '''

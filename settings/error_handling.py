@@ -1,5 +1,4 @@
-from settings.file_management import extrapolate_document_value
-
-
 def no_image_comment(document):
-    return f'No document image available at {extrapolate_document_value(document)}, please review'
+    no_image_comment = f'No document image available at {document.extrapolate_value()}, please review'
+    print(no_image_comment)
+    return no_image_comment
