@@ -28,6 +28,6 @@ def enter_input_value(browser, document, input_function, type, id, value):
         input_function(browser, document, id, type).send_keys(Keys.UP + value)
 
 
-def click_button(browser, document, input_function, type, id):
+def click_button(browser, document, input_function, id, type):
     button = input_function(browser, document, id, type)
     button.click()

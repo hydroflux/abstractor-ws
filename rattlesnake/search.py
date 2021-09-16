@@ -32,7 +32,7 @@ def handle_document_value_numbers(browser, document):
 
 
 def execute_search(browser, document):
-    click_button(browser, document, document.button_ids["Submit Button"], "submit button")
+    click_button(browser, document, locate_input, document.button_ids["Submit Button"], "submit button")
 
 
 def document_search(browser, document):
