@@ -100,16 +100,14 @@ def open_result(browser, document, result_number=0):
     return handle_result_document_type(browser, result, document)
 
 
-def handle_search_results(browser, document, result_number=None):
+def handle_search_results(browser, document, result_number=0):
     if document.number_results == 0:
         return False
-    elif document.number_results == 1:
-        return open_result(browser, document)
     else:
         return open_result(browser, document, result_number)
 
 
-def open_document(browser, document, result_number=None):
-    if result_number is None:
+def open_document(browser, document, result_number=0):
+    if result_number == 0:
         count_results(browser, document)
     return handle_search_results(browser, document, result_number)

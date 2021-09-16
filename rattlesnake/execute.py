@@ -53,6 +53,7 @@ def handle_single_document(browser, target_directory, document_list, document, r
 
 def handle_multiple_documents(browser, target_directory, document_list, document, review):
     for result_number in range(1, document.number_results):
+        print('more than one', result_number)
         search(browser, document)
         open_document(browser, document, result_number)
         handle_single_document(

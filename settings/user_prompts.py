@@ -20,7 +20,7 @@ def get_program_type():
                        )
     while user_input not in ["1", "2", "3", "4"]:
         clear_terminal()
-        print(f'You entered {user_input} Please enter 1, 2, 3, or 4:')
+        print(f'You entered "{user_input}" Please enter 1, 2, 3, or 4:')
         user_input = input('What would you like to do? \n'
                            '[1] Execute Program \n'
                            '[2] Review Output \n'
@@ -50,7 +50,7 @@ def request_yes_or_no(prompt):
     user_input = input(f'{prompt} (Y/N) \n')
     while user_input.upper() not in ["Y", "N", "YES", "NO"]:
         clear_terminal()
-        print(f'You entered {user_input} Please enter "Y" or "N"')
+        print(f'You entered "{user_input}" Please enter "Y" or "N"')
         user_input = input(f'{prompt} (Y/N) \n')
     if user_input.upper() in ["Y", "YES"]:
         return True
@@ -96,7 +96,7 @@ def state_prompt():
                         )
     while state_input not in ["1", "2", "3", "4"]:
         clear_terminal()
-        print(f'You entered {state_input} Please enter 1, 2, 3, or 4:')
+        print(f'You entered "{state_input}" Please enter 1, 2, 3, or 4:')
         state_input = input('Please choose a state in which to create an abstraction?: \n'
                             '[1] Colorado \n'
                             '[2] Louisiana \n'
@@ -168,7 +168,7 @@ def available_file_names(target_directory):
 
 
 def file_name_prompt(current_file_name):
-    print(f'Current File Name: {current_file_name}')
+    print(f'Current File Name: "{current_file_name}"')
     if request_yes_or_no('Has the file name changed?'):
         file_name_input = input("Please enter the new file name: \n")
         return f'{file_name_input}'
@@ -182,7 +182,7 @@ def available_sheet_names():
 
 
 def sheet_name_prompt(current_sheet_name):
-    print(f'Current Sheet Name: {current_sheet_name}')
+    print(f'Current Sheet Name: "{current_sheet_name}"')
     if request_yes_or_no('Has the sheet name changed?'):
         sheet_name_input = input("Please enter the new sheet name: \n")
         return f'{sheet_name_input}'
@@ -199,7 +199,7 @@ def download_type_prompt(county):
     download_type_input = input(input_statement).lower()
     while download_type_input not in ['1', 'f', 'free', '2', 'p', 'paid']:
         clear_terminal()
-        print(f'You entered {download_type_input} Please choose from the following options')
+        print(f'You entered "{download_type_input}" Please choose from the following options')
         download_type_input = input(input_statement).lower()
     if download_type_input in ['1', 'f', 'free']:
         return 'free'
