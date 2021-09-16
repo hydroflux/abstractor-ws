@@ -1,3 +1,4 @@
+from armadillo.transform_document_list import transform_document_list
 from settings.abstract_object import abstract_dictionary as dataframe
 from settings.bad_search import record_bad_search, unable_to_download
 from settings.driver import create_webdriver
@@ -94,7 +95,7 @@ def search_documents_from_list(browser, county, target_directory, document_list,
 
 def execute_program(county, target_directory, document_list, file_name, review=False):
     browser = create_webdriver(target_directory, headless)
-    # transform
+    transform_document_list(document_list)
     account_login(browser)
     abstraction = export_document(
         county,
