@@ -7,8 +7,8 @@ from selenium.common.exceptions import (NoSuchWindowException, JavascriptExcepti
 from settings.general_functions import long_nap, naptime
 
 
-def previously_downloaded(county, document_directory, document_number):
-    document_download_path = f'{document_directory}/{county.prefix}-{document_number}.pdf'
+def previously_downloaded(document_directory, document):
+    document_download_path = f'{document_directory}/{document.county.prefix}-{document.reception_number}.pdf'
     if os.path.exists(document_download_path):
         return True
     else:
@@ -163,13 +163,13 @@ def check_for_rename(browser, document_directory, number_files, document_number,
         raise ValueError("%s isn't a file!" % rename_path)
 
 
-def update_download(browser, county, stock_download, document_directory, number_files, document_number, alt=None):
+def update_download(browser, document_directory, document, number_files, alt=None):
     download_path, current_download = set_download_path(browser, document_directory, stock_download, alt)
     if wait_for_download(browser, document_directory, download_path, number_files):
         return False
     else:
         naptime()
-        new_download_name = f'{county.prefix}-{document_number}.pdf'
+        new_download_name = f'{document.county.prefix}-{document.reception_number}.pdf'
         rename_download(document_directory, current_download, document_number, download_path, new_download_name)
         # naptime()
         check_for_rename(browser, document_directory, number_files, document_number, new_download_name)

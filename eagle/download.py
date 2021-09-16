@@ -54,27 +54,24 @@ def execute_download(browser):
         print("Browser timed out while trying to click the download button.")
 
 
-def build_stock_download(document_number):
-    return f'{document_number}-{stock_download_suffix}'
+def build_stock_download(document):
+    document.download_value = f'{document.reception_number}-{stock_download_suffix}'
 
 
-def download_document(browser, county, dataframe, target_directory, document):
+def download_document(browser, dataframe, target_directory, document):
     if download_available(dataframe, document):
         document_directory = create_document_directory(target_directory)
-        if previously_downloaded(county, document_directory, document.reception_number):
+        if previously_downloaded(document_directory, document):
             return True
         else:
             number_files = len(os.listdir(document_directory))
-            stock_download = build_stock_download(document.reception_number)
+            build_stock_download(document)
             access_pdf_viewer(browser)
             execute_download(browser)
             switch_to_default_content(browser)
-            if update_download(
+            return update_download(
                 browser,
-                county,
-                stock_download,
                 document_directory,
-                number_files,
-                document.reception_number
-            ):
-                return True
+                document,
+                number_files
+            )

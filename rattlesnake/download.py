@@ -54,27 +54,26 @@ def add_to_cart(browser, document):
     add_to_cart_button.click()
 
 
-def execute_download(browser, county, document_directory, document):
+def execute_download(browser, document_directory, document):
     if document.download_type == 'free':
+        number_files = len(os.listdir(document_directory))
         free_download(browser, document)
         return update_download(
             browser,
-            county,
-            '',
             document_directory,
-            len(os.listdir(document_directory)),
-            document.reception_number,
+            document,
+            number_files,
             'alt'
             )
     elif document.download_type == 'paid':
         return add_to_cart(browser, document)
 
 
-def download_document(browser, county, target_directory, document):
+def download_document(browser, target_directory, document):
     document_directory = create_document_directory(target_directory)
-    if previously_downloaded(county, document_directory, document.reception_number):
+    if previously_downloaded(document_directory, document):
         return True
     else:
         open_download_page(browser, document)
         if verify_document_image_page_loaded(browser, document):
-            return execute_download(browser, county, document_directory, document)
+            return execute_download(browser, document_directory, document)
