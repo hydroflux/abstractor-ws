@@ -41,9 +41,9 @@ def list_remaining_documents(document_list, document):
     return f'{remaining_documents(document_list, document)} documents remaining'
 
 
-def multiple_documents_comment(county, document):
+def multiple_documents_comment(document):
     return (f'Multiple documents located at {extrapolate_document_value(document)}'
-            f' on the {county} recording website; Each of the {document.number_results}'
+            f' on the {document.county} recording website; Each of the {document.number_results}'
             f' documents has been listed, please review')
 
 

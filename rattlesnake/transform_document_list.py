@@ -17,6 +17,12 @@ def update_input_ids(document_list):
             }
 
 
-def transform_document_list(document_list):
+def update_county(document_list, county):
+    for document in document_list:
+        document.county = county
+
+
+def transform_document_list(document_list, county):
     convert_document_numbers(document_list)
     update_input_ids(document_list)
+    update_county(document_list, county)

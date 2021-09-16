@@ -111,7 +111,7 @@ def search_documents_from_list(browser, county, target_directory, document_list,
 
 def execute_program(county, target_directory, document_list, file_name, review=False):
     browser = create_webdriver(target_directory, headless)
-    transform_document_list(document_list)
+    transform_document_list(document_list, county)
     account_login(browser)
     abstraction = export_document(
         county,

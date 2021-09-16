@@ -60,7 +60,8 @@
 
 #### Document Class To Do
 
-- [ ] Add 'start_time' as a 'Document' class attribute
+- [ ] 'button ids' need to be separate from 'input ids' in 'transform_document_list' functions and 'Document' class
+- [ ] Add 'county' to the 'Document' class
 
 ### Imports To Do
 

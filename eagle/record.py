@@ -304,36 +304,36 @@ def record_volume(dataframe):
     dataframe['Volume'].append('')
 
 
-def record_comments(county, dataframe, document, image_available):
-    if document.number_results > 1:
-        dataframe["Comments"].append(multiple_documents_comment(county, document))
-    else:
+def record_comments(dataframe, document, image_available):
+    if document.number_results == 1:
         dataframe["Comments"].append("")
+    elif document.number_results > 1:
+        dataframe["Comments"].append(multiple_documents_comment(document))
     if not image_available:
         no_document_image(dataframe, document)
 
 
-def record_document_fields(browser, county, dataframe, document, image_available):
+def record_document_fields(browser, dataframe, document, image_available):
     document_information = get_document_information(browser, document)
     document_tables = access_document_information_tables(browser, document, document_information)
     display_all_information(browser, document)
     aggregate_document_information(browser, document_tables, dataframe, document)
     record_effective_date(dataframe)
     record_volume(dataframe)
-    record_comments(county, dataframe, document, image_available)
+    record_comments(dataframe, document, image_available)
     scroll_to_top(browser)
 
 
-def review_entry(browser, county, dataframe, document, image_available):
+def review_entry(browser, dataframe, document, image_available):
     while dataframe["Grantor"][-1] == missing_values[0] and dataframe["Grantee"][-1] == missing_values[0]\
             and dataframe["Related Documents"][-1] == missing_values[1]:
         print("Recording of last document was processed incorrectly, attempting to record again.")
-        re_record_document_fields(browser, county, dataframe, document, image_available)
+        re_record_document_fields(browser, dataframe, document, image_available)
 
 
-def re_record_document_fields(browser, county, dataframe, document, image_available):
+def re_record_document_fields(browser, dataframe, document, image_available):
     drop_last_entry(dataframe)
-    record_document_fields(browser, county, dataframe, document, image_available)
+    record_document_fields(browser, dataframe, document, image_available)
 
 
 def get_result_buttons(browser, document):
@@ -399,8 +399,8 @@ def get_reception_number(browser, document):
     document.reception_number = split_reception_field(reception_field)[0]
 
 
-def record_document(browser, county, dataframe, document):
+def record_document(browser, dataframe, document):
     image_available = handle_document_image_status(browser, document)
-    record_document_fields(browser, county, dataframe, document, image_available)
+    record_document_fields(browser, dataframe, document, image_available)
     check_length(dataframe)
-    review_entry(browser, county, dataframe, document, image_available)
+    review_entry(browser, dataframe, document, image_available)

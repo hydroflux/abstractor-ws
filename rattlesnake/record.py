@@ -178,7 +178,11 @@ def record_related_documents(dataframe):
 
 
 def record_comments(dataframe):
-    dataframe['Comments'].append('')
+    if document.number_results == 1:
+        dataframe['Comments'].append('')
+    elif document.number_results > 1:
+        dataframe["Comments"].append(multiple_documents_comment(county, document))
+
 
 
 def record_document_fields(browser, dataframe, document):

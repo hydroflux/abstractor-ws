@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+from eagle.transform_document_list import transform_document_list
 from settings.abstract_object import abstract_dictionary as dataframe
 from settings.bad_search import record_bad_search, unable_to_download
 from settings.driver import create_webdriver
@@ -141,6 +142,7 @@ def search_documents_from_list(browser, county, target_directory, document_list,
 
 def execute_program(county, target_directory, document_list, file_name, review=False):
     browser = create_webdriver(target_directory, False)
+    transform_document_list(document_list, county)
     account_login(browser)
     abstraction = export_document(
         county,
@@ -174,6 +176,7 @@ def execute_program(county, target_directory, document_list, file_name, review=F
 def download_documents_from_list(browser, county, target_directory, document_list):
     for document in document_list:
         document.start_time = start_timer()
+        transform_document_list(document_list, county)
         search(browser, document)
         if open_document(browser, document):
             handle_search_results(browser, county, target_directory,
@@ -189,11 +192,11 @@ def download_documents_from_list(browser, county, target_directory, document_lis
 #     browser.close()
 
 
-def execute_document_download(county, target_directory, document_list):
-    browser = create_webdriver(target_directory, False)
-    account_login(browser)
-    download_documents_from_list(browser, county, target_directory, document_list)
-    browser.close()
+# def execute_document_download(county, target_directory, document_list):
+#     browser = create_webdriver(target_directory, False)
+#     account_login(browser)
+#     download_documents_from_list(browser, county, target_directory, document_list)
+#     browser.close()
 
 
 # def execute_web_program(client, legal, upload_file):
