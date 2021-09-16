@@ -7,7 +7,7 @@ if __name__ == '__main__':
     from crocodile.execute import execute_name_search as name_search_crocodile
     from crocodile.execute import execute_program as execute_crocodile
     from crocodile.execute import execute_review as review_crocodile
-    from eagle.execute import execute_document_download as download_eagle
+    # from eagle.execute import execute_document_download as download_eagle
     from eagle.execute import execute_program as execute_eagle
     from leopard.execute import execute_document_download as download_leopard
     from leopard.execute import execute_program as execute_leopard
