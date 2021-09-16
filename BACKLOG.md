@@ -61,6 +61,8 @@
 #### Document Class To Do
 
 - [ ] 'button ids' need to be separate from 'input ids' in 'transform_document_list' functions and 'Document' class
+- [ ] Add 'download_path' to the 'Document' class
+- [ ] Add 'new_download_name' to the 'Document' class (name it something more eloquent)
 
 ### Imports To Do
 

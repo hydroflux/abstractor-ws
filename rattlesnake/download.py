@@ -62,8 +62,7 @@ def execute_download(browser, document_directory, document):
             browser,
             document_directory,
             document,
-            number_files,
-            'alt'
+            number_files
             )
     elif document.download_type == 'paid':
         return add_to_cart(browser, document)
