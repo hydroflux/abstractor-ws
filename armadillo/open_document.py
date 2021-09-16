@@ -4,7 +4,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from settings.general_functions import get_direct_link, timeout
 
-from armadillo.armadillo_variables import (link_tag, number_results_class,
+from armadillo.armadillo_variables import (link_tag, number_results_class, multiple_results_message,
                                            result_class_names,
                                            search_results_id,
                                            single_result_message)
@@ -28,9 +28,11 @@ def count_results(browser, document):
     result_count = locate_result_count(browser, document)
     if result_count.text == single_result_message:
         document.number_results += 1
+    elif result_count.text.endswith(multiple_results_message):
+        document.number_results += int(result_count.text[:-len(multiple_results_message)])
     else:
-        print(f'Browser located more or less than 1 search results for '
-              f'{document.extrapolate_value()}, new logic path needs to be developed.')
+        print(f'Browser unable to determine results for '
+              f'{document.extrapolate_value()}, please review.')
         print("Please press enter after reviewing the search results...")
         input()
 
