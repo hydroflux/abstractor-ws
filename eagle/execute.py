@@ -14,19 +14,19 @@ from settings.settings import download
 from eagle.download import download_document
 from eagle.login import account_login
 from eagle.open_document import open_document
-from eagle.record import next_result, record_document
+from eagle.record import next_result, record
 from eagle.search import search
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("execute", __name__)
 
 
-def record_single_document(browser, document_list, document, review):
-    record_document(browser, dataframe, document)
+def record_document(browser, document_list, document, review):
+    record(browser, dataframe, document)
     document_found(document_list, document, review)
 
 
-def download_single_document(browser, target_directory, document_list, document):
+def download_recorded_document(browser, target_directory, document_list, document):
     if not download_document(
         browser,
         dataframe,
@@ -42,14 +42,14 @@ def download_single_document(browser, target_directory, document_list, document)
 
 
 def handle_single_document(browser, target_directory, document_list, document, review):
-    record_single_document(
+    record_document(
         browser,
         document_list,
         document,
         review
     )
     if download and not review:
-        download_single_document(
+        download_recorded_document(
             browser,
             target_directory,
             document_list,
