@@ -105,17 +105,13 @@ def execute_program(county, target_directory, document_list, file_name, review=F
     browser = create_webdriver(target_directory, headless)
     transform_document_list(document_list, county)
     account_login(browser)
-    abstraction = export_document(
-        county,
-        target_directory,
-        file_name,
-        search_documents_from_list(
-            browser,
+    search_documents_from_list(browser, target_directory, document_list, review)
+    if not review:
+        abstraction = export_document(
+            county,
             target_directory,
-            document_list,
-            review
+            file_name,
         )
-    )
+        bundle_project(target_directory, abstraction)
     logout(browser)
-    bundle_project(target_directory, abstraction)
     browser.close()
