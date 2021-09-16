@@ -20,9 +20,9 @@ print("download", __name__)
 
 def download_available(dataframe, document):
     if dataframe["Comments"][-1].endswith(no_image_comment(document)):
+        print(no_image_comment(document))
         return False
     else:
-        print(no_image_comment(document))
         return True
 
 

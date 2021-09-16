@@ -123,8 +123,8 @@ def validate_date(text):
     return len(text) == 10 and date_from_string(text) == text
 
 
-def validate_download_link(document, string):
-    return f'{document.download_value}.pdf' == string
+# def validate_download_link(document, string):
+#     return f'{document.download_value}.pdf' == string
 
 
 '''

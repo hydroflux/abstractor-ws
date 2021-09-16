@@ -18,7 +18,6 @@ from armadillo.armadillo_variables import (add_to_cart_name,
                                            download_page_class_name,
                                            download_prefix,
                                            free_download_button_tag)
-from armadillo.validation import validate_download_link
 
 
 def locate_download_page(browser, document):
@@ -66,10 +65,10 @@ def access_listed_download_name(download_content):
     return newline_split(download_content.text)[0]
 
 
-def verify_download(browser, document):
-    download_content = access_download_content(browser, document)
-    listed_download_name = access_listed_download_name(download_content)
-    return validate_download_link(document, listed_download_name)
+# def verify_download(browser, document):
+#     download_content = access_download_content(browser, document)
+#     listed_download_name = access_listed_download_name(download_content)
+#     return validate_download_link(document, listed_download_name)
 
 
 def locate_free_download_button(download_content, document):
@@ -134,12 +133,20 @@ def execute_download(browser, document_directory, document):
         return add_to_cart(browser, document)
 
 
-def download_document(browser, target_directory, document):
+def check_last_document(dataframe, document, result_number):
+    if result_number > 0 and document.reception_number == dataframe["Reception Number"][-2]:
+        document.reception_number = f'{document.reception_number}-{result_number}'
+        dataframe["Reception Number"][-1] = document.reception_number
+    else:
+        return True
+
+
+def download_document(browser, target_directory, dataframe, document, result_number):
     document_directory = create_document_directory(target_directory)
     if previously_downloaded(document_directory, document):
-        return True
-    else:
-        open_download_page(browser, document)
-        if verify_download(browser, document):
-            switch_to_default_content(browser)
-            return execute_download(browser, document_directory, document)
+        if check_last_document(dataframe, document, result_number):
+            return True
+    open_download_page(browser, document)
+    # if verify_download(browser, document):
+    switch_to_default_content(browser)
+    return execute_download(browser, document_directory, document)

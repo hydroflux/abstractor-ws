@@ -140,8 +140,8 @@ def access_date(date_text, document, type):
     else:
         print(f'Browser failed to validate {type} date for '
               f'{document.extrapolate_value()} instead finding '
-              f'"{date_text}", please review before continuing...')
-        input()
+              f'"{date_text}", recording an empty string instead.')
+        return ''
 
 
 def record_date(row, dataframe, document, type):

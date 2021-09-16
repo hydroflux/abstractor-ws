@@ -23,11 +23,13 @@ def record_document(browser, document_list, document, review):
     document_found(document_list, document, review)
 
 
-def download_recorded_document(browser, target_directory, document_list, document):
+def download_recorded_document(browser, target_directory, dataframe, document_list, document, result_number):
     if not download_document(
         browser,
         target_directory,
-        document
+        dataframe,
+        document,
+        result_number
     ):
         no_document_image(dataframe, document)
         no_document_downloaded(document_list, document)
@@ -35,7 +37,7 @@ def download_recorded_document(browser, target_directory, document_list, documen
         document_downloaded(document_list, document)
 
 
-def handle_single_document(browser, target_directory, document_list, document, review):
+def handle_single_document(browser, target_directory, document_list, document, review, result_number=0):
     record_document(
         browser,
         document_list,
@@ -46,8 +48,10 @@ def handle_single_document(browser, target_directory, document_list, document, r
         download_recorded_document(
             browser,
             target_directory,
+            dataframe,
             document_list,
-            document
+            document,
+            result_number
         )
 
 
@@ -60,7 +64,8 @@ def handle_multiple_documents(browser, target_directory, document_list, document
             target_directory,
             document_list,
             document,
-            review
+            review,
+            result_number
         )
 
 
