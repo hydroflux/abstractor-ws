@@ -215,6 +215,7 @@
 - [ ] Refactor 'open_document' selenium functions into selenium utilities directory
 - [ ] Refactor 'record' selenium functions into selenium utilities directory
 - [ ] Add a method for handling "NO DOCUMENT TYPES"
+- [ ] Drop book from Dataframe
 
 ### Testing Script To Do
 

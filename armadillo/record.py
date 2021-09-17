@@ -79,16 +79,14 @@ def access_download_value(document, reception_number):
 
 
 def access_reception_number(reception_number):
-    return reception_number[len(reception_number_prefix):].replace('-', '')
+    return reception_number[len(reception_number_prefix):]
+    # return reception_number[len(reception_number_prefix):].replace('-', '')
 
 
 def update_reception_number(document, reception_number):
     if reception_number.startswith(reception_number_prefix) and handle_document_validation(document, reception_number):
         access_download_value(document, reception_number)
         reception_number = access_reception_number(reception_number)
-        if document.type == 'volume_and_page' and reception_number == '1':
-            return (f'{four_character_padding(document.document_value()[0])}-'
-                    f'{four_character_padding(document.document_value()[1])}')
         return reception_number
     else:
         print(f'Reception number "{reception_number}" does not match the expected result format for '
@@ -273,6 +271,17 @@ def record_comments(dataframe, document):
         dataframe['Comments'].append('')
     elif document.number_results > 1:
         dataframe["Comments"].append(multiple_documents_comment(document))
+
+
+def record_document_link(dataframe, document):
+    if document.reception_number.find('-') == -1:
+        document_link = (f'{four_character_padding(dataframe["Book"][-1])}-'
+                         f'{four_character_padding(dataframe["Volume"][-1])}-'
+                         f'{four_character_padding(dataframe["Page"][-1])}-')
+    else:
+        document_link = document.reception_number
+    document.new_name = document_link
+    dataframe["Document Link"].append(document_link)
 
 
 def record_document_fields(browser, dataframe, document):

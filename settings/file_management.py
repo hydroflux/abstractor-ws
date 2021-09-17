@@ -108,6 +108,7 @@ def drop_last_entry(dataframe):
     dataframe["Volume"].pop()
     dataframe["Page"].pop()
     dataframe["Reception Number"].pop()
+    dataframe["Document Link"].pop()
     dataframe["Document Type"].pop()
     dataframe["Effective Date"].pop()
     dataframe["Recording Date"].pop()
@@ -123,6 +124,7 @@ def check_length(dataframe):
     volumes = len(dataframe["Volume"])
     pages = len(dataframe["Page"])
     reception_numbers = len(dataframe["Reception Number"])
+    document_links = len(dataframe["Document Link"])
     document_types = len(dataframe["Document Type"])
     effective_dates = len(dataframe["Effective Date"])
     recording_dates = len(dataframe["Recording Date"])
@@ -130,7 +132,7 @@ def check_length(dataframe):
     related_documents = len(dataframe["Related Documents"])
     comments = len(dataframe["Comments"])
     if (grantors == grantees == books == volumes == pages
-            == reception_numbers == document_types
+            == reception_numbers == document_links == document_types
             == effective_dates == recording_dates == legals
             == related_documents == comments):
         pass
@@ -141,6 +143,7 @@ def check_length(dataframe):
         print("Volumes: ", volumes)
         print("Pages: ", pages)
         print("Reception Numbers: ", reception_numbers)
+        print("Document Links: ", document_links)
         print("Document Types: ", document_types)
         print("Effective Dates: ", effective_dates)
         print("Recording Dates: ", recording_dates)

@@ -53,8 +53,8 @@ def get_downloaded_file_name(browser, wait_time=300):
 
 
 def set_download_path_and_name_values(browser, document_directory, document):
-    document.new_name = f'{document.county.prefix}-{document.reception_number}.pdf'
     if document.download_value is not None:
+        document.new_name = f'{document.county.prefix}-{document.reception_number}.pdf'
         document.download_path = f'{document_directory}/{document.download_value}'
     else:
         document.download_value = get_downloaded_file_name(browser)
