@@ -288,6 +288,7 @@ def record_document_fields(browser, dataframe, document):
     record_document_type_and_number(browser, dataframe, document)
     aggregate_document_table_information(browser, dataframe, document)
     record_comments(dataframe, document)
+    record_document_link(dataframe, document)
 
 
 def record(browser, dataframe, document):
