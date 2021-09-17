@@ -134,9 +134,15 @@ def execute_download(browser, document_directory, document):
 
 
 def check_last_document(dataframe, document, result_number):
-    if result_number > 0 and document.reception_number == dataframe["Reception Number"][-2]:
-        document.reception_number = f'{document.reception_number}-{result_number}'
-        dataframe["Reception Number"][-1] = document.reception_number
+    if result_number > 0:
+        if document.reception_number == dataframe["Reception Number"][-2]:
+            document.reception_number = f'{document.reception_number}-{result_number}'
+            dataframe["Reception Number"][-1] = document.reception_number
+        elif f'{document.reception_number}-{result_number - 1}' == dataframe["Reception Number"][-2]:
+            document.reception_number = f'{document.reception_number}-{result_number}'
+            dataframe["Reception Number"][-1] = document.reception_number
+        else:
+            return True
     else:
         return True
 

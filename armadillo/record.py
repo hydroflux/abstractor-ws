@@ -4,7 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-from settings.general_functions import (date_from_string, element_title_strip,
+from settings.general_functions import (date_from_string, element_title_strip, four_character_padding,
                                         list_to_string, newline_split,
                                         print_list_by_index, timeout,
                                         title_strip)
@@ -86,6 +86,9 @@ def update_reception_number(document, reception_number):
     if reception_number.startswith(reception_number_prefix) and handle_document_validation(document, reception_number):
         access_download_value(document, reception_number)
         reception_number = access_reception_number(reception_number)
+        if document.type == 'volume_and_page' and reception_number == '1':
+            return (f'{four_character_padding(document.document_value()[0])}-'
+                    f'{four_character_padding(document.document_value()[1])}')
         return reception_number
     else:
         print(f'Reception number "{reception_number}" does not match the expected result format for '
