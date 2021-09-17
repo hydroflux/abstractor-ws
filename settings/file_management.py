@@ -64,7 +64,7 @@ def document_value(document):
 
 
 def extrapolate_document_value(document):
-    value = document_value(document)
+    value = document.document_value()
     type = document_type(document)
     if type == "book_and_page":
         return f'Book: {value[0]}, Page: {value[1]}'
@@ -81,16 +81,16 @@ def extrapolate_document_value(document):
 
 # Consolidate split_book_and_page & split_volume_and_page
 def split_book_and_page(document):
-    book = four_character_padding(document_value(document)[0])
-    page = four_character_padding(document_value(document)[1])
+    book = four_character_padding(document.document_value()[0])
+    page = four_character_padding(document.document_value()[1])
     return book, page
     # Check to see if the padding is affecting search results
     # Consider only adding the padding when updating the document frame
 
 
 def split_volume_and_page(document):
-    volume = document_value(document)[0]
-    page = document_value(document)[1]
+    volume = document.document_value()[0]
+    page = document.document_value()[1]
     return volume, page
 
 
@@ -157,6 +157,7 @@ def account_for_number_results(document):
         return f'({document.number_results} documents for {document.extrapolate_value()}), '
     else:
         return ','
+
 
 def document_found(document_list, document, review):
     if review is False:
