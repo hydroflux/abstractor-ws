@@ -30,6 +30,7 @@ def count_results(browser, document):
         document.number_results += 1
     elif result_count.text.endswith(multiple_results_message):
         document.number_results += int(result_count.text[:-len(multiple_results_message)])
+        print(f'{document.number_results} documents returned while searching {document.extrapolate_value()}.')
     else:
         print(f'Browser unable to determine results for '
               f'{document.extrapolate_value()}, please review.')

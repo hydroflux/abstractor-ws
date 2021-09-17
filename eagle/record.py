@@ -310,7 +310,6 @@ def record_comments(dataframe, document, image_available):
     elif document.number_results > 1:
         dataframe["Comments"].append(multiple_documents_comment(document))
     if not image_available:
-        print('record comments', image_available)
         no_document_image(dataframe, document)
 
 

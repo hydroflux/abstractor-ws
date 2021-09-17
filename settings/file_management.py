@@ -152,15 +152,23 @@ def check_length(dataframe):
         print("Comments: ", comments)
 
 
+def account_for_number_results(document):
+    if document.number_results > 1:
+        return f'({document.number_results} documents for {document.extrapolate_value()}), '
+    else:
+        return ','
+
 def document_found(document_list, document, review):
     if review is False:
         print('Document located at '
-              f'{extrapolate_document_value(document)} recorded, '
+              f'{extrapolate_document_value(document)} recorded '
               f'{list_remaining_documents(document_list, document)} '
+              f'{account_for_number_results(document)}'
               f'({report_execution_time(document.start_time)})')
     elif review is True:
-        input(f'Document located at {extrapolate_document_value(document)} found, '
+        input(f'Document located at {extrapolate_document_value(document)} found '
               'please review & press enter to continue... '
+              f'{account_for_number_results(document)}'
               f'({list_remaining_documents(document_list, document)}) '
               f'({report_execution_time(document.start_time)})')
     # elif alt == "download":
@@ -185,13 +193,15 @@ def no_document_found(document_list, document, review):
 
 def document_downloaded(document_list, document):
     print(f'Document located at '
-          f'{extrapolate_document_value(document)} downloaded, '
+          f'{extrapolate_document_value(document)} downloaded '
+          f'{account_for_number_results(document)}'
           f'{list_remaining_documents(document_list, document)}')
 
 
 def no_document_downloaded(document_list, document):
     print(f'Unable to download document at '
-          f'{extrapolate_document_value(document)}, '
+          f'{extrapolate_document_value(document)} '
+          f'{account_for_number_results(document)}'
           f'{list_remaining_documents(document_list, document)}')
 
 

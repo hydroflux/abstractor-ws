@@ -48,6 +48,8 @@ def count_results(browser, document):
     result_rows = get_search_result_rows(browser, document)
     for _ in result_rows:
         document.number_results += 1
+    if document.number_results > 1:
+        print(f'{document.number_results} documents returned while searching {document.extrapolate_value()}.')
 
 
 def get_result(browser, document, result_number=0):
