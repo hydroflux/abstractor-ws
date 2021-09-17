@@ -275,12 +275,12 @@ def record_comments(dataframe, document):
 
 def record_document_link(dataframe, document):
     if document.reception_number.find('-') == -1:
-        document_link = (f'{four_character_padding(dataframe["Book"][-1])}-'
+        document_link = (f'{dataframe["Book"][-1]}-'
                          f'{four_character_padding(dataframe["Volume"][-1])}-'
-                         f'{four_character_padding(dataframe["Page"][-1])}-')
+                         f'{four_character_padding(dataframe["Page"][-1])}')
     else:
         document_link = document.reception_number
-    document.new_name = document_link
+    document.new_name = f'{document.county.prefix}-{document_link}.pdf'
     dataframe["Document Link"].append(document_link)
 
 

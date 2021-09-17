@@ -7,8 +7,15 @@ from selenium.common.exceptions import (NoSuchWindowException, JavascriptExcepti
 from settings.general_functions import long_nap, naptime
 
 
+def build_previous_download_path(document_directory, document):
+    if document.new_name is None:
+        return f'{document_directory}/{document.county.prefix}-{document.reception_number}.pdf'
+    else:
+        return f'{document_directory}/{document.county.prefix}-{document.new_name}.pdf'
+
+
 def previously_downloaded(document_directory, document):
-    document_download_path = f'{document_directory}/{document.county.prefix}-{document.reception_number}.pdf'
+    document_download_path = build_previous_download_path(document_directory, document)
     if os.path.exists(document_download_path):
         return True
     else:
