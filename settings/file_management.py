@@ -42,7 +42,7 @@ def list_remaining_documents(document_list, document):
 
 
 def multiple_documents_comment(document):
-    return (f'Multiple documents located at {extrapolate_document_value(document)}'
+    return (f'Multiple documents located at {document.extrapolate_value()}'
             f' on the {document.county} recording website; Each of the {document.number_results}'
             f' documents has been listed, please review')
 
@@ -161,19 +161,19 @@ def account_for_number_results(document):
 def document_found(document_list, document, review):
     if review is False:
         print('Document located at '
-              f'{extrapolate_document_value(document)} recorded '
+              f'{document.extrapolate_value()} recorded '
               f'{list_remaining_documents(document_list, document)} '
               f'{account_for_number_results(document)}'
               f'({report_execution_time(document.start_time)})')
     elif review is True:
-        input(f'Document located at {extrapolate_document_value(document)} found '
+        input(f'Document located at {document.extrapolate_value()} found '
               'please review & press enter to continue... '
               f'{account_for_number_results(document)}'
               f'({list_remaining_documents(document_list, document)}) '
               f'({report_execution_time(document.start_time)})')
     # elif alt == "download":
     #     print('Document located at '
-    #           f'{extrapolate_document_value(document)} downloaded, '
+    #           f'{document.extrapolate_value()} downloaded, '
     #           f'{list_remaining_documents(document_list, document)} '
     #           f'({report_execution_time(start_time)})')
 
@@ -181,11 +181,11 @@ def document_found(document_list, document, review):
 def no_document_found(document_list, document, review):
     if review is False:
         print('No document found at '
-              f'{extrapolate_document_value(document)}, '
+              f'{document.extrapolate_value()}, '
               f'{list_remaining_documents(document_list, document)} '
               f'({report_execution_time(document.start_time)})')
     elif review is True:
-        input(f'No document found at {extrapolate_document_value(document)}, '
+        input(f'No document found at {document.extrapolate_value()}, '
               'please review & press enter to continue... '
               f'({list_remaining_documents(document_list, document)}) '
               f'({report_execution_time(document.start_time)})')
@@ -193,14 +193,14 @@ def no_document_found(document_list, document, review):
 
 def document_downloaded(document_list, document):
     print(f'Document located at '
-          f'{extrapolate_document_value(document)} downloaded '
+          f'{document.extrapolate_value()} downloaded '
           f'{account_for_number_results(document)}'
           f'{list_remaining_documents(document_list, document)}')
 
 
 def no_document_downloaded(document_list, document):
     print(f'Unable to download document at '
-          f'{extrapolate_document_value(document)} '
+          f'{document.extrapolate_value()} '
           f'{account_for_number_results(document)}'
           f'{list_remaining_documents(document_list, document)}')
 
