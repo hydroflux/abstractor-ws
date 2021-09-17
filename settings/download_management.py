@@ -11,7 +11,7 @@ def build_previous_download_path(document_directory, document):
     if document.new_name is None:
         return f'{document_directory}/{document.county.prefix}-{document.reception_number}.pdf'
     else:
-        return f'{document_directory}/{document.county.prefix}-{document.new_name}.pdf'
+        return f'{document_directory}/{document.new_name}'
 
 
 def previously_downloaded(document_directory, document):

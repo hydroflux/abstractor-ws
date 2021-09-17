@@ -154,7 +154,7 @@ def check_length(dataframe):
 
 def account_for_number_results(document):
     if document.number_results > 1:
-        return f'({document.number_results} documents for {document.extrapolate_value()}), '
+        return f'- {document.number_results} results found for {document.extrapolate_value()}, '
     else:
         return ','
 
@@ -163,8 +163,8 @@ def document_found(document_list, document, review):
     if review is False:
         print('Document located at '
               f'{document.extrapolate_value()} recorded '
-              f'{list_remaining_documents(document_list, document)} '
               f'{account_for_number_results(document)}'
+              f'{list_remaining_documents(document_list, document)} '
               f'({report_execution_time(document.start_time)})')
     elif review is True:
         input(f'Document located at {document.extrapolate_value()} found '

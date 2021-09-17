@@ -133,27 +133,28 @@ def execute_download(browser, document_directory, document):
         return add_to_cart(browser, document)
 
 
-# def check_last_document(dataframe, document, result_number):
-#     if result_number > 0:
-#         if document.reception_number == dataframe["Reception Number"][-2]:
-#             document.reception_number = f'{document.reception_number}-{result_number}'
-#             dataframe["Reception Number"][-1] = document.reception_number
-#         elif f'{document.reception_number}-{result_number - 1}' == dataframe["Reception Number"][-2]:
-#             document.reception_number = f'{document.reception_number}-{result_number}'
-#             dataframe["Reception Number"][-1] = document.reception_number
-#         else:
-#             return True
-#     else:
-#         return True
+def check_last_document(dataframe, document, result_number, count=0):
+    if result_number > 0:
+        for element in dataframe["Document Link"]:
+            if element == dataframe["Document Link"][-1]:
+                count += 1
+            elif element == f'{dataframe["Document Link"][-1]}-{str(count)}':
+                count += 1
+        if count > 1:
+            dataframe["Document Link"][-1] = f'{dataframe["Document Link"][-1]}-{str(count - 1)}'
+            document.new_name = f'{document.new_name[:-4]}-{str(count - 1)}.pdf'
+        else:
+            return True
+    else:
+        return True
 
 
 def download_document(browser, target_directory, dataframe, document, result_number):
     document_directory = create_document_directory(target_directory)
     if previously_downloaded(document_directory, document):
-        # if check_last_document(dataframe, document, result_number):
-        return True
-    else:
-        open_download_page(browser, document)
-        # if verify_download(browser, document):
-        switch_to_default_content(browser)
-        return execute_download(browser, document_directory, document)
+        if check_last_document(dataframe, document, result_number):
+            return True
+    open_download_page(browser, document)
+    # if verify_download(browser, document):
+    switch_to_default_content(browser)
+    return execute_download(browser, document_directory, document)
