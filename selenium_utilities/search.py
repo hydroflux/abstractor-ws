@@ -9,12 +9,12 @@ from settings.general_functions import get_field_value, timeout
 
 def locate_element_by_id(browser, document, id, type):
     try:
-        input_present = EC.element_to_be_clickable((By.ID, id))
-        WebDriverWait(browser, timeout).until(input_present)
-        input = browser.find_element_by_id(id)
-        return input
+        element_present = EC.element_to_be_clickable((By.ID, id))
+        WebDriverWait(browser, timeout).until(element_present)
+        element = browser.find_element_by_id(id)
+        return element
     except TimeoutException:
-        print(f'Browser timed out trying to locate "{type}" input for '
+        print(f'Browser timed out trying to locate "{type}" element for '
               f'{document.extrapolate_value()}.')
 
 
