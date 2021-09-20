@@ -1,3 +1,4 @@
+from selenium_utilities.search import locate_element_by_class_name, locate_element_by_id
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -12,20 +13,21 @@ from armadillo.validation import (validate_result, verify_results_loaded,
                                   verify_search_results_page_loaded)
 
 
-def locate_result_count(browser, document):
-    try:
-        result_count_present = EC.presence_of_element_located((By.CLASS_NAME, number_results_class))
-        WebDriverWait(browser, timeout).until(result_count_present)
-        result_count = browser.find_element_by_class_name(number_results_class)
-        return result_count
-    except TimeoutException:
-        print(f'Browser timed out trying to locate result count for '
-              f'{document.extrapolate_value()}, please review.')
-        input()
+# def locate_result_count(browser, document):
+#     try:
+#         result_count_present = EC.presence_of_element_located((By.CLASS_NAME, number_results_class))
+#         WebDriverWait(browser, timeout).until(result_count_present)
+#         result_count = browser.find_element_by_class_name(number_results_class)
+#         return result_count
+#     except TimeoutException:
+#         print(f'Browser timed out trying to locate result count for '
+#               f'{document.extrapolate_value()}, please review.')
+#         input()
 
 
 def count_results(browser, document):
-    result_count = locate_result_count(browser, document)
+    result_count = locate_element_by_class_name(browser, document, number_results_class, "number results")
+    # result_count = locate_result_count(browser, document)
     if result_count.text == single_result_message:
         document.number_results += 1
     elif result_count.text.endswith(multiple_results_message):
@@ -38,16 +40,16 @@ def count_results(browser, document):
         input()
 
 
-def locate_search_results_table(browser, document):
-    try:
-        search_results_present = EC.presence_of_element_located((By.ID, search_results_id))
-        WebDriverWait(browser, timeout).until(search_results_present)
-        search_results = browser.find_element_by_id(search_results_id)
-        return search_results
-    except TimeoutException:
-        print(f'Browser timed out trying to locate search results for '
-              f'{document.extrapolate_value()}, please review.')
-        input()
+# def locate_search_results_table(browser, document):
+#     try:
+#         search_results_present = EC.presence_of_element_located((By.ID, search_results_id))
+#         WebDriverWait(browser, timeout).until(search_results_present)
+#         search_results = browser.find_element_by_id(search_results_id)
+#         return search_results
+#     except TimeoutException:
+#         print(f'Browser timed out trying to locate search results for '
+#               f'{document.extrapolate_value()}, please review.')
+#         input()
 
 
 def locate_results(search_results, document, results_class):
@@ -67,7 +69,8 @@ def determine_results_class(result_number):
 
 
 def get_results(browser, document, result_number):
-    search_results_table = locate_search_results_table(browser, document)
+    search_results_table = locate_element_by_id(browser, document, search_results_id, "search results table")
+    # search_results_table = locate_search_results_table(browser, document)
     results_class = determine_results_class(result_number)
     return locate_results(search_results_table, document, results_class)
 

@@ -14,7 +14,7 @@ def locate_element_by_id(browser, document, id, type):
         element = browser.find_element_by_id(id)
         return element
     except TimeoutException:
-        print(f'Browser timed out trying to locate "{type}" element for '
+        print(f'Browser timed out trying to locate "{type}" for '
               f'{document.extrapolate_value()}.')
 
 
@@ -25,7 +25,7 @@ def locate_element_by_class_name(browser, document, class_name, type):
         element = browser.find_element_by_class_name(class_name)
         return element
     except TimeoutException:
-        print(f'Browser timed out trying to locate "{type}" input for '
+        print(f'Browser timed out trying to locate "{type}" for '
               f'{document.extrapolate_value()}.')
 
 
@@ -36,7 +36,7 @@ def locate_elements_by_class_name(browser, document, class_name, type):
         elements = browser.find_elements_by_class_name(class_name)
         return elements
     except TimeoutException:
-        print(f'Browser timed out trying to locate "{type}" input for '
+        print(f'Browser timed out trying to locate "{type}" for '
               f'{document.extrapolate_value()}.')
 
 
