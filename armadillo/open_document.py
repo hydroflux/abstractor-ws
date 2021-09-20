@@ -1,4 +1,4 @@
-from selenium_utilities.search import locate_element_by_class_name, locate_element_by_id
+from selenium_utilities.search import locate_element_by_class_name, locate_element_by_id, locate_elements_by_class_name
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -26,7 +26,7 @@ from armadillo.validation import (validate_result, verify_results_loaded,
 
 
 def count_results(browser, document):
-    result_count = locate_element_by_class_name(browser, document, number_results_class, "number results")
+    result_count = locate_element_by_class_name(browser, document, number_results_class, "number results", False)
     # result_count = locate_result_count(browser, document)
     if result_count.text == single_result_message:
         document.number_results += 1
@@ -52,16 +52,16 @@ def count_results(browser, document):
 #         input()
 
 
-def locate_results(search_results, document, results_class):
-    try:
-        results_present = EC.element_to_be_clickable((By.CLASS_NAME, results_class))
-        WebDriverWait(search_results, timeout).until(results_present)
-        results = search_results.find_elements_by_class_name(results_class)
-        return results
-    except TimeoutException:
-        print(f'Browser timed out trying to locate first search result of '
-              f'{document.extrapolate_value()}, please review.')
-        input()
+# def locate_results(search_results_table, document, results_class):
+#     try:
+#         results_present = EC.element_to_be_clickable((By.CLASS_NAME, results_class))
+#         WebDriverWait(search_results_table, timeout).until(results_present)
+#         results = search_results_table.find_elements_by_class_name(results_class)
+#         return results
+#     except TimeoutException:
+#         print(f'Browser timed out trying to locate first search result of '
+#               f'{document.extrapolate_value()}, please review.')
+#         input()
 
 
 def determine_results_class(result_number):
@@ -72,7 +72,8 @@ def get_results(browser, document, result_number):
     search_results_table = locate_element_by_id(browser, document, search_results_id, "search results table")
     # search_results_table = locate_search_results_table(browser, document)
     results_class = determine_results_class(result_number)
-    return locate_results(search_results_table, document, results_class)
+    return locate_elements_by_class_name(search_results_table, document, results_class, "search results", True)
+    # return locate_results(search_results_table, document, results_class)
 
 
 def access_result(browser, document, result_number):
