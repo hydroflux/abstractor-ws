@@ -49,25 +49,16 @@ def locate_elements_by_class_name(locator, document, class_name, type, clickable
               f'{document.extrapolate_value()}.')
 
 
-
-def locate_element_by_tag_name(locator, document, tag_name, type):
-    try:
-        element_present = EC.
-
-
-
-
-
 def clear_input(browser, document, input_function, type, id):
     while get_field_value(input_function(browser, document, id, type)) != '':
-        input_function(browser, document, id, type).clear()
+        input_function(browser, document, id, type, True).clear()
 
 
 def enter_input_value(browser, document, input_function, type, id, value):
     while get_field_value(input_function(browser, document, id, type)) != value:
-        input_function(browser, document, id, type).send_keys(Keys.UP + value)
+        input_function(browser, document, id, type, True).send_keys(Keys.UP + value)
 
 
 def click_button(browser, document, input_function, id, type):
-    button = input_function(browser, document, id, type)
+    button = input_function(browser, document, id, type, True)
     button.click()

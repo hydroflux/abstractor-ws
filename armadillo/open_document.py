@@ -26,7 +26,7 @@ from armadillo.validation import (validate_result, verify_results_loaded,
 
 
 def count_results(browser, document):
-    result_count = locate_element_by_class_name(browser, document, number_results_class, "number results", False)
+    result_count = locate_element_by_class_name(browser, document, number_results_class, "number results")
     # result_count = locate_result_count(browser, document)
     if result_count.text == single_result_message:
         document.number_results += 1
