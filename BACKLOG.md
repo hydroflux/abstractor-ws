@@ -181,6 +181,7 @@
 - [ ] Refactor 'record' functions, in particular the way that the validation is being handled
 - [ ] Refactor 'open_document' selenium functions into selenium utilities directory
 - [ ] Refactor 'record' selenium functions into selenium utilities directory
+- [ ] "next" page could work effectively for recording armadillo documents with multiple results, & would cut down on search time
 
 ### Iguana To Do
 
