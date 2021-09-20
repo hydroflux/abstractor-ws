@@ -18,6 +18,28 @@ def locate_element_by_id(browser, document, id, type):
               f'{document.extrapolate_value()}.')
 
 
+def locate_element_by_class_name(browser, document, class_name, type):
+    try:
+        element_present = EC.element_to_be_clickable((By.CLASS_NAME, class_name))
+        WebDriverWait(browser, timeout).until(element_present)
+        element = browser.find_element_by_class_name(class_name)
+        return element
+    except TimeoutException:
+        print(f'Browser timed out trying to locate "{type}" input for '
+              f'{document.extrapolate_value()}.')
+
+
+def locate_elements_by_class_name(browser, document, class_name, type):
+    try:
+        elements_present = EC.element_to_be_clickable((By.CLASS_NAME, class_name))
+        WebDriverWait(browser, timeout).until(elements_present)
+        elements = browser.find_elements_by_class_name(class_name)
+        return elements
+    except TimeoutException:
+        print(f'Browser timed out trying to locate "{type}" input for '
+              f'{document.extrapolate_value()}.')
+
+
 def clear_input(browser, document, input_function, type, id):
     while get_field_value(input_function(browser, document, id, type)) != '':
         input_function(browser, document, id, type).clear()
