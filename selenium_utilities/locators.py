@@ -6,7 +6,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from settings.general_functions import timeout
 
 
-def locate_element_by_id(locator, document, id, type, clickable=False):
+def locate_element_by_id(locator, id, type, clickable=False, document=None):
     try:
         if clickable:
             element_present = EC.element_to_be_clickable((By.ID, id))
@@ -16,11 +16,10 @@ def locate_element_by_id(locator, document, id, type, clickable=False):
         element = locator.find_element_by_id(id)
         return element
     except TimeoutException:
-        print(f'Browser timed out trying to locate "{type}" for '
-              f'{document.extrapolate_value()}, please review.')
+        print_timeout_statement(type, document)
 
 
-def locate_element_by_class_name(locator, document, class_name, type, clickable=False):
+def locate_element_by_class_name(locator, class_name, type, clickable=False, document=None):
     try:
         if clickable:
             element_present = EC.element_to_be_clickable((By.CLASS_NAME, class_name))
@@ -30,11 +29,10 @@ def locate_element_by_class_name(locator, document, class_name, type, clickable=
         element = locator.find_element_by_class_name(class_name)
         return element
     except TimeoutException:
-        print(f'Browser timed out trying to locate "{type}" for '
-              f'{document.extrapolate_value()}, please review.')
+        print_timeout_statement(type, document)
 
 
-def locate_elements_by_class_name(locator, document, class_name, type, clickable=False):
+def locate_elements_by_class_name(locator, class_name, type, clickable=False, document=None):
     try:
         if clickable:
             elements_present = EC.element_to_be_clickable((By.CLASS_NAME, class_name))
@@ -44,11 +42,23 @@ def locate_elements_by_class_name(locator, document, class_name, type, clickable
         elements = locator.find_elements_by_class_name(class_name)
         return elements
     except TimeoutException:
-        print(f'Browser timed out trying to locate "{type}" for '
-              f'{document.extrapolate_value()}, please review.')
+        print_timeout_statement(type, document)
 
 
-def locate_element_by_tag_name(locator, document, tag_name, type, clickable=False):
+def locate_element_by_name(locator, name, type, clickable=False, document=None):
+    try:
+        if clickable:
+            element_present = EC.element_to_be_clickable((By.NAME, name))
+        else:
+            element_present = EC.presence_of_element_located((By.NAME, name))
+        WebDriverWait(locator, timeout).until(element_present)
+        element = locator.find_element_by_name(name)
+        return element
+    except TimeoutException:
+        print_timeout_statement(type, document)
+
+
+def locate_element_by_tag_name(locator, tag_name, type, clickable=False, document=None):
     try:
         if clickable:
             element_present = EC.element_to_be_clickable((By.TAG_NAME, tag_name))
@@ -58,5 +68,12 @@ def locate_element_by_tag_name(locator, document, tag_name, type, clickable=Fals
         element = locator.find_element_by_tag_name(tag_name)
         return element
     except TimeoutException:
+        print_timeout_statement(type, document)
+
+
+def print_timeout_statement(type, document):
+    if document is None:
+        print(f'Browser timed out trying to locate "{type}", please review.')
+    else:
         print(f'Browser timed out trying to locate "{type}" for '
               f'{document.extrapolate_value()}, please review.')

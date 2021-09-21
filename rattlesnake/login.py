@@ -1,3 +1,4 @@
+from selenium_utilities.locators import locate_element_by_name
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
