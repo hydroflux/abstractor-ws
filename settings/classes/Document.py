@@ -1,22 +1,23 @@
 class Document:
-    def __init__(self, type, value, number_results=0, index_number=None, reception_number=None,
-                 description_link=None, image_link=None, multiple_results=None, year=None,
+    def __init__(self, type, value, year=None, index_number=None,
+                 number_results=0, multiple_results=None,  reception_number=None,
+                 description_link=None, image_link=None,
                  button_ids=None, input_ids=None,
-                 start_time=None, county=None,
+                 county=None, start_time=None,
                  download_type=None, download_value=None, download_path=None, new_name=None):
         self.type = type
         self.value = value
-        self.number_results = number_results
+        self.year = year
         self.index_number = index_number
+        self.number_results = number_results
+        self.multiple_results = multiple_results
         self.reception_number = reception_number
         self.description_link = description_link
         self.image_link = image_link
-        self.multiple_results = multiple_results
-        self.year = year
         self.button_ids = button_ids
         self.input_ids = input_ids
-        self.start_time = start_time
         self.county = county
+        self.start_time = start_time
         self.download_type = download_type
         self.download_value = download_value
         self.download_path = download_path
