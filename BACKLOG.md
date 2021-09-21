@@ -184,6 +184,9 @@
 - [ ] "next" page could work effectively for recording armadillo documents with multiple results, & would cut down on search time
 - [ ] Create a way to handle multiple documents being returned but not all being validated in the "Multiple documents" comment
 - [ ] Use 'document_description' to determine if the 'next' document is a duplicate
+- [ ] Perform a substring replacement for " 's " and other monikers
+- [ ] Include 'year' in search in order to refine 'multiple results'
+- [ ] Grab document_descriptions links to speed up the process of searching for multiple results
 
 ### Iguana To Do
 
