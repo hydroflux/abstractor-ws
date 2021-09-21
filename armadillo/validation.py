@@ -1,15 +1,13 @@
+from selenium_utilities.open import assert_window_title
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-
-from settings.general_functions import (assert_window_title, date_from_string,
-                                        timeout)
+from settings.general_functions import date_from_string, timeout
 
 from armadillo.armadillo_variables import (bad_login_text,
                                            document_information_title,
                                            document_search_results_title,
-                                           document_search_title,
                                            login_validation_form_name,
                                            login_validation_text_id,
                                            no_results_message,
@@ -60,11 +58,11 @@ def verify_login(browser):
         exit()
 
 
-def verify_document_search_page_loaded(browser, document):
-    if not assert_window_title(browser, document_search_title):
-        print(f'Browser failed to open document search link for '
-              f'{document.extrapolate_value()}, please review.')
-        input()
+# def verify_document_search_page_loaded(browser, document):
+#     if not assert_window_title(browser, document_search_title):
+#         print(f'Browser failed to open document search link for '
+#               f'{document.extrapolate_value()}, please review.')
+#         input()
 
 
 def verify_search_results_page_loaded(browser, document):

@@ -1,16 +1,12 @@
+from selenium_utilities.open import open_url
 from selenium_utilities.inputs import clear_input, enter_input_value
 from selenium_utilities.locators import locate_element_by_id as locate_input
 
 from settings.general_functions import javascript_script_execution
 
-from armadillo.armadillo_variables import (document_search_url,
+from armadillo.armadillo_variables import (search_url, search_title,
                                            execute_document_search_script)
 from armadillo.validation import verify_document_search_page_loaded
-
-
-# Armadillo & rattlesnake identical
-def open_document_search(browser):
-    browser.get(document_search_url)
 
 
 def clear_search(browser, document):
@@ -49,7 +45,7 @@ def document_search(browser, document):
 
 
 def search(browser, document):
-    open_document_search(browser)
+    open_url(browser, search_url, search_title, 'document search page', document)
     verify_document_search_page_loaded(browser, document)
     clear_search(browser, document)
     document_search(browser, document)
