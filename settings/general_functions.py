@@ -211,10 +211,6 @@ def get_direct_link(document_link):
     return document_link.get_attribute("href")
 
 
-def get_field_value(field):
-    return field.get_attribute("value").strip()
-
-
 def date_from_string(string):
     try:
         format = '%m/%d/%Y'

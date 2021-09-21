@@ -1,6 +1,8 @@
 from selenium.webdriver.common.keys import Keys
 
-from settings.general_functions import get_field_value
+
+def get_field_value(field):
+    return field.get_attribute("value").strip()
 
 
 def clear_input(browser, document, input_function, type, id):
