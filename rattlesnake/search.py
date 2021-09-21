@@ -7,12 +7,8 @@ from rattlesnake.rattlesnake_variables import search_title, search_url, old_sear
 
 
 def clear_search(browser, document):
-    clear_input(browser, locate_input, document.input_ids["Reception Number"],
-                "reception number input", document)
-    clear_input(browser, locate_input, document.input_ids["Volume"],
-                "volume input", document)
-    clear_input(browser, locate_input, document.input_ids["Page"],
-                "page input", document)
+    for id in document.input_ids:
+        clear_input(browser, locate_input, document.input_ids[id], f'{id} Input', document)
 
 
 def handle_document_value_numbers(browser, document):
