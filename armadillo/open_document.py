@@ -74,7 +74,7 @@ def get_results(browser, document, result_number):
     # search_results_table = locate_search_results_table(browser, document)
     results_class = determine_results_class(result_number)
     return locate_elements_by_class_name(search_results_table, document, results_class,
-                                         "search results", True, document)
+                                         "search results", True, document=document)
     # return locate_results(search_results_table, document, results_class)
 
 
