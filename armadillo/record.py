@@ -7,7 +7,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from settings.general_functions import (date_from_string, element_title_strip, four_character_padding,
                                         list_to_string, newline_split,
                                         print_list_by_index, timeout,
-                                        title_strip)
+                                        title_strip, update_sentence_case_extras)
 
 from armadillo.armadillo_variables import (book_and_page_text,
                                            document_tables_tag, legal_text,
@@ -106,7 +106,7 @@ def record_document_type_and_number(browser, dataframe, document):
         browser, document)
     document_type, reception_number = access_document_type_and_number(
         document, document_type_and_number_fields[0])
-    dataframe['Document Type'].append(document_type)
+    dataframe['Document Type'].append(update_sentence_case_extras(document_type))
     handle_reception_number(dataframe, document, reception_number)
 
 
@@ -205,7 +205,7 @@ def access_parties_information(document_table):
     parties_midpoint = get_parties_midpoint(document_table)
     grantor = list(map(title_strip, (document_table[1:parties_midpoint])))
     grantee = list(map(title_strip, (document_table[(parties_midpoint + 1):])))
-    return list_to_string(grantor), list_to_string(grantee)
+    return update_sentence_case_extras(list_to_string(grantor)), update_sentence_case_extras(list_to_string(grantee))
 
 
 def record_parties_information(document_table, dataframe):

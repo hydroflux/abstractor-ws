@@ -6,7 +6,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 
 from settings.general_functions import (date_from_string, element_title_strip,
                                         get_field_value, list_to_string,
-                                        timeout, title_strip)
+                                        timeout, title_strip, update_sentence_case_extras)
 
 from rattlesnake.rattlesnake_variables import (document_type_id,
                                                effective_date_id,
@@ -38,7 +38,7 @@ def access_field_value(browser, document, id, field_type):
     if field_type.endswith('date'):
         return date_from_string(get_field_value(field).split(' ')[0])
     elif field_type == 'document type':
-        return title_strip(get_field_value(field))
+        return update_sentence_case_extras(title_strip(get_field_value(field)))
     else:
         if field_type == 'reception number':
             document.reception_number = get_field_value(field)
@@ -166,8 +166,10 @@ def aggregate_party_information(browser, document):
 
 def record_parties_information(browser, dataframe, document):
     grantor, grantee = aggregate_party_information(browser, document)
-    record_value(browser, dataframe, document, 'grantor', value=list_to_string(grantor), alt='empty')  # Grantor
-    record_value(browser, dataframe, document, 'grantee', value=list_to_string(grantee), alt='empty')  # Grantee
+    record_value(browser, dataframe, document, 'grantor',
+                 value=update_sentence_case_extras(list_to_string(grantor)), alt='empty')  # Grantor
+    record_value(browser, dataframe, document, 'grantee',
+                 value=update_sentence_case_extras(list_to_string(grantee)), alt='empty')  # Grantee
 
 
 def record_book(dataframe):
