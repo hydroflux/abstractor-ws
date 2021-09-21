@@ -1,12 +1,11 @@
-from settings.file_management import multiple_documents_comment
-from selenium.common.exceptions import TimeoutException
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.wait import WebDriverWait
+from selenium_utilities.inputs import get_field_value
+from selenium_utilities.locators import (locate_element_by_id,
+                                         locate_elements_by_tag_name)
 
+from settings.file_management import multiple_documents_comment
 from settings.general_functions import (date_from_string, element_title_strip,
-                                        get_field_value, list_to_string,
-                                        timeout, title_strip, update_sentence_case_extras)
+                                        list_to_string, title_strip,
+                                        update_sentence_case_extras)
 
 from rattlesnake.rattlesnake_variables import (document_type_id,
                                                effective_date_id,
@@ -17,24 +16,13 @@ from rattlesnake.rattlesnake_variables import (document_type_id,
                                                reception_number_id,
                                                recording_date_id,
                                                row_data_tag_name, volume_id)
-from rattlesnake.validation import (validate_date, validate_reception_number, validate_volume_and_page_numbers,
+from rattlesnake.validation import (validate_date, validate_reception_number,
+                                    validate_volume_and_page_numbers,
                                     verify_document_description_page_loaded)
 
 
-def locate_information_field(browser, document, id, field_type):
-    try:
-        field_present = EC.presence_of_element_located((By.ID, id))
-        WebDriverWait(browser, timeout).until(field_present)
-        field = browser.find_element_by_id(id)
-        return field
-    except TimeoutException:
-        print(f'Browser timed out trying to locate "{field_type}" field for '
-              f'{document.extrapolate_value()}, please review.')
-        input()
-
-
 def access_field_value(browser, document, id, field_type):
-    field = locate_information_field(browser, document, id, field_type)
+    field = locate_element_by_id(browser, id, field_type, document=document)
     if field_type.endswith('date'):
         return date_from_string(get_field_value(field).split(' ')[0])
     elif field_type == 'document type':
@@ -62,23 +50,15 @@ def record_field_value(dataframe, value, field_type):
     dataframe[f'{field_type.title()}'].append(value)
 
 
-def record_null_value(dataframe, field_type):
-    dataframe[f'{field_type.title()}'].append(empty_value_fields[-1])
-
-
-def record_empty_value(dataframe, field_type):
-    dataframe[f'{field_type.title()}'].append(empty_value_fields[0])
-
-
 def record_bad_value(dataframe, document, field_type, alt):
     if alt is None:
         print(f'No alternative trigger provided to record a bad value found in the '
               f'"{field_type}" field for "{document.extrapolate_value()}", please review')
         input()
     elif alt == 'empty':
-        record_empty_value(dataframe, field_type)
+        record_field_value(dataframe, empty_value_fields[0], field_type)
     elif alt == 'null':
-        record_null_value(dataframe, field_type)
+        record_field_value(dataframe, empty_value_fields[1], field_type)
     else:
         print(f'Encountered an unexpected problem trying to record a bad value found in the '
               f'"{field_type}" field for "{document.extrapolate_value()}" '
@@ -115,33 +95,9 @@ def record_value(browser, dataframe, document, field_type, id=None, value=None, 
     handle_value_content(dataframe, document, field_type, value, alt)
 
 
-def locate_parties_rows(parties_table, document):
-    try:
-        party_rows_present = EC.presence_of_element_located((By.TAG_NAME, party_rows_tag_name))
-        WebDriverWait(parties_table, timeout).until(party_rows_present)
-        party_rows = parties_table.find_elements_by_tag_name(party_rows_tag_name)
-        return party_rows
-    except TimeoutException:
-        print(f'Browser timed out trying to locate document party rows for '
-              f'{document.extrapolate_value()}, please review.')
-        input()
-
-
 def access_parties_rows(browser, document, field_type='parties'):
-    parties_table = locate_information_field(browser, document, parties_id, field_type)
-    return locate_parties_rows(parties_table, document)[1:]
-
-
-def locate_row_data(row, document):
-    try:
-        row_data_present = EC.presence_of_element_located((By.TAG_NAME, row_data_tag_name))
-        WebDriverWait(row, timeout).until(row_data_present)
-        row_data = row.find_elements_by_tag_name(row_data_tag_name)
-        return row_data
-    except TimeoutException:
-        print(f'Browser timed out trying to locate row data for '
-              f'{document.extrapolate_value()} row "{row.text}", please review.')
-        input()
+    parties_table = locate_element_by_id(browser, parties_id, field_type, document=document)
+    return locate_elements_by_tag_name(parties_table, party_rows_tag_name, "document party rows", document=document)[1:]
 
 
 def access_party_details(row_data, party_type, party_list):
@@ -153,7 +109,8 @@ def map_party_information(rows, document):
     grantor = []
     grantee = []
     for row in rows:
-        row_data = locate_row_data(row, document)
+        row_data = locate_elements_by_tag_name(row, row_data_tag_name, f'row data => {row.text}', document=document)
+        # row_data = locate_row_data(row, document)
         access_party_details(row_data, grantor_text, grantor)
         access_party_details(row_data, grantee_text, grantee)
     return grantor, grantee
