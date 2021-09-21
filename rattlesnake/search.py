@@ -3,7 +3,7 @@ from selenium_utilities.inputs import (clear_input, click_button,
 from selenium_utilities.locators import locate_element_by_id as locate_input
 from selenium_utilities.open import open_url
 
-from rattlesnake.rattlesnake_variables import search_title, search_url
+from rattlesnake.rattlesnake_variables import search_title, search_url, old_search_url, old_search_title
 
 
 def clear_search(browser, document):
@@ -33,9 +33,12 @@ def handle_document_value_numbers(browser, document):
 
 
 def search(browser, document):
-    open_url(browser, search_url, search_title, "document search", document)  # Open Document Search
-    # verify_document_search_page_loaded(browser, search_url, open_document_search)
-    clear_search(browser, document)
-    handle_document_value_numbers(browser, document)  # Enter Value Numbers
-    click_button(browser, locate_input, document.button_ids["Submit Button"],
-                 "submit button", document)  # Execute Search
+    if document.year >= '1985' or document.year is None:
+        open_url(browser, search_url, search_title, "document search", document)  # Open Document Search
+        # verify_document_search_page_loaded(browser, search_url, open_document_search)
+        clear_search(browser, document)
+        handle_document_value_numbers(browser, document)  # Enter Value Numbers
+        click_button(browser, locate_input, document.button_ids["Submit Button"],
+                     "submit button", document)  # Execute Search
+    else:
+        open_url(browser, old_search_url, old_search_title, "old document search", document)

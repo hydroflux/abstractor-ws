@@ -87,12 +87,12 @@ def get_year(columns, row):
     if 'Recording Date' in columns:
         year = row['Recording Date']
     elif 'Recording Dates' in columns:
-        year = row['Recording Dates'][-4:]
+        year = row['Recording Dates']
     if year:
         try:
             return year[-4:]
         except TypeError:
-            return year.year
+            return str(year.year)
         except AttributeError:
             return None
     else:
