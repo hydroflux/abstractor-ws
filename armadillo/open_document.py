@@ -118,6 +118,8 @@ def open_result(browser, document, result_number):
     result_text = result.text.split('\n')
     if validate_result(result_text, document):
         return open_result_link(browser, document, result)
+    else:
+        return False
 
 
 def handle_search_results(browser, document, result_number):

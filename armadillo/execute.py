@@ -58,15 +58,15 @@ def handle_single_document(browser, target_directory, document_list, document, r
 def handle_multiple_documents(browser, target_directory, document_list, document, review):
     for result_number in range(1, document.number_results):
         search(browser, document)
-        open_document(browser, document, result_number)
-        handle_single_document(
-            browser,
-            target_directory,
-            document_list,
-            document,
-            review,
-            result_number
-        )
+        if open_document(browser, document, result_number):
+            handle_single_document(
+                browser,
+                target_directory,
+                document_list,
+                document,
+                review,
+                result_number
+            )
 
 
 def handle_search_results(browser, target_directory, document_list, document, review):

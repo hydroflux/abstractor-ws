@@ -182,6 +182,7 @@
 - [ ] Refactor 'open_document' selenium functions into selenium utilities directory
 - [ ] Refactor 'record' selenium functions into selenium utilities directory
 - [ ] "next" page could work effectively for recording armadillo documents with multiple results, & would cut down on search time
+- [ ] Create a way to handle multiple documents being returned but not all being validated in the "Multiple documents" comment
 
 ### Iguana To Do
 
