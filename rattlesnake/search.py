@@ -1,6 +1,6 @@
-from selenium_utilities.search import (clear_input, click_button,
+from selenium_utilities.inputs import (clear_input, click_button,
                                        enter_input_value)
-from selenium_utilities.search import locate_element_by_id as locate_input
+from selenium_utilities.locators import locate_element_by_id as locate_input
 
 from rattlesnake.rattlesnake_variables import document_search_url
 from rattlesnake.validation import verify_document_search_page_loaded
@@ -12,18 +12,24 @@ def open_document_search(browser):
 
 
 def clear_search(browser, document):
-    clear_input(browser, document, locate_input, "reception number", document.input_ids["Reception Number"])
-    clear_input(browser, document, locate_input, "volume", document.input_ids["Volume"])
-    clear_input(browser, document, locate_input, "page", document.input_ids["Page"])
+    clear_input(browser, locate_input, document.input_ids["Reception Number"],
+                "reception number input", document)
+    clear_input(browser, locate_input, document.input_ids["Volume"],
+                "volume input", document)
+    clear_input(browser, locate_input, document.input_ids["Page"],
+                "page input", document)
 
 
 def handle_document_value_numbers(browser, document):
     value = document.document_value()
     if document.type == 'document_number':
-        enter_input_value(browser, document, locate_input, document.type, document.input_ids["Reception Number"], value)
+        enter_input_value(browser, locate_input, document.input_ids["Reception Number"],
+                          "reception number input", value, document)
     elif document.type == 'volume_and_page':
-        enter_input_value(browser, document, locate_input, document.type, document.input_ids["Volume"], value[0])
-        enter_input_value(browser, document, locate_input, document.type, document.input_ids["Page"], value[1])
+        enter_input_value(browser, locate_input, document.input_ids["Volume"],
+                          "volume input", value[0], document)
+        enter_input_value(browser, locate_input, document.input_ids["Page"],
+                          "page input", value[1], document)
     else:
         print(f'Unable to search document type "{document.type}", '
               f'a new search path needs to be developed in order to continue.\n')
@@ -32,7 +38,7 @@ def handle_document_value_numbers(browser, document):
 
 
 def execute_search(browser, document):
-    click_button(browser, document, locate_input, document.button_ids["Submit Button"], "submit button")
+    click_button(browser, locate_input, document.button_ids["Submit Button"], "submit button", document)
 
 
 def document_search(browser, document):

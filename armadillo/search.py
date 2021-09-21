@@ -14,18 +14,24 @@ def open_document_search(browser):
 
 
 def clear_search(browser, document):
-    clear_input(browser, document, locate_input, "reception number", document.input_ids["Reception Number"])
-    clear_input(browser, document, locate_input, "volume", document.input_ids["Volume"])
-    clear_input(browser, document, locate_input, "page", document.input_ids["Page"])
+    clear_input(browser, locate_input, document.input_ids["Reception Number"],
+                "reception number input", document)
+    clear_input(browser, locate_input, document.input_ids["Volume"],
+                "volume input", document)
+    clear_input(browser, locate_input, document.input_ids["Page"],
+                "page input", document)
 
 
 def handle_document_value_numbers(browser, document):
     value = document.document_value()
     if document.type == 'document_number':
-        enter_input_value(browser, document, locate_input, document.type, document.input_ids["Reception Number"], value)
+        enter_input_value(browser, locate_input, document.input_ids["Reception Number"],
+                          "reception number input", value, document)
     elif document.type == 'volume_and_page':
-        enter_input_value(browser, document, locate_input, document.type, document.input_ids["Volume"], value[0])
-        enter_input_value(browser, document, locate_input, document.type, document.input_ids["Page"], value[1])
+        enter_input_value(browser, locate_input, document.input_ids["Volume"], value[0],
+                          "volume input", document)
+        enter_input_value(browser, locate_input, document.input_ids["Page"], value[1],
+                          "page input", document)
     else:
         print(f'Unable to search document type "{document.type}", '
               f'a new search path needs to be developed in order to continue.\n')
