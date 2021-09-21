@@ -83,12 +83,24 @@ def get_document_number(columns, row):
             return str(document_number).strip()
 
 
-def store_document(document_list, type, value):
-    document = Document(type=type, value=value)
+def get_year(columns, row):
+    if 'Recording Date' in columns:
+        return row['Recording Date'][-4:]
+    elif 'Recording Dates' in columns:
+        return row['Recording Dates'][-4:]
+    else:
+        return None
+
+
+def store_document(document_list, type, value, year):
+    if year is None:
+        document = Document(type=type, value=value)
+    else:
+        document = Document(type=type, value=value, year=year)
     document_list.append(document)
 
 
-def create_book_and_page_object(document_list, row):
+def create_book_and_page_object(document_list, row, year):
     book = get_book_number(row)
     page = get_page_number(row)
     if book is not None and page is not None:
@@ -96,10 +108,10 @@ def create_book_and_page_object(document_list, row):
             "Book": book,
             "Page": page
         }
-        store_document(document_list, "book_and_page", book_and_page)
+        store_document(document_list, "book_and_page", book_and_page, year)
 
 
-def create_volume_and_page_object(document_list, row):
+def create_volume_and_page_object(document_list, row, year):
     volume = get_volume_number(row)
     page = get_page_number(row)
     if volume is not None and page is not None:
@@ -107,27 +119,27 @@ def create_volume_and_page_object(document_list, row):
             "Volume": volume,
             "Page": page
         }
-        store_document(document_list, "volume_and_page", volume_and_page)
+        store_document(document_list, "volume_and_page", volume_and_page, year)
 
 
-def create_document_number_object(document_list, columns, row):
+def create_document_number_object(document_list, columns, row, year):
     document_number = get_document_number(columns, row)
     if document_number is not None:
-        store_document(document_list, "document_number", document_number)
+        store_document(document_list, "document_number", document_number, year)
 
 
-def build_book_volume_page_into_list(document_list, columns, row):
+def build_book_volume_page_into_list(document_list, columns, row, year):
     if 'Book' in columns and 'Page' in columns:
-        create_book_and_page_object(document_list, row)
+        create_book_and_page_object(document_list, row, year)
     if 'Volume' in columns and 'Page' in columns:
-        create_volume_and_page_object(document_list, row)
+        create_volume_and_page_object(document_list, row, year)
 
 
-def build_document_number_into_list(document_list, columns, row):
+def build_document_number_into_list(document_list, columns, row, year):
     if 'Document' in columns or 'Documents' in columns or \
                                 'Reception Number' in columns or \
                                 'Reception Numbers' in columns:
-        create_document_number_object(document_list, columns, row)
+        create_document_number_object(document_list, columns, row, year)
 
 
 def create_document_list(excel_object):
@@ -135,8 +147,9 @@ def create_document_list(excel_object):
     columns = get_sheet_columns(excel_object)
     rows = get_sheet_rows(excel_object)
     for row in rows:
-        build_book_volume_page_into_list(document_list, columns, row)
-        build_document_number_into_list(document_list, columns, row)
+        year = get_year(columns, row)
+        build_book_volume_page_into_list(document_list, columns, row, year)
+        build_document_number_into_list(document_list, columns, row, year)
         # if 'Book' in columns and 'Page' in columns:
         #     create_book_and_page_object(document_list, row)
         # if 'Volume' in columns and 'Page' in columns:
