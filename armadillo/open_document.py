@@ -1,8 +1,8 @@
 from selenium.common.exceptions import TimeoutException
-from selenium_utilities.search import (locate_element_by_class_name,
-                                       locate_element_by_id,
-                                       locate_element_by_tag_name,
-                                       locate_elements_by_class_name)
+from selenium_utilities.locators import (locate_element_by_class_name,
+                                         locate_element_by_id,
+                                         locate_element_by_tag_name,
+                                         locate_elements_by_class_name)
 from settings.general_functions import get_direct_link
 
 from armadillo.armadillo_variables import (link_tag, multiple_results_message,
@@ -26,7 +26,7 @@ from armadillo.validation import (validate_result, verify_results_loaded,
 
 
 def count_results(browser, document):
-    result_count = locate_element_by_class_name(browser, document, number_results_class, "number results")
+    result_count = locate_element_by_class_name(browser, number_results_class, "number results", document=document)
     # result_count = locate_result_count(browser, document)
     if result_count.text == single_result_message:
         document.number_results += 1
@@ -69,10 +69,12 @@ def determine_results_class(result_number):
 
 
 def get_results(browser, document, result_number):
-    search_results_table = locate_element_by_id(browser, document, search_results_id, "search results table")
+    search_results_table = locate_element_by_id(browser, search_results_id,
+                                                "search results table", document=document)
     # search_results_table = locate_search_results_table(browser, document)
     results_class = determine_results_class(result_number)
-    return locate_elements_by_class_name(search_results_table, document, results_class, "search results", True)
+    return locate_elements_by_class_name(search_results_table, document, results_class,
+                                         "search results", True, document)
     # return locate_results(search_results_table, document, results_class)
 
 
@@ -94,7 +96,7 @@ def access_result(browser, document, result_number):
 
 
 def access_result_link(document, result):
-    result_link_element = locate_element_by_tag_name(result, document, link_tag, "result link", True)
+    result_link_element = locate_element_by_tag_name(result, link_tag, "result link", True, document)
     # result_link_element = locate_result_link(document, result)
     return get_direct_link(result_link_element)
 

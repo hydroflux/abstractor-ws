@@ -1,7 +1,5 @@
-
-
-from selenium_utilities.search import clear_input, enter_input_value
-from selenium_utilities.search import locate_element_by_id as locate_input
+from selenium_utilities.inputs import clear_input, enter_input_value
+from selenium_utilities.locators import locate_element_by_id as locate_input
 
 from settings.general_functions import javascript_script_execution
 
