@@ -183,6 +183,7 @@
 - [ ] Refactor 'record' selenium functions into selenium utilities directory
 - [ ] "next" page could work effectively for recording armadillo documents with multiple results, & would cut down on search time
 - [ ] Create a way to handle multiple documents being returned but not all being validated in the "Multiple documents" comment
+- [ ] Use 'document_description' to determine if the 'next' document is a duplicate
 
 ### Iguana To Do
 
