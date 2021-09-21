@@ -1,14 +1,10 @@
 from selenium_utilities.inputs import (clear_input, click_button,
                                        enter_input_value)
 from selenium_utilities.locators import locate_element_by_id as locate_input
+from selenium_utilities.open import open_url
 
-from rattlesnake.rattlesnake_variables import document_search_url
-from rattlesnake.validation import verify_document_search_page_loaded
-
-
-# Armadillo & rattlesnake identical
-def open_document_search(browser):
-    browser.get(document_search_url)
+from rattlesnake.rattlesnake_variables import (document_search_title,
+                                               document_search_url)
 
 
 def clear_search(browser, document):
@@ -37,17 +33,10 @@ def handle_document_value_numbers(browser, document):
         input()
 
 
-def execute_search(browser, document):
-    click_button(browser, locate_input, document.button_ids["Submit Button"], "submit button", document)
-
-
-def document_search(browser, document):
-    handle_document_value_numbers(browser, document)
-    execute_search(browser, document)
-
-
 def search(browser, document):
-    open_document_search(browser)
-    verify_document_search_page_loaded(browser, document, open_document_search)
+    open_url(browser, document_search_url, document_search_title, "document search", document)  # Open Document Search
+    # verify_document_search_page_loaded(browser, document, open_document_search)
     clear_search(browser, document)
-    document_search(browser, document)
+    handle_document_value_numbers(browser, document)  # Enter Value Numbers
+    click_button(browser, locate_input, document.button_ids["Submit Button"],
+                 "submit button", document)  # Execute Search

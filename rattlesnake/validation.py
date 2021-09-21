@@ -5,7 +5,7 @@ from rattlesnake.rattlesnake_variables import (bad_download_title,
                                                bad_login_title,
                                                document_description_page_title,
                                                document_image_page_title,
-                                               document_search_title,
+                                               #    document_search_title,
                                                home_page_title, home_page_url,
                                                post_login_title,
                                                post_logout_title)
@@ -62,23 +62,23 @@ def verify_logout(browser):
         input()
 
 
-def validate_document_search_page(browser, document, open_search):
-    if check_for_bad_server_response(browser):
-        return_home(browser)
-        open_search(browser)
-        return True
+# def validate_document_search_page(browser, document, open_search):
+#     if check_for_bad_server_response(browser):
+#         return_home(browser)
+#         open_search(browser)
+#         return True
 
 
-def verify_document_search_page_loaded(browser, document, search):
-    if assert_window_title(browser, document_search_title):
-        return True
-    elif (validate_document_search_page(browser, document, search) and
-          assert_window_title(browser, document_search_title)):
-        print('Browser failed to open search page on initial attempt, continuing after validation.')
-    else:
-        print(f'Browser failed to open document search link for '
-              f'{document.extrapolate_value()}, please review.')
-        input()
+# def verify_document_search_page_loaded(browser, document, search):
+#     if assert_window_title(browser, document_search_title):
+#         return True
+#     elif (validate_document_search_page(browser, document, search) and
+#           assert_window_title(browser, document_search_title)):
+#         print('Browser failed to open search page on initial attempt, continuing after validation.')
+#     else:
+#         print(f'Browser failed to open document search link for '
+#               f'{document.extrapolate_value()}, please review.')
+#         input()
 
 
 def validate_result_reception_number(result, document):
