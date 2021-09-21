@@ -15,7 +15,7 @@ from rattlesnake.logout import logout
 from rattlesnake.open_document import open_document
 from rattlesnake.record import record
 from rattlesnake.search import search
-from rattlesnake.transform_document_list import transform_document_list
+from rattlesnake.transform import transform_document_list
 
 
 def record_document(browser, document_list, document, review):
