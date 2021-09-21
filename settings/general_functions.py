@@ -219,9 +219,9 @@ def date_from_string(string):
         return string
 
 
-def clear_search_field(handle_field_function):
-    while get_field_value(handle_field_function) != "":
-        handle_field_function.clear()
+# def clear_search_field(handle_field_function):
+#     while get_field_value(handle_field_function) != "":
+#         handle_field_function.clear()
 
 
 def enter_field_value(handle_field_function, value):
@@ -232,9 +232,9 @@ def enter_field_value(handle_field_function, value):
               f'enter "{value}" value into appropriate field, trying again...')
 
 
-def fill_search_field(handle_field_function, value):
-    while get_field_value(handle_field_function) != value:
-        enter_field_value(handle_field_function, value)
+# def fill_search_field(handle_field_function, value):
+#     while get_field_value(handle_field_function) != value:
+#         enter_field_value(handle_field_function, value)
 
 
 # Used for crocodile, performing the same function as "fill_search_field" but not as effectively
