@@ -75,4 +75,5 @@ def enter_input_value(browser, document, input_function, type, id, value):
 
 def click_button(browser, document, input_function, id, type):
     button = input_function(browser, document, id, type, True)
+    print('button', button.text)
     button.click()

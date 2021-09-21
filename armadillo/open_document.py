@@ -1,17 +1,17 @@
-from selenium_utilities.search import locate_element_by_class_name, locate_element_by_id, locate_elements_by_class_name
 from selenium.common.exceptions import TimeoutException
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.wait import WebDriverWait
-from settings.general_functions import get_direct_link, timeout
+from selenium_utilities.search import (locate_element_by_class_name,
+                                       locate_element_by_id,
+                                       locate_element_by_tag_name,
+                                       locate_elements_by_class_name)
+from settings.general_functions import get_direct_link
 
-from armadillo.armadillo_variables import (link_tag, number_results_class, multiple_results_message,
+from armadillo.armadillo_variables import (link_tag, multiple_results_message,
+                                           number_results_class,
                                            result_class_names,
                                            search_results_id,
                                            single_result_message)
 from armadillo.validation import (validate_result, verify_results_loaded,
                                   verify_search_results_page_loaded)
-
 
 # def locate_result_count(browser, document):
 #     try:
@@ -81,23 +81,25 @@ def access_result(browser, document, result_number):
     return results[int(result_number/2)]
 
 
-def locate_result_link(document, result):
-    try:
-        result_link_present = EC.element_to_be_clickable((By.TAG_NAME, link_tag))
-        WebDriverWait(result, timeout).until(result_link_present)
-        result_link = result.find_element_by_tag_name(link_tag)
-        return result_link
-    except TimeoutException:
-        print(f'Browser timed out trying to locate result link for '
-              f'{document.extrapolate_value()}, please review.')
-        input()
+# def locate_result_link(document, result):
+#     try:
+#         result_link_present = EC.element_to_be_clickable((By.TAG_NAME, link_tag))
+#         WebDriverWait(result, timeout).until(result_link_present)
+#         result_link = result.find_element_by_tag_name(link_tag)
+#         return result_link
+#     except TimeoutException:
+#         print(f'Browser timed out trying to locate result link for '
+#               f'{document.extrapolate_value()}, please review.')
+#         input()
 
 
 def access_result_link(document, result):
-    result_link_element = locate_result_link(document, result)
+    result_link_element = locate_element_by_tag_name(result, document, link_tag, "result link", True)
+    # result_link_element = locate_result_link(document, result)
     return get_direct_link(result_link_element)
 
 
+# Does this need a try / exception to function properly?
 def open_result_link(browser, document, result):
     try:
         document_link = access_result_link(document, result)
