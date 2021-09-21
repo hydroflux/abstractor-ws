@@ -1,6 +1,7 @@
 from rattlesnake.rattlesnake_variables import (old_date_end_input_id,
                                                old_date_start_input_id,
                                                old_page_input_id,
+                                               old_search_button_id,
                                                old_volume_input_id,
                                                page_input_id,
                                                reception_number_input_id,
@@ -25,6 +26,9 @@ def update_element_ids(document_list):
                 "Page": old_page_input_id,
                 "Date Start": old_date_start_input_id,
                 "Date End": old_date_end_input_id
+            }
+            document.button_ids = {
+                "Submit Button": old_search_button_id
             }
 
 

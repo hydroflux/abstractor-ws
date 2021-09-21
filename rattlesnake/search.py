@@ -11,6 +11,14 @@ def clear_search(browser, document):
         clear_input(browser, locate_input, document.input_ids[id], f'{id} Input', document)
 
 
+def handle_search_years(browser, document):
+    if document.year < '1985' and document.year != '1700':
+        enter_input_value(browser, locate_input, document.input_ids["Date Start"],
+                          "Date Start Input", f'01/01/{document.year}', document)
+        enter_input_value(browser, locate_input, document.input_ids["Date End"],
+                          "Date Start Input", f'12/31/{document.year}', document)
+
+
 def handle_document_value_numbers(browser, document):
     value = document.document_value()
     if document.type == 'document_number':
@@ -21,6 +29,7 @@ def handle_document_value_numbers(browser, document):
                           "volume input", value[0], document)
         enter_input_value(browser, locate_input, document.input_ids["Page"],
                           "page input", value[1], document)
+        handle_search_years(browser, document)
     else:
         print(f'Unable to search document type "{document.type}", '
               f'a new search path needs to be developed in order to continue.\n')
@@ -38,3 +47,5 @@ def search(browser, document):
                      "submit button", document)  # Execute Search
     else:
         open_url(browser, old_search_url, old_search_title, "old document search", document)
+        clear_search(browser, document)
+        handle_document_value_numbers(browser, document)  # Enter Value Numbers

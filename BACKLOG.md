@@ -223,6 +223,7 @@
 - [ ] Refactor 'record' selenium functions into selenium utilities directory
 - [ ] Add a method for handling "NO DOCUMENT TYPES"
 - [ ] Drop book from Dataframe
+- [ ] Add 'search_url' & 'search_title' (and respective 'old') to the document instances with 'transform' script & the document class
 
 ### Testing Script To Do
 
