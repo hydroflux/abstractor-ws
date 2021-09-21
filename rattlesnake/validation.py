@@ -1,5 +1,5 @@
-from settings.general_functions import (assert_window_title, date_from_string,
-                                        naptime)
+from selenium_utilities.open import assert_window_title
+from settings.general_functions import date_from_string, naptime
 
 from rattlesnake.rattlesnake_variables import (bad_download_title,
                                                bad_login_title,
