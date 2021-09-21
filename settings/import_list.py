@@ -85,9 +85,16 @@ def get_document_number(columns, row):
 
 def get_year(columns, row):
     if 'Recording Date' in columns:
-        return row['Recording Date'][-4:]
+        year = row['Recording Date']
     elif 'Recording Dates' in columns:
-        return row['Recording Dates'][-4:]
+        year = row['Recording Dates'][-4:]
+    if year:
+        try:
+            return year[-4:]
+        except TypeError:
+            return year.year
+        except AttributeError:
+            return None
     else:
         return None
 
