@@ -1,3 +1,4 @@
+from selenium_utilities.open import open_url
 from selenium.common.exceptions import (ElementClickInterceptedException,
                                         JavascriptException, TimeoutException)
 from selenium.webdriver.common.by import By
@@ -16,12 +17,6 @@ from eagle.login import check_login_status
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("search", __name__)
-
-
-def open_search(browser):
-    browser.get(search_url)
-    check_login_status(browser)  # Try here, if unsuccessful move to after open_search
-    assert search_title
 
 
 def get_clear_search_button(browser, document):
@@ -162,7 +157,8 @@ def execute_search(browser):
 
 
 def search(browser, document):
-    open_search(browser)
+    open_url(browser, search_url, search_title, "document search page")
+    check_login_status(browser)  # Try here, if unsuccessful move to after open_search
     clear_search(browser, document)   # This can probably be dropped if clear_search_field is working properly
     # but additional adjustments need to be made in order to handle the same exceptions that are processed
     # with clear search
