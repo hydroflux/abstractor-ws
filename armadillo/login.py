@@ -3,8 +3,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-from settings.general_functions import (assert_window_title, fill_search_field,
-                                        timeout)
+from selenium_utilities.open import assert_window_title
+
+from settings.general_functions import timeout
 
 from armadillo.armadillo_variables import credentials, website, website_title
 from armadillo.validation import verify_login

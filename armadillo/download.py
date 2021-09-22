@@ -5,10 +5,12 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
+from selenium_utilities.inputs import center_element
+
 from settings.download_management import previously_downloaded, update_download
 from settings.file_management import (create_document_directory,
                                       extrapolate_document_value)
-from settings.general_functions import (center_element, get_direct_link,
+from settings.general_functions import (get_direct_link,
                                         newline_split, timeout)
 from settings.iframe_handling import (access_iframe_by_tag,
                                       switch_to_default_content)

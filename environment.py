@@ -3,7 +3,7 @@ import sys
 sys.path.append(".")
 
 if __name__ == '__main__':
-    from armadillo.execute import execute_program as execute_armadillo
+    # from armadillo.execute import execute_program as execute_armadillo
     from crocodile.execute import execute_name_search as name_search_crocodile
     from crocodile.execute import execute_program as execute_crocodile
     from crocodile.execute import execute_review as review_crocodile
@@ -32,13 +32,14 @@ print("environment", __name__)
 
 def execute_program_type(county, program_type, document_list=None, search_name=None):
     if county.program == 'armadillo':
-        if program_type == 'execute':
-            add_download_types(county, document_list)
-            execute_armadillo(county, target_directory, document_list, file_name)
-        elif program_type == 'review':
-            execute_armadillo(county, target_directory, document_list, file_name, True)
-        else:
-            currently_unavailable(county, program_type)
+        # if program_type == 'execute':
+        #     add_download_types(county, document_list)
+        #     execute_armadillo(county, target_directory, document_list, file_name)
+        # elif program_type == 'review':
+        #     execute_armadillo(county, target_directory, document_list, file_name, True)
+        # else:
+        #     currently_unavailable(county, program_type)
+        pass
     elif county.program == 'crocodile':
         if program_type == 'execute':
             execute_crocodile(county, target_directory, document_list, file_name)
