@@ -114,9 +114,7 @@ def execute_search(browser, document):
 
 def search(browser, document):
     open_url(browser, search_url, search_title, "document search page")
-    check_login_status(browser)  # Try here, if unsuccessful move to after open_search
-    clear_search(browser, document)   # This can probably be dropped if clear_search_field is working properly
-    # but additional adjustments need to be made in order to handle the same exceptions that are processed
-    # with clear search
+    check_login_status(browser)
+    clear_search(browser, document)
     naptime()  # Consider testing without this nap to see if necessary
     execute_search(browser, document)
