@@ -16,7 +16,7 @@ def update_element_ids(document_list):
                 "Reception Number": reception_number_input_id,
                 "Volume": volume_input_id,
                 "Page": page_input_id,
-                }
+            }
             document.button_ids = {
                 "Submit Button": search_button_id
             }

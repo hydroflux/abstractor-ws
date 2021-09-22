@@ -144,16 +144,6 @@ def prepare_search(browser, document):
         prepare_book_and_page_search(browser, document)
 
 
-# def locate_search_button(browser):
-#     try:
-#         search_button_present = EC.element_to_be_clickable((By.ID, search_button_id))
-#         WebDriverWait(browser, timeout).until(search_button_present)
-#         search_button = browser.find_element_by_id(search_button_id)
-#         return search_button
-#     except TimeoutException:
-#         print("Browser timed out trying to execute search.")
-
-
 def execute_search(browser, document):
     prepare_search(browser, document)
     click_button(browser, locate_element_by_id, search_button_id, "execute search button", document)

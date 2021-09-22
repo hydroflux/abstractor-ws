@@ -16,7 +16,7 @@ def update_input_ids(document_list):
             "Reception Number": reception_number_input_id,
             "Volume": volume_input_id,
             "Page": page_input_id
-            }
+        }
 
 
 def update_county(document_list, county):
