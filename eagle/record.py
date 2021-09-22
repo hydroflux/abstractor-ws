@@ -313,6 +313,10 @@ def record_comments(dataframe, document, image_available):
         no_document_image(dataframe, document)
 
 
+def record_document_link(dataframe):
+    dataframe["Document Link"].append('')
+
+
 def record_document_fields(browser, dataframe, document, image_available):
     document_information = get_document_information(browser, document)
     document_tables = access_document_information_tables(browser, document, document_information)
