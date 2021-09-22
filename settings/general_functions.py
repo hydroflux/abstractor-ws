@@ -135,10 +135,10 @@ def scroll_to_top(browser):
 
 def get_element_attributes(browser, element):
     attributes = browser.execute_script(
-                    'var items = {};'
-                    'for (index = 0; index < arguments[0].attributes.length; ++index)'
-                    '{ items[arguments[0].attributes[index].name] = arguments[0].attributes[index].value }; '
-                    'return items;', element)
+        'var items = {};'
+        'for (index = 0; index < arguments[0].attributes.length; ++index)'
+        '{ items[arguments[0].attributes[index].name] = arguments[0].attributes[index].value }; '
+        'return items;', element)
     pprint(attributes)
 
 

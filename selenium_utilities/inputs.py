@@ -10,7 +10,7 @@ def clear_input(browser, locator_function, attribute, type, document=None):
         locator_function(browser, attribute, type, True, document).clear()
 
 
-def enter_locator_value(browser, locator_function, attribute, type, value, document=None):
+def enter_input_value(browser, locator_function, attribute, type, value, document=None):
     while get_field_value(locator_function(browser, attribute, type, True, document)) != value:
         locator_function(browser, attribute, type, True, document).send_keys(Keys.UP + value)
 
