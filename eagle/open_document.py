@@ -1,4 +1,4 @@
-from selenium_utilities.locators import locate_element_by_class_name
+from selenium_utilities.locators import locate_element_by_class_name, locate_elements_by_class_name
 from selenium.common.exceptions import (StaleElementReferenceException,
                                         TimeoutException)
 from selenium.webdriver.common.by import By
@@ -11,7 +11,7 @@ from eagle.eagle_variables import (currently_searching, failed_search,
                                    invalid_search_message, no_results_message,
                                    search_action_tag,
                                    search_actions_class_name,
-                                   search_result_class_name, search_status_tag,
+                                   results_row_class_name, search_status_tag,
                                    validation_class_name)
 from eagle.search import search, execute_search
 
@@ -63,33 +63,36 @@ def retry_execute_search(browser, document, search_status):
     return search_status
 
 
-def locate_first_result(browser):
-    try:
-        first_result_present = EC.element_to_be_clickable((By.CLASS_NAME, search_result_class_name))
-        WebDriverWait(browser, timeout).until(first_result_present)
-        first_result = browser.find_elements_by_class_name(search_result_class_name)
-        return first_result
-    except TimeoutException:
-        print("Browser timed out trying to retrieve the first result of the search.")
+# def locate_first_result(browser):
+#     try:
+#         first_result_present = EC.element_to_be_clickable((By.CLASS_NAME, search_result_class_name))
+#         WebDriverWait(browser, timeout).until(first_result_present)
+#         first_result = browser.find_elements_by_class_name(search_result_class_name)
+#         return first_result
+#     except TimeoutException:
+#         print("Browser timed out trying to retrieve the first result of the search.")
 
 
 def get_search_results(browser, document):
-    search_results = locate_first_result(browser)
-    while type(search_results) is None:
+    result_rows = locate_elements_by_class_name(browser, results_row_class_name,
+                                                "search results", True, document=document)
+    while type(result_rows) is None:
         retry_search(browser, document)
-        search_results = locate_first_result(browser)
-    return search_results
+        result_rows = locate_elements_by_class_name(browser, results_row_class_name,
+                                                    "search results", True, document=document)
+    return result_rows
 
 
 def count_results(browser, document):
-    try:
-        search_results = get_search_results(browser, document)
-        number_results = len(search_results)
-        return int(number_results)
-    except TypeError:
-        print(f'Encountered a "TypeError" trying to count search results for '
-              f'{document.extrapolate_value()}, please review.')
-        return None
+    # try:
+    result_rows = get_search_results(browser, document)
+    document.number_results += len(result_rows)
+    # Again, I don't think the try / exception is necessary here
+    # return int(number_results)
+    # except TypeError:
+    #     print(f'Encountered a "TypeError" trying to count search results for '
+    #           f'{document.extrapolate_value()}, please review.')
+    #     return None
 
 
 def handle_result_count(browser, document):
