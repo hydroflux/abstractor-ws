@@ -161,9 +161,7 @@ def handle_search_results(browser, document):
     try:
         first_result = get_search_results(browser, document)[0]
         open_document_description(browser, document, first_result)
-        short_nap() # W/O nap pdf fails to load properly on first try
-        # Testing fine without naptime, however hitting manual overrides more often;
-        # Use short_nap if it prevents the break
+        short_nap()  # W/O nap pdf fails to load properly on first try
         return True
     except StaleElementReferenceException:
         print(f'Encountered a stale element exception while trying to open '
