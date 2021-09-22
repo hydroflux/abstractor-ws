@@ -29,6 +29,7 @@ def validate_search(browser, document):
     return invalid_search_message != locate_element_by_class_name(browser, validation_class_name,
                                                                   "search validation message", document=document)
 
+
 def retry_search(browser, document):
     browser.refresh()
     naptime()
@@ -160,7 +161,7 @@ def handle_search_results(browser, document):
     try:
         first_result = get_search_results(browser, document)[0]
         open_document_description(browser, document, first_result)
-        # short_nap()
+        short_nap() # W/O nap pdf fails to load properly on first try
         # Testing fine without naptime, however hitting manual overrides more often;
         # Use short_nap if it prevents the break
         return True

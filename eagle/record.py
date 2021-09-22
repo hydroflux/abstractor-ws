@@ -325,6 +325,7 @@ def record_document_fields(browser, dataframe, document, image_available):
     aggregate_document_information(browser, document_tables, dataframe, document)
     record_effective_date(dataframe)
     record_volume(dataframe)
+    record_document_link(dataframe)
     record_comments(dataframe, document, image_available)
     scroll_to_top(browser)
 
