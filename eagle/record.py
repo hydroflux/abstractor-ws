@@ -304,6 +304,10 @@ def record_volume(dataframe):
     dataframe['Volume'].append('')
 
 
+def record_document_link(dataframe):
+    dataframe["Document Link"].append('')
+
+
 def record_comments(dataframe, document, image_available):
     if document.number_results == 1:
         dataframe["Comments"].append("")
@@ -311,10 +315,6 @@ def record_comments(dataframe, document, image_available):
         dataframe["Comments"].append(multiple_documents_comment(document))
     if not image_available:
         no_document_image(dataframe, document)
-
-
-def record_document_link(dataframe):
-    dataframe["Document Link"].append('')
 
 
 def record_document_fields(browser, dataframe, document, image_available):

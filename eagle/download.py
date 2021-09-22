@@ -1,18 +1,17 @@
 import os
-from settings.iframe_handling import switch_to_default_content
 
 from selenium.common.exceptions import TimeoutException
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.wait import WebDriverWait
+from selenium_utilities.inputs import click_button
+from selenium_utilities.locators import (locate_element_by_class_name,
+                                         locate_element_by_id)
 
 from settings.download_management import previously_downloaded, update_download
-from settings.file_management import create_document_directory
-from settings.general_functions import long_timeout, naptime
 from settings.error_handling import no_image_comment
+from settings.file_management import create_document_directory
+from settings.general_functions import naptime
+from settings.iframe_handling import switch_to_default_content
 
-from eagle.eagle_variables import (download_button_id, pdf_viewer_class_name,
-                                   stock_download_suffix)
+from eagle.eagle_variables import pdf_viewer_class_name, stock_download_suffix
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("download", __name__)
@@ -28,9 +27,7 @@ def download_available(dataframe, document):
 
 def switch_into_frame(browser):
     try:
-        pdf_viewer_present = EC.presence_of_element_located((By.CLASS_NAME, pdf_viewer_class_name))
-        WebDriverWait(browser, long_timeout).until(pdf_viewer_present)
-        pdf_viewer = browser.find_element_by_class_name(pdf_viewer_class_name)
+        pdf_viewer = locate_element_by_class_name(browser, pdf_viewer_class_name, "pfd viewer")
         browser.switch_to.frame(pdf_viewer)
         return True
     except TimeoutException:
@@ -44,15 +41,15 @@ def access_pdf_viewer(browser):
         naptime()
 
 
-def execute_download(browser):
-    try:
-        download_button_present = EC.presence_of_element_located((By.ID, download_button_id))
-        WebDriverWait(browser, long_timeout).until(download_button_present)
-        download_button = browser.find_element_by_id(download_button_id)
-        download_button.click()
-        print("Executed download.")
-    except TimeoutException:
-        print("Browser timed out while trying to click the download button.")
+# def execute_download(browser):
+#     try:
+#         download_button_present = EC.presence_of_element_located((By.ID, download_button_id))
+#         WebDriverWait(browser, long_timeout).until(download_button_present)
+#         download_button = browser.find_element_by_id(download_button_id)
+#         download_button.click()
+#         print("Executed download.")
+#     except TimeoutException:
+#         print("Browser timed out while trying to click the download button.")
 
 
 def build_stock_download(document):
@@ -68,7 +65,8 @@ def download_document(browser, dataframe, target_directory, document):
             number_files = len(os.listdir(document_directory))
             build_stock_download(document)
             access_pdf_viewer(browser)
-            execute_download(browser)
+            click_button(browser, locate_element_by_id,
+                         document.button_ids["Download Button"], "download button")
             switch_to_default_content(browser)
             return update_download(
                 browser,

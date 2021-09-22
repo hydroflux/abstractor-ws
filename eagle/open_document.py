@@ -3,10 +3,12 @@ from selenium.common.exceptions import (StaleElementReferenceException,
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+
 from selenium_utilities.locators import (locate_element_by_class_name,
                                          locate_elements_by_class_name,
                                          locate_elements_by_tag_name)
 from selenium_utilities.open import open_url
+
 from settings.general_functions import (get_direct_link, naptime, short_nap,
                                         timeout)
 
