@@ -1,4 +1,6 @@
-from selenium_utilities.locators import locate_element_by_id
+from eagle.disclaimer import check_for_disclaimer
+from selenium_utilities.inputs import click_button
+from selenium_utilities.locators import locate_element_by_id, locate_element_by_class_name
 from selenium_utilities.open import open_url
 from time import sleep
 
@@ -22,16 +24,6 @@ print("login", __name__)
 def open_site(browser):
     open_url(browser, home_page_url, home_page_title, "county site")
     input("Press enter to login...")
-
-
-def open_login_prompt(browser):
-    try:
-        login_button_present = EC.element_to_be_clickable((By.CLASS_NAME, login_button_class))
-        WebDriverWait(browser, timeout).until(login_button_present)
-        login_button = browser.find_element_by_class_name(login_button_class)
-        login_button.click()
-    except TimeoutException:
-        print("Browser timed out while trying to click login prompt.")
 
 
 def enter_credentials(browser):
@@ -70,7 +62,8 @@ def confirm_login(browser):
 
 def log_back_in(browser):
     try:
-        open_login_prompt(browser)
+        click_button(browser, locate_element_by_class_name,
+                     login_button_class, "login button prompt")
         enter_credentials(browser)
         confirm_login(browser)
     except TimeoutException:
@@ -87,16 +80,18 @@ def check_login_status(browser):
 
 
 def execute_login_process(browser):
-    try:
-        open_site(browser)
-        check_for_disclaimer(browser)
-        open_login_prompt(browser)
-        enter_credentials(browser)
-        confirm_login(browser)
-        return True
-    except TimeoutException:
-        print("Browser timed out while trying to execute login sequence.")
-        return False
+    # try:
+    open_site(browser)
+    check_for_disclaimer(browser)
+    click_button(browser, locate_element_by_class_name,
+                 login_button_class, "login button prompt")
+    enter_credentials(browser)
+    confirm_login(browser)
+    return True
+    # I don't think this try / exception is necessary--testing without
+    # except TimeoutException:
+    #     print("Browser timed out while trying to execute login sequence.")
+    #     return False
 
 
 def account_login(browser):
