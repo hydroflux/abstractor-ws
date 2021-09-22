@@ -1,6 +1,6 @@
 from eagle.eagle_variables import (book_input_id, clear_search_id,
-                                   login_button_id, page_input_id,
-                                   reception_number_input_id, search_button_id)
+                                   page_input_id, reception_number_input_id,
+                                   search_button_id)
 
 
 def update_element_ids(document_list):
@@ -11,7 +11,6 @@ def update_element_ids(document_list):
             "Page": page_input_id,
         }
         document.button_ids = {
-            "Login": login_button_id,
             "Clear Search": clear_search_id,
             "Submit Search": search_button_id
         }

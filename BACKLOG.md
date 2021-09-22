@@ -59,6 +59,13 @@
 
 ### Class To Do
 
+#### Abstract Class To Do
+
+- [ ] Create 'Abstract' class
+- [ ] Put general button_ids on the 'abstract' class (login, logout, etc.)
+- [ ] Put urls on the abstract class
+- [ ] Update button_ids to button_attrs & similarly elsewhere
+
 #### Document Class To Do
 
 - [ ] Add the 'download' trigger to the Document class
