@@ -88,6 +88,8 @@ def get_year(columns, row):
         year = row['Recording Date']
     elif 'Recording Dates' in columns:
         year = row['Recording Dates']
+    else:
+        year = None
     if year:
         try:
             return year[-4:]

@@ -1,5 +1,5 @@
+from selenium_utilities.open import assert_window_title
 from settings.file_management import extrapolate_document_value
-from settings.general_functions import assert_window_title
 
 from crocodile.crocodile_variables import website_title
 from crocodile.login import account_login

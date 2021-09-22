@@ -1,11 +1,11 @@
+from selenium_utilities.open import assert_window_title
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from settings.classes.Document import Document
 from settings.file_management import document_value, extrapolate_document_value
-from settings.general_functions import (assert_window_title,
-                                        get_direct_children, get_direct_link,
+from settings.general_functions import (get_direct_children, get_direct_link,
                                         get_element_text,
                                         javascript_script_execution,
                                         set_description_link, timeout)

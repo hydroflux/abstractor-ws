@@ -1,3 +1,4 @@
+from selenium_utilities.inputs import center_element
 from selenium.common.exceptions import (ElementClickInterceptedException,
                                         StaleElementReferenceException,
                                         TimeoutException)
@@ -9,7 +10,7 @@ from settings.bad_search import no_document_image
 from settings.export_settings import search_errors
 from settings.file_management import (check_length, drop_last_entry,
                                       multiple_documents_comment)
-from settings.general_functions import (center_element, long_timeout,
+from settings.general_functions import (long_timeout,
                                         medium_nap, naptime, scroll_to_top,
                                         short_nap, timeout,
                                         update_sentence_case_extras)
