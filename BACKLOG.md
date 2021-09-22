@@ -56,6 +56,7 @@
 - [ ] Generalize 'clear_search' functions to use a loop of the input ids
 - [ ] In order to make the above work, 'button ids' need to be separate from 'input ids' in 'transform_document_list' functions and 'Document' class
 - [ ] Update 'display_document_list' to show all available attributes attached to a document
+- [ ] Eliminate iframe_handling script?
 
 ### Class To Do
 

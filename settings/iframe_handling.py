@@ -2,21 +2,14 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+
+from selenium_utilities.locators import locate_elements_by_tag_name
+
 from settings.general_functions import timeout
 
 
-def locate_iframes_by_tag(browser):
-    try:
-        iframes_present = EC.presence_of_element_located((By.TAG_NAME, 'iframe'))
-        WebDriverWait(browser, timeout).until(iframes_present)
-        iframes = browser.find_elements_by_tag_name('iframe')
-        return iframes
-    except TimeoutException:
-        print('Browser timed out trying to locate iframes on the page, please review.')
-
-
 def access_iframe_by_tag(browser):
-    iframes = locate_iframes_by_tag(browser)
+    iframes = locate_elements_by_tag_name(browser, 'iframe', 'iframes')
     if len(iframes) == 0:
         print('Browser unable to locate any iframes on the page, please review.')
     elif len(iframes) > 1:
