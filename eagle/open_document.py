@@ -1,16 +1,17 @@
-from selenium_utilities.locators import locate_element_by_class_name, locate_elements_by_class_name
+from selenium_utilities.open import open_url
+from selenium_utilities.locators import locate_element_by_class_name, locate_elements_by_class_name, locate_elements_by_tag_name
 from selenium.common.exceptions import (StaleElementReferenceException,
                                         TimeoutException)
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-from settings.general_functions import naptime, short_nap, timeout
+from settings.general_functions import get_direct_children, get_direct_link, naptime, short_nap, timeout
 
-from eagle.eagle_variables import (currently_searching, failed_search,
+from eagle.eagle_variables import (currently_searching, failed_search, document_description_title,
                                    invalid_search_message, no_results_message,
-                                   search_action_tag,
-                                   search_actions_class_name,
+                                   result_action_tag_name,
+                                   result_actions_class_name,
                                    results_row_class_name, search_status_tag,
                                    validation_class_name)
 from eagle.search import search, execute_search
@@ -127,27 +128,35 @@ def check_search_results(browser, document):
         return True
 
 
-def view_search_actions(browser, result):
-    try:
-        search_actions_list_present = EC.presence_of_element_located((By.CLASS_NAME, search_actions_class_name))
-        WebDriverWait(browser, timeout).until(search_actions_list_present)
-        search_actions_list = result.find_element_by_class_name(search_actions_class_name)
-        return search_actions_list.find_elements_by_tag_name(search_action_tag)
-    except TimeoutException:
-        print("Browser timed out while trying to access search actions.")
+# def view_search_actions(browser, result):
+#     try:
+#         search_actions_list_present = EC.presence_of_element_located((By.CLASS_NAME, search_actions_class_name))
+#         WebDriverWait(browser, timeout).until(search_actions_list_present)
+#         search_actions_list = result.find_element_by_class_name(search_actions_class_name)
+#         return search_actions_list.find_elements_by_tag_name(search_action_tag_name)
+#     except TimeoutException:
+#         print("Browser timed out while trying to access search actions.")
 
 
-def open_document_description(browser, result):
-    search_actions = view_search_actions(browser, result)
-    browser.get(search_actions[1].get_attribute("href"))
+def get_document_link(result, document):
+    result_actions_list = locate_element_by_class_name(result, result_actions_class_name,
+                                                       "search results actions list", document=document)
+    return locate_elements_by_tag_name(result_actions_list, result_action_tag_name,
+                                       "search actions", document=document)[1]
+
+
+def open_document_description(browser, document, result):
+    document_link = get_document_link(result, document)
+    document.description_link = get_direct_link(document_link)
+    open_url(browser, document.description_link, document_description_title, "document description", document)
 
 
 def handle_search_results(browser, document):
     try:
         first_result = get_search_results(browser, document)[0]
-        open_document_description(browser, first_result)
-        short_nap()
-        # Testing find without naptime, however hitting manual overrides more often;
+        open_document_description(browser, document, first_result)
+        # short_nap()
+        # Testing fine without naptime, however hitting manual overrides more often;
         # Use short_nap if it prevents the break
         return True
     except StaleElementReferenceException:
