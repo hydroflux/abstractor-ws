@@ -15,7 +15,7 @@ from armadillo.logout import logout
 from armadillo.open_document import open_document
 from armadillo.record import record
 from armadillo.search import search
-from armadillo.transform_document_list import transform_document_list
+from armadillo.transform import transform_document_list
 
 
 def record_document(browser, document_list, document, review):
