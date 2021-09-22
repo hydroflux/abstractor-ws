@@ -1,3 +1,4 @@
+from selenium_utilities.locators import locate_element_by_class_name
 from selenium.common.exceptions import (StaleElementReferenceException,
                                         TimeoutException)
 from selenium.webdriver.common.by import By
@@ -19,17 +20,8 @@ print("open", __name__)
 
 
 def validate_search(browser, document):
-    try:
-        validation_message_present = EC.presence_of_element_located((By.CLASS_NAME, validation_class_name))
-        WebDriverWait(browser, timeout).until(validation_message_present)
-        validation_message = browser.find_element_by_class_name(validation_class_name)
-        if validation_message == invalid_search_message:
-            return False
-        else:
-            return True
-    except TimeoutException:
-        print(f'Browser timed out trying to validate the search for {document.extrapolate_value()}')
-
+    return invalid_search_message != locate_element_by_class_name(browser, validation_class_name,
+                                                                  "search validation message", document=document)
 
 def retry_search(browser, document):
     browser.refresh()
