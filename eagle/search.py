@@ -1,3 +1,5 @@
+from selenium_utilities.locators import locate_element_by_id
+from selenium_utilities.inputs import center_element, click_button
 from selenium_utilities.open import open_url
 from selenium.common.exceptions import (ElementClickInterceptedException,
                                         JavascriptException, TimeoutException)
@@ -9,8 +11,8 @@ from settings.general_functions import (clear_search_field, fill_search_field,
                                         medium_nap, naptime, scroll_into_view,
                                         timeout)
 
-from eagle.eagle_variables import (book_search_id, clear_search_id,
-                                   instrument_search_id, page_search_id,
+from eagle.eagle_variables import (clear_search_id,
+                                   reception_number_input_id, book_input_id, page_input_id,
                                    search_button_id, search_title, search_url)
 from eagle.error_handling import check_for_error
 from eagle.login import check_login_status
@@ -32,7 +34,7 @@ def get_clear_search_button(browser, document):
 
 def execute_clear_search(browser, button):
     try:
-        scroll_into_view(browser, button)
+        center_element(browser, button)
         button.click()
         return True
     except ElementClickInterceptedException:
@@ -55,25 +57,27 @@ def clear_search(browser, document):
             # medium_nap()  #  Commented out on June 22, 2021
             browser.back()  # Should work for JS exceptions--don't know about Element Click Interceptions
             medium_nap()
-            open_search(browser)
+            open_url(browser, search_url, search_title, "document search page")
 
 
-def locate_document_number_search_field(browser, document):
-    try:
-        instrument_search_field_present = EC.presence_of_element_located((By.ID, instrument_search_id))
-        WebDriverWait(browser, timeout).until(instrument_search_field_present)
-        instrument_search_field = browser.find_element_by_id(instrument_search_id)
-        return instrument_search_field
-    except TimeoutException:
-        print(f'Browser timed out trying to locate search field for '
-              f'{document.extrapolate_value()}.')
+# def locate_document_number_search_field(browser, document):
+#     try:
+#         instrument_search_field_present = EC.presence_of_element_located((By.ID, instrument_search_id))
+#         WebDriverWait(browser, timeout).until(instrument_search_field_present)
+#         instrument_search_field = browser.find_element_by_id(instrument_search_id)
+#         return instrument_search_field
+#     except TimeoutException:
+#         print(f'Browser timed out trying to locate search field for '
+#               f'{document.extrapolate_value()}.')
 
 
 def handle_document_number_search_field(browser, document):
-    instrument_search_field = locate_document_number_search_field(browser, document)
+    instrument_search_field = locate_element_by_id(browser, reception_number_input_id,
+                                                   "reception number input", True, document)
     while type(instrument_search_field) is None:
         check_for_error(browser, document)
-        instrument_search_field = locate_document_number_search_field(browser, document)
+        instrument_search_field = locate_element_by_id(browser, reception_number_input_id,
+                                                       "reception number input", True, document)
     return instrument_search_field
 
 
@@ -82,50 +86,50 @@ def enter_document_number(browser, document):
     fill_search_field(handle_document_number_search_field(browser, document), document.document_value())
 
 
-def locate_book_search_field(browser, book):
-    try:
-        book_search_field_present = EC.presence_of_element_located((By.ID, book_search_id))
-        WebDriverWait(browser, timeout).until(book_search_field_present)
-        book_search_field = browser.find_element_by_id(book_search_id)
-        return book_search_field
-    except TimeoutException:
-        print(f'Browser timed out trying to locate document field for Book: {book}.')
+# def locate_book_search_field(browser, book):
+#     try:
+#         book_search_field_present = EC.presence_of_element_located((By.ID, book_input_id))
+#         WebDriverWait(browser, timeout).until(book_search_field_present)
+#         book_search_field = browser.find_element_by_id(book_input_id)
+#         return book_search_field
+#     except TimeoutException:
+#         print(f'Browser timed out trying to locate document field for Book: {book}.')
 
 
-def handle_book_search_field(browser, document, book):
-    book_search_field = locate_book_search_field(browser, book)
+def handle_book_search_field(browser, document):
+    book_search_field = locate_element_by_id(browser, book_input_id, "book input", True, document)
     while type(book_search_field) is None:
         check_for_error(browser, document)
-        book_search_field = locate_book_search_field(browser, document)
+        book_search_field = locate_element_by_id(browser, book_input_id, "book input", True, document)
     return book_search_field
 
 
 def enter_book_number(browser, document, book):
-    clear_search_field(handle_book_search_field(browser, document, book))
-    fill_search_field(handle_book_search_field(browser, document, book), book)
+    clear_search_field(handle_book_search_field(browser, document))
+    fill_search_field(handle_book_search_field(browser, document), book)
 
 
-def locate_page_search_field(browser, page):
-    try:
-        page_search_field_present = EC.presence_of_element_located((By.ID, page_search_id))
-        WebDriverWait(browser, timeout).until(page_search_field_present)
-        page_search_field = browser.find_element_by_id(page_search_id)
-        return page_search_field
-    except TimeoutException:
-        print(f'Browser timed out trying to fill document field for Page: {page}.')
+# def locate_page_search_field(browser, page):
+#     try:
+#         page_search_field_present = EC.presence_of_element_located((By.ID, page_search_id))
+#         WebDriverWait(browser, timeout).until(page_search_field_present)
+#         page_search_field = browser.find_element_by_id(page_search_id)
+#         return page_search_field
+#     except TimeoutException:
+#         print(f'Browser timed out trying to fill document field for Page: {page}.')
 
 
-def handle_page_search_field(browser, document, page):
-    page_search_field = locate_page_search_field(browser, page)
+def handle_page_search_field(browser, document):
+    page_search_field = locate_element_by_id(browser, page_input_id, "page input", True, document)
     while type(page_search_field) is None:
         check_for_error(browser, document)
-        page_search_field = locate_page_search_field(browser, page)
+        page_search_field = locate_element_by_id(browser, page_input_id, "page input", True, document)
     return page_search_field
 
 
 def enter_page_number(browser, document, page):
-    clear_search_field(handle_page_search_field(browser, document, page))
-    fill_search_field(handle_page_search_field(browser, document, page), page)
+    clear_search_field(handle_page_search_field(browser, document))
+    fill_search_field(handle_page_search_field(browser, document), page)
 
 
 def prepare_book_and_page_search(browser, document):
@@ -140,20 +144,19 @@ def prepare_search(browser, document):
         prepare_book_and_page_search(browser, document)
 
 
-def locate_search_button(browser):
-    try:
-        search_button_present = EC.element_to_be_clickable((By.ID, search_button_id))
-        WebDriverWait(browser, timeout).until(search_button_present)
-        search_button = browser.find_element_by_id(search_button_id)
-        return search_button
-    except TimeoutException:
-        print("Browser timed out trying to execute search.")
+# def locate_search_button(browser):
+#     try:
+#         search_button_present = EC.element_to_be_clickable((By.ID, search_button_id))
+#         WebDriverWait(browser, timeout).until(search_button_present)
+#         search_button = browser.find_element_by_id(search_button_id)
+#         return search_button
+#     except TimeoutException:
+#         print("Browser timed out trying to execute search.")
 
 
-def execute_search(browser):
-    search_button = locate_search_button(browser)
-    scroll_into_view(browser, search_button)
-    search_button.click()
+def execute_search(browser, document):
+    prepare_search(browser, document)
+    click_button(browser, locate_element_by_id, search_button_id, "execute search button", document)
 
 
 def search(browser, document):
@@ -163,5 +166,4 @@ def search(browser, document):
     # but additional adjustments need to be made in order to handle the same exceptions that are processed
     # with clear search
     naptime()  # Consider testing without this nap to see if necessary
-    prepare_search(browser, document)
-    execute_search(browser)
+    execute_search(browser, document)
