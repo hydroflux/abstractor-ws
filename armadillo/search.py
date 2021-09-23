@@ -6,7 +6,7 @@ from settings.general_functions import javascript_script_execution
 
 from armadillo.armadillo_variables import (search_url, search_title,
                                            execute_document_search_script)
-from armadillo.validation import verify_document_search_page_loaded
+# from armadillo.validation import verify_document_search_page_loaded
 
 
 def clear_search(browser, document):
@@ -46,6 +46,6 @@ def document_search(browser, document):
 
 def search(browser, document):
     open_url(browser, search_url, search_title, 'document search page', document)
-    verify_document_search_page_loaded(browser, document)
+    # verify_document_search_page_loaded(browser, document)
     clear_search(browser, document)
     document_search(browser, document)
