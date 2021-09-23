@@ -18,6 +18,6 @@ def enter_credentials(browser):
 
 def account_login(browser):
     open_url(browser, home_page_url, home_page_title, "county site")  # Open County Site
-    open_url(browser, login_url, login_title, "county site")  # Open Login Prompt
+    open_url(browser, login_url, login_title, "login")  # Open Login Prompt
     enter_credentials(browser)  # Enter Login Information
     verify_login(browser, account_login)  # Verify Login
