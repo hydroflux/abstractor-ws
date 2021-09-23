@@ -24,10 +24,10 @@ def handle_document_value_numbers(browser, document):
         enter_input_value(browser, locate_input, document.input_ids["Reception Number"],
                           "reception number input", value, document)
     elif document.type == 'volume_and_page':
-        enter_input_value(browser, locate_input, document.input_ids["Volume"], value[0],
-                          "volume input", document)
-        enter_input_value(browser, locate_input, document.input_ids["Page"], value[1],
-                          "page input", document)
+        enter_input_value(browser, locate_input, document.input_ids["Volume"],
+                          "volume input", value[0], document)
+        enter_input_value(browser, locate_input, document.input_ids["Page"],
+                          "page input", value[1], document)
     else:
         print(f'Unable to search document type "{document.type}", '
               f'a new search path needs to be developed in order to continue.\n')
