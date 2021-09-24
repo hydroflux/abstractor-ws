@@ -2,7 +2,7 @@ from rattlesnake.search import clear_search
 from selenium_utilities.open import open_url
 
 
-from rattlesnake.rattlesnake_variables import old_search_url, old_search_title
+from rattlesnake.rattlesnake_variables import early_search_url, early_search_title
 
 
 # def handle_search_years(browser, document):
@@ -16,12 +16,12 @@ from rattlesnake.rattlesnake_variables import old_search_url, old_search_title
 
 
 def open_early_documents(browser):
-    open_url(browser, old_search_url, old_search_title, "old document search")
     clear_search(browser, document)
     handle_document_value_numbers(browser, document)  # Enter Value Numbers
     click_button(browser, locate_input, document.button_ids["Submit Button"],
                     "submit button", document)  # Execute Search
 
 
-def download_early_documents():
+def download_early_documents(browser):
+    open_url(browser, early_search_url, early_search_title, "old document search")
     pass
