@@ -124,3 +124,4 @@ def execute_early_document_download(county, target_directory, document_list, fil
     transform_document_list(document_list, county, True)
     account_login(browser)
     download_early_documents()
+    browser.close()
