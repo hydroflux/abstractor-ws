@@ -1,5 +1,6 @@
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
+import json
 
 
 # Look into how to change driver preferences mid script -- for download directories
@@ -12,16 +13,32 @@ def chrome_webdriver(target_directory, headless):
         # options.add_argument('start-maximized') # Maximize Viewport
     options.add_argument('--no-sandbox')  # Bypass OS Security Model
 
+    # Settings used for printing directly to PDF
+    settings = {
+       "recentDestinations": [{
+            "id": "Save as PDF",
+            "origin": "local",
+            "account": ""
+        }],
+       "selectedDestinationId": "Save as PDF",
+       "version": 2
+    }
+
     # Needs to be reviewed, but possibly can be used for adblock???
     # options.add_extension(‘Users/Desktop/Python Scripting/crx_files/adblock_plus_3_8_4_0.crx’)
 
     prefs = {
         "download.default_directory": f'{target_directory}/Documents',
         "download.prompt_for_download": False,
-        "plugins.always_open_pdf_externally": True
+        "plugins.always_open_pdf_externally": True,
+        # Added for printing to PDF
+        "printing.print_preview_sticky_settings.appState": json.dumps(settings)
     }
 
     options.add_experimental_option("prefs", prefs)
+
+    # Added for printing to PDF
+    options.add_argument('--kiosk-printing')
 
     driver = webdriver.Chrome(chromedriver, options=options)
     driver.maximize_window()
