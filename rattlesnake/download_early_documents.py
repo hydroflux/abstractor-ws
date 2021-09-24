@@ -16,7 +16,7 @@ def search_early_document(browser, document):
                  "submit button", document)  # Execute Search
 
 
-def handle_document_image_page_user_input():
+def document_image_page_user_prompt():
     print('It appears that you are not on the document image page, would you like to '
           'try again, or continue to the next document?')
     input_selection = ('What would you like to do? \n'
@@ -33,7 +33,7 @@ def check_document_image_page(browser):
     clear_terminal()
     input('Please press enter after opening early document volume...')
     if not assert_window_title(browser, early_document_image_title):
-        return handle_document_image_page_user_input()
+        return document_image_page_user_prompt()
 
 
 def go_to_page(browser, document, page_value):
@@ -41,10 +41,29 @@ def go_to_page(browser, document, page_value):
     page_selector.selectByValue(page_value)
 
 
+def download_page_prompt():
+    print('Would you like to download this document page?')
+    input_selection = ('[1] Yes \n'
+                       '[2] No')
+    user_input = input(input_selection)
+    while user_input not in ["1", "2"]:
+        print(f'You entered "{user_input}" Please enter 1 or 2:')
+        user_input = input(input_selection)
+    return True if user_input == "1" else False
+
+
+def download_page(browser, document, target_directory):
+    pass
+
+
 def download_early_document_image(browser, document, target_directory, next_page=True):
     page_value = int(document.document_value()[1] - 1)
     while next_page is True:
         go_to_page(browser, document, page_value)
+        if download_page_prompt():
+            download_page(browser, document, target_directory)
+        else:
+            next_page = False
 
 
 def download_early_documents(browser, target_directory, document_list):
