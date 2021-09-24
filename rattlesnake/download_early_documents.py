@@ -81,11 +81,28 @@ def open_download_page(browser, document):
     open_url(browser, page_source, page_image_title, "page image", document)
 
 
-def download_page(browser, document, document_directory):
+def download_page(browser, document, document_directory, count):
     number_files = len(os.listdir(document_directory))
     open_download_page(browser, document)
     browser.execute_script('window.print();')
-    update_download(browser, document_directory, document, number_files)
+    if update_download(browser, document_directory, document, number_files):
+        print(f'Successfully downloaded page {count + 1} for '
+              f'{document.extrapolate_value()}.')
+    else:
+        print('Browser failed to downloaded page {count + 1} for '
+              f'{document.document_value()}, please review.')
+        input()
+
+
+def next_page_prompt():
+    print('Would you like to go to the next page?')
+    input_selection = ('[1] Yes \n'
+                       '[2] No')
+    user_input = input(input_selection)
+    while user_input not in ["1", "2"]:
+        print(f'You entered "{user_input}" Please enter 1 or 2:')
+        user_input = input(input_selection)
+    return True if user_input == "1" else False
 
 
 def download_early_document_image(browser, document, document_directory, count=0, next_page=True):
@@ -94,7 +111,10 @@ def download_early_document_image(browser, document, document_directory, count=0
         go_to_page(browser, document, page_value)
         if download_page_prompt():
             set_early_document_download_name(document, count)
-            download_page(browser, document, document_directory)
+            download_page(browser, document, document_directory, count)
+            count += 1
+            page_value = page_value + count
+            next_page = next_page_prompt()
         else:
             next_page = False
 
