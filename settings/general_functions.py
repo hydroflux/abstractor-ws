@@ -116,7 +116,12 @@ def update_sentence_case_extras(text):
             .replace("1St ", "1st ")
             .replace("2Nd ", "2nd ")
             .replace("3Rd ", "3rd ")
-            .replace("4Th ", "4th "))
+            .replace("4Th ", "4th ")
+            .replace("Llc ", "LLC ")
+            .replace("Llp ", "LLP ")
+            .replace("Ii ", "II ")
+            .replace("Iii ", "III ")
+            )
 
 
 def scroll_to_top(browser):
