@@ -21,3 +21,7 @@ def open_early_documents(browser):
     handle_document_value_numbers(browser, document)  # Enter Value Numbers
     click_button(browser, locate_input, document.button_ids["Submit Button"],
                     "submit button", document)  # Execute Search
+
+
+def download_early_documents():
+    pass

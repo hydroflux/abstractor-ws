@@ -1,3 +1,4 @@
+from rattlesnake.download_early_documents import download_early_documents
 from settings.abstract_object import abstract_dictionary as dataframe
 from settings.bad_search import no_document_image, record_bad_search
 from settings.driver import create_webdriver
@@ -116,3 +117,10 @@ def execute_program(county, target_directory, document_list, file_name, review=F
         bundle_project(target_directory, abstraction)
     logout(browser)
     browser.close()
+
+
+def execute_early_document_download(county, target_directory, document_list, file_name):
+    browser = create_webdriver(target_directory, False)
+    transform_document_list(document_list, county, True)
+    account_login(browser)
+    download_early_documents()
