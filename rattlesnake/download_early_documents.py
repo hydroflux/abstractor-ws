@@ -1,4 +1,5 @@
 import os
+from settings.general_functions import four_character_padding
 from settings.download_management import update_download
 from settings.file_management import create_document_directory
 from selenium.webdriver.support.ui import Select
@@ -61,8 +62,17 @@ def download_page_prompt():
     return True if user_input == "1" else False
 
 
-def set_early_document_download_values(document, count):
-    pass
+def set_early_document_download_name(document, count):
+    value = document.document_value()
+    if count == 0:
+        document.new_name = (f'{document.county.prefix}-'
+                             f'{four_character_padding(value[0])}-'
+                             f'{four_character_padding(value[1])}.pdf')
+    else:
+        document.new_name = (f'{document.county.prefix}-'
+                             f'{four_character_padding(value[0])}-'
+                             f'{four_character_padding(value[1])}-'
+                             f'{count}.pdf')
 
 
 def open_download_page(browser, document):
@@ -83,7 +93,7 @@ def download_early_document_image(browser, document, document_directory, count=0
     while next_page is True:
         go_to_page(browser, document, page_value)
         if download_page_prompt():
-            set_early_document_download_values(document, count)
+            set_early_document_download_name(document, count)
             download_page(browser, document, document_directory)
         else:
             next_page = False
