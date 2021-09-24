@@ -1,3 +1,6 @@
+import os
+from settings.download_management import update_download
+from settings.file_management import create_document_directory
 from selenium.webdriver.support.ui import Select
 
 from selenium_utilities.inputs import click_button
@@ -58,27 +61,36 @@ def download_page_prompt():
     return True if user_input == "1" else False
 
 
+def set_early_document_download_values(document, count):
+    pass
+
+
 def open_download_page(browser, document):
     page_image = locate_element(browser, page_image_id, "page image", document=document)
     page_source = page_image.get_attribute('src')
     open_url(browser, page_source, page_image_title, "page image", document)
 
 
-def download_page(browser, document, target_directory):
+def download_page(browser, document, document_directory):
+    number_files = len(os.listdir(document_directory))
     open_download_page(browser, document)
+    browser.execute_script('window.print();')
+    update_download(browser, document_directory, document, number_files)
 
 
-def download_early_document_image(browser, document, target_directory, next_page=True):
+def download_early_document_image(browser, document, document_directory, count=0, next_page=True):
     page_value = int(document.document_value()[1] - 1)
     while next_page is True:
         go_to_page(browser, document, page_value)
         if download_page_prompt():
-            download_page(browser, document, target_directory)
+            set_early_document_download_values(document, count)
+            download_page(browser, document, document_directory)
         else:
             next_page = False
 
 
 def download_early_documents(browser, target_directory, document_list):
+    document_directory = create_document_directory(target_directory)
     for document in document_list:
         clear_terminal()
         print(f'Now searching {document.document_value()}...')
@@ -86,4 +98,4 @@ def download_early_documents(browser, target_directory, document_list):
         clear_search(browser, document)
         search_early_document(browser, document)
         if check_document_image_page(browser):
-            download_early_document_image(browser, document, target_directory)
+            download_early_document_image(browser, document, document_directory)
