@@ -1,4 +1,5 @@
 from selenium.common.exceptions import TimeoutException
+
 from selenium_utilities.locators import (locate_element_by_class_name,
                                          locate_element_by_id,
                                          locate_element_by_tag_name,
@@ -16,7 +17,6 @@ from armadillo.validation import (validate_result, verify_results_loaded,
 
 def count_results(browser, document):
     result_count = locate_element_by_class_name(browser, number_results_class, "number results", document=document)
-    # result_count = locate_result_count(browser, document)
     if result_count.text == single_result_message:
         document.number_results += 1
     elif result_count.text.endswith(multiple_results_message):
@@ -48,7 +48,6 @@ def access_result(browser, document, result_number):
 
 def access_result_link(document, result):
     result_link_element = locate_element_by_tag_name(result, link_tag, "result link", True, document)
-    # result_link_element = locate_result_link(document, result)
     return get_direct_link(result_link_element)
 
 
