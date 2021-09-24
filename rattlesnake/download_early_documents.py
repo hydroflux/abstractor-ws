@@ -1,13 +1,14 @@
 import os
-from settings.general_functions import four_character_padding
-from settings.download_management import update_download
-from settings.file_management import create_document_directory
+
 from selenium.webdriver.support.ui import Select
 
 from selenium_utilities.inputs import click_button
 from selenium_utilities.locators import locate_element_by_id as locate_element
 from selenium_utilities.open import assert_window_title, open_url
 
+from settings.download_management import update_download
+from settings.file_management import create_document_directory
+from settings.general_functions import four_character_padding
 from settings.user_prompts import clear_terminal
 
 from rattlesnake.rattlesnake_variables import (early_document_image_title,

@@ -12,7 +12,8 @@ from settings.general_functions import timeout
 from rattlesnake.rattlesnake_variables import (add_to_cart_button_id,
                                                download_page_id,
                                                free_download_button_id)
-from rattlesnake.validation import verify_document_image_page_loaded, verify_valid_download
+from rattlesnake.validation import (verify_document_image_page_loaded,
+                                    verify_valid_download)
 
 
 def locate_download_page(browser, document):
