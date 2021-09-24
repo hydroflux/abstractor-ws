@@ -1,11 +1,17 @@
 from selenium.webdriver.support.ui import Select
-from settings.user_prompts import clear_terminal
-from selenium_utilities.inputs import click_button
-from rattlesnake.search import clear_search, handle_document_value_numbers
-from selenium_utilities.open import assert_window_title, open_url
-from selenium_utilities.locators import locate_element_by_id as locate_element
 
-from rattlesnake.rattlesnake_variables import early_search_url, early_search_title, early_document_image_title, page_selector_id, page_image_id, page_image_title
+from selenium_utilities.inputs import click_button
+from selenium_utilities.locators import locate_element_by_id as locate_element
+from selenium_utilities.open import assert_window_title, open_url
+
+from settings.user_prompts import clear_terminal
+
+from rattlesnake.rattlesnake_variables import (early_document_image_title,
+                                               early_search_title,
+                                               early_search_url, page_image_id,
+                                               page_image_title,
+                                               page_selector_id)
+from rattlesnake.search import clear_search, handle_document_value_numbers
 
 
 def search_early_document(browser, document):
