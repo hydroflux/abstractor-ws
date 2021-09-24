@@ -5,7 +5,7 @@ from rattlesnake.search import clear_search, handle_document_value_numbers
 from selenium_utilities.open import assert_window_title, open_url
 from selenium_utilities.locators import locate_element_by_id as locate_element
 
-from rattlesnake.rattlesnake_variables import early_search_url, early_search_title, early_document_image_title, page_selector_id
+from rattlesnake.rattlesnake_variables import early_search_url, early_search_title, early_document_image_title, page_selector_id, page_image_id, page_image_title
 
 
 def search_early_document(browser, document):
@@ -52,8 +52,14 @@ def download_page_prompt():
     return True if user_input == "1" else False
 
 
+def open_download_page(browser, document):
+    page_image = locate_element(browser, page_image_id, "page image", document=document)
+    page_source = page_image.get_attribute('src')
+    open_url(browser, page_source, page_image_title, "page image", document)
+
+
 def download_page(browser, document, target_directory):
-    pass
+    open_download_page(browser, document)
 
 
 def download_early_document_image(browser, document, target_directory, next_page=True):
