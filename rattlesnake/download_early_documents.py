@@ -8,7 +8,7 @@ from selenium_utilities.open import assert_window_title, open_url
 
 from settings.download_management import update_download
 from settings.file_management import create_document_directory
-from settings.general_functions import four_character_padding
+from settings.general_functions import four_character_padding, naptime
 from settings.user_prompts import clear_terminal
 
 from rattlesnake.rattlesnake_variables import (early_document_image_title,
@@ -32,7 +32,7 @@ def document_image_page_user_prompt():
           'try again, or continue to the next document?')
     input_selection = ('What would you like to do? \n'
                        '[1] Try Again \n'
-                       '[2] Next Document')
+                       '[2] Next Document \n')
     user_input = input(input_selection)
     while user_input not in ["1", "2"]:
         print(f'You entered "{user_input}" Please enter 1 or 2:')
@@ -57,7 +57,7 @@ def go_to_page(browser, document, page_value):
 def download_page_prompt():
     print('Would you like to download this document page?')
     input_selection = ('[1] Yes \n'
-                       '[2] No')
+                       '[2] No \n')
     user_input = input(input_selection)
     while user_input not in ["1", "2"]:
         print(f'You entered "{user_input}" Please enter 1 or 2:')
@@ -88,6 +88,7 @@ def download_page(browser, document, document_directory, count):
     number_files = len(os.listdir(document_directory))
     open_download_page(browser, document)
     browser.execute_script('window.print();')
+    naptime()
     if update_download(browser, document_directory, document, number_files):
         print(f'Successfully downloaded page {count + 1} for '
               f'{document.extrapolate_value()}.')
@@ -101,7 +102,7 @@ def download_page(browser, document, document_directory, count):
 def next_page_prompt():
     print('Would you like to go to the next page?')
     input_selection = ('[1] Yes \n'
-                       '[2] No')
+                       '[2] No \n')
     user_input = input(input_selection)
     while user_input not in ["1", "2"]:
         print(f'You entered "{user_input}" Please enter 1 or 2:')
