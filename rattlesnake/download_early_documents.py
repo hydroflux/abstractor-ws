@@ -11,7 +11,7 @@ from settings.file_management import create_document_directory
 from settings.general_functions import four_character_padding, naptime
 from settings.user_prompts import clear_terminal
 
-from rattlesnake.rattlesnake_variables import (early_document_image_title,
+from rattlesnake.rattlesnake_variables import (early_document_image_title, early_download_value,
                                                early_search_title,
                                                early_search_url, page_image_id,
                                                page_image_title,
@@ -67,6 +67,7 @@ def download_page_prompt():
 
 def set_early_document_download_name(document, count):
     value = document.document_value()
+    document.download_value = early_download_value
     if count == 0:
         document.new_name = (f'{document.county.prefix}-'
                              f'{four_character_padding(value[0])}-'
@@ -115,6 +116,7 @@ def download_early_document_image(browser, document, document_directory, count=0
     while next_page is True:
         go_to_page(browser, document, page_value)
         if download_page_prompt():
+            os.chdir(document_directory)
             set_early_document_download_name(document, count)
             download_page(browser, document, document_directory, count)
             count += 1
