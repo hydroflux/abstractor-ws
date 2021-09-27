@@ -89,6 +89,7 @@ def download_page(browser, document, document_directory, count):
     if update_download(browser, document_directory, document, number_files):
         print(f'Successfully downloaded page {count + 1} for '
               f'{document.extrapolate_value()}.')
+        browser.back()
     else:
         print('Browser failed to downloaded page {count + 1} for '
               f'{document.document_value()}, please review.')
