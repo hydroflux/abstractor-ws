@@ -1,6 +1,19 @@
+import json
+
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
-import json
+
+
+# # helper to edit 'Preferences' file inside Chrome profile directory.
+# def set_download_directory(profile_path, profile_name, download_path):
+#     prefs_path = os.path.join(profile_path, profile_name, 'Preferences')
+#     with open(prefs_path, 'r') as f:
+#         prefs_dict = json.loads(f.read())
+#     prefs_dict['download']['default_directory'] = download_path
+#     prefs_dict['savefile']['directory_upgrade'] = True
+#     prefs_dict['download']['directory_upgrade'] = True
+#     with open(prefs_path, 'w') as f:
+#         json.dump(prefs_dict, f)
 
 
 # Look into how to change driver preferences mid script -- for download directories
@@ -28,6 +41,8 @@ def chrome_webdriver(target_directory, headless):
     # options.add_extension(‘Users/Desktop/Python Scripting/crx_files/adblock_plus_3_8_4_0.crx’)
 
     prefs = {
+        # Setting Default Directory Doesn't work when using JSON.dumps
+        'savefile.default_directory': f'{target_directory}/Documents',
         "download.default_directory": f'{target_directory}/Documents',
         "download.prompt_for_download": False,
         "plugins.always_open_pdf_externally": True,
