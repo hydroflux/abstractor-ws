@@ -51,7 +51,7 @@ def check_document_image_page(browser):
 
 def go_to_page(browser, document, page_value):
     page_selector = Select(locate_element(browser, page_selector_id, "page selector", True, document))
-    page_selector.selectByValue(page_value)
+    page_selector.select_by_value(str(page_value))
 
 
 def download_page_prompt():
@@ -110,7 +110,7 @@ def next_page_prompt():
 
 
 def download_early_document_image(browser, document, document_directory, count=0, next_page=True):
-    page_value = int(document.document_value()[1] - 1)
+    page_value = int(document.document_value()[1]) - 1
     while next_page is True:
         go_to_page(browser, document, page_value)
         if download_page_prompt():
