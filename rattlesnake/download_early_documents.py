@@ -120,7 +120,7 @@ def download_early_document_image(browser, document, document_directory, count=0
             set_early_document_download_name(document, count)
             download_page(browser, document, document_directory, count)
             count += 1
-            page_value = page_value + count
+            page_value += 1
             next_page = next_page_prompt()
         else:
             next_page = False
