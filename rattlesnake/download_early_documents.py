@@ -45,6 +45,8 @@ def check_document_image_page(browser):
     input('Please press enter after opening early document volume...')
     if not assert_window_title(browser, early_document_image_title):
         return document_image_page_user_prompt()
+    else:
+        return True
 
 
 def go_to_page(browser, document, page_value):
@@ -125,7 +127,7 @@ def download_early_documents(browser, target_directory, document_list):
     document_directory = create_document_directory(target_directory)
     for document in document_list:
         clear_terminal()
-        print(f'Now searching {document.document_value()}...')
+        print(f'Now searching {document.extrapolate_value()}...')
         open_url(browser, early_search_url, early_search_title, "old document search")
         clear_search(browser, document)
         search_early_document(browser, document)
