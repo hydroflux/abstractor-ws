@@ -119,7 +119,7 @@ def execute_program(county, target_directory, document_list, file_name, review=F
     browser.close()
 
 
-def execute_early_document_download(county, target_directory, document_list, file_name):
+def execute_early_document_download(county, target_directory, document_list):
     browser = create_webdriver(target_directory, False)
     transform_document_list(document_list, county, True)
     account_login(browser)

@@ -15,6 +15,7 @@ if __name__ == '__main__':
     # from tiger.execute import execute_program as execute_tiger
     # from tiger.execute import execute_review as review_tiger
     from rattlesnake.execute import execute_program as execute_rattlesnake
+    from rattlesnake.execute import execute_early_document_download as download_rattlesnake
     from settings.file_management import display_document_list
     from settings.general_functions import (get_county_data,
                                             start_program_timer,
@@ -77,6 +78,9 @@ def execute_program_type(county, program_type, document_list=None, search_name=N
             execute_rattlesnake(county, target_directory, document_list, file_name)
         elif program_type == 'review':
             execute_rattlesnake(county, target_directory, document_list, file_name, True)
+        elif program_type == 'download':
+            download_rattlesnake(county, target_directory, document_list)
+            # Need an additional prompt to handle early document downloads
         else:
             currently_unavailable(county, program_type)
     else:
