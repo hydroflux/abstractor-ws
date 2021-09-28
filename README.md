@@ -21,7 +21,7 @@ Automating the process of searching for government records on bulky, difficult t
 
 ## Video
 
-- [Abstractor Example Video](https://drive.google.com/file/d/1hQstZP56DrBs3taTtD5ZxGtkgF9oHuRA/view?usp=sharing)
+- [Abstractor Example Video](https://drive.google.com/file/d/1a3WE2JRs7mJrWBcxyIqcCQwXJRHbQa5T/view?usp=sharing)
 
 ## Features
 
