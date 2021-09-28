@@ -1,12 +1,14 @@
-from rattlesnake.rattlesnake_variables import (early_date_end_input_id,
+from rattlesnake.rattlesnake_variables import (early_book_type_id,
+                                               early_date_end_input_id,
                                                early_date_start_input_id,
+                                               early_next_button_id,
                                                early_page_input_id,
                                                early_search_button_id,
                                                early_volume_input_id,
-                                               page_input_id,
-                                               early_book_type_id,
+                                               page_image_id, page_input_id,
+                                               page_selector_id,
                                                reception_number_input_id,
-                                               early_next_button_id,
+                                               results_table_id,
                                                search_button_id,
                                                volume_input_id)
 
@@ -15,7 +17,6 @@ def update_element_ids(document_list, early_records):
     for document in document_list:
         if early_records:
             document.input_ids = {
-                "Book Type": early_book_type_id,
                 "Volume": early_volume_input_id,
                 "Page": early_page_input_id,
                 "Date Start": early_date_start_input_id,
@@ -24,6 +25,12 @@ def update_element_ids(document_list, early_records):
             document.button_ids = {
                 "Submit Button": early_search_button_id,
                 "Next Button": early_next_button_id
+            }
+            document.search_ids = {
+                "Book Type": early_book_type_id,
+                "Page Image Id": page_image_id,
+                "Page Selector Id": page_selector_id,
+                "Results Table Id": results_table_id
             }
         else:
             document.input_ids = {

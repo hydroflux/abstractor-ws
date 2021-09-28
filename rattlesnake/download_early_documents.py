@@ -1,10 +1,13 @@
 import os
 
 from selenium.webdriver.support.ui import Select
+
 from selenium_utilities.inputs import click_button
 from selenium_utilities.locators import locate_element_by_id as locate_element
-from selenium_utilities.locators import locate_elements_by_tag_name
+from selenium_utilities.locators import (locate_element_by_tag_name,
+                                         locate_elements_by_tag_name)
 from selenium_utilities.open import assert_window_title, open_url
+
 from settings.download_management import update_download
 from settings.file_management import create_document_directory
 from settings.general_functions import four_character_padding, naptime
@@ -15,16 +18,16 @@ from rattlesnake.rattlesnake_variables import (early_document_image_title,
                                                early_search_title,
                                                early_search_url,
                                                other_book_type_value,
-                                               page_image_id, page_image_title,
-                                               page_selector_id,
+                                               page_image_title,
                                                patent_book_type_value,
-                                               patent_range, results_table_id,
-                                               results_tag)
+                                               patent_range,
+                                               result_link_tag_name,
+                                               results_tag_name)
 from rattlesnake.search import clear_search, handle_document_value_numbers
 
 
 def select_book_type(browser, document):
-    book_type_selector = Select(locate_element(browser, document.input_ids["Book Type"],
+    book_type_selector = Select(locate_element(browser, document.search_ids["Book Type"],
                                 "book type selector", True, document))
     if document.document_value()[0] in patent_range:
         book_type_selector.select_by_value(patent_book_type_value)
@@ -40,16 +43,19 @@ def search_early_document(browser, document):
 
 
 def check_results(browser, document):
-    search_results = locate_element(browser, results_table_id, "search results", document=document)
-    first_result = locate_elements_by_tag_name(search_results, results_tag, "first result", document=document)
-    if document.document_value()[0] in patent_range and document.document_value()[0] * 10 is int(first_result[2]):
+    search_results = locate_element(browser, document.search_ids["Results Table Id"],
+                                    "search results", document=document)
+    first_result = locate_elements_by_tag_name(search_results, results_tag_name, "first result", document=document)
+    if document.document_value()[0] in patent_range and document.document_value()[0] * 10 is int(first_result[2].text):
         return True
-    elif document.document_value()[0] is int(first_result[2]):
+    elif document.document_value()[0] is int(first_result[2].text):
         return True
 
 
 def open_result(browser, document):
-    pass
+    search_results = locate_element(browser, document.search_ids["Results Table Id"],
+                                    "search results", document=document)
+    click_button(search_results, locate_element_by_tag_name, result_link_tag_name, "result link", document)
 
 
 def document_image_page_user_prompt():
@@ -75,7 +81,8 @@ def check_document_image_page(browser):
 
 
 def go_to_page(browser, document, page_value):
-    page_selector = Select(locate_element(browser, page_selector_id, "page selector", True, document))
+    page_selector = Select(locate_element(browser, document.search_ids["Page Selector Id"],
+                           "page selector", True, document))
     page_selector.select_by_value(str(page_value))
 
 
@@ -106,7 +113,7 @@ def set_early_document_download_name(document, count):
 
 
 def open_download_page(browser, document):
-    page_image = locate_element(browser, page_image_id, "page image", document=document)
+    page_image = locate_element(browser, document.search_ids["Page Image Id"], "page image", document=document)
     page_source = page_image.get_attribute('src')
     open_url(browser, page_source, page_image_title, "page image", document)
 
@@ -154,8 +161,6 @@ def download_early_document_image(browser, document, document_directory, count=0
             next_page = False
 
 
-# Switch to a "next page clicker"
-
 def download_early_documents(browser, target_directory, document_list):
     document_directory = create_document_directory(target_directory)
     for document in document_list:
@@ -166,6 +171,8 @@ def download_early_documents(browser, target_directory, document_list):
         search_early_document(browser, document)
         if check_results(browser, document):
             open_result(browser, document)
-        else: 
+            download_early_document_image(browser, document, document_directory)
+        else:
+            print('Unable to locate correct search result on first try, please locate and open the correct Volume.')
             if check_document_image_page(browser):
                 download_early_document_image(browser, document, document_directory)
