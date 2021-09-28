@@ -21,7 +21,7 @@ Automating the process of searching for government records on bulky, difficult t
 
 ## Video
 
-- [Abstractor Example Video] (https://drive.google.com/file/d/1hQstZP56DrBs3taTtD5ZxGtkgF9oHuRA/view?usp=sharing)
+- [Abstractor Example Video](https://drive.google.com/file/d/1hQstZP56DrBs3taTtD5ZxGtkgF9oHuRA/view?usp=sharing)
 
 ## Features
 
@@ -34,7 +34,7 @@ Automating the process of searching for government records on bulky, difficult t
   - Creates a "Document Directory" titled "Documents"
   - Downloads and renames document images based on context provided by the user, saved to the "Document Directory"
   - Creates relative hyperlinks for each document image downloaded, connected to the "Document Directory"
-  - Creates a "Hyperlink" tab in the final output XLSX file, with hyperlinks to each document image in the directory
+  - Creates a "Hyperlink" tab in the final output XLSX file, with hyperlinks to each document image in the directory (**example video shows "Direct Links" which are created on record)
 - Creates specialized comments for any search point that does not return expected results, which conditionally format their respective line items for easy identification
   - Identifies when "No Record Can Be Found" at a specific search point
   - Checks for "Multiple Documents" located at a single search point (recording each document and leaving appropriate comments for each)
