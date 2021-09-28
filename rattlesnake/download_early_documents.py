@@ -34,10 +34,11 @@ def document_image_page_user_prompt():
                        '[1] Try Again \n'
                        '[2] Next Document \n')
     user_input = input(input_selection)
-    while user_input not in ["1", "2"]:
+    while user_input.lower() not in ["1", "2", "y", "n", "yes", "no"]:
         print(f'You entered "{user_input}" Please enter 1 or 2:')
         user_input = input(input_selection)
-    return True if user_input == "1" else False
+    print()
+    return True if user_input.lower() in ["1", "y", "yes"] else False
 
 
 def check_document_image_page(browser):
@@ -58,10 +59,11 @@ def download_page_prompt():
     input_selection = ('[1] Yes \n'
                        '[2] No \n')
     user_input = input(input_selection)
-    while user_input not in ["1", "2"]:
+    while user_input.lower() not in ["1", "2", "y", "n", "yes", "no"]:
         print(f'You entered "{user_input}" Please enter 1 or 2:')
         user_input = input(input_selection)
-    return True if user_input == "1" else False
+    print()
+    return True if user_input.lower() in ["1", "y", "yes"] else False
 
 
 def set_early_document_download_name(document, count):
@@ -104,10 +106,11 @@ def next_page_prompt():
     input_selection = ('[1] Yes \n'
                        '[2] No \n')
     user_input = input(input_selection)
-    while user_input not in ["1", "2"]:
+    while user_input.lower() not in ["1", "2", "y", "n", "yes", "no"]:
         print(f'You entered "{user_input}" Please enter 1 or 2:')
         user_input = input(input_selection)
-    return True if user_input == "1" else False
+    print()
+    return True if user_input.lower() in ["1", "y", "yes"] else False
 
 
 def download_early_document_image(browser, document, document_directory, count=0, next_page=True):
