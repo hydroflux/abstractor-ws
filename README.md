@@ -15,10 +15,10 @@ Automating the process of searching for government records on bulky, difficult t
 ## General Information
 
 - Simplifies the process of creating chain of title, locating property, searching individual names, and downloading & hyperlinking document images.
-- Automates mouseclicks and search functionality in order to remove the possibility for mistyping or "fat-fingering" when searching for documents
+- Automates mouse-clicks and search functionality in order to remove the possibility for mistyping or "fat-fingering" when searching for documents
 - Removes wait times for the user, so that if a website is slow or unresponsive, the burden of time is taken away from the user and placed on the program
 - Creates uniform, consistent output that can be relied on and used for further research and deeper insights
-- Removes the time cost and burden of continual data entry, so that hitorical data professionals can focus on what they're best at
+- Removes the time cost and burden of continual data entry, so that historical data professionals can focus on what they're best at
 
 ## Video
 
@@ -39,7 +39,7 @@ Automating the process of searching for government records on bulky, difficult t
 - Creates specialized comments for any search point that does not return expected results, which conditionally format their respective line items for easy identification
   - Identifies when "No Record Can Be Found" at a specific search point
   - Checks for "Multiple Documents" located at a single search point (recording each document and leaving appropriate comments for each)
-  - Checks for "No Image Found" at any givenn document when "Download" is selected as an option, whether "Multiple Documents" are found or not
+  - Checks for "No Image Found" at any given document when "Download" is selected as an option, whether "Multiple Documents" are found or not
 - Creates a "Limitations" output based on the county / state searched and client specifications
 - Prints output with a "Last Updated" date listed at the bottom of the XLSX document
 
