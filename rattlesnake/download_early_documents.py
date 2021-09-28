@@ -11,11 +11,15 @@ from settings.file_management import create_document_directory
 from settings.general_functions import four_character_padding, naptime
 from settings.user_prompts import clear_terminal
 
-from rattlesnake.rattlesnake_variables import (early_document_image_title, early_download_value,
+from rattlesnake.rattlesnake_variables import (early_document_image_title,
+                                               early_download_value,
                                                early_search_title,
-                                               early_search_url, page_image_id,
-                                               page_image_title,
-                                               page_selector_id, patent_range, patent_book_type_value, other_book_type_value)
+                                               early_search_url,
+                                               other_book_type_value,
+                                               page_image_id, page_image_title,
+                                               page_selector_id,
+                                               patent_book_type_value,
+                                               patent_range)
 from rattlesnake.search import clear_search, handle_document_value_numbers
 
 
