@@ -4,13 +4,14 @@ from selenium.webdriver.support.ui import Select
 
 from selenium_utilities.inputs import click_button
 from selenium_utilities.locators import locate_element_by_id as locate_element
-from selenium_utilities.locators import (locate_element_by_tag_name,
-                                         locate_elements_by_tag_name)
+from selenium_utilities.locators import locate_elements_by_tag_name
 from selenium_utilities.open import assert_window_title, open_url
 
 from settings.download_management import update_download
 from settings.file_management import create_document_directory
-from settings.general_functions import four_character_padding, get_direct_link, javascript_script_execution, naptime
+from settings.general_functions import (four_character_padding,
+                                        get_direct_link,
+                                        javascript_script_execution, naptime)
 from settings.user_prompts import clear_terminal
 
 from rattlesnake.rattlesnake_variables import (early_document_image_title,
@@ -163,6 +164,16 @@ def download_early_document_image(browser, document, document_directory, count=0
             next_page = False
 
 
+def handle_search_results(browser, document, document_directory):
+    if check_results(browser, document):
+        open_result(browser, document)
+        download_early_document_image(browser, document, document_directory)
+    else:
+        print('Unable to locate correct search result on first try, please locate and open the correct Volume.')
+        if check_document_image_page(browser):
+            download_early_document_image(browser, document, document_directory)
+
+
 def download_early_documents(browser, target_directory, document_list):
     document_directory = create_document_directory(target_directory)
     for document in document_list:
@@ -171,10 +182,4 @@ def download_early_documents(browser, target_directory, document_list):
         open_url(browser, early_search_url, early_search_title, "old document search")
         clear_search(browser, document)
         search_early_document(browser, document)
-        if check_results(browser, document):
-            open_result(browser, document)
-            download_early_document_image(browser, document, document_directory)
-        else:
-            print('Unable to locate correct search result on first try, please locate and open the correct Volume.')
-            if check_document_image_page(browser):
-                download_early_document_image(browser, document, document_directory)
+        handle_search_results(browser, document, document_directory)
