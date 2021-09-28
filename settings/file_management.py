@@ -262,3 +262,7 @@ def strip_document_number_from_file_name(file_name):
 
 def clear_dictionary(dictionary):
     [dictionary[key].clear() for key in dictionary]
+
+
+def last_document(document_list, document):
+    return document_list[document_list.index(document) - 1]
