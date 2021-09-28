@@ -48,9 +48,9 @@ def check_results(browser, document):
                                     "search results", document=document)
     first_result = locate_elements_by_tag_name(search_results, results_tag_name, "first result", document=document)
     volume = int(document.document_value()[0])
-    if volume in patent_range and volume * 10 is int(first_result[2].text):
+    if volume in patent_range and volume * 10 == int(first_result[2].text):
         return True
-    elif volume is int(first_result[2].text):
+    elif volume == int(first_result[2].text):
         return True
 
 
