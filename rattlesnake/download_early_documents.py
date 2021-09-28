@@ -112,15 +112,16 @@ def next_page_prompt():
 
 def download_early_document_image(browser, document, document_directory, count=0, next_page=True):
     page_value = int(document.document_value()[1]) - 1
+    go_to_page(browser, document, page_value)
     while next_page is True:
-        go_to_page(browser, document, page_value)
         if download_page_prompt():
             os.chdir(document_directory)
             set_early_document_download_name(document, count)
             download_page(browser, document, document_directory, count)
             count += 1
             page_value += 1
-            next_page = next_page_prompt()
+            if next_page_prompt():
+                click_button(browser, locate_element, document.button_ids["Next Button"], "next page button", document)
         else:
             next_page = False
 
