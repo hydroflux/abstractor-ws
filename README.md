@@ -39,6 +39,8 @@ Automating the process of searching for government records on bulky, difficult t
   - Identifies when "No Record Can Be Found" at a specific search point
   - Checks for "Multiple Documents" located at a single search point (recording each document and leaving appropriate comments for each)
   - Checks for "No Image Found" at any givenn document when "Download" is selected as an option, whether "Multiple Documents" are found or not
+- Creates a "Limitations" output based on the county / state searched and client specifications
+- Prints output with a "Last Updated" date listed at the bottom of the XLSX document
 
 
 ## Status
