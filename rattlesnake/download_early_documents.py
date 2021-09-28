@@ -41,7 +41,6 @@ def document_image_page_user_prompt():
 
 
 def check_document_image_page(browser):
-    clear_terminal()
     input('Please press enter after opening early document volume...')
     if not assert_window_title(browser, early_document_image_title):
         return document_image_page_user_prompt()
