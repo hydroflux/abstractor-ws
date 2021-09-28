@@ -10,7 +10,7 @@ from selenium_utilities.open import assert_window_title, open_url
 
 from settings.download_management import update_download
 from settings.file_management import create_document_directory
-from settings.general_functions import four_character_padding, naptime
+from settings.general_functions import four_character_padding, get_direct_link, javascript_script_execution, naptime
 from settings.user_prompts import clear_terminal
 
 from rattlesnake.rattlesnake_variables import (early_document_image_title,
@@ -56,7 +56,9 @@ def check_results(browser, document):
 def open_result(browser, document):
     search_results = locate_element(browser, document.search_ids["Results Table Id"],
                                     "search results", document=document)
-    click_button(search_results, locate_element_by_tag_name, result_link_tag_name, "result link", document)
+    result_script = get_direct_link(locate_elements_by_tag_name(
+                    search_results, result_link_tag_name, "result link", True, document)[1])
+    javascript_script_execution(browser, result_script)
 
 
 def document_image_page_user_prompt():
@@ -142,7 +144,6 @@ def next_page_prompt():
     while user_input.lower() not in ["1", "2", "y", "n", "yes", "no"]:
         print(f'You entered "{user_input}" Please enter 1 or 2:')
         user_input = input(input_selection)
-    print()
     return True if user_input.lower() in ["1", "y", "yes"] else False
 
 
