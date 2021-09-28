@@ -1,11 +1,10 @@
 import os
 
 from selenium.webdriver.support.ui import Select
-
 from selenium_utilities.inputs import click_button
 from selenium_utilities.locators import locate_element_by_id as locate_element
+from selenium_utilities.locators import locate_elements_by_tag_name
 from selenium_utilities.open import assert_window_title, open_url
-
 from settings.download_management import update_download
 from settings.file_management import create_document_directory
 from settings.general_functions import four_character_padding, naptime
@@ -19,7 +18,8 @@ from rattlesnake.rattlesnake_variables import (early_document_image_title,
                                                page_image_id, page_image_title,
                                                page_selector_id,
                                                patent_book_type_value,
-                                               patent_range)
+                                               patent_range, results_table_id,
+                                               results_tag)
 from rattlesnake.search import clear_search, handle_document_value_numbers
 
 
@@ -33,12 +33,23 @@ def select_book_type(browser, document):
 
 
 def search_early_document(browser, document):
-    select_book_type(browser, document)
-    handle_document_value_numbers(browser, document)
-    click_button(browser, locate_element, document.input_ids["Volume"],
-                 "Volume Input", document)
+    select_book_type(browser, document)  # Select Book Type
+    handle_document_value_numbers(browser, document)  # Update Volume & Page Numbers
     click_button(browser, locate_element, document.button_ids["Submit Button"],
                  "submit button", document)  # Execute Search
+
+
+def check_results(browser, document):
+    search_results = locate_element(browser, results_table_id, "search results", document=document)
+    first_result = locate_elements_by_tag_name(search_results, results_tag, "first result", document=document)
+    if document.document_value()[0] in patent_range and document.document_value()[0] * 10 is int(first_result[2]):
+        return True
+    elif document.document_value()[0] is int(first_result[2]):
+        return True
+
+
+def open_result(browser, document):
+    pass
 
 
 def document_image_page_user_prompt():
@@ -153,5 +164,8 @@ def download_early_documents(browser, target_directory, document_list):
         open_url(browser, early_search_url, early_search_title, "old document search")
         clear_search(browser, document)
         search_early_document(browser, document)
-        if check_document_image_page(browser):
-            download_early_document_image(browser, document, document_directory)
+        if check_results(browser, document):
+            open_result(browser, document)
+        else: 
+            if check_document_image_page(browser):
+                download_early_document_image(browser, document, document_directory)
