@@ -15,11 +15,21 @@ from rattlesnake.rattlesnake_variables import (early_document_image_title, early
                                                early_search_title,
                                                early_search_url, page_image_id,
                                                page_image_title,
-                                               page_selector_id)
+                                               page_selector_id, patent_range, patent_book_type_value, other_book_type_value)
 from rattlesnake.search import clear_search, handle_document_value_numbers
 
 
+def select_book_type(browser, document):
+    book_type_selector = Select(locate_element(browser, document.input_ids["Book Type"],
+                                "book type selector", True, document))
+    if document.document_value()[0] in patent_range:
+        book_type_selector.select_by_value(patent_book_type_value)
+    else:
+        book_type_selector.select_by_value(other_book_type_value)
+
+
 def search_early_document(browser, document):
+    select_book_type(browser, document)
     handle_document_value_numbers(browser, document)
     click_button(browser, locate_element, document.input_ids["Volume"],
                  "Volume Input", document)

@@ -4,6 +4,7 @@ from rattlesnake.rattlesnake_variables import (early_date_end_input_id,
                                                early_search_button_id,
                                                early_volume_input_id,
                                                page_input_id,
+                                               early_book_type_id,
                                                reception_number_input_id,
                                                early_next_button_id,
                                                search_button_id,
@@ -14,6 +15,7 @@ def update_element_ids(document_list, early_records):
     for document in document_list:
         if early_records:
             document.input_ids = {
+                "Book Type": early_book_type_id,
                 "Volume": early_volume_input_id,
                 "Page": early_page_input_id,
                 "Date Start": early_date_start_input_id,
