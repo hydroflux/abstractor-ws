@@ -1,6 +1,6 @@
 # Abstractor
 
-Simplifying the process of creating chain of title from Patent to Present, searching individual names, and downloading and hyperlinking document images
+Automating the process of searching for government records on bulky, difficult to access websites.
 
 ## Table Of Contents
 
@@ -13,7 +13,11 @@ Simplifying the process of creating chain of title from Patent to Present, searc
 
 ## General Information
 
--  
+- Simplifies the process of creating chain of title, locating property, searching individual names, and downloading & hyperlinking document images.
+- Automates mouseclicks and search functionality in order to remove the possibility for mistyping or "fat-fingering" when searching for documents
+- Removes wait times for the user, so that if a website is slow or unresponsive, the burden of time is taken away from the user and placed on the program
+- Creates uniform, consistent output that can be relied on and used for further research and deeper insights
+- Removes the time cost and burden of continual data entry, so that hitorical data professionals can focus on what they're best at
 
 ## Video
 
@@ -21,7 +25,21 @@ Simplifying the process of creating chain of title from Patent to Present, searc
 
 ## Features
 
-- 
+- On a county-by-county basis, takes inputs of either a "Name", "Reception Numbers" / "File Numbers", or "Book" / "Volume" / "Page" numbers
+  - A "Name" search will take search a name given by the use as an input
+  - "Reception Number" / "File Number" and "Book" / "Volume" / "Page" searches use take a given file path and XLSX file name, importing the documents to be searched into a list that is looped over until completion
+- Retrieves information located on county websites by searching given inputs and recording the information located at each search point
+- Creates an XLSX file as an output, formatted based on client designations
+- When "Download" is selected as an option,
+  - Creates a "Document Directory" titled "Documents"
+  - Downloads and renames document images based on context provided by the user, saved to the "Document Directory"
+  - Creates relative hyperlinks for each document image downloaded, connected to the "Document Directory"
+  - Creates a "Hyperlink" tab in the final output XLSX file, with hyperlinks to each document image in the directory
+- Creates specialized comments for any search point that does not return expected results, which conditionally format their respective line items for easy identification
+  - Identifies when "No Record Can Be Found" at a specific search point
+  - Checks for "Multiple Documents" located at a single search point (recording each document and leaving appropriate comments for each)
+  - Checks for "No Image Found" at any givenn document when "Download" is selected as an option, whether "Multiple Documents" are found or not
+
 
 ## Status
 
