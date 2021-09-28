@@ -174,15 +174,19 @@ def handle_search_results(browser, document, document_directory):
             download_early_document_image(browser, document, document_directory)
 
 
+def handle_document_search(browser, document_list, document, document_directory):
+    if document.document_value()[0] == last_document(document_list, document).document_value()[0]:
+        download_early_document_image(browser, document, document_directory)
+    else:
+        open_url(browser, early_search_url, early_search_title, "old document search")
+        clear_search(browser, document)
+        search_early_document(browser, document)
+        handle_search_results(browser, document, document_directory)
+
+
 def download_early_documents(browser, target_directory, document_list):
     document_directory = create_document_directory(target_directory)
     for document in document_list:
         clear_terminal()
         print(f'Now searching {document.extrapolate_value()}...')
-        if document.document_value()[0] == last_document(document_list, document).document_value()[0]:
-            download_early_document_image(browser, document, document_directory)
-        else:
-            open_url(browser, early_search_url, early_search_title, "old document search")
-            clear_search(browser, document)
-            search_early_document(browser, document)
-            handle_search_results(browser, document, document_directory)
+        handle_document_search(browser, document_list, document, document_directory)
