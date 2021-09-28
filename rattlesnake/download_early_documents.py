@@ -159,8 +159,8 @@ def download_early_document_image(browser, document, document_directory, count=0
             download_page(browser, document, document_directory, count)
             count += 1
             page_value += 1
-            if next_page_prompt():
-                click_button(browser, locate_element, document.button_ids["Next Button"], "next page button", document)
+            # if next_page_prompt():
+            click_button(browser, locate_element, document.button_ids["Next Button"], "next page button", document)
         else:
             next_page = False
 
