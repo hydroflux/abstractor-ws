@@ -125,6 +125,8 @@ def download_early_document_image(browser, document, document_directory, count=0
             next_page = False
 
 
+# Switch to a "next page clicker"
+
 def download_early_documents(browser, target_directory, document_list):
     document_directory = create_document_directory(target_directory)
     for document in document_list:
