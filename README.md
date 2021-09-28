@@ -42,7 +42,6 @@ Automating the process of searching for government records on bulky, difficult t
 - Creates a "Limitations" output based on the county / state searched and client specifications
 - Prints output with a "Last Updated" date listed at the bottom of the XLSX document
 
-
 ## Status
 
 - In production, continually updating based on contracts received.
