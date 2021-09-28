@@ -46,12 +46,13 @@ def search_early_document(browser, document):
 def check_results(browser, document):
     search_results = locate_element(browser, document.search_ids["Results Table Id"],
                                     "search results", document=document)
-    first_result = locate_elements_by_tag_name(search_results, results_tag_name, "first result", document=document)
-    volume = int(document.document_value()[0])
-    if volume in patent_range and volume * 10 == int(first_result[2].text):
-        return True
-    elif volume == int(first_result[2].text):
-        return True
+    if search_results is not None:
+        first_result = locate_elements_by_tag_name(search_results, results_tag_name, "first result", document=document)
+        volume = int(document.document_value()[0])
+        if volume in patent_range and volume * 10 == int(first_result[2].text):
+            return True
+        elif volume == int(first_result[2].text):
+            return True
 
 
 def open_result(browser, document):
