@@ -3,7 +3,7 @@ from selenium_utilities.inputs import (clear_input, click_button,
 from selenium_utilities.locators import locate_element_by_id as locate_input
 from selenium_utilities.open import open_url
 
-from rattlesnake.rattlesnake_variables import search_title, search_url
+from settings.county_variables.rattlesnake import search_title, search_url
 
 
 def clear_search(browser, document):

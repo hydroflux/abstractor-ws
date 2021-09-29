@@ -13,6 +13,7 @@ logs/
 
 # Specific files #
 ##################
+settings/county_variables
 variables.py
 armadillo/armadillo_variables.py
 buffalo/buffalo_variables.py

@@ -5,13 +5,13 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
+from settings.county_variables.rattlesnake import (add_to_cart_button_id,
+                                                   download_page_id,
+                                                   free_download_button_id)
 from settings.download_management import previously_downloaded, update_download
 from settings.file_management import create_document_directory
 from settings.general_functions import timeout
 
-from rattlesnake.rattlesnake_variables import (add_to_cart_button_id,
-                                               download_page_id,
-                                               free_download_button_id)
 from rattlesnake.validation import (verify_document_image_page_loaded,
                                     verify_valid_download)
 

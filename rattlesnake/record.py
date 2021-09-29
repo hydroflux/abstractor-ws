@@ -2,20 +2,22 @@ from selenium_utilities.inputs import get_field_value
 from selenium_utilities.locators import (locate_element_by_id,
                                          locate_elements_by_tag_name)
 
+from settings.county_variables.rattlesnake import (document_type_id,
+                                                   effective_date_id,
+                                                   empty_value_fields,
+                                                   grantee_text, grantor_text,
+                                                   legal_id, page_id,
+                                                   parties_id,
+                                                   party_rows_tag_name,
+                                                   reception_number_id,
+                                                   recording_date_id,
+                                                   row_data_tag_name,
+                                                   volume_id)
 from settings.file_management import multiple_documents_comment
 from settings.general_functions import (date_from_string, element_title_strip,
                                         list_to_string, title_strip,
                                         update_sentence_case_extras)
 
-from rattlesnake.rattlesnake_variables import (document_type_id,
-                                               effective_date_id,
-                                               empty_value_fields,
-                                               grantee_text, grantor_text,
-                                               legal_id, page_id, parties_id,
-                                               party_rows_tag_name,
-                                               reception_number_id,
-                                               recording_date_id,
-                                               row_data_tag_name, volume_id)
 from rattlesnake.validation import (validate_date, validate_reception_number,
                                     validate_volume_and_page_numbers,
                                     verify_document_description_page_loaded)

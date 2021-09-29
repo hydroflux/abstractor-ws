@@ -1,12 +1,21 @@
 import os
 
 from selenium.webdriver.support.ui import Select
-
 from selenium_utilities.inputs import click_button
 from selenium_utilities.locators import locate_element_by_id as locate_element
 from selenium_utilities.locators import locate_elements_by_tag_name
 from selenium_utilities.open import assert_window_title, open_url
 
+from settings.county_variables.rattlesnake import (early_document_image_title,
+                                                   early_download_value,
+                                                   early_search_title,
+                                                   early_search_url,
+                                                   other_book_type_value,
+                                                   page_image_title,
+                                                   patent_book_type_value,
+                                                   patent_range,
+                                                   result_link_tag_name,
+                                                   results_tag_name)
 from settings.download_management import update_download
 from settings.file_management import create_document_directory, last_document
 from settings.general_functions import (four_character_padding,
@@ -14,16 +23,6 @@ from settings.general_functions import (four_character_padding,
                                         javascript_script_execution, naptime)
 from settings.user_prompts import clear_terminal
 
-from rattlesnake.rattlesnake_variables import (early_document_image_title,
-                                               early_download_value,
-                                               early_search_title,
-                                               early_search_url,
-                                               other_book_type_value,
-                                               page_image_title,
-                                               patent_book_type_value,
-                                               patent_range,
-                                               result_link_tag_name,
-                                               results_tag_name)
 from rattlesnake.search import clear_search, handle_document_value_numbers
 
 

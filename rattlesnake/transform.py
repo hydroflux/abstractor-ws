@@ -1,16 +1,17 @@
-from rattlesnake.rattlesnake_variables import (early_book_type_id,
-                                               early_date_end_input_id,
-                                               early_date_start_input_id,
-                                               early_next_button_id,
-                                               early_page_input_id,
-                                               early_search_button_id,
-                                               early_volume_input_id,
-                                               page_image_id, page_input_id,
-                                               page_selector_id,
-                                               reception_number_input_id,
-                                               results_table_id,
-                                               search_button_id,
-                                               volume_input_id)
+from settings.county_variables.rattlesnake import (early_book_type_id,
+                                                   early_date_end_input_id,
+                                                   early_date_start_input_id,
+                                                   early_next_button_id,
+                                                   early_page_input_id,
+                                                   early_search_button_id,
+                                                   early_volume_input_id,
+                                                   page_image_id,
+                                                   page_input_id,
+                                                   page_selector_id,
+                                                   reception_number_input_id,
+                                                   results_table_id,
+                                                   search_button_id,
+                                                   volume_input_id)
 
 
 def update_element_ids(document_list, early_records):

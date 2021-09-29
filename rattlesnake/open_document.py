@@ -1,14 +1,15 @@
 from selenium.common.exceptions import TimeoutException
+
 from selenium_utilities.locators import (locate_element_by_id,
                                          locate_element_by_tag_name,
                                          locate_elements_by_tag_name)
 
+from settings.county_variables.rattlesnake import (result_link_tag_name,
+                                                   result_row_tag_name,
+                                                   results_table_id)
 from settings.general_functions import (get_direct_link,
                                         javascript_script_execution)
 
-from rattlesnake.rattlesnake_variables import (result_link_tag_name,
-                                               result_row_tag_name,
-                                               results_table_id)
 from rattlesnake.validation import (validate_result_reception_number,
                                     validate_result_volume_and_page_numbers)
 

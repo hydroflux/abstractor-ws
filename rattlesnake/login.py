@@ -1,10 +1,12 @@
-from selenium_utilities.open import open_url
 from selenium_utilities.inputs import click_button, enter_input_value
 from selenium_utilities.locators import locate_element_by_name as locate_input
+from selenium_utilities.open import open_url
 
-from rattlesnake.rattlesnake_variables import (credentials, home_page_title,
-                                               home_page_url, login_title,
-                                               login_url)
+from settings.county_variables.rattlesnake import (credentials,
+                                                   home_page_title,
+                                                   home_page_url, login_title,
+                                                   login_url)
+
 from rattlesnake.validation import verify_login
 
 
