@@ -1,16 +1,19 @@
 from selenium.common.exceptions import (StaleElementReferenceException,
                                         TimeoutException)
+
 from selenium_utilities.inputs import click_button, enter_input_value
 from selenium_utilities.locators import (locate_element_by_class_name,
                                          locate_element_by_id)
 from selenium_utilities.open import open_url
 
+from settings.county_variables.eagle import (credentials, fallback_search_url,
+                                             home_page_title, home_page_url,
+                                             logged_out_redirect_url,
+                                             login_button_id,
+                                             login_prompt_class)
 from settings.general_functions import micro_nap
 
 from eagle.disclaimer import check_for_disclaimer
-from eagle.eagle_variables import (credentials, fallback_search_url,
-                                   home_page_title, home_page_url,
-                                   logged_out_redirect_url, login_prompt_class, login_button_id)
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("login", __name__)

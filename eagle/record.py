@@ -1,4 +1,3 @@
-from selenium_utilities.inputs import center_element
 from selenium.common.exceptions import (ElementClickInterceptedException,
                                         StaleElementReferenceException,
                                         TimeoutException)
@@ -6,24 +5,29 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
+from selenium_utilities.inputs import center_element
+
 from settings.bad_search import no_document_image
+from settings.county_variables.eagle import (document_information_id,
+                                             document_table_class,
+                                             error_message_text,
+                                             image_container_id,
+                                             index_table_tags,
+                                             information_links_class,
+                                             less_info, loading_status,
+                                             missing_values, more_info,
+                                             no_image_text, pdf_viewer_load_id,
+                                             related_table_class,
+                                             result_button_tag,
+                                             result_buttons_class)
 from settings.export_settings import search_errors
 from settings.file_management import (check_length, drop_last_entry,
                                       multiple_documents_comment)
-from settings.general_functions import (long_timeout,
-                                        medium_nap, naptime, scroll_to_top,
-                                        short_nap, timeout,
+from settings.general_functions import (long_timeout, medium_nap, naptime,
+                                        scroll_to_top, short_nap, timeout,
                                         update_sentence_case_extras)
 from settings.settings import execution_review
 
-from eagle.eagle_variables import (document_information_id,
-                                   document_table_class, error_message_text,
-                                   image_container_id, index_table_tags,
-                                   information_links_class, less_info,
-                                   loading_status, missing_values, more_info,
-                                   no_image_text, pdf_viewer_load_id,
-                                   related_table_class, result_button_tag,
-                                   result_buttons_class)
 from eagle.error_handling import check_for_error
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder

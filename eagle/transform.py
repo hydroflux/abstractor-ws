@@ -1,6 +1,7 @@
-from eagle.eagle_variables import (book_input_id, clear_search_id,
-                                   download_button_id, page_input_id,
-                                   reception_number_input_id, search_button_id)
+from settings.county_variables.eagle import (book_input_id, clear_search_id,
+                                             download_button_id, page_input_id,
+                                             reception_number_input_id,
+                                             search_button_id)
 
 
 def update_element_ids(document_list):

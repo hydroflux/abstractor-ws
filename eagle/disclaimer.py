@@ -1,6 +1,6 @@
 from selenium.common.exceptions import NoSuchElementException
 
-from eagle.eagle_variables import disclaimer_id, inaccessible
+from settings.county_variables.eagle import disclaimer_id, inaccessible
 
 
 def locate_disclaimer(browser):

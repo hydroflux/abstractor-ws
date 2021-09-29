@@ -3,9 +3,9 @@ from selenium_utilities.inputs import (clear_input, click_button,
 from selenium_utilities.locators import locate_element_by_id as locate_input
 from selenium_utilities.open import open_url
 
+from settings.county_variables.eagle import search_title, search_url
 from settings.general_functions import naptime
 
-from eagle.eagle_variables import search_title, search_url
 from eagle.login import check_login_status
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder

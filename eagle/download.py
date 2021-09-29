@@ -1,17 +1,18 @@
 import os
 
 from selenium.common.exceptions import TimeoutException
+
 from selenium_utilities.inputs import click_button
 from selenium_utilities.locators import (locate_element_by_class_name,
                                          locate_element_by_id)
 
+from settings.county_variables.eagle import (pdf_viewer_class_name,
+                                             stock_download_suffix)
 from settings.download_management import previously_downloaded, update_download
 from settings.error_handling import no_image_comment
 from settings.file_management import create_document_directory
 from settings.general_functions import naptime
 from settings.iframe_handling import switch_to_default_content
-
-from eagle.eagle_variables import pdf_viewer_class_name, stock_download_suffix
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("download", __name__)

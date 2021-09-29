@@ -9,16 +9,19 @@ from selenium_utilities.locators import (locate_element_by_class_name,
                                          locate_elements_by_tag_name)
 from selenium_utilities.open import open_url
 
+from settings.county_variables.eagle import (currently_searching,
+                                             document_description_title,
+                                             failed_search,
+                                             invalid_search_message,
+                                             no_results_message,
+                                             result_action_tag_name,
+                                             result_actions_class_name,
+                                             results_row_class_name,
+                                             search_status_tag,
+                                             validation_class_name)
 from settings.general_functions import (get_direct_link, naptime, short_nap,
                                         timeout)
 
-from eagle.eagle_variables import (currently_searching,
-                                   document_description_title, failed_search,
-                                   invalid_search_message, no_results_message,
-                                   result_action_tag_name,
-                                   result_actions_class_name,
-                                   results_row_class_name, search_status_tag,
-                                   validation_class_name)
 from eagle.search import execute_search, search
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
