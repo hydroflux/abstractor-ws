@@ -7,19 +7,17 @@ from selenium.webdriver.support.wait import WebDriverWait
 
 from selenium_utilities.inputs import center_element
 
+from settings.county_variables.armadillo import (add_to_cart_name,
+                                                 download_content_id,
+                                                 download_page_class_name,
+                                                 download_prefix,
+                                                 free_download_button_tag)
 from settings.download_management import previously_downloaded, update_download
 from settings.file_management import (create_document_directory,
                                       extrapolate_document_value)
-from settings.general_functions import (get_direct_link,
-                                        newline_split, timeout)
+from settings.general_functions import get_direct_link, newline_split, timeout
 from settings.iframe_handling import (access_iframe_by_tag,
                                       switch_to_default_content)
-
-from armadillo.armadillo_variables import (add_to_cart_name,
-                                           download_content_id,
-                                           download_page_class_name,
-                                           download_prefix,
-                                           free_download_button_tag)
 
 
 def locate_download_page(browser, document):

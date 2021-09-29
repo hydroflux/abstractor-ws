@@ -1,11 +1,11 @@
-from selenium_utilities.open import open_url
 from selenium_utilities.inputs import clear_input, enter_input_value
 from selenium_utilities.locators import locate_element_by_id as locate_input
+from selenium_utilities.open import open_url
 
+from settings.county_variables.armadillo import (
+    execute_document_search_script, search_title, search_url)
 from settings.general_functions import javascript_script_execution
 
-from armadillo.armadillo_variables import (search_url, search_title,
-                                           execute_document_search_script)
 # from armadillo.validation import verify_document_search_page_loaded
 
 

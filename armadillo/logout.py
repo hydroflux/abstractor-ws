@@ -1,4 +1,4 @@
-from armadillo.armadillo_variables import logout_user_link
+from settings.county_variables.armadillo import logout_user_link
 
 
 def logout(browser):

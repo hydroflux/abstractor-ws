@@ -1,6 +1,6 @@
-from armadillo.armadillo_variables import (page_input_id,
-                                           reception_number_input_id,
-                                           volume_input_id)
+from settings.county_variables.armadillo import (page_input_id,
+                                                 reception_number_input_id,
+                                                 volume_input_id)
 
 
 def convert_document_numbers(document_list):

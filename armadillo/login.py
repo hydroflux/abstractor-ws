@@ -2,7 +2,8 @@ from selenium_utilities.inputs import click_button, enter_input_value
 from selenium_utilities.locators import locate_element_by_name as locate_input
 from selenium_utilities.open import open_url
 
-from armadillo.armadillo_variables import credentials, login_title, login_url
+from settings.county_variables.armadillo import credentials, login_title, login_url
+
 from armadillo.validation import verify_login
 
 

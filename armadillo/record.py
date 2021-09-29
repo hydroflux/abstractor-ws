@@ -1,21 +1,23 @@
-from settings.file_management import multiple_documents_comment
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-from settings.general_functions import (date_from_string, element_title_strip, four_character_padding,
-                                        list_to_string, newline_split,
-                                        print_list_by_index, timeout,
-                                        title_strip, update_sentence_case_extras)
+from settings.county_variables.armadillo import (book_and_page_text,
+                                                 document_tables_tag,
+                                                 legal_text, legal_update,
+                                                 parties_midpoint_text,
+                                                 reception_number_prefix,
+                                                 related_documents_text,
+                                                 related_types,
+                                                 type_and_number_table_id)
+from settings.file_management import multiple_documents_comment
+from settings.general_functions import (date_from_string, element_title_strip,
+                                        four_character_padding, list_to_string,
+                                        newline_split, print_list_by_index,
+                                        timeout, title_strip,
+                                        update_sentence_case_extras)
 
-from armadillo.armadillo_variables import (book_and_page_text,
-                                           document_tables_tag, legal_text,
-                                           legal_update, parties_midpoint_text,
-                                           reception_number_prefix,
-                                           related_documents_text,
-                                           related_types,
-                                           type_and_number_table_id)
 from armadillo.validation import (validate_date, validate_reception_number,
                                   validate_volume_page,
                                   verify_results_page_loaded)

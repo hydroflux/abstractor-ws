@@ -1,18 +1,19 @@
-from selenium_utilities.open import assert_window_title
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-from settings.general_functions import date_from_string, timeout
 
-from armadillo.armadillo_variables import (bad_login_text,
-                                           document_information_title,
-                                           document_search_results_title,
-                                           login_validation_form_name,
-                                           login_validation_text_id,
-                                           no_results_message,
-                                           no_results_text_class,
-                                           post_login_title)
+from selenium_utilities.open import assert_window_title
+
+from settings.county_variables.armadillo import (bad_login_text,
+                                                 document_information_title,
+                                                 document_search_results_title,
+                                                 login_validation_form_name,
+                                                 login_validation_text_id,
+                                                 no_results_message,
+                                                 no_results_text_class,
+                                                 post_login_title)
+from settings.general_functions import date_from_string, timeout
 
 
 def get_login_validation_text(browser):

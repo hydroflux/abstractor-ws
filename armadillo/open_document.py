@@ -4,13 +4,15 @@ from selenium_utilities.locators import (locate_element_by_class_name,
                                          locate_element_by_id,
                                          locate_element_by_tag_name,
                                          locate_elements_by_class_name)
+
+from settings.county_variables.armadillo import (link_tag,
+                                                 multiple_results_message,
+                                                 number_results_class,
+                                                 result_class_names,
+                                                 search_results_id,
+                                                 single_result_message)
 from settings.general_functions import get_direct_link
 
-from armadillo.armadillo_variables import (link_tag, multiple_results_message,
-                                           number_results_class,
-                                           result_class_names,
-                                           search_results_id,
-                                           single_result_message)
 from armadillo.validation import (validate_result, verify_results_loaded,
                                   verify_search_results_page_loaded)
 
