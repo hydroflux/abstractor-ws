@@ -1,20 +1,22 @@
-from selenium_utilities.open import assert_window_title
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+
+from selenium_utilities.open import assert_window_title
+
 from settings.classes.Document import Document
+from settings.county_variables.crocodile import (document_description_title,
+                                                 filter_list, link_tag,
+                                                 no_results_message,
+                                                 results_page_id,
+                                                 results_statement_tag,
+                                                 results_table_id)
 from settings.file_management import document_value, extrapolate_document_value
 from settings.general_functions import (get_direct_children, get_direct_link,
                                         get_element_text,
                                         javascript_script_execution,
                                         set_description_link, timeout)
-
-from crocodile.crocodile_variables import (document_description_title,
-                                           filter_list, link_tag,
-                                           no_results_message, results_page_id,
-                                           results_statement_tag,
-                                           results_table_id)
 
 
 def locate_results_page_information(browser, document):

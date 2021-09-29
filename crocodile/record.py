@@ -4,7 +4,14 @@ from selenium.common.exceptions import (NoSuchElementException,
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+
 from settings.bad_search import no_document_image
+from settings.county_variables.crocodile import (
+    additional_legal_pages_class, bad_document_types, general_information_id,
+    grantee_id, grantor_id, inactive, legal_id, link_tag,
+    related_documents_buttons_class, related_documents_id, row_data_tag,
+    row_header_tag, row_titles, show_all_rows_text, table_body_tag,
+    table_row_tag)
 from settings.export_settings import not_applicable
 from settings.file_management import (extrapolate_document_value,
                                       multiple_documents_comment)
@@ -12,17 +19,6 @@ from settings.general_functions import (get_direct_children, get_element_text,
                                         list_to_string, set_image_link,
                                         set_reception_number, short_nap,
                                         timeout, title_strip, zipped_list)
-
-from crocodile.crocodile_variables import (additional_legal_pages_class,
-                                           bad_document_types,
-                                           general_information_id, grantee_id,
-                                           grantor_id, inactive, legal_id,
-                                           link_tag,
-                                           related_documents_buttons_class,
-                                           related_documents_id, row_data_tag,
-                                           row_header_tag, row_titles,
-                                           show_all_rows_text, table_body_tag,
-                                           table_row_tag)
 
 
 def locate_general_information(document_information, document):

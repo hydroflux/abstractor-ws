@@ -1,21 +1,21 @@
 import os
-from selenium_utilities.open import assert_window_title
 
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
+from selenium_utilities.open import assert_window_title
+from settings.county_variables.crocodile import (document_image_title,
+                                                 download_button_tag,
+                                                 download_confirmation_id,
+                                                 download_confirmation_title,
+                                                 download_menu_id,
+                                                 stock_download)
 from settings.download_management import previously_downloaded, update_download
 from settings.file_management import (create_document_directory,
                                       extrapolate_document_value)
 from settings.general_functions import javascript_script_execution, timeout
-
-from crocodile.crocodile_variables import (document_image_title,
-                                           download_button_tag,
-                                           download_confirmation_id,
-                                           download_confirmation_title,
-                                           download_menu_id, stock_download)
 
 
 def open_document_download_page(browser, document):

@@ -1,7 +1,7 @@
 from selenium_utilities.open import assert_window_title
 from settings.file_management import extrapolate_document_value
 
-from crocodile.crocodile_variables import website_title
+from settings.county_variables.crocodile import website_title
 from crocodile.login import account_login
 
 
