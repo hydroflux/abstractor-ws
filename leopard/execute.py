@@ -11,7 +11,7 @@ from leopard.download import download_document
 from leopard.login import account_login
 from leopard.logout import logout
 from leopard.open_document import open_document
-from leopard.record import get_reception_number, next_result, record_document
+from leopard.record import next_result, record_document
 from leopard.search import search
 from leopard.transform_document_list import transform_document_list
 
