@@ -1,4 +1,4 @@
-from PyPDF2 import PdfFileMerger
+from PyPDF2 import PdfFileMerger, PdfFileReader
 import os
 
 
@@ -18,6 +18,10 @@ def create_pdf_dictionary(target_directory, pdf_dictionary={}):
 
 
 def rename_pdfs(target_directory):
+    os.chdir(target_directory)
     pdf_dictionary = create_pdf_dictionary(target_directory)
     for name, pdfs in pdf_dictionary.items():
-        print(pdfs)
+        merger = PdfFileMerger()
+        [merger.append(PdfFileReader(f'{target_directory}/{pdf}', 'rb')) for pdf in pdfs]
+        merger.write(f'{name}')
+        merger.close()
