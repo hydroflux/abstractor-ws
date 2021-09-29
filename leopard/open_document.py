@@ -2,15 +2,17 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+
+from settings.county_variables.leopard import (result_cell_tag,
+                                               result_row_class,
+                                               results_body_tag,
+                                               results_count_id, results_id)
 from settings.file_management import (document_type, document_value,
                                       extrapolate_document_value,
                                       split_book_and_page)
 from settings.general_functions import (get_element_text, scroll_into_view,
                                         timeout)
 
-from leopard.leopard_variables import (result_cell_tag, result_row_class,
-                                       results_body_tag, results_count_id,
-                                       results_id)
 from leopard.search import search
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder

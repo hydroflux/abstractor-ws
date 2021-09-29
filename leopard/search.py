@@ -3,21 +3,22 @@ from selenium.common.exceptions import (StaleElementReferenceException,
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+
+from settings.county_variables.leopard import (book_and_page_search_button_id,
+                                               book_and_page_search_tab_id,
+                                               book_search_id,
+                                               document_search_button_id,
+                                               document_search_field_id,
+                                               document_search_tab_id,
+                                               page_search_id,
+                                               search_navigation_id,
+                                               search_script, search_title)
 from settings.file_management import (document_type, document_value,
                                       extrapolate_document_value,
                                       split_book_and_page)
-from settings.general_functions import (check_active_class, get_parent_element, naptime,
-                                        javascript_script_execution,
+from settings.general_functions import (check_active_class, get_parent_element,
+                                        javascript_script_execution, naptime,
                                         scroll_into_view, timeout)
-
-from leopard.leopard_variables import (book_and_page_search_button_id,
-                                       book_and_page_search_tab_id,
-                                       book_search_id,
-                                       document_search_button_id,
-                                       document_search_field_id,
-                                       document_search_tab_id, page_search_id,
-                                       search_navigation_id, search_script,
-                                       search_title)
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("search", __name__)
