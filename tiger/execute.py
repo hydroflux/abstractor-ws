@@ -1,20 +1,19 @@
 from settings.abstract_object import abstract_dictionary as dictionary
 from settings.bad_search import record_bad_search
+from settings.county_variables.tiger import search_script
 from settings.driver import create_webdriver
 from settings.export import export_document
 from settings.file_management import bundle_project, remaining_downloads
 from settings.general_functions import (get_county_data,
                                         javascript_script_execution, naptime)
 from settings.import_list import generate_document_list
-from settings.settings import web_directory
-from settings.settings import download
+from settings.settings import download, web_directory
 
 from tiger.download import download_document
 from tiger.login import account_login
 from tiger.open_document import open_document
 from tiger.record import record_document
 from tiger.search import search
-from tiger.tiger_variables import search_script
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("execute", __name__)
@@ -75,7 +74,6 @@ def execute_review():
 def execute_web_program(county, client, legal, upload_file):
     county = get_county_data(county)
     sheet_name = 'Documents'
-    download = True
     file_name = upload_file
     target_directory = web_directory
     browser = create_webdriver(target_directory, False)

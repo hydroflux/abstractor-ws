@@ -2,13 +2,13 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-from settings.file_management import document_value, extrapolate_document_value
-from settings.general_functions import scroll_into_view
-from settings.settings import timeout
 
-from tiger.tiger_variables import (first_result_tag, result_cell_tag,
-                                   result_count_button_id, result_count_id,
-                                   results_body_tag, results_id)
+from settings.county_variables.tiger import (first_result_tag, result_cell_tag,
+                                             result_count_button_id,
+                                             result_count_id, results_body_tag,
+                                             results_id)
+from settings.file_management import document_value, extrapolate_document_value
+from settings.general_functions import scroll_into_view, timeout
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("open_document", __name__)

@@ -4,16 +4,19 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
 if __name__ == '__main__':
+    from settings.county_variables.tiger import (instrument_search_id,
+                                                 search_button_id,
+                                                 search_navigation_id,
+                                                 search_script, search_tab_id,
+                                                 search_title)
     from settings.settings import timeout
-
-    from tiger.tiger_variables import (instrument_search_id, search_button_id,
-                                       search_navigation_id, search_script,
-                                       search_tab_id, search_title)
 else:
+    from ..settings.county_variables.tiger import (instrument_search_id,
+                                                   search_button_id,
+                                                   search_navigation_id,
+                                                   search_script,
+                                                   search_tab_id, search_title)
     from ..settings.settings import timeout
-    from .tiger_variables import (instrument_search_id, search_button_id,
-                                  search_navigation_id, search_script,
-                                  search_tab_id, search_title)
 
 
 def check_active_class(element):

@@ -5,16 +5,18 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
 if __name__ == '__main__':
-    from settings.settings import timeout
+    from settings.county_variables.tiger import (credentials,
+                                                 handle_disclaimer_id, website,
+                                                 website_title)
+    from settings.general_functions import timeout
 
     from tiger.search import open_search
-    from tiger.tiger_variables import (credentials, handle_disclaimer_id,
-                                       website, website_title)
 else:
-    from ..settings.settings import timeout
+    from ..settings.county_variables.tiger import (credentials,
+                                                   handle_disclaimer_id,
+                                                   website, website_title)
+    from ..settings.general_functions import timeout
     from .search import open_search
-    from .tiger_variables import (credentials, handle_disclaimer_id, website,
-                                  website_title)
 
 
 def open_site(browser):
