@@ -2,13 +2,17 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-from settings.general_functions import (assert_window_title, fill_search_field,
+
+from selenium_utilities.open import assert_window_title
+
+from settings.county_variables.buffalo import (credentials, disclaimer_script,
+                                               login_script, post_login_text,
+                                               post_login_title, website,
+                                               website_title,
+                                               welcome_message_id)
+from settings.general_functions import (fill_search_field,
                                         javascript_script_execution, timeout)
 
-from buffalo.buffalo_variables import (credentials, disclaimer_script,
-                                       login_script, post_login_text,
-                                       post_login_title, website,
-                                       website_title, welcome_message_id)
 from buffalo.frame_handling import switch_to_main_frame
 
 
@@ -31,10 +35,12 @@ def locate_login_field(browser, prompt_name, type):
 
 
 def submit_username(browser):
+    # No longer going to work, need to update
     fill_search_field(locate_login_field(browser, credentials[0], "username"), credentials[1])
 
 
 def submit_password(browser):
+    # No longer going to work, need to update
     fill_search_field(locate_login_field(browser, credentials[2], "password"), credentials[3])
 
 

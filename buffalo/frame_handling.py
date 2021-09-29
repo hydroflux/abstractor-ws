@@ -1,10 +1,11 @@
-from settings.iframe_handling import locate_iframe_by_name, switch_to_default_content
-
-from buffalo.buffalo_variables import (header_frame_name, main_frame_name,
-                                       result_frame_name,
-                                       result_list_frame_name,
-                                       search_input_frame_name,
-                                       search_menu_frame_name)
+from settings.county_variables.buffalo import (header_frame_name,
+                                               main_frame_name,
+                                               result_frame_name,
+                                               result_list_frame_name,
+                                               search_input_frame_name,
+                                               search_menu_frame_name)
+from settings.iframe_handling import (locate_iframe_by_name,
+                                      switch_to_default_content)
 
 
 def switch_to_main_frame(browser):

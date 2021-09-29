@@ -2,11 +2,13 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-from settings.file_management import document_type, document_value, extrapolate_document_value
+
+from settings.county_variables.buffalo import (first_result_id,
+                                               search_results_header_text)
+from settings.file_management import (document_type, document_value,
+                                      extrapolate_document_value)
 from settings.general_functions import eight_character_padding, timeout
 
-from buffalo.buffalo_variables import (first_result_id,
-                                       search_results_header_text)
 from buffalo.frame_handling import switch_to_search_result_list_frame
 from buffalo.validation import page_is_loaded
 

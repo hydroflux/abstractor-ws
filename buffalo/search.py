@@ -3,16 +3,15 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+
+from settings.county_variables.buffalo import (
+    document_search_field_class_name, document_search_menu_id,
+    search_input_header_text, search_menu_active_class, search_page_button_id)
 from settings.file_management import (document_type, document_value,
                                       extrapolate_document_value)
 from settings.general_functions import (get_element_class, get_field_value,
                                         timeout)
 
-from buffalo.buffalo_variables import (document_search_field_class_name,
-                                       document_search_menu_id,
-                                       search_input_header_text,
-                                       search_menu_active_class,
-                                       search_page_button_id)
 from buffalo.frame_handling import (switch_to_main_frame,
                                     switch_to_search_input_frame,
                                     switch_to_search_menu_frame)

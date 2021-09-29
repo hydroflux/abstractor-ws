@@ -1,7 +1,7 @@
 from settings.general_functions import (assert_window_title,
                                         javascript_script_execution)
 
-from buffalo.buffalo_variables import logout_script, website_title
+from settings.county_variables.buffalo import logout_script, website_title
 from buffalo.frame_handling import switch_to_default_content
 
 
