@@ -21,7 +21,7 @@ def merge_pdfs(target_directory, pdf_dictionary):
     for name, pdfs in pdf_dictionary.items():
         merger = PdfFileMerger()
         [merger.append(PdfFileReader(f'{target_directory}/{pdf}', 'rb')) for pdf in pdfs]
-        merger.write(f'{name}')
+        merger.write(name)
         merger.close()
 
 
