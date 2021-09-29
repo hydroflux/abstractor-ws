@@ -236,3 +236,8 @@
 ### Testing Script To Do
 
 - [ ] Needs webdriver, target directory, document class, headless, etc. all aggregated
+
+### PDF Merger To Do
+
+- [ ] Update PDF merger to work on a county by county basis
+- [ ] Handle cases where a '-1' document is valid

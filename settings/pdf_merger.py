@@ -9,6 +9,7 @@ def sort_pdf_dictionary(dictionary):
 def create_pdf_dictionary(target_directory, pdf_dictionary={}):
     for pdf in os.listdir(target_directory):
         if not pdf.endswith('.DS_Store'):
+            # This is only going to work for rattlesnake for the time being--need to update naming syntax
             pdf_name = f'{pdf[:15]}.pdf'
             if pdf_name in pdf_dictionary:
                 pdf_dictionary[pdf_name].append(pdf)
