@@ -10,18 +10,18 @@ def create_pdf_dictionary(target_directory, pdf_dictionary={}):
     for pdf in os.listdir(target_directory):
         if not pdf.endswith('.DS_Store'):
             # This is only going to work for rattlesnake for the time being--need to update naming syntax
-            pdf_name = f'{pdf[:15]}.pdf'
+            pdf_name = f'{pdf[:15]}'
             if pdf_name in pdf_dictionary:
-                pdf_dictionary[pdf_name].append(pdf)
+                pdf_dictionary[pdf_name].append(pdf[:-4])
             else:
-                pdf_dictionary[pdf_name] = [pdf]
-    return sort_pdf_dictionary(pdf_dictionary)
+                pdf_dictionary[pdf_name] = [pdf[:-4]]
+    return pdf_dictionary
 
 
 def merge_pdfs(target_directory, pdf_dictionary):
     for name, pdfs in pdf_dictionary.items():
         merger = PdfFileMerger()
-        [merger.append(PdfFileReader(f'{target_directory}/{pdf}', 'rb')) for pdf in pdfs]
+        [merger.append(PdfFileReader(f'{target_directory}/{pdf}.pdf', 'rb')) for pdf in pdfs]
         merger.write(name)
         merger.close()
 
