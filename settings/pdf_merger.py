@@ -3,7 +3,8 @@ import os
 
 
 def sort_pdf_dictionary(dictionary):
-    return {key: sorted(value)[-1:] + sorted(value)[:-1] for key, value in dictionary.items()}
+    [values.sort(key=lambda value: int(value[(value.rfind('-') + 1):])) for values in dictionary.values()]
+    return {name: values[-1:] + values[:-1] for name, values in dictionary.items()}
 
 
 def create_pdf_dictionary(target_directory, pdf_dictionary={}):
@@ -15,14 +16,14 @@ def create_pdf_dictionary(target_directory, pdf_dictionary={}):
                 pdf_dictionary[pdf_name].append(pdf[:-4])
             else:
                 pdf_dictionary[pdf_name] = [pdf[:-4]]
-    return pdf_dictionary
+    return sort_pdf_dictionary(pdf_dictionary)
 
 
 def merge_pdfs(target_directory, pdf_dictionary):
     for name, pdfs in pdf_dictionary.items():
         merger = PdfFileMerger()
         [merger.append(PdfFileReader(f'{target_directory}/{pdf}.pdf', 'rb')) for pdf in pdfs]
-        merger.write(name)
+        merger.write(f'{name}.pdf')
         merger.close()
 
 
