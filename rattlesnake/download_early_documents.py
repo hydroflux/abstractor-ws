@@ -175,7 +175,8 @@ def handle_search_results(browser, document, document_directory):
 
 
 def handle_document_search(browser, document_list, document, document_directory):
-    if document.document_value()[0] == last_document(document_list, document).document_value()[0]:
+    volume = document.document_value()[0]
+    if volume == last_document(document_list, document).document_value()[0] and len(document_list) > 1:
         download_early_document_image(browser, document, document_directory)
     else:
         open_url(browser, early_search_url, early_search_title, "old document search")
