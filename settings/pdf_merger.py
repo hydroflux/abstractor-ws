@@ -4,8 +4,13 @@ import os
 
 def sort_pdf_dictionary(dictionary):
     [values.sort(key=lambda value: int(value[(value.rfind('-') + 1):])) for values in dictionary.values()]
-    return {name: values[-1:] + values[:-1] for name, values in dictionary.items()}
+    [values.insert(0, values.pop(values.index(key))) for key, values in dictionary.items()]
+    return dictionary
+    # return {name: values[-1:] + values[:-1] for name, values in dictionary.items()}
 
+
+# target_directory = '/Users/jphubert/Downloads/Section 8, Block 26 - H&TC Mitchell Co, TX Runsheet/Documents/Update'
+# lst.append(lst.pop(lst.index('string2')))
 
 def create_pdf_dictionary(target_directory, pdf_dictionary={}):
     for pdf in os.listdir(target_directory):
