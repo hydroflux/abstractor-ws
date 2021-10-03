@@ -4,7 +4,8 @@ import os
 
 def sort_pdf_dictionary(dictionary):
     [values.sort(key=lambda value: int(value[(value.rfind('-') + 1):])) for values in dictionary.values()]
-    return {name: values[-1:] + values[:-1] for name, values in dictionary.items()}
+    [values.insert(0, values.pop(values.index(key))) for key, values in dictionary.items()]
+    return dictionary
 
 
 def create_pdf_dictionary(target_directory, pdf_dictionary={}):
