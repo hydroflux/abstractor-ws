@@ -195,8 +195,8 @@ def set_image_link(document, link):
     document.image_link = link
 
 
-def get_direct_link(document_link):
-    return document_link.get_attribute("href")
+def get_direct_link(link):
+    return link.get_attribute("href")
 
 
 def date_from_string(string):
