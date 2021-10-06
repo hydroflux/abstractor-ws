@@ -16,7 +16,7 @@ def locate_element_by_id(locator, id, type, clickable=False, document=None):
         element = locator.find_element_by_id(id)
         return element
     except TimeoutException:
-        print_timeout_statement(type, document)
+        return print_timeout_statement(type, document)
 
 
 def locate_element_by_class_name(locator, class_name, type, clickable=False, document=None):
@@ -29,7 +29,7 @@ def locate_element_by_class_name(locator, class_name, type, clickable=False, doc
         element = locator.find_element_by_class_name(class_name)
         return element
     except TimeoutException:
-        print_timeout_statement(type, document)
+        return print_timeout_statement(type, document)
 
 
 def locate_elements_by_class_name(locator, class_name, type, clickable=False, document=None):
@@ -42,7 +42,7 @@ def locate_elements_by_class_name(locator, class_name, type, clickable=False, do
         elements = locator.find_elements_by_class_name(class_name)
         return elements
     except TimeoutException:
-        print_timeout_statement(type, document)
+        return print_timeout_statement(type, document)
 
 
 def locate_element_by_name(locator, name, type, clickable=False, document=None):
@@ -55,7 +55,7 @@ def locate_element_by_name(locator, name, type, clickable=False, document=None):
         element = locator.find_element_by_name(name)
         return element
     except TimeoutException:
-        print_timeout_statement(type, document)
+        return print_timeout_statement(type, document)
 
 
 def locate_element_by_tag_name(locator, tag_name, type, clickable=False, document=None):
@@ -68,7 +68,7 @@ def locate_element_by_tag_name(locator, tag_name, type, clickable=False, documen
         element = locator.find_element_by_tag_name(tag_name)
         return element
     except TimeoutException:
-        print_timeout_statement(type, document)
+        return print_timeout_statement(type, document)
 
 
 def locate_elements_by_tag_name(locator, tag_name, type, clickable=False, document=None):
@@ -81,7 +81,7 @@ def locate_elements_by_tag_name(locator, tag_name, type, clickable=False, docume
         elements = locator.find_elements_by_tag_name(tag_name)
         return elements
     except TimeoutException:
-        print_timeout_statement(type, document)
+        return print_timeout_statement(type, document)
 
 
 def print_timeout_statement(type, document):
@@ -90,3 +90,4 @@ def print_timeout_statement(type, document):
     else:
         print(f'Browser timed out trying to locate "{type}" for '
               f'{document.extrapolate_value()}, please review.')
+    return False
