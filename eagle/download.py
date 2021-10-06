@@ -30,6 +30,7 @@ def switch_into_frame(browser):
     try:
         pdf_viewer = locate_element_by_class_name(browser, pdf_viewer_class_name, "pfd viewer")
         if not pdf_viewer:
+            print('Unable to locate PDF viewer, trying again.')
             return pdf_viewer
         browser.switch_to.frame(pdf_viewer)
         return True
