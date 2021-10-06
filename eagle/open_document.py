@@ -67,7 +67,7 @@ def retry_execute_search(browser, document, search_status):
     while search_status == failed_search:
         print(f'Search failed for {document.extrapolate_value()},'
               f' executing search again.')
-        execute_search(browser)
+        execute_search(browser, document)
         naptime()
         search_status = wait_for_results(browser)
     return search_status
