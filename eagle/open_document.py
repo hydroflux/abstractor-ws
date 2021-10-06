@@ -86,7 +86,7 @@ def retry_execute_search(browser, document, search_status):
 def get_search_results(browser, document):
     result_rows = locate_elements_by_class_name(browser, results_row_class_name,
                                                 "search results", True, document=document)
-    while type(result_rows) is None:
+    while type(result_rows) is None or result_rows is False:
         retry_search(browser, document)
         result_rows = locate_elements_by_class_name(browser, results_row_class_name,
                                                     "search results", True, document=document)
