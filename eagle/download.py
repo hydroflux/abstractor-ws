@@ -26,11 +26,14 @@ def download_available(dataframe, document):
         return True
 
 
-def switch_into_frame(browser):
+def switch_into_frame(browser, document):
     try:
-        pdf_viewer = locate_element_by_class_name(browser, pdf_viewer_class_name, "pfd viewer")
+        pdf_viewer = locate_element_by_class_name(browser, pdf_viewer_class_name, "pdf viewer")
         if not pdf_viewer:
             print('Unable to locate PDF viewer, trying again.')
+            print(f'PDF Viewer: {pdf_viewer}')
+            print(f'Reception Number: {document.reception_number}')
+            print(f'Download Value: {document.download_value}')
             return pdf_viewer
         browser.switch_to.frame(pdf_viewer)
         return True
@@ -39,8 +42,8 @@ def switch_into_frame(browser):
         return False
 
 
-def access_pdf_viewer(browser):
-    while not switch_into_frame(browser):
+def access_pdf_viewer(browser, document):
+    while not switch_into_frame(browser, document):
         browser.refresh()
         naptime()
 
@@ -68,7 +71,7 @@ def download_document(browser, dataframe, target_directory, document):
         else:
             number_files = len(os.listdir(document_directory))
             build_stock_download(document)
-            access_pdf_viewer(browser)
+            access_pdf_viewer(browser, document)
             click_button(browser, locate_element_by_id,
                          document.button_ids["Download Button"], "download button")
             switch_to_default_content(browser)
