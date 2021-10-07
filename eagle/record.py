@@ -242,8 +242,7 @@ def record_legal_data(document_table, dataframe):
         legal = legal_data[-1].text
         if legal.endswith(search_errors[4]):
             legal = legal.strip()  # Running along with test 1
-            # legal = legal[:-11] # Might make more sense to make this a .strip with -10 rather than -11
-        dataframe["Legal"].append(legal)
+        dataframe["Legal"].append(drop_superfluous_information(legal))
 
 
 def locate_related_documents_table_rows(document, document_table):
