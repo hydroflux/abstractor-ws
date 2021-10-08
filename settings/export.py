@@ -149,9 +149,9 @@ def set_title_format(dataframe, worksheet, font_format):
 
 
 def create_range_message(dataframe, content):
-    # return f'From {content["start_date"]} to {content["end_date"]} \n ({content["order"]})'
-    start = dataframe[worksheet_properties["date_range"]]
-    return f'From {start.iloc[0]} to {start.iloc[-1]} \n ({content["order"]})'
+    return f'From {content["start_date"]} to {content["end_date"]} \n ({content["order"]})'
+    # start = dataframe[worksheet_properties["date_range"]]
+    # return f'From {start.iloc[0]} to {start.iloc[-1]} \n ({content["order"]})'
 
 
 def write_title_content(dataframe, county, worksheet, font_formats, client=None, legal=None):

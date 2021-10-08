@@ -8,7 +8,6 @@
 - [ ] Create a breakdown of adding a new county ('skeleton structures', 'general_functions', etc.)
 - [ ] Change 'file_management' to 'dataframe_management' & split out functions into multiple utility scripts
 - [ ] Create directory for objects & split abstract_objects into separate scripts
-- [ ] Create a fully built-out README
 - [ ] Add watermark
 - [ ] In the same vein as the two above, create an indicator for any instances that are repeated (don't necessarily remove them)
 - [ ] Figure out how to send cookies through to browser instances in order to get faster page load times
