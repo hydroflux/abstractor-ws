@@ -2,6 +2,8 @@
 
 ## General To Do
 
+- [ ] Comment imports and section by type
+- [ ] Create log files on run returning various metrics => create a comment function that takes a comment as an argument and then updates an object to be exported & prints to the screen
 - [ ] Handle 'Document Date' added to the abstract_dictionary across all recording scripts--maybe make a new utility settings script which handles 'Document Date'
 - [ ] Create a breakdown of adding a new county ('skeleton structures', 'general_functions', etc.)
 - [ ] Change 'file_management' to 'dataframe_management' & split out functions into multiple utility scripts
