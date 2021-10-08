@@ -253,11 +253,18 @@ def set_dataframe_format(worksheet, font_format):
         worksheet.set_column(column.column_range, column.width, font_format)
 
 
+def footer_row(dataframe):
+    return access_last_row(dataframe) + 1
+
+
 def add_footer_row(dataframe, worksheet, font_format):
-    footer_row = access_last_row(dataframe) + 1
-    footer_range = f'A{footer_row}:{last_column(dataframe)}{footer_row}'
+    footer_range = f'A{footer_row(dataframe)}:{last_column(dataframe)}{footer_row(dataframe)}'
     worksheet.set_row((footer_row - 1), worksheet_properties['footer_height'])
     worksheet.merge_range(footer_range, worksheet_properties['footer_content'], font_format)
+
+
+def add_filter(dataframe, worksheet):
+    worksheet.autofilter(f'A4:{last_column(dataframe)}{footer_row(dataframe)}')
 
 
 def add_watermark(worksheet):
@@ -274,6 +281,7 @@ def add_content(county, dataframe, worksheet, font_formats, client=None, legal=N
     add_dataframe_headers(dataframe, worksheet, font_formats['datatype'])
     set_worksheet_border(dataframe, worksheet, font_formats['border'])
     add_footer_row(dataframe, worksheet, font_formats['footer'])
+    add_filter(dataframe, worksheet)
     # add_watermark(worksheet)
 
 
