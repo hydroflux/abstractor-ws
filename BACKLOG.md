@@ -35,7 +35,6 @@
 - [ ] Add a check to the environment file to make sure that the county information is entered correctly before starting the webdriver
 - [ ] If continuing to use the 'extrapolate_document_value' function with name_search, function & it's spin-offs should be renamed accordingly (criteria, value, etc.)
 - [ ] Demo prompts should have a "go back" option
-- [ ] There is a function in export_settings to create the full_disclaimer---ideally there should be no functions in settings files
 - [ ] Change "Document Found" so that it lists either "recorded" or "recorded & downloaded" instead of located
 - [ ] Look into github vulnerability link that's broken
 - [ ] Convert notes from demo into a proper README
@@ -92,6 +91,8 @@
 - [ ] Get rid of print statements in export
 - [ ] Automatically export a 'color coding legend' for all documents as an additional tab
 - [ ] Add filters to xlsx output sheets
+- [ ] There is a function in export_settings to create the full_disclaimer---ideally there should be no functions in settings files
+- [ ] Eliminate the 'Effective Date' column in export--maybe only add 'Document Date' into the abstract if it appears???
 
 ### File Management To Do
 
@@ -180,9 +181,7 @@
 
 - [ ] Create a "download only" option for execution
 - [ ] Create a final prompt before logging out & closing the browser in order to review documents IF PAID & checkout
-- [ ] Update export settings 'Book' to 'Volume' for armadillo
 - [ ] Create some consistency between 'document.reception_number' & 'document.value' in order to avoid constantly updating
-- [ ] Eliminate the 'Effective Date' column in export--maybe only add 'Document Date' into the abstract if it appears???
 - [ ] Update the validation file with the proper use of 'verify' & 'validate' (definitions have been added)
 - [ ] Delete 'record' comment block accessing document tables after 09/17 (assuming active testing is done in the meantime)
 - [ ] Get clarification around 'Document Date' vs. 'Effective Date' for formatting
