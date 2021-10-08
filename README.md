@@ -31,17 +31,19 @@ Automating the process of searching for government records on bulky, difficult t
   - "Reception Number" / "File Number" and "Book" / "Volume" / "Page" searches use take a given file path and XLSX file name, importing the documents to be searched into a list that is looped over until completion
 - Retrieves information located on county websites by searching given inputs and recording the information located at each search point
 - Creates an XLSX file as an output, formatted based on client designations
+- Adds an auto-filter and freezes portions of the XLSX file for clients to quickly parse through information
+- Creates a "Limitations" output based on the county / state searched and client specifications
+- Prints output with a "Last Updated" date listed at the bottom of the XLSX document
+- Creates specialized comments for any search point that does not return expected results, which conditionally format their respective line items for easy identification
+  - Identifies when "No Record Can Be Found" at a specific search point
+  - Checks for "Multiple Documents" located at a single search point (recording each document and leaving appropriate comments for each)
+  - Checks for "No Image Found" at any given document when "Download" is selected as an option, whether "Multiple Documents" are found or not
+- Provides a "Color-Coding Legend" for users in order to quickly identify the purpose of the color-coded comments
 - When "Download" is selected as an option,
   - Creates a "Document Directory" titled "Documents"
   - Downloads and renames document images based on context provided by the user, saved to the "Document Directory"
   - Creates relative hyperlinks for each document image downloaded, connected to the "Document Directory"
   - Creates a "Hyperlink" tab in the final output XLSX file, with hyperlinks to each document image in the directory (**example video shows "Direct Links" which are created on record)
-- Creates specialized comments for any search point that does not return expected results, which conditionally format their respective line items for easy identification
-  - Identifies when "No Record Can Be Found" at a specific search point
-  - Checks for "Multiple Documents" located at a single search point (recording each document and leaving appropriate comments for each)
-  - Checks for "No Image Found" at any given document when "Download" is selected as an option, whether "Multiple Documents" are found or not
-- Creates a "Limitations" output based on the county / state searched and client specifications
-- Prints output with a "Last Updated" date listed at the bottom of the XLSX document
 
 ## Example Output
 
