@@ -264,7 +264,7 @@ def add_footer_row(dataframe, worksheet, font_format):
 
 
 def add_filter(dataframe, worksheet):
-    worksheet.autofilter(f'A4:{last_column(dataframe)}{footer_row(dataframe)}')
+    worksheet.autofilter(f'A5:{last_column(dataframe)}{footer_row(dataframe)}')
 
 
 def add_watermark(worksheet):
