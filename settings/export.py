@@ -259,7 +259,7 @@ def footer_row(dataframe):
 
 def add_footer_row(dataframe, worksheet, font_format):
     footer_range = f'A{footer_row(dataframe)}:{last_column(dataframe)}{footer_row(dataframe)}'
-    worksheet.set_row((footer_row - 1), worksheet_properties['footer_height'])
+    worksheet.set_row((footer_row(dataframe) - 1), worksheet_properties['footer_height'])
     worksheet.merge_range(footer_range, worksheet_properties['footer_content'], font_format)
 
 
