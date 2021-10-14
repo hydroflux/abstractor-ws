@@ -49,7 +49,7 @@ def create_excel_writer(output_file):
 
 
 def create_xlsx_document(target_directory, file_name, dataframe):
-    output_file = create_output_file(file_name, abstraction_type)
+    output_file = create_output_file(file_name)
     writer = create_excel_writer(output_file)
     return output_file, writer
 
