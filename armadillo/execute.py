@@ -106,7 +106,7 @@ def search_documents_from_list(browser, target_directory, document_list, review)
     return dataframe
 
 
-def execute_program(county, target_directory, document_list, file_name, review=False):
+def execute_program(county, target_directory, document_list, file_name, review=False, download=False):
     browser = create_webdriver(target_directory, headless)
     transform_document_list(document_list, county)
     account_login(browser)
@@ -118,7 +118,8 @@ def execute_program(county, target_directory, document_list, file_name, review=F
             browser,
             target_directory,
             document_list,
-            review
+            review,
+            download
         )
     )
     logout(browser)
