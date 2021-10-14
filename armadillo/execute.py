@@ -123,5 +123,5 @@ def execute_program(county, target_directory, document_list, file_name, review=F
         )
     )
     logout(browser)
-    bundle_project(target_directory, abstraction)
+    bundle_project(target_directory, abstraction, review, download)
     browser.close()

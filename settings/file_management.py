@@ -240,12 +240,13 @@ def move_downloaded_documents(target_directory, project_folder):
         shutil.move(f'{target_directory}/Documents', project_folder)
 
 
-def bundle_project(target_directory, abstraction):
-    os.chdir(target_directory)
-    project_folder = create_project_folder(target_directory, abstraction)
-    move_abstraction_into_project_folder(target_directory, project_folder, abstraction)
-    move_downloaded_documents(target_directory, project_folder)
-    # shutil.move(f'{target_directory}/{file_name}.xlsx', project_folder)
+def bundle_project(target_directory, abstraction, review=False, download=False):
+    if not review and not download:
+        os.chdir(target_directory)
+        project_folder = create_project_folder(target_directory, abstraction)
+        move_abstraction_into_project_folder(target_directory, project_folder, abstraction)
+        move_downloaded_documents(target_directory, project_folder)
+        # shutil.move(f'{target_directory}/{file_name}.xlsx', project_folder)
 
 
 def remove_prefix(string, prefix):
