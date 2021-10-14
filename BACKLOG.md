@@ -94,6 +94,7 @@
 - [ ] Add filters to xlsx output sheets
 - [ ] There is a function in export_settings to create the full_disclaimer---ideally there should be no functions in settings files
 - [ ] Eliminate the 'Effective Date' column in export--maybe only add 'Document Date' into the abstract if it appears???
+- [ ] Handle "ABSTRACTION TYPE" based on the "PROGRAM TYPE" rather than on a specific setting or user input
 
 ### File Management To Do
 

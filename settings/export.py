@@ -49,7 +49,7 @@ def create_excel_writer(output_file):
 
 
 def create_xlsx_document(target_directory, file_name, dataframe):
-    output_file = create_output_file(file_name)
+    output_file = create_output_file(file_name, abstraction_type)
     writer = create_excel_writer(output_file)
     return output_file, writer
 
@@ -149,8 +149,6 @@ def set_title_format(dataframe, worksheet, font_format):
 
 def create_range_message(dataframe, content):
     return f'From {content["start_date"]} to {content["end_date"]} \n ({content["order"]})'
-    # start = dataframe[worksheet_properties["date_range"]]
-    # return f'From {start.iloc[0]} to {start.iloc[-1]} \n ({content["order"]})'
 
 
 def write_title_content(dataframe, county, worksheet, font_formats, client=None, legal=None):
@@ -340,20 +338,12 @@ def add_hyperlink_sheet(target_directory, workbook):
         os.chdir(target_directory)  # Is this necessary?
 
 
-def close_workbook(workbook):
-    workbook.close()
-
-# def finalize_xlsx_document(county, writer, dataframe, client=None, legal=None):
-#     workbook = format_xlsx_document(county, writer, dataframe, client, legal)
-#     close_workbook(workbook)
-
-
 def export_hyperlinks(county, target_directory, file_name, dataframe):
     prepare_output_environment(target_directory)
     output_file, writer = create_xlsx_document(target_directory, file_name, dataframe)
     workbook = access_workbook_object(writer)
     add_hyperlink_sheet(target_directory, workbook)
-    close_workbook(workbook)
+    workbook.close()
     return output_file
 
 
@@ -365,6 +355,5 @@ def export_document(county, target_directory, file_name, dictionary, client=None
     create_writer_object(target_directory, writer, dataframe, abstraction_type.upper())
     workbook = format_xlsx_document(county, writer, dataframe, client, legal)
     add_hyperlink_sheet(target_directory, workbook)
-    # finalize_xlsx_document(county, writer, dataframe, client, legal)
-    close_workbook(workbook)
+    workbook.close()
     return output_file
