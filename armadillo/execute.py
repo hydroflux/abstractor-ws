@@ -23,7 +23,7 @@ def record_document(browser, document_list, document, review):
     document_found(document_list, document, review)
 
 
-def download_recorded_document(browser, target_directory, dataframe, document_list, document, result_number):
+def download_recorded_document(browser, target_directory, dataframe, document_list, document, download_only, result_number):
     if not download_document(
         browser,
         target_directory,
@@ -32,9 +32,9 @@ def download_recorded_document(browser, target_directory, dataframe, document_li
         result_number
     ):
         no_document_image(dataframe, document)
-        no_document_downloaded(document_list, document)
+        no_document_downloaded(document_list, document, download_only)
     else:
-        document_downloaded(document_list, document)
+        document_downloaded(document_list, document, download_only)
 
 
 def handle_single_document(browser, target_directory, document_list, document, review, download_only, result_number=0):
@@ -45,13 +45,14 @@ def handle_single_document(browser, target_directory, document_list, document, r
             document,
             review
         )
-    if download and not review:
+    if download and not review or download_only:
         download_recorded_document(
             browser,
             target_directory,
             dataframe,
             document_list,
             document,
+            download_only,
             result_number
         )
 
@@ -116,7 +117,7 @@ def search_documents_from_list(browser, target_directory, document_list, review,
     return dataframe
 
 
-def process_dataframe(county, target_directory, file_name, dataframe, review, download_only):
+def process_dataframe(county, target_directory, file_name, review, download_only):
     if not review and not download_only:
         abstraction = export_document(county, target_directory, file_name, dataframe)
         bundle_project(target_directory, abstraction)
