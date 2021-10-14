@@ -1,7 +1,7 @@
 from settings.abstract_object import abstract_dictionary as dataframe
 from settings.bad_search import no_document_image, record_bad_search
 from settings.driver import create_webdriver
-from settings.export import export_document
+from settings.export import export_document, export_hyperlinks
 from settings.file_management import (bundle_project, check_length,
                                       document_downloaded, document_found,
                                       no_document_downloaded,
@@ -119,9 +119,12 @@ def search_documents_from_list(browser, target_directory, document_list, review,
 
 
 def process_dataframe(county, target_directory, file_name, review, download_only):
-    if not review and not download_only:
-        abstraction = export_document(county, target_directory, file_name, dataframe)
-        bundle_project(target_directory, abstraction)
+    if not review:
+        if not download_only:
+            abstraction_file = export_document(county, target_directory, file_name, dataframe)
+        else:
+            abstraction_file = export_hyperlinks(county, target_directory, file_name, dataframe)
+        bundle_project(target_directory, abstraction_file)
 
 
 def execute_program(county, target_directory, document_list, file_name, review=False, download_only=False):

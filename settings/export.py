@@ -48,6 +48,12 @@ def create_excel_writer(output_file):
         date_format='mm/dd/yyyy')  # pylint: disable=abstract-class-instantiated
 
 
+def create_xlsx_document(target_directory, file_name, dataframe):
+    output_file = create_output_file(file_name)
+    writer = create_excel_writer(output_file)
+    return output_file, writer
+
+
 def add_column(dataframe, current_position, column):
     dataframe.insert(current_position, column.title, '')
 
@@ -62,7 +68,7 @@ def add_breakpoints(dataframe):
         current_position = current_position + column.position
 
 
-def create_excel_object(target_directory, writer, dataframe, sheet_name):
+def create_writer_object(target_directory, writer, dataframe, sheet_name):
     # add_hyperlinks(target_directory, dataframe)
     add_breakpoints(dataframe)
     return dataframe.to_excel(
@@ -72,13 +78,6 @@ def create_excel_object(target_directory, writer, dataframe, sheet_name):
         header=False,
         index=False
     )
-
-
-def create_xlsx_document(target_directory, file_name, dataframe):
-    output_file = create_output_file(file_name)
-    writer = create_excel_writer(output_file)
-    create_excel_object(target_directory, writer, dataframe, abstraction_type.upper())
-    return output_file, writer
 
 
 def access_workbook_object(writer):
@@ -349,11 +348,21 @@ def close_workbook(workbook):
 #     close_workbook(workbook)
 
 
+def export_hyperlinks(county, target_directory, file_name, dataframe):
+    prepare_output_environment(target_directory)
+    output_file, writer = create_xlsx_document(target_directory, file_name, dataframe)
+    workbook = access_workbook_object(writer)
+    add_hyperlink_sheet(target_directory, workbook)
+    close_workbook(workbook)
+    return output_file
+
+
 def export_document(county, target_directory, file_name, dictionary, client=None, legal=None):
     prepare_output_environment(target_directory)
     dataframe = transform_dictionary(dictionary)
     # add_hyperlinks(target_directory, dataframe)
     output_file, writer = create_xlsx_document(target_directory, file_name, dataframe)
+    create_writer_object(target_directory, writer, dataframe, abstraction_type.upper())
     workbook = format_xlsx_document(county, writer, dataframe, client, legal)
     add_hyperlink_sheet(target_directory, workbook)
     # finalize_xlsx_document(county, writer, dataframe, client, legal)
