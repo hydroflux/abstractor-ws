@@ -201,6 +201,7 @@
 - [ ] Grab document_descriptions links to speed up the process of searching for multiple results
 - [ ] If downloads are 'paid' then login isn't necessary--and will break the site application; update accordingly
 - [ ] Consider 'checking for subscription'??? <--- could be added to eagle as well
+- [ ] Options should be created in the environment file, the 'use_prompts' file, or a new file specifically for handling options
 
 ### Iguana To Do
 

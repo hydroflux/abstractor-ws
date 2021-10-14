@@ -275,7 +275,7 @@ def record_comments(dataframe, document):
         dataframe["Comments"].append(multiple_documents_comment(document))
 
 
-def record_document_link(dataframe, document):
+def prepare_document_for_download(dataframe, document):
     if document.reception_number.find('-') == -1:
         document_link = (f'{dataframe["Book"][-1]}-'
                          f'{four_character_padding(dataframe["Volume"][-1])}-'
@@ -283,6 +283,11 @@ def record_document_link(dataframe, document):
     else:
         document_link = document.reception_number
     document.new_name = f'{document.county.prefix}-{document_link}.pdf'
+    return document_link
+
+
+def record_document_link(dataframe, document):
+    document_link = prepare_document_for_download(dataframe, document)
     dataframe["Document Link"].append(document_link)
 
 
