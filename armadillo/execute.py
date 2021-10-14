@@ -23,7 +23,8 @@ def record_document(browser, document_list, document, review):
     document_found(document_list, document, review)
 
 
-def download_recorded_document(browser, target_directory, dataframe, document_list, document, download_only, result_number):
+def download_recorded_document(browser, target_directory, dataframe, document_list,
+                               document, download_only, result_number):
     if not download_document(
         browser,
         target_directory,
