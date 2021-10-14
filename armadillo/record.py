@@ -260,9 +260,13 @@ def record_legal(document_table, dataframe):
     dataframe['Legal'].append(legal)
 
 
+def indexing_table(document_tables):
+    return newline_split(document_tables[1].text)
+
+
 def aggregate_document_table_information(browser, dataframe, document):
     document_tables = locate_document_information_tables(browser, document)
-    record_indexing_information(newline_split(document_tables[1].text), dataframe, document)
+    record_indexing_information(indexing_table(document_tables), dataframe, document)
     record_parties_information(access_table_information(document_tables[3]), dataframe)
     record_related_documents(newline_split(document_tables[6].text), dataframe)
     record_legal(newline_split(document_tables[8].text), dataframe)
@@ -289,6 +293,13 @@ def prepare_document_for_download(dataframe, document):
 def record_document_link(dataframe, document):
     document_link = prepare_document_for_download(dataframe, document)
     dataframe["Document Link"].append(document_link)
+
+
+def build_document_download_information(browser, dataframe, document):
+    record_document_type_and_number(browser, dataframe, document)
+    document_tables = locate_document_information_tables(browser, document)
+    record_book_volume_page(indexing_table(document_tables), dataframe, document)
+    prepare_document_for_download(dataframe, document)
 
 
 def record_document_fields(browser, dataframe, document):

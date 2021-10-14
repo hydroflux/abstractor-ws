@@ -149,6 +149,7 @@
 - [ ] Create create option in 'handle_search_results' to account for 'else'
 - [ ] Create a validation script for eagle
 - [ ] Scrub comments from scripts
+- [ ] Refactor 'record' script into its own directory
 
 ### Crocodile To Do
 
@@ -202,6 +203,7 @@
 - [ ] If downloads are 'paid' then login isn't necessary--and will break the site application; update accordingly
 - [ ] Consider 'checking for subscription'??? <--- could be added to eagle as well
 - [ ] Options should be created in the environment file, the 'use_prompts' file, or a new file specifically for handling options
+- [ ] Refactor 'record' script into its own directory
 
 ### Iguana To Do
 
