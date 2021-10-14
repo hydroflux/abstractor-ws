@@ -199,6 +199,8 @@
 - [ ] Perform a substring replacement for " 's " and other monikers
 - [ ] Include 'year' in search in order to refine 'multiple results'
 - [ ] Grab document_descriptions links to speed up the process of searching for multiple results
+- [ ] If downloads are 'paid' then login isn't necessary--and will break the site application; update accordingly
+- [ ] Consider 'checking for subscription'??? <--- could be added to eagle as well
 
 ### Iguana To Do
 
