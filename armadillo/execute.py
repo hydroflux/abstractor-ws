@@ -69,14 +69,21 @@ def handle_multiple_documents(browser, target_directory, document_list, document
             )
 
 
-def handle_search_results(browser, target_directory, document_list, document, review):
+def handle_bad_search(dataframe, document_list, document, review, download_only):
+    if not download_only:
+        record_bad_search(dataframe, document)
+    no_document_found(document_list, document, review)
+
+
+def handle_search_results(browser, target_directory, document_list, document, review, download_only):
     if open_document(browser, document):
         handle_single_document(
             browser,
             target_directory,
             document_list,
             document,
-            review
+            review,
+            download_only
         )
         if document.number_results > 1:
             handle_multiple_documents(
@@ -87,11 +94,10 @@ def handle_search_results(browser, target_directory, document_list, document, re
                 review
             )
     else:
-        record_bad_search(dataframe, document)
-        no_document_found(document_list, document, review)
+        handle_bad_search(dataframe, document_list, document, review, download_only)
 
 
-def search_documents_from_list(browser, target_directory, document_list, review):
+def search_documents_from_list(browser, target_directory, document_list, review, download_only):
     for document in document_list:
         document.start_time = start_timer()
         search(browser, document)
@@ -100,7 +106,8 @@ def search_documents_from_list(browser, target_directory, document_list, review)
             target_directory,
             document_list,
             document,
-            review
+            review,
+            download_only
         )
         check_length(dataframe)
     return dataframe
