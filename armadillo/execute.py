@@ -13,7 +13,7 @@ from armadillo.download import download_document
 from armadillo.login import account_login
 from armadillo.logout import logout
 from armadillo.open_document import open_document
-from armadillo.record import record
+from armadillo.record import build_document_download_information, record
 from armadillo.search import search
 from armadillo.transform import transform_document_list
 
@@ -46,6 +46,11 @@ def handle_single_document(browser, target_directory, document_list, document, r
             document,
             review
         )
+    else:
+        build_document_download_information(
+            browser,
+            dataframe,
+            document)
     if download and not review or download_only:
         download_recorded_document(
             browser,
@@ -114,13 +119,13 @@ def search_documents_from_list(browser, target_directory, document_list, review,
             review,
             download_only
         )
-        check_length(dataframe)
     return dataframe
 
 
 def process_dataframe(county, target_directory, file_name, review, download_only):
     if not review:
         if not download_only:
+            check_length(dataframe)
             abstraction_file = export_document(county, target_directory, file_name, dataframe)
         else:
             abstraction_file = export_hyperlinks(county, target_directory, file_name, dataframe)

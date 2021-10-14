@@ -82,7 +82,6 @@ def access_download_value(document, reception_number):
 
 def access_reception_number(reception_number):
     return reception_number[len(reception_number_prefix):]
-    # return reception_number[len(reception_number_prefix):].replace('-', '')
 
 
 def update_reception_number(document, reception_number):
@@ -122,19 +121,6 @@ def locate_document_information_tables(browser, document):
         print(f'Browser timed out trying to get document information tables for '
               f'{document.extrapolate_value()}, please review.')
         input()
-
-# Substituted document_tables_class for document_tables_tag => testing for result solvency
-
-# def locate_document_information_tables(browser, document):
-#     try:
-#         information_tables_present = EC.presence_of_element_located((By.CLASS_NAME, document_tables_class))
-#         WebDriverWait(browser, timeout).until(information_tables_present)
-#         information_tables = browser.find_elements_by_class_name(document_tables_class)
-#         return information_tables
-#     except TimeoutException:
-#         print(f'Browser timed out trying to get document information tables for '
-#               f'{document.extrapolate_value()}, please review.')
-#         input()
 
 
 def access_date(date_text, document, type):
