@@ -57,6 +57,7 @@
 - [ ] In order to make the above work, 'button ids' need to be separate from 'input ids' in 'transform_document_list' functions and 'Document' class
 - [ ] Update 'display_document_list' to show all available attributes attached to a document
 - [ ] Eliminate iframe_handling script?
+- [ ] Create an 'options' object to hold things like 'review', 'download_only', 'download', etc
 
 ### Class To Do
 
