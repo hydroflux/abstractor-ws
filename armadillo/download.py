@@ -20,7 +20,7 @@ from settings.iframe_handling import (access_iframe_by_tag,
                                       switch_to_default_content)
 
 
-def locate_download_page(browser, document):
+def locate_download_option(browser, document):
     try:
         download_page_present = EC.element_to_be_clickable((By.CLASS_NAME, download_page_class_name))
         WebDriverWait(browser, timeout).until(download_page_present)
@@ -32,10 +32,10 @@ def locate_download_page(browser, document):
         input()
 
 
-def open_download_page(browser, document):
-    download_page = locate_download_page(browser, document)
-    download_page_link = get_direct_link(download_page)
-    browser.get(download_page_link)
+def open_download(browser, document):
+    download_option = locate_download_option(browser, document)
+    download_option_link = get_direct_link(download_option)
+    browser.get(download_option_link)
 
 
 def switch_to_download_frame(browser, document):
@@ -119,18 +119,20 @@ def add_to_cart(browser, document):
 
 
 def execute_download(browser, document_directory, document):
+    number_files = len(os.listdir(document_directory))
+    build_stock_download(document)
     if document.download_type == 'free':
-        number_files = len(os.listdir(document_directory))
+        open_download(browser, document)
+        switch_to_default_content(browser)
         free_download(browser, document)
-        build_stock_download(document)
-        return update_download(
+    elif document.download_type == 'paid':
+        open_download(browser, document)
+    return update_download(
             browser,
             document_directory,
             document,
             number_files
             )
-    elif document.download_type == 'paid':
-        return add_to_cart(browser, document)
 
 
 def check_last_document(dataframe, document, result_number, count=0):
@@ -154,7 +156,5 @@ def download_document(browser, target_directory, dataframe, document, result_num
     if previously_downloaded(document_directory, document):
         if check_last_document(dataframe, document, result_number):
             return True
-    open_download_page(browser, document)
     # if verify_download(browser, document):
-    switch_to_default_content(browser)
     return execute_download(browser, document_directory, document)
