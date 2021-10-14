@@ -37,13 +37,14 @@ def download_recorded_document(browser, target_directory, dataframe, document_li
         document_downloaded(document_list, document)
 
 
-def handle_single_document(browser, target_directory, document_list, document, review, result_number=0):
-    record_document(
-        browser,
-        document_list,
-        document,
-        review
-    )
+def handle_single_document(browser, target_directory, document_list, document, review, download_only, result_number=0):
+    if not download_only:
+        record_document(
+            browser,
+            document_list,
+            document,
+            review
+        )
     if download and not review:
         download_recorded_document(
             browser,
@@ -55,7 +56,7 @@ def handle_single_document(browser, target_directory, document_list, document, r
         )
 
 
-def handle_multiple_documents(browser, target_directory, document_list, document, review):
+def handle_multiple_documents(browser, target_directory, document_list, document, review, download_only):
     for result_number in range(1, document.number_results):
         search(browser, document)
         if open_document(browser, document, result_number):
@@ -65,6 +66,7 @@ def handle_multiple_documents(browser, target_directory, document_list, document
                 document_list,
                 document,
                 review,
+                download_only,
                 result_number
             )
 
@@ -91,7 +93,8 @@ def handle_search_results(browser, target_directory, document_list, document, re
                 target_directory,
                 document_list,
                 document,
-                review
+                review,
+                download_only
             )
     else:
         handle_bad_search(dataframe, document_list, document, review, download_only)
