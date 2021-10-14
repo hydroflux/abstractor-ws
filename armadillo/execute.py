@@ -106,22 +106,23 @@ def search_documents_from_list(browser, target_directory, document_list, review)
     return dataframe
 
 
-def execute_program(county, target_directory, document_list, file_name, review=False, download=False):
+def process_dataframe(county, target_directory, file_name, dataframe, review, download_only):
+    if not review and not download_only:
+        abstraction = export_document(county, target_directory, file_name, dataframe)
+        bundle_project(target_directory, abstraction)
+
+
+def execute_program(county, target_directory, document_list, file_name, review=False, download_only=False):
     browser = create_webdriver(target_directory, headless)
     transform_document_list(document_list, county)
     account_login(browser)
-    abstraction = export_document(
-        county,
-        target_directory,
-        file_name,
-        search_documents_from_list(
+    search_documents_from_list(
             browser,
             target_directory,
             document_list,
             review,
-            download
+            download_only
         )
-    )
+    process_dataframe(county, target_directory, file_name, review, download_only)
     logout(browser)
-    bundle_project(target_directory, abstraction, review, download)
     browser.close()

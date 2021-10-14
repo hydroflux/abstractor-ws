@@ -39,7 +39,7 @@ def execute_program_type(county, program_type, document_list=None, search_name=N
         elif program_type == 'review':
             execute_armadillo(county, target_directory, document_list, file_name, review=True)
         elif program_type == 'download':
-            execute_armadillo(county, target_directory, document_list, file_name, download=True)
+            execute_armadillo(county, target_directory, document_list, file_name, download_only=True)
         else:
             currently_unavailable(county, program_type)
     elif county.program == 'crocodile':
