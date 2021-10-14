@@ -35,8 +35,10 @@ def execute_program_type(county, program_type, document_list=None, search_name=N
     if county.program == 'armadillo':
         if program_type == 'execute' or program_type == 'download':
             add_download_types(county, document_list)
-            execute_armadillo(county, target_directory, document_list, file_name)
-            execute_armadillo(county, target_directory, document_list, file_name, download_only=True)
+            if program_type == 'execute':
+                execute_armadillo(county, target_directory, document_list, file_name)
+            else:
+                execute_armadillo(county, target_directory, document_list, file_name, download_only=True)
         elif program_type == 'review':
             execute_armadillo(county, target_directory, document_list, file_name, review=True)
         else:
