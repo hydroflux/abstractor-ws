@@ -94,9 +94,10 @@ def get_year(columns, row):
         try:
             return year[-4:]
         except TypeError:
-            return str(year.year)
-        except AttributeError:
-            return None
+            try:
+                return str(year.year)
+            except AttributeError:
+                return None
     else:
         return None
 
