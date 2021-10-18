@@ -131,6 +131,7 @@
 
 ### Eagle To Do
 
+- [ ] Documents with the same reception numbers should be downloaded successively with "-#" based on the result number
 - [ ] Update multiple_documents comment to include actual document numbers and / or book & page numbers
 - [ ] Verify results after clicking into the document page
 - [ ] Auto generate hyperlinks—probably requires auditing the entire ‘reception_numbers’ page & doing a comparison against what’s in the document folder
