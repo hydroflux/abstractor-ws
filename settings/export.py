@@ -68,7 +68,7 @@ def add_breakpoints(dataframe):
         current_position = current_position + column.position
 
 
-def create_writer_object(target_directory, writer, dataframe, sheet_name):
+def create_abstraction_object(target_directory, writer, dataframe, sheet_name):
     # add_hyperlinks(target_directory, dataframe)
     add_breakpoints(dataframe)
     return dataframe.to_excel(
@@ -352,7 +352,7 @@ def export_document(county, target_directory, file_name, dictionary, client=None
     dataframe = transform_dictionary(dictionary)
     # add_hyperlinks(target_directory, dataframe)
     output_file, writer = create_xlsx_document(target_directory, file_name, dataframe)
-    create_writer_object(target_directory, writer, dataframe, abstraction_type.upper())
+    create_abstraction_object(target_directory, writer, dataframe, abstraction_type.upper())
     workbook = format_xlsx_document(county, writer, dataframe, client, legal)
     add_hyperlink_sheet(target_directory, workbook)
     workbook.close()
