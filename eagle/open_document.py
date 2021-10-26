@@ -86,7 +86,7 @@ def retry_execute_search(browser, document, search_status):
 def get_search_results(browser, document):
     result_rows = locate_elements_by_class_name(browser, results_row_class_name,
                                                 "search results", True, document=document)
-    while type(result_rows) is None or result_rows is False:
+    while type(result_rows) is None:
         retry_search(browser, document)
         result_rows = locate_elements_by_class_name(browser, results_row_class_name,
                                                     "search results", True, document=document)
@@ -96,7 +96,8 @@ def get_search_results(browser, document):
 def count_results(browser, document):
     # try:
     result_rows = get_search_results(browser, document)
-    document.number_results += len(result_rows)
+    if result_rows is not False:
+        document.number_results += len(result_rows)
     # Again, I don't think the try / exception is necessary here
     # return int(number_results)
     # except TypeError:
@@ -107,6 +108,7 @@ def count_results(browser, document):
 
 def handle_result_count(browser, document):
     search_status = wait_for_results(browser)
+    print(search_status)
     if search_status == failed_search:
         print(f'Initial search failed, attempting to execute search again for '
               f'{document.extrapolate_value()}')
