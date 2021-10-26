@@ -229,8 +229,8 @@ def record_indexing_data(document_table, dataframe, document):
 
 def record_name_data(document_table, dataframe):
     grantor, grantee = access_indexing_information(document_table)
-    dataframe["Grantor"].append(drop_superfluous_information(grantor))
-    dataframe["Grantee"].append(drop_superfluous_information(grantee))
+    dataframe["Grantor"].append(update_sentence_case_extras(drop_superfluous_information(grantor)))
+    dataframe["Grantee"].append(update_sentence_case_extras(drop_superfluous_information(grantee)))
 
 
 def record_legal_data(document_table, dataframe):
