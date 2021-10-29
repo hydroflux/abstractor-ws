@@ -110,7 +110,7 @@ def execute_search(browser, document):
 def search(browser, document):
     open_url(browser, search_url, search_title, "document search page")
     check_login_status(browser)
-    check_for_error(browser, document)
+    # check_for_error(browser, document)  # Testing as of 10/28   
     clear_search(browser, document)
     naptime()  # Consider testing without this nap to see if necessary
     execute_search(browser, document)
