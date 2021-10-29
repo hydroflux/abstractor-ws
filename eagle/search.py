@@ -1,3 +1,4 @@
+from eagle.error_handling import check_for_error
 from selenium_utilities.inputs import (clear_input, click_button,
                                        enter_input_value)
 from selenium_utilities.locators import locate_element_by_id as locate_input
@@ -109,6 +110,7 @@ def execute_search(browser, document):
 def search(browser, document):
     open_url(browser, search_url, search_title, "document search page")
     check_login_status(browser)
+    check_for_error(browser, document)
     clear_search(browser, document)
     naptime()  # Consider testing without this nap to see if necessary
     execute_search(browser, document)
