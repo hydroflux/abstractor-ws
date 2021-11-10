@@ -10,7 +10,6 @@ from settings.county_variables.eagle import (pdf_viewer_class_name,
                                              stock_download_suffix)
 from settings.download_management import previously_downloaded, update_download
 from settings.error_handling import no_image_comment
-from settings.file_management import create_document_directory
 from settings.general_functions import naptime
 from settings.iframe_handling import switch_to_default_content
 
