@@ -77,6 +77,7 @@ def handle_multiple_documents(browser, target_directory, document_list, document
                 result_number
             )
 
+
 def handle_search_results(browser, target_directory, document_list, document, review, download_only):
     handle_single_document(
         browser,
@@ -118,6 +119,7 @@ def search_documents_from_list(browser, target_directory, document_list, review,
             )
         else:
             handle_bad_search(dataframe, document_list, document, review, download_only)
+        check_length(dataframe)
     return dataframe
 
 
