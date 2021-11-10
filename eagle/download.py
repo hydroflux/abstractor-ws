@@ -63,8 +63,20 @@ def build_stock_download(document):
     document.download_value = f'{document.reception_number}-{stock_download_suffix}'
 
 
-def check_last_document(dataframe, document, result_number):
-    pass
+def check_last_document(dataframe, document, result_number, count=0):
+    if result_number > 0:
+        for element in dataframe["Reception Number"]:
+            if element == dataframe["Reception Number"][-1]:
+                count += 1
+            elif element == f'{dataframe["Reception Number"][-1]}-{str(count)}':
+                count += 1
+        if count > 1:
+            dataframe["Reception Number"][-1] = f'{dataframe["Reception Number+"][-1]}-{str(count - 1)}'
+            document.new_name = f'{document.new_name[:-4]}-{str(count - 1)}.pdf'
+        else:
+            return True
+    else:
+        return True
 
 
 def download_document(browser, dataframe, target_directory, document, result_number):
