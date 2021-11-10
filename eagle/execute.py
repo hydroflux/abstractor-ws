@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+from armadillo.record import build_document_download_information
 from eagle.transform import transform_document_list
 from settings.abstract_object import abstract_dictionary as dataframe
 from settings.bad_search import record_bad_search, unable_to_download
@@ -51,8 +52,7 @@ def handle_single_document(browser, target_directory, document_list, document, r
             review
         )
     else:
-        pass
-        # build_document_download_information(browser, dataframe, document)
+        build_document_download_information(browser, dataframe, document)
     if download and not review:
         download_recorded_document(
             browser,
