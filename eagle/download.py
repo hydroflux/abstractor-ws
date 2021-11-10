@@ -63,7 +63,7 @@ def build_stock_download(document):
     document.download_value = f'{document.reception_number}-{stock_download_suffix}'
 
 
-def check_last_document(dataframe, document, result_number, count=0):
+def check_last_download(dataframe, document, result_number, count=0):
     if result_number > 0:
         for element in dataframe["Reception Number"]:
             if element == dataframe["Reception Number"][-1]:
@@ -83,7 +83,7 @@ def download_document(browser, dataframe, target_directory, document, result_num
     if download_available(dataframe, document):
         document_directory = create_document_directory(target_directory)
         if previously_downloaded(document_directory, document):
-            if check_last_document(dataframe, document, result_number):
+            if check_last_download(dataframe, document, result_number):
                 return True
         else:
             number_files = len(os.listdir(document_directory))

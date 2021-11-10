@@ -135,7 +135,7 @@ def execute_download(browser, document_directory, document):
             )
 
 
-def check_last_document(dataframe, document, result_number, count=0):
+def check_last_download(dataframe, document, result_number, count=0):
     if result_number > 0:
         for element in dataframe["Document Link"]:
             if element == dataframe["Document Link"][-1]:
@@ -154,7 +154,7 @@ def check_last_document(dataframe, document, result_number, count=0):
 def download_document(browser, target_directory, dataframe, document, result_number):
     document_directory = create_document_directory(target_directory)
     if previously_downloaded(document_directory, document):
-        if check_last_document(dataframe, document, result_number):
+        if check_last_download(dataframe, document, result_number):
             return True
     # if verify_download(browser, document):
     return execute_download(browser, document_directory, document)
