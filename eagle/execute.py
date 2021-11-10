@@ -2,9 +2,10 @@
 from eagle.record import build_document_download_information
 from settings.abstract_object import abstract_dictionary as dataframe
 from settings.bad_search import record_bad_search, unable_to_download
+from settings.download_management import previously_downloaded
 from settings.driver import create_webdriver
 from settings.export import export_document
-from settings.file_management import (bundle_project, document_downloaded,
+from settings.file_management import (bundle_project, create_document_directory, document_downloaded,
                                       document_found, no_document_downloaded,
                                       no_document_found)
 from settings.general_functions import start_timer
@@ -26,11 +27,11 @@ def record_document(browser, document_list, document, review):
     document_found(document_list, document, review)
 
 
-def download_recorded_document(browser, target_directory, document_list, document, download_only, result_number):
+def download_recorded_document(browser, document_directory, document_list, document, download_only, result_number):
     if not download_document(
         browser,
         dataframe,
-        target_directory,
+        document_directory,
         document,
         result_number
     ):  # add document reception number to document instance
@@ -53,9 +54,13 @@ def handle_single_document(browser, target_directory, document_list, document, r
     else:
         build_document_download_information(browser, dataframe, document)
     if download and not review:
+        document_directory = create_document_directory(target_directory)
+        if document.number_results == 1:
+            if previously_downloaded(document_directory, document):
+                return
         download_recorded_document(
             browser,
-            target_directory,
+            document_directory,
             document_list,
             document,
             download_only,

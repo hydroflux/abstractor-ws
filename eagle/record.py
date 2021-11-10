@@ -418,11 +418,9 @@ def build_document_download_information(browser, dataframe, document):
         no_document_image(dataframe, document)
     else:
         document_tables = access_document_tables(browser, document)
-        print("document tables", document_tables)
         reception_field, _ = access_indexing_information(document_tables[1])
-        print("reception field", reception_field)
         reception_number, _, _ = split_reception_field(reception_field)
-        print("reception number", reception_number)
+        document.reception_number = reception_number
         dataframe['Reception Number'].append(reception_number)
         dataframe['Comments'].append('')
 

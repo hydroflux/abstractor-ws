@@ -79,9 +79,8 @@ def check_last_download(dataframe, document, result_number, count=0):
         return True
 
 
-def download_document(browser, dataframe, target_directory, document, result_number):
+def download_document(browser, dataframe, document_directory, document, result_number):
     if download_available(dataframe, document):
-        document_directory = create_document_directory(target_directory)
         if previously_downloaded(document_directory, document):
             if check_last_download(dataframe, document, result_number):
                 return True
