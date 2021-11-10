@@ -117,6 +117,11 @@ def drop_last_entry(dataframe):
     dataframe["Comments"].pop()
 
 
+def check_last_document(document_list, document):
+    # if document.index_number == document_list[-1].index_number:
+    pass
+
+
 def check_length(dataframe):
     grantors = len(dataframe["Grantor"])
     grantees = len(dataframe["Grantee"])
