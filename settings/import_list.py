@@ -102,11 +102,11 @@ def get_year(columns, row):
         return None
 
 
-def store_document(document_list, type, value, year):
+def store_document(document_list, type, value, year, row):
     if year is None:
-        document = Document(type=type, value=value)
+        document = Document(type=type, value=value, index_number=row)
     else:
-        document = Document(type=type, value=value, year=year)
+        document = Document(type=type, value=value, year=year, index_number=row)
     document_list.append(document)
 
 
@@ -118,7 +118,7 @@ def create_book_and_page_object(document_list, row, year):
             "Book": book,
             "Page": page
         }
-        store_document(document_list, "book_and_page", book_and_page, year)
+        store_document(document_list, "book_and_page", book_and_page, year, row)
 
 
 def create_volume_and_page_object(document_list, row, year):
@@ -129,13 +129,13 @@ def create_volume_and_page_object(document_list, row, year):
             "Volume": volume,
             "Page": page
         }
-        store_document(document_list, "volume_and_page", volume_and_page, year)
+        store_document(document_list, "volume_and_page", volume_and_page, year, row)
 
 
 def create_document_number_object(document_list, columns, row, year):
     document_number = get_document_number(columns, row)
     if document_number is not None:
-        store_document(document_list, "document_number", document_number, year)
+        store_document(document_list, "document_number", document_number, year, row)
 
 
 def build_book_volume_page_into_list(document_list, columns, row, year):
