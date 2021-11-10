@@ -131,6 +131,7 @@
 
 ### Eagle To Do
 
+- [ ] If 'number_results' is 1, check for previously_downloaded if 'download_only' options is active
 - [ ] Documents with the same reception numbers should be downloaded successively with "-#" based on the result number
 - [ ] Update multiple_documents comment to include actual document numbers and / or book & page numbers
 - [ ] Verify results after clicking into the document page
