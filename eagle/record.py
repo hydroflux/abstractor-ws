@@ -88,9 +88,6 @@ def handle_document_image_status(browser, document):
     if document_image_exists(browser, document):
         wait_for_pdf_to_load(browser, document)
         # naptime()   # Part of test 2 & test 3
-        if execution_review:
-            medium_nap()   # Adding a flag instead of having to comment the line our every time for review
-            # should probably be it's own function if continue using in this manner
         return True
     else:
         print(f'No document image exists for '
@@ -321,9 +318,16 @@ def record_comments(dataframe, document, image_available):
         no_document_image(dataframe, document)
 
 
-def record_document_fields(browser, dataframe, document, image_available):
+def access_document_tables(browser, document):
     document_information = get_document_information(browser, document)
-    document_tables = access_document_information_tables(browser, document, document_information)
+    access_document_information_tables(browser, document, document_information)
+
+
+def record_document_fields(browser, dataframe, document, image_available):
+    document_tables = access_document_tables(browser, document)
+    if execution_review:
+            medium_nap()   # Adding a flag instead of having to comment the line our every time for review
+            # should probably be it's own function if continue using in this manner
     display_all_information(browser, document)
     aggregate_document_information(browser, document_tables, dataframe, document)
     record_effective_date(dataframe)
@@ -400,12 +404,16 @@ def next_result(browser, document):
     naptime()  # DO NOT REMOVE NAP -- slow server speeds can cause duplicate recordings of the same document
 
 
-def get_reception_number(browser, document):
-    wait_for_pdf_to_load(browser, document)
-    document_information = get_document_information(browser, document)
-    document_tables = access_document_information_tables(browser, document, document_information)
-    reception_field, _ = access_indexing_information(document_tables[1])
-    document.reception_number = split_reception_field(reception_field)[0]
+# def get_reception_number(browser, document):
+#     wait_for_pdf_to_load(browser, document)
+#     document_information = get_document_information(browser, document)
+#     document_tables = access_document_information_tables(browser, document, document_information)
+#     reception_field, _ = access_indexing_information(document_tables[1])
+#     document.reception_number = split_reception_field(reception_field)[0]
+
+def build_document_download_information(browser, dataframe, document):
+    image_available = handle_document_image_status(browser, document)
+
 
 
 def record(browser, dataframe, document):
