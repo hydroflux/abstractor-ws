@@ -26,7 +26,7 @@ def record_document(browser, document_list, document, review):
     document_found(document_list, document, review)
 
 
-def download_recorded_document(browser, target_directory, document_list, document):
+def download_recorded_document(browser, target_directory, document_list, document, download_only):
     if not download_document(
         browser,
         dataframe,
@@ -34,20 +34,21 @@ def download_recorded_document(browser, target_directory, document_list, documen
         document
     ):  # add document reception number to document instance
         unable_to_download(dataframe, document)
-        no_document_downloaded(document_list, document)
+        no_document_downloaded(document_list, document, download_only)
     else:
-        document_downloaded(document_list, document)
+        document_downloaded(document_list, document, download_only)
         # document_found document_list, document)
         # => this is probably a leftover from 'download document list'
 
 
-def handle_single_document(browser, target_directory, document_list, document, review):
-    record_document(
-        browser,
-        document_list,
-        document,
-        review
-    )
+def handle_single_document(browser, target_directory, document_list, document, review, download_only):
+    if not download_only:
+        record_document(
+            browser,
+            document_list,
+            document,
+            review
+        )
     if download and not review:
         download_recorded_document(
             browser,
@@ -57,13 +58,14 @@ def handle_single_document(browser, target_directory, document_list, document, r
         )
 
 
-def handle_multiple_documents(browser, target_directory, document_list, document, review):
+def handle_multiple_documents(browser, target_directory, document_list, document, review, download_only):
     handle_single_document(
         browser,
         target_directory,
         document_list,
         document,
-        review
+        review,
+        download_only
     )
     for _ in range(1, document.number_results):
         next_result(browser, document)
@@ -72,19 +74,20 @@ def handle_multiple_documents(browser, target_directory, document_list, document
             target_directory,
             document_list,
             document,
-            review
+            review,
+            download_only
         )
 
 
-def handle_search_results(browser, target_directory,
-                          document_list, document, review):
+def handle_search_results(browser, target_directory, document_list, document, review, download_only):
     if document.number_results == 1:
         handle_single_document(
             browser,
             target_directory,
             document_list,
             document,
-            review
+            review,
+            download_only
         )
     elif document.number_results > 1:
         handle_multiple_documents(
@@ -92,11 +95,18 @@ def handle_search_results(browser, target_directory,
             target_directory,
             document_list,
             document,
-            review
+            review,
+            download_only
         )
 
 
-def search_documents_from_list(browser, target_directory, document_list, review):
+def handle_bad_search(dataframe, document_list, document, review, download_only):
+    if not download_only:
+        record_bad_search(dataframe, document)
+    no_document_found(document_list, document, review)
+
+
+def search_documents_from_list(browser, target_directory, document_list, review, download_only):
     for document in document_list:
         document.start_time = start_timer()
         search(browser, document)
@@ -106,16 +116,16 @@ def search_documents_from_list(browser, target_directory, document_list, review)
                 target_directory,
                 document_list,
                 document,
-                review
+                review,
+                download_only
             )
         else:
-            record_bad_search(dataframe, document)
-            no_document_found(document_list, document, review)
+            handle_bad_search(dataframe, document_list, document, review, download_only)
         check_length(dataframe)
     return dataframe  # Is this necessary ? ? ?
 
 
-def execute_program(county, target_directory, document_list, file_name, review=False):
+def execute_program(county, target_directory, document_list, file_name, review=False, download_only=False):
     browser = create_webdriver(target_directory, False)
     transform_document_list(document_list, county)
     account_login(browser)
@@ -127,7 +137,8 @@ def execute_program(county, target_directory, document_list, file_name, review=F
             browser,
             target_directory,
             document_list,
-            review
+            review,
+            download_only
         )
     )
     # logout ???
