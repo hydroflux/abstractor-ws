@@ -21,7 +21,7 @@ from settings.county_variables.eagle import (document_information_id,
                                              result_button_tag,
                                              result_buttons_class)
 from settings.export_settings import search_errors
-from settings.file_management import (check_length, drop_last_entry,
+from settings.file_management import (check_last_document, check_length, drop_last_entry,
                                       multiple_documents_comment)
 from settings.general_functions import (long_timeout, medium_nap, naptime,
                                         scroll_to_top, short_nap, timeout,
@@ -418,16 +418,18 @@ def build_document_download_information(browser, dataframe, document):
         no_document_image(dataframe, document)
     else:
         document_tables = access_document_tables(browser, document)
-        print(document_tables)
+        print("document tables", document_tables)
         reception_field, _ = access_indexing_information(document_tables[1])
-        print(reception_field)
+        print("reception field", reception_field)
         reception_number, _, _ = split_reception_field(reception_field)
-        print(reception_number)
-        dataframe['Reception Number'](reception_number)
+        print("reception number", reception_number)
+        dataframe['Reception Number'].append(reception_number)
+        dataframe['Comments'].append('')
 
 
-def record(browser, dataframe, document):
+def record(browser, document_list, dataframe, document):
     image_available = handle_document_image_status(browser, document)
     record_document_fields(browser, dataframe, document, image_available)
     check_length(dataframe)
+    check_last_document(dataframe, document_list, document)
     review_entry(browser, dataframe, document, image_available)

@@ -4,8 +4,7 @@ from settings.abstract_object import abstract_dictionary as dataframe
 from settings.bad_search import record_bad_search, unable_to_download
 from settings.driver import create_webdriver
 from settings.export import export_document
-from settings.file_management import (bundle_project, check_last_document,
-                                      check_length, document_downloaded,
+from settings.file_management import (bundle_project, document_downloaded,
                                       document_found, no_document_downloaded,
                                       no_document_found)
 from settings.general_functions import start_timer
@@ -23,7 +22,7 @@ print("execute", __name__)
 
 
 def record_document(browser, document_list, document, review):
-    record(browser, dataframe, document)
+    record(browser, document_list, dataframe, document)
     document_found(document_list, document, review)
 
 
@@ -128,8 +127,6 @@ def search_documents_from_list(browser, target_directory, document_list, review,
             )
         else:
             handle_bad_search(dataframe, document_list, document, review, download_only)
-        check_length(dataframe)
-        check_last_document(dataframe, document_list, document)
     return dataframe  # Is this necessary ? ? ?
 
 
