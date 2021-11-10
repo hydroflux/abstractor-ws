@@ -26,12 +26,13 @@ def record_document(browser, document_list, document, review):
     document_found(document_list, document, review)
 
 
-def download_recorded_document(browser, target_directory, document_list, document, download_only):
+def download_recorded_document(browser, target_directory, document_list, document, download_only, result_number):
     if not download_document(
         browser,
         dataframe,
         target_directory,
-        document
+        document,
+        result_number
     ):  # add document reception number to document instance
         unable_to_download(dataframe, document)
         no_document_downloaded(document_list, document, download_only)
@@ -41,7 +42,7 @@ def download_recorded_document(browser, target_directory, document_list, documen
         # => this is probably a leftover from 'download document list'
 
 
-def handle_single_document(browser, target_directory, document_list, document, review, download_only):
+def handle_single_document(browser, target_directory, document_list, document, review, download_only, result_number=0):
     if not download_only:
         record_document(
             browser,
@@ -49,12 +50,17 @@ def handle_single_document(browser, target_directory, document_list, document, r
             document,
             review
         )
+    else:
+        pass
+        # build_document_download_information(browser, dataframe, document)
     if download and not review:
         download_recorded_document(
             browser,
             target_directory,
             document_list,
-            document
+            document,
+            download_only,
+            result_number
         )
 
 
@@ -67,7 +73,7 @@ def handle_multiple_documents(browser, target_directory, document_list, document
         review,
         download_only
     )
-    for _ in range(1, document.number_results):
+    for result_number in range(1, document.number_results):
         next_result(browser, document)
         handle_single_document(
             browser,
@@ -75,7 +81,8 @@ def handle_multiple_documents(browser, target_directory, document_list, document
             document_list,
             document,
             review,
-            download_only
+            download_only,
+            result_number
         )
 
 
