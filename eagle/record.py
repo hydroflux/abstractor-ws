@@ -418,9 +418,12 @@ def build_document_download_information(browser, dataframe, document):
         no_document_image(dataframe, document)
     else:
         document_tables = access_document_tables(browser, document)
+        print(document_tables)
         reception_field, _ = access_indexing_information(document_tables[1])
+        print(reception_field)
         reception_number, _, _ = split_reception_field(reception_field)
-        dataframe.append(reception_number)
+        print(reception_number)
+        dataframe['Reception Number'](reception_number)
 
 
 def record(browser, dataframe, document):

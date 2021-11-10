@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-from armadillo.record import build_document_download_information
+from eagle.record import build_document_download_information
 from settings.abstract_object import abstract_dictionary as dataframe
 from settings.bad_search import record_bad_search, unable_to_download
 from settings.driver import create_webdriver

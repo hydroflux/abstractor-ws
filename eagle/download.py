@@ -71,7 +71,7 @@ def check_last_download(dataframe, document, result_number, count=0):
             elif element == f'{dataframe["Reception Number"][-1]}-{str(count)}':
                 count += 1
         if count > 1:
-            dataframe["Reception Number"][-1] = f'{dataframe["Reception Number+"][-1]}-{str(count - 1)}'
+            dataframe["Reception Number"][-1] = f'{dataframe["Reception Number"][-1]}-{str(count - 1)}'
             document.new_name = f'{document.new_name[:-4]}-{str(count - 1)}.pdf'
         else:
             return True
