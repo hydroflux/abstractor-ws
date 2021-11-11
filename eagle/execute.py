@@ -137,6 +137,9 @@ def search_documents_from_list(browser, target_directory, document_list, review,
 
 def execute_program(county, target_directory, document_list, file_name, review=False, download_only=False):
     browser = create_webdriver(target_directory, False)
+    print("1", document_list[0])
+    print("1", document_list[0].index_number)
+    print("3", document_list[document_list.index(document_list[2]) - 1].index_number)
     transform_document_list(document_list, county)
     account_login(browser)
     abstraction = export_document(
