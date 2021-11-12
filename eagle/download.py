@@ -62,8 +62,8 @@ def build_stock_download(document):
     document.download_value = f'{document.reception_number}-{stock_download_suffix}'
 
 
-def check_last_download(dataframe, document, result_number, count=0):
-    if result_number > 0:
+def check_last_download(dataframe, document, count=0):
+    if document.result_number > 0:
         for element in dataframe["Reception Number"]:
             if element == dataframe["Reception Number"][-1]:
                 count += 1
@@ -78,21 +78,23 @@ def check_last_download(dataframe, document, result_number, count=0):
         return True
 
 
-def download_document(browser, dataframe, document_directory, document, result_number):
+def execute_download(browser, dataframe, document_directory, document):
+    number_files = len(os.listdir(document_directory))
+    build_stock_download(document)
+    access_pdf_viewer(browser, document)
+    click_button(browser, locate_element_by_id, document.button_ids["Download Button"], "download button")
+    switch_to_default_content(browser)
+    return update_download(
+        browser,
+        document_directory,
+        document,
+        number_files
+    )
+
+
+def download_document(browser, dataframe, document_directory, document):
     if download_available(dataframe, document):
         if previously_downloaded(document_directory, document):
-            if check_last_download(dataframe, document, result_number):
+            if check_last_download(dataframe, document):
                 return True
-        else:
-            number_files = len(os.listdir(document_directory))
-            build_stock_download(document)
-            access_pdf_viewer(browser, document)
-            click_button(browser, locate_element_by_id,
-                         document.button_ids["Download Button"], "download button")
-            switch_to_default_content(browser)
-            return update_download(
-                browser,
-                document_directory,
-                document,
-                number_files
-            )
+        execute_download(browser, dataframe, document_directory, document)
