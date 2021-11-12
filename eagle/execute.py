@@ -27,13 +27,12 @@ def record_document(browser, document_list, document, review):
     document_found(document_list, document, review)
 
 
-def download_recorded_document(browser, document_directory, document_list, document, download_only, result_number):
+def download_recorded_document(browser, document_directory, document_list, document, download_only):
     if not download_document(
         browser,
         dataframe,
         document_directory,
-        document,
-        result_number
+        document
     ):  # add document reception number to document instance
         unable_to_download(dataframe, document)
         no_document_downloaded(document_list, document, download_only)
@@ -43,7 +42,7 @@ def download_recorded_document(browser, document_directory, document_list, docum
         # => this is probably a leftover from 'download document list'
 
 
-def handle_single_document(browser, target_directory, document_list, document, review, download_only, result_number=0):
+def handle_single_document(browser, target_directory, document_list, document, review, download_only):
     if not download_only:
         record_document(
             browser,
@@ -63,8 +62,7 @@ def handle_single_document(browser, target_directory, document_list, document, r
             document_directory,
             document_list,
             document,
-            download_only,
-            result_number
+            download_only
         )
 
 
@@ -78,6 +76,7 @@ def handle_multiple_documents(browser, target_directory, document_list, document
         download_only
     )
     for result_number in range(1, document.number_results):
+        document.result_number = result_number
         next_result(browser, document)
         handle_single_document(
             browser,
@@ -85,8 +84,7 @@ def handle_multiple_documents(browser, target_directory, document_list, document
             document_list,
             document,
             review,
-            download_only,
-            result_number
+            download_only
         )
 
 

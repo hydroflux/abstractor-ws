@@ -119,7 +119,8 @@ def drop_last_entry(dataframe):
 
 def check_last_document(dataframe, document_list, document):
     if len(dataframe['Reception Number']) >= 2:
-        if document.index_number == document_list[document_list.index(document) - 1].index_number:
+        if document.index_number == document_list[document_list.index(document) - 1].index_number and \
+          document.result_number == 0:
             if dataframe["Grantor"][-1] == dataframe["Grantor"][-2] and \
               dataframe["Grantee"][-1] == dataframe["Grantee"][-2] and \
               dataframe["Book"][-1] == dataframe["Book"][-2] and \
