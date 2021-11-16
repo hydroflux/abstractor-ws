@@ -97,4 +97,4 @@ def download_document(browser, dataframe, document_directory, document):
         if previously_downloaded(document_directory, document):
             if check_last_download(dataframe, document):
                 return True
-        execute_download(browser, dataframe, document_directory, document)
+        return execute_download(browser, dataframe, document_directory, document)

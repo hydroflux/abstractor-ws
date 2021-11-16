@@ -136,13 +136,17 @@ def prepare_file_for_download(document_directory, document):
         os.rename(document.download_value, document.new_name)
         os.chdir(document_directory)
         check_download_size(document.new_name, document)
+        return True
     else:
-        raise ValueError("%s isn't a file!" % document.download_path)
+        # raise ValueError("%s isn't a file!" % document.download_path)
+        sleep(60)
+        return False
 
 
 def rename_download(document_directory, document):
     try:
-        prepare_file_for_download(document_directory, document)
+        while not prepare_file_for_download(document_directory, document):
+            prepare_file_for_download(document_directory, document)
     except FileNotFoundError:
         print(f'File not found, please review stock download '
               f'"{document.download_value}" & new file name "{document.new_name}"')

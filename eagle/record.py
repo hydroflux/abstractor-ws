@@ -310,6 +310,7 @@ def record_document_link(dataframe):
 
 
 def record_comments(dataframe, document, image_available):
+    print('image available', image_available)
     if document.number_results == 1:
         dataframe["Comments"].append("")
     elif document.number_results > 1:
