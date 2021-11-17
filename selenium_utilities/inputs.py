@@ -1,4 +1,5 @@
 from selenium.webdriver.common.keys import Keys
+from time import sleep
 
 
 def get_field_value(field):
@@ -15,8 +16,17 @@ def center_element(browser, element):
 
 
 def clear_input(browser, locator_function, attribute, type, document=None):
-    while get_field_value(locator_function(browser, attribute, type, True, document)) != '':
-        locator_function(browser, attribute, type, True, document).clear()
+    try:
+        while get_field_value(locator_function(browser, attribute, type, True, document)) != '':
+            locator_function(browser, attribute, type, True, document).clear()
+    except AttributeError:
+        print(f'Encountered an attribute error attempting to "clear input" for '
+              f'{document.extrapolate_value()}, please review & press enter to continue...')
+        input()
+        browser.refresh()
+        sleep(30)
+        clear_input(browser, locator_function, attribute, type, document=None)
+        # consider returning False or none & addressing the error handler
 
 
 def enter_input_value(browser, locator_function, attribute, type, value, document=None):
