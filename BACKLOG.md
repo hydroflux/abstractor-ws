@@ -131,6 +131,7 @@
 
 ### Eagle To Do
 
+- [ ] Create a fallback procedure for when a 'locator' function returns false--causing an issue with 'clear_input' -- currently has a bandaid but needs to be updated properly
 - [ ] If 'number_results' is 1, check for previously_downloaded if 'download_only' options is active BEFORE document is opened (unnecessary time glut)
 - [ ] Documents with the same reception numbers should be downloaded successively with "-#" based on the result number
 - [ ] Update multiple_documents comment to include actual document numbers and / or book & page numbers
