@@ -339,7 +339,7 @@ def record_document_fields(browser, dataframe, document, image_available):
 
 def review_entry(browser, dataframe, document, image_available):
     while dataframe["Grantor"][-1] == missing_values[0] and dataframe["Grantee"][-1] == missing_values[0]\
-            and dataframe["Related Documents"][-1] == missing_values[1]:
+            and dataframe["Related Documents"][-1] == missing_values[1] or document.reception_number == '':  # Adjustment added 12/01
         print("Recording of last document was processed incorrectly, attempting to record again.")
         re_record_document_fields(browser, dataframe, document, image_available)
 
