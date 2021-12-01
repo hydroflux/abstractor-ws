@@ -254,9 +254,12 @@ def locate_related_documents_table_rows(document, document_table):
 
 
 def get_related_documents_table_rows(browser, document_table, document):
+    center_element(browser, document_table)
     related_documents_table_rows = locate_related_documents_table_rows(document, document_table)
     while related_documents_table_rows is False:
-        center_element(browser, document_table)
+        print(f'Unable to locate the "Related Documents Table" rows for '
+              f'{document.extrapolate_value()}, trying again...')
+        naptime()
         related_documents_table_rows = locate_related_documents_table_rows(document, document_table)
     return related_documents_table_rows
 
