@@ -242,10 +242,9 @@ def record_legal_data(document_table, dataframe):
         dataframe["Legal"].append(drop_superfluous_information(legal))
 
 
-def locate_related_documents_table_rows(browser, document, document_table):
+def locate_related_documents_table_rows(document, document_table):
     try:
         related_table_rows = document_table.find_elements_by_class_name(related_table_class)
-        center_element(browser, related_table_rows)
         return related_table_rows
     except StaleElementReferenceException:
         print(f'Browser encountered StaleElementReferenceException trying to '
@@ -255,10 +254,13 @@ def locate_related_documents_table_rows(browser, document, document_table):
 
 
 def get_related_documents_table_rows(browser, document_table, document):
-    related_documents_table_rows = locate_related_documents_table_rows(browser, document, document_table)
+    center_element(browser, document_table)
+    related_documents_table_rows = locate_related_documents_table_rows(document, document_table)
     while related_documents_table_rows is False:
+        print(f'Unable to locate the "Related Documents Table" rows for '
+              f'{document.extrapolate_value()}, trying again...')
         naptime()
-        related_documents_table_rows = locate_related_documents_table_rows(browser, document, document_table)
+        related_documents_table_rows = locate_related_documents_table_rows(document, document_table)
     return related_documents_table_rows
 
 
