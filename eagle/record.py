@@ -339,7 +339,7 @@ def record_document_fields(browser, dataframe, document, image_available):
 
 def review_entry(browser, dataframe, document, image_available):
     while dataframe["Grantor"][-1] == missing_values[0] and dataframe["Grantee"][-1] == missing_values[0]\
-            and dataframe["Related Documents"][-1] == missing_values[1] or document.reception_number == '':  # Adjustment added 12/01
+            and dataframe["Related Documents"][-1] == missing_values[1] or document.reception_number.strip() == '':  # Adjustment added 12/01
         print("Recording of last document was processed incorrectly, attempting to record again.")
         re_record_document_fields(browser, dataframe, document, image_available)
 
@@ -412,7 +412,7 @@ def next_result(browser, document):
 #     document.reception_number = split_reception_field(reception_field)[0]
 
 
-def build_document_download_information(browser, dataframe, document):
+def access_download_information(browser, dataframe, document):
     image_available = handle_document_image_status(browser, document)
     if not image_available:
         no_document_image(dataframe, document)
@@ -421,8 +421,17 @@ def build_document_download_information(browser, dataframe, document):
         reception_field, _ = access_indexing_information(document_tables[1])
         reception_number, _, _ = split_reception_field(reception_field)
         document.reception_number = reception_number
-        dataframe['Reception Number'].append(reception_number)
-        dataframe['Comments'].append('')
+
+
+def build_document_download_information(browser, dataframe, document):
+    reception_number = access_download_information(browser, dataframe, document)
+    while document.reception_number.strip() == '':
+        print('Browser did not correctly access reception number for '
+              f'{document.extrapolate_value()}, trying again...')
+        naptime()
+        reception_number = access_download_information(browser, dataframe, document)
+    dataframe['Reception Number'].append(reception_number)
+    dataframe['Comments'].append('')
 
 
 def record(browser, document_list, dataframe, document):
