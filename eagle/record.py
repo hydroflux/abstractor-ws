@@ -346,6 +346,8 @@ def review_entry(browser, dataframe, document, image_available):
 
 def re_record_document_fields(browser, dataframe, document, image_available):
     drop_last_entry(dataframe)
+    browser.refresh()
+    medium_nap()
     record_document_fields(browser, dataframe, document, image_available)
 
 
