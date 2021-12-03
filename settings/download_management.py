@@ -4,7 +4,7 @@ from time import sleep, time
 from selenium.common.exceptions import (NoSuchWindowException, JavascriptException,
                                         WebDriverException)
 
-from settings.general_functions import long_nap, medium_nap, naptime
+from settings.general_functions import medium_nap, naptime
 
 
 def build_previous_download_path(document_directory, document):
