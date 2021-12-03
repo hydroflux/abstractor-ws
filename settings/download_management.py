@@ -4,7 +4,7 @@ from time import sleep, time
 from selenium.common.exceptions import (NoSuchWindowException, JavascriptException,
                                         WebDriverException)
 
-from settings.general_functions import long_nap, naptime
+from settings.general_functions import long_nap, medium_nap, naptime
 
 
 def build_previous_download_path(document_directory, document):
@@ -124,7 +124,8 @@ def check_file_size(download_path):
     if os.path.isfile(download_path):
         return True
     else:
-        long_nap()
+        # long_nap()  # Changed 12/03/21
+        medium_nap()
         if os.path.isfile(download_path):
             return True
         else:
@@ -134,12 +135,17 @@ def check_file_size(download_path):
 def prepare_file_for_download(document_directory, document):
     if check_file_size(document.download_path):
         os.rename(document.download_value, document.new_name)
-        os.chdir(document_directory)
+        # os.chdir(document_directory)  # Changed 12/03/21
+        check_download_size(document.new_name, document)
+        return True
+    elif os.path.isfile(f'{document_directory}/{document.document.new_name}'):
         check_download_size(document.new_name, document)
         return True
     else:
         # raise ValueError("%s isn't a file!" % document.download_path)
-        sleep(60)
+        print('Encountered an issue preparing file for download for '
+              f'{document.extrapolate_value()}, trying again...')
+        medium_nap()
         return False
 
 
