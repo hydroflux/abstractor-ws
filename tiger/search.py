@@ -3,6 +3,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
+from selenium_utilities.locators import locate_element_by_id
+
 from selenium_utilities.element_interaction import is_active_class
 
 if __name__ == '__main__':
@@ -22,16 +24,12 @@ else:
 
 
 def open_search(browser):
-    try:
-        search_navigation_present = EC.element_to_be_clickable((By.ID, search_navigation_id))
-        WebDriverWait(browser, timeout).until(search_navigation_present)
-        search_navigation = browser.find_element_by_id(search_navigation_id)
-        if is_active_class(search_navigation):
-            return
+    search_navigation = locate_element_by_id(browser, search_navigation_id, "search navigation", True)
+    if is_active_class(search_navigation):
+        return
+    else:
         browser.execute_script(search_script)
         assert search_title
-    except TimeoutException:
-        print("Browser timed out while trying to open the search navigation.")
 
 
 def get_parent_element(element):
