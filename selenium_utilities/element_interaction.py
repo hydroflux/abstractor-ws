@@ -23,3 +23,8 @@ def is_active_class(element):
 
 def get_parent_element(element):
     return element.find_element_by_xpath("..")
+
+
+# move out of 'general_functions' & update dependencies
+def get_element_text(element):
+    return element.text

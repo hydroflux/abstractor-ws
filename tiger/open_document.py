@@ -5,14 +5,14 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium_utilities.element_interaction import center_element
 
 from selenium_utilities.inputs import click_button
-from selenium_utilities.locators import locate_element_by_id, locate_element_by_tag_name
+from selenium_utilities.locators import locate_element_by_id, locate_element_by_tag_name, locate_elements_by_tag_name
+from selenium_utilities.element_interaction import get_element_text
 
 from settings.county_variables.tiger import (first_result_tag, result_cell_tag,
                                              result_count_button_id,
                                              result_count_id, results_body_tag,
                                              results_id)
 from settings.file_management import document_value, extrapolate_document_value
-from settings.general_functions import scroll_into_view, timeout
 
 
 def count_results(browser, document):
@@ -32,19 +32,9 @@ def get_results_table_body(browser, document):
     return results_table
 
 
-def get_all_results(browser, results_table_body, document):
-    try:
-        first_row_present = EC.presence_of_element_located((By.TAG_NAME, first_result_tag))
-        WebDriverWait(browser, timeout).until(first_row_present)
-        all_results = results_table_body.find_elements_by_tag_name(first_result_tag)
-        return all_results
-    except TimeoutException:
-        print(f'Browser timed out while trying to get results for '
-              f'{extrapolate_document_value(document)}, please review.')
-
-
-def get_first_row(browser, results_table_body, document):
-    all_results = get_all_results(browser, results_table_body, document)
+def get_first_row(results_table_body, document):
+    all_results = locate_elements_by_tag_name(results_table_body, first_result_tag,
+                                              "search results", document=document)
     return all_results[0]
 
 
@@ -53,14 +43,10 @@ def identify_first_result(browser, document):
     return get_first_row(browser, results_table_body, document)
 
 
-def get_element_text(element):
-    return element.text
-
-
 def check_result(browser, document):
     first_result = identify_first_result(browser, document)
     first_result_cells = first_result.find_elements_by_tag_name(result_cell_tag)
-    if document_value(document) in map(get_element_text, first_result_cells):
+    if document.value() in map(get_element_text, first_result_cells):
         return True
 
 

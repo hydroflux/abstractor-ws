@@ -127,6 +127,7 @@
 - [ ] Update scripts with new general functions (i.e. assert_window_title)
 - [ ] Update the record function to set the reception number rather than return it
 - [ ] Add Book / Page search option to the 'search' script & forward
+- [ ] Update function names in 'open_document' => not very clear what each function is accomplishing
 
 ### Eagle To Do
 
