@@ -4,8 +4,7 @@ from selenium.common.exceptions import (ElementClickInterceptedException,
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-
-from selenium_utilities.inputs import center_element
+from selenium_utilities.element_interaction import center_element
 
 from settings.bad_search import no_document_image
 from settings.county_variables.eagle import (document_information_id,
