@@ -3,6 +3,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
+from selenium_utilities.element_interaction import is_active_class
+
 if __name__ == '__main__':
     from settings.county_variables.tiger import (instrument_search_id,
                                                  search_button_id,
@@ -19,18 +21,12 @@ else:
     from ..settings.settings import timeout
 
 
-def check_active_class(element):
-    element_class = element.get_attribute("class")
-    if element_class.endswith("active"):
-        return True
-
-
 def open_search(browser):
     try:
         search_navigation_present = EC.element_to_be_clickable((By.ID, search_navigation_id))
         WebDriverWait(browser, timeout).until(search_navigation_present)
         search_navigation = browser.find_element_by_id(search_navigation_id)
-        if check_active_class(search_navigation):
+        if is_active_class(search_navigation):
             return
         browser.execute_script(search_script)
         assert search_title
@@ -49,7 +45,7 @@ def open_search_tab(browser):
         WebDriverWait(browser, timeout).until(search_tab_present)
         search_tab = browser.find_element_by_id(search_tab_id)
         browser.execute_script("arguments[0].scrollIntoView();", search_tab)
-        if check_active_class(get_parent_element(search_tab)):
+        if is_active_class(get_parent_element(search_tab)):
             return
         search_tab.click()
     except TimeoutException:
