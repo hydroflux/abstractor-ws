@@ -4,21 +4,23 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium_utilities.inputs import click_button, enter_input_value
-from selenium_utilities.locators import locate_element_by_id, locate_element_by_name
-
+from selenium_utilities.locators import (locate_element_by_id,
+                                         locate_element_by_name)
 from selenium_utilities.open import open_url
 
 if __name__ == '__main__':
     from settings.county_variables.tiger import (credentials,
-                                                 handle_disclaimer_id, website, login_button_name,
+                                                 handle_disclaimer_id,
+                                                 login_button_name, website,
                                                  website_title)
     from settings.general_functions import timeout
 
     from tiger.search import open_search
 else:
     from ..settings.county_variables.tiger import (credentials,
-                                                 handle_disclaimer_id, website, login_button_name,
-                                                 website_title)
+                                                   handle_disclaimer_id,
+                                                   login_button_name, website,
+                                                   website_title)
     from ..settings.general_functions import timeout
     from .search import open_search
 
