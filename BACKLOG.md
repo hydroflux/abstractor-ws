@@ -127,6 +127,7 @@
 - [ ] Create a "download only" option for execution
 - [ ] Update scripts with new general functions (i.e. assert_window_title)
 - [ ] Update the record function to set the reception number rather than return it
+- [ ] Add Book / Page search option to the 'search' script & forward
 
 ### Eagle To Do
 
