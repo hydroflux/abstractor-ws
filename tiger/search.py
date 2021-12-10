@@ -1,23 +1,15 @@
-if __name__ == '__main__':
-    from settings.county_variables.tiger import (instrument_search_id,
-                                                 search_button_id,
-                                                 search_navigation_id,
-                                                 search_script, search_tab_id,
-                                                 search_title)
+from selenium_utilities.element_interaction import (center_element,
+                                                    get_parent_element,
+                                                    is_active_class)
+from selenium_utilities.inputs import (clear_input, click_button,
+                                       enter_input_value)
+from selenium_utilities.locators import locate_element_by_id
 
-    from selenium_utilities.inputs import clear_input, click_button, enter_input_value
-    from selenium_utilities.locators import locate_element_by_id
-    from selenium_utilities.element_interaction import center_element, get_parent_element, is_active_class
-else:
-    from ..settings.county_variables.tiger import (instrument_search_id,
-                                                   search_button_id,
-                                                   search_navigation_id,
-                                                   search_script,
-                                                   search_tab_id, search_title)
-
-    from ..selenium_utilities.inputs import clear_input, click_button, enter_input_value
-    from ..selenium_utilities.locators import locate_element_by_id
-    from ..selenium_utilities.element_interaction import center_element, get_parent_element, is_active_class
+from settings.county_variables.tiger import (instrument_search_id,
+                                             search_button_id,
+                                             search_navigation_id,
+                                             search_script, search_tab_id,
+                                             search_title)
 
 
 def open_search(browser):

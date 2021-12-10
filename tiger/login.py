@@ -1,26 +1,13 @@
-if __name__ == '__main__':
-    from selenium_utilities.inputs import click_button, enter_input_value
-    from selenium_utilities.locators import (locate_element_by_id,
-                                             locate_element_by_name)
-    from selenium_utilities.open import open_url
+from selenium_utilities.inputs import click_button, enter_input_value
+from selenium_utilities.locators import (locate_element_by_id,
+                                         locate_element_by_name)
+from selenium_utilities.open import open_url
 
-    from settings.county_variables.tiger import (credentials,
-                                                 handle_disclaimer_id,
-                                                 login_button_name, website,
-                                                 website_title)
+from settings.county_variables.tiger import (credentials, handle_disclaimer_id,
+                                             login_button_name, website,
+                                             website_title)
 
-    from tiger.search import open_search
-else:
-    from ..selenium_utilities.inputs import click_button, enter_input_value
-    from ..selenium_utilities.locators import (locate_element_by_id,
-                                               locate_element_by_name)
-    from ..selenium_utilities.open import open_url
-
-    from ..settings.county_variables.tiger import (credentials,
-                                                   handle_disclaimer_id,
-                                                   login_button_name, website,
-                                                   website_title)
-    from .search import open_search
+from tiger.search import open_search
 
 
 def enter_credentials(browser):
