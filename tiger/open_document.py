@@ -3,6 +3,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
+from selenium_utilities.inputs import click_button
+from selenium_utilities.locators import locate_element_by_id
+
 from settings.county_variables.tiger import (first_result_tag, result_cell_tag,
                                              result_count_button_id,
                                              result_count_id, results_body_tag,
@@ -10,30 +13,13 @@ from settings.county_variables.tiger import (first_result_tag, result_cell_tag,
 from settings.file_management import document_value, extrapolate_document_value
 from settings.general_functions import scroll_into_view, timeout
 
-# Use the following print statement to identify the best way to manage imports for Django vs the script folder
-print("open_document", __name__)
-
-
-def open_result_count(browser, document):
-    try:
-        result_count_button_present = EC.element_to_be_clickable((By.ID, result_count_button_id))
-        WebDriverWait(browser, timeout).until(result_count_button_present)
-        result_count_button = browser.find_element_by_id(result_count_button_id)
-        result_count_button.click()
-    except TimeoutException:
-        print(f'Browser timed out trying to open the number of results for '
-              f'{extrapolate_document_value(document)}.')
-
 
 def count_results(browser, document):
-    try:
-        result_count_present = EC.presence_of_element_located((By.ID, result_count_id))
-        WebDriverWait(browser, timeout).until(result_count_present)
-        result_count = browser.find_element_by_id(result_count_id)
-        return result_count.text.split(' ')[-1]
-    except TimeoutException:
-        print(f'Browser timed out trying to read the number of results for '
-              f'{extrapolate_document_value(document)}.')
+    click_button(browser, locate_element_by_id, result_count_button_id,
+                 "result count button", document)  # Open Result Count
+    result_count = locate_element_by_id(browser, result_count_id,
+                                        "result count", document=document)  # Get Result Count
+    return result_count.text.split(' ')[-1]
 
 
 def get_results_table_body(browser, document):
