@@ -2,9 +2,10 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+from selenium_utilities.element_interaction import center_element
 
 from selenium_utilities.inputs import click_button
-from selenium_utilities.locators import locate_element_by_id
+from selenium_utilities.locators import locate_element_by_id, locate_element_by_tag_name
 
 from settings.county_variables.tiger import (first_result_tag, result_cell_tag,
                                              result_count_button_id,
@@ -23,16 +24,12 @@ def count_results(browser, document):
 
 
 def get_results_table_body(browser, document):
-    try:
-        results_present = EC.presence_of_element_located((By.ID, results_id))
-        WebDriverWait(browser, timeout).until(results_present)
-        results = browser.find_element_by_id(results_id)
-        scroll_into_view(browser, results)
-        results_table_body = results.find_element_by_tag_name(results_body_tag)
-        return results_table_body
-    except TimeoutException:
-        print(f'Browser timed out trying to get results table after searching '
-              f'{extrapolate_document_value(document)}, please review.')
+    results = locate_element_by_id(browser, results_id,
+                                   "results section", document=document)
+    center_element(browser, results)
+    results_table = locate_element_by_tag_name(browser, results_body_tag,
+                                               "results table", document=document)
+    return results_table
 
 
 def get_all_results(browser, results_table_body, document):
