@@ -1,8 +1,4 @@
-from selenium.common.exceptions import TimeoutException
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium_utilities.inputs import clear_input, enter_input_value
+from selenium_utilities.inputs import clear_input, click_button, enter_input_value
 
 from selenium_utilities.locators import locate_element_by_id
 
@@ -58,19 +54,14 @@ def handle_document_value_numbers(browser, document):
         input()
 
 
-def execute_search(browser):
-    try:
-        search_button_present = EC.element_to_be_clickable((By.ID, search_button_id))
-        WebDriverWait(browser, timeout).until(search_button_present)
-        search_button = browser.find_element_by_id(search_button_id)
-        search_button.click()
-    except TimeoutException:
-        print("Browser timed out while trying to execute search.")
+def execute_search(browser, document):
+    handle_document_value_numbers(browser, document)
+    click_button(browser, locate_element_by_id, search_button_id,
+                 "execute search button", document)
 
 
 def search(browser, document):
     open_search(browser)
     open_search_tab(browser)
     clear_search(browser, document)
-    handle_document_value_numbers(browser, document)
-    execute_search(browser)
+    execute_search(browser, document)

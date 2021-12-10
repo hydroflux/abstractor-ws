@@ -117,7 +117,6 @@
 - [ ] Create a logout script to work with tiger -- again based on leopard primarily
 - [ ] Refactor environment to work with the new export, document_list, & execute functionality
 - [ ] Refactor the execute script
-- [ ] Refactor tiger search
 - [ ] Refactor tiger open_document
 - [ ] Refactor tiger record
 - [ ] Refactor tiger download
