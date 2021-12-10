@@ -21,7 +21,8 @@ from settings.county_variables.eagle import (document_information_id,
                                              result_button_tag,
                                              result_buttons_class)
 from settings.export_settings import search_errors
-from settings.file_management import (check_last_document, check_length, drop_last_entry,
+from settings.file_management import (check_last_document, check_length,
+                                      drop_last_entry,
                                       multiple_documents_comment)
 from settings.general_functions import (long_timeout, medium_nap, naptime,
                                         scroll_to_top, short_nap, timeout,
@@ -342,7 +343,7 @@ def record_document_fields(browser, dataframe, document, image_available):
 
 def review_entry(browser, dataframe, document, image_available):
     while dataframe["Grantor"][-1] == missing_values[0] and dataframe["Grantee"][-1] == missing_values[0]\
-            and dataframe["Related Documents"][-1] == missing_values[1] or document.reception_number.strip() == '':  # Adjustment added 12/01
+            and dataframe["Related Documents"][-1] == missing_values[1] or document.reception_number.strip() == '':
         print("Recording of last document was processed incorrectly, attempting to record again.")
         re_record_document_fields(browser, dataframe, document, image_available)
 
