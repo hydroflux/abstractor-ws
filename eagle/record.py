@@ -4,6 +4,7 @@ from selenium.common.exceptions import (ElementClickInterceptedException,
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+
 from selenium_utilities.element_interaction import center_element
 
 from settings.bad_search import no_document_image
@@ -14,8 +15,9 @@ from settings.county_variables.eagle import (document_information_id,
                                              index_table_tags,
                                              information_links_class,
                                              less_info, loading_status,
-                                             missing_values, more_info, login_error_text,
-                                             no_image_text, pdf_viewer_load_id,
+                                             login_error_text, missing_values,
+                                             more_info, no_image_text,
+                                             pdf_viewer_load_id,
                                              related_table_class,
                                              result_button_tag,
                                              result_buttons_class)
