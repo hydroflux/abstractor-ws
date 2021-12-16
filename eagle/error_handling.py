@@ -21,11 +21,13 @@ def check_for_error(browser, document):
     print(f'Checking for error during processing of {document.extrapolate_value()}...')
     error_message = locate_element_by_class_name(browser, error_message_class, "PDF error message", document=document)
     if type(error_message) is not None or error_message.text.startswith(error_message_text):
+        print('error_message', error_message)
+        print('error_message_type', type(error_message))
         print(f'An error occurred while opening the document located at '
               f'{document.extrapolate_value()}, refreshing the page to try again.')
         browser.refresh()
         naptime()
         return error_message_text
     else:
-        print('No error appear to have occurred, please review.')
-        throw_alert()
+        print('No error appear to have occurred, please review and press enter to continue...')
+        input()

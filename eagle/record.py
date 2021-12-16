@@ -14,7 +14,7 @@ from settings.county_variables.eagle import (document_information_id,
                                              index_table_tags,
                                              information_links_class,
                                              less_info, loading_status,
-                                             missing_values, more_info,
+                                             missing_values, more_info, login_error_text,
                                              no_image_text, pdf_viewer_load_id,
                                              related_table_class,
                                              result_button_tag,
@@ -48,14 +48,16 @@ def access_image_container(browser, document):
 
 def get_image_container(browser, document):
     image_container = access_image_container(browser, document)
-    while image_container == error_message_text:
+    while image_container.text == error_message_text:
         image_container = access_image_container(browser, document)
-    return image_container
+    if image_container.text == login_error_text:
+        return no_image_text
+    return image_container.text
 
 
 def document_image_exists(browser, document):
-    image_container = get_image_container(browser, document)
-    if image_container.text == no_image_text:
+    image_container_text = get_image_container(browser, document)
+    if image_container_text == no_image_text:
         return False
     else:
         return True
