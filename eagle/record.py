@@ -73,7 +73,8 @@ def pdf_load_status(browser, document):
 
 
 def wait_for_pdf_to_load(browser, document):
-    while pdf_load_status(browser, document).startswith(loading_status) or pdf_load_status == error_message_text:
+    while pdf_load_status(browser, document).startswith(loading_status) or \
+            pdf_load_status(browser, document) == error_message_text:
         print(f'hitting wait_for_pdf_to_load at {document.extrapolate_value()}')
         medium_nap()
         # naptime()
