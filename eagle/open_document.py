@@ -108,7 +108,6 @@ def count_results(browser, document):
 
 def handle_result_count(browser, document):
     search_status = wait_for_results(browser)
-    print(search_status)
     if search_status == failed_search:
         print(f'Initial search failed, attempting to execute search again for '
               f'{document.extrapolate_value()}')
