@@ -18,17 +18,21 @@ from settings.county_variables.eagle import error_message_class, error_message_t
 
 
 def check_for_error(browser, document, alt=None):
-    error_message = locate_element_by_class_name(browser, error_message_class, "PDF error message",
+    error_message = locate_element_by_class_name(browser, error_message_class, "search error message",
                                                  document=document, quick=True)
-    if type(error_message) is not None or error_message.text.startswith(error_message_text):
+    if error_message is not None:
         print(f'Located an error during processing of {document.extrapolate_value()}...')
         print('error_message', error_message)
-        print('error_message_type', type(error_message))
-        print(f'An error occurred while opening the document located at '
-              f'{document.extrapolate_value()}, refreshing the page to try again.')
-        browser.refresh()
-        naptime()
-        return error_message_text
+        print('error_message_text', error_message.text)
+        if error_message.text.startswith(error_message_text):
+            print(f'An error occurred while handling document located at '
+                  f'{document.extrapolate_value()}, refreshing the page to try again.')
+            browser.refresh()
+            naptime()
+            return error_message_text
+        else:
+            print('Unable to determine how to handle error, please review and press enter to continue...')
+            input()
     elif alt == 'search':
         return False
     else:
