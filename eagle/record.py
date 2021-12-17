@@ -36,7 +36,7 @@ from eagle.error_handling import check_for_error
 print("record", __name__)
 
 
-def access_image_container(browser, document):
+def access_image_container_text(browser, document):
     try:
         image_container_present = EC.presence_of_element_located((By.ID, image_container_id))
         WebDriverWait(browser, timeout).until(image_container_present)
@@ -49,12 +49,12 @@ def access_image_container(browser, document):
 
 
 def get_image_container(browser, document):
-    image_container = access_image_container(browser, document)
-    while image_container.text == error_message_text:
-        image_container = access_image_container(browser, document)
-    if image_container.text == login_error_text:
+    image_container_text = access_image_container_text(browser, document)
+    while image_container_text == error_message_text or image_container_text is None:
+        image_container_text = access_image_container_text(browser, document)
+    if image_container_text == login_error_text:
         return no_image_text
-    return image_container.text
+    return image_container_text
 
 
 def document_image_exists(browser, document):
