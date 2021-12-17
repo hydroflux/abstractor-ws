@@ -18,7 +18,8 @@ from settings.county_variables.eagle import error_message_class, error_message_t
 
 
 def check_for_error(browser, document, alt=None):
-    error_message = locate_element_by_class_name(browser, error_message_class, "PDF error message", document=document)
+    error_message = locate_element_by_class_name(browser, error_message_class, "PDF error message",
+                                                 document=document, quick=True)
     if type(error_message) is not None or error_message.text.startswith(error_message_text):
         print(f'Located an error during processing of {document.extrapolate_value()}...')
         print('error_message', error_message)
