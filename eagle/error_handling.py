@@ -17,7 +17,7 @@ from settings.county_variables.eagle import error_message_class, error_message_t
 #         throw_alert()
 
 
-def check_for_error(browser, document):
+def check_for_error(browser, document, alt=None):
     print(f'Checking for error during processing of {document.extrapolate_value()}...')
     error_message = locate_element_by_class_name(browser, error_message_class, "PDF error message", document=document)
     if type(error_message) is not None or error_message.text.startswith(error_message_text):
@@ -28,6 +28,8 @@ def check_for_error(browser, document):
         browser.refresh()
         naptime()
         return error_message_text
+    elif alt == 'search':
+        return False
     else:
         print('No error appear to have occurred, please review and press enter to continue...')
         input()
