@@ -5,18 +5,6 @@ from settings.general_functions import naptime
 from settings.county_variables.eagle import error_message_class, error_message_text
 
 
-# def locate_error_message(browser):
-#     try:
-#         error_message_present = EC.presence_of_element_located((By.CLASS_NAME, error_message_class))
-#         WebDriverWait(browser, timeout).until(error_message_present)
-#         error_message = browser.find_element_by_class_name(error_message_class)
-#         return error_message
-#     except TimeoutException:
-#         print("Browser timed out trying to locate error message after PDF failed to load, please review.")
-#         # Refreshing fixed the issue; count = 1
-#         throw_alert()
-
-
 def check_for_error(browser, document, alt=None):
     error_message = locate_element_by_class_name(browser, error_message_class, "search error message",
                                                  document=document, quick=True)
