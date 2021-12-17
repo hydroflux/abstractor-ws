@@ -10,8 +10,8 @@ def center_element(browser, element):
         scroll_y_by = desired_y - current_y
         browser.execute_script("window.scrollBy(0, arguments[0]);", scroll_y_by)
     except StaleElementReferenceException:
-        print(f'Browser encountered a StaleElementReferenceException while trying to center '
-              f'"{element.text}", please review and press enter to continue...')
+        print('Browser encountered a StaleElementReferenceException while trying to center '
+              'element, please review and press enter to continue...')
         input()
 
 
