@@ -79,9 +79,7 @@ def pdf_load_status(browser, document):
 def wait_for_pdf_to_load(browser, document):
     while pdf_load_status(browser, document).startswith(loading_status) or \
             pdf_load_status(browser, document) == error_message_text:
-        print(f'hitting wait_for_pdf_to_load at {document.extrapolate_value()}')
         medium_nap()
-        # naptime()
         # Status Quo (below) as of 06/23/21 changing to try & work with related documents issue
         # short_nap()  # using short_nap in order to try & grab all related documents
         # Consider changing to even naptime ~~~ originally 0.5 second sleep

@@ -58,6 +58,8 @@
 - [ ] Update 'display_document_list' to show all available attributes attached to a document
 - [ ] Eliminate iframe_handling script?
 - [ ] Create an 'options' object to hold things like 'review', 'download_only', 'download', etc
+- [ ] Add a comment indicating how many documents have been completed
+- [ ] Add a print statement at the end to indicate what type of run sheet was created (& the section)
 
 ### Class To Do
 
@@ -95,6 +97,7 @@
 - [ ] There is a function in export_settings to create the full_disclaimer---ideally there should be no functions in settings files
 - [ ] Eliminate the 'Effective Date' column in export--maybe only add 'Document Date' into the abstract if it appears???
 - [ ] Handle "ABSTRACTION TYPE" based on the "PROGRAM TYPE" rather than on a specific setting or user input
+- [ ] Update export settings to change color if the comment mentions no image available
 
 ### File Management To Do
 
@@ -129,6 +132,7 @@
 
 ### Eagle To Do
 
+- [ ] Change download so that it checks before searching if only downloading need to search, then validate the number of search results,  THEN check to see if it's been downloaded or not
 - [ ] Create a fallback procedure for when a 'locator' function returns false--causing an issue with 'clear_input' -- currently has a bandaid but needs to be updated properly
 - [ ] If 'number_results' is 1, check for previously_downloaded if 'download_only' options is active BEFORE document is opened (unnecessary time glut)
 - [ ] Documents with the same reception numbers should be downloaded successively with "-#" based on the result number
@@ -172,6 +176,7 @@
 - [ ] Name search currently only works with a "first name" / "last name" split--needs to be more robust to work in multiple scenarios
 - [ ] Add 'download' decision to Document class & document instances
 - [ ] Add 'start_time' as an optional argument for document found depending on download state
+- [ ] IF not download OR if previously downloaded, add a couple of seconds--thats where I'm losing related documents
 
 ### Buffalo To Do
 
