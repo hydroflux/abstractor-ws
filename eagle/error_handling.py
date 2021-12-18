@@ -21,8 +21,10 @@ def check_for_error(browser, document, alt=None):
         else:
             print('Unable to determine how to handle error, please review and press enter to continue...')
             input()
+            return error_message_text
     elif alt == 'search':
         return False
     else:
         print('No error appears to have occurred, please review and press enter to continue...')
         input()
+        return error_message_text

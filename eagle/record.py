@@ -52,16 +52,16 @@ def get_image_container(browser, document):
     image_container_text = access_image_container_text(browser, document)
     while image_container_text == error_message_text or image_container_text is None:
         image_container_text = access_image_container_text(browser, document)
-    if image_container_text == login_error_text:
-        return no_image_text
     return image_container_text
 
 
 def document_image_exists(browser, document):
     image_container_text = get_image_container(browser, document)
-    if image_container_text == no_image_text:
+    print(image_container_text)
+    if image_container_text == no_image_text or image_container_text == login_error_text:
         return False
     else:
+        print('image_container_text', image_container_text)
         return True
 
 
