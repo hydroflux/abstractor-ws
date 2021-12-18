@@ -13,9 +13,10 @@ def clear_input(browser, locator_function, attribute, type, document=None):
         while get_field_value(locator_function(browser, attribute, type, True, document)) != '':
             locator_function(browser, attribute, type, True, document).clear()
     except AttributeError:
+        # print(f'Encountered an attribute error attempting to "clear input" for '
+        #       f'{document.extrapolate_value()}, please review & press enter to continue...')
         print(f'Encountered an attribute error attempting to "clear input" for '
-              f'{document.extrapolate_value()}, please review & press enter to continue...')
-        input()
+              f'{document.extrapolate_value()}, refreshing the page in order to try and continue.')
         browser.refresh()
         sleep(30)
         clear_input(browser, locator_function, attribute, type, document=None)
