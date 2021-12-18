@@ -41,7 +41,7 @@ def access_image_container_text(browser, document):
         image_container_present = EC.presence_of_element_located((By.ID, image_container_id))
         WebDriverWait(browser, timeout).until(image_container_present)
         image_container = browser.find_element_by_id(image_container_id)
-        return image_container
+        return image_container.text
     except TimeoutException:
         print('Browser timed out waiting for image container to load for '
               f'{document.extrapolate_value()}, please review.')
