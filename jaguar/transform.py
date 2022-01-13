@@ -1,4 +1,6 @@
-from settings.county_variables.jaguar import (reception_number_input_id, name_input_id, search_button_name)
+from settings.county_variables.jaguar import (name_input_id,
+                                              reception_number_input_id,
+                                              search_button_name)
 
 
 def update_county(document_list, county):
