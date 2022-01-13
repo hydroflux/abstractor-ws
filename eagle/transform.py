@@ -9,14 +9,14 @@ def update_county(document_list, county):
         document.county = county
 
 
-def update_element_ids(document_list):
+def update_element_attributes(document_list):
     for document in document_list:
-        document.input_ids = {
+        document.input_attributes = {
             "Reception Number": reception_number_input_id,
             "Book": book_input_id,
             "Page": page_input_id,
         }
-        document.button_ids = {
+        document.button_attributes = {
             "Clear Search": clear_search_id,
             "Submit Search": search_button_id,
             "Download Button": download_button_id
@@ -25,4 +25,4 @@ def update_element_ids(document_list):
 
 def transform_document_list(document_list, county):
     update_county(document_list, county)
-    update_element_ids(document_list)
+    update_element_attributes(document_list)

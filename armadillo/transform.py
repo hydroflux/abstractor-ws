@@ -10,9 +10,9 @@ def convert_document_numbers(document_list):
             document.value = f'{document.year}-{document.value[4:]}'
 
 
-def update_input_ids(document_list):
+def update_input_attributes(document_list):
     for document in document_list:
-        document.input_ids = {
+        document.input_attributes = {
             "Reception Number": reception_number_input_id,
             "Volume": volume_input_id,
             "Page": page_input_id
@@ -26,5 +26,5 @@ def update_county(document_list, county):
 
 def transform_document_list(document_list, county):
     convert_document_numbers(document_list)
-    update_input_ids(document_list)
+    update_input_attributes(document_list)
     update_county(document_list, county)

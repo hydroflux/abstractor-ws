@@ -2,7 +2,7 @@ class Document:
     def __init__(self, type, value, year=None, index_number=None,
                  number_results=0, multiple_results=None,  result_number=None, reception_number=None,
                  description_link=None, image_link=None,
-                 button_ids=None, input_ids=None, search_ids=None,
+                 button_attributes=None, input_attributes=None, search_attributes=None,
                  county=None, start_time=None,
                  download_type=None, download_value=None, download_path=None, new_name=None):
         self.type = type
@@ -15,9 +15,9 @@ class Document:
         self.reception_number = reception_number
         self.description_link = description_link
         self.image_link = image_link
-        self.button_ids = button_ids
-        self.input_ids = input_ids
-        self.search_ids = search_ids
+        self.button_attributes = button_attributes
+        self.input_attributes = input_attributes
+        self.search_attributes = search_attributes
         self.county = county
         self.start_time = start_time
         self.download_type = download_type
