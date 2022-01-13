@@ -5,6 +5,7 @@ from settings.file_management import bundle_project
 from settings.general_functions import start_timer
 
 from jaguar.login import account_login
+from jaguar.transform import transform_document_list
 
 
 def search_documents_from_list(browser, target_directory, document_list):
@@ -25,7 +26,7 @@ def search_documents_from_list(browser, target_directory, document_list):
 
 def execute_program(county, target_directory, document_list, file_name):
     browser = create_webdriver(target_directory, False)
-    # transform_document_list(document_list, county)
+    transform_document_list(document_list, county)
     account_login(browser)
     abstraction = export_document(
         county,
