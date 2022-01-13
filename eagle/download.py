@@ -82,7 +82,7 @@ def execute_download(browser, dataframe, document_directory, document):
     number_files = len(os.listdir(document_directory))
     build_stock_download(document)
     access_pdf_viewer(browser, document)
-    click_button(browser, locate_element_by_id, document.button_ids["Download Button"], "download button")
+    click_button(browser, locate_element_by_id, document.button_attributes["Download Button"], "download button")
     switch_to_default_content(browser)
     return update_download(
         browser,

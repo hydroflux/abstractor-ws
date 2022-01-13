@@ -10,23 +10,23 @@ from settings.general_functions import javascript_script_execution
 
 
 def clear_search(browser, document):
-    clear_input(browser, locate_input, document.input_ids["Reception Number"],
+    clear_input(browser, locate_input, document.input_attributes["Reception Number"],
                 "reception number input", document)
-    clear_input(browser, locate_input, document.input_ids["Volume"],
+    clear_input(browser, locate_input, document.input_attributes["Volume"],
                 "volume input", document)
-    clear_input(browser, locate_input, document.input_ids["Page"],
+    clear_input(browser, locate_input, document.input_attributes["Page"],
                 "page input", document)
 
 
 def handle_document_value_numbers(browser, document):
     value = document.document_value()
     if document.type == 'document_number':
-        enter_input_value(browser, locate_input, document.input_ids["Reception Number"],
+        enter_input_value(browser, locate_input, document.input_attributes["Reception Number"],
                           "reception number input", value, document)
     elif document.type == 'volume_and_page':
-        enter_input_value(browser, locate_input, document.input_ids["Volume"],
+        enter_input_value(browser, locate_input, document.input_attributes["Volume"],
                           "volume input", value[0], document)
-        enter_input_value(browser, locate_input, document.input_ids["Page"],
+        enter_input_value(browser, locate_input, document.input_attributes["Page"],
                           "page input", value[1], document)
     else:
         print(f'Unable to search document type "{document.type}", '

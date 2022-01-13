@@ -7,19 +7,19 @@ from settings.county_variables.rattlesnake import search_title, search_url
 
 
 def clear_search(browser, document):
-    for id in document.input_ids:
-        clear_input(browser, locate_input, document.input_ids[id], f'{id} Input', document)
+    for id in document.input_attributes:
+        clear_input(browser, locate_input, document.input_attributes[id], f'{id} Input', document)
 
 
 def handle_document_value_numbers(browser, document):
     value = document.document_value()
     if document.type == 'document_number':
-        enter_input_value(browser, locate_input, document.input_ids["Reception Number"],
+        enter_input_value(browser, locate_input, document.input_attributes["Reception Number"],
                           "reception number input", value, document)
     elif document.type == 'volume_and_page':
-        enter_input_value(browser, locate_input, document.input_ids["Volume"],
+        enter_input_value(browser, locate_input, document.input_attributes["Volume"],
                           "volume input", value[0], document)
-        enter_input_value(browser, locate_input, document.input_ids["Page"],
+        enter_input_value(browser, locate_input, document.input_attributes["Page"],
                           "page input", value[1], document)
     else:
         print(f'Unable to search document type "{document.type}", '
@@ -33,5 +33,5 @@ def search(browser, document):
     # verify_document_search_page_loaded(browser, search_url, open_document_search)
     clear_search(browser, document)
     handle_document_value_numbers(browser, document)  # Enter Value Numbers
-    click_button(browser, locate_input, document.button_ids["Submit Button"],
+    click_button(browser, locate_input, document.button_attributes["Submit Button"],
                  "submit button", document)  # Execute Search
