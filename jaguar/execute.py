@@ -1,12 +1,26 @@
+from settings.abstract_object import abstract_dictionary as dataframe
 from settings.driver import create_webdriver
 from settings.export import export_document
 from settings.file_management import bundle_project
+from settings.general_functions import start_timer
 
 from jaguar.login import account_login
 
 
 def search_documents_from_list(browser, target_directory, document_list):
-    pass
+    for document in document_list:
+        document.start_time = start_timer()
+        # search(browser, document)
+        # if open_document(browser, document):
+    #         handle_search_results(
+    #             browser,
+    #             target_directory,
+    #             document_list,
+    #             document
+    #         )
+    #     else:
+    #         handle_bad_search(dataframe, document_list, document)
+    return dataframe
 
 
 def execute_program(county, target_directory, document_list, file_name):
