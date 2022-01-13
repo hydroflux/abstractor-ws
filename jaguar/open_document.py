@@ -1,8 +1,22 @@
 from jaguar.validation import validate_search, verify_results_loaded
+from selenium_utilities.locators import locate_element_by_class_name
+
+from settings.county_variables.jaguar import number_results_class_name, single_result_message, multiple_results_message
 
 
 def count_results(browser, document):
-    pass
+    result_count = locate_element_by_class_name(browser, number_results_class_name,
+                                                "number results", document=document)
+    if result_count.text == single_result_message:
+        document.number_results == 1
+    elif result_count.text.endswith(multiple_results_message):
+        document.number_results += int(result_count.text[:-len(multiple_results_message)])
+        print(f'{document.number_results} documents returned while searching {document.extrapolate_value()}.')
+    else:
+        print(f'Browser unable to determine results for '
+              f'{document.extrapolate_value()}, please review.')
+        print("Please press enter after reviewing the search results...")
+        input()
 
 
 def handle_search_results(browser, document):
