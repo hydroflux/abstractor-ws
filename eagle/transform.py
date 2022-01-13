@@ -4,6 +4,11 @@ from settings.county_variables.eagle import (book_input_id, clear_search_id,
                                              search_button_id)
 
 
+def update_county(document_list, county):
+    for document in document_list:
+        document.county = county
+
+
 def update_element_ids(document_list):
     for document in document_list:
         document.input_ids = {
@@ -18,11 +23,6 @@ def update_element_ids(document_list):
         }
 
 
-def update_county(document_list, county):
-    for document in document_list:
-        document.county = county
-
-
 def transform_document_list(document_list, county):
-    update_element_ids(document_list)
     update_county(document_list, county)
+    update_element_ids(document_list)
