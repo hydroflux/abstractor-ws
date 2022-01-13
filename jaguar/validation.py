@@ -3,4 +3,4 @@ def verify_search_results_page_loaded(browser, document):
 
 
 def verify_results_loaded(browser, document):
-    pass
+    return True
