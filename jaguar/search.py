@@ -1,10 +1,12 @@
+from selenium_utilities.inputs import clear_input
 from selenium_utilities.open import open_url
 
 from settings.county_variables.jaguar import search_url, search_title
 
 
 def clear_search(browser, document):
-    pass
+    for id in document.input_ids:
+        clear_input(browser, )
 
 
 def handle_document_value_numbers(browser, document):
