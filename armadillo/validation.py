@@ -73,6 +73,7 @@ def verify_search_results_page_loaded(browser, document):
         input()
 
 
+# This can be cleaned up by using the 'quick' option
 def locate_no_results_text(browser, document):
     try:
         no_results_text = browser.find_element_by_class_name(no_results_text_class)
