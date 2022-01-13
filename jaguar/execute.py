@@ -5,13 +5,14 @@ from settings.file_management import bundle_project
 from settings.general_functions import start_timer
 
 from jaguar.login import account_login
+from jaguar.search import search
 from jaguar.transform import transform_document_list
 
 
 def search_documents_from_list(browser, target_directory, document_list):
     for document in document_list:
         document.start_time = start_timer()
-        # search(browser, document)
+        search(browser, document)
         # if open_document(browser, document):
     #         handle_search_results(
     #             browser,
