@@ -19,8 +19,19 @@ def count_results(browser, document):
         input()
 
 
-def handle_search_results(browser, document):
+def open_result(browser, document):
     pass
+
+
+def handle_search_results(browser, document):
+    if document.number_results == 0:
+        return False
+    elif document.number_results == 1:
+        return open_result(browser, document)
+    else:
+        print(f'Search results for {document.extrapolate_value()} returned '
+              f'"{document.number_results}" results, please review...')
+        input()
 
 
 def open_document(browser, document):
