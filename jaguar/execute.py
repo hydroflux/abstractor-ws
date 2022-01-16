@@ -6,22 +6,31 @@ from settings.general_functions import start_timer
 
 from jaguar.login import account_login
 from jaguar.search import search
+from jaguar.open_document import open_document
 from jaguar.transform import transform_document_list
+
+
+def handle_search_results(browser, target_directory, document_list, document):
+    pass
+
+
+def handle_bad_search(dataframe, document_list, document):
+    pass
 
 
 def search_documents_from_list(browser, target_directory, document_list):
     for document in document_list:
         document.start_time = start_timer()
         search(browser, document)
-        # if open_document(browser, document):
-    #         handle_search_results(
-    #             browser,
-    #             target_directory,
-    #             document_list,
-    #             document
-    #         )
-    #     else:
-    #         handle_bad_search(dataframe, document_list, document)
+        if open_document(browser, document):
+            handle_search_results(
+                browser,
+                target_directory,
+                document_list,
+                document
+            )
+        else:
+            handle_bad_search(dataframe, document_list, document)
     return dataframe
 
 
