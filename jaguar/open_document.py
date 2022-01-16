@@ -27,7 +27,7 @@ def get_results(browser, document):
                                         "search results", True, document=document)
 
 
-def open_result(browser, document):
+def open_first_result(browser, document):
     # Need a separate function path if multiple results are returned
     first_result = get_results(browser, document)
 
@@ -36,7 +36,7 @@ def handle_search_results(browser, document):
     if document.number_results == 0:
         return False
     elif document.number_results == 1:
-        return open_result(browser, document)
+        return open_first_result(browser, document)
     else:
         print(f'Search results for {document.extrapolate_value()} returned '
               f'"{document.number_results}" results, please review...')
