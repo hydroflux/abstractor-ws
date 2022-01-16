@@ -1,7 +1,8 @@
 from jaguar.validation import validate_search, verify_results_loaded, validate_result
 from selenium_utilities.locators import locate_element_by_class_name, locate_element_by_id, locate_element_by_tag_name
+from selenium_utilities.open import open_url
 
-from settings.county_variables.jaguar import number_results_class_name, single_result_message, multiple_results_message, search_results_id, results_class, link_tag
+from settings.county_variables.jaguar import number_results_class_name, single_result_message, multiple_results_message, search_results_id, results_class, link_tag, document_description_title
 from settings.general_functions import get_direct_link
 
 
@@ -35,8 +36,8 @@ def access_result_link(document, result):
 
 def open_result_link(browser, document, result):
     document_link = access_result_link(document, result)
-    browser.get(document_link)
-    return True
+    return open_url(browser, document_link, document_description_title,
+                    "document description", document)
 
 
 def open_first_result(browser, document):
