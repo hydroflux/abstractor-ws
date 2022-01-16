@@ -1,6 +1,6 @@
-from selenium_utilities.locators import locate_element_by_id
+from selenium_utilities.locators import locate_element_by_id, locate_elements_by_tag_name
 
-from settings.county_variables.jaguar import document_type_and_number_field_id
+from settings.county_variables.jaguar import document_type_and_number_field_id, document_tables_tag
 from settings.general_functions import update_sentence_case_extras
 
 from jaguar.validation import validate_reception_number
@@ -34,8 +34,30 @@ def record_document_type_and_number(browser, dataframe, document):
     handle_reception_number(dataframe, document, reception_number)
 
 
-def aggregate_document_table_information(browser, dataframe, document):
+def record_indexing_information(document_table, dataframe, document):
     pass
+
+
+def record_parties_information(doucment_table, dataframe, document):
+    pass
+
+
+def record_related_documents(document_table, dataframe, document):
+    pass
+
+
+def record_legal(document_table, dataframe, document):
+    pass
+
+
+def aggregate_document_table_information(browser, dataframe, document):
+    document_tables = locate_elements_by_tag_name(browser, document_tables_tag,
+                                                  "document tables", document=document)
+    record_indexing_information(document_tables[2], dataframe, document)
+    # record_parties_information(document_tables[5], dataframe, document)
+    # record_related_documents(document_tables[8], dataframe, document)
+    # record_legal(document_tables[10], dataframe, document)
+
 
 
 def record_comments(dataframe, document):
@@ -49,3 +71,5 @@ def record_document_link(dataframe, document):
 def record(browser, dataframe, document):
     record_document_type_and_number(browser, dataframe, document)
     aggregate_document_table_information(browser, dataframe, document)
+    record_comments(dataframe, document)
+    record_document_link(dataframe, document)
