@@ -30,7 +30,7 @@ def verify_results_loaded(browser, document):
 
 
 def validate_reception_number(document, text):
-    pass
+    return text.endswith(document.value)
 
 
 def validate_result(result, document):
