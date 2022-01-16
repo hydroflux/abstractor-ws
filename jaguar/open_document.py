@@ -1,7 +1,8 @@
 from jaguar.validation import validate_search, verify_results_loaded
-from selenium_utilities.locators import locate_element_by_class_name, locate_element_by_id
+from selenium_utilities.locators import locate_element_by_class_name, locate_element_by_id, locate_element_by_tag_name
 
-from settings.county_variables.jaguar import number_results_class_name, single_result_message, multiple_results_message, search_results_id, results_class
+from settings.county_variables.jaguar import number_results_class_name, single_result_message, multiple_results_message, search_results_id, results_class, link_tag
+from settings.general_functions import get_direct_link
 
 
 def count_results(browser, document):
@@ -24,14 +25,21 @@ def get_results(browser, document):
                                                 "search results table", document=document)
     # Need a separate function path if multiple results are returned
     return locate_element_by_class_name(search_results_table, results_class,
-                                        "search results", True, document=document)
+                                        "search results", True, document)
+
+
+def access_result_link(document, result):
+    result_link_element = locate_element_by_tag_name(result, link_tag, "result link", True, document)
+    return get_direct_link(result_link_element)
 
 
 def open_first_result(browser, document):
     # Need a separate function path if multiple results are returned
     first_result = get_results(browser, document)
+    result_link = access_result_link(document, first_result)
 
 
+# Very similar to armadillo 'handle_search_results' dependent functions
 def handle_search_results(browser, document):
     if document.number_results == 0:
         return False
