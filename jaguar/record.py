@@ -1,7 +1,12 @@
-from selenium_utilities.locators import locate_element_by_id, locate_elements_by_tag_name
+from selenium_utilities.locators import (locate_element_by_class_name,
+                                         locate_element_by_id,
+                                         locate_elements_by_tag_name)
 
-from settings.county_variables.jaguar import document_type_and_number_field_id, document_tables_tag
-from settings.general_functions import update_sentence_case_extras
+from settings.county_variables.jaguar import (
+    document_tables_tag, document_type_and_number_field_id,
+    recording_date_field_class)
+from settings.general_functions import (date_from_string,
+                                        update_sentence_case_extras)
 
 from jaguar.validation import validate_reception_number
 
@@ -35,10 +40,17 @@ def record_document_type_and_number(browser, dataframe, document):
 
 
 def record_indexing_information(document_table, dataframe, document):
-    pass
+    recording_date_field = locate_element_by_class_name(document_table, recording_date_field_class,
+                                                        "recording date", document=document)
+    recording_date = date_from_string(recording_date_field.text[:10])
+    dataframe['Recording Date'].append(recording_date)
+    dataframe['Effective Date'].append('')
+    dataframe['Book'].append('')
+    dataframe['Volume'].append('')
+    dataframe['Page'].append('')
 
 
-def record_parties_information(doucment_table, dataframe, document):
+def record_parties_information(document_table, dataframe, document):
     pass
 
 
@@ -57,7 +69,6 @@ def aggregate_document_table_information(browser, dataframe, document):
     # record_parties_information(document_tables[5], dataframe, document)
     # record_related_documents(document_tables[8], dataframe, document)
     # record_legal(document_tables[10], dataframe, document)
-
 
 
 def record_comments(dataframe, document):
