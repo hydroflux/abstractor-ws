@@ -1,4 +1,4 @@
-from jaguar.validation import validate_search, verify_results_loaded
+from jaguar.validation import validate_search, verify_results_loaded, validate_result
 from selenium_utilities.locators import locate_element_by_class_name, locate_element_by_id, locate_element_by_tag_name
 
 from settings.county_variables.jaguar import number_results_class_name, single_result_message, multiple_results_message, search_results_id, results_class, link_tag
@@ -33,18 +33,13 @@ def access_result_link(document, result):
     return get_direct_link(result_link_element)
 
 
-def validate_result(result, document):
-    pass
-
-
 def open_result_link(browser, document, result):
-    pass
+    result_link = access_result_link(document, result)
 
 
 def open_first_result(browser, document):
     # Need a separate function path if multiple results are returned
     first_result = get_results(browser, document)
-    result_link = access_result_link(document, first_result)
     if validate_result(first_result, document):
         return open_result_link(browser, document, first_result)
     else:

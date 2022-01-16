@@ -27,3 +27,17 @@ def verify_results_loaded(browser, document):
                                                       document=document, quick=True)
     if no_results_element.text.strip() != no_results_message:
         return True
+
+
+def validate_reception_number(document, text):
+    pass
+
+
+def validate_result(result, document):
+    result_text = result.text.split('\n')
+    if document.type == 'document_number':
+        return validate_reception_number(document, result_text[1])
+    else:
+        print(f'No application path built out to validate document type '
+              f'"{document.type}", please review and press enter to continue...')
+        input()
