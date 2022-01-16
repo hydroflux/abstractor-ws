@@ -39,7 +39,7 @@ def access_table_information(table):
     return newline_split(element_title_strip(table))
 
 
-def get_document_type_and_number_fields(browser, document):
+def get_document_type_and_number_field(browser, document):
     type_and_number_table = locate_document_type_and_number_table(browser, document)
     return access_table_information(type_and_number_table)
 
@@ -103,10 +103,10 @@ def handle_reception_number(dataframe, document, reception_number):
 
 
 def record_document_type_and_number(browser, dataframe, document):
-    document_type_and_number_fields = get_document_type_and_number_fields(
+    document_type_and_number_field = get_document_type_and_number_field(
         browser, document)
     document_type, reception_number = access_document_type_and_number(
-        document, document_type_and_number_fields[0])
+        document, document_type_and_number_field[0])
     dataframe['Document Type'].append(update_sentence_case_extras(document_type))
     handle_reception_number(dataframe, document, reception_number)
 
