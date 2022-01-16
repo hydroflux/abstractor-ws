@@ -33,10 +33,22 @@ def access_result_link(document, result):
     return get_direct_link(result_link_element)
 
 
+def validate_result(result, document):
+    pass
+
+
+def open_result_link(browser, document, result):
+    pass
+
+
 def open_first_result(browser, document):
     # Need a separate function path if multiple results are returned
     first_result = get_results(browser, document)
     result_link = access_result_link(document, first_result)
+    if validate_result(first_result, document):
+        return open_result_link(browser, document, first_result)
+    else:
+        return False
 
 
 # Very similar to armadillo 'handle_search_results' dependent functions
