@@ -11,8 +11,22 @@ from jaguar.search import search
 from jaguar.transform import transform_document_list
 
 
-def handle_search_results(browser, target_directory, document_list, document):
+def handle_single_document(browser, target_directory, document_list, document):
     pass
+
+
+def handle_search_results(browser, target_directory, document_list, document):
+    if document.number_results == 1:
+        handle_single_document(
+            browser,
+            target_directory,
+            document_list,
+            document
+        )
+    elif document.number_results > 1:
+        print('Application not equipped to handle multiple documents at the moment; '
+              'Script should not have reached this point, please review...')
+        input()
 
 
 def handle_bad_search(dataframe, document_list, document):
@@ -33,7 +47,6 @@ def search_documents_from_list(browser, target_directory, document_list):
             )
         else:
             handle_bad_search(dataframe, document_list, document)
-    return dataframe
 
 
 def execute_program(county, target_directory, document_list, file_name):
