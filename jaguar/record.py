@@ -5,6 +5,7 @@ from selenium_utilities.locators import (locate_element_by_class_name,
 from settings.county_variables.jaguar import (
     document_tables_tag, document_type_and_number_field_id,
     recording_date_field_class)
+from settings.file_management import multiple_documents_comment
 from settings.general_functions import (date_from_string, list_to_string, title_strip,
                                         update_sentence_case_extras)
 
@@ -81,11 +82,14 @@ def aggregate_document_table_information(browser, dataframe, document):
 
 
 def record_comments(dataframe, document):
-    pass
+    if document.number_results == 1:
+        dataframe['Comments'].append('')
+    elif document.number_results > 1:
+        dataframe["Comments"].append(multiple_documents_comment(document))
 
 
 def record_document_link(dataframe, document):
-    pass
+    dataframe['Document Link'].append('')
 
 
 def record(browser, dataframe, document):
