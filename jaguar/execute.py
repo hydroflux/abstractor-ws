@@ -22,7 +22,6 @@ def record_document(browser, document_list, document):
 def download_recorded_document(browser, document_directory, document_list, document):
     if not download_document(
         browser,
-        dataframe,
         document_directory,
         document
     ):
