@@ -5,7 +5,7 @@ from selenium_utilities.locators import (locate_element_by_class_name,
 from settings.county_variables.jaguar import (
     document_tables_tag, document_type_and_number_field_id,
     recording_date_field_class)
-from settings.general_functions import (date_from_string, title_strip,
+from settings.general_functions import (date_from_string, list_to_string, title_strip,
                                         update_sentence_case_extras)
 
 from jaguar.validation import validate_reception_number
@@ -51,14 +51,19 @@ def record_indexing_information(document_table, dataframe, document):
 
 
 def record_parties_information(document_tables, dataframe, document):
-    grantor = title_strip(document_tables[6].text.split('\n')[1:])
-    grantee = title_strip(document_tables[7].text.split('\n')[1:])
-    dataframe['Grantor'].append(update_sentence_case_extras(grantor))
-    dataframe['Grantee'].append(update_sentence_case_extras(grantee))
+    grantor_text = title_strip(document_tables[6].text.split('\n')[1:])
+    grantee_text = title_strip(document_tables[7].text.split('\n')[1:])
+    grantor = update_sentence_case_extras(list_to_string(grantor_text))
+    grantee = update_sentence_case_extras(list_to_string(grantee_text))
+    dataframe['Grantor'].append(grantor)
+    dataframe['Grantee'].append(grantee)
 
 
 def record_related_documents(document_table, dataframe, document):
-    pass
+    related_documents_text = document_table.text.split('\n')[1:]
+    related_documents_list = list(map(title_strip, related_documents_text))
+    related_documents = list_to_string(related_documents_list)
+    dataframe['Related Documents'].append(related_documents)
 
 
 def record_legal(document_table, dataframe, document):
@@ -70,7 +75,7 @@ def aggregate_document_table_information(browser, dataframe, document):
                                                   "document tables", document=document)
     record_indexing_information(document_tables[2], dataframe, document)
     record_parties_information(document_tables, dataframe, document)
-    # record_related_documents(document_tables[8], dataframe, document)
+    record_related_documents(document_tables[8], dataframe, document)
     # record_legal(document_tables[10], dataframe, document)
 
 
