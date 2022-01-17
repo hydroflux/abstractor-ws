@@ -67,7 +67,8 @@ def record_related_documents(document_table, dataframe, document):
 
 
 def record_legal(document_table, dataframe, document):
-    pass
+    legal = title_strip(document_table.text)
+    dataframe['Legal'].append(legal)
 
 
 def aggregate_document_table_information(browser, dataframe, document):
@@ -76,7 +77,7 @@ def aggregate_document_table_information(browser, dataframe, document):
     record_indexing_information(document_tables[2], dataframe, document)
     record_parties_information(document_tables, dataframe, document)
     record_related_documents(document_tables[8], dataframe, document)
-    # record_legal(document_tables[10], dataframe, document)
+    record_legal(document_tables[10], dataframe, document)
 
 
 def record_comments(dataframe, document):
