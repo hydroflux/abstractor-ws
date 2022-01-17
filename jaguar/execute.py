@@ -1,9 +1,11 @@
+from jaguar.record import record
 from settings.abstract_object import abstract_dictionary as dataframe
 from settings.bad_search import record_bad_search
 from settings.driver import create_webdriver
 from settings.export import export_document
-from settings.file_management import bundle_project, no_document_found
+from settings.file_management import bundle_project, create_document_directory, document_found, no_document_found
 from settings.general_functions import start_timer
+from settings.settings import download
 
 from jaguar.login import account_login
 from jaguar.open_document import open_document
@@ -11,8 +13,25 @@ from jaguar.search import search
 from jaguar.transform import transform_document_list
 
 
-def handle_single_document(browser, target_directory, document_list, document):
+def record_document(browser, document_list, document):
+    record(browser, document_list, dataframe, document)
+    document_found(document_list, document)
+
+
+def download_recorded_document(browser, document_directory, document_list, document):
     pass
+
+
+def handle_single_document(browser, target_directory, document_list, document):
+    record_document(browser, dataframe, document)
+    if download:
+        document_directory = create_document_directory(target_directory)
+        download_recorded_document(
+            browser,
+            document_directory,
+            document_list,
+            document
+        )
 
 
 def handle_search_results(browser, target_directory, document_list, document):
