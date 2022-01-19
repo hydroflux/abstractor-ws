@@ -19,7 +19,7 @@ from jaguar.transform import transform_document_list
 
 
 def record_document(browser, document_list, document, review):
-    record(browser, document_list, dataframe, document)
+    record(browser, dataframe, document)
     document_found(document_list, document, review)
 
 

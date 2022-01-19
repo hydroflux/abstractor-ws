@@ -45,8 +45,9 @@ def access_result_link(document, result):
 
 def open_result_link(browser, document, result):
     document_link = access_result_link(document, result)
-    return open_url(browser, document_link, document_description_title,
-                    "document description", document)
+    open_url(browser, document_link, document_description_title,
+             "document description", document)
+    return True
 
 
 def open_first_result(browser, document):
