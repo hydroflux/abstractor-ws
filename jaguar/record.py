@@ -46,9 +46,9 @@ def record_indexing_information(document_table, dataframe, document):
     recording_date = date_from_string(recording_date_field.text[:10])
     dataframe['Recording Date'].append(recording_date)
     dataframe['Effective Date'].append('')
-    dataframe['Book'].append('')
+    dataframe['Book'].append('N/A')
     dataframe['Volume'].append('')
-    dataframe['Page'].append('')
+    dataframe['Page'].append('N/A')
 
 
 def record_parties_information(document_tables, dataframe, document):
