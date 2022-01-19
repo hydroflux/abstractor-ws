@@ -24,7 +24,7 @@ def access_document_type_and_number(browser, document):
 
 
 def handle_reception_number(dataframe, document, reception_number):
-    if validate_reception_number(reception_number, document):
+    if validate_reception_number(document, reception_number):
         document.reception_number = reception_number
         dataframe['Reception Number'].append(reception_number)
     else:
@@ -52,10 +52,12 @@ def record_indexing_information(document_table, dataframe, document):
 
 
 def record_parties_information(document_tables, dataframe, document):
-    grantor_text = title_strip(document_tables[6].text.split('\n')[1:])
-    grantee_text = title_strip(document_tables[7].text.split('\n')[1:])
-    grantor = update_sentence_case_extras(list_to_string(grantor_text))
-    grantee = update_sentence_case_extras(list_to_string(grantee_text))
+    grantor_text = document_tables[6].text.split('\n')[1:]
+    grantee_text = document_tables[7].text.split('\n')[1:]
+    grantor_list = list(map(title_strip, grantor_text))
+    grantee_list = list(map(title_strip, grantee_text))
+    grantor = update_sentence_case_extras(list_to_string(grantor_list))
+    grantee = update_sentence_case_extras(list_to_string(grantee_list))
     dataframe['Grantor'].append(grantor)
     dataframe['Grantee'].append(grantee)
 
