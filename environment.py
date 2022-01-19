@@ -9,6 +9,7 @@ if __name__ == '__main__':
     from crocodile.execute import execute_review as review_crocodile
     # from eagle.execute import execute_document_download as download_eagle
     from eagle.execute import execute_program as execute_eagle
+    from jaguar.execute import execute_program as execute_jaguar
     from leopard.execute import execute_document_download as download_leopard
     from leopard.execute import execute_program as execute_leopard
     from leopard.execute import execute_review as review_leopard
@@ -59,6 +60,15 @@ def execute_program_type(county, program_type, document_list=None, search_name=N
             execute_eagle(county, target_directory, document_list, file_name, review=True)
         elif program_type == "download":
             execute_eagle(county, target_directory, document_list, file_name, download_only=True)
+        else:
+            currently_unavailable(county, program_type)
+    elif county.program == 'jaguar':
+        if program_type == "execute":
+            execute_jaguar(headless, county, target_directory, document_list, file_name)
+        # elif program_type == "review":
+        #     review_jaguar(county, target_directory, document_list)
+        # elif program_type == "download":
+        #     download_jaguar(county, target_directory, document_list)
         else:
             currently_unavailable(county, program_type)
     elif county.program == 'leopard':
