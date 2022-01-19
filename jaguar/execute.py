@@ -18,9 +18,9 @@ from jaguar.search import search
 from jaguar.transform import transform_document_list
 
 
-def record_document(browser, document_list, document):
+def record_document(browser, document_list, document, review):
     record(browser, document_list, dataframe, document)
-    document_found(document_list, document)
+    document_found(document_list, document, review)
 
 
 def download_recorded_document(browser, document_directory, document_list, document):
@@ -35,9 +35,14 @@ def download_recorded_document(browser, document_directory, document_list, docum
         document_downloaded(document_list, document)
 
 
-def handle_single_document(browser, target_directory, document_list, document):
-    record_document(browser, dataframe, document)
-    if download:
+def handle_single_document(browser, target_directory, document_list, document, review):
+    record_document(
+        browser,
+        dataframe,
+        document,
+        review
+    )
+    if download and not review:
         document_directory = create_document_directory(target_directory)
         download_recorded_document(
             browser,
@@ -47,13 +52,14 @@ def handle_single_document(browser, target_directory, document_list, document):
         )
 
 
-def handle_search_results(browser, target_directory, document_list, document):
+def handle_search_results(browser, target_directory, document_list, document, review):
     if document.number_results == 1:
         handle_single_document(
             browser,
             target_directory,
             document_list,
-            document
+            document,
+            review
         )
     elif document.number_results > 1:
         print('Application not equipped to handle multiple documents at the moment; '
@@ -61,12 +67,12 @@ def handle_search_results(browser, target_directory, document_list, document):
         input()
 
 
-def handle_bad_search(dataframe, document_list, document):
+def handle_bad_search(dataframe, document_list, document, review):
     record_bad_search(dataframe, document)
-    no_document_found(document_list, document)
+    no_document_found(document_list, document, review)
 
 
-def search_documents_from_list(browser, target_directory, document_list):
+def search_documents_from_list(browser, target_directory, document_list, review):
     for document in document_list:
         document.start_time = start_timer()
         search(browser, document)
@@ -75,13 +81,14 @@ def search_documents_from_list(browser, target_directory, document_list):
                 browser,
                 target_directory,
                 document_list,
-                document
+                document,
+                review
             )
         else:
-            handle_bad_search(dataframe, document_list, document)
+            handle_bad_search(dataframe, document_list, document, review)
 
 
-def execute_program(headless, county, target_directory, document_list, file_name):
+def execute_program(headless, county, target_directory, document_list, file_name, review=False):
     browser = create_webdriver(target_directory, headless)
     transform_document_list(document_list, county)
     account_login(browser)
@@ -93,6 +100,7 @@ def execute_program(headless, county, target_directory, document_list, file_name
             browser,
             target_directory,
             document_list,
+            review
         )
     )
     bundle_project(target_directory, abstraction)
