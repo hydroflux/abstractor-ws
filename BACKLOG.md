@@ -92,7 +92,6 @@
 - [ ] Add filters to xlsx output sheets
 - [ ] There is a function in export_settings to create the full_disclaimer---ideally there should be no functions in settings files
 - [ ] Eliminate the 'Effective Date' column in export--maybe only add 'Document Date' into the abstract if it appears???
-- [ ] Handle "ABSTRACTION TYPE" based on the "PROGRAM TYPE" rather than on a specific setting or user input
 - [ ] Update export settings to change color if the comment mentions no image available
 
 ### File Management To Do
@@ -108,6 +107,7 @@
 - [ ] Update scripts with new general functions (i.e. assert_window_title)
 - [ ] Update the record function to set the reception number rather than return it
 - [ ] Update 'review' loop so that 'review' comes in as True or False, rather than an 'alt' argument
+- [ ] Fix the issue with the defunct 'get_reception_number' function in leopard 'execute' script
 
 ### Tiger To Do
 

@@ -1,4 +1,4 @@
-from settings.abstract_object import abstract_dictionary as dataframe
+from settings.objects.abstract_dataframe import abstract_dictionary as dataframe
 from settings.bad_search import record_bad_search, unable_to_download
 from settings.driver import create_webdriver
 from settings.export import export_document

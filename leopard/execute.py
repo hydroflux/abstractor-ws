@@ -1,4 +1,4 @@
-from settings.abstract_object import abstract_dictionary as dictionary
+from settings.objects.abstract_dataframe import abstract_dictionary as dataframe
 from settings.bad_search import no_document_image, record_bad_search
 from settings.driver import create_webdriver
 from settings.export import export_document
@@ -20,17 +20,17 @@ print("execute", __name__)
 
 
 def record_single_document(browser, county, target_directory, document_list, document, start_time):
-    document_number = record_document(browser, county, dictionary, document)
+    document_number = record_document(browser, county, dataframe, document)
     if download:
         if not download_document(browser, county, target_directory, document, document_number):
-            no_document_image(dictionary, document)
+            no_document_image(dataframe, document)
     document_found(start_time, document_list, document)
 
 
 def download_single_document(browser, county, target_directory, document_list, document, start_time):
     document_number = get_reception_number(browser, document)
     if not download_document(browser, county, target_directory, document, document_number):
-        no_document_image(dictionary, document)
+        no_document_image(dataframe, document)
     document_found(start_time, document_list, document, "download")
 
 
@@ -86,10 +86,10 @@ def search_documents_from_list(browser, county, target_directory, document_list)
             handle_search_results(browser, county, target_directory,
                                   document_list, document, start_time)
         else:
-            record_bad_search(dictionary, document)
+            record_bad_search(dataframe, document)
             no_document_found(start_time, document_list, document)
-        check_length(dictionary)
-    return dictionary
+        check_length(dataframe)
+    return dataframe
 
 
 def review_documents_from_list(browser, county, target_directory, document_list):
@@ -119,9 +119,9 @@ def download_documents_from_list(browser, county, target_directory, document_lis
 def execute_program(headless, county, target_directory, document_list, file_name, sheet_name):
     browser = create_webdriver(target_directory, headless)
     account_login(browser)
-    dictionary = search_documents_from_list(browser, county, target_directory, document_list)
+    dataframe = search_documents_from_list(browser, county, target_directory, document_list)
     logout(browser)
-    abstraction = export_document(county, target_directory, file_name, dictionary)
+    abstraction = export_document(county, target_directory, file_name, dataframe)
     bundle_project(target_directory, abstraction)
     browser.close()
 

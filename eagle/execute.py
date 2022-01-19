@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 from eagle.record import build_document_download_information
-from settings.abstract_object import abstract_dictionary as dataframe
+from settings.objects.abstract_dataframe import abstract_dictionary as dataframe
 from settings.bad_search import record_bad_search, unable_to_download
 from settings.download_management import previously_downloaded
 from settings.driver import create_webdriver

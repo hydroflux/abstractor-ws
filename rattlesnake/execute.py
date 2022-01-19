@@ -1,5 +1,5 @@
 from rattlesnake.download_early_documents import download_early_documents
-from settings.abstract_object import abstract_dictionary as dataframe
+from settings.objects.abstract_dataframe import abstract_dictionary as dataframe
 from settings.bad_search import no_document_image, record_bad_search
 from settings.driver import create_webdriver
 from settings.export import export_document

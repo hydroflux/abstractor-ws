@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-from settings.abstract_object import abstract_dictionary as dictionary
+from settings.objects.abstract_dataframe import abstract_dictionary as dataframe
 from settings.bad_search import record_bad_search
 from settings.driver import create_webdriver
 from settings.export import export_document
@@ -38,18 +38,18 @@ def search_documents_from_list(browser, county, target_directory, document_list)
         if open_document(browser, document):
             handle_search_results(browser, county, target_directory, document_list, document, start_time)
         else:
-            record_bad_search(dictionary, document)
+            record_bad_search(dataframe, document)
             no_document_found(start_time, document_list, document)
-        check_length(dictionary)
-    return dictionary
+        check_length(dataframe)
+    return dataframe
 
 
 # Identical to crocodile execute_program
 def execute_program(county, target_directory, document_list, file_name):
     browser = create_webdriver(target_directory, False)
     account_login(browser)
-    dictionary = search_documents_from_list(browser, county, target_directory, document_list)
+    dataframe = search_documents_from_list(browser, county, target_directory, document_list)
     logout(browser)
-    abstraction = export_document(county, target_directory, file_name, dictionary)
+    abstraction = export_document(county, target_directory, file_name, dataframe)
     bundle_project(target_directory, abstraction)
     browser.close()

@@ -1,4 +1,4 @@
-from settings.abstract_object import abstract_dictionary as dictionary
+from settings.objects.abstract_dataframe import abstract_dictionary as dataframe
 from settings.bad_search import record_bad_search, unable_to_download
 from settings.driver import create_webdriver
 from settings.export import export_document
@@ -19,10 +19,10 @@ from crocodile.search import search
 
 
 def record_single_document(browser, county, target_directory, document_list, document, start_time):
-    record_document(browser, county, dictionary, document)
+    record_document(browser, county, dataframe, document)
     if download:
         if not download_document(browser, county, target_directory, document):
-            unable_to_download(dictionary, document)
+            unable_to_download(dataframe, document)
     document_found(start_time, document_list, document)
 
 
@@ -47,18 +47,18 @@ def search_documents_from_list(browser, county, target_directory, document_list)
         if open_document(browser, document):
             handle_search_results(browser, county, target_directory, document_list, document, start_time)
         else:
-            record_bad_search(dictionary, document)
+            record_bad_search(dataframe, document)
             no_document_found(start_time, document_list, document)
-        check_length(dictionary)
-    return dictionary
+        check_length(dataframe)
+    return dataframe
 
 
 def execute_program(county, target_directory, document_list, file_name):
     browser = create_webdriver(target_directory, headless)
     account_login(browser)
-    dictionary = search_documents_from_list(browser, county, target_directory, document_list)
+    dataframe = search_documents_from_list(browser, county, target_directory, document_list)
     logout(browser)
-    abstraction = export_document(county, target_directory, file_name, dictionary)
+    abstraction = export_document(county, target_directory, file_name, dataframe)
     bundle_project(target_directory, abstraction)
     browser.close()
 
@@ -73,9 +73,9 @@ def perform_name_search(browser, county, target_directory, search_name):
 def execute_name_search(county, target_directory, search_name):
     browser = create_webdriver(target_directory, headless)
     account_login(browser)
-    dictionary = perform_name_search(browser, county, target_directory, search_name)
+    dataframe = perform_name_search(browser, county, target_directory, search_name)
     logout(browser)
-    abstraction = export_document(county, target_directory, document_value(search_name), dictionary)
+    abstraction = export_document(county, target_directory, document_value(search_name), dataframe)
     bundle_project(target_directory, abstraction)
     # sleep(8)  #  <-- use for demo
     browser.close()
