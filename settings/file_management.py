@@ -94,13 +94,6 @@ def split_volume_and_page(document):
     return volume, page
 
 
-def display_document_list(document_list):
-    print(f'{len(document_list)} documents to be recorded:')
-    for document in range(len(document_list)):
-        print(document_value(document_list[document]))
-    print()
-
-
 def drop_last_entry(dataframe):
     dataframe["Grantor"].pop()
     dataframe["Grantee"].pop()

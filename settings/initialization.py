@@ -1,6 +1,7 @@
 from settings.classes.Abstract import Abstract
 from settings.classes.counties import county_dictionary
 from settings.general_functions import start_program_timer
+from settings.import_list import generate_document_list
 from settings.settings import (county_name, file_name, headless, sheet_name, download,
                                target_directory)
 from settings.user_prompts import (add_download_types, currently_unavailable,
@@ -21,6 +22,10 @@ def create_abstract_object():
         program_type=get_program_type(),
         download=download
     )
-    # document_list = generate_document_list(target_directory, file_name, sheet_name)
-    # display_document_list(document_list)
-    # start_time = start_program_timer(county, document_list)
+
+
+def initialize_abstraction():
+    abstract = create_abstract_object()
+    abstract.document_list = generate_document_list(target_directory, file_name, sheet_name)
+    abstract.timer = start_program_timer(abstract.county, abstract.document_list)
+    return abstract

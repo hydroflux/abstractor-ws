@@ -1,5 +1,7 @@
 import sys
 
+from settings.initialization import initialize_abstraction
+
 sys.path.append(".")
 
 if __name__ == '__main__':
@@ -105,11 +107,18 @@ def execute_abstractor():
     # county = get_county_data(county_name)
     # print(county)
     # program_type = get_program_type()
-    document_list = generate_document_list(target_directory, file_name, sheet_name)
-    display_document_list(document_list)
-    start_time = start_program_timer(county, document_list)
-    execute_program_type(county, program_type, document_list)
-    stop_program_timer(start_time)
+    # document_list = generate_document_list(target_directory, file_name, sheet_name)
+    # display_document_list(document_list)
+    # start_time = start_program_timer(county, document_list)
+    abstract = initialize_abstraction()
+    execute_program_type(
+        abstract.county,
+        abstract.program_type,
+        abstract.document_list
+    )
+    stop_program_timer(abstract.timer)
+    # execute_program_type(county, program_type, document_list)
+    # stop_program_timer(start_time)
     quit()
 
 

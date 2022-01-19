@@ -1,4 +1,5 @@
 import math
+from numpy import disp
 
 import pandas as pd
 
@@ -176,9 +177,18 @@ def import_excel_document(file_path, sheet_name):
     return create_document_list(excel_object)
 
 
+def display_document_list(document_list):
+    print(f'{len(document_list)} documents to be recorded:')
+    for document in range(len(document_list)):
+        print(document_list[document].value)
+    print()
+
+
 def generate_document_list(target_directory, file_name, sheet_name):
     file_path = f'{target_directory}/{file_name}.xlsx'
-    return import_excel_document(file_path, sheet_name)
+    document_list = import_excel_document(file_path, sheet_name)
+    display_document_list(document_list)
+    return document_list
 
 
 # def generate_list_from_file(file_name, sheet_name):
