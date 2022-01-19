@@ -30,7 +30,6 @@
 - [ ] I keep returning the reception number as a way to 'get' the document number--but if it matches (or if it can be stored a different way), this is completely redundant
 - [ ] Add program_type to  the 'started on...' line when starting a program (checks for cases where the wrong program type was chosen & logging in is time extensive)
 - [ ] Document number & document_image_available should be part of the document class--in addition to this, "download" could be an attribute of the document that is added when the document list is imported, & gets turned off if the document image isn't available
-- [ ] Create a class for the "abstraction" itself in order to avoid passing so many variables around between functions--would really clean up the code & make it easier to interact with documents when the code breaks
 - [ ] Add county to the document class as well to avoid passing county around to different functions
 - [ ] If websites & logins are added to the county class the open_site function can be generalized across all scripts
 - [ ] Add a check to the environment file to make sure that the county information is entered correctly before starting the webdriver
@@ -46,7 +45,6 @@
 - [ ] Create an explanation .md file to define & explain the differences between 'locate', 'get', 'access', 'build', 'handle', etc. functions--'access' & 'get' functions have some overlap, & specifically defining differences would be incredibly beneficial
 - [ ] Add 'county' as an instance variable to document class---could be handled in 'transform_document_list' functions & wouldn't need to be passed around as often
 - [ ] Update parameter (and then argument) order for all instances of 'document_found' and 'no_document_found'
-- [ ] CREATE AN ABSTRACTION OBJECT WHICH HOLDS DOCUMENT LIST, TARGET DIRECTORY, COUNTY, REVIEW TRIGGER, AND DOWNLOAD TRIGGER
 - [ ] Exception review could include a 'continue?' option that could close out the browser
 - [ ] Replace all 'scroll' functions with 'center element'
 - [ ] Drop 'document_type' and 'document_value' functions if possible & replace with instance variables they are returning--will simplify in the long run
@@ -66,14 +64,11 @@
 
 #### Abstract Class To Do
 
-- [ ] Create 'Abstract' class
-- [ ] Put general button_ids on the 'abstract' class (login, logout, etc.)
-- [ ] Put urls on the abstract class
-- [ ] Update button_ids to button_attrs & similarly elsewhere
+- [ ] Up-to-date
 
 #### Document Class To Do
 
-- [ ] Add the 'download' trigger to the Document class
+- [ ] Up-to-date
 
 ### Imports To Do
 
