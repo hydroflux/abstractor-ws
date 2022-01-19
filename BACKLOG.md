@@ -58,6 +58,7 @@
 - [ ] Create an 'options' object to hold things like 'review', 'download_only', 'download', etc
 - [ ] Add a comment indicating how many documents have been completed
 - [ ] Add a print statement at the end to indicate what type of run sheet was created (& the section)
+- [ ] Update & uncomment the the 'execute_demo' function in the 'environment' file
 
 ### Class To Do
 

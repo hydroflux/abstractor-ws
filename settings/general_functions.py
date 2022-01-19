@@ -6,7 +6,6 @@ from selenium.common.exceptions import StaleElementReferenceException
 
 from selenium.webdriver.common.keys import Keys
 
-from settings.classes.counties import county_dictionary
 from settings.settings import abstraction_type
 
 # Timeout / Wait Variables
@@ -36,10 +35,6 @@ def medium_nap():
 
 def long_nap():
     sleep(randint(30, 45))
-
-
-def get_county_data(county_name):
-    return county_dictionary.get(county_name.lower())
 
 
 def start_timer():

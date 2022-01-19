@@ -22,12 +22,12 @@ if __name__ == '__main__':
                                             start_program_timer,
                                             stop_program_timer)
     from settings.import_list import generate_document_list
-    from settings.settings import (county_name, file_name, headless,
-                                   sheet_name, target_directory)
-    from settings.user_prompts import (add_download_types,
-                                       currently_unavailable,
-                                       get_demo_information, get_program_type,
-                                       prepare_name_search)
+    # from settings.settings import (county_name, file_name, headless,
+    #                                sheet_name, target_directory)
+    # from settings.user_prompts import (add_download_types,
+    #                                    currently_unavailable,
+    #                                    get_demo_information, get_program_type,
+    #                                    prepare_name_search)
 
 print("environment", __name__)
 
@@ -102,9 +102,9 @@ def execute_program_type(county, program_type, document_list=None, search_name=N
 
 # Break these out into simpler functions
 def execute_abstractor():
-    county = get_county_data(county_name)
-    print(county)
-    program_type = get_program_type()
+    # county = get_county_data(county_name)
+    # print(county)
+    # program_type = get_program_type()
     document_list = generate_document_list(target_directory, file_name, sheet_name)
     display_document_list(document_list)
     start_time = start_program_timer(county, document_list)
@@ -113,19 +113,20 @@ def execute_abstractor():
     quit()
 
 
-def execute_demo():
-    county = get_county_data(get_demo_information())
-    program_type = get_program_type()
-    if program_type == "name search":
-        search_name = prepare_name_search()
-        start_time = start_program_timer(county)
-        execute_program_type(county, program_type, document_list=None, search_name=search_name)
-    else:
-        document_list = generate_document_list(target_directory, file_name, sheet_name)
-        start_time = start_program_timer(county)
-        execute_program_type(county, program_type, document_list)
-    stop_program_timer(start_time)
-    quit()
+# def execute_demo():
+#     county = get_county_data(get_demo_information())
+#     print(county)
+#     program_type = get_program_type()
+#     if program_type == "name search":
+#         search_name = prepare_name_search()
+#         start_time = start_program_timer(county)
+#         execute_program_type(county, program_type, document_list=None, search_name=search_name)
+#     else:
+#         document_list = generate_document_list(target_directory, file_name, sheet_name)
+#         start_time = start_program_timer(county)
+#         execute_program_type(county, program_type, document_list)
+#     stop_program_timer(start_time)
+#     quit()
 
 
 execute_abstractor()
