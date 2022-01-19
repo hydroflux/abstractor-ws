@@ -250,6 +250,12 @@
 - [ ] Drop book from Dataframe
 - [ ] Add 'search_url' & 'search_title' (and respective 'old') to the document instances with 'transform' script & the document class
 
+### Jaguar To Do
+
+- [ ] Needs further manual testing and review
+- [ ] Add paths for multiple documents, review, download only, etc.
+- [ ] Add a function to drop duplicates (from the document list? from the dataframe?)
+
 ### Testing Script To Do
 
 - [ ] Needs webdriver, target directory, document class, headless, etc. all aggregated

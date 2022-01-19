@@ -72,7 +72,7 @@ def handle_bad_search(dataframe, document_list, document, review):
     no_document_found(document_list, document, review)
 
 
-def search_documents_from_list(browser, target_directory, document_list, review):
+def search_documents_from_list(browser, target_directory, document_list, dataframe, review):
     for document in document_list:
         document.start_time = start_timer()
         search(browser, document)
@@ -86,23 +86,24 @@ def search_documents_from_list(browser, target_directory, document_list, review)
             )
         else:
             handle_bad_search(dataframe, document_list, document, review)
-    return dataframe
 
 
 def execute_program(headless, county, target_directory, document_list, file_name, review=False):
     browser = create_webdriver(target_directory, headless)
     transform_document_list(document_list, county)
     account_login(browser)
-    abstraction = export_document(
-        county,
-        target_directory,
-        file_name,
-        search_documents_from_list(
+    search_documents_from_list(
             browser,
             target_directory,
             document_list,
+            dataframe,
             review
         )
+    abstraction = export_document(
+            county,
+            target_directory,
+            file_name,
+            dataframe
     )
     bundle_project(target_directory, abstraction)
     browser.close()
