@@ -133,6 +133,7 @@
 
 ### Eagle To Do
 
+- [ ] Create a transform list function to handle hyphenated numbers coming from specific reports
 - [ ] Change download so that it checks before searching if only downloading need to search, then validate the number of search results,  THEN check to see if it's been downloaded or not
 - [ ] Create a fallback procedure for when a 'locator' function returns false--causing an issue with 'clear_input' -- currently has a bandaid but needs to be updated properly
 - [ ] If 'number_results' is 1, check for previously_downloaded if 'download_only' options is active BEFORE document is opened (unnecessary time glut)
