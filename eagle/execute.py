@@ -130,7 +130,7 @@ def search_documents_from_list(browser, target_directory, document_list, review,
             )
         else:
             handle_bad_search(dataframe, document_list, document, review, download_only)
-    return dataframe  # Is this necessary ? ? ?
+    return dataframe
 
 
 def execute_program(county, target_directory, document_list, file_name, review=False, download_only=False):

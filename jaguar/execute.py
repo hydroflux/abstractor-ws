@@ -86,6 +86,7 @@ def search_documents_from_list(browser, target_directory, document_list, review)
             )
         else:
             handle_bad_search(dataframe, document_list, document, review)
+    return dataframe
 
 
 def execute_program(headless, county, target_directory, document_list, file_name, review=False):

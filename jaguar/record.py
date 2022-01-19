@@ -36,7 +36,7 @@ def handle_reception_number(dataframe, document, reception_number):
 def record_document_type_and_number(browser, dataframe, document):
     document_type, reception_number = access_document_type_and_number(browser, document)
     document.reception_number = reception_number
-    dataframe['Document Type'].append(update_sentence_case_extras(document_type))
+    dataframe['Document Type'].append(update_sentence_case_extras(title_strip(document_type)))
     handle_reception_number(dataframe, document, reception_number)
 
 
