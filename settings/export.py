@@ -33,7 +33,8 @@ def initialize_project(abstract):
         type=abstract.type,
         target_directory=abstract.target_directory,
         dataframe=DataFrame(abstract.dataframe),
-        file_name=create_output_file(abstract)
+        file_name=create_output_file(abstract),
+        sheet_name=abstract.type.upper()
     )
     project.writer = create_excel_writer(project)
     update_dataframe(project)
@@ -56,24 +57,24 @@ def add_breakpoints(dataframe):
         current_position = current_position + column.position
 
 
-def create_abstraction_object(target_directory, writer, dataframe, sheet_name):
+def create_abstraction_object(project):
     # add_hyperlinks(target_directory, dataframe)
-    add_breakpoints(dataframe)
-    return dataframe.to_excel(
-        writer,
-        sheet_name=sheet_name,
+    add_breakpoints(project.dataframe)
+    return project.dataframe.to_excel(
+        project.writer,
+        sheet_name=project.sheet_name,
         startrow=worksheet_properties['startrow'],
         header=False,
         index=False
     )
 
 
-def access_workbook_object(writer):
-    return writer.book
+def access_workbook_object(project):
+    return project.writer.book
 
 
-def access_worksheet_object(abstract, writer):
-    return writer.sheets[(abstract.type.upper())]
+def access_worksheet_object(project):
+    return project.writer.sheets[(project.sheet_name)]
 
 
 def set_workbook_properties(workbook):
@@ -336,7 +337,7 @@ def add_hyperlink_sheet(abstract, workbook):
 
 def export_document(abstract, client=None, legal=None):
     project = initialize_project(abstract)
-    create_abstraction_object(abstract.target_directory, writer, abstract.dataframe, abstract.type.upper())
+    create_abstraction_object(project)
     workbook = format_xlsx_document(abstract, writer, client, legal)
     add_hyperlink_sheet(abstract, workbook)
     workbook.close()
