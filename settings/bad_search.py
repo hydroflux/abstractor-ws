@@ -38,17 +38,18 @@ def add_bad_search_message(dataframe, document):
 
 
 def record_bad_search(abstract, document):
-    add_bad_search_key_values(abstract.dataframe, document)
-    abstract.dataframe["Grantor"].append(search_errors[0])
-    abstract.dataframe["Grantee"].append(search_errors[0])
-    abstract.dataframe["Document Type"].append(search_errors[0])
-    abstract.dataframe["Document Link"].append(search_errors[-2])
-    abstract.dataframe["Effective Date"].append(search_errors[-2])
-    abstract.dataframe["Recording Date"].append(search_errors[1])
-    abstract.dataframe["Legal"].append(search_errors[-2])
-    abstract.dataframe["Related Documents"].append(search_errors[-2])
-    add_bad_search_message(abstract.dataframe, document)
-    no_document_found(abstract.document_list, document, abstract.review)
+    if not abstract.download_only:
+        add_bad_search_key_values(abstract.dataframe, document)
+        abstract.dataframe["Grantor"].append(search_errors[0])
+        abstract.dataframe["Grantee"].append(search_errors[0])
+        abstract.dataframe["Document Type"].append(search_errors[0])
+        abstract.dataframe["Document Link"].append(search_errors[-2])
+        abstract.dataframe["Effective Date"].append(search_errors[-2])
+        abstract.dataframe["Recording Date"].append(search_errors[1])
+        abstract.dataframe["Legal"].append(search_errors[-2])
+        abstract.dataframe["Related Documents"].append(search_errors[-2])
+        add_bad_search_message(abstract.dataframe, document)
+    no_document_found(abstract, document)
 
 
 def unable_to_download(dataframe, document):

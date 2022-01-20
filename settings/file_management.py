@@ -192,16 +192,16 @@ def document_found(document_list, document, review):
     #           f'({report_execution_time(start_time)})')
 
 
-def no_document_found(document_list, document, review):
-    if review is False:
+def no_document_found(abstract, document):
+    if abstract.review is False:
         print('No document found at '
               f'{document.extrapolate_value()}, '
-              f'{list_remaining_documents(document_list, document)} '
+              f'{list_remaining_documents(abstract.document_list, document)} '
               f'({report_execution_time(document.start_time)})')
-    elif review is True:
+    elif abstract.review is True:
         input(f'No document found at {document.extrapolate_value()}, '
               'please review & press enter to continue... '
-              f'({list_remaining_documents(document_list, document)}) '
+              f'({list_remaining_documents(abstract.document_list, document)}) '
               f'({report_execution_time(document.start_time)})')
 
 

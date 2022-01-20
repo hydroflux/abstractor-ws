@@ -115,8 +115,8 @@ def handle_bad_search(dataframe, document_list, document, review, download_only)
     no_document_found(document_list, document, review)
 
 
-def search_documents_from_list(browser, target_directory, document_list, review, download_only):
-    for document in document_list:
+def search_documents_from_list(browser, abstract):
+    for document in abstract.document_list:
         document.start_time = start_timer()
         search(browser, document)
         if open_document(browser, document):
@@ -129,28 +129,18 @@ def search_documents_from_list(browser, target_directory, document_list, review,
                 download_only
             )
         else:
-            handle_bad_search(dataframe, document_list, document, review, download_only)
+            record_bad_search(abstract, document)
     return dataframe
 
 
+# Identical to 'jaguar' execute_program
 def execute_program(abstract):
     browser = create_webdriver(abstract)
     transform_document_list(abstract)
     account_login(browser)
-    abstraction = export_document(
-        county,
-        target_directory,
-        file_name,
-        search_documents_from_list(
-            browser,
-            target_directory,
-            document_list,
-            review,
-            download_only
-        )
-    )
-    # logout ???
-    bundle_project(target_directory, abstraction)
+    search_documents_from_list(browser, abstract)
+    abstract.abstraction = export_document(abstract)
+    bundle_project(abstract)
     browser.close()
 
 

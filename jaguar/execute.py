@@ -41,6 +41,7 @@ def search_documents_from_list(browser, abstract):
             record_bad_search(abstract, document)
 
 
+# Identical to 'eagle' execute_program
 def execute_program(abstract):
     browser = create_webdriver(abstract)
     transform_document_list(abstract)
