@@ -2,25 +2,14 @@
 
 ## General To Do
 
-- [ ] Create a 'timers' script (pull from 'file_management' and 'general_functions')
+- [ ] Create a 'timers' script (pull from 'file_management' and 'general_functions') or otherwise a 'time_management' script to handle sleeps, dates, timers, etc.
 - [ ] Comment imports and section by type
-- [ ] Create log files on run returning various metrics => create a comment function that takes a comment as an argument and then updates an object to be exported & prints to the screen
-- [ ] Create a breakdown of adding a new county ('skeleton structures', 'general_functions', etc.)
 - [ ] In the same vein as the two above, create an indicator for any instances that are repeated (don't necessarily remove them)
 - [ ] Figure out how to send cookies through to browser instances in order to get faster page load times
 - [ ] Consider an "append_text" function to go in general functions / file management which would strip, title case, & replace any unwanted information
-- [ ] Compare parallel scripts from leopard & eagle in order to help refactoring
 - [ ] Review all scripts for "standardized" functions that might be extrapolated
-- [ ] Create a time_management file in settings to handle sleeps, dates, & timers
-- [ ] Create a 'testing' script that imports all settings & variables & opens a browser instance so dev setup doesn't have to be completely manual
-- [ ] Create a "download_setup" series of functions where if download == yes: create_directory, get current files, change active directory, etc.
-- [ ] Circle back to leopard download after completing the above
 - [ ] Create a "big cat" repo to combine information that matches between tiger & leopard
-- [ ] Add date / year into the document class in order to add the option to sort by date
-- [ ] Create a double-check option for eagle--possibly under the "review" as a switch in order to check for any related documents missing
 - [ ] Create 'master' scripts after breaking out directory scripts into smaller pieces--i.e. 'login' can be a 'master' script; 'fill_search_field' & the like can be built out further as well; 'execution' as well
-- [ ] Create an explanation .md file to define & explain the differences between 'locate', 'get', 'access', 'build', 'handle', etc. functions--'access' & 'get' functions have some overlap, & specifically defining differences would be incredibly beneficial
-- [ ] Add 'county' as an instance variable to document class---could be handled in 'transform_document_list' functions & wouldn't need to be passed around as often
 - [ ] Exception review could include a 'continue?' option that could close out the browser
 - [ ] Replace all 'scroll' functions with 'center element'
 - [ ] Eliminate iframe_handling script?
@@ -37,6 +26,7 @@
 - [ ] Add a comment indicating how many documents have been completed
 - [ ] Update parameter (and then argument) order for all instances of 'document_found' and 'no_document_found'
 - [ ] Add a check to the environment file to make sure that the county information is entered correctly before starting the webdriver
+- [ ] Create log files on run returning various metrics => create a comment function that takes a comment as an argument and then updates an object to be exported & prints to the screen
 
 ### Class To Do
 
@@ -54,6 +44,7 @@
 
 - [ ] Update 'document.value' to 'document.search_value' to create a better differentiation between 'document.reception_number'???
 - [ ] Turn off 'download' flag if document image is not available?--could be a better solution to checking image available before trying to download
+- [ ] Add date / year into the document class in order to add the option to sort by date
 
 #### Program Class To Do
 
@@ -76,6 +67,7 @@
 - [ ] Armadillo, leopard & tiger use convert_document_numbers, maybe make a workspace level script that checks counties against individual 'convert_document_numbers'
 - [ ] Update 'display_document_list' to show all available attributes attached to a document
 - [ ] Entire header should be created in the settings block, rather than relying on first & last recording dates in the dataframe
+- [ ] Compare parallel scripts from leopard & eagle in order to help refactoring
 
 #### Exports To Do
 
@@ -200,6 +192,7 @@
 - [ ] Scrub comments from scripts
 - [ ] Refactor 'record' script into its own directory
 - [ ] Remove an additional space when dropping "see record" in order to cut the new line character out
+- [ ] Create a double-check option for eagle--possibly under the "review" as a switch in order to check for any related documents missing
 
 #### Iguana To Do
 
@@ -225,6 +218,8 @@
 - [ ] Update the record function to set the reception number rather than return it
 - [ ] Update 'review' loop so that 'review' comes in as True or False, rather than an 'alt' argument
 - [ ] Fix the issue with the defunct 'get_reception_number' function in leopard 'execute' script
+- [ ] Create a "download_setup" series of functions where if download == yes: create_directory, get current files, change active directory, etc.
+- [ ] Circle back to leopard download after completing the above
 
 #### Tiger To Do
 
@@ -266,8 +261,14 @@
 ## Testing Script To Do
 
 - [ ] Needs webdriver, target directory, document class, headless, etc. all aggregated
+- [ ] Create a 'testing' script that imports all settings & variables & opens a browser instance so dev setup doesn't have to be completely manual
 
 ## PDF Merger To Do
 
 - [ ] Update PDF merger to work on a county by county basis
 - [ ] Handle cases where a '-1' document is valid
+
+## Documentation To Do
+
+- [ ] Create a breakdown of adding a new county ('skeleton structures', 'general_functions', etc.)
+- [ ] Create an explanation .md file to define & explain the differences between 'locate', 'get', 'access', 'build', 'handle', etc. functions--'access' & 'get' functions have some overlap, & specifically defining differences would be incredibly beneficial
