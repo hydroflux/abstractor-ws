@@ -83,6 +83,7 @@ def split_book_and_page(document):
     # Consider only adding the padding when updating the document frame
 
 
+# This function isn't necessary, just split instead of call
 def split_volume_and_page(document):
     volume = document.document_value()[0]
     page = document.document_value()[1]

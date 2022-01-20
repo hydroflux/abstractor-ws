@@ -19,10 +19,7 @@ print("execute", __name__)
 
 
 def handle_single_document(browser, abstract, document):
-    if not abstract.download_only:
-        record(browser, abstract, document)
-    else:
-        build_document_download_information(browser, abstract, document)
+    record(browser, abstract, document)
     if abstract.download and not abstract.review:
         if document.number_results == 1:
             if previously_downloaded(abstract.document_directory, document):
