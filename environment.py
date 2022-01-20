@@ -50,6 +50,7 @@ def execute_program(abstract):
         # else:
         #     currently_unavailable(county, program_type)
     elif abstract.county.engine == 'eagle':
+        abstract.headless = False
         if abstract.program in ["execute", "review", "download"]:
             execute_eagle(abstract)
         else:
@@ -57,10 +58,6 @@ def execute_program(abstract):
     elif abstract.county.engine == 'jaguar':
         if abstract.program == "execute":
             execute_jaguar(abstract)
-        # elif program_type == "review":
-        #     review_jaguar(county, target_directory, document_list)
-        # elif program_type == "download":
-        #     download_jaguar(county, target_directory, document_list)
         else:
             currently_unavailable(abstract)
     elif abstract.county.engine == 'leopard':

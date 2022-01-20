@@ -133,9 +133,9 @@ def search_documents_from_list(browser, target_directory, document_list, review,
     return dataframe
 
 
-def execute_program(county, target_directory, document_list, file_name, review=False, download_only=False):
-    browser = create_webdriver(target_directory, False)
-    transform_document_list(document_list, county)
+def execute_program(abstract):
+    browser = create_webdriver(abstract)
+    transform_document_list(abstract)
     account_login(browser)
     abstraction = export_document(
         county,
