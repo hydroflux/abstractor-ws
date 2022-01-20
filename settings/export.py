@@ -37,40 +37,20 @@ def add_column(dataframe, current_position, column):
 def add_breakpoints(dataframe):
     current_position = dataframe.columns.get_loc(worksheet_properties['breakpoint_start'])
     for column in worksheet_properties['breakpoints']:
-        print('current_position', current_position)
-        print('column', column)
-        print(dataframe.columns)
         add_column(dataframe, current_position, column)
         current_position = current_position + column.position
 
 
 def create_abstraction_object(project):
+    update_dataframe(project)
     add_breakpoints(project.dataframe)
-    return project.dataframe.to_excel(
+    project.dataframe.to_excel(
         project.writer,
         sheet_name=project.sheet_name,
         startrow=worksheet_properties['startrow'],
         header=False,
         index=False
     )
-
-
-def initialize_project(abstract):
-    os.chdir(abstract.target_directory)
-    project = Project(
-        type=abstract.type,
-        county=abstract.county,
-        target_directory=abstract.target_directory,
-        dataframe=DataFrame(abstract.dataframe),
-        output_file=create_output_file(abstract),
-        sheet_name=abstract.type.upper()
-    )
-    project.writer = create_excel_writer(project)
-    update_dataframe(project)
-    create_abstraction_object(project)
-    project.workbook = project.writer.book
-    project.worksheet = project.writer.sheets[(project.sheet_name)]
-    return project
 
 
 def set_font_formats(project):
@@ -91,17 +71,38 @@ def set_font_formats(project):
     }
 
 
-def format_workbook(project):
-    project.workbook.set_properties(authorship)
+def set_project_attributes(project):
+    project.writer = create_excel_writer(project)
+    create_abstraction_object(project)
+    project.workbook = project.writer.book
+    project.worksheet = project.writer.sheets[(project.sheet_name)]
     project.font_formats = set_font_formats(project)
 
 
-def format_worksheet(project):
+def format_xlsx_document(project):
+    # Format Workbook
+    project.workbook.set_properties(authorship)
+    # Format Worksheet
     project.worksheet.set_landscape()
     project.worksheet.set_paper(worksheet_properties['paper_size'])
     project.worksheet.set_margins(left=0.25, right=0.25, top=0.75, bottom=0.75)
     project.worksheet.hide_gridlines(worksheet_properties['gridlines'])
     project.worksheet.freeze_panes(f'A{worksheet_properties["startrow"] + 1}')
+
+
+def initialize_project(abstract):
+    os.chdir(abstract.target_directory)
+    project = Project(
+        type=abstract.type,
+        county=abstract.county,
+        target_directory=abstract.target_directory,
+        dataframe=DataFrame(abstract.dataframe),
+        output_file=create_output_file(abstract),
+        sheet_name=abstract.type.upper()
+    )
+    set_project_attributes(project)
+    format_xlsx_document(project)
+    return project
 
 
 def count_columns(project):
@@ -252,6 +253,7 @@ def add_content(project):
     add_disclaimer(project, project.font_formats['disclaimer'])
     add_dataframe_headers(project, project.font_formats['datatype'])
     set_worksheet_border(project, project.font_formats['border'])
+    set_dataframe_format(project)
     add_footer_row(project, project.font_formats['footer'])
     add_filter(project)
     # add_watermark(worksheet)
@@ -289,9 +291,6 @@ def add_conditional_formatting(project):
 
 
 def format_xlsx_document(project):
-    format_workbook(project)
-    format_worksheet(project)
-    set_dataframe_format(project)
     add_content(project)
     add_conditional_formatting(project)
 
