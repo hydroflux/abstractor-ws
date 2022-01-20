@@ -2,7 +2,6 @@ from settings.bad_search import record_bad_search
 from settings.driver import create_webdriver
 from settings.export import export_document
 from settings.file_management import (bundle_project,
-                                      create_document_directory,
                                       document_found)
 from settings.general_functions import start_timer
 
@@ -18,7 +17,6 @@ def handle_single_document(browser, abstract, document):
     record(browser, abstract, document)
     document_found(abstract, document)
     if abstract.download and not abstract.review:
-        abstract.document_directory = create_document_directory(abstract.target_directory)
         download_document(browser, abstract, document)
 
 

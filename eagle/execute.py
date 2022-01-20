@@ -4,7 +4,6 @@ from settings.download_management import previously_downloaded
 from settings.driver import create_webdriver
 from settings.export import export_document
 from settings.file_management import (bundle_project,
-                                      create_document_directory,
                                       document_found)
 from settings.general_functions import start_timer
 
@@ -27,7 +26,6 @@ def handle_single_document(browser, abstract, document):
     else:
         build_document_download_information(browser, abstract, document)
     if abstract.download and not abstract.review:
-        abstract.document_directory = create_document_directory(abstract.target_directory)
         if document.number_results == 1:
             if previously_downloaded(abstract.document_directory, document):
                 return
