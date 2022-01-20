@@ -1,7 +1,7 @@
 from settings.error_handling import no_image_comment
 from settings.export_settings import search_errors
 from settings.file_management import (document_type, document_value,
-                                      extrapolate_document_value, no_document_found)
+                                      extrapolate_document_value, no_document_downloaded, no_document_found)
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("bad_search", __name__)
@@ -66,3 +66,8 @@ def no_document_image(dataframe, document):
         dataframe["Comments"][-1] = no_image_comment(document)
     else:
         dataframe["Comments"][-1] = f'{last_comment}; {no_image_comment(document)}'
+
+
+def no_download(abstract, document):
+    unable_to_download(abstract.dataframe, document)
+    no_document_downloaded(abstract.document_list, document)

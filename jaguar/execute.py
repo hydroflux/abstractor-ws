@@ -1,4 +1,4 @@
-from settings.bad_search import record_bad_search, unable_to_download
+from settings.bad_search import no_download, record_bad_search, unable_to_download
 from settings.driver import create_webdriver
 from settings.export import export_document
 from settings.file_management import (bundle_project,
@@ -17,8 +17,7 @@ from jaguar.transform import transform_document_list
 
 def download_recorded_document(browser, abstract, document):
     if not download_document(browser, abstract.document_directory, document):
-        unable_to_download(abstract.dataframe, document)
-        no_document_downloaded(abstract.document_list, document)
+        no_download(abstract, document)
     else:
         document_downloaded(abstract.document_list, document)
 
