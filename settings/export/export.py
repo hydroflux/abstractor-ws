@@ -2,6 +2,7 @@ import os
 from pandas import DataFrame, ExcelWriter
 
 from settings.classes.Project import Project
+from settings.export.conditional_formatting import add_conditional_formatting
 
 from settings.temp_hyperlink import write_temporary_hyperlinks
 from settings.export.settings import (authorship, full_disclaimer,
@@ -98,7 +99,8 @@ def initialize_project(abstract):
         target_directory=abstract.target_directory,
         dataframe=DataFrame(abstract.dataframe),
         output_file=create_output_file(abstract),
-        sheet_name=abstract.type.upper()
+        sheet_name=abstract.type.upper(),
+        worksheet_properties=worksheet_properties
     )
     set_project_attributes(project)
     format_xlsx_document(project)
@@ -257,37 +259,6 @@ def add_content(project):
     add_footer_row(project, project.font_formats['footer'])
     add_filter(project)
     # add_watermark(worksheet)
-
-
-def add_no_record_format(project, font_format):
-    no_record_format = worksheet_properties['conditional_formats']['no_record_format']
-    no_record_format['format'] = font_format
-    project.worksheet.conditional_format(project.worksheet_range, no_record_format)
-
-
-def add_multiple_document_format(project, font_format):
-    multi_documents_format = worksheet_properties['conditional_formats']['multi_documents_format']
-    multi_documents_format['format'] = font_format
-    project.worksheet.conditional_format(project.worksheet_range, multi_documents_format)
-
-
-def add_no_document_image_format(project, font_format):
-    no_document_image_format = worksheet_properties['conditional_formats']['no_image_format']
-    no_document_image_format['format'] = font_format
-    project.worksheet.conditional_format(project.worksheet_range, no_document_image_format)
-
-
-def add_out_of_county_format(project, font_format):
-    out_of_county_format = worksheet_properties['conditional_formats']['out_of_county_format']
-    out_of_county_format['format'] = font_format
-    project.worksheet.conditional_format(project.worksheet_range, out_of_county_format)
-
-
-def add_conditional_formatting(project):
-    add_no_record_format(project, project.font_formats['no_record'])
-    add_multiple_document_format(project, project.font_formats['multiple_documents'])
-    add_no_document_image_format(project, project.font_formats['no_image'])
-    add_out_of_county_format(project, project.font_formats['out_of_county'])
 
 
 def create_hyperlink_sheet(project):

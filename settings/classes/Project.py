@@ -3,7 +3,8 @@ import shutil
 
 
 class Project:
-    def __init__(self, type, county, target_directory, dataframe, output_file, sheet_name,
+    def __init__(self, type, county, target_directory, dataframe,
+                 output_file, sheet_name, worksheet_properties,
                  writer=None, font_formats=None, workbook=None, worksheet=None,
                  worksheet_range=None, number_columns=None, last_column=None,
                  client=None, legal=None,
@@ -14,6 +15,7 @@ class Project:
         self.dataframe = dataframe
         self.output_file = output_file
         self.sheet_name = sheet_name
+        self.worksheet_properties = worksheet_properties
         self.writer = writer
         self.font_formats = font_formats
         self.workbook = workbook
