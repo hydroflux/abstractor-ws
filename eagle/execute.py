@@ -22,7 +22,7 @@ from eagle.transform import transform_document_list
 print("execute", __name__)
 
 
-def record_document(browser, document_list, document, review):
+def record_document(browser, abstract, document):
     record(browser, document_list, dataframe, document)
     document_found(document_list, document, review)
 
@@ -42,71 +42,32 @@ def download_recorded_document(browser, document_directory, document_list, docum
         # => this is probably a leftover from 'download document list'
 
 
-def handle_single_document(browser, target_directory, document_list, document, review, download_only):
-    if not download_only:
-        record_document(
-            browser,
-            document_list,
-            document,
-            review
-        )
+def handle_single_document(browser, abstract, document):
+    if not abstract.download_only:
+        record_document(browser, abstract, document)
     else:
         build_document_download_information(browser, dataframe, document)
-    if download and not review:
-        document_directory = create_document_directory(target_directory)
+    if download and not abstract.review:
+        abstract.document_directory = create_document_directory(abstract.target_directory)
         if document.number_results == 1:
-            if previously_downloaded(document_directory, document):
+            if previously_downloaded(abstract.document_directory, document):
                 return
-        download_recorded_document(
-            browser,
-            document_directory,
-            document_list,
-            document,
-            download_only
-        )
+        download_recorded_document(browser, abstract, document)
 
 
-def handle_multiple_documents(browser, target_directory, document_list, document, review, download_only):
-    handle_single_document(
-        browser,
-        target_directory,
-        document_list,
-        document,
-        review,
-        download_only
-    )
+def handle_multiple_documents(browser, abstract, document):
+    handle_single_document(browser, abstract, document)
     for result_number in range(1, document.number_results):
         document.result_number = result_number
         next_result(browser, document)
-        handle_single_document(
-            browser,
-            target_directory,
-            document_list,
-            document,
-            review,
-            download_only
-        )
+        handle_single_document(browser, abstract, document)
 
 
 def handle_search_results(browser, abstract, document):
     if document.number_results == 1:
-        handle_single_document(
-            browser,
-            target_directory,
-            document_list,
-            document,
-            review,
-            download_only
-        )
+        handle_single_document(browser, abstract, document)
     elif document.number_results > 1:
-        handle_multiple_documents(
-            browser,
-            target_directory,
-            document_list,
-            document,
-            review,
-            download_only
-        )
+        handle_multiple_documents(browser, abstract, document)
 
 
 def search_documents_from_list(browser, abstract):
