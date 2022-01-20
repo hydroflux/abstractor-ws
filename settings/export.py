@@ -1,5 +1,5 @@
 import os
-from settings.file_management import access_document_directory, document_directory_exists
+from settings.file_management import document_directory_exists
 from settings.temp_hyperlink import write_temporary_hyperlinks
 
 from pandas import DataFrame, ExcelWriter
@@ -329,20 +329,19 @@ def create_hyperlink_sheet(workbook):
     return hyperlink_sheet
 
 
-def add_hyperlink_sheet(target_directory, workbook):
-    if document_directory_exists(target_directory):
+def add_hyperlink_sheet(abstract, workbook):
+    if document_directory_exists(abstract.target_directory):
         hyperlink_format = workbook.add_format(text_formats['hyperlink'])
         hyperlink_sheet = create_hyperlink_sheet(workbook)
-        document_directory = access_document_directory(target_directory)
-        write_temporary_hyperlinks(document_directory, hyperlink_sheet, hyperlink_format)
-        os.chdir(target_directory)  # Is this necessary?
+        write_temporary_hyperlinks(abstract.document_directory, hyperlink_sheet, hyperlink_format)
+        os.chdir(abstract.target_directory)  # Is this necessary?
 
 
-def export_hyperlinks(county, target_directory, file_name, dataframe):
-    prepare_output_environment(target_directory)
-    output_file, writer = create_xlsx_document(target_directory, file_name, dataframe)
+def export_hyperlinks(abstract):
+    prepare_output_environment(abstract.target_directory)
+    output_file, writer = create_xlsx_document(abstract.target_directory, abstract.file_name, abstract.dataframe)
     workbook = access_workbook_object(writer)
-    add_hyperlink_sheet(target_directory, workbook)
+    add_hyperlink_sheet(abstract, workbook)
     workbook.close()
     return output_file
 
