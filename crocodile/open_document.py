@@ -5,7 +5,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 
 from selenium_utilities.open import assert_window_title
 
-from settings.classes.Document import Document
+from classes.Document import Document
 from settings.county_variables.crocodile import (document_description_title,
                                                  filter_list, link_tag,
                                                  no_results_message,

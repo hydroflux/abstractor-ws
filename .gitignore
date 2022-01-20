@@ -13,6 +13,7 @@ logs/
 
 # Specific files #
 ##################
+classes/counties.py
 settings/county_variables
 variables.py
 project_management/settings.py
@@ -21,4 +22,3 @@ settings/settings.py
 formatting/excel_export_format.py
 .vscode
 __pycache__
-settings/classes/counties.py

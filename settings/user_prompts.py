@@ -1,7 +1,7 @@
 import os
 
-from settings.classes.Document import Document
-from settings.classes.counties import county_list
+from classes.Document import Document
+from classes.counties import county_list
 from settings.general_functions import title_strip
 from settings.settings import root, search_name, download
 

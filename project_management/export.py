@@ -1,7 +1,7 @@
 import os
 from pandas import DataFrame, ExcelWriter
 
-from settings.classes.Project import Project
+from classes.Project import Project
 
 from project_management.conditional_formatting import add_conditional_formatting
 from project_management.content import add_content, number_to_letter

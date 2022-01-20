@@ -1,7 +1,7 @@
 import os
 
-from settings.classes.Abstract import Abstract
-from settings.classes.counties import county_dictionary
+from classes.Abstract import Abstract
+from classes.counties import county_dictionary
 from settings.general_functions import start_program_timer
 from project_management.generate_document_list import generate_document_list
 from settings.objects.abstract_dataframe import \
