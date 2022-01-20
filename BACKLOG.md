@@ -73,6 +73,11 @@
 - [ ] Create an 'Export' class
 - [ ] Potential attributes: workbook, worksheet, output_file, writer
 
+#### Program Class To Do
+
+- [ ] Create a 'Program' class
+- [ ] Use the 'Program' class to create a united 'execute' function across multiple directories
+
 #### Abstract Class To Do
 
 - [ ] Update the 'driver' script and other scripts from 'settings' to work with the 'abstract' class

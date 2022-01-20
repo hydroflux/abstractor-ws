@@ -22,15 +22,21 @@ def handle_single_document(browser, abstract, document):
         download_document(browser, abstract, document)
 
 
+def handle_multiple_documents(browser, abstract, document):
+    print('Application not equipped to handle multiple documents at the moment; '
+          'Script should not have reached this point, please review...')
+    input()
+
+
+# Identical to 'eagle' execute_program
 def handle_search_results(browser, abstract, document):
     if document.number_results == 1:
         handle_single_document(browser, abstract, document)
     elif document.number_results > 1:
-        print('Application not equipped to handle multiple documents at the moment; '
-              'Script should not have reached this point, please review...')
-        input()
+        handle_multiple_documents(browser, abstract, document)
 
 
+# Identical to 'eagle' execute_program
 def search_documents_from_list(browser, abstract):
     for document in abstract.document_list:
         document.start_time = start_timer()

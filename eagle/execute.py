@@ -1,14 +1,13 @@
 #!/usr/bin/python3
 from eagle.record import build_document_download_information
 from settings.objects.abstract_dataframe import abstract_dictionary as dataframe
-from settings.bad_search import record_bad_search, unable_to_download
+from settings.bad_search import record_bad_search
 from settings.download_management import previously_downloaded
 from settings.driver import create_webdriver
 from settings.export import export_document
-from settings.file_management import (bundle_project, create_document_directory, document_downloaded,
-                                      document_found, no_document_downloaded)
+from settings.file_management import (bundle_project, create_document_directory,
+                                      document_found)
 from settings.general_functions import start_timer
-from settings.settings import download
 
 from eagle.download import download_document
 from eagle.login import account_login
@@ -27,7 +26,7 @@ def handle_single_document(browser, abstract, document):
         document_found(abstract.document_list, document, abstract.review)
     else:
         build_document_download_information(browser, dataframe, document)
-    if download and not abstract.review:
+    if abstract.download and not abstract.review:
         abstract.document_directory = create_document_directory(abstract.target_directory)
         if document.number_results == 1:
             if previously_downloaded(abstract.document_directory, document):
@@ -43,6 +42,7 @@ def handle_multiple_documents(browser, abstract, document):
         handle_single_document(browser, abstract, document)
 
 
+# Identical to 'jaguar' execute_program
 def handle_search_results(browser, abstract, document):
     if document.number_results == 1:
         handle_single_document(browser, abstract, document)
@@ -50,6 +50,7 @@ def handle_search_results(browser, abstract, document):
         handle_multiple_documents(browser, abstract, document)
 
 
+# Identical to 'jaguar' execute_program
 def search_documents_from_list(browser, abstract):
     for document in abstract.document_list:
         document.start_time = start_timer()
@@ -58,7 +59,6 @@ def search_documents_from_list(browser, abstract):
             handle_search_results(browser, abstract, document)
         else:
             record_bad_search(abstract, document)
-    return dataframe
 
 
 # Identical to 'jaguar' execute_program
