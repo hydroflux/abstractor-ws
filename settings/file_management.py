@@ -47,16 +47,12 @@ def multiple_documents_comment(document):
             f' documents has been listed, please review')
 
 
-def document_type(document):
-    return str(document.type)
-
-
 def document_value(document):
-    if document_type(document) == "document_number" or document_type(document) == "name":
+    if document.type == "document_number" or document.type == "name":
         return str(document.value)
-    elif document_type(document) == "book_and_page":
+    elif document.type == "book_and_page":
         return [str(document.value["Book"]), str(document.value["Page"])]
-    elif document_type(document) == "volume_and_page":
+    elif document.type == "volume_and_page":
         return [str(document.value["Volume"]), str(document.value["Page"])]
     else:
         print('Unable to identify document type while attempting to identify "document value", please review.')
@@ -65,14 +61,13 @@ def document_value(document):
 
 def extrapolate_document_value(document):
     value = document.document_value()
-    type = document_type(document)
-    if type == "book_and_page":
+    if document.type == "book_and_page":
         return f'Book: {value[0]}, Page: {value[1]}'
-    elif type == "volume_and_page":
+    elif document.type == "volume_and_page":
         return f'Volume: {value[0]}, Page: {value[1]}'
-    elif type == "document_number":
+    elif document.type == "document_number":
         return f'Document number {value}'
-    elif type == "name":
+    elif document.type == "name":
         return f'search name "{value}"'
     else:
         print('Unable to identify document type while attempting to "extrapolate document value", please review.')
