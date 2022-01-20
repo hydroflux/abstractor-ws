@@ -17,11 +17,11 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 
 # Look into how to change driver preferences mid script -- for download directories
-def chrome_webdriver(target_directory, headless):
+def chrome_webdriver(abstract):
     chromedriver = ChromeDriverManager().install()
     options = webdriver.ChromeOptions()
 
-    if headless:
+    if abstract.headless:
         options.add_argument('--headless')
         # options.add_argument('start-maximized') # Maximize Viewport
     options.add_argument('--no-sandbox')  # Bypass OS Security Model
@@ -42,8 +42,8 @@ def chrome_webdriver(target_directory, headless):
 
     prefs = {
         # Setting Default Directory Doesn't work when using JSON.dumps
-        'savefile.default_directory': f'{target_directory}/Documents',
-        "download.default_directory": f'{target_directory}/Documents',
+        'savefile.default_directory': f'{abstract.target_directory}/Documents',
+        "download.default_directory": f'{abstract.target_directory}/Documents',
         "download.prompt_for_download": False,
         "plugins.always_open_pdf_externally": True,
         # Added for printing to PDF
@@ -61,8 +61,8 @@ def chrome_webdriver(target_directory, headless):
     return driver
 
 
-def enable_download_in_headless_chrome(browser, target_directory):
-    document_directory = f'{target_directory}/Documents'
+def enable_download_in_headless_chrome(browser, abstract):
+    document_directory = f'{abstract.target_directory}/Documents'
 
     browser.command_executor._commands["send_command"] = (
         "POST",
@@ -79,8 +79,8 @@ def enable_download_in_headless_chrome(browser, target_directory):
     browser.execute("send_command", params)
 
 
-def create_webdriver(target_directory, headless):
-    browser = chrome_webdriver(target_directory, headless)
-    if headless:
-        enable_download_in_headless_chrome(browser, target_directory)
+def create_webdriver(abstract):
+    browser = chrome_webdriver(abstract)
+    if abstract.headless:
+        enable_download_in_headless_chrome(browser, abstract)
     return browser
