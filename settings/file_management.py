@@ -172,18 +172,18 @@ def account_for_number_results(document):
         return ''
 
 
-def document_found(document_list, document, review):
-    if review is False:
+def document_found(abstract, document):
+    if abstract.review is False:
         print('Document located at '
               f'{document.extrapolate_value()} recorded'
               f'{account_for_number_results(document)}, '
-              f'{list_remaining_documents(document_list, document)} '
+              f'{list_remaining_documents(abstract.document_list, document)} '
               f'({report_execution_time(document.start_time)})')
-    elif review is True:
+    elif abstract.review is True:
         input(f'Document located at {document.extrapolate_value()} found'
               f'{account_for_number_results(document)}, '
               'please review & press enter to continue... '
-              f'({list_remaining_documents(document_list, document)}) '
+              f'({list_remaining_documents(abstract.document_list, document)}) '
               f'({report_execution_time(document.start_time)})')
     # elif alt == "download":
     #     print('Document located at '
