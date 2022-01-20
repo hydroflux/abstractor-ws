@@ -225,7 +225,7 @@ def get_worksheet_range(project):
 
 
 def set_worksheet_border(project, font_format):
-    worksheet_range = get_worksheet_range(project.dataframe)
+    worksheet_range = get_worksheet_range(project)
     border_format_1 = worksheet_properties['conditional_formats']['border_format_1']
     border_format_2 = worksheet_properties['conditional_formats']['border_format_2']
     border_format_1['format'] = font_format
@@ -295,12 +295,12 @@ def add_out_of_county_format(worksheet, worksheet_range, font_format):
     worksheet.conditional_format(worksheet_range, out_of_county_format)
 
 
-def add_conditional_formatting(dataframe, worksheet, font_formats):
-    worksheet_range = get_worksheet_range(dataframe)
-    add_no_record_format(worksheet, worksheet_range, font_formats['no_record'])
-    add_multiple_document_format(worksheet, worksheet_range, font_formats['multiple_documents'])
-    add_no_document_image_format(worksheet, worksheet_range, font_formats['no_image'])
-    add_out_of_county_format(worksheet, worksheet_range, font_formats['out_of_county'])
+def add_conditional_formatting(project):
+    worksheet_range = get_worksheet_range(project)
+    add_no_record_format(project.worksheet, worksheet_range, project.font_formats['no_record'])
+    add_multiple_document_format(project.worksheet, worksheet_range, project.font_formats['multiple_documents'])
+    add_no_document_image_format(project.worksheet, worksheet_range, project.font_formats['no_image'])
+    add_out_of_county_format(project.worksheet, worksheet_range, project.font_formats['out_of_county'])
 
 
 def format_xlsx_document(project):
@@ -308,7 +308,7 @@ def format_xlsx_document(project):
     format_worksheet(project)
     set_dataframe_format(project.worksheet, project.font_formats['body'])
     add_content(project)
-    add_conditional_formatting(project.dataframe, project.worksheet, project.font_formats)
+    add_conditional_formatting(project)
 
 
 def create_hyperlink_sheet(project):
