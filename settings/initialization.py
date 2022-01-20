@@ -17,7 +17,7 @@ def create_abstract_object():
     return Abstract(
         county=access_county_instance(county_name),
         target_directory=target_directory,
-        file_name=file_name
+        file_name=file_name,
         program=get_program_type(),
         headless=headless,
         download=download

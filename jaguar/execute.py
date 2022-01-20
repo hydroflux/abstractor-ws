@@ -88,9 +88,9 @@ def search_documents_from_list(browser, target_directory, document_list, datafra
             handle_bad_search(dataframe, document_list, document, review)
 
 
-def execute_program(headless, county, target_directory, document_list, file_name, review=False):
-    browser = create_webdriver(target_directory, headless)
-    transform_document_list(document_list, county)
+def execute_program(abstract):
+    browser = create_webdriver(abstract.target_directory, abstract.headless)
+    transform_document_list(abstract)
     account_login(browser)
     search_documents_from_list(
             browser,
