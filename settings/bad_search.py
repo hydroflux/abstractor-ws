@@ -1,27 +1,26 @@
 from settings.error_handling import no_image_comment
 from settings.export_settings import search_errors
-from settings.file_management import (document_type, document_value,
-                                      extrapolate_document_value, no_document_downloaded, no_document_found)
+from settings.file_management import no_document_downloaded, no_document_found
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("bad_search", __name__)
 
 
 def add_bad_search_key_values(dataframe, document):
-    if document_type(document) == "document_number":
-        document_number = document_value(document)
+    if document.type == "document_number":
+        document_number = document.value
         dataframe["Book"].append(search_errors[2])
         dataframe["Volume"].append(search_errors[2])
         dataframe["Page"].append(search_errors[2])
         dataframe["Reception Number"].append(document_number)
-    elif document_type(document) == "book_and_page":
-        book, page = document_value(document)
+    elif document.type == "book_and_page":
+        book, page = document.value
         dataframe["Book"].append(book)
         dataframe["Volume"].append(search_errors[2])
         dataframe["Page"].append(page)
         dataframe["Reception Number"].append(search_errors[2])
-    elif document_type(document) == "volume_and_page":
-        volume, page = document_value(document)
+    elif document.type == "volume_and_page":
+        volume, page = document.value
         dataframe["Book"].append(search_errors[2])
         dataframe["Volume"].append(volume)
         dataframe["Page"].append(page)
@@ -29,11 +28,11 @@ def add_bad_search_key_values(dataframe, document):
 
 
 def add_bad_search_message(dataframe, document):
-    if document_type(document) == "document_number":
-        document_number = document_value(document)
+    if document.type == "document_number":
+        document_number = document.value
         bad_search_message = f'No document located at reception number {document_number}, please review'
-    elif document_type(document) == "book_and_page" or document_type(document) == "volume_and_page":
-        bad_search_message = f'No document located at {extrapolate_document_value(document)}, please review'
+    elif document.type == "book_and_page" or document.type == "volume_and_page":
+        bad_search_message = f'No document located at {document.extrapolate_value()}, please review'
     dataframe["Comments"].append(bad_search_message)
 
 
@@ -54,7 +53,7 @@ def record_bad_search(abstract, document):
 
 def unable_to_download(dataframe, document):
     last_comment = dataframe["Comments"][-1]
-    unable_to_download = f'Unable to download document image at {extrapolate_document_value(document)}, please review'
+    unable_to_download = f'Unable to download document image at {document.extrapolate_value()}, please review'
     if last_comment == "":
         dataframe["Comments"][-1] = unable_to_download
     else:

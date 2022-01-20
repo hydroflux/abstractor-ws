@@ -9,8 +9,7 @@ from settings.general_functions import start_timer
 from eagle.download import download_document
 from eagle.login import account_login
 from eagle.open_document import open_document
-from eagle.record import (build_document_download_information, next_result,
-                          record)
+from eagle.record import next_result, record
 from eagle.search import search
 from eagle.transform import transform_document_list
 
