@@ -163,9 +163,9 @@ def add_title_row(project):
     write_title_content(project)
 
 
-def add_limitations(dataframe, worksheet, font_format):
-    worksheet.set_row(1, worksheet_properties['limitations_height'])
-    worksheet.merge_range(f'A2:{last_column(project)}2', worksheet_properties['limitations_content'], font_format)
+def add_limitations(project, font_format):
+    project.worksheet.set_row(1, worksheet_properties['limitations_height'])
+    project.worksheet.merge_range(f'A2:{last_column(project)}2', worksheet_properties['limitations_content'], font_format)
 
 
 def add_disclaimer(project, font_format):
