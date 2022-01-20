@@ -6,7 +6,8 @@ class Project:
     def __init__(self, type, county, target_directory, dataframe, output_file, sheet_name,
                  writer=None, font_formats=None, workbook=None, worksheet=None,
                  worksheet_range=None, number_columns=None,
-                 client=None, legal=None, project_folder=None):
+                 client=None, legal=None,
+                 project_folder=None):
         self.type = type
         self.county = county
         self.target_directory = target_directory

@@ -72,43 +72,35 @@ def create_abstraction_object(project):
     )
 
 
-def set_workbook_properties(workbook):
-    workbook.set_properties(authorship)
-
-
-def set_font_formats(workbook):
+def set_font_formats(project):
     return {
-        'large': workbook.add_format(text_formats['large']),
-        'small': workbook.add_format(text_formats['small']),
-        'header': workbook.add_format(text_formats['header']),
-        'datatype': workbook.add_format(text_formats['datatype']),
-        'body': workbook.add_format(text_formats['body']),
-        'border': workbook.add_format(text_formats['border']),
-        'limitations': workbook.add_format(text_formats['limitations']),
-        'disclaimer': workbook.add_format(text_formats['disclaimer']),
-        'footer': workbook.add_format(text_formats['footer']),
-        'no_record': workbook.add_format(text_formats['no_record']),
-        'multiple_documents': workbook.add_format(text_formats['multiple_documents']),
-        'no_image': workbook.add_format(text_formats['no_image']),
-        'out_of_county': workbook.add_format(text_formats['out_of_county'])
+        'large': project.workbook.add_format(text_formats['large']),
+        'small': project.workbook.add_format(text_formats['small']),
+        'header': project.workbook.add_format(text_formats['header']),
+        'datatype': project.workbook.add_format(text_formats['datatype']),
+        'body': project.workbook.add_format(text_formats['body']),
+        'border': project.workbook.add_format(text_formats['border']),
+        'limitations': project.workbook.add_format(text_formats['limitations']),
+        'disclaimer': project.workbook.add_format(text_formats['disclaimer']),
+        'footer': project.workbook.add_format(text_formats['footer']),
+        'no_record': project.workbook.add_format(text_formats['no_record']),
+        'multiple_documents': project.workbook.add_format(text_formats['multiple_documents']),
+        'no_image': project.workbook.add_format(text_formats['no_image']),
+        'out_of_county': project.workbook.add_format(text_formats['out_of_county'])
     }
 
 
 def format_workbook(project):
-    set_workbook_properties(project.workbook)
-    project.font_formats = set_font_formats(project.workbook)
-
-
-def set_page_format(worksheet):
-    worksheet.set_landscape()
-    worksheet.set_paper(worksheet_properties['paper_size'])
-    worksheet.set_margins(left=0.25, right=0.25, top=0.75, bottom=0.75)
-    worksheet.hide_gridlines(worksheet_properties['gridlines'])
-    worksheet.freeze_panes(f'A{worksheet_properties["startrow"] + 1}')
+    project.workbook.set_properties(authorship)
+    project.font_formats = set_font_formats(project)
 
 
 def format_worksheet(project):
-    set_page_format(project.worksheet)
+    project.worksheet.set_landscape()
+    project.worksheet.set_paper(worksheet_properties['paper_size'])
+    project.worksheet.set_margins(left=0.25, right=0.25, top=0.75, bottom=0.75)
+    project.worksheet.hide_gridlines(worksheet_properties['gridlines'])
+    project.worksheet.freeze_panes(f'A{worksheet_properties["startrow"] + 1}')
 
 
 def count_columns(project):
