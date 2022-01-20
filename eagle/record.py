@@ -22,9 +22,7 @@ from settings.county_variables.eagle import (document_information_id,
                                              result_button_tag,
                                              result_buttons_class)
 from settings.export_settings import search_errors
-from settings.file_management import (check_last_document, check_length, document_found,
-                                      drop_last_entry,
-                                      multiple_documents_comment)
+from settings.file_management import document_found, multiple_documents_comment
 from settings.general_functions import (long_timeout, medium_nap, naptime,
                                         scroll_to_top, short_nap, timeout,
                                         update_sentence_case_extras)
@@ -350,11 +348,11 @@ def review_entry(browser, dataframe, document, image_available):
         re_record_document_fields(browser, dataframe, document, image_available)
 
 
-def re_record_document_fields(browser, dataframe, document, image_available):
-    drop_last_entry(dataframe)
+def re_record_document_fields(browser, abstract, document, image_available):
+    abstract.drop_last_entry()
     browser.refresh()
     medium_nap()
-    record_document_fields(browser, dataframe, document, image_available)
+    record_document_fields(browser, abstract.dataframe, document, image_available)
 
 
 def get_result_buttons(browser, document):
@@ -446,8 +444,9 @@ def record(browser, abstract, document):
     if not abstract.download_only:
         image_available = handle_document_image_status(browser, document)
         record_document_fields(browser, abstract.dataframe, document, image_available)
-        check_length(abstract.dataframe)
-        check_last_document(abstract.dataframe, abstract.document_list, document)
+        abstract.check_length()
+        # This might not be the correct syntax
+        abstract.check_last_document(document)
         review_entry(browser, abstract.dataframe, document, image_available)
         document_found(abstract, document)
     else:

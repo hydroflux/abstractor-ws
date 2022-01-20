@@ -84,7 +84,7 @@
 
 #### Document Class To Do
 
-- [ ] Up-to-date
+- [ ] Add 'image_available' onto the Document class
 
 ### Imports To Do
 
