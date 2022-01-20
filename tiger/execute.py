@@ -6,7 +6,7 @@ from settings.export.export import export_document
 from settings.file_management import bundle_project, remaining_downloads
 from settings.general_functions import (get_county_data,
                                         javascript_script_execution, naptime)
-from settings.import_list import generate_document_list
+from settings.export.import_list import generate_document_list
 from settings.settings import download, web_directory
 
 from tiger.download import download_document

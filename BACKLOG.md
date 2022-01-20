@@ -264,11 +264,11 @@
 - [ ] Drop book from Dataframe
 - [ ] Add 'search_url' & 'search_title' (and respective 'old') to the document instances with 'transform' script & the document class
 
-### Testing Script To Do
+## Testing Script To Do
 
 - [ ] Needs webdriver, target directory, document class, headless, etc. all aggregated
 
-### PDF Merger To Do
+## PDF Merger To Do
 
 - [ ] Update PDF merger to work on a county by county basis
 - [ ] Handle cases where a '-1' document is valid
