@@ -22,7 +22,7 @@ print("execute", __name__)
 
 def handle_single_document(browser, abstract, document):
     if not abstract.download_only:
-        record(browser, abstract.document_list, abstract.dataframe, document)
+        record(browser, abstract, document)
         document_found(abstract.document_list, document, abstract.review)
     else:
         build_document_download_information(browser, abstract.dataframe, document)

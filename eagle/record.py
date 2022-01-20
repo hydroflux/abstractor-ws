@@ -442,9 +442,9 @@ def build_document_download_information(browser, dataframe, document):
     dataframe['Comments'].append('')
 
 
-def record(browser, document_list, dataframe, document):
+def record(browser, abstract, document):
     image_available = handle_document_image_status(browser, document)
-    record_document_fields(browser, dataframe, document, image_available)
-    check_length(dataframe)
-    check_last_document(dataframe, document_list, document)
-    review_entry(browser, dataframe, document, image_available)
+    record_document_fields(browser, abstract.dataframe, document, image_available)
+    check_length(abstract.dataframe)
+    check_last_document(abstract.dataframe, abstract.document_list, document)
+    review_entry(browser, abstract.dataframe, document, image_available)
