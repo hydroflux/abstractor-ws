@@ -5,6 +5,7 @@ from settings.classes.Project import Project
 
 from settings.export.conditional_formatting import add_conditional_formatting
 from settings.export.content import add_content, number_to_letter
+from settings.export.font_formats import generate_font_formats
 from settings.export.hyperlinks import add_hyperlink_sheet
 
 
@@ -53,30 +54,12 @@ def create_abstraction_object(project):
     )
 
 
-def set_font_formats(project):
-    return {
-        'large': project.workbook.add_format(Project.text_formats['large']),
-        'small': project.workbook.add_format(Project.text_formats['small']),
-        'header': project.workbook.add_format(Project.text_formats['header']),
-        'datatype': project.workbook.add_format(Project.text_formats['datatype']),
-        'body': project.workbook.add_format(Project.text_formats['body']),
-        'border': project.workbook.add_format(Project.text_formats['border']),
-        'limitations': project.workbook.add_format(Project.text_formats['limitations']),
-        'disclaimer': project.workbook.add_format(Project.text_formats['disclaimer']),
-        'footer': project.workbook.add_format(Project.text_formats['footer']),
-        'no_record': project.workbook.add_format(Project.text_formats['no_record']),
-        'multiple_documents': project.workbook.add_format(Project.text_formats['multiple_documents']),
-        'no_image': project.workbook.add_format(Project.text_formats['no_image']),
-        'out_of_county': project.workbook.add_format(Project.text_formats['out_of_county'])
-    }
-
-
 def set_project_attributes(project):
     project.writer = create_excel_writer(project)
     create_abstraction_object(project)
     project.workbook = project.writer.book
     project.worksheet = project.writer.sheets[(project.sheet_name)]
-    project.font_formats = set_font_formats(project)
+    project.font_formats = generate_font_formats(project)
     project.number_columns = len(project.dataframe.columns)
     project.last_column = number_to_letter(project.number_columns)
     project.last_row = len(project.dataframe.index) + project.worksheet_properties['startrow']
