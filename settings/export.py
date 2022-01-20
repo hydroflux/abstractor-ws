@@ -330,7 +330,7 @@ def create_hyperlink_sheet(workbook):
 
 
 def add_hyperlink_sheet(abstract, workbook):
-    if document_directory_exists(abstract.target_directory):
+    if abstract.download:
         hyperlink_format = workbook.add_format(text_formats['hyperlink'])
         hyperlink_sheet = create_hyperlink_sheet(workbook)
         write_temporary_hyperlinks(abstract.document_directory, hyperlink_sheet, hyperlink_format)
