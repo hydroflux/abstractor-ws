@@ -1,5 +1,5 @@
 from settings.error_handling import no_image_comment
-from settings.export_settings import search_errors
+from settings.county_variables.general import search_errors
 from settings.file_management import no_document_downloaded, no_document_found
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder

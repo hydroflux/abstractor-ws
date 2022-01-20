@@ -11,8 +11,7 @@ from settings.county_variables.leopard import (book_page_abbreviation,
                                                previous_result_id,
                                                row_data_tag, row_titles,
                                                table_row_tag)
-from settings.export_settings import not_applicable
-from settings.file_management import extrapolate_document_value
+from settings.county_variables.general import not_applicable
 from settings.general_functions import (get_element_text, scroll_to_top,
                                         timeout, title_strip)
 

@@ -15,7 +15,7 @@ logs/
 ##################
 settings/county_variables
 variables.py
-settings/export_settings.py
+settings/export/settings.py
 settings/hyperlink_settings.py
 settings/settings.py
 formatting/excel_export_format.py

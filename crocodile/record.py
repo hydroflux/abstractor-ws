@@ -12,7 +12,7 @@ from settings.county_variables.crocodile import (
     related_documents_buttons_class, related_documents_id, row_data_tag,
     row_header_tag, row_titles, show_all_rows_text, table_body_tag,
     table_row_tag)
-from settings.export_settings import not_applicable
+from settings.county_variables.general import not_applicable
 from settings.file_management import (extrapolate_document_value,
                                       multiple_documents_comment)
 from settings.general_functions import (get_direct_children, get_element_text,
