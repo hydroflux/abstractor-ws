@@ -88,7 +88,7 @@ def handle_multiple_documents(browser, target_directory, document_list, document
         )
 
 
-def handle_search_results(browser, target_directory, document_list, document, review, download_only):
+def handle_search_results(browser, abstract, document):
     if document.number_results == 1:
         handle_single_document(
             browser,
@@ -109,25 +109,12 @@ def handle_search_results(browser, target_directory, document_list, document, re
         )
 
 
-def handle_bad_search(dataframe, document_list, document, review, download_only):
-    if not download_only:
-        record_bad_search(dataframe, document)
-    no_document_found(document_list, document, review)
-
-
 def search_documents_from_list(browser, abstract):
     for document in abstract.document_list:
         document.start_time = start_timer()
         search(browser, document)
         if open_document(browser, document):
-            handle_search_results(
-                browser,
-                target_directory,
-                document_list,
-                document,
-                review,
-                download_only
-            )
+            handle_search_results(browser, abstract, document)
         else:
             record_bad_search(abstract, document)
     return dataframe
