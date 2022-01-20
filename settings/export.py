@@ -27,7 +27,7 @@ def transform_dictionary(dictionary):
 
 
 def create_output_file(abstract):
-    abstraction_export = '-'.join(abstract.abstraction_type.upper().split(' '))
+    abstraction_export = '-'.join(abstract.type.upper().split(' '))
     abstract.output_file = f'{abstract.file_name.upper()}-{abstraction_export}.xlsx'
 
 
@@ -76,7 +76,7 @@ def access_workbook_object(writer):
 
 
 def access_worksheet_object(abstract, writer):
-    return writer.sheets[(abstract.abstraction_type.upper())]
+    return writer.sheets[(abstract.type.upper())]
 
 
 def set_workbook_properties(workbook):
@@ -329,7 +329,7 @@ def add_hyperlink_sheet(abstract, workbook):
 
 
 def export_hyperlinks(abstract):
-    prepare_output_environment(abstract.target_directory)
+    os.chdir(abstract.target_directory)
     output_file, writer = create_xlsx_document(abstract.target_directory, abstract.file_name, abstract.dataframe)
     workbook = access_workbook_object(writer)
     add_hyperlink_sheet(abstract, workbook)
@@ -341,7 +341,7 @@ def export_document(abstract, client=None, legal=None):
     os.chdir(abstract.target_directory)
     abstract.dataframe = transform_dictionary(abstract.dataframe)
     # add_hyperlinks(target_directory, dataframe)
-    abstract.output_file, writer = create_xlsx_document(abstract)
+    writer = create_xlsx_document(abstract)
     create_abstraction_object(abstract.target_directory, writer, abstract.dataframe, abstract.type.upper())
     workbook = format_xlsx_document(abstract, writer, client, legal)
     add_hyperlink_sheet(abstract, workbook)
