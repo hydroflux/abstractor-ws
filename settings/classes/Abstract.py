@@ -2,7 +2,8 @@ class Abstract:
     def __init__(self, county, target_directory, file_name, program, headless, download,
                  review=False,
                  document_list=None, timer=None, dataframe=None,
-                 search_name=None):
+                 search_name=None,
+                 abstraction=None):
         self.county = county
         self.target_directory = target_directory
         self.file_name = file_name,
@@ -13,6 +14,7 @@ class Abstract:
         self.document_list = document_list
         self.timer = timer
         self.search_name = search_name
+        self.abstraction = abstraction
 
 
 # - [ ] Put general button_ids on the 'abstract' class (login, logout, etc.)

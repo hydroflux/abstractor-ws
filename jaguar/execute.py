@@ -70,16 +70,16 @@ def search_documents_from_list(browser, abstract):
 
 
 def execute_program(abstract):
-    browser = create_webdriver(abstract.target_directory, abstract.headless)
+    browser = create_webdriver(abstract)
     transform_document_list(abstract)
     account_login(browser)
     abstract.dataframe = dataframe
     search_documents_from_list(browser, abstract)
-    abstraction = export_document(
+    abstract.abstraction = export_document(
             abstract.county,
             abstract.target_directory,
             abstract.file_name,
             dataframe
     )
-    bundle_project(abstract.target_directory, abstraction)
+    bundle_project(abstract)
     browser.close()
