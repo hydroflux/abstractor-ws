@@ -352,6 +352,6 @@ def export_document(abstract, client=None, legal=None):
     output_file, writer = create_xlsx_document(abstract.target_directory, abstract.file_name, abstract.dataframe)
     create_abstraction_object(abstract.target_directory, writer, abstract.dataframe, abstraction_type.upper())
     workbook = format_xlsx_document(abstract.county, writer, abstract.dataframe, client, legal)
-    add_hyperlink_sheet(abstract.target_directory, workbook)
+    add_hyperlink_sheet(abstract, workbook)
     workbook.close()
     return output_file

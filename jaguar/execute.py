@@ -1,7 +1,6 @@
 from settings.bad_search import record_bad_search
 from settings.driver import create_webdriver
 from settings.export import export_document
-from settings.file_management import bundle_project
 from settings.general_functions import start_timer
 
 from jaguar.download import download_document
@@ -10,6 +9,7 @@ from jaguar.open_document import open_document
 from jaguar.record import record
 from jaguar.search import search
 from jaguar.transform import transform_document_list
+from settings.initialization import bundle_project
 
 
 def handle_single_document(browser, abstract, document):
