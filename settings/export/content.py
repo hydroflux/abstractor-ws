@@ -3,7 +3,7 @@ def number_to_letter(number):
 
 
 def set_title_format(project, font_format):
-    project.worksheet.set_row(0, Project.worksheet_properties['header_height'])
+    project.worksheet.set_row(0, project.worksheet_properties['header_height'])
     project.worksheet.merge_range(f'A1:{project.last_column}1', '', font_format)
 
 
@@ -12,7 +12,7 @@ def create_range_message(dataframe, content):
 
 
 def write_title_content(project):
-    content = Project.worksheet_properties['header_content']
+    content = project.worksheet_properties['header_content']
     content['county'] = f'{project.county}\n'
     range_message = create_range_message(project.dataframe, content)
     if project.client is not None and project.legal is not None:
@@ -35,20 +35,20 @@ def add_title_row(project):
 
 
 def add_limitations(project, font_format):
-    project.worksheet.set_row(1, Project.worksheet_properties['limitations_height'])
+    project.worksheet.set_row(1, project.worksheet_properties['limitations_height'])
     project.worksheet.merge_range(f'A2:{project.last_column}2',
-                                  Project.worksheet_properties['limitations_content'],
+                                  project.worksheet_properties['limitations_content'],
                                   font_format)
 
 
 def add_disclaimer(project, font_format):
     disclaimer_message = f'{project.disclaimer[0]}{project.county}{project.disclaimer[1]}'
-    project.worksheet.set_row(2, Project.worksheet_properties['disclaimer_height'])
+    project.worksheet.set_row(2, project.worksheet_properties['disclaimer_height'])
     project.worksheet.merge_range(f'A3:{project.last_column}3', disclaimer_message, font_format)
 
 
 def merge_primary_datatype_ranges(project, font_format):
-    primary_range = Project.worksheet_properties['datatype_content']['primary_datatype_columns']
+    primary_range = project.worksheet_properties['datatype_content']['primary_datatype_columns']
     for column in primary_range:
         column_name = project.dataframe.columns[column]
         column_position = number_to_letter((column + 1))
@@ -60,18 +60,18 @@ def merge_primary_datatype_ranges(project, font_format):
 
 
 def merge_custom_column(project, font_format):
-    column = Project.worksheet_properties['datatype_content']['custom_datatype_column']
+    column = project.worksheet_properties['datatype_content']['custom_datatype_column']
     column_position_start = number_to_letter((column + 1))
     column_position_end = number_to_letter((column + 4))
     project.worksheet.merge_range(
         f'{column_position_start}4:{column_position_end}4',
-        Project.worksheet_properties['custom_column_name'],
+        project.worksheet_properties['custom_column_name'],
         font_format
     )
 
 
 def merge_secondary_datatype_ranges(project, font_format):
-    primary_range = Project.worksheet_properties['datatype_content']['secondary_datatype_columns']
+    primary_range = project.worksheet_properties['datatype_content']['secondary_datatype_columns']
     for column in primary_range:
         column_name = project.dataframe.columns[column]
         column_position = number_to_letter((column + 1))
@@ -89,8 +89,8 @@ def add_dataframe_headers(project, font_format):
 
 
 def set_worksheet_border(project, font_format):
-    border_format_1 = Project.worksheet_properties['conditional_formats']['border_format_1']
-    border_format_2 = Project.worksheet_properties['conditional_formats']['border_format_2']
+    border_format_1 = project.worksheet_properties['conditional_formats']['border_format_1']
+    border_format_2 = project.worksheet_properties['conditional_formats']['border_format_2']
     border_format_1['format'] = font_format
     border_format_2['format'] = font_format
     project.worksheet.conditional_format(project.worksheet_range, border_format_1)
@@ -99,14 +99,14 @@ def set_worksheet_border(project, font_format):
 
 def set_dataframe_format(project):
     body_format = project.font_formats['body']
-    for column in Project.worksheet_properties['column_formats']:
+    for column in project.worksheet_properties['column_formats']:
         project.worksheet.set_column(column.column_range, column.width, body_format)
 
 
 def add_footer_row(project, font_format):
     footer_range = f'A{project.footer_row}:{project.last_column}{project.footer_row}'
-    project.worksheet.set_row((project.last_row), Project.worksheet_properties['footer_height'])
-    project.worksheet.merge_range(footer_range, Project.worksheet_properties['footer_content'], font_format)
+    project.worksheet.set_row((project.last_row), project.worksheet_properties['footer_height'])
+    project.worksheet.merge_range(footer_range, project.worksheet_properties['footer_content'], font_format)
 
 
 def add_filter(project):
