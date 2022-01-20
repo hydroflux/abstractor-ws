@@ -27,8 +27,16 @@ def create_abstract_object():
     )
 
 
+def program_type_update(abstract):
+    if abstract.program == "review":
+        abstract.review = True
+    elif abstract.program == "download":
+        abstract.download_only = True
+
+
 def initialize_abstraction():
     abstract = create_abstract_object()
+    program_type_update(abstract)
     abstract.document_list = generate_document_list(target_directory, file_name, sheet_name)
     abstract.timer = start_program_timer(abstract.county, abstract.document_list)
     return abstract
