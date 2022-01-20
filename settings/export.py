@@ -119,21 +119,21 @@ def format_worksheet(project):
     set_page_format(project.worksheet)
 
 
-def count_columns(dataframe):
-    return len(dataframe.columns)
+def count_columns(project):
+    return len(project.dataframe.columns)
 
 
 def number_to_letter(number):
     return chr(ord('@') + (number))
 
 
-def last_column(dataframe):
-    return number_to_letter(count_columns(dataframe))
+def last_column(project):
+    return number_to_letter(count_columns(project))
 
 
 def set_title_format(project, font_format):
     project.worksheet.set_row(0, worksheet_properties['header_height'])
-    project.worksheet.merge_range(f'A1:{last_column(project.dataframe)}1', '', font_format)
+    project.worksheet.merge_range(f'A1:{last_column(project)}1', '', font_format)
 
 
 def create_range_message(dataframe, content):
@@ -165,12 +165,12 @@ def add_title_row(project):
 
 def add_limitations(dataframe, worksheet, font_format):
     worksheet.set_row(1, worksheet_properties['limitations_height'])
-    worksheet.merge_range(f'A2:{last_column(dataframe)}2', worksheet_properties['limitations_content'], font_format)
+    worksheet.merge_range(f'A2:{last_column(project)}2', worksheet_properties['limitations_content'], font_format)
 
 
 def add_disclaimer(project, font_format):
     project.worksheet.set_row(2, worksheet_properties['disclaimer_height'])
-    project.worksheet.merge_range(f'A3:{last_column(project.dataframe)}3', full_disclaimer(project.county), font_format)
+    project.worksheet.merge_range(f'A3:{last_column(project)}3', full_disclaimer(project.county), font_format)
 
 
 def merge_primary_datatype_ranges(project, font_format):
@@ -214,24 +214,24 @@ def add_dataframe_headers(project, font_format):
     merge_secondary_datatype_ranges(project, font_format)
 
 
-def access_last_row(dataframe):
-    return len(dataframe.index) + worksheet_properties['startrow']
+def access_last_row(project):
+    return len(project.dataframe.index) + worksheet_properties['startrow']
 
 
-def get_worksheet_range(dataframe):
-    number_columns = count_columns(dataframe)
+def get_worksheet_range(project):
+    number_columns = count_columns(project)
     return (f'A{worksheet_properties["startrow"]}:'
-            f'{number_to_letter(number_columns)}{access_last_row(dataframe)}')
+            f'{number_to_letter(number_columns)}{access_last_row(project)}')
 
 
 def set_worksheet_border(project, font_format):
-    worksheet_range = get_worksheet_range(dataframe)
+    worksheet_range = get_worksheet_range(project.dataframe)
     border_format_1 = worksheet_properties['conditional_formats']['border_format_1']
     border_format_2 = worksheet_properties['conditional_formats']['border_format_2']
     border_format_1['format'] = font_format
     border_format_2['format'] = font_format
-    worksheet.conditional_format(worksheet_range, border_format_1)
-    worksheet.conditional_format(worksheet_range, border_format_2)
+    project.worksheet.conditional_format(worksheet_range, border_format_1)
+    project.worksheet.conditional_format(worksheet_range, border_format_2)
 
 
 def set_dataframe_format(worksheet, font_format):
@@ -239,18 +239,18 @@ def set_dataframe_format(worksheet, font_format):
         worksheet.set_column(column.column_range, column.width, font_format)
 
 
-def footer_row(dataframe):
-    return access_last_row(dataframe) + 1
+def footer_row(project):
+    return access_last_row(project) + 1
 
 
 def add_footer_row(project, font_format):
-    footer_range = f'A{footer_row(dataframe)}:{last_column(dataframe)}{footer_row(dataframe)}'
-    worksheet.set_row((footer_row(dataframe) - 1), worksheet_properties['footer_height'])
-    worksheet.merge_range(footer_range, worksheet_properties['footer_content'], font_format)
+    footer_range = f'A{footer_row(project)}:{last_column(project)}{footer_row(project)}'
+    project.worksheet.set_row((footer_row(project) - 1), worksheet_properties['footer_height'])
+    project.worksheet.merge_range(footer_range, worksheet_properties['footer_content'], font_format)
 
 
 def add_filter(project):
-    worksheet.autofilter(f'A5:{last_column(dataframe)}{footer_row(dataframe)}')
+    project.worksheet.autofilter(f'A5:{last_column(project)}{footer_row(project)}')
 
 
 def add_watermark(worksheet):
