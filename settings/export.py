@@ -8,16 +8,6 @@ from settings.export_settings import (authorship, full_disclaimer,
                                       text_formats, worksheet_properties)
 
 
-def initialize_project(abstract):
-    project = Project(
-        target_directory=abstract.target_directory,
-        dataframe=DataFrame(abstract.dataframe)
-    )
-    print(project.dataframe)
-    os.chdir(project.target_directory)
-    return project
-
-
 def rename_legal_description(dataframe):
     return dataframe.rename({"Legal": "Legal Description"}, axis=1)
 
@@ -26,16 +16,26 @@ def rename_effective_date(dataframe):
     return dataframe.rename({"Effective Date": "Document Effective Date"}, axis=1)
 
 
-def transform_dataframe(project):
-    rename_legal_description(rename_effective_date(project.dataframe))
-
-
 def create_output_file(abstract):
     abstraction_export = '-'.join(abstract.type.upper().split(' '))
-    abstract.output_file = f'{abstract.file_name.upper()}-{abstraction_export}.xlsx'
+    return f'{abstract.file_name.upper()}-{abstraction_export}.xlsx'
 
 
-def create_excel_writer(output_file):
+def initialize_project(abstract):
+    project = Project(
+        type=abstract.type,
+        target_directory=abstract.target_directory,
+        dataframe=DataFrame(abstract.dataframe),
+        file_name=create_output_file(abstract)
+    )
+    rename_legal_description(project.dataframe)
+    rename_effective_date(project.dataframe)
+    print(project.dataframe)
+    os.chdir(project.target_directory)
+    return project
+
+
+def create_excel_writer(project):
     return ExcelWriter(
         output_file,
         engine='xlsxwriter',
@@ -43,9 +43,9 @@ def create_excel_writer(output_file):
         date_format='mm/dd/yyyy')  # pylint: disable=abstract-class-instantiated
 
 
-def create_xlsx_document(abstract):
-    create_output_file(abstract)
-    writer = create_excel_writer(abstract.output_file)
+def create_xlsx_document(project):
+    create_output_file(project)
+    writer = create_excel_writer(project)
     return writer
 
 
@@ -343,9 +343,7 @@ def export_hyperlinks(abstract):
 
 def export_document(abstract, client=None, legal=None):
     project = initialize_project(abstract)
-    transform_dataframe(project)
-    # add_hyperlinks(target_directory, dataframe)
-    writer = create_xlsx_document(abstract)
+    create_xlsx_document(project)
     create_abstraction_object(abstract.target_directory, writer, abstract.dataframe, abstract.type.upper())
     workbook = format_xlsx_document(abstract, writer, client, legal)
     add_hyperlink_sheet(abstract, workbook)
