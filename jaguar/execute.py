@@ -1,8 +1,7 @@
 from settings.bad_search import record_bad_search
 from settings.driver import create_webdriver
 from settings.export import export_document
-from settings.file_management import (bundle_project,
-                                      document_found)
+from settings.file_management import bundle_project
 from settings.general_functions import start_timer
 
 from jaguar.download import download_document
@@ -15,7 +14,6 @@ from jaguar.transform import transform_document_list
 
 def handle_single_document(browser, abstract, document):
     record(browser, abstract, document)
-    document_found(abstract, document)
     if abstract.download and not abstract.review:
         download_document(browser, abstract, document)
 

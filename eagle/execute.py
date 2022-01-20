@@ -3,8 +3,7 @@ from settings.bad_search import record_bad_search
 from settings.download_management import previously_downloaded
 from settings.driver import create_webdriver
 from settings.export import export_document
-from settings.file_management import (bundle_project,
-                                      document_found)
+from settings.file_management import bundle_project, document_found
 from settings.general_functions import start_timer
 
 from eagle.download import download_document
@@ -22,7 +21,6 @@ print("execute", __name__)
 def handle_single_document(browser, abstract, document):
     if not abstract.download_only:
         record(browser, abstract, document)
-        document_found(abstract, document)
     else:
         build_document_download_information(browser, abstract, document)
     if abstract.download and not abstract.review:
