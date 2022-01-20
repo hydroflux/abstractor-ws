@@ -1,9 +1,13 @@
+import os
+
+
 class Abstract:
     def __init__(self, county, target_directory, file_name, program,
                  headless, download, dataframe,
                  review=False, download_only=False, document_directory=None,
                  document_list=None, timer=None, abstraction=None,
-                 search_name=None):
+                 search_name=None,
+                 project_folder=None):
         self.county = county
         self.target_directory = target_directory
         self.file_name = file_name
@@ -18,6 +22,7 @@ class Abstract:
         self.timer = timer
         self.abstraction = abstraction
         self.search_name = search_name
+        self.project_folder = project_folder
 
     def drop_last_entry(self):
         self.dataframe["Grantor"].pop()
@@ -86,6 +91,14 @@ class Abstract:
             print("Legals: ", legals)
             print("Related Documents: ", related_documents)
             print("Comments: ", comments)
+
+    def create_project_folder(self):
+        self.project_folder = f'{self.target_directory}/{self.abstraction[:-5]}'
+        try:
+            if not os.path.exists(self.target_directory):
+                os.makedirs(self.target_directory)
+        except OSError:
+            print('Error: Creating directory ' + self.target_directory)
 
 # - [ ] Put general button_ids on the 'abstract' class (login, logout, etc.)
 # - [ ] Put urls on the abstract class

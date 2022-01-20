@@ -3,7 +3,6 @@ from settings.bad_search import record_bad_search
 from settings.download_management import previously_downloaded
 from settings.driver import create_webdriver
 from settings.export import export_document
-from settings.file_management import bundle_project
 from settings.general_functions import start_timer
 
 from eagle.download import download_document

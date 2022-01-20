@@ -37,11 +37,6 @@ def program_type_update(abstract):
         abstract.download_only = True
 
 
-# def document_directory_exists(target_directory):
-#     if os.path.exists(f'{target_directory}/Documents'):
-#         return True
-
-
 def create_folder(directory):
     try:
         if not os.path.exists(directory):
@@ -76,15 +71,9 @@ def move_downloaded_documents(target_directory, project_folder):
         shutil.move(f'{target_directory}/Documents', project_folder)
 
 
-def create_project_folder(target_directory, abstraction):
-    project_folder = f'{target_directory}/{abstraction[:-5]}'
-    create_folder(project_folder)
-    return project_folder
-
-
 def bundle_project(abstract):
     os.chdir(abstract.target_directory)
-    project_folder = create_project_folder(abstract.target_directory, abstract.abstraction)
+    project_folder = abstract.create_project_folder()
     move_abstraction_into_project_folder(abstract.target_directory, project_folder, abstract.abstraction)
     move_downloaded_documents(abstract.target_directory, project_folder)
     # shutil.move(f'{target_directory}/{file_name}.xlsx', project_folder)

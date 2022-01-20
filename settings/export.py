@@ -1,5 +1,4 @@
 import os
-from settings.file_management import document_directory_exists
 from settings.temp_hyperlink import write_temporary_hyperlinks
 
 from pandas import DataFrame, ExcelWriter
