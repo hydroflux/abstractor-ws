@@ -1,21 +1,18 @@
 def add_no_record_format(project):
-    font_format = project.font_formats['no_record']
     no_record_format = project.worksheet_properties['conditional_formats']['no_record_format']
-    no_record_format['format'] = font_format
+    no_record_format['format'] = project.font_formats['no_record']
     project.worksheet.conditional_format(project.worksheet_range, no_record_format)
 
 
 def add_multiple_document_format(project):
-    font_format = project.font_formats['multiple_documents']
     multi_documents_format = project.worksheet_properties['conditional_formats']['multi_documents_format']
-    multi_documents_format['format'] = font_format
+    multi_documents_format['format'] = project.font_formats['multiple_documents']
     project.worksheet.conditional_format(project.worksheet_range, multi_documents_format)
 
 
 def add_no_document_image_format(project):
-    font_format = project.font_formats['no_image']
     no_document_image_format = project.worksheet_properties['conditional_formats']['no_image_format']
-    no_document_image_format['format'] = font_format
+    no_document_image_format['format'] = project.font_formats['no_image']
     project.worksheet.conditional_format(project.worksheet_range, no_document_image_format)
 
 
