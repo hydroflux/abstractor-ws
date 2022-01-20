@@ -9,7 +9,7 @@ from settings.file_management import document_found, multiple_documents_comment
 from settings.general_functions import (date_from_string, list_to_string, title_strip,
                                         update_sentence_case_extras)
 
-from jaguar.validation import validate_reception_number
+from engines.jaguar.validation import validate_reception_number
 
 
 def get_document_type_and_number(browser, document):

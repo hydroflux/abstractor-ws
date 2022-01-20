@@ -1,3 +1,6 @@
+from engines.jaguar.validation import (validate_result, validate_search,
+                                       verify_results_loaded)
+
 from selenium_utilities.locators import (locate_element_by_class_name,
                                          locate_element_by_id,
                                          locate_element_by_tag_name)
@@ -10,9 +13,6 @@ from settings.county_variables.jaguar import (document_description_title,
                                               results_class, search_results_id,
                                               single_result_message)
 from settings.general_functions import get_direct_link
-
-from jaguar.validation import (validate_result, validate_search,
-                               verify_results_loaded)
 
 
 def count_results(browser, document):

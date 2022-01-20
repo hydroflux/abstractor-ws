@@ -3,12 +3,12 @@ from settings.driver import create_webdriver
 from project_management.export import export_document
 from settings.general_functions import start_timer
 
-from jaguar.download import download_document
-from jaguar.login import account_login
-from jaguar.open_document import open_document
-from jaguar.record import record
-from jaguar.search import search
-from jaguar.transform import transform_document_list
+from engines.jaguar.download import download_document
+from engines.jaguar.login import account_login
+from engines.jaguar.open_document import open_document
+from engines.jaguar.record import record
+from engines.jaguar.search import search
+from engines.jaguar.transform import transform_document_list
 
 
 def handle_single_document(browser, abstract, document):
