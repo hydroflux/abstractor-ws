@@ -290,11 +290,6 @@ def add_conditional_formatting(project):
     add_out_of_county_format(project, project.font_formats['out_of_county'])
 
 
-def format_xlsx_document(project):
-    add_content(project)
-    add_conditional_formatting(project)
-
-
 def create_hyperlink_sheet(project):
     hyperlink_sheet = project.workbook.add_worksheet("Hyperlink")
     hyperlink_sheet.set_column('A:A', 20)
@@ -320,7 +315,8 @@ def add_hyperlink_sheet(abstract, project):
 
 def export_document(abstract):
     project = initialize_project(abstract)
-    format_xlsx_document(project)
+    add_content(project)
+    add_conditional_formatting(project)
     add_hyperlink_sheet(abstract, project)
     project.workbook.close()
     return project
