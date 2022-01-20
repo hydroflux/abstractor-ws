@@ -17,11 +17,6 @@ from jaguar.search import search
 from jaguar.transform import transform_document_list
 
 
-def record_document(browser, document_list, document, review):
-    record(browser, dataframe, document)
-    document_found(document_list, document, review)
-
-
 def download_recorded_document(browser, document_directory, document_list, document):
     if not download_document(
         browser,
@@ -35,11 +30,8 @@ def download_recorded_document(browser, document_directory, document_list, docum
 
 
 def handle_single_document(browser, abstract, document):
-    record_document(
-        browser,
-        abstract,
-        document
-    )
+    record(browser, abstract.dataframe, document)
+    document_found(abstract.document_list, document, abstract.review)
     if abstract.download and not abstract.review:
         document_directory = create_document_directory(abstract.target_directory)
         download_recorded_document(
