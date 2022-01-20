@@ -1,12 +1,14 @@
 import os
 import shutil
 
-from settings.export.settings import authorship, text_formats, worksheet_properties
+from settings.export.settings import (authorship, disclaimer, text_formats,
+                                      worksheet_properties)
 
 
 class Project:
 
     authorship = authorship
+    disclaimer = disclaimer
     text_formats = text_formats
     worksheet_properties = worksheet_properties
 
