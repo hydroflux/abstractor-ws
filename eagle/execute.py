@@ -21,16 +21,6 @@ from eagle.transform import transform_document_list
 print("execute", __name__)
 
 
-def download_recorded_document(browser, document_directory, document_list, document, download_only):
-    if not download_document(browser, abstract, document):  # add document reception number to document instance
-        unable_to_download(dataframe, document)
-        no_document_downloaded(document_list, document, download_only)
-    else:
-        document_downloaded(document_list, document, download_only)
-        # document_found document_list, document)
-        # => this is probably a leftover from 'download document list'
-
-
 def handle_single_document(browser, abstract, document):
     if not abstract.download_only:
         record(browser, abstract.document_list, dataframe, document)
@@ -42,7 +32,7 @@ def handle_single_document(browser, abstract, document):
         if document.number_results == 1:
             if previously_downloaded(abstract.document_directory, document):
                 return
-        download_recorded_document(browser, abstract, document)
+        download_document(browser, abstract, document)
 
 
 def handle_multiple_documents(browser, abstract, document):

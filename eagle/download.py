@@ -5,11 +5,13 @@ from selenium.common.exceptions import TimeoutException
 from selenium_utilities.inputs import click_button
 from selenium_utilities.locators import (locate_element_by_class_name,
                                          locate_element_by_id)
+from settings.bad_search import no_download
 
 from settings.county_variables.eagle import (pdf_viewer_class_name,
                                              stock_download_suffix)
 from settings.download_management import previously_downloaded, update_download
 from settings.error_handling import no_image_comment
+from settings.file_management import document_downloaded
 from settings.general_functions import naptime
 from settings.iframe_handling import switch_to_default_content
 
@@ -78,23 +80,29 @@ def check_last_download(dataframe, document, count=0):
         return True
 
 
-def execute_download(browser, dataframe, document_directory, document):
-    number_files = len(os.listdir(document_directory))
+def execute_download(browser, abstract, document):
+    number_files = len(os.listdir(abstract.document_directory))
     build_stock_download(document)
     access_pdf_viewer(browser, document)
     click_button(browser, locate_element_by_id, document.button_attributes["Download Button"], "download button")
     switch_to_default_content(browser)
-    return update_download(
+    if update_download(
         browser,
-        document_directory,
+        abstract.document_directory,
         document,
         number_files
-    )
+    ):
+        document_downloaded(abstract.document_list, document)
+        return True
+    else:
+        no_download(abstract, document)
+        return False
 
 
 def download_document(browser, abstract, document):
-    if download_available(dataframe, document):
-        if previously_downloaded(document_directory, document):
-            if check_last_download(dataframe, document):
+    if download_available(abstract.dataframe, document):
+        if previously_downloaded(abstract.document_directory, document):
+            if check_last_download(abstract.dataframe, document):
+                document_downloaded(abstract.document_list, document)
                 return True
-        return execute_download(browser, dataframe, document_directory, document)
+        return execute_download(browser, abstract, document)
