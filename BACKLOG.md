@@ -2,7 +2,6 @@
 
 ## General To Do
 
-- [ ] Change 'import_list' to 'create_document_list'
 - [ ] If a base runsheet folder has already been created, create a new one
 - [ ] Create a directory to hold all of the functioning programs (cleaning up the work tree structure)
 - [ ] Add 'document_found' to instances of 'record'???
