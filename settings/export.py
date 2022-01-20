@@ -102,9 +102,9 @@ def set_font_formats(workbook):
 
 
 def format_workbook(project):
-    workbook = access_workbook_object(project)
-    set_workbook_properties(workbook)
-    return set_font_formats(workbook), workbook
+    project.workbook = access_workbook_object(project)
+    set_workbook_properties(project.workbook)
+    project.font_formats = set_font_formats(project.workbook)
 
 
 def set_page_format(worksheet):
@@ -116,9 +116,8 @@ def set_page_format(worksheet):
 
 
 def format_worksheet(project):
-    worksheet = access_worksheet_object(project)
-    set_page_format(worksheet)
-    return worksheet
+    project.worksheet = access_worksheet_object(project)
+    set_page_format(project.worksheet)
 
 
 def count_columns(dataframe):
@@ -306,8 +305,8 @@ def add_conditional_formatting(dataframe, worksheet, font_formats):
 
 
 def format_xlsx_document(project, client=None, legal=None):
-    font_formats, workbook = format_workbook(project)
-    worksheet = format_worksheet(project)
+    format_workbook(project)
+    format_worksheet(project)
     set_dataframe_format(worksheet, font_formats['body'])
     add_content(project.county, project.dataframe, worksheet, font_formats, client, legal)
     add_conditional_formatting(project.dataframe, worksheet, font_formats)
@@ -340,6 +339,6 @@ def add_hyperlink_sheet(abstract, workbook):
 def export_document(abstract, client=None, legal=None):
     project = initialize_project(abstract)
     create_abstraction_object(project)
-    workbook = format_xlsx_document(project, client, legal)
+    format_xlsx_document(project, client, legal)
     add_hyperlink_sheet(abstract, workbook)
     workbook.close()
