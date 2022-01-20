@@ -41,6 +41,8 @@ def initialize_project(abstract):
         sheet_name=abstract.type.upper()
     )
     project.writer = create_excel_writer(project)
+    project.workbook = project.writer.book
+    project.worksheet = project.writer.sheets[(project.sheet_name)]
     update_dataframe(project)
     return project
 
@@ -70,14 +72,6 @@ def create_abstraction_object(project):
     )
 
 
-def access_workbook_object(project):
-    return project.writer.book
-
-
-def access_worksheet_object(project):
-    return project.writer.sheets[(project.sheet_name)]
-
-
 def set_workbook_properties(workbook):
     workbook.set_properties(authorship)
 
@@ -101,7 +95,6 @@ def set_font_formats(workbook):
 
 
 def format_workbook(project):
-    project.workbook = access_workbook_object(project)
     set_workbook_properties(project.workbook)
     project.font_formats = set_font_formats(project.workbook)
 
@@ -115,7 +108,6 @@ def set_page_format(worksheet):
 
 
 def format_worksheet(project):
-    project.worksheet = access_worksheet_object(project)
     set_page_format(project.worksheet)
 
 
