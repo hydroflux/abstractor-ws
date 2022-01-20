@@ -1,5 +1,4 @@
 import os
-import shutil
 
 from settings.classes.Abstract import Abstract
 from settings.classes.counties import county_dictionary
@@ -59,21 +58,3 @@ def initialize_abstraction():
     abstract.timer = start_program_timer(abstract.county, abstract.document_list)
     abstract.document_directory = create_document_directory(abstract.target_directory)
     return abstract
-
-
-def move_abstraction_into_project_folder(abstract):
-    # shutil.move(f'{target_directory}/{file_name}-{abstraction_type.upper()}.xlsx', project_folder)
-    shutil.move(f'{target_directory}/{abstract.abstraction}', abstract.project_folder)
-
-
-def move_downloaded_documents(abstract):
-    if download:
-        shutil.move(f'{abstract.target_directory}/Documents', abstract.project_folder)
-
-
-def bundle_project(abstract):
-    os.chdir(abstract.target_directory)
-    abstract.create_project_folder()
-    move_abstraction_into_project_folder(abstract)
-    move_downloaded_documents(abstract)
-    # shutil.move(f'{target_directory}/{file_name}.xlsx', project_folder)

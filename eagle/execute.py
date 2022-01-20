@@ -11,7 +11,6 @@ from eagle.open_document import open_document
 from eagle.record import next_result, record
 from eagle.search import search
 from eagle.transform import transform_document_list
-from settings.initialization import bundle_project
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("execute", __name__)
@@ -60,7 +59,7 @@ def execute_program(abstract):
     account_login(browser)
     search_documents_from_list(browser, abstract)
     abstract.abstraction = export_document(abstract)
-    bundle_project(abstract)
+    abstract.bundle_project()
     browser.close()
 
 

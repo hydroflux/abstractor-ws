@@ -1,4 +1,5 @@
 import os
+import shutil
 
 
 class Abstract:
@@ -99,6 +100,22 @@ class Abstract:
                 os.makedirs(self.project_folder)
         except OSError:
             print('Error: Creating directory ' + self.project_folder)
+
+    def move_abstraction_into_project_folder(self):
+        # shutil.move(f'{target_directory}/{file_name}-{abstraction_type.upper()}.xlsx', project_folder)
+        shutil.move(f'{self.target_directory}/{self.abstraction}', self.project_folder)
+
+    def move_downloaded_documents(self):
+        if self.download:
+            shutil.move(f'{self.target_directory}/Documents', self.project_folder)
+
+    def bundle_project(self):
+        os.chdir(self.target_directory)
+        self.create_project_folder()
+        self.move_abstraction_into_project_folder()
+        self.move_downloaded_documents()
+        # shutil.move(f'{target_directory}/{file_name}.xlsx', project_folder)
+
 
 # - [ ] Put general button_ids on the 'abstract' class (login, logout, etc.)
 # - [ ] Put urls on the abstract class
