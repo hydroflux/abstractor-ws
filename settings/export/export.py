@@ -72,12 +72,33 @@ def set_font_formats(project):
     }
 
 
+##################################
+
+
+def number_to_letter(number):
+    return chr(ord('@') + (number))
+
+
+def access_last_row(project):
+    return len(project.dataframe.index) + worksheet_properties['startrow']
+
+
+def get_worksheet_range(project):
+    # number_columns = count_columns(project)
+    return (f'A{worksheet_properties["startrow"]}:'
+            f'{number_to_letter(project.number_columns)}{access_last_row(project)}')
+
+
+##################################
+
 def set_project_attributes(project):
     project.writer = create_excel_writer(project)
     create_abstraction_object(project)
     project.workbook = project.writer.book
     project.worksheet = project.writer.sheets[(project.sheet_name)]
     project.font_formats = set_font_formats(project)
+    project.number_columns = len(project.dataframe.columns)
+    project.worksheet_range = get_worksheet_range(project)
 
 
 def format_xlsx_document(project):
@@ -107,16 +128,8 @@ def initialize_project(abstract):
     return project
 
 
-def count_columns(project):
-    return len(project.dataframe.columns)
-
-
-def number_to_letter(number):
-    return chr(ord('@') + (number))
-
-
 def last_column(project):
-    return number_to_letter(count_columns(project))
+    return number_to_letter(project.number_columns)
 
 
 def set_title_format(project, font_format):
@@ -202,16 +215,6 @@ def add_dataframe_headers(project, font_format):
     merge_secondary_datatype_ranges(project, font_format)
 
 
-def access_last_row(project):
-    return len(project.dataframe.index) + worksheet_properties['startrow']
-
-
-def get_worksheet_range(project):
-    number_columns = count_columns(project)
-    return (f'A{worksheet_properties["startrow"]}:'
-            f'{number_to_letter(number_columns)}{access_last_row(project)}')
-
-
 def set_worksheet_border(project, font_format):
     border_format_1 = worksheet_properties['conditional_formats']['border_format_1']
     border_format_2 = worksheet_properties['conditional_formats']['border_format_2']
@@ -249,7 +252,6 @@ def add_watermark(worksheet):
 
 
 def add_content(project):
-    project.worksheet_range = get_worksheet_range(project)
     add_title_row(project)
     add_limitations(project, project.font_formats['limitations'])
     add_disclaimer(project, project.font_formats['disclaimer'])
@@ -258,7 +260,6 @@ def add_content(project):
     set_dataframe_format(project)
     add_footer_row(project, project.font_formats['footer'])
     add_filter(project)
-    # add_watermark(worksheet)
 
 
 def create_hyperlink_sheet(project):
