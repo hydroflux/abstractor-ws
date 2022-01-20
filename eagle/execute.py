@@ -1,18 +1,18 @@
 #!/usr/bin/python3
-from eagle.record import build_document_download_information
-from settings.objects.abstract_dataframe import abstract_dictionary as dataframe
 from settings.bad_search import record_bad_search
 from settings.download_management import previously_downloaded
 from settings.driver import create_webdriver
 from settings.export import export_document
-from settings.file_management import (bundle_project, create_document_directory,
+from settings.file_management import (bundle_project,
+                                      create_document_directory,
                                       document_found)
 from settings.general_functions import start_timer
 
 from eagle.download import download_document
 from eagle.login import account_login
 from eagle.open_document import open_document
-from eagle.record import next_result, record
+from eagle.record import (build_document_download_information, next_result,
+                          record)
 from eagle.search import search
 from eagle.transform import transform_document_list
 
@@ -22,10 +22,10 @@ print("execute", __name__)
 
 def handle_single_document(browser, abstract, document):
     if not abstract.download_only:
-        record(browser, abstract.document_list, dataframe, document)
+        record(browser, abstract.document_list, abstract.dataframe, document)
         document_found(abstract.document_list, document, abstract.review)
     else:
-        build_document_download_information(browser, dataframe, document)
+        build_document_download_information(browser, abstract.dataframe, document)
     if abstract.download and not abstract.review:
         abstract.document_directory = create_document_directory(abstract.target_directory)
         if document.number_results == 1:
