@@ -2,10 +2,10 @@ import os
 from pandas import DataFrame, ExcelWriter
 
 from settings.classes.Project import Project
+
 from settings.export.conditional_formatting import add_conditional_formatting
 from settings.export.content import add_content, number_to_letter
-
-from settings.temp_hyperlink import write_temporary_hyperlinks
+from settings.export.hyperlinks import add_hyperlink_sheet
 
 
 def update_dataframe(project):
@@ -109,29 +109,6 @@ def initialize_project(abstract):
     set_project_attributes(project)
     format_xlsx_document(project)
     return project
-
-
-def create_hyperlink_sheet(project):
-    hyperlink_sheet = project.workbook.add_worksheet("Hyperlink")
-    hyperlink_sheet.set_column('A:A', 20)
-    return hyperlink_sheet
-
-
-def add_hyperlink_sheet(abstract, project):
-    if abstract.download:
-        hyperlink_format = project.workbook.add_format(Project.text_formats['hyperlink'])
-        hyperlink_sheet = create_hyperlink_sheet(project)
-        write_temporary_hyperlinks(abstract.document_directory, hyperlink_sheet, hyperlink_format)
-        os.chdir(abstract.target_directory)  # Is this necessary?
-
-
-# def export_hyperlinks(abstract):
-#     os.chdir(abstract.target_directory)
-#     output_file, writer = create_xlsx_document(abstract.target_directory, abstract.file_name, abstract.dataframe)
-#     workbook = access_workbook_object(writer)
-#     add_hyperlink_sheet(abstract, workbook)
-#     workbook.close()
-#     return output_file
 
 
 def export_document(abstract):

@@ -45,3 +45,29 @@ def write_temporary_hyperlinks(document_directory, sheet, format):
     for file in directory:
         if not drop_ds_store(file):
             write_hyperlink_url(directory, file, sheet, format)
+
+
+#####################################################################
+
+
+def create_hyperlink_sheet(project):
+    hyperlink_sheet = project.workbook.add_worksheet("Hyperlink")
+    hyperlink_sheet.set_column('A:A', 20)
+    return hyperlink_sheet
+
+
+def add_hyperlink_sheet(abstract, project):
+    if abstract.download:
+        hyperlink_format = project.workbook.add_format(project.text_formats['hyperlink'])
+        hyperlink_sheet = create_hyperlink_sheet(project)
+        write_temporary_hyperlinks(abstract.document_directory, hyperlink_sheet, hyperlink_format)
+        os.chdir(abstract.target_directory)  # Is this necessary?
+
+
+# def export_hyperlinks(abstract):
+#     os.chdir(abstract.target_directory)
+#     output_file, writer = create_xlsx_document(abstract.target_directory, abstract.file_name, abstract.dataframe)
+#     workbook = access_workbook_object(writer)
+#     add_hyperlink_sheet(abstract, workbook)
+#     workbook.close()
+#     return output_file
