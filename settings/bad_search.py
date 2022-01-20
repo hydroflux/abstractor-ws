@@ -1,7 +1,7 @@
 from settings.error_handling import no_image_comment
 from settings.export_settings import search_errors
 from settings.file_management import (document_type, document_value,
-                                      extrapolate_document_value)
+                                      extrapolate_document_value, no_document_found)
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("bad_search", __name__)
@@ -38,17 +38,17 @@ def add_bad_search_message(dataframe, document):
 
 
 def record_bad_search(abstract, document):
-    add_bad_search_key_values(dataframe, document)
-    dataframe["Grantor"].append(search_errors[0])
-    dataframe["Grantee"].append(search_errors[0])
-    dataframe["Document Type"].append(search_errors[0])
-    dataframe["Document Link"].append(search_errors[-2])
-    dataframe["Effective Date"].append(search_errors[-2])
-    dataframe["Recording Date"].append(search_errors[1])
-    dataframe["Legal"].append(search_errors[-2])
-    dataframe["Related Documents"].append(search_errors[-2])
-    add_bad_search_message(dataframe, document)
-    no_document_found(document_list, document, review)
+    add_bad_search_key_values(abstract.dataframe, document)
+    abstract.dataframe["Grantor"].append(search_errors[0])
+    abstract.dataframe["Grantee"].append(search_errors[0])
+    abstract.dataframe["Document Type"].append(search_errors[0])
+    abstract.dataframe["Document Link"].append(search_errors[-2])
+    abstract.dataframe["Effective Date"].append(search_errors[-2])
+    abstract.dataframe["Recording Date"].append(search_errors[1])
+    abstract.dataframe["Legal"].append(search_errors[-2])
+    abstract.dataframe["Related Documents"].append(search_errors[-2])
+    add_bad_search_message(abstract.dataframe, document)
+    no_document_found(abstract.document_list, document, abstract.review)
 
 
 def unable_to_download(dataframe, document):
