@@ -225,18 +225,18 @@ def get_worksheet_range(project):
 
 
 def set_worksheet_border(project, font_format):
-    worksheet_range = get_worksheet_range(project)
     border_format_1 = worksheet_properties['conditional_formats']['border_format_1']
     border_format_2 = worksheet_properties['conditional_formats']['border_format_2']
     border_format_1['format'] = font_format
     border_format_2['format'] = font_format
-    project.worksheet.conditional_format(worksheet_range, border_format_1)
-    project.worksheet.conditional_format(worksheet_range, border_format_2)
+    project.worksheet.conditional_format(project.worksheet_range, border_format_1)
+    project.worksheet.conditional_format(project.worksheet_range, border_format_2)
 
 
-def set_dataframe_format(worksheet, font_format):
+def set_dataframe_format(project):
+    body_format = project.font_formats['body']
     for column in worksheet_properties['column_formats']:
-        worksheet.set_column(column.column_range, column.width, font_format)
+        project.worksheet.set_column(column.column_range, column.width, body_format)
 
 
 def footer_row(project):
@@ -261,6 +261,7 @@ def add_watermark(worksheet):
 
 
 def add_content(project):
+    project.worksheet_range = get_worksheet_range(project)
     add_title_row(project)
     add_limitations(project, project.font_formats['limitations'])
     add_disclaimer(project, project.font_formats['disclaimer'])
@@ -271,10 +272,10 @@ def add_content(project):
     # add_watermark(worksheet)
 
 
-def add_no_record_format(worksheet, worksheet_range, font_format):
+def add_no_record_format(project, font_format):
     no_record_format = worksheet_properties['conditional_formats']['no_record_format']
     no_record_format['format'] = font_format
-    worksheet.conditional_format(worksheet_range, no_record_format)
+    project.worksheet.conditional_format(project.worksheet_range, no_record_format)
 
 
 def add_multiple_document_format(worksheet, worksheet_range, font_format):
@@ -296,8 +297,7 @@ def add_out_of_county_format(worksheet, worksheet_range, font_format):
 
 
 def add_conditional_formatting(project):
-    worksheet_range = get_worksheet_range(project)
-    add_no_record_format(project.worksheet, worksheet_range, project.font_formats['no_record'])
+    add_no_record_format(project, project.font_formats['no_record'])
     add_multiple_document_format(project.worksheet, worksheet_range, project.font_formats['multiple_documents'])
     add_no_document_image_format(project.worksheet, worksheet_range, project.font_formats['no_image'])
     add_out_of_county_format(project.worksheet, worksheet_range, project.font_formats['out_of_county'])
@@ -306,7 +306,7 @@ def add_conditional_formatting(project):
 def format_xlsx_document(project):
     format_workbook(project)
     format_worksheet(project)
-    set_dataframe_format(project.worksheet, project.font_formats['body'])
+    set_dataframe_format(project)
     add_content(project)
     add_conditional_formatting(project)
 
