@@ -95,10 +95,10 @@ class Abstract:
     def create_project_folder(self):
         self.project_folder = f'{self.target_directory}/{self.abstraction[:-5]}'
         try:
-            if not os.path.exists(self.target_directory):
-                os.makedirs(self.target_directory)
+            if not os.path.exists(self.project_folder):
+                os.makedirs(self.project_folder)
         except OSError:
-            print('Error: Creating directory ' + self.target_directory)
+            print('Error: Creating directory ' + self.project_folder)
 
 # - [ ] Put general button_ids on the 'abstract' class (login, logout, etc.)
 # - [ ] Put urls on the abstract class

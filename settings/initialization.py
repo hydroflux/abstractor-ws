@@ -66,14 +66,14 @@ def move_abstraction_into_project_folder(abstract):
     shutil.move(f'{target_directory}/{abstract.abstraction}', abstract.project_folder)
 
 
-def move_downloaded_documents(target_directory, project_folder):
+def move_downloaded_documents(abstract):
     if download:
-        shutil.move(f'{target_directory}/Documents', project_folder)
+        shutil.move(f'{abstract.target_directory}/Documents', abstract.project_folder)
 
 
 def bundle_project(abstract):
     os.chdir(abstract.target_directory)
-    project_folder = abstract.create_project_folder()
+    abstract.create_project_folder()
     move_abstraction_into_project_folder(abstract)
-    move_downloaded_documents(abstract.target_directory, project_folder)
+    move_downloaded_documents(abstract)
     # shutil.move(f'{target_directory}/{file_name}.xlsx', project_folder)
