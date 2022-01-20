@@ -131,36 +131,36 @@ def last_column(dataframe):
     return number_to_letter(count_columns(dataframe))
 
 
-def set_title_format(dataframe, worksheet, font_format):
-    worksheet.set_row(0, worksheet_properties['header_height'])
-    worksheet.merge_range(f'A1:{last_column(dataframe)}1', '', font_format)
+def set_title_format(project, font_format):
+    project.worksheet.set_row(0, worksheet_properties['header_height'])
+    project.worksheet.merge_range(f'A1:{last_column(project.dataframe)}1', '', font_format)
 
 
 def create_range_message(dataframe, content):
     return f'From {content["start_date"]} to {content["end_date"]} \n ({content["order"]})'
 
 
-def write_title_content(dataframe, county, worksheet, font_formats, client=None, legal=None):
+def write_title_content(project):
     content = worksheet_properties['header_content']
-    content['county'] = f'{county}\n'
-    range_message = create_range_message(dataframe, content)
-    if client is not None and legal is not None:
-        content['user'] = f'{client}\n'
-        content['scope'] = f'{legal}\n'
-    worksheet.write_rich_string(
+    content['county'] = f'{project.county}\n'
+    range_message = create_range_message(project.dataframe, content)
+    if project.client is not None and project.legal is not None:
+        content['user'] = f'{project.client}\n'
+        content['scope'] = f'{project.legal}\n'
+    project.worksheet.write_rich_string(
         'A1',
-        font_formats['large'], content['type'],
-        font_formats['large'], content['user'],
-        font_formats['small'], content['scope'],
-        font_formats['small'], content['county'],
-        font_formats['small'], range_message,
-        font_formats['header']
+        project.font_formats['large'], content['type'],
+        project.font_formats['large'], content['user'],
+        project.font_formats['small'], content['scope'],
+        project.font_formats['small'], content['county'],
+        project.font_formats['small'], range_message,
+        project.font_formats['header']
     )
 
 
 def add_title_row(project):
-    set_title_format(dataframe, worksheet, font_formats['header'])
-    write_title_content(dataframe, county, worksheet, font_formats, client, legal)
+    set_title_format(project, project.font_formats['header'])
+    write_title_content(project)
 
 
 def add_limitations(dataframe, worksheet, font_format):
