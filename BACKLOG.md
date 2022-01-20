@@ -96,6 +96,7 @@
 
 ### Exports To Do
 
+- [ ] Add hyperlinks not if 'download' flag is true on abstract, but rather if a document_directory exists--maybe check length of the document_directory for files with the county prefix
 - [ ] Add volume & document date (effective date for now) to the dataframe at outset, then remove for each county not needed in "transform"
 - [ ] Add hyperlinks before exporting (working on now)
 - [ ] Update date formatting to named months input at the beginning

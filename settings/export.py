@@ -311,16 +311,16 @@ def format_xlsx_document(project):
     add_conditional_formatting(project.dataframe, project.worksheet, project.font_formats)
 
 
-def create_hyperlink_sheet(workbook):
-    hyperlink_sheet = workbook.add_worksheet("Hyperlink")
+def create_hyperlink_sheet(project):
+    hyperlink_sheet = project.workbook.add_worksheet("Hyperlink")
     hyperlink_sheet.set_column('A:A', 20)
     return hyperlink_sheet
 
 
-def add_hyperlink_sheet(abstract, workbook):
+def add_hyperlink_sheet(abstract, project):
     if abstract.download:
-        hyperlink_format = workbook.add_format(text_formats['hyperlink'])
-        hyperlink_sheet = create_hyperlink_sheet(workbook)
+        hyperlink_format = project.workbook.add_format(text_formats['hyperlink'])
+        hyperlink_sheet = create_hyperlink_sheet(project)
         write_temporary_hyperlinks(abstract.document_directory, hyperlink_sheet, hyperlink_format)
         os.chdir(abstract.target_directory)  # Is this necessary?
 
@@ -338,6 +338,6 @@ def export_document(abstract):
     project = initialize_project(abstract)
     create_abstraction_object(project)
     format_xlsx_document(project)
-    add_hyperlink_sheet(abstract, project.workbook)
+    add_hyperlink_sheet(abstract, project)
     project.workbook.close()
     return project
