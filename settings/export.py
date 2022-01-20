@@ -8,12 +8,11 @@ from settings.export_settings import (authorship, full_disclaimer,
                                       text_formats, worksheet_properties)
 
 
-def rename_legal_description(dataframe):
-    return dataframe.rename({"Legal": "Legal Description"}, axis=1)
-
-
-def rename_effective_date(dataframe):
-    return dataframe.rename({"Effective Date": "Document Effective Date"}, axis=1)
+def update_dataframe(project):
+    # Rename Legal Description
+    project.dataframe.rename({"Legal": "Legal Description"}, axis=1)
+    # Rename Effective Date
+    project.dataframe.rename({"Effective Date": "Document Effective Date"}, axis=1)
 
 
 def create_output_file(abstract):
@@ -37,8 +36,7 @@ def initialize_project(abstract):
         file_name=create_output_file(abstract)
     )
     project.writer = create_excel_writer(project)
-    rename_legal_description(project.dataframe)
-    rename_effective_date(project.dataframe)
+    update_dataframe(project)
     print(project.dataframe)
     os.chdir(project.target_directory)
     return project
