@@ -55,11 +55,6 @@ def handle_search_results(browser, abstract, document):
         input()
 
 
-def handle_bad_search(dataframe, document_list, document, review):
-    record_bad_search(dataframe, document)
-    no_document_found(document_list, document, review)
-
-
 def search_documents_from_list(browser, abstract):
     for document in abstract.document_list:
         document.start_time = start_timer()
@@ -71,7 +66,7 @@ def search_documents_from_list(browser, abstract):
                 document
             )
         else:
-            handle_bad_search(dataframe, abstract.document_list, document, abstract.document_list)
+            record_bad_search(abstract, document)
 
 
 def execute_program(abstract):

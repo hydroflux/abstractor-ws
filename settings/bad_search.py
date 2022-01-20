@@ -37,7 +37,7 @@ def add_bad_search_message(dataframe, document):
     dataframe["Comments"].append(bad_search_message)
 
 
-def record_bad_search(dataframe, document):
+def record_bad_search(abstract, document):
     add_bad_search_key_values(dataframe, document)
     dataframe["Grantor"].append(search_errors[0])
     dataframe["Grantee"].append(search_errors[0])
@@ -48,6 +48,7 @@ def record_bad_search(dataframe, document):
     dataframe["Legal"].append(search_errors[-2])
     dataframe["Related Documents"].append(search_errors[-2])
     add_bad_search_message(dataframe, document)
+    no_document_found(document_list, document, review)
 
 
 def unable_to_download(dataframe, document):
