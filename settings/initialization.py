@@ -63,3 +63,27 @@ def initialize_abstraction():
     abstract.timer = start_program_timer(abstract.county, abstract.document_list)
     abstract.document_directory = create_document_directory(abstract.target_directory)
     return abstract
+
+
+def move_abstraction_into_project_folder(target_directory, project_folder, abstraction):
+    # shutil.move(f'{target_directory}/{file_name}-{abstraction_type.upper()}.xlsx', project_folder)
+    shutil.move(f'{target_directory}/{abstraction}', project_folder)
+
+
+def move_downloaded_documents(target_directory, project_folder):
+    if download:
+        shutil.move(f'{target_directory}/Documents', project_folder)
+
+
+def create_project_folder(target_directory, abstraction):
+    project_folder = f'{target_directory}/{abstraction[:-5]}'
+    create_folder(project_folder)
+    return project_folder
+
+
+def bundle_project(abstract):
+    os.chdir(abstract.target_directory)
+    project_folder = create_project_folder(abstract.target_directory, abstract.abstraction)
+    move_abstraction_into_project_folder(abstract.target_directory, project_folder, abstract.abstraction)
+    move_downloaded_documents(abstract.target_directory, project_folder)
+    # shutil.move(f'{target_directory}/{file_name}.xlsx', project_folder)

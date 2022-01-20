@@ -1,7 +1,4 @@
 import os
-import shutil
-
-from settings.settings import download
 
 if __name__ == '__main__':
     from settings.general_functions import four_character_padding, report_execution_time
@@ -209,30 +206,6 @@ def rename_documents_in_directory(county, directory):
             if size is True:
                 os.remove(new_document_name)
                 print('Failed to download reception number ' + pdf)
-
-
-def create_project_folder(target_directory, abstraction):
-    project_folder = f'{target_directory}/{abstraction[:-5]}'
-    create_folder(project_folder)
-    return project_folder
-
-
-def move_abstraction_into_project_folder(target_directory, project_folder, abstraction):
-    # shutil.move(f'{target_directory}/{file_name}-{abstraction_type.upper()}.xlsx', project_folder)
-    shutil.move(f'{target_directory}/{abstraction}', project_folder)
-
-
-def move_downloaded_documents(target_directory, project_folder):
-    if download:
-        shutil.move(f'{target_directory}/Documents', project_folder)
-
-
-def bundle_project(abstract):
-    os.chdir(abstract.target_directory)
-    project_folder = create_project_folder(abstract.target_directory, abstract.abstraction)
-    move_abstraction_into_project_folder(abstract.target_directory, project_folder, abstract.abstraction)
-    move_downloaded_documents(abstract.target_directory, project_folder)
-    # shutil.move(f'{target_directory}/{file_name}.xlsx', project_folder)
 
 
 def remove_prefix(string, prefix):
