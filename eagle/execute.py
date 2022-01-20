@@ -6,8 +6,7 @@ from settings.download_management import previously_downloaded
 from settings.driver import create_webdriver
 from settings.export import export_document
 from settings.file_management import (bundle_project, create_document_directory, document_downloaded,
-                                      document_found, no_document_downloaded,
-                                      no_document_found)
+                                      document_found, no_document_downloaded)
 from settings.general_functions import start_timer
 from settings.settings import download
 
@@ -22,18 +21,8 @@ from eagle.transform import transform_document_list
 print("execute", __name__)
 
 
-def record_document(browser, abstract, document):
-    record(browser, document_list, dataframe, document)
-    document_found(document_list, document, review)
-
-
 def download_recorded_document(browser, document_directory, document_list, document, download_only):
-    if not download_document(
-        browser,
-        dataframe,
-        document_directory,
-        document
-    ):  # add document reception number to document instance
+    if not download_document(browser, abstract, document):  # add document reception number to document instance
         unable_to_download(dataframe, document)
         no_document_downloaded(document_list, document, download_only)
     else:
@@ -44,7 +33,8 @@ def download_recorded_document(browser, document_directory, document_list, docum
 
 def handle_single_document(browser, abstract, document):
     if not abstract.download_only:
-        record_document(browser, abstract, document)
+        record(browser, abstract.document_list, dataframe, document)
+        document_found(abstract.document_list, document, abstract.review)
     else:
         build_document_download_information(browser, dataframe, document)
     if download and not abstract.review:

@@ -92,7 +92,7 @@ def execute_download(browser, dataframe, document_directory, document):
     )
 
 
-def download_document(browser, dataframe, document_directory, document):
+def download_document(browser, abstract, document):
     if download_available(dataframe, document):
         if previously_downloaded(document_directory, document):
             if check_last_download(dataframe, document):

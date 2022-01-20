@@ -7,6 +7,7 @@
 - [ ] Change 'import_list' to 'create_document_list'
 - [ ] If a base runsheet folder has already been created, create a new one
 - [ ] Create a directory to hold all of the functioning programs (cleaning up the work tree structure)
+- [ ] Add 'document_found' to instances of 'record'???
 - [ ] Create a 'timers' script (pull from 'file_management' and 'general_functions')
 - [ ] Comment imports and section by type
 - [ ] Create log files on run returning various metrics => create a comment function that takes a comment as an argument and then updates an object to be exported & prints to the screen
