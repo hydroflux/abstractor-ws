@@ -31,8 +31,8 @@ def transform_dictionary(dictionary):
 
 
 def create_output_file(abstract):
-    abstraction_export = '-'.join(abstraction_type.upper().split(' '))
-    return f'{file_name.upper()}-{abstraction_export}.xlsx'
+    abstraction_export = '-'.join(abstract.abstraction_type.upper().split(' '))
+    abstract.output_file = f'{abstract.file_name.upper()}-{abstraction_export}.xlsx'
 
 
 def create_excel_writer(output_file):
@@ -44,9 +44,9 @@ def create_excel_writer(output_file):
 
 
 def create_xlsx_document(abstract):
-    output_file = create_output_file(abstract)
-    writer = create_excel_writer(output_file)
-    return output_file, writer
+    create_output_file(abstract)
+    writer = create_excel_writer(abstract.output_file)
+    return writer
 
 
 def add_column(dataframe, current_position, column):
@@ -79,8 +79,8 @@ def access_workbook_object(writer):
     return writer.book
 
 
-def access_worksheet_object(writer):
-    return writer.sheets[(abstraction_type.upper())]
+def access_worksheet_object(abstract, writer):
+    return writer.sheets[(abstract.abstraction_type.upper())]
 
 
 def set_workbook_properties(workbook):
@@ -119,8 +119,8 @@ def set_page_format(worksheet):
     worksheet.freeze_panes(f'A{worksheet_properties["startrow"] + 1}')
 
 
-def format_worksheet(writer):
-    worksheet = access_worksheet_object(writer)
+def format_worksheet(abstract, writer):
+    worksheet = access_worksheet_object(abstract, writer)
     set_page_format(worksheet)
     return worksheet
 
@@ -309,12 +309,12 @@ def add_conditional_formatting(dataframe, worksheet, font_formats):
     add_out_of_county_format(worksheet, worksheet_range, font_formats['out_of_county'])
 
 
-def format_xlsx_document(county, writer, dataframe, client=None, legal=None):
+def format_xlsx_document(abstract, writer, client=None, legal=None):
     font_formats, workbook = format_workbook(writer)
-    worksheet = format_worksheet(writer)
+    worksheet = format_worksheet(abstract, writer)
     set_dataframe_format(worksheet, font_formats['body'])
-    add_content(county, dataframe, worksheet, font_formats, client, legal)
-    add_conditional_formatting(dataframe, worksheet, font_formats)
+    add_content(abstract.county, abstract.dataframe, worksheet, font_formats, client, legal)
+    add_conditional_formatting(abstract.dataframe, worksheet, font_formats)
     return workbook
 
 
@@ -347,6 +347,6 @@ def export_document(abstract, client=None, legal=None):
     # add_hyperlinks(target_directory, dataframe)
     abstract.output_file, writer = create_xlsx_document(abstract)
     create_abstraction_object(abstract.target_directory, writer, abstract.dataframe, abstract.type.upper())
-    workbook = format_xlsx_document(abstract.county, writer, abstract.dataframe, client, legal)
+    workbook = format_xlsx_document(abstract, writer, client, legal)
     add_hyperlink_sheet(abstract, workbook)
     workbook.close()
