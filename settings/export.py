@@ -1,16 +1,21 @@
 import os
-from settings.temp_hyperlink import write_temporary_hyperlinks
-
 from pandas import DataFrame, ExcelWriter
 
+from settings.classes.Project import Project
+
+from settings.temp_hyperlink import write_temporary_hyperlinks
 from settings.export_settings import (authorship, full_disclaimer,
                                       text_formats, worksheet_properties)
 
 
-def create_dataframe(dictionary):
-    dataframe = DataFrame(dictionary)
-    print(dataframe)
-    return dataframe
+def initialize_project(abstract):
+    project = Project(
+        target_directory=abstract.target_directory,
+        dataframe=DataFrame(abstract.dataframe)
+    )
+    print(project.dataframe)
+    os.chdir(project.target_directory)
+    return project
 
 
 def rename_legal_description(dataframe):
@@ -21,9 +26,8 @@ def rename_effective_date(dataframe):
     return dataframe.rename({"Effective Date": "Document Effective Date"}, axis=1)
 
 
-def transform_dictionary(dictionary):
-    dataframe = create_dataframe(dictionary)
-    return rename_legal_description(rename_effective_date(dataframe))
+def transform_dataframe(project):
+    rename_legal_description(rename_effective_date(project.dataframe))
 
 
 def create_output_file(abstract):
@@ -338,8 +342,8 @@ def export_hyperlinks(abstract):
 
 
 def export_document(abstract, client=None, legal=None):
-    os.chdir(abstract.target_directory)
-    abstract.dataframe = transform_dictionary(abstract.dataframe)
+    project = initialize_project(abstract)
+    transform_dataframe(project)
     # add_hyperlinks(target_directory, dataframe)
     writer = create_xlsx_document(abstract)
     create_abstraction_object(abstract.target_directory, writer, abstract.dataframe, abstract.type.upper())
