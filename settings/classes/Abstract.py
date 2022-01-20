@@ -1,14 +1,9 @@
-import os
-import shutil
-
-
 class Abstract:
     def __init__(self, type, county, target_directory, file_name, program,
                  headless, download, dataframe,
                  review=False, download_only=False, document_directory=None,
-                 document_list=None, timer=None, output_file=None,
-                 search_name=None,
-                 project_folder=None):
+                 document_list=None, timer=None,
+                 search_name=None):
         self.type = type
         self.county = county
         self.target_directory = target_directory
@@ -22,9 +17,7 @@ class Abstract:
         self.document_directory = document_directory
         self.document_list = document_list
         self.timer = timer
-        self.output_file = output_file
         self.search_name = search_name
-        self.project_folder = project_folder
 
     def drop_last_entry(self):
         self.dataframe["Grantor"].pop()
@@ -93,23 +86,6 @@ class Abstract:
             print("Legals: ", legals)
             print("Related Documents: ", related_documents)
             print("Comments: ", comments)
-
-    def create_project_folder(self):
-        self.project_folder = f'{self.target_directory}/{self.output_file[:-5]}'
-        try:
-            if not os.path.exists(self.project_folder):
-                os.makedirs(self.project_folder)
-        except OSError:
-            print('Error: Creating directory ' + self.project_folder)
-
-    def bundle_project(self):
-        os.chdir(self.target_directory)
-        self.create_project_folder()
-        # Move Output File into Project Folder
-        shutil.move(f'{self.target_directory}/{self.output_file}', self.project_folder)
-        # Move Downloaded Documents
-        if self.download:
-            shutil.move(f'{self.target_directory}/Documents', self.project_folder)
 
 
 # - [ ] Put general button_ids on the 'abstract' class (login, logout, etc.)

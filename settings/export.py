@@ -22,7 +22,7 @@ def create_output_file(abstract):
 
 def create_excel_writer(project):
     return ExcelWriter(
-        project.file_name,
+        project.output_file,
         engine='xlsxwriter',
         datetime_format='mm/dd/yyyy',
         date_format='mm/dd/yyyy')  # pylint: disable=abstract-class-instantiated
@@ -34,7 +34,7 @@ def initialize_project(abstract):
         county=abstract.county,
         target_directory=abstract.target_directory,
         dataframe=DataFrame(abstract.dataframe),
-        file_name=create_output_file(abstract),
+        output_file=create_output_file(abstract),
         sheet_name=abstract.type.upper()
     )
     project.writer = create_excel_writer(project)
@@ -59,9 +59,7 @@ def add_breakpoints(dataframe):
 
 
 def create_abstraction_object(project):
-    # add_hyperlinks(target_directory, dataframe)
     add_breakpoints(project.dataframe)
-    # doesn't need the return statement
     return project.dataframe.to_excel(
         project.writer,
         sheet_name=project.sheet_name,
