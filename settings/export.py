@@ -21,6 +21,14 @@ def create_output_file(abstract):
     return f'{abstract.file_name.upper()}-{abstraction_export}.xlsx'
 
 
+def create_excel_writer(project):
+    return ExcelWriter(
+        project.file_name,
+        engine='xlsxwriter',
+        datetime_format='mm/dd/yyyy',
+        date_format='mm/dd/yyyy')  # pylint: disable=abstract-class-instantiated
+
+
 def initialize_project(abstract):
     project = Project(
         type=abstract.type,
@@ -28,25 +36,12 @@ def initialize_project(abstract):
         dataframe=DataFrame(abstract.dataframe),
         file_name=create_output_file(abstract)
     )
+    project.writer = create_excel_writer(project)
     rename_legal_description(project.dataframe)
     rename_effective_date(project.dataframe)
     print(project.dataframe)
     os.chdir(project.target_directory)
     return project
-
-
-def create_excel_writer(project):
-    return ExcelWriter(
-        output_file,
-        engine='xlsxwriter',
-        datetime_format='mm/dd/yyyy',
-        date_format='mm/dd/yyyy')  # pylint: disable=abstract-class-instantiated
-
-
-def create_xlsx_document(project):
-    create_output_file(project)
-    writer = create_excel_writer(project)
-    return writer
 
 
 def add_column(dataframe, current_position, column):
@@ -332,18 +327,17 @@ def add_hyperlink_sheet(abstract, workbook):
         os.chdir(abstract.target_directory)  # Is this necessary?
 
 
-def export_hyperlinks(abstract):
-    os.chdir(abstract.target_directory)
-    output_file, writer = create_xlsx_document(abstract.target_directory, abstract.file_name, abstract.dataframe)
-    workbook = access_workbook_object(writer)
-    add_hyperlink_sheet(abstract, workbook)
-    workbook.close()
-    return output_file
+# def export_hyperlinks(abstract):
+#     os.chdir(abstract.target_directory)
+#     output_file, writer = create_xlsx_document(abstract.target_directory, abstract.file_name, abstract.dataframe)
+#     workbook = access_workbook_object(writer)
+#     add_hyperlink_sheet(abstract, workbook)
+#     workbook.close()
+#     return output_file
 
 
 def export_document(abstract, client=None, legal=None):
     project = initialize_project(abstract)
-    create_xlsx_document(project)
     create_abstraction_object(abstract.target_directory, writer, abstract.dataframe, abstract.type.upper())
     workbook = format_xlsx_document(abstract, writer, client, legal)
     add_hyperlink_sheet(abstract, workbook)
