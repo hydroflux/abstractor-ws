@@ -92,13 +92,8 @@ def execute_program(abstract):
     browser = create_webdriver(abstract.target_directory, abstract.headless)
     transform_document_list(abstract)
     account_login(browser)
-    search_documents_from_list(
-            browser,
-            target_directory,
-            document_list,
-            dataframe,
-            review
-        )
+    abstract.dataframe = dataframe
+    search_documents_from_list(browser, abstract)
     abstraction = export_document(
             county,
             target_directory,

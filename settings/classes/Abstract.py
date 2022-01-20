@@ -1,7 +1,7 @@
 class Abstract:
     def __init__(self, county, target_directory, file_name, program, headless, download,
                  review=False,
-                 document_list=None, timer=None,
+                 document_list=None, timer=None, dataframe=None,
                  search_name=None):
         self.county = county
         self.target_directory = target_directory
