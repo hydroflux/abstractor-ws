@@ -431,15 +431,15 @@ def access_download_information(browser, dataframe, document):
         document.reception_number = reception_number
 
 
-def build_document_download_information(browser, dataframe, document):
-    reception_number = access_download_information(browser, dataframe, document)
+def build_document_download_information(browser, abstract, document):
+    reception_number = access_download_information(browser, abstract.dataframe, document)
     while document.reception_number.strip() == '':
         print('Browser did not correctly access reception number for '
               f'{document.extrapolate_value()}, trying again...')
         naptime()
-        reception_number = access_download_information(browser, dataframe, document)
-    dataframe['Reception Number'].append(reception_number)
-    dataframe['Comments'].append('')
+        reception_number = access_download_information(browser, abstract.dataframe, document)
+    abstract.dataframe['Reception Number'].append(reception_number)
+    abstract.dataframe['Comments'].append('')
 
 
 def record(browser, abstract, document):

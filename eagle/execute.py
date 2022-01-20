@@ -25,7 +25,7 @@ def handle_single_document(browser, abstract, document):
         record(browser, abstract, document)
         document_found(abstract, document)
     else:
-        build_document_download_information(browser, abstract.dataframe, document)
+        build_document_download_information(browser, abstract, document)
     if abstract.download and not abstract.review:
         abstract.document_directory = create_document_directory(abstract.target_directory)
         if document.number_results == 1:
