@@ -7,10 +7,6 @@ from settings.export_settings import (authorship, full_disclaimer,
                                       text_formats, worksheet_properties)
 
 
-def prepare_output_environment(target_directory):
-    os.chdir(target_directory)
-
-
 def create_dataframe(dictionary):
     dataframe = DataFrame(dictionary)
     print(dataframe)
@@ -342,7 +338,7 @@ def export_hyperlinks(abstract):
 
 
 def export_document(abstract, client=None, legal=None):
-    prepare_output_environment(abstract.target_directory)
+    os.chdir(abstract.target_directory)
     abstract.dataframe = transform_dictionary(abstract.dataframe)
     # add_hyperlinks(target_directory, dataframe)
     abstract.output_file, writer = create_xlsx_document(abstract)
