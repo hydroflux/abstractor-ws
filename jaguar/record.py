@@ -94,8 +94,8 @@ def record_document_link(dataframe, document):
     dataframe['Document Link'].append('')
 
 
-def record(browser, dataframe, document):
-    record_document_type_and_number(browser, dataframe, document)
-    aggregate_document_table_information(browser, dataframe, document)
-    record_comments(dataframe, document)
-    record_document_link(dataframe, document)
+def record(browser, abstract, document):
+    record_document_type_and_number(browser, abstract.dataframe, document)
+    aggregate_document_table_information(browser, abstract.dataframe, document)
+    record_comments(abstract.dataframe, document)
+    record_document_link(abstract.dataframe, document)
