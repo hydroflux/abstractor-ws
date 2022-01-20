@@ -8,7 +8,6 @@ from settings.file_management import (bundle_project,
                                       no_document_downloaded,
                                       no_document_found)
 from settings.general_functions import start_timer
-from settings.settings import download
 
 from jaguar.download import download_document
 from jaguar.login import account_login
@@ -35,31 +34,28 @@ def download_recorded_document(browser, document_directory, document_list, docum
         document_downloaded(document_list, document)
 
 
-def handle_single_document(browser, target_directory, document_list, document, review):
+def handle_single_document(browser, abstract, document):
     record_document(
         browser,
-        document_list,
-        document,
-        review
+        abstract,
+        document
     )
-    if download and not review:
-        document_directory = create_document_directory(target_directory)
+    if abstract.download and not abstract.review:
+        document_directory = create_document_directory(abstract.target_directory)
         download_recorded_document(
             browser,
             document_directory,
-            document_list,
+            abstract.document_list,
             document
         )
 
 
-def handle_search_results(browser, target_directory, document_list, document, review):
+def handle_search_results(browser, abstract, document):
     if document.number_results == 1:
         handle_single_document(
             browser,
-            target_directory,
-            document_list,
-            document,
-            review
+            abstract,
+            document
         )
     elif document.number_results > 1:
         print('Application not equipped to handle multiple documents at the moment; '
@@ -72,20 +68,18 @@ def handle_bad_search(dataframe, document_list, document, review):
     no_document_found(document_list, document, review)
 
 
-def search_documents_from_list(browser, target_directory, document_list, dataframe, review):
-    for document in document_list:
+def search_documents_from_list(browser, abstract):
+    for document in abstract.document_list:
         document.start_time = start_timer()
         search(browser, document)
         if open_document(browser, document):
             handle_search_results(
                 browser,
-                target_directory,
-                document_list,
-                document,
-                review
+                abstract,
+                document
             )
         else:
-            handle_bad_search(dataframe, document_list, document, review)
+            handle_bad_search(dataframe, abstract.document_list, document, abstract.document_list)
 
 
 def execute_program(abstract):
@@ -95,10 +89,10 @@ def execute_program(abstract):
     abstract.dataframe = dataframe
     search_documents_from_list(browser, abstract)
     abstraction = export_document(
-            county,
-            target_directory,
-            file_name,
+            abstract.county,
+            abstract.target_directory,
+            abstract.file_name,
             dataframe
     )
-    bundle_project(target_directory, abstraction)
+    bundle_project(abstract.target_directory, abstraction)
     browser.close()
