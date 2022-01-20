@@ -1,10 +1,9 @@
-from settings.bad_search import no_download, record_bad_search, unable_to_download
+from settings.bad_search import record_bad_search
 from settings.driver import create_webdriver
 from settings.export import export_document
 from settings.file_management import (bundle_project,
                                       create_document_directory,
-                                      document_downloaded, document_found,
-                                      no_document_downloaded)
+                                      document_found)
 from settings.general_functions import start_timer
 
 from jaguar.download import download_document
