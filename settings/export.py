@@ -347,13 +347,13 @@ def export_hyperlinks(county, target_directory, file_name, dataframe):
     return output_file
 
 
-def export_document(county, target_directory, file_name, dictionary, client=None, legal=None):
-    prepare_output_environment(target_directory)
-    dataframe = transform_dictionary(dictionary)
+def export_document(abstract, client=None, legal=None):
+    prepare_output_environment(abstract.target_directory)
+    abstract.dataframe = transform_dictionary(abstract.dataframe)
     # add_hyperlinks(target_directory, dataframe)
-    output_file, writer = create_xlsx_document(target_directory, file_name, dataframe)
-    create_abstraction_object(target_directory, writer, dataframe, abstraction_type.upper())
-    workbook = format_xlsx_document(county, writer, dataframe, client, legal)
-    add_hyperlink_sheet(target_directory, workbook)
+    output_file, writer = create_xlsx_document(abstract.target_directory, abstract.file_name, abstract.dataframe)
+    create_abstraction_object(abstract.target_directory, writer, abstract.dataframe, abstraction_type.upper())
+    workbook = format_xlsx_document(abstract.county, writer, abstract.dataframe, client, legal)
+    add_hyperlink_sheet(abstract.target_directory, workbook)
     workbook.close()
     return output_file
