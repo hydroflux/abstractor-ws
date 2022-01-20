@@ -3,7 +3,9 @@
 ## General To Do
 
 - [ ] If nothing is recorded, do not create a base runsheet or a folder
+- [ ] Add 'transform' to abstract initialization dependent on the county
 - [ ] Change 'import_list' to 'create_document_list'
+- [ ] If a base runsheet folder has already been created, create a new one
 - [ ] Create a directory to hold all of the functioning programs (cleaning up the work tree structure)
 - [ ] Create a 'timers' script (pull from 'file_management' and 'general_functions')
 - [ ] Comment imports and section by type
