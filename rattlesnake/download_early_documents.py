@@ -21,7 +21,7 @@ from settings.file_management import create_document_directory, last_document
 from settings.general_functions import (four_character_padding,
                                         get_direct_link,
                                         javascript_script_execution, naptime)
-from settings.user_prompts import clear_terminal
+from project_management.user_prompts import clear_terminal
 
 from rattlesnake.search import clear_search, handle_document_value_numbers
 

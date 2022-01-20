@@ -2,19 +2,12 @@
 
 ## General To Do
 
-- [ ] If a base runsheet folder has already been created, create a new one
-- [ ] Create a directory to hold all of the functioning programs (cleaning up the work tree structure)
-- [ ] Add 'document_found' to instances of 'record'???
 - [ ] Create a 'timers' script (pull from 'file_management' and 'general_functions')
 - [ ] Comment imports and section by type
 - [ ] Create log files on run returning various metrics => create a comment function that takes a comment as an argument and then updates an object to be exported & prints to the screen
-- [ ] Handle 'Document Date' added to the abstract_dictionary across all recording scripts--maybe make a new utility settings script which handles 'Document Date'
 - [ ] Create a breakdown of adding a new county ('skeleton structures', 'general_functions', etc.)
-- [ ] Change 'file_management' to 'dataframe_management' & split out functions into multiple utility scripts
 - [ ] In the same vein as the two above, create an indicator for any instances that are repeated (don't necessarily remove them)
 - [ ] Figure out how to send cookies through to browser instances in order to get faster page load times
-- [ ] Entire header should be created in the settings block, rather than relying on first & last recording dates in the dataframe
-- [ ] Update 'document.value' to 'document.search_value' to create a better differentiation between 'document.reception_number'???
 - [ ] Consider an "append_text" function to go in general functions / file management which would strip, title case, & replace any unwanted information
 - [ ] Compare parallel scripts from leopard & eagle in order to help refactoring
 - [ ] Review all scripts for "standardized" functions that might be extrapolated
@@ -25,26 +18,25 @@
 - [ ] Create a "big cat" repo to combine information that matches between tiger & leopard
 - [ ] Add date / year into the document class in order to add the option to sort by date
 - [ ] Create a double-check option for eagle--possibly under the "review" as a switch in order to check for any related documents missing
-- [ ] Best order of operations for file management should be to create the folder first & then put the documents folder inside of it, rather than bundling at the end
-- [ ] I keep returning the reception number as a way to 'get' the document number--but if it matches (or if it can be stored a different way), this is completely redundant
-- [ ] Add program_type to  the 'started on...' line when starting a program (checks for cases where the wrong program type was chosen & logging in is time extensive)
-- [ ] Document number & document_image_available should be part of the document class--in addition to this, "download" could be an attribute of the document that is added when the document list is imported, & gets turned off if the document image isn't available
-- [ ] Add county to the document class as well to avoid passing county around to different functions
-- [ ] Add a check to the environment file to make sure that the county information is entered correctly before starting the webdriver
-- [ ] Separate imports for each file based on source location (settings, main directory, outside imports, etc.)
-- [ ] Add input() to every timeout which doesn't have a natural resolution in order to pause the program at each exception (& create a correction)--maybe something to follow up 'extrapolate_document_value', like 'input(, please review.\nPlease press enter after reviewing error)' + a screenshot
-- [ ] Consider creating an error_handling function for exceptions which takes a screenshot & throws an input together with the above suggestion
 - [ ] Create 'master' scripts after breaking out directory scripts into smaller pieces--i.e. 'login' can be a 'master' script; 'fill_search_field' & the like can be built out further as well; 'execution' as well
 - [ ] Create an explanation .md file to define & explain the differences between 'locate', 'get', 'access', 'build', 'handle', etc. functions--'access' & 'get' functions have some overlap, & specifically defining differences would be incredibly beneficial
 - [ ] Add 'county' as an instance variable to document class---could be handled in 'transform_document_list' functions & wouldn't need to be passed around as often
-- [ ] Update parameter (and then argument) order for all instances of 'document_found' and 'no_document_found'
 - [ ] Exception review could include a 'continue?' option that could close out the browser
 - [ ] Replace all 'scroll' functions with 'center element'
-- [ ] Drop 'document_type' and 'document_value' functions if possible & replace with instance variables they are returning--will simplify in the long run
-- [ ] Update 'display_document_list' to show all available attributes attached to a document
 - [ ] Eliminate iframe_handling script?
-- [ ] Add a comment indicating how many documents have been completed
 - [ ] Update & uncomment the the 'execute_demo' function in the 'environment' file
+
+### Error Handling To Do
+
+- [ ] Consider creating an error_handling function for exceptions which takes a screenshot & throws an input together with the above suggestion
+- [ ] Add input() to every timeout which doesn't have a natural resolution in order to pause the program at each exception (& create a correction)--maybe something to follow up 'extrapolate_document_value', like 'input(, please review.\nPlease press enter after reviewing error)' + a screenshot
+
+### Runtime To Do
+
+- [ ] Add program_type to the 'started on...' line when starting a program (checks for cases where the wrong program type was chosen & logging in is time extensive)
+- [ ] Add a comment indicating how many documents have been completed
+- [ ] Update parameter (and then argument) order for all instances of 'document_found' and 'no_document_found'
+- [ ] Add a check to the environment file to make sure that the county information is entered correctly before starting the webdriver
 
 ### Class To Do
 
@@ -60,7 +52,8 @@
 
 #### Document Class To Do
 
-- [ ] Up-To-Date
+- [ ] Update 'document.value' to 'document.search_value' to create a better differentiation between 'document.reception_number'???
+- [ ] Turn off 'download' flag if document image is not available?--could be a better solution to checking image available before trying to download
 
 #### Program Class To Do
 
@@ -71,7 +64,9 @@
 
 - [ ] Up-To-Date
 
-### Imports To Do
+### Project Management To Do
+
+#### Imports To Do
 
 - [ ] Allow user to review the imported excel document & choose the column / columns to run
 - [ ] Add download flag to document class & set at import in order to avoid passing the flag around
@@ -79,8 +74,10 @@
 - [ ] If 0 documents are imported, close the program and send a message
 - [ ] If download is true and the document is already located in the target document directory, add a medium nap for eagle--in order to do so, add "downloaded" or something similar to the Document class for imports
 - [ ] Armadillo, leopard & tiger use convert_document_numbers, maybe make a workspace level script that checks counties against individual 'convert_document_numbers'
+- [ ] Update 'display_document_list' to show all available attributes attached to a document
+- [ ] Entire header should be created in the settings block, rather than relying on first & last recording dates in the dataframe
 
-### Exports To Do
+#### Exports To Do
 
 - [ ] If nothing is recorded, do not create a base runsheet or a folder
 - [ ] Add hyperlinks not if 'download' flag is true on abstract, but rather if a document_directory exists--maybe check length of the document_directory for files with the county prefix
@@ -91,6 +88,7 @@
 - [ ] Automatically export a 'color coding legend' for all documents as an additional tab
 - [ ] Add watermark
 - [ ] Add a print statement at the end to indicate what type of run sheet was created (& the section)
+- [ ] If a base runsheet folder has already been created, create a new one
 
 ### User Prompts To Do
 
@@ -100,6 +98,8 @@
 
 - [ ] Consolidate 'split_book_and_page' and 'split_volume_and_page' functions
 - [ ] Change "Document Found" so that it lists either "recorded" or "recorded & downloaded" instead of located
+- [ ] Change 'file_management' to 'dataframe_management' & split out functions into multiple utility scripts
+- [ ] Best order of operations for file management should be to create the folder first & then put the documents folder inside of it, rather than bundling at the end
 
 ### Download Management To Do
 

@@ -20,7 +20,7 @@ if __name__ == '__main__':
     from settings.general_functions import stop_program_timer
     # from settings.settings import (county_name, file_name, headless,
     #                                sheet_name, target_directory)
-    from settings.user_prompts import currently_unavailable
+    from project_management.user_prompts import currently_unavailable
 
 
 print("environment", __name__)

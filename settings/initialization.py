@@ -8,7 +8,7 @@ from settings.objects.abstract_dataframe import \
     abstract_dictionary as dataframe
 from settings.settings import (county_name, download, file_name, headless, abstraction_type,
                                sheet_name, target_directory)
-from settings.user_prompts import get_program_type
+from project_management.user_prompts import get_program_type
 
 
 def access_county_instance(county_name):
