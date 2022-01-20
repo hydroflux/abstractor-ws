@@ -13,6 +13,8 @@ def update_dataframe(project):
     project.dataframe = project.dataframe.rename({"Legal": "Legal Description"}, axis=1)
     # Rename Effective Date
     project.dataframe = project.dataframe.rename({"Effective Date": "Document Effective Date"}, axis=1)
+    # View Dataframe Layout
+    print(project.dataframe)
 
 
 def create_output_file(abstract):
@@ -29,6 +31,7 @@ def create_excel_writer(project):
 
 
 def initialize_project(abstract):
+    os.chdir(abstract.target_directory)
     project = Project(
         type=abstract.type,
         county=abstract.county,
@@ -39,8 +42,6 @@ def initialize_project(abstract):
     )
     project.writer = create_excel_writer(project)
     update_dataframe(project)
-    print(project.dataframe)
-    os.chdir(project.target_directory)
     return project
 
 

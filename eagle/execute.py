@@ -59,7 +59,7 @@ def execute_program(abstract):
     account_login(browser)
     search_documents_from_list(browser, abstract)
     project = export_document(abstract)
-    project.bundle_project()
+    project.bundle_project(abstract)
     browser.close()
 
 

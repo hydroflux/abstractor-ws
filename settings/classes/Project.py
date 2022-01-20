@@ -28,11 +28,11 @@ class Project:
         except OSError:
             print('Error: Creating directory ' + self.project_folder)
 
-    def bundle_project(self):
+    def bundle_project(self, abstract):
         os.chdir(self.target_directory)
         self.create_project_folder()
         # Move Output File into Project Folder
         shutil.move(f'{self.target_directory}/{self.output_file}', self.project_folder)
         # Move Downloaded Documents
-        if self.download:
+        if abstract.download:
             shutil.move(f'{self.target_directory}/Documents', self.project_folder)
