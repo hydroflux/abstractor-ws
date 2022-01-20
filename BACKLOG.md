@@ -14,7 +14,6 @@
 - [ ] Handle 'Document Date' added to the abstract_dictionary across all recording scripts--maybe make a new utility settings script which handles 'Document Date'
 - [ ] Create a breakdown of adding a new county ('skeleton structures', 'general_functions', etc.)
 - [ ] Change 'file_management' to 'dataframe_management' & split out functions into multiple utility scripts
-- [ ] Add watermark
 - [ ] In the same vein as the two above, create an indicator for any instances that are repeated (don't necessarily remove them)
 - [ ] Figure out how to send cookies through to browser instances in order to get faster page load times
 - [ ] Entire header should be created in the settings block, rather than relying on first & last recording dates in the dataframe
@@ -25,7 +24,6 @@
 - [ ] Review all scripts for "standardized" functions that might be extrapolated
 - [ ] Create a time_management file in settings to handle sleeps, dates, & timers
 - [ ] Create a 'testing' script that imports all settings & variables & opens a browser instance so dev setup doesn't have to be completely manual
-- [ ] Create a selenium general_functions script to handle duplicable functions that require the webdriver in order to run
 - [ ] Create a "download_setup" series of functions where if download == yes: create_directory, get current files, change active directory, etc.
 - [ ] Circle back to leopard download after completing the above
 - [ ] Create a "big cat" repo to combine information that matches between tiger & leopard
@@ -83,7 +81,7 @@
 
 #### Document Class To Do
 
-- [ ] Add 'image_available' onto the Document class
+- [ ] Up-To-Date
 
 ### Imports To Do
 
@@ -98,17 +96,11 @@
 
 - [ ] Add hyperlinks not if 'download' flag is true on abstract, but rather if a document_directory exists--maybe check length of the document_directory for files with the county prefix
 - [ ] Add volume & document date (effective date for now) to the dataframe at outset, then remove for each county not needed in "transform"
-- [ ] Add hyperlinks before exporting (working on now)
 - [ ] Update date formatting to named months input at the beginning
 - [ ] Consider throwing a trigger requesting the dates
-- [ ] Consider lengthening grantor / grantee fields for armadillo
 - [ ] If there is a file matching the created file (i.e. xxxx-Base-Runsheet) which exists, pause and get input to see what the user wants to do
-- [ ] Get rid of print statements in export
 - [ ] Automatically export a 'color coding legend' for all documents as an additional tab
-- [ ] Add filters to xlsx output sheets
-- [ ] There is a function in export_settings to create the full_disclaimer---ideally there should be no functions in settings files
-- [ ] Eliminate the 'Effective Date' column in export--maybe only add 'Document Date' into the abstract if it appears???
-- [ ] Update export settings to change color if the comment mentions no image available
+- [ ] Add watermark
 
 ### File Management To Do
 
@@ -224,6 +216,7 @@
 - [ ] Consider 'checking for subscription'??? <--- could be added to eagle as well
 - [ ] Options should be created in the environment file, the 'use_prompts' file, or a new file specifically for handling options
 - [ ] Refactor 'record' script into its own directory
+- [ ] Consider lengthening grantor / grantee fields for armadillo
 
 ### Iguana To Do
 
