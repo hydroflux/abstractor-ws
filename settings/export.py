@@ -10,9 +10,9 @@ from settings.export_settings import (authorship, full_disclaimer,
 
 def update_dataframe(project):
     # Rename Legal Description
-    project.dataframe.rename({"Legal": "Legal Description"}, axis=1)
+    project.dataframe = project.dataframe.rename({"Legal": "Legal Description"}, axis=1)
     # Rename Effective Date
-    project.dataframe.rename({"Effective Date": "Document Effective Date"}, axis=1)
+    project.dataframe = project.dataframe.rename({"Effective Date": "Document Effective Date"}, axis=1)
 
 
 def create_output_file(abstract):
@@ -31,6 +31,7 @@ def create_excel_writer(project):
 def initialize_project(abstract):
     project = Project(
         type=abstract.type,
+        county=abstract.county,
         target_directory=abstract.target_directory,
         dataframe=DataFrame(abstract.dataframe),
         file_name=create_output_file(abstract),
@@ -60,6 +61,7 @@ def add_breakpoints(dataframe):
 def create_abstraction_object(project):
     # add_hyperlinks(target_directory, dataframe)
     add_breakpoints(project.dataframe)
+    # doesn't need the return statement
     return project.dataframe.to_excel(
         project.writer,
         sheet_name=project.sheet_name,
@@ -303,12 +305,12 @@ def add_conditional_formatting(dataframe, worksheet, font_formats):
     add_out_of_county_format(worksheet, worksheet_range, font_formats['out_of_county'])
 
 
-def format_xlsx_document(abstract, writer, client=None, legal=None):
-    font_formats, workbook = format_workbook(writer)
-    worksheet = format_worksheet(abstract, writer)
+def format_xlsx_document(project, client=None, legal=None):
+    font_formats, workbook = format_workbook(project)
+    worksheet = format_worksheet(project)
     set_dataframe_format(worksheet, font_formats['body'])
-    add_content(abstract.county, abstract.dataframe, worksheet, font_formats, client, legal)
-    add_conditional_formatting(abstract.dataframe, worksheet, font_formats)
+    add_content(project.county, project.dataframe, worksheet, font_formats, client, legal)
+    add_conditional_formatting(project.dataframe, worksheet, font_formats)
     return workbook
 
 
@@ -338,6 +340,6 @@ def add_hyperlink_sheet(abstract, workbook):
 def export_document(abstract, client=None, legal=None):
     project = initialize_project(abstract)
     create_abstraction_object(project)
-    workbook = format_xlsx_document(abstract, writer, client, legal)
+    workbook = format_xlsx_document(project, client, legal)
     add_hyperlink_sheet(abstract, workbook)
     workbook.close()
