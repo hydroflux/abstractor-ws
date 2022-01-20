@@ -72,24 +72,9 @@ def set_font_formats(project):
     }
 
 
-##################################
-
-
 def number_to_letter(number):
     return chr(ord('@') + (number))
 
-
-def access_last_row(project):
-    return len(project.dataframe.index) + worksheet_properties['startrow']
-
-
-def get_worksheet_range(project):
-    # number_columns = count_columns(project)
-    return (f'A{worksheet_properties["startrow"]}:'
-            f'{number_to_letter(project.number_columns)}{access_last_row(project)}')
-
-
-##################################
 
 def set_project_attributes(project):
     project.writer = create_excel_writer(project)
@@ -98,7 +83,10 @@ def set_project_attributes(project):
     project.worksheet = project.writer.sheets[(project.sheet_name)]
     project.font_formats = set_font_formats(project)
     project.number_columns = len(project.dataframe.columns)
-    project.worksheet_range = get_worksheet_range(project)
+    project.last_row = len(project.dataframe.index) + project.worksheet_properties['startrow']
+    project.footer_row = project.last_row + 1
+    project.worksheet_range = (f'A{worksheet_properties["startrow"]}:'
+                               f'{number_to_letter(project.number_columns)}{project.last_row}')
 
 
 def format_xlsx_document(project):
@@ -228,10 +216,6 @@ def set_dataframe_format(project):
     body_format = project.font_formats['body']
     for column in worksheet_properties['column_formats']:
         project.worksheet.set_column(column.column_range, column.width, body_format)
-
-
-def footer_row(project):
-    return access_last_row(project) + 1
 
 
 def add_footer_row(project, font_format):
