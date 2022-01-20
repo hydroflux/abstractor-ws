@@ -6,7 +6,7 @@ from settings.general_functions import start_program_timer
 from settings.import_list import generate_document_list
 from settings.objects.abstract_dataframe import \
     abstract_dictionary as dataframe
-from settings.settings import (county_name, download, file_name, headless,
+from settings.settings import (county_name, download, file_name, headless, abstraction_type,
                                sheet_name, target_directory)
 from settings.user_prompts import get_program_type
 
@@ -19,6 +19,7 @@ def access_county_instance(county_name):
 
 def create_abstract_object():
     return Abstract(
+        type=abstraction_type,
         county=access_county_instance(county_name),
         target_directory=target_directory,
         file_name=file_name,

@@ -58,7 +58,7 @@ def execute_program(abstract):
     transform_document_list(abstract)
     account_login(browser)
     search_documents_from_list(browser, abstract)
-    abstract.abstraction = export_document(abstract)
+    export_document(abstract)
     abstract.bundle_project()
     browser.close()
 

@@ -5,10 +5,6 @@ from pandas import DataFrame, ExcelWriter
 
 from settings.export_settings import (authorship, full_disclaimer,
                                       text_formats, worksheet_properties)
-# from settings.hyperlink import add_hyperlinks
-from settings.settings import abstraction_type
-
-# from .assets import draft_watermark as draft_watermark
 
 
 def prepare_output_environment(target_directory):
@@ -34,7 +30,7 @@ def transform_dictionary(dictionary):
     return rename_legal_description(rename_effective_date(dataframe))
 
 
-def create_output_file(file_name):
+def create_output_file(abstract):
     abstraction_export = '-'.join(abstraction_type.upper().split(' '))
     return f'{file_name.upper()}-{abstraction_export}.xlsx'
 
@@ -47,8 +43,8 @@ def create_excel_writer(output_file):
         date_format='mm/dd/yyyy')  # pylint: disable=abstract-class-instantiated
 
 
-def create_xlsx_document(target_directory, file_name, dataframe):
-    output_file = create_output_file(file_name)
+def create_xlsx_document(abstract):
+    output_file = create_output_file(abstract)
     writer = create_excel_writer(output_file)
     return output_file, writer
 
@@ -349,9 +345,8 @@ def export_document(abstract, client=None, legal=None):
     prepare_output_environment(abstract.target_directory)
     abstract.dataframe = transform_dictionary(abstract.dataframe)
     # add_hyperlinks(target_directory, dataframe)
-    output_file, writer = create_xlsx_document(abstract.target_directory, abstract.file_name, abstract.dataframe)
-    create_abstraction_object(abstract.target_directory, writer, abstract.dataframe, abstraction_type.upper())
+    abstract.output_file, writer = create_xlsx_document(abstract)
+    create_abstraction_object(abstract.target_directory, writer, abstract.dataframe, abstract.type.upper())
     workbook = format_xlsx_document(abstract.county, writer, abstract.dataframe, client, legal)
     add_hyperlink_sheet(abstract, workbook)
     workbook.close()
-    return output_file
