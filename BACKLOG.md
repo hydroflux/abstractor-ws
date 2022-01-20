@@ -65,6 +65,11 @@
 
 ### Class To Do
 
+#### Export Class To Do
+
+- [ ] Create an 'Export' class
+- [ ] Potential attributes: workbook, worksheet, output_file, writer
+
 #### Abstract Class To Do
 
 - [ ] Update the 'driver' script and other scripts from 'settings' to work with the 'abstract' class
