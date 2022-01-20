@@ -304,13 +304,12 @@ def add_conditional_formatting(dataframe, worksheet, font_formats):
     add_out_of_county_format(worksheet, worksheet_range, font_formats['out_of_county'])
 
 
-def format_xlsx_document(project, client=None, legal=None):
+def format_xlsx_document(project):
     format_workbook(project)
     format_worksheet(project)
-    set_dataframe_format(worksheet, font_formats['body'])
-    add_content(project.county, project.dataframe, worksheet, font_formats, client, legal)
-    add_conditional_formatting(project.dataframe, worksheet, font_formats)
-    return workbook
+    set_dataframe_format(project.worksheet, project.font_formats['body'])
+    add_content(project.county, project.dataframe, project.worksheet, project.font_formats, project.client, project.legal)
+    add_conditional_formatting(project.dataframe, project.worksheet, project.font_formats)
 
 
 def create_hyperlink_sheet(workbook):
@@ -336,9 +335,9 @@ def add_hyperlink_sheet(abstract, workbook):
 #     return output_file
 
 
-def export_document(abstract, client=None, legal=None):
+def export_document(abstract):
     project = initialize_project(abstract)
     create_abstraction_object(project)
-    format_xlsx_document(project, client, legal)
-    add_hyperlink_sheet(abstract, workbook)
-    workbook.close()
+    format_xlsx_document(project)
+    add_hyperlink_sheet(abstract, project.workbook)
+    project.workbook.close()
