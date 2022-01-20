@@ -3,7 +3,7 @@ import os
 from settings.classes.Abstract import Abstract
 from settings.classes.counties import county_dictionary
 from settings.general_functions import start_program_timer
-from settings.import_list import generate_document_list
+from project_management.import_list import generate_document_list
 from settings.objects.abstract_dataframe import \
     abstract_dictionary as dataframe
 from settings.settings import (county_name, download, file_name, headless, abstraction_type,

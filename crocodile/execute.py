@@ -1,7 +1,7 @@
 from settings.objects.abstract_dataframe import abstract_dictionary as dataframe
 from settings.bad_search import record_bad_search, unable_to_download
 from settings.driver import create_webdriver
-from settings.export.export import export_document
+from project_management.export import export_document
 from settings.file_management import (bundle_project, check_length,
                                       display_document_list, document_found,
                                       document_value, no_document_found)
