@@ -68,10 +68,9 @@
 
 ### Class To Do
 
-#### Export Class To Do
+#### Project Class To Do
 
-- [ ] Create an 'Export' class
-- [ ] Potential attributes: workbook, worksheet, output_file, writer
+- [ ] Up-To-Date
 
 #### Program Class To Do
 
