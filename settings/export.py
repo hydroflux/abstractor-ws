@@ -158,7 +158,7 @@ def write_title_content(dataframe, county, worksheet, font_formats, client=None,
     )
 
 
-def add_title_row(county, dataframe, worksheet, font_formats, client=None, legal=None):
+def add_title_row(project):
     set_title_format(dataframe, worksheet, font_formats['header'])
     write_title_content(dataframe, county, worksheet, font_formats, client, legal)
 
@@ -168,7 +168,7 @@ def add_limitations(dataframe, worksheet, font_format):
     worksheet.merge_range(f'A2:{last_column(dataframe)}2', worksheet_properties['limitations_content'], font_format)
 
 
-def add_disclaimer(county, dataframe, worksheet, font_format):
+def add_disclaimer(project, font_format):
     worksheet.set_row(2, worksheet_properties['disclaimer_height'])
     worksheet.merge_range(f'A3:{last_column(dataframe)}3', full_disclaimer(county), font_format)
 
@@ -208,7 +208,7 @@ def merge_secondary_datatype_ranges(dataframe, worksheet, font_format):
         )
 
 
-def add_dataframe_headers(dataframe, worksheet, font_format):
+def add_dataframe_headers(project, font_format):
     merge_primary_datatype_ranges(dataframe, worksheet, font_format)
     merge_custom_column(dataframe, worksheet, font_format)
     merge_secondary_datatype_ranges(dataframe, worksheet, font_format)
@@ -224,7 +224,7 @@ def get_worksheet_range(dataframe):
             f'{number_to_letter(number_columns)}{access_last_row(dataframe)}')
 
 
-def set_worksheet_border(dataframe, worksheet, font_format):
+def set_worksheet_border(project, font_format):
     worksheet_range = get_worksheet_range(dataframe)
     border_format_1 = worksheet_properties['conditional_formats']['border_format_1']
     border_format_2 = worksheet_properties['conditional_formats']['border_format_2']
@@ -243,13 +243,13 @@ def footer_row(dataframe):
     return access_last_row(dataframe) + 1
 
 
-def add_footer_row(dataframe, worksheet, font_format):
+def add_footer_row(project, font_format):
     footer_range = f'A{footer_row(dataframe)}:{last_column(dataframe)}{footer_row(dataframe)}'
     worksheet.set_row((footer_row(dataframe) - 1), worksheet_properties['footer_height'])
     worksheet.merge_range(footer_range, worksheet_properties['footer_content'], font_format)
 
 
-def add_filter(dataframe, worksheet):
+def add_filter(project):
     worksheet.autofilter(f'A5:{last_column(dataframe)}{footer_row(dataframe)}')
 
 
@@ -260,14 +260,14 @@ def add_watermark(worksheet):
     # worksheet.write('A1', 'Select Print Preview to see the watermark.')
 
 
-def add_content(county, dataframe, worksheet, font_formats, client=None, legal=None):
-    add_title_row(county, dataframe, worksheet, font_formats, client, legal)
-    add_limitations(dataframe, worksheet, font_formats['limitations'])
-    add_disclaimer(county, dataframe, worksheet, font_formats['disclaimer'])
-    add_dataframe_headers(dataframe, worksheet, font_formats['datatype'])
-    set_worksheet_border(dataframe, worksheet, font_formats['border'])
-    add_footer_row(dataframe, worksheet, font_formats['footer'])
-    add_filter(dataframe, worksheet)
+def add_content(project):
+    add_title_row(project)
+    add_limitations(project, project.font_formats['limitations'])
+    add_disclaimer(project, project.font_formats['disclaimer'])
+    add_dataframe_headers(project, project.font_formats['datatype'])
+    set_worksheet_border(project, project.font_formats['border'])
+    add_footer_row(project, project.font_formats['footer'])
+    add_filter(project)
     # add_watermark(worksheet)
 
 
@@ -307,7 +307,7 @@ def format_xlsx_document(project):
     format_workbook(project)
     format_worksheet(project)
     set_dataframe_format(project.worksheet, project.font_formats['body'])
-    add_content(project.county, project.dataframe, project.worksheet, project.font_formats, project.client, project.legal)
+    add_content(project)
     add_conditional_formatting(project.dataframe, project.worksheet, project.font_formats)
 
 
