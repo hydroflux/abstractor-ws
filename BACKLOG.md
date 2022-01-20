@@ -3,6 +3,7 @@
 ## General To Do
 
 - [ ] If nothing is recorded, do not create a base runsheet or a folder
+- [ ] Change 'import_list' to 'create_document_list'
 - [ ] Comment imports and section by type
 - [ ] Create log files on run returning various metrics => create a comment function that takes a comment as an argument and then updates an object to be exported & prints to the screen
 - [ ] Handle 'Document Date' added to the abstract_dictionary across all recording scripts--maybe make a new utility settings script which handles 'Document Date'

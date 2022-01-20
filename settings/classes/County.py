@@ -2,12 +2,12 @@ class County:
 
     number_counties = 0
 
-    def __init__(self, county_name, prefix, state, state_prefix, program):
+    def __init__(self, county_name, prefix, state, state_prefix, engine):
         self.county_name = county_name
         self.prefix = prefix
         self.state = state
         self.state_prefix = state_prefix
-        self.program = program
+        self.engine = engine
 
         County.number_counties += 1
 

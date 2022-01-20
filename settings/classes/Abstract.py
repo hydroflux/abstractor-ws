@@ -1,13 +1,17 @@
 class Abstract:
-    def __init__(self, county, target_directory, program_type, download, review=False,
-                 document_list=None, timer=None):
+    def __init__(self, county, target_directory, program, headless, download,
+                 review=False,
+                 document_list=None, timer=None,
+                 search_name=None):
         self.county = county
         self.target_directory = target_directory
-        self.program_type = program_type
+        self.program = program
+        self.headless = headless
         self.download = download
         self.review = review
         self.document_list = document_list
         self.timer = timer
+        self.search_name = search_name
 
 
 # - [ ] Put general button_ids on the 'abstract' class (login, logout, etc.)
