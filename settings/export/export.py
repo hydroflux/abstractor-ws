@@ -5,7 +5,7 @@ from settings.classes.Project import Project
 from settings.export.conditional_formatting import add_conditional_formatting
 
 from settings.temp_hyperlink import write_temporary_hyperlinks
-from settings.export.settings import full_disclaimer, text_formats
+from settings.export.settings import full_disclaimer
 
 
 def update_dataframe(project):
@@ -55,19 +55,19 @@ def create_abstraction_object(project):
 
 def set_font_formats(project):
     return {
-        'large': project.workbook.add_format(text_formats['large']),
-        'small': project.workbook.add_format(text_formats['small']),
-        'header': project.workbook.add_format(text_formats['header']),
-        'datatype': project.workbook.add_format(text_formats['datatype']),
-        'body': project.workbook.add_format(text_formats['body']),
-        'border': project.workbook.add_format(text_formats['border']),
-        'limitations': project.workbook.add_format(text_formats['limitations']),
-        'disclaimer': project.workbook.add_format(text_formats['disclaimer']),
-        'footer': project.workbook.add_format(text_formats['footer']),
-        'no_record': project.workbook.add_format(text_formats['no_record']),
-        'multiple_documents': project.workbook.add_format(text_formats['multiple_documents']),
-        'no_image': project.workbook.add_format(text_formats['no_image']),
-        'out_of_county': project.workbook.add_format(text_formats['out_of_county'])
+        'large': project.workbook.add_format(Project.text_formats['large']),
+        'small': project.workbook.add_format(Project.text_formats['small']),
+        'header': project.workbook.add_format(Project.text_formats['header']),
+        'datatype': project.workbook.add_format(Project.text_formats['datatype']),
+        'body': project.workbook.add_format(Project.text_formats['body']),
+        'border': project.workbook.add_format(Project.text_formats['border']),
+        'limitations': project.workbook.add_format(Project.text_formats['limitations']),
+        'disclaimer': project.workbook.add_format(Project.text_formats['disclaimer']),
+        'footer': project.workbook.add_format(Project.text_formats['footer']),
+        'no_record': project.workbook.add_format(Project.text_formats['no_record']),
+        'multiple_documents': project.workbook.add_format(Project.text_formats['multiple_documents']),
+        'no_image': project.workbook.add_format(Project.text_formats['no_image']),
+        'out_of_county': project.workbook.add_format(Project.text_formats['out_of_county'])
     }
 
 
@@ -252,7 +252,7 @@ def create_hyperlink_sheet(project):
 
 def add_hyperlink_sheet(abstract, project):
     if abstract.download:
-        hyperlink_format = project.workbook.add_format(text_formats['hyperlink'])
+        hyperlink_format = project.workbook.add_format(Project.text_formats['hyperlink'])
         hyperlink_sheet = create_hyperlink_sheet(project)
         write_temporary_hyperlinks(abstract.document_directory, hyperlink_sheet, hyperlink_format)
         os.chdir(abstract.target_directory)  # Is this necessary?
