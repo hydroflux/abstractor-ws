@@ -1,4 +1,3 @@
-from settings.objects.abstract_dataframe import abstract_dictionary as dataframe
 from settings.bad_search import record_bad_search, unable_to_download
 from settings.driver import create_webdriver
 from settings.export import export_document
@@ -23,7 +22,7 @@ def download_recorded_document(browser, document_directory, document_list, docum
         document_directory,
         document
     ):
-        unable_to_download(dataframe, document)
+        unable_to_download(abstract.dataframe, document)
         no_document_downloaded(document_list, document)
     else:
         document_downloaded(document_list, document)
@@ -73,7 +72,7 @@ def execute_program(abstract):
     browser = create_webdriver(abstract)
     transform_document_list(abstract)
     account_login(browser)
-    abstract.dataframe = dataframe
+    print("file_name", abstract.file_name)
     search_documents_from_list(browser, abstract)
     abstract.abstraction = export_document(
             abstract.county,
