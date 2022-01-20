@@ -9,30 +9,6 @@ else:
     from .general_functions import four_character_padding, report_execution_time
 
 
-def create_folder(directory):
-    try:
-        if not os.path.exists(directory):
-            os.makedirs(directory)
-    except OSError:
-        print('Error: Creating directory ' + directory)
-
-
-def document_directory_exists(target_directory):
-    if os.path.exists(f'{target_directory}/Documents'):
-        return True
-
-
-def access_document_directory(target_directory):
-    return f'{target_directory}/Documents'
-
-
-def create_document_directory(target_directory):
-    document_directory = access_document_directory(target_directory)
-    create_folder(document_directory)
-    os.chdir(document_directory)
-    return document_directory
-
-
 def remaining_documents(document_list, document):
     return len(document_list) - document_list.index(document) - 1
 

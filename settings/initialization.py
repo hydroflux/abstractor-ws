@@ -1,6 +1,7 @@
+import os
+
 from settings.classes.Abstract import Abstract
 from settings.classes.counties import county_dictionary
-from settings.file_management import create_document_directory
 from settings.general_functions import start_program_timer
 from settings.import_list import generate_document_list
 from settings.objects.abstract_dataframe import \
@@ -33,6 +34,26 @@ def program_type_update(abstract):
         abstract.review = True
     elif abstract.program == "download":
         abstract.download_only = True
+
+
+# def document_directory_exists(target_directory):
+#     if os.path.exists(f'{target_directory}/Documents'):
+#         return True
+
+
+def create_folder(directory):
+    try:
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+    except OSError:
+        print('Error: Creating directory ' + directory)
+
+
+def create_document_directory(target_directory):
+    document_directory = f'{target_directory}/Documents'
+    create_folder(document_directory)
+    os.chdir(document_directory)
+    return document_directory
 
 
 def initialize_abstraction():
