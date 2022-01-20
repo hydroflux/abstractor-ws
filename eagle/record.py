@@ -89,12 +89,12 @@ def handle_document_image_status(browser, document):
     if document_image_exists(browser, document):
         wait_for_pdf_to_load(browser, document)
         # naptime()   # Part of test 2 & test 3
-        return True
+        document.image_available = True
     else:
         print(f'No document image exists for '
               f'{document.extrapolate_value()}, please review.')
         medium_nap()
-        return False
+        document.image_available = False
 
 
 def get_document_information(browser, document):
@@ -313,12 +313,12 @@ def record_document_link(dataframe):
     dataframe["Document Link"].append('')
 
 
-def record_comments(dataframe, document, image_available):
+def record_comments(dataframe, document):
     if document.number_results == 1:
         dataframe["Comments"].append("")
     elif document.number_results > 1:
         dataframe["Comments"].append(multiple_documents_comment(document))
-    if not image_available:
+    if not document.image_available:
         no_document_image(dataframe, document)
 
 
@@ -327,7 +327,7 @@ def access_document_tables(browser, document):
     return access_document_information_tables(browser, document, document_information)
 
 
-def record_document_fields(browser, dataframe, document, image_available):
+def record_document_fields(browser, dataframe, document):
     document_tables = access_document_tables(browser, document)
     if execution_review:
         medium_nap()   # Adding a flag instead of having to comment the line our every time for review
@@ -337,22 +337,22 @@ def record_document_fields(browser, dataframe, document, image_available):
     record_effective_date(dataframe)
     record_volume(dataframe)
     record_document_link(dataframe)
-    record_comments(dataframe, document, image_available)
+    record_comments(dataframe, document)
     scroll_to_top(browser)
 
 
-def review_entry(browser, dataframe, document, image_available):
+def review_entry(browser, dataframe, document):
     while dataframe["Grantor"][-1] == missing_values[0] and dataframe["Grantee"][-1] == missing_values[0]\
             and dataframe["Related Documents"][-1] == missing_values[1] or document.reception_number.strip() == '':
         print("Recording of last document was processed incorrectly, attempting to record again.")
-        re_record_document_fields(browser, dataframe, document, image_available)
+        re_record_document_fields(browser, dataframe, document)
 
 
-def re_record_document_fields(browser, abstract, document, image_available):
+def re_record_document_fields(browser, abstract, document):
     abstract.drop_last_entry()
     browser.refresh()
     medium_nap()
-    record_document_fields(browser, abstract.dataframe, document, image_available)
+    record_document_fields(browser, abstract.dataframe, document)
 
 
 def get_result_buttons(browser, document):
@@ -419,8 +419,8 @@ def next_result(browser, document):
 
 
 def access_download_information(browser, dataframe, document):
-    image_available = handle_document_image_status(browser, document)
-    if not image_available:
+    handle_document_image_status(browser, document)
+    if not document.image_available:
         no_document_image(dataframe, document)
     else:
         document_tables = access_document_tables(browser, document)
@@ -442,12 +442,12 @@ def build_document_download_information(browser, abstract, document):
 
 def record(browser, abstract, document):
     if not abstract.download_only:
-        image_available = handle_document_image_status(browser, document)
-        record_document_fields(browser, abstract.dataframe, document, image_available)
+        handle_document_image_status(browser, document)
+        record_document_fields(browser, abstract.dataframe, document)
         abstract.check_length()
         # This might not be the correct syntax
         abstract.check_last_document(document)
-        review_entry(browser, abstract.dataframe, document, image_available)
+        review_entry(browser, abstract.dataframe, document)
         document_found(abstract, document)
     else:
         build_document_download_information(browser, abstract, document)

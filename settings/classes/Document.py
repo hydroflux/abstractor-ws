@@ -1,7 +1,7 @@
 class Document:
     def __init__(self, type, value, year=None, index_number=None,
-                 number_results=0, multiple_results=None,  result_number=None, reception_number=None,
-                 description_link=None, image_link=None,
+                 number_results=0, multiple_results=None, result_number=0, reception_number=None,
+                 description_link=None, image_available=None, image_link=None,
                  button_attributes=None, input_attributes=None, search_attributes=None,
                  county=None, start_time=None,
                  download_type=None, download_value=None, download_path=None, new_name=None):
@@ -11,9 +11,10 @@ class Document:
         self.index_number = index_number
         self.number_results = number_results
         self.multiple_results = multiple_results
-        self.result_number = 0
+        self.result_number = result_number
         self.reception_number = reception_number
         self.description_link = description_link
+        self.image_available = image_available
         self.image_link = image_link
         self.button_attributes = button_attributes
         self.input_attributes = input_attributes
