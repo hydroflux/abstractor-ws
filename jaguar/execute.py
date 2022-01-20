@@ -79,7 +79,7 @@ def execute_program(abstract):
             abstract.county,
             abstract.target_directory,
             abstract.file_name,
-            dataframe
+            abstract.dataframe
     )
     bundle_project(abstract)
     browser.close()
