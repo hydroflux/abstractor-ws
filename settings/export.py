@@ -30,23 +30,6 @@ def create_excel_writer(project):
         date_format='mm/dd/yyyy')  # pylint: disable=abstract-class-instantiated
 
 
-def initialize_project(abstract):
-    os.chdir(abstract.target_directory)
-    project = Project(
-        type=abstract.type,
-        county=abstract.county,
-        target_directory=abstract.target_directory,
-        dataframe=DataFrame(abstract.dataframe),
-        output_file=create_output_file(abstract),
-        sheet_name=abstract.type.upper()
-    )
-    project.writer = create_excel_writer(project)
-    project.workbook = project.writer.book
-    project.worksheet = project.writer.sheets[(project.sheet_name)]
-    update_dataframe(project)
-    return project
-
-
 def add_column(dataframe, current_position, column):
     dataframe.insert(current_position, column.title, '')
 
@@ -70,6 +53,24 @@ def create_abstraction_object(project):
         header=False,
         index=False
     )
+
+
+def initialize_project(abstract):
+    os.chdir(abstract.target_directory)
+    project = Project(
+        type=abstract.type,
+        county=abstract.county,
+        target_directory=abstract.target_directory,
+        dataframe=DataFrame(abstract.dataframe),
+        output_file=create_output_file(abstract),
+        sheet_name=abstract.type.upper()
+    )
+    project.writer = create_excel_writer(project)
+    update_dataframe(project)
+    create_abstraction_object(project)
+    project.workbook = project.writer.book
+    project.worksheet = project.writer.sheets[(project.sheet_name)]
+    return project
 
 
 def set_font_formats(project):
@@ -320,7 +321,6 @@ def add_hyperlink_sheet(abstract, project):
 
 def export_document(abstract):
     project = initialize_project(abstract)
-    create_abstraction_object(project)
     format_xlsx_document(project)
     add_hyperlink_sheet(abstract, project)
     project.workbook.close()
