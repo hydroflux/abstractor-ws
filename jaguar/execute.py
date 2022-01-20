@@ -16,7 +16,7 @@ from jaguar.transform import transform_document_list
 
 def handle_single_document(browser, abstract, document):
     record(browser, abstract.dataframe, document)
-    document_found(abstract.document_list, document, abstract.review)
+    document_found(abstract, document)
     if abstract.download and not abstract.review:
         abstract.document_directory = create_document_directory(abstract.target_directory)
         download_document(browser, abstract, document)
