@@ -99,8 +99,8 @@ def set_font_formats(workbook):
     }
 
 
-def format_workbook(writer):
-    workbook = access_workbook_object(writer)
+def format_workbook(project):
+    workbook = access_workbook_object(project)
     set_workbook_properties(workbook)
     return set_font_formats(workbook), workbook
 
@@ -113,8 +113,8 @@ def set_page_format(worksheet):
     worksheet.freeze_panes(f'A{worksheet_properties["startrow"] + 1}')
 
 
-def format_worksheet(abstract, writer):
-    worksheet = access_worksheet_object(abstract, writer)
+def format_worksheet(project):
+    worksheet = access_worksheet_object(project)
     set_page_format(worksheet)
     return worksheet
 
