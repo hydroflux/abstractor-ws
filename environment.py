@@ -3,28 +3,26 @@ import sys
 sys.path.append(".")
 
 if __name__ == '__main__':
-    from armadillo.execute import execute_program as execute_armadillo
-    from crocodile.execute import execute_name_search as name_search_crocodile
-    from crocodile.execute import execute_program as execute_crocodile
-    from crocodile.execute import execute_review as review_crocodile
+    # from armadillo.execute import execute_program as execute_armadillo
+    # from crocodile.execute import execute_name_search as name_search_crocodile
+    # from crocodile.execute import execute_program as execute_crocodile
+    # from crocodile.execute import execute_review as review_crocodile
     # from eagle.execute import execute_document_download as download_eagle
-    from eagle.execute import execute_program as execute_eagle
+    # from eagle.execute import execute_program as execute_eagle
     from jaguar.execute import execute_program as execute_jaguar
-    from leopard.execute import execute_document_download as download_leopard
-    from leopard.execute import execute_program as execute_leopard
-    from leopard.execute import execute_review as review_leopard
+    # from leopard.execute import execute_document_download as download_leopard
+    # from leopard.execute import execute_program as execute_leopard
+    # from leopard.execute import execute_review as review_leopard
     # from tiger.execute import execute_program as execute_tiger
     # from tiger.execute import execute_review as review_tiger
-    from rattlesnake.execute import execute_program as execute_rattlesnake
-    from rattlesnake.execute import execute_early_document_download as download_rattlesnake
+    # from rattlesnake.execute import execute_program as execute_rattlesnake
+    # from rattlesnake.execute import execute_early_document_download as download_rattlesnake
     from settings.initialization import initialize_abstraction
     from settings.general_functions import stop_program_timer
     # from settings.settings import (county_name, file_name, headless,
     #                                sheet_name, target_directory)
-    from settings.user_prompts import (add_download_types,
-                                       currently_unavailable,
-                                       get_demo_information, get_program_type,
-                                       prepare_name_search)
+    from settings.user_prompts import currently_unavailable
+
 
 print("environment", __name__)
 
@@ -70,7 +68,7 @@ def execute_program(abstract):
         # elif program_type == "download":
         #     download_jaguar(county, target_directory, document_list)
         else:
-            currently_unavailable(county, program_type)
+            currently_unavailable(abstract)
     elif abstract.county.engine == 'leopard':
         pass
     #     if program_type == "execute":

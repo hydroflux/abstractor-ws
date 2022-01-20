@@ -39,9 +39,9 @@ def get_program_type():
     return program_type
 
 
-def currently_unavailable(county, program_type):
-    print(f'There has not been a(n) "{program_type}" application path developed for '
-          f'{county} to date, please review your inputs and try again.')
+def currently_unavailable(abstract):
+    print(f'There has not been a(n) "{abstract.program}" application path developed for '
+          f'{abstract.county} to date, please review your inputs and try again.')
     quit()
 
 

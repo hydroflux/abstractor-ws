@@ -1,10 +1,11 @@
 class Abstract:
-    def __init__(self, county, target_directory, program, headless, download,
+    def __init__(self, county, target_directory, file_name, program, headless, download,
                  review=False,
                  document_list=None, timer=None,
                  search_name=None):
         self.county = county
         self.target_directory = target_directory
+        self.file_name = file_name,
         self.program = program
         self.headless = headless
         self.download = download
