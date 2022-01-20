@@ -169,39 +169,39 @@ def add_limitations(dataframe, worksheet, font_format):
 
 
 def add_disclaimer(project, font_format):
-    worksheet.set_row(2, worksheet_properties['disclaimer_height'])
-    worksheet.merge_range(f'A3:{last_column(dataframe)}3', full_disclaimer(county), font_format)
+    project.worksheet.set_row(2, worksheet_properties['disclaimer_height'])
+    project.worksheet.merge_range(f'A3:{last_column(project.dataframe)}3', full_disclaimer(project.county), font_format)
 
 
-def merge_primary_datatype_ranges(dataframe, worksheet, font_format):
+def merge_primary_datatype_ranges(project, font_format):
     primary_range = worksheet_properties['datatype_content']['primary_datatype_columns']
     for column in primary_range:
-        column_name = dataframe.columns[column]
+        column_name = project.dataframe.columns[column]
         column_position = number_to_letter((column + 1))
-        worksheet.merge_range(
+        project.worksheet.merge_range(
             f'{column_position}4:{column_position}5',
             column_name,
             font_format
         )
 
 
-def merge_custom_column(dataframe, worksheet, font_format):
+def merge_custom_column(project, font_format):
     column = worksheet_properties['datatype_content']['custom_datatype_column']
     column_position_start = number_to_letter((column + 1))
     column_position_end = number_to_letter((column + 4))
-    worksheet.merge_range(
+    project.worksheet.merge_range(
         f'{column_position_start}4:{column_position_end}4',
         worksheet_properties['custom_column_name'],
         font_format
     )
 
 
-def merge_secondary_datatype_ranges(dataframe, worksheet, font_format):
+def merge_secondary_datatype_ranges(project, font_format):
     primary_range = worksheet_properties['datatype_content']['secondary_datatype_columns']
     for column in primary_range:
-        column_name = dataframe.columns[column]
+        column_name = project.dataframe.columns[column]
         column_position = number_to_letter((column + 1))
-        worksheet.write(
+        project.worksheet.write(
             f'{column_position}5',
             column_name,
             font_format
@@ -209,9 +209,9 @@ def merge_secondary_datatype_ranges(dataframe, worksheet, font_format):
 
 
 def add_dataframe_headers(project, font_format):
-    merge_primary_datatype_ranges(dataframe, worksheet, font_format)
-    merge_custom_column(dataframe, worksheet, font_format)
-    merge_secondary_datatype_ranges(dataframe, worksheet, font_format)
+    merge_primary_datatype_ranges(project, font_format)
+    merge_custom_column(project, font_format)
+    merge_secondary_datatype_ranges(project, font_format)
 
 
 def access_last_row(dataframe):
