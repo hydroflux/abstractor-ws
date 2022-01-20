@@ -278,29 +278,29 @@ def add_no_record_format(project, font_format):
     project.worksheet.conditional_format(project.worksheet_range, no_record_format)
 
 
-def add_multiple_document_format(worksheet, worksheet_range, font_format):
+def add_multiple_document_format(project, font_format):
     multi_documents_format = worksheet_properties['conditional_formats']['multi_documents_format']
     multi_documents_format['format'] = font_format
-    worksheet.conditional_format(worksheet_range, multi_documents_format)
+    project.worksheet.conditional_format(project.worksheet_range, multi_documents_format)
 
 
-def add_no_document_image_format(worksheet, worksheet_range, font_format):
+def add_no_document_image_format(project, font_format):
     no_document_image_format = worksheet_properties['conditional_formats']['no_image_format']
     no_document_image_format['format'] = font_format
-    worksheet.conditional_format(worksheet_range, no_document_image_format)
+    project.worksheet.conditional_format(project.worksheet_range, no_document_image_format)
 
 
-def add_out_of_county_format(worksheet, worksheet_range, font_format):
+def add_out_of_county_format(project, font_format):
     out_of_county_format = worksheet_properties['conditional_formats']['out_of_county_format']
     out_of_county_format['format'] = font_format
-    worksheet.conditional_format(worksheet_range, out_of_county_format)
+    project.worksheet.conditional_format(project.worksheet_range, out_of_county_format)
 
 
 def add_conditional_formatting(project):
     add_no_record_format(project, project.font_formats['no_record'])
-    add_multiple_document_format(project.worksheet, worksheet_range, project.font_formats['multiple_documents'])
-    add_no_document_image_format(project.worksheet, worksheet_range, project.font_formats['no_image'])
-    add_out_of_county_format(project.worksheet, worksheet_range, project.font_formats['out_of_county'])
+    add_multiple_document_format(project, project.font_formats['multiple_documents'])
+    add_no_document_image_format(project, project.font_formats['no_image'])
+    add_out_of_county_format(project, project.font_formats['out_of_county'])
 
 
 def format_xlsx_document(project):
