@@ -339,3 +339,4 @@ def export_document(abstract):
     format_xlsx_document(project)
     add_hyperlink_sheet(abstract, project.workbook)
     project.workbook.close()
+    return project
