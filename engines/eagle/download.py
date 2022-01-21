@@ -8,7 +8,7 @@ from selenium_utilities.locators import (locate_element_by_class_name,
                                          locate_element_by_id)
 from settings.bad_search import no_download
 
-from settings.county_variables.eagle import (pdf_viewer_class_name,
+from settings.county_variables.eagle import (pdf_viewer_class_name, purchase_button_class_name,
                                              stock_download_suffix)
 from settings.download_management import previously_downloaded, update_download
 from settings.error_handling import no_image_comment
@@ -28,6 +28,12 @@ def download_available(dataframe, document):
         return True
 
 
+def center_purchase_button(browser, document):
+    purchase_button = locate_element_by_class_name(browser, purchase_button_class_name, "purchase button",
+                                                   clickable=True, document=document)
+    center_element(browser, purchase_button)
+
+
 def switch_into_frame(browser, document):
     try:
         pdf_viewer = locate_element_by_class_name(browser, pdf_viewer_class_name, "pdf viewer")
@@ -37,7 +43,7 @@ def switch_into_frame(browser, document):
             print(f'Reception Number: {document.reception_number}')
             print(f'Download Value: {document.download_value}')
             return pdf_viewer
-        center_element(browser, pdf_viewer)  # added 22/01/21 to help with locating pdf_viewer if screen isn't maximized
+        center_purchase_button(browser, document)
         browser.switch_to.frame(pdf_viewer)
         return True
     except TimeoutException:
