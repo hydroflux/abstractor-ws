@@ -31,8 +31,8 @@ def enter_input_value(browser, locator_function, attribute, type, value, documen
 def click_button(browser, locator_function, attribute, type, document=None):
     button = locator_function(browser, attribute, type, True, document)
     while button is False:  # while loop added for eagle--might not be the most pure option
-        sleep(30)
         browser.refresh()
+        sleep(5)
         button = locator_function(browser, attribute, type, True, document)
     center_element(browser, button)
     button.click()

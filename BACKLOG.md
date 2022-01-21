@@ -99,6 +99,7 @@
 - [ ] Consolidate the prepare, & check functions in download management--had a case where a 500+ page document was clicked & downloaded properly, but 173 in update, 145 in rename, & 140 in prepare raised a value error that it wasn't a file, even though circling back indicated that it was downloaded properly, and with the expected name
 - [ ] Along with above, the new function for waiting for a download & then renaming it could probably be worked together in a new logic path
 - [ ] The 'document_directory' should be created if 'download' is true but not otherwise
+- [ ] Check if 'document_directory' (.exists?) each time a document is downloaded, & create otherwise
 
 ### County Programs To Do
 

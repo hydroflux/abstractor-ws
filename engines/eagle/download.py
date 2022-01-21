@@ -84,7 +84,11 @@ def execute_download(browser, abstract, document):
     number_files = len(os.listdir(abstract.document_directory))
     build_stock_download(document)
     access_pdf_viewer(browser, document)
-    click_button(browser, locate_element_by_id, document.button_attributes["Download Button"], "download button")
+    click_button(browser,
+                 locate_element_by_id,
+                 document.button_attributes["Download Button"],
+                 "download button",
+                 document)
     switch_to_default_content(browser)
     if update_download(
         browser,
