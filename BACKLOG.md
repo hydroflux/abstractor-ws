@@ -83,21 +83,22 @@
 - [ ] Add a print statement at the end to indicate what type of run sheet was created (& the section)
 - [ ] If a base runsheet folder has already been created, create a new one
 
-### User Prompts To Do
+#### User Prompts To Do
 
 - [ ] Demo prompts should have a "go back" option
 
-### File Management To Do
+#### File Management To Do
 
 - [ ] Consolidate 'split_book_and_page' and 'split_volume_and_page' functions
 - [ ] Change "Document Found" so that it lists either "recorded" or "recorded & downloaded" instead of located
 - [ ] Change 'file_management' to 'dataframe_management' & split out functions into multiple utility scripts
 - [ ] Best order of operations for file management should be to create the folder first & then put the documents folder inside of it, rather than bundling at the end
 
-### Download Management To Do
+#### Download Management To Do
 
 - [ ] Consolidate the prepare, & check functions in download management--had a case where a 500+ page document was clicked & downloaded properly, but 173 in update, 145 in rename, & 140 in prepare raised a value error that it wasn't a file, even though circling back indicated that it was downloaded properly, and with the expected name
 - [ ] Along with above, the new function for waiting for a download & then renaming it could probably be worked together in a new logic path
+- [ ] The 'document_directory' should be created if 'download' is true but not otherwise
 
 ### County Programs To Do
 
