@@ -22,7 +22,7 @@ from settings.county_variables.eagle import (currently_searching,
 from settings.general_functions import (get_direct_link, naptime, short_nap,
                                         timeout)
 
-from eagle.search import execute_search, search
+from engines.eagle.search import execute_search, search
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("open", __name__)

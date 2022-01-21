@@ -28,7 +28,7 @@ from settings.general_functions import (long_timeout, medium_nap, naptime,
                                         update_sentence_case_extras)
 from settings.settings import execution_review
 
-from eagle.error_handling import check_for_error
+from engines.eagle.error_handling import check_for_error
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("record", __name__)

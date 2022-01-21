@@ -13,7 +13,7 @@ from settings.county_variables.eagle import (credentials, fallback_search_url,
                                              login_prompt_class)
 from settings.general_functions import micro_nap
 
-from eagle.disclaimer import check_for_disclaimer
+from engines.eagle.disclaimer import check_for_disclaimer
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("login", __name__)

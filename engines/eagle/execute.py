@@ -5,12 +5,12 @@ from settings.driver import create_webdriver
 from project_management.export import export_document
 from settings.general_functions import start_timer
 
-from eagle.download import download_document
-from eagle.login import account_login
-from eagle.open_document import open_document
-from eagle.record import next_result, record
-from eagle.search import search
-from eagle.transform import transform_document_list
+from engines.eagle.download import download_document
+from engines.eagle.login import account_login
+from engines.eagle.open_document import open_document
+from engines.eagle.record import next_result, record
+from engines.eagle.search import search
+from engines.eagle.transform import transform_document_list
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("execute", __name__)
