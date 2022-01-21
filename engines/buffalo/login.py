@@ -13,7 +13,7 @@ from settings.county_variables.buffalo import (credentials, disclaimer_script,
 from settings.general_functions import (fill_search_field,
                                         javascript_script_execution, timeout)
 
-from buffalo.frame_handling import switch_to_main_frame
+from engines.buffalo.frame_handling import switch_to_main_frame
 
 
 def open_site(browser):

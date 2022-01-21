@@ -1,4 +1,4 @@
-from buffalo.frame_handling import switch_to_header_frame
+from engines.buffalo.frame_handling import switch_to_header_frame
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC

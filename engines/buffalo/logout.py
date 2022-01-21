@@ -2,7 +2,7 @@ from settings.general_functions import (assert_window_title,
                                         javascript_script_execution)
 
 from settings.county_variables.buffalo import logout_script, website_title
-from buffalo.frame_handling import switch_to_default_content
+from engines.buffalo.frame_handling import switch_to_default_content
 
 
 def log_out_user(browser):

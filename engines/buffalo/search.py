@@ -12,10 +12,10 @@ from settings.file_management import (document_type, document_value,
 from settings.general_functions import (get_element_class, get_field_value,
                                         timeout)
 
-from buffalo.frame_handling import (switch_to_main_frame,
+from engines.buffalo.frame_handling import (switch_to_main_frame,
                                     switch_to_search_input_frame,
                                     switch_to_search_menu_frame)
-from buffalo.validation import page_is_loaded
+from engines.buffalo.validation import page_is_loaded
 
 
 def locate_search_page_button(browser, document):

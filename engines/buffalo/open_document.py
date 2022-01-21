@@ -9,8 +9,8 @@ from settings.file_management import (document_type, document_value,
                                       extrapolate_document_value)
 from settings.general_functions import eight_character_padding, timeout
 
-from buffalo.frame_handling import switch_to_search_result_list_frame
-from buffalo.validation import page_is_loaded
+from engines.buffalo.frame_handling import switch_to_search_result_list_frame
+from engines.buffalo.validation import page_is_loaded
 
 
 def locate_first_result(browser, document):
