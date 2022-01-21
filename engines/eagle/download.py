@@ -1,6 +1,7 @@
 import os
 
 from selenium.common.exceptions import TimeoutException
+from selenium_utilities.element_interaction import center_element
 
 from selenium_utilities.inputs import click_button
 from selenium_utilities.locators import (locate_element_by_class_name,
@@ -36,6 +37,7 @@ def switch_into_frame(browser, document):
             print(f'Reception Number: {document.reception_number}')
             print(f'Download Value: {document.download_value}')
             return pdf_viewer
+        center_element(pdf_viewer)  # added 22/01/21 to help with locating the pdf_viewer if the screen isn't maximized
         browser.switch_to.frame(pdf_viewer)
         return True
     except TimeoutException:

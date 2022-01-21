@@ -38,7 +38,8 @@ def click_button(browser, locator_function, attribute, type, document=None):
         else:
             center_element(browser, button)
             button.click()
-    except ElementClickInterceptedException:
+    except ElementClickInterceptedException:  # handles an issue with eagle downloads
         print(f'Element click intercepted while trying to click "{type}" '
-              f'attribute "{attribute}", please review.')
+              f'attribute "{attribute}", please review and press enter to continue...')
+        input()
         return False
