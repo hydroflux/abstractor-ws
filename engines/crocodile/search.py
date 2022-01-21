@@ -15,7 +15,7 @@ from settings.file_management import (document_type, document_value,
                                       extrapolate_document_value)
 from settings.general_functions import timeout
 
-from crocodile.error_handling import check_login_status
+from engines.crocodile.error_handling import check_login_status
 
 
 def open_document_search(browser, document):
