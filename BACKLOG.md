@@ -14,6 +14,7 @@
 - [ ] Replace all 'scroll' functions with 'center element'
 - [ ] Eliminate iframe_handling script?
 - [ ] Update & uncomment the the 'execute_demo' function in the 'environment' file
+- [ ] If performing a 'refresh' loop, only allow for x # of refreshes before pausing for input--don't want to create too many requests (create a Document class attribute?)
 
 ### Error Handling To Do
 
@@ -100,6 +101,8 @@
 - [ ] Along with above, the new function for waiting for a download & then renaming it could probably be worked together in a new logic path
 - [ ] The 'document_directory' should be created if 'download' is true but not otherwise
 - [ ] Check if 'document_directory' (.exists?) each time a document is downloaded, & create otherwise
+- [ ] Search both the 'download_name' (is that the correct attribute) and the 'new_name' when determining if a document has been downloaded or not (previously_downloaded)
+- [ ] Create some series of checks (maybe in 'transform' scripts) to check for previously downloaded documents at the outset--just have to be careful about documents with multiple results (but that could probably be handled with the 'number_results' attribute)
 
 ### County Programs To Do
 

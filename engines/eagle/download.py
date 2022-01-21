@@ -80,16 +80,21 @@ def check_last_download(dataframe, document, count=0):
         return True
 
 
+def access_document_image(browser, abstract, document):
+    access_pdf_viewer(browser, document)
+    while click_button(browser, locate_element_by_id,
+                       document.button_attributes["Download Button"],
+                       "download button", document) is False:
+        print('Browser failed to access document image, refreshing and trying again...')
+        browser.refresh()
+        access_pdf_viewer(browser, document)
+    switch_to_default_content(browser)
+
+
 def execute_download(browser, abstract, document):
     number_files = len(os.listdir(abstract.document_directory))
     build_stock_download(document)
-    access_pdf_viewer(browser, document)
-    click_button(browser,
-                 locate_element_by_id,
-                 document.button_attributes["Download Button"],
-                 "download button",
-                 document)
-    switch_to_default_content(browser)
+    access_document_image(browser, abstract, document)
     if update_download(
         browser,
         abstract.document_directory,
