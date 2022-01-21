@@ -222,6 +222,14 @@
 - [ ] Create a "download_setup" series of functions where if download == yes: create_directory, get current files, change active directory, etc.
 - [ ] Circle back to leopard download after completing the above
 
+#### Mountain Lion
+
+- [ ] Create a new directory to work with the mountain lion codebase
+- [ ] Add all mountain lion scripts (execute, login, logout, search, open, record, download)
+- [ ] Integrate mountain lion scripts to work with the top level environment file
+- [ ] Create a convert_document_numbers script
+- [ ] Create an "execution", "review", & "download only" option for execution
+
 #### Tiger To Do
 
 - [ ] Update multiple_documents comment to include actual document numbers and / or book & page numbers
