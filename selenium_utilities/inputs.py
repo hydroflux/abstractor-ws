@@ -1,4 +1,6 @@
+from selenium.common.exceptions import ElementClickInterceptedException
 from selenium.webdriver.common.keys import Keys
+
 from time import sleep
 
 from selenium_utilities.element_interaction import center_element
@@ -29,9 +31,14 @@ def enter_input_value(browser, locator_function, attribute, type, value, documen
 
 
 def click_button(browser, locator_function, attribute, type, document=None):
-    button = locator_function(browser, attribute, type, True, document)
-    if button is False:
+    try:
+        button = locator_function(browser, attribute, type, True, document)
+        if button is False:
+            return False
+        else:
+            center_element(browser, button)
+            button.click()
+    except ElementClickInterceptedException:
+        print(f'Element click intercepted while trying to click "{type}" '
+              f'attribute "{attribute}", please review.')
         return False
-    else:
-        center_element(browser, button)
-        button.click()
