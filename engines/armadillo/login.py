@@ -4,7 +4,7 @@ from selenium_utilities.open import open_url
 
 from settings.county_variables.armadillo import credentials, login_title, login_url
 
-from armadillo.validation import verify_login
+from engines.armadillo.validation import verify_login
 
 
 def enter_credentials(browser):

@@ -13,7 +13,7 @@ from settings.county_variables.armadillo import (link_tag,
                                                  single_result_message)
 from settings.general_functions import get_direct_link
 
-from armadillo.validation import (validate_result, verify_results_loaded,
+from engines.armadillo.validation import (validate_result, verify_results_loaded,
                                   verify_search_results_page_loaded)
 
 

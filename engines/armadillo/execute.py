@@ -9,13 +9,13 @@ from settings.file_management import (bundle_project, check_length,
 from settings.general_functions import start_timer
 from settings.settings import download, headless
 
-from armadillo.download import download_document
-from armadillo.login import account_login
-from armadillo.logout import logout
-from armadillo.open_document import open_document
-from armadillo.record import build_document_download_information, record
-from armadillo.search import search
-from armadillo.transform import transform_document_list
+from engines.armadillo.download import download_document
+from engines.armadillo.login import account_login
+from engines.armadillo.logout import logout
+from engines.armadillo.open_document import open_document
+from engines.armadillo.record import build_document_download_information, record
+from engines.armadillo.search import search
+from engines.armadillo.transform import transform_document_list
 
 
 def record_document(browser, document_list, document, review):
