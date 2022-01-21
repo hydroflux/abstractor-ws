@@ -4,7 +4,6 @@ from selenium_utilities.locators import (locate_element_by_class_name,
                                          locate_element_by_id,
                                          locate_element_by_tag_name,
                                          locate_elements_by_class_name)
-
 from settings.county_variables.armadillo import (link_tag,
                                                  multiple_results_message,
                                                  number_results_class,
@@ -13,8 +12,9 @@ from settings.county_variables.armadillo import (link_tag,
                                                  single_result_message)
 from settings.general_functions import get_direct_link
 
-from engines.armadillo.validation import (validate_result, verify_results_loaded,
-                                  verify_search_results_page_loaded)
+from engines.armadillo.validation import (validate_result,
+                                          verify_results_loaded,
+                                          verify_search_results_page_loaded)
 
 
 def count_results(browser, document):
