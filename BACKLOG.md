@@ -45,6 +45,7 @@
 - [ ] Update 'document.value' to 'document.search_value' to create a better differentiation between 'document.reception_number'???
 - [ ] Turn off 'download' flag if document image is not available?--could be a better solution to checking image available before trying to download
 - [ ] Add date / year into the document class in order to add the option to sort by date
+- [ ] Consolidate the 'value' attribute and the 'document_value' instance function--too confusing and creating problems
 
 #### Program Class To Do
 
