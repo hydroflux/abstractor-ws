@@ -57,17 +57,6 @@ def access_pdf_viewer(browser, document):
         naptime()
 
 
-# def execute_download(browser):
-#     try:
-#         download_button_present = EC.presence_of_element_located((By.ID, download_button_id))
-#         WebDriverWait(browser, long_timeout).until(download_button_present)
-#         download_button = browser.find_element_by_id(download_button_id)
-#         download_button.click()
-#         print("Executed download.")
-#     except TimeoutException:
-#         print("Browser timed out while trying to click the download button.")
-
-
 def build_stock_download(document):
     document.download_value = f'{document.reception_number}-{stock_download_suffix}'
 
