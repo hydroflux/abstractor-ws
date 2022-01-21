@@ -11,8 +11,6 @@ from settings.county_variables.crocodile import (document_search_button_id,
                                                  document_search_field_id,
                                                  document_search_title,
                                                  document_search_url)
-from settings.file_management import (document_type, document_value,
-                                      extrapolate_document_value)
 from settings.general_functions import timeout
 
 from engines.crocodile.error_handling import check_login_status
@@ -22,7 +20,7 @@ def open_document_search(browser, document):
     browser.get(document_search_url)
     if not assert_window_title(browser, document_search_title):
         print(f'Browser failed to open document search link for '
-              f'{extrapolate_document_value(document)}, please review.')
+              f'{document.extrapolate_value()}, please review.')
         if check_login_status(browser, document):
             browser.get(document_search_url)
 
@@ -35,7 +33,7 @@ def locate_document_search_field(browser, document):
         return document_search_field
     except TimeoutException:
         print(f'Browser timed out trying to locate document field for '
-              f'{extrapolate_document_value(document)}.')
+              f'{document.extrapolate_value()}.')
 
 
 def clear_document_search_field(browser, document):
@@ -44,10 +42,10 @@ def clear_document_search_field(browser, document):
 
 
 def enter_document_number(browser, document):
-    while get_field_value(locate_document_search_field(browser, document)) != document_value(document):
+    while get_field_value(locate_document_search_field(browser, document)) != document.document_value():
         # print(f'Entering document value for '
-        #       f'{extrapolate_document_value(document)}.')
-        locate_document_search_field(browser, document).send_keys(Keys.UP + document_value(document))
+        #       f'{document.extrapolate_value()}.')
+        locate_document_search_field(browser, document).send_keys(Keys.UP + document.document_value())
 
 
 def handle_document_search_field(browser, document):
@@ -63,7 +61,7 @@ def locate_search_button(browser, document):
         return search_button
     except TimeoutException:
         print(f'Browser timed out trying to locate search button for '
-              f'{extrapolate_document_value(document)}, please review.')
+              f'{document.extrapolate_value()}, please review.')
 
 
 def execute_search(browser, document):
@@ -80,9 +78,9 @@ def document_search(browser, document):
 
 
 def search(browser, document):
-    if document_type(document) == "document_number":
+    if document.type == "document_number":
         document_search(browser, document)
     else:
-        print(f'Unable to search {document_type(document)}, new search path needs to be developed.')
+        print(f'Unable to search "{document.type}" type, new search path needs to be developed.')
         print("Please press enter after reviewing the search parameters...")
         input()
