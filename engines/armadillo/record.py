@@ -18,9 +18,10 @@ from settings.general_functions import (date_from_string, element_title_strip,
                                         timeout, title_strip,
                                         update_sentence_case_extras)
 
-from engines.armadillo.validation import (validate_date, validate_reception_number,
-                                  validate_volume_page,
-                                  verify_results_page_loaded)
+from engines.armadillo.validation import (validate_date,
+                                          validate_reception_number,
+                                          validate_volume_page,
+                                          verify_results_page_loaded)
 
 
 def locate_document_type_and_number_table(browser, document):
