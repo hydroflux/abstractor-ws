@@ -37,7 +37,7 @@ def switch_into_frame(browser, document):
             print(f'Reception Number: {document.reception_number}')
             print(f'Download Value: {document.download_value}')
             return pdf_viewer
-        center_element(pdf_viewer)  # added 22/01/21 to help with locating the pdf_viewer if the screen isn't maximized
+        center_element(browser, pdf_viewer)  # added 22/01/21 to help with locating pdf_viewer if screen isn't maximized
         browser.switch_to.frame(pdf_viewer)
         return True
     except TimeoutException:

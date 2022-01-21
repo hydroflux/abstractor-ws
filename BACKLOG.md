@@ -199,6 +199,7 @@
 - [ ] Refactor 'record' script into its own directory
 - [ ] Remove an additional space when dropping "see record" in order to cut the new line character out
 - [ ] Create a double-check option for eagle--possibly under the "review" as a switch in order to check for any related documents missing
+- [ ] Compare the 'switch_into_frame' and dependent 'access_pdf_viewer' functions from the 'download' (and 'record'?) script to try and extrapolate into the generalized 'frame_handling' script
 
 #### Iguana To Do
 
