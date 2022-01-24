@@ -206,6 +206,7 @@ def aggregate_document_information(browser, county, document, dictionary, rows):
     record_related_documents(rows, dictionary)
     record_legal(rows, dictionary)
     record_comments(county, dictionary, document)
+    # document_number return statement not necessary--need to set reception_number attribute
     return document_number
 
 
@@ -252,7 +253,7 @@ def record(browser, abstract, document):
         rows = get_document_content(browser, document)
         if abstract.download_only:
             get_reception_number(browser, rows, document)
-        document_number = aggregate_document_information(browser, county, document, dictionary, rows)
-        # document_number assignment not necessary
+        else:
+            aggregate_document_information(browser, county, document, dictionary, rows)
     document_found(abstract, document)
     # return document_number
