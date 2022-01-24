@@ -91,8 +91,9 @@ def execute_program(abstract):
     account_login(browser)
     search_documents_from_list(browser, abstract)
     logout(browser)
-    project = export_document(abstract)
-    project.bundle_project(abstract)
+    if not abstract.download_only and not abstract.review:
+        project = export_document(abstract)
+        project.bundle_project(abstract)
     browser.close()
 
 

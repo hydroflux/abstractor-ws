@@ -34,8 +34,9 @@
 
 #### Abstract Class To Do
 
-- [ ] Up-To-Date
+<!-- - [ ] Up-To-Date -->
 - [ ] Add 'transform' to abstract initialization dependent on the county
+- [ ] Update either the 'Abstract' or 'Project' class to handle whether to export & bundle a project, rather than having the argument inline of the 'execute_program' functions (across directories)
 
 #### County Class To Do
 
@@ -56,7 +57,7 @@
 
 #### Project Class To Do
 
-- [ ] Up-To-Date
+- [ ] Update either the 'Abstract' or 'Project' class to handle whether to export & bundle a project, rather than having the argument inline of the 'execute_program' functions (across directories)
 
 ### Project Management To Do
 
@@ -243,6 +244,7 @@
 - [ ] Update the leopard 'download' script to use the active Abstract and Document class instances
 - [ ] Fix the 'get_reception_number' function in the 'record' script (use the Document class)
 - [ ] Currently the 'download_only' switch for the 'headless' attribute is in the 'execute_program' function--better placement would probably be in the 'environment' or 'initialization' scripts if possible
+- [ ] Drop the "if not abstract.download_only and not abstract.review:" line from the 'execute_program' function of the 'execute' script in favor of something more elegant--possibly update on the Abstract or Program class
 
 #### Mountain Lion
 
