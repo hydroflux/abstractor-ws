@@ -1,5 +1,6 @@
-from settings.objects.abstract_dataframe import abstract_dictionary as dataframe
+#!/usr/bin/python3
 from settings.bad_search import no_document_image, record_bad_search
+from settings.download_management import previously_downloaded
 from settings.driver import create_webdriver
 from project_management.export import export_document
 from settings.file_management import document_found, no_document_found
