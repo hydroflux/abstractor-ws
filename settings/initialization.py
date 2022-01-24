@@ -33,6 +33,7 @@ def create_abstract_object():
 def program_type_update(abstract):
     if abstract.program == "review":
         abstract.review = True
+        abstract.headless = False
     elif abstract.program == "download":
         abstract.download_only = True
 
