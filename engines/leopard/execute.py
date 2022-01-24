@@ -19,7 +19,7 @@ from engines.leopard.transform import transform_document_list
 print("execute", __name__)
 
 
-def record_single_document(browser, county, target_directory, document_list, document, start_time):
+def record_single_document(browser, abstract, document):
     document_number = record_document(browser, county, dataframe, document)
     if download:
         if not download_document(browser, county, target_directory, document, document_number):
@@ -27,53 +27,50 @@ def record_single_document(browser, county, target_directory, document_list, doc
     document_found(start_time, document_list, document)
 
 
-def download_single_document(browser, county, target_directory, document_list, document, start_time):
+def download_single_document(browser, abstract, document):
     document_number = get_reception_number(browser, document)
     if not download_document(browser, county, target_directory, document, document_number):
         no_document_image(dataframe, document)
     document_found(start_time, document_list, document, "download")
 
 
-def record_multiple_documents(browser, county, target_directory, document_list, document, start_time):
+def record_multiple_documents(browser, abstract, document):
     record_single_document(browser, county, target_directory, document_list, document, start_time)
     for document_instance in range(0, (document.number_results - 1)):
         next_result(browser, document)
         record_single_document(browser, county, target_directory, document_list, document, start_time)
 
 
-def review_multiple_documents(browser, start_time, document_list, document):
+def review_multiple_documents(browser, abstract, document):
     document_found(start_time, document_list, document, "review")
     for document_instance in range(0, (document.number_results - 1)):
         next_result(browser, document)
         document_found(start_time, document_list, document, "review")
 
 
-def download_multiple_documents(browser, county, target_directory, start_time, document_list, document):
+def download_multiple_documents(browser, abstract, document):
     download_single_document(browser, county, target_directory, document)
     for document_instance in range(0, (document.number_results - 1)):
         next_result(browser, document)
         download_single_document(browser, county, target_directory, document)
 
 
-def handle_search_results(browser, county, target_directory,
-                          document_list, document, start_time, alt=None):
+def handle_search_results(browser, abstract, document, alt=None):
     if alt is None:
         if document.number_results > 1:
-            record_multiple_documents(browser, county, target_directory,
-                                      document_list, document, start_time)
+            record_multiple_documents(browser, abstract, document)
         else:
-            record_single_document(browser, county, target_directory,
-                                   document_list, document, start_time)
+            record_single_document(browser, abstract, document)
     elif alt == 'review':
         if document.number_results > 1:
-            review_multiple_documents(browser, start_time, document_list, document)
+            review_multiple_documents(browser, abstract, document)
         else:
-            document_found(start_time, document_list, document, "review")
+            document_found(abstract, document, "review")  # I don't think this syntax will work as is
     elif alt == "download":
         if document.number_results > 1:
-            download_multiple_documents(browser, county, target_directory, start_time, document_list, document)
+            download_multiple_documents((browser, abstract, document))
         else:
-            download_single_document(browser, county, target_directory, document_list, document, start_time)
+            download_single_document((browser, abstract, document))
 
 
 def search_documents_from_list(browser, abstract):

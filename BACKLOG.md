@@ -230,6 +230,7 @@
 - [ ] Fix the issue with the defunct 'get_reception_number' function in leopard 'execute' script
 - [ ] Create a "download_setup" series of functions where if download == yes: create_directory, get current files, change active directory, etc.
 - [ ] Circle back to leopard download after completing the above
+- [ ] Eliminate the 'alt' options in the 'execute' script in favor of using attributes on Document class instances
 
 #### Mountain Lion
 
