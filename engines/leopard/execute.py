@@ -18,25 +18,11 @@ from engines.leopard.transform import transform_document_list
 print("execute", __name__)
 
 
-def download_single_document(browser, abstract, document):
-    get_reception_number(browser, document)
-    if not download_document(browser, abstract, document):
-        no_document_image(abstract, document)
-    document_found(abstract, document)
-
-
 def review_multiple_documents(browser, abstract, document):
     document_found(abstract, document)
     for _ in range(1, document.number_results):
         next_result(browser, document)
         document_found(abstract, document)
-
-
-def download_multiple_documents(browser, abstract, document):
-    download_single_document(browser, abstract, document)
-    for _ in range(1, document.number_results):
-        next_result(browser, document)
-        download_single_document(browser, abstract, document)
 
 
 def handle_single_document(browser, abstract, document):
