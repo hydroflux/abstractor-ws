@@ -30,7 +30,7 @@ def download_recorded_document(browser, target_directory, document_list, documen
         target_directory,
         document
     ):
-        no_document_image(dataframe, document)
+        no_document_image(abstract, document)
         no_document_downloaded(document_list, document)
     else:
         document_downloaded(document_list, document)
