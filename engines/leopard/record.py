@@ -248,9 +248,11 @@ def get_reception_number(browser, rows, document):
 
 
 def record(browser, abstract, document):
-    rows = get_document_content(browser, document)
-    if abstract.download_only:
-        get_reception_number(browser, rows, document)
-    document_number = aggregate_document_information(browser, county, document, dictionary, rows)
+    if not abstract.review:
+        rows = get_document_content(browser, document)
+        if abstract.download_only:
+            get_reception_number(browser, rows, document)
+        document_number = aggregate_document_information(browser, county, document, dictionary, rows)
+        # document_number assignment not necessary
     document_found(abstract, document)
-    return document_number
+    # return document_number

@@ -252,7 +252,7 @@
 - [ ] Integrate 'document_downloaded' function from 'file_management' into the 'download' script
 - [ ] Integrate 'previously_downloaded' into the 'execute' script instead of calling in the 'download' script--try to set equivalency to the eagle 'execute' script
 - [ ] Logic for the 'previously_downloaded' route goes in the 'handle_single_document' function of the 'execute' script
-- [ ] Create function logic for the 'record' function of the 'record' script to only grab the 'reception_number' if 'review' or 'download_only' are true
+- [ ] Update the 'record' script to set the 'document.reception_number' for the current Document class instance being recorded (somewhere in the 'aggregate_document_information' function of the 'record' script)
 
 #### Mountain Lion
 
