@@ -12,6 +12,7 @@ from settings.county_variables.leopard import (book_page_abbreviation,
                                                row_data_tag, row_titles,
                                                table_row_tag)
 from settings.county_variables.general import not_applicable
+from settings.file_management import document_found
 from settings.general_functions import (get_element_text, scroll_to_top,
                                         timeout, title_strip)
 
@@ -247,7 +248,8 @@ def next_result(browser, document):
 #     return locate_reception_number(rows)
 
 
-def record_document(browser, county, dictionary, document):
+def record(browser, abstract, document):
     rows = get_document_content(browser, document)
     document_number = aggregate_document_information(browser, county, document, dictionary, rows)
+    document_found(abstract, document)
     return document_number

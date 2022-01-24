@@ -2,16 +2,14 @@ from settings.objects.abstract_dataframe import abstract_dictionary as dataframe
 from settings.bad_search import no_document_image, record_bad_search
 from settings.driver import create_webdriver
 from project_management.export import export_document
-from settings.file_management import (bundle_project, check_length,
-                                      document_found, no_document_found)
+from settings.file_management import (bundle_project, check_length, no_document_found)
 from settings.general_functions import start_timer
-from settings.settings import download
 
 from engines.leopard.download import download_document
 from engines.leopard.login import account_login
 from engines.leopard.logout import logout
 from engines.leopard.open_document import open_document
-from engines.leopard.record import next_result, record_document
+from engines.leopard.record import next_result, record
 from engines.leopard.search import search
 from engines.leopard.transform import transform_document_list
 
@@ -20,11 +18,10 @@ print("execute", __name__)
 
 
 def record_single_document(browser, abstract, document):
-    document_number = record_document(browser, county, dataframe, document)
-    if download:
-        if not download_document(browser, county, target_directory, document, document_number):
+    record(browser, abstract, document)
+    if abstract.download:
+        if not download_document(browser, abstract, document):
             no_document_image(dataframe, document)
-    document_found(start_time, document_list, document)
 
 
 def download_single_document(browser, abstract, document):
@@ -35,7 +32,7 @@ def download_single_document(browser, abstract, document):
 
 
 def record_multiple_documents(browser, abstract, document):
-    record_single_document(browser, county, target_directory, document_list, document, start_time)
+    record_single_document(browser, abstract, document)
     for document_instance in range(0, (document.number_results - 1)):
         next_result(browser, document)
         record_single_document(browser, county, target_directory, document_list, document, start_time)

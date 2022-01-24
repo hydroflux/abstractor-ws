@@ -49,7 +49,7 @@ def execute_download(browser, document):
     download_button.click()
 
 
-def download_document(browser, county, target_directory, document, document_number):
+def download_document(browser, abstract, document):
     document_directory = create_document_directory(target_directory)
     if previously_downloaded(county, document_directory, document_number):
         return True
