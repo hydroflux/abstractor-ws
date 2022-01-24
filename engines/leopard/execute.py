@@ -22,13 +22,13 @@ def handle_single_document(browser, abstract, document):
     record(browser, abstract, document)
     if abstract.download:
         if not download_document(browser, abstract, document):
-            no_document_image(dataframe, document)
+            no_document_image(abstract, document)
 
 
 def download_single_document(browser, abstract, document):
     document_number = get_reception_number(browser, document)
     if not download_document(browser, county, target_directory, document, document_number):
-        no_document_image(dataframe, document)
+        no_document_image(abstract, document)
     document_found(abstract, document)
 
 

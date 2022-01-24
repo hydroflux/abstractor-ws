@@ -238,6 +238,8 @@
 - [ ] Create a "download_setup" series of functions where if download == yes: create_directory, get current files, change active directory, etc.
 - [ ] Circle back to leopard download after completing the above
 - [ ] Eliminate the 'alt' options in the 'execute' script in favor of using attributes on Document class instances
+- [ ] Update the leopard 'record' script to use the active Abstract and Document class instances
+- [ ] Update the leopard 'download' script to use the active Abstract and Document class instances
 
 #### Mountain Lion
 
