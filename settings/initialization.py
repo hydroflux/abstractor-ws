@@ -34,8 +34,10 @@ def program_type_update(abstract):
     if abstract.program == "review":
         abstract.review = True
         abstract.headless = False
+        abstract.download = False
     elif abstract.program == "download":
         abstract.download_only = True
+        abstract.download = True
 
 
 def create_folder(directory):
