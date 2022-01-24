@@ -83,16 +83,6 @@ def search_documents_from_list(browser, abstract):
         # check_length(dataframe)  # Where is the best place to put this???
 
 
-def review_documents_from_list(browser, abstract):
-    for document in abstract.document_list:
-        document.start_time = start_timer()
-        search(browser, document)
-        if open_document(browser, document):
-            handle_search_results(browser, abstract, document)
-        else:
-            no_document_found(abstract, document)
-
-
 def execute_program(abstract):
     if abstract.download_only:
         abstract.headless = False  # Figure out better placement
