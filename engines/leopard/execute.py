@@ -18,13 +18,6 @@ from engines.leopard.transform import transform_document_list
 print("execute", __name__)
 
 
-def review_multiple_documents(browser, abstract, document):
-    document_found(abstract, document)
-    for _ in range(1, document.number_results):
-        next_result(browser, document)
-        document_found(abstract, document)
-
-
 def handle_single_document(browser, abstract, document):
     if not abstract.review or abstract.download_only:
         record(browser, abstract, document)
