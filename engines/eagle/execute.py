@@ -29,15 +29,6 @@ def handle_single_document(browser, abstract, document):
             download_document(browser, abstract, document)
 
 
-def handle_single_document(browser, abstract, document):
-    record(browser, abstract, document)
-    if abstract.download and not abstract.review:
-        if document.number_results == 1:
-            if previously_downloaded(abstract.document_directory, document):
-                return
-        download_document(browser, abstract, document)
-
-
 # Identical to 'leopard' handle_multiple_documents
 def handle_multiple_documents(browser, abstract, document):
     handle_single_document(browser, abstract, document)
