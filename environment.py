@@ -10,7 +10,7 @@ if __name__ == '__main__':
     from engines.eagle.execute import execute_program as execute_eagle
     from engines.jaguar.execute import execute_program as execute_jaguar
     # from leopard.execute import execute_document_download as download_leopard
-    # from leopard.execute import execute_program as execute_leopard
+    from engines.leopard.execute import execute_program as execute_leopard
     # from leopard.execute import execute_review as review_leopard
     # from tiger.execute import execute_program as execute_tiger
     # from tiger.execute import execute_review as review_tiger
@@ -61,16 +61,12 @@ def execute_program(abstract):
         else:
             currently_unavailable(abstract)
     elif abstract.county.engine == 'leopard':
+        if abstract.program in ["execute", "review", "download"]:
+            execute_leopard(abstract)
+        else:
+            currently_unavailable(abstract)
+    elif abstract.county.engine == 'tiger':
         pass
-    #     if program_type == "execute":
-    #         execute_leopard(headless, county, target_directory, document_list, file_name, sheet_name)
-    #     elif program_type == "review":
-    #         review_leopard(county, target_directory, document_list)
-    #     elif program_type == "download":
-    #         download_leopard(county, target_directory, document_list)
-    #     else:
-    #         currently_unavailable(county, program_type)
-    # # elif county.program == 'tiger':
     # #     if program_type == 'execute':
     # #         execute_tiger()
     # #     elif program_type == 'review':
