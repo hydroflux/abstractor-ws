@@ -17,10 +17,36 @@
 - [ ] If performing a 'refresh' loop, only allow for x # of refreshes before pausing for input--don't want to create too many requests (create a Document class attribute?)
 - [ ] Determine the best place to place the 'check_length' function for all scripts
 
-### Error Handling To Do
+## Classes To Do
 
-- [ ] Consider creating an error_handling function for exceptions which takes a screenshot & throws an input together with the above suggestion
-- [ ] Add input() to every timeout which doesn't have a natural resolution in order to pause the program at each exception (& create a correction)--maybe something to follow up 'extrapolate_document_value', like 'input(, please review.\nPlease press enter after reviewing error)' + a screenshot
+### Abstract Class To Do
+
+- [ ] Add 'transform' to abstract initialization dependent on the county
+- [ ] Update either the 'Abstract' or 'Project' class to handle whether to export & bundle a project, rather than having the argument inline of the 'execute_program' functions (across directories)
+
+### County Class To Do
+
+- [ ] If websites & logins are added to the county class the open_site function can be generalized across all scripts
+- [ ] The above can also be used for the 'Program' class instead
+
+### Document Class To Do
+
+- [ ] Update 'document.value' to 'document.search_value' to create a better differentiation between 'document.reception_number'???
+- [ ] Turn off 'download' flag if document image is not available?--could be a better solution to checking image available before trying to download
+- [ ] Add date / year into the document class in order to add the option to sort by date
+- [ ] Consolidate the 'value' attribute and the 'document_value' instance function--too confusing and creating problems
+- [ ] Create class functions for 'document_found', 'document_downloaded', 'no_document_found' and 'no_document_downloaded' using the functions from the 'file_management' script
+
+### Program Class To Do
+
+- [ ] Create a 'Program' class
+- [ ] Use the 'Program' class to create a united 'execute' function across multiple directories
+
+### Project Class To Do
+
+- [ ] Update either the 'Abstract' or 'Project' class to handle whether to export & bundle a project, rather than having the argument inline of the 'execute_program' functions (across directories)
+
+## Program To Do
 
 ### Runtime To Do
 
@@ -31,52 +57,24 @@
 - [ ] Create log files on run returning various metrics => create a comment function that takes a comment as an argument and then updates an object to be exported & prints to the screen
 - [ ] Move the webdriver creation up from all 'execute' files into the 'environment' script and pass into the execute functions as an argument
 
-### Classes To Do
+## Project Management To Do
 
-#### Abstract Class To Do
+### Conditional Formatting To Do
 
-<!-- - [ ] Up-To-Date -->
-- [ ] Add 'transform' to abstract initialization dependent on the county
-- [ ] Update either the 'Abstract' or 'Project' class to handle whether to export & bundle a project, rather than having the argument inline of the 'execute_program' functions (across directories)
+- [ ] Up-To-Date
 
-#### County Class To Do
+### Content To Do
 
-- [ ] If websites & logins are added to the county class the open_site function can be generalized across all scripts
-- [ ] The above can also be used for the 'Program' class instead
+- [ ] Up-To-Date
 
-#### Document Class To Do
+### Defunct Hyperlink To Do
 
-- [ ] Update 'document.value' to 'document.search_value' to create a better differentiation between 'document.reception_number'???
-- [ ] Turn off 'download' flag if document image is not available?--could be a better solution to checking image available before trying to download
-- [ ] Add date / year into the document class in order to add the option to sort by date
-- [ ] Consolidate the 'value' attribute and the 'document_value' instance function--too confusing and creating problems
-- [ ] Create class functions for 'document_found', 'document_downloaded', 'no_document_found' and 'no_document_downloaded' using the functions from the 'file_management' script
+- [ ] Integrate unused functions into the 'hyperlinks' script
+- [ ] Delete the 'defunct_hyperlink' script
 
-#### Program Class To Do
+### Export To Do
 
-- [ ] Create a 'Program' class
-- [ ] Use the 'Program' class to create a united 'execute' function across multiple directories
-
-#### Project Class To Do
-
-- [ ] Update either the 'Abstract' or 'Project' class to handle whether to export & bundle a project, rather than having the argument inline of the 'execute_program' functions (across directories)
-
-### Project Management To Do
-
-#### Imports To Do
-
-- [ ] Allow user to review the imported excel document & choose the column / columns to run
-- [ ] Add download flag to document class & set at import in order to avoid passing the flag around
-- [ ] When creating document instances, leave an indication if a book and page instance & a document number instance are on the same line (use the index) in order to create more effective comments---set up for Document class just needs to be implemented
-- [ ] If 0 documents are imported, close the program and send a message
-- [ ] If download is true and the document is already located in the target document directory, add a medium nap for eagle--in order to do so, add "downloaded" or something similar to the Document class for imports
-- [ ] Armadillo, leopard & tiger use convert_document_numbers, maybe make a workspace level script that checks counties against individual 'convert_document_numbers'
-- [ ] Update 'display_document_list' to show all available attributes attached to a document
-- [ ] Entire header should be created in the settings block, rather than relying on first & last recording dates in the dataframe
-- [ ] Compare parallel scripts from leopard & eagle in order to help refactoring
-
-#### Exports To Do
-
+- [ ] Create an 'export' subdirectory inside project management (come up with a better name)
 - [ ] If nothing is recorded, do not create a base runsheet or a folder
 - [ ] Add hyperlinks not if 'download' flag is true on abstract, but rather if a document_directory exists--maybe check length of the document_directory for files with the county prefix
 - [ ] Add volume & document date (effective date for now) to the dataframe at outset, then remove for each county not needed in "transform"
@@ -88,38 +86,119 @@
 - [ ] Add a print statement at the end to indicate what type of run sheet was created (& the section)
 - [ ] If a base runsheet folder has already been created, create a new one
 
-#### User Prompts To Do
+### Font Formats To Do
+
+- [ ] Up-To-Date
+
+### Generate Document List To Do
+
+- [ ] Allow user to review the imported excel document & choose the column / columns to run
+- [ ] Add download flag to document class & set at import in order to avoid passing the flag around
+- [ ] When creating document instances, leave an indication if a book and page instance & a document number instance are on the same line (use the index) in order to create more effective comments---set up for Document class just needs to be implemented
+- [ ] If 0 documents are imported, close the program and send a message
+- [ ] If download is true and the document is already located in the target document directory, add a medium nap for eagle--in order to do so, add "downloaded" or something similar to the Document class for imports
+- [ ] Armadillo, leopard & tiger use convert_document_numbers, maybe make a workspace level script that checks counties against individual 'convert_document_numbers'
+- [ ] Update 'display_document_list' to show all available attributes attached to a document
+- [ ] Entire header should be created in the settings block, rather than relying on first & last recording dates in the dataframe
+- [ ] Compare parallel scripts from leopard & eagle in order to help refactoring
+
+### Hyperlinks To Do
+
+- [ ] Integrate useful functions from the 'defunct_hyperlinks' script into the 'hyperlinks' script
+- [ ] Determine a way to add hyperlinks into the xlsx document prior to export instead of creating a separate sheet--try using some kind of 'replacement' function, or otherwise avoid writing the 'Reception Number' column until the hyperlinks can be created
+
+### User Prompts To Do
 
 - [ ] Demo prompts should have a "go back" option
 
-#### File Management To Do
+## Selenium Utilities To Do
 
-- [ ] Consolidate 'split_book_and_page' and 'split_volume_and_page' functions
-- [ ] Change "Document Found" so that it lists either "recorded" or "recorded & downloaded" instead of located
-- [ ] Change 'file_management' to 'dataframe_management' & split out functions into multiple utility scripts
-- [ ] Best order of operations for file management should be to create the folder first & then put the documents folder inside of it, rather than bundling at the end
+### Element Interaction To Do
 
-#### Download Management To Do
+- [ ] Up-To-Date
+
+### Inputs To Do
+
+- [ ] Up-To-Date
+
+### Locators To Do
+
+- [ ] Up-To-Date
+
+### Open To Do
+
+- [ ] Up-To-Date
+
+## Settings To Do
+
+### Assets To Do
+
+- [ ] Up-To-Date
+
+### County Variables To Do
+
+- [ ] Eliminate superfluous lines of code commented out at previous testing stages across all scripts
+- [ ] Check all variables in each 'county_variables' script to make sure they are still being used
+- [ ] Streamline variable names across all 'county_variables' scripts
+- [ ] Create class variables on the Document class for any 'county_variables' used across multiple / all scripts
+
+### Objects To Do
+
+- [ ] Up-To-Date
+
+### Download Management To Do
 
 - [ ] Consolidate the prepare, & check functions in download management--had a case where a 500+ page document was clicked & downloaded properly, but 173 in update, 145 in rename, & 140 in prepare raised a value error that it wasn't a file, even though circling back indicated that it was downloaded properly, and with the expected name
 - [ ] Along with above, the new function for waiting for a download & then renaming it could probably be worked together in a new logic path
 - [ ] The 'document_directory' should be created if 'download' is true but not otherwise
 - [ ] Check if 'document_directory' (.exists?) each time a document is downloaded, & create otherwise
 - [ ] Search both the 'download_name' (is that the correct attribute) and the 'new_name' when determining if a document has been downloaded or not (previously_downloaded)
-- [ ] Create some series of checks (maybe in 'transform' scripts) to check for previously downloaded documents at the outset--just have to be careful about documents with multiple results (but that could probably be handled with the 'number_results' attribute)
+- [ ] Create some series of checks (maybe in 'transform' scripts) to check for previously downloaded documents at the outset--just have to be careful about documents with multiple results (but that could probably be handled with the 'number_results' attribute
 
-### Settings To Do
+### Driver To Do
 
-#### Invalid To Do
+- [ ] Up-To-Date
+
+### Error Handling To Do
+
+- [ ] Consider creating an error_handling function for exceptions which takes a screenshot & throws an input together with the above suggestion
+- [ ] Add input() to every timeout which doesn't have a natural resolution in order to pause the program at each exception (& create a correction)--maybe something to follow up 'extrapolate_document_value', like 'input(, please review.\nPlease press enter after reviewing error)' + a screenshot
+
+### File Management To Do
+
+- [ ] Consolidate 'split_book_and_page' and 'split_volume_and_page' functions
+- [ ] Change "Document Found" so that it lists either "recorded" or "recorded & downloaded" instead of located
+- [ ] Change 'file_management' to 'dataframe_management' & split out functions into multiple utility scripts
+- [ ] Best order of operations for file management should be to create the folder first & then put the documents folder inside of it, rather than bundling at the end
+
+### General Functions To Do
+
+- [ ] Up-To-Date
+
+### iFrame Handling To Do
+
+- [ ] Integrate 'iframe_handling' into 'selenium_utilities' directory
+
+### Initialization To Do
+
+- [ ] Up-To-Date
+
+### Invalid To Do
 
 - [ ] Integrate appropriate functions from other scripts into the more generalized 'invalid' script, which has replaced the 'bad_search' script
 - [ ] Create sub-functions for recording 'invalid' or 'bad' values which can be extrapolated to all working engine scripts
 - [ ] Create a better suited method of using the 'no_document_image' function--currently used in 'armadillo', 'rattlesnake' and 'leopard'
 - [ ] Determine if any other switches need to be put in place for the 'record_invalid_search' function if the abstract program type is 'review' or 'download_only'--further, this function may do well handling additional program logic overall
 
-### County Programs To Do
+### PDF Merger To Do
 
-#### Armadillo To Do
+- [ ] Update PDF merger to work on a county by county basis
+- [ ] Handle cases where a '-1' document is valid
+- [ ] Consider creating an independent program for the pdf_merger
+
+## County Programs To Do
+
+### Armadillo To Do
 
 - [ ] Create a "download only" option for execution
 - [ ] Create a final prompt before logging out & closing the browser in order to review documents IF PAID & checkout
@@ -147,7 +226,7 @@
 - [ ] Consider lengthening grantor / grantee fields for armadillo
 - [ ] Update all scripts to work with the 'Project' and 'Abstract' classes
 
-#### Buffalo To Do
+### Buffalo To Do
 
 - [ ] Add all buffalo scripts (execute, record, download)
 - [ ] Integrate buffalo scripts to work with the top level environment file
@@ -156,7 +235,7 @@
 - [ ] Update buffalo error_handling with use cases -- currently has none
 - [ ] Update all scripts to work with the 'Project' and 'Abstract' classes
 
-#### Crocodile To Do
+### Crocodile To Do
 
 - [ ] Integrate crocodile scripts to work with the top level environment file
 - [ ] Create a convert_document_numbers script ??? need to see what an index looks like
@@ -177,7 +256,7 @@
 - [ ] Add 'start_time' as an optional argument for document found depending on download state
 - [ ] IF not download OR if previously downloaded, add a couple of seconds--thats where I'm losing related documents
 
-#### Dolphin To Do
+### Dolphin To Do
 
 - [ ] Create a new directory to work with the dolphin codebase
 - [ ] Add all dolphin scripts (execute, login, logout, search, open, record, download)
@@ -185,7 +264,7 @@
 - [ ] Create a convert_document_numbers script
 - [ ] Create an "execution", "review", & "download only" option for execution
 
-#### Eagle To Do
+### Eagle To Do
 
 - [ ] Create a transform list function to handle hyphenated numbers coming from specific reports
 - [ ] Change download so that it checks before searching if only downloading need to search, then validate the number of search results,  THEN check to see if it's been downloaded or not
@@ -219,7 +298,7 @@
 - [ ] Create function logic for the 'record' function of the 'record' script to only grab the 'reception_number' if 'review' or 'download_only' are true
 - [ ] Consider eliminating the 'review_entry' function path of the 'record' script--doesn't seem to be in use (could determine if log files are developed)
 
-#### Iguana To Do
+### Iguana To Do
 
 - [ ] Create a new directory to work with the iguana codebase
 - [ ] Add all iguana scripts (execute, login, logout, search, open, record, download)
@@ -227,13 +306,13 @@
 - [ ] Create a convert_document_numbers script
 - [ ] Create an "execution", "review", & "download only" option for execution
 
-#### Jaguar To Do
+### Jaguar To Do
 
 - [ ] Needs further manual testing and review
 - [ ] Add paths for multiple documents, review, download only, etc.
 - [ ] Add a function to drop duplicates (from the document list? from the dataframe?)
 
-#### Leopard To Do
+### Leopard To Do
 
 - [ ] Update multiple_documents comment to include actual document numbers and / or book & page numbers
 - [ ] HIGH PRIORITY -- refactor leopard execute
@@ -257,7 +336,7 @@
 - [ ] Logic for the 'previously_downloaded' route goes in the 'handle_single_document' function of the 'execute' script
 - [ ] Update the 'record' script to set the 'document.reception_number' for the current Document class instance being recorded (somewhere in the 'aggregate_document_information' function of the 'record' script)
 
-#### Mountain Lion
+### Mountain Lion
 
 - [ ] Create a new directory to work with the mountain lion codebase
 - [ ] Add all mountain lion scripts (execute, login, logout, search, open, record, download)
@@ -265,26 +344,7 @@
 - [ ] Create a convert_document_numbers script
 - [ ] Create an "execution", "review", & "download only" option for execution
 
-#### Tiger To Do
-
-- [ ] Update multiple_documents comment to include actual document numbers and / or book & page numbers
-- [ ] Re-design tiger to work with the code base for leopard
-- [ ] Create a logout script to work with tiger -- again based on leopard primarily
-- [ ] Refactor environment to work with the new export, document_list, & execute functionality
-- [ ] Refactor the execute script
-- [ ] Refactor tiger record
-- [ ] Refactor tiger download
-- [ ] Update record (after refactoring) to work with multiple documents
-- [ ] Document.number_results should be spread across open, record, & execute
-- [ ] Create a convert_document_numbers script to work like leopard, but with the tiger document lists
-- [ ] Create a "download only" option for execution
-- [ ] Update scripts with new general functions (i.e. assert_window_title)
-- [ ] Update the record function to set the reception number rather than return it
-- [ ] Add Book / Page search option to the 'search' script & forward
-- [ ] Create a new 'tiger' directory inside the 'engines' directory
-- [ ] Update all scripts to work with the 'Project' and 'Abstract' classes
-
-#### Rattlesnake To Do
+### Rattlesnake To Do
 
 - [ ] Fix login & search loops for return to home
 - [ ] Create a 'volume' & 'page' search
@@ -308,17 +368,34 @@
 - [ ] Create a new 'tiger' directory inside the 'engines' directory
 - [ ] Update all scripts to work with the 'Project' and 'Abstract' classes
 
-## Testing Script To Do
+### Tiger To Do
 
-- [ ] Needs webdriver, target directory, document class, headless, etc. all aggregated
-- [ ] Create a 'testing' script that imports all settings & variables & opens a browser instance so dev setup doesn't have to be completely manual
+- [ ] Update multiple_documents comment to include actual document numbers and / or book & page numbers
+- [ ] Re-design tiger to work with the code base for leopard
+- [ ] Create a logout script to work with tiger -- again based on leopard primarily
+- [ ] Refactor environment to work with the new export, document_list, & execute functionality
+- [ ] Refactor the execute script
+- [ ] Refactor tiger record
+- [ ] Refactor tiger download
+- [ ] Update record (after refactoring) to work with multiple documents
+- [ ] Document.number_results should be spread across open, record, & execute
+- [ ] Create a convert_document_numbers script to work like leopard, but with the tiger document lists
+- [ ] Create a "download only" option for execution
+- [ ] Update scripts with new general functions (i.e. assert_window_title)
+- [ ] Update the record function to set the reception number rather than return it
+- [ ] Add Book / Page search option to the 'search' script & forward
+- [ ] Create a new 'tiger' directory inside the 'engines' directory
+- [ ] Update all scripts to work with the 'Project' and 'Abstract' classes
 
-## PDF Merger To Do
+## Other To Do
 
-- [ ] Update PDF merger to work on a county by county basis
-- [ ] Handle cases where a '-1' document is valid
-
-## Documentation To Do
+### Documentation To Do
 
 - [ ] Create a breakdown of adding a new county ('skeleton structures', 'general_functions', etc.)
 - [ ] Create an explanation .md file to define & explain the differences between 'locate', 'get', 'access', 'build', 'handle', etc. functions--'access' & 'get' functions have some overlap, & specifically defining differences would be incredibly beneficial
+
+### Testing Script To Do
+
+- [ ] Needs webdriver, target directory, document class, headless, etc. all aggregated
+- [ ] Create a 'testing' script that imports all settings & variables & opens a browser instance so dev setup doesn't have to be completely manual
+- [ ] Use the 'testing_dataframe' from the 'objects' directory in the testing script as appropriate
