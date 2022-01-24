@@ -77,7 +77,6 @@ def handle_search_results(browser, county, target_directory,
 
 
 def search_documents_from_list(browser, county, target_directory, document_list):
-    transform_document_list(document_list)
     for document in document_list:
         start_time = start_timer()
         search(browser, document)
@@ -93,7 +92,6 @@ def search_documents_from_list(browser, county, target_directory, document_list)
 
 
 def review_documents_from_list(browser, county, target_directory, document_list):
-    transform_document_list(document_list)
     for document in document_list:
         start_time = start_timer()
         search(browser, document)
@@ -105,7 +103,6 @@ def review_documents_from_list(browser, county, target_directory, document_list)
 
 
 def download_documents_from_list(browser, county, target_directory, document_list):
-    transform_document_list(document_list)
     for document in document_list:
         start_time = start_timer()
         search(browser, document)
@@ -118,6 +115,7 @@ def download_documents_from_list(browser, county, target_directory, document_lis
 
 def execute_program(abstract):
     browser = create_webdriver(abstract)
+    transform_document_list(abstract)
     account_login(browser)
     search_documents_from_list(abstract)
     logout(browser)
