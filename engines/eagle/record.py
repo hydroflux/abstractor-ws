@@ -441,13 +441,14 @@ def build_document_download_information(browser, abstract, document):
 
 
 def record(browser, abstract, document):
-    if not abstract.download_only:
-        handle_document_image_status(browser, document)
-        record_document_fields(browser, abstract.dataframe, document)
-        abstract.check_length()
-        # This might not be the correct syntax
-        abstract.check_last_document(document)
-        review_entry(browser, abstract.dataframe, document)
-        document_found(abstract, document)
-    else:
-        build_document_download_information(browser, abstract, document)
+    if not abstract.review:
+        if not abstract.download_only:
+            handle_document_image_status(browser, document)
+            record_document_fields(browser, abstract.dataframe, document)
+            abstract.check_length()
+            # This might not be the correct syntax
+            abstract.check_last_document(document)
+            review_entry(browser, abstract.dataframe, document)
+        else:
+            build_document_download_information(browser, abstract, document)
+    document_found(abstract, document)
