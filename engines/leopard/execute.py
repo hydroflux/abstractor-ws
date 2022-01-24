@@ -20,13 +20,10 @@ print("execute", __name__)
 
 # Try to set handle_single_document equivalent to the 'eagle' handle_single_document function
 def handle_single_document(browser, abstract, document):
-    if abstract.review:
-        document_found(abstract, document)
-    else:
-        record(browser, abstract, document)
-        if abstract.download:
-            # previously_downloaded logic goes here
-            download_document(browser, abstract, document)
+    record(browser, abstract, document)
+    if abstract.download:
+        # previously_downloaded logic goes here
+        download_document(browser, abstract, document)
 
 
 # Identical to 'eagle' handle_multiple_documents
