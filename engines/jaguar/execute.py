@@ -1,4 +1,4 @@
-from settings.bad_search import record_bad_search
+from settings.invalid import record_bad_search
 from settings.driver import create_webdriver
 from project_management.export import export_document
 from settings.general_functions import start_timer

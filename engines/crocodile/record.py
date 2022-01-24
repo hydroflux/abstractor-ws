@@ -5,7 +5,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-from settings.bad_search import no_document_image
+from settings.invalid import no_document_image
 from settings.county_variables.crocodile import (
     additional_legal_pages_class, bad_document_types, general_information_id,
     grantee_id, grantor_id, inactive, legal_id, link_tag,

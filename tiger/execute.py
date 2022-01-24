@@ -1,5 +1,5 @@
 from settings.objects.abstract_dataframe import abstract_dictionary as dataframe
-from settings.bad_search import record_bad_search
+from settings.invalid import record_bad_search
 from settings.county_variables.tiger import search_script
 from settings.driver import create_webdriver
 from project_management.export import export_document

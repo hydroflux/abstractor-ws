@@ -1,6 +1,6 @@
 from project_management.export import export_document
 
-from settings.bad_search import record_bad_search, unable_to_download
+from settings.invalid import record_bad_search, unable_to_download
 from settings.driver import create_webdriver
 from settings.file_management import (bundle_project, check_length,
                                       display_document_list, document_found,

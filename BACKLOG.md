@@ -105,6 +105,12 @@
 - [ ] Search both the 'download_name' (is that the correct attribute) and the 'new_name' when determining if a document has been downloaded or not (previously_downloaded)
 - [ ] Create some series of checks (maybe in 'transform' scripts) to check for previously downloaded documents at the outset--just have to be careful about documents with multiple results (but that could probably be handled with the 'number_results' attribute)
 
+### Settings To Do
+
+#### Invalid To Do
+
+- Integrate appropriate functions from other scripts into the more generalized 'invalid' script, which has replaced the 'bad_search' script
+
 ### County Programs To Do
 
 #### Armadillo To Do

@@ -7,7 +7,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 
 from selenium_utilities.element_interaction import center_element
 
-from settings.bad_search import no_document_image
+from settings.invalid import no_document_image
 from settings.county_variables.eagle import (document_information_id,
                                              document_table_class,
                                              error_message_text,

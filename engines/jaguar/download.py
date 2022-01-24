@@ -2,7 +2,7 @@ import os
 
 from selenium_utilities.inputs import click_button
 from selenium_utilities.locators import locate_element_by_class_name
-from settings.bad_search import no_download
+from settings.invalid import no_download
 
 from settings.download_management import previously_downloaded, update_download
 from settings.county_variables.jaguar import download_button_class

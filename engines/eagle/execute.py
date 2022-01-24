@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-from settings.bad_search import record_bad_search
+from settings.invalid import record_bad_search
 from settings.download_management import previously_downloaded
 from settings.driver import create_webdriver
 from project_management.export import export_document
