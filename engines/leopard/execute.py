@@ -33,9 +33,9 @@ def download_single_document(browser, abstract, document):
 
 def record_multiple_documents(browser, abstract, document):
     record_single_document(browser, abstract, document)
-    for document_instance in range(0, (document.number_results - 1)):
+    for _ in range(0, (document.number_results - 1)):
         next_result(browser, document)
-        record_single_document(browser, county, target_directory, document_list, document, start_time)
+        record_single_document(browser, abstract, document)
 
 
 def review_multiple_documents(browser, abstract, document):
