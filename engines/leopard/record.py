@@ -243,9 +243,9 @@ def next_result(browser, document):
     next_result_button.click()
 
 
-# def get_reception_number(browser, document):
-#     rows = get_document_content(browser, document)
-#     return locate_reception_number(rows)
+def get_reception_number(browser, document):
+    rows = get_document_content(browser, document)
+    document.reception_number = locate_reception_number(rows)
 
 
 def record(browser, abstract, document):

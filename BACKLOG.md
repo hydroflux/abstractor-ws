@@ -111,6 +111,7 @@
 
 - [ ] Integrate appropriate functions from other scripts into the more generalized 'invalid' script, which has replaced the 'bad_search' script
 - [ ] Create sub-functions for recording 'invalid' or 'bad' values which can be extrapolated to all working engine scripts
+- [ ] Create a better suited method of using the 'no_document_image' function--currently used in 'armadillo', 'rattlesnake' and 'leopard'
 
 ### County Programs To Do
 
@@ -240,6 +241,7 @@
 - [ ] Eliminate the 'alt' options in the 'execute' script in favor of using attributes on Document class instances
 - [ ] Update the leopard 'record' script to use the active Abstract and Document class instances
 - [ ] Update the leopard 'download' script to use the active Abstract and Document class instances
+- [ ] Fix the 'get_reception_number' function in the 'record' script (use the Document class)
 
 #### Mountain Lion
 

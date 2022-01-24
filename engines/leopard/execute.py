@@ -26,8 +26,8 @@ def handle_single_document(browser, abstract, document):
 
 
 def download_single_document(browser, abstract, document):
-    document_number = get_reception_number(browser, document)
-    if not download_document(browser, county, target_directory, document, document_number):
+    get_reception_number(browser, document)
+    if not download_document(browser, abstract, document):
         no_document_image(abstract, document)
     document_found(abstract, document)
 
@@ -47,10 +47,10 @@ def review_multiple_documents(browser, abstract, document):
 
 
 def download_multiple_documents(browser, abstract, document):
-    download_single_document(browser, county, target_directory, document)
+    download_single_document(browser, abstract, document)
     for _ in range(0, (document.number_results - 1)):
         next_result(browser, document)
-        download_single_document(browser, county, target_directory, document)
+        download_single_document(browser, abstract, document)
 
 
 def handle_search_results(browser, abstract, document, alt=None):
