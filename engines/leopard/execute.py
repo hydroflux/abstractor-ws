@@ -76,19 +76,16 @@ def handle_search_results(browser, county, target_directory,
             download_single_document(browser, county, target_directory, document_list, document, start_time)
 
 
-def search_documents_from_list(browser, county, target_directory, document_list):
-    for document in document_list:
-        start_time = start_timer()
+def search_documents_from_list(browser, abstract):
+    for document in abstract.document_list:
+        document.start_time = start_timer()
         search(browser, document)
         # naptime()  # --- script runs without issues while this nap was in place
         if open_document(browser, document):
-            handle_search_results(browser, county, target_directory,
-                                  document_list, document, start_time)
+            handle_search_results(browser, abstract, document)
         else:
-            record_bad_search(dataframe, document)
-            no_document_found(start_time, document_list, document)
-        check_length(dataframe)
-    return dataframe
+            record_bad_search(abstract, document)
+        # check_length(dataframe)  # Where is the best place to put this???
 
 
 def review_documents_from_list(browser, county, target_directory, document_list):
@@ -117,7 +114,7 @@ def execute_program(abstract):
     browser = create_webdriver(abstract)
     transform_document_list(abstract)
     account_login(browser)
-    search_documents_from_list(abstract)
+    search_documents_from_list(browser, abstract)
     logout(browser)
     project = export_document(abstract)
     project.bundle_project(abstract)

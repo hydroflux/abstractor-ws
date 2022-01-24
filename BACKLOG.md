@@ -15,6 +15,7 @@
 - [ ] Eliminate iframe_handling script?
 - [ ] Update & uncomment the the 'execute_demo' function in the 'environment' file
 - [ ] If performing a 'refresh' loop, only allow for x # of refreshes before pausing for input--don't want to create too many requests (create a Document class attribute?)
+- [ ] Determine the best place to place the 'check_length' function for all scripts
 
 ### Error Handling To Do
 
