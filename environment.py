@@ -9,9 +9,7 @@ if __name__ == '__main__':
     # from crocodile.execute import execute_review as review_crocodile
     from engines.eagle.execute import execute_program as execute_eagle
     from engines.jaguar.execute import execute_program as execute_jaguar
-    # from leopard.execute import execute_document_download as download_leopard
     from engines.leopard.execute import execute_program as execute_leopard
-    # from leopard.execute import execute_review as review_leopard
     # from tiger.execute import execute_program as execute_tiger
     # from tiger.execute import execute_review as review_tiger
     # from rattlesnake.execute import execute_program as execute_rattlesnake
