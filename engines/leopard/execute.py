@@ -17,7 +17,7 @@ from engines.leopard.transform import transform_document_list
 print("execute", __name__)
 
 
-def record_single_document(browser, abstract, document):
+def handle_single_document(browser, abstract, document):
     record(browser, abstract, document)
     if abstract.download:
         if not download_document(browser, abstract, document):
@@ -31,11 +31,11 @@ def download_single_document(browser, abstract, document):
     document_found(start_time, document_list, document, "download")
 
 
-def record_multiple_documents(browser, abstract, document):
-    record_single_document(browser, abstract, document)
+def handle_multiple_documents(browser, abstract, document):
+    handle_single_document(browser, abstract, document)
     for _ in range(0, (document.number_results - 1)):
         next_result(browser, document)
-        record_single_document(browser, abstract, document)
+        handle_single_document(browser, abstract, document)
 
 
 def review_multiple_documents(browser, abstract, document):
@@ -55,9 +55,9 @@ def download_multiple_documents(browser, abstract, document):
 def handle_search_results(browser, abstract, document, alt=None):
     if alt is None:
         if document.number_results > 1:
-            record_multiple_documents(browser, abstract, document)
+            handle_multiple_documents(browser, abstract, document)
         else:
-            record_single_document(browser, abstract, document)
+            handle_single_document(browser, abstract, document)
     elif alt == 'review':
         if document.number_results > 1:
             review_multiple_documents(browser, abstract, document)
