@@ -1,5 +1,5 @@
 from settings.objects.abstract_dataframe import abstract_dictionary as dataframe
-from settings.invalid import no_document_image, record_bad_search
+from settings.invalid import no_document_image, record_invalid_search
 from settings.driver import create_webdriver
 from project_management.export import export_document, export_hyperlinks
 from settings.file_management import (bundle_project, check_length,
@@ -100,7 +100,7 @@ def handle_search_results(browser, target_directory, document_list, document, re
 
 def handle_bad_search(dataframe, document_list, document, review, download_only):
     if not download_only:
-        record_bad_search(dataframe, document)
+        record_invalid_search(dataframe, document)
     no_document_found(document_list, document, review)
 
 

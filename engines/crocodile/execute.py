@@ -1,6 +1,6 @@
 from project_management.export import export_document
 
-from settings.invalid import record_bad_search, unable_to_download
+from settings.invalid import record_invalid_search, unable_to_download
 from settings.driver import create_webdriver
 from settings.file_management import (bundle_project, check_length,
                                       display_document_list, document_found,
@@ -49,7 +49,7 @@ def search_documents_from_list(browser, county, target_directory, document_list)
         if open_document(browser, document):
             handle_search_results(browser, county, target_directory, document_list, document, start_time)
         else:
-            record_bad_search(dataframe, document)
+            record_invalid_search(dataframe, document)
             no_document_found(start_time, document_list, document)
         check_length(dataframe)
     return dataframe

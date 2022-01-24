@@ -109,7 +109,8 @@
 
 #### Invalid To Do
 
-- Integrate appropriate functions from other scripts into the more generalized 'invalid' script, which has replaced the 'bad_search' script
+- [ ] Integrate appropriate functions from other scripts into the more generalized 'invalid' script, which has replaced the 'bad_search' script
+- [ ] Create sub-functions for recording 'invalid' or 'bad' values which can be extrapolated to all working engine scripts
 
 ### County Programs To Do
 
@@ -284,6 +285,8 @@
 - [ ] Add a method for handling "NO DOCUMENT TYPES"
 - [ ] Drop book from Dataframe
 - [ ] Add 'search_url' & 'search_title' (and respective 'old') to the document instances with 'transform' script & the document class
+- [ ] Update the 'record' script 'record_bad_value' to 'record_invalid_value'
+- [ ] Consider extrapolating 'record_bad_value' to the 'invalid' script
 - [ ] Create a new 'tiger' directory inside the 'engines' directory
 - [ ] Update all scripts to work with the 'Project' and 'Abstract' classes
 

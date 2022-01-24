@@ -1,5 +1,5 @@
 from settings.objects.abstract_dataframe import abstract_dictionary as dataframe
-from settings.invalid import record_bad_search
+from settings.invalid import record_invalid_search
 from settings.county_variables.tiger import search_script
 from settings.driver import create_webdriver
 from project_management.export import export_document
@@ -48,7 +48,7 @@ def search_documents_from_list(browser, county, target_directory, document_list)
             javascript_script_execution(search_script)
             naptime()
         else:
-            record_bad_search(dataframe, document_number)
+            record_invalid_search(dataframe, document_number)
             print(f'No document found at reception number {document_number}, '
                   f'{remaining_downloads(document_list, document_number)} documents remaining.')
 

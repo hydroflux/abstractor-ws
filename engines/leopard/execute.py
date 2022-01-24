@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-from settings.invalid import no_document_image, record_bad_search
+from settings.invalid import no_document_image, record_invalid_search
 from settings.download_management import previously_downloaded
 from settings.driver import create_webdriver
 from project_management.export import export_document
@@ -79,7 +79,7 @@ def search_documents_from_list(browser, abstract):
         if open_document(browser, document):
             handle_search_results(browser, abstract, document)
         else:
-            record_bad_search(abstract, document)
+            record_invalid_search(abstract, document)
         # check_length(dataframe)  # Where is the best place to put this???
 
 
