@@ -249,6 +249,7 @@
 - [ ] Drop the "if not abstract.download_only and not abstract.review:" line from the 'execute_program' function of the 'execute' script in favor of something more elegant--possibly update on the Abstract or Program class
 - [ ] Integrate the 'document.result_number' attribute into the 'handle_multiple_documents' function of the 'execute' script--use eagle as an example template
 - [ ] Integrate 'document_downloaded' function from 'file_management' into the 'download' script
+- [ ] Integrate 'previously_downloaded' into the 'execute' script instead of calling in the 'download' script--try to set equivalency to the eagle 'execute' script
 
 #### Mountain Lion
 

@@ -243,13 +243,14 @@ def next_result(browser, document):
     next_result_button.click()
 
 
-def get_reception_number(browser, document):
-    rows = get_document_content(browser, document)
+def get_reception_number(browser, rows, document):
     document.reception_number = locate_reception_number(rows)
 
 
 def record(browser, abstract, document):
     rows = get_document_content(browser, document)
+    if abstract.download_only:
+        get_reception_number(browser, rows, document)
     document_number = aggregate_document_information(browser, county, document, dictionary, rows)
     document_found(abstract, document)
     return document_number

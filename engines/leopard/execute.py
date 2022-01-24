@@ -19,15 +19,13 @@ print("execute", __name__)
 
 
 def handle_single_document(browser, abstract, document):
-    if not abstract.review or abstract.download_only:
-        record(browser, abstract, document)
-    elif abstract.review:
+    if abstract.review:
         document_found(abstract, document)
-    elif abstract.download_only:
-        get_reception_number(browser, document)
-    if abstract.download:
-        if not download_document(browser, abstract, document):
-            no_document_image(abstract, document)
+    else:
+        record(browser, abstract, document)
+        if abstract.download:
+            if not download_document(browser, abstract, document):
+                no_document_image(abstract, document)
 
 
 # Identical to 'eagle' handle_multiple_documents
