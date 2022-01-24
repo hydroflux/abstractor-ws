@@ -1,5 +1,5 @@
-def convert_document_numbers(document_list):
-    for document in document_list:
+def convert_document_numbers(abstract):
+    for document in abstract.document_list:
         if document.type == "document_number" and document.value.find("-") != -1:
             document_number, year = document.value.split("-")
             year = int(year)
@@ -24,5 +24,5 @@ def convert_document_numbers(document_list):
 
 
 # Redundant function as it stands, the purpose being to circle back & add additional functionality
-def transform_document_list(document_list):
-    convert_document_numbers(document_list)
+def transform_document_list(abstract):
+    convert_document_numbers(abstract)
