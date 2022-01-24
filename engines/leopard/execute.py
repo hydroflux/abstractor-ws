@@ -28,7 +28,7 @@ def download_single_document(browser, abstract, document):
     document_number = get_reception_number(browser, document)
     if not download_document(browser, county, target_directory, document, document_number):
         no_document_image(dataframe, document)
-    document_found(start_time, document_list, document, "download")
+    document_found(abstract, document)
 
 
 def handle_multiple_documents(browser, abstract, document):
@@ -39,10 +39,10 @@ def handle_multiple_documents(browser, abstract, document):
 
 
 def review_multiple_documents(browser, abstract, document):
-    document_found(start_time, document_list, document, "review")
+    document_found(abstract, document)
     for document_instance in range(0, (document.number_results - 1)):
         next_result(browser, document)
-        document_found(start_time, document_list, document, "review")
+        document_found(abstract, document)
 
 
 def download_multiple_documents(browser, abstract, document):
@@ -62,7 +62,7 @@ def handle_search_results(browser, abstract, document, alt=None):
         if document.number_results > 1:
             review_multiple_documents(browser, abstract, document)
         else:
-            document_found(abstract, document, "review")  # I don't think this syntax will work as is
+            document_found(abstract, document)
     elif alt == "download":
         if document.number_results > 1:
             download_multiple_documents((browser, abstract, document))
@@ -90,7 +90,7 @@ def review_documents_from_list(browser, county, target_directory, document_list)
             handle_search_results(browser, county, target_directory, False,
                                   document_list, document, start_time, "review")
         else:
-            no_document_found(start_time, document_list, document, "review")
+            no_document_found(abstract, document)
 
 
 def download_documents_from_list(browser, county, target_directory, document_list):
@@ -101,7 +101,7 @@ def download_documents_from_list(browser, county, target_directory, document_lis
             handle_search_results(browser, county, target_directory, True,
                                   document_list, document, start_time, "download")
         else:
-            no_document_found(start_time, document_list, document)
+            no_document_found(abstract, document)
 
 
 def execute_program(abstract):
