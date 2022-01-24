@@ -18,11 +18,7 @@ from engines.leopard.transform import transform_document_list
 print("execute", __name__)
 
 
-def handle_single_document(browser, abstract, document):
-    record(browser, abstract, document)
-    if abstract.download:
-        if not download_document(browser, abstract, document):
-            no_document_image(abstract, document)
+
 
 
 def download_single_document(browser, abstract, document):
@@ -32,25 +28,32 @@ def download_single_document(browser, abstract, document):
     document_found(abstract, document)
 
 
-def handle_multiple_documents(browser, abstract, document):
-    handle_single_document(browser, abstract, document)
-    for _ in range(0, (document.number_results - 1)):
-        next_result(browser, document)
-        handle_single_document(browser, abstract, document)
-
-
 def review_multiple_documents(browser, abstract, document):
     document_found(abstract, document)
-    for _ in range(0, (document.number_results - 1)):
+    for _ in range(1, document.number_results):
         next_result(browser, document)
         document_found(abstract, document)
 
 
 def download_multiple_documents(browser, abstract, document):
     download_single_document(browser, abstract, document)
-    for _ in range(0, (document.number_results - 1)):
+    for _ in range(1, document.number_results):
         next_result(browser, document)
         download_single_document(browser, abstract, document)
+
+
+def handle_single_document(browser, abstract, document):
+    record(browser, abstract, document)
+    if abstract.download:
+        if not download_document(browser, abstract, document):
+            no_document_image(abstract, document)
+
+
+def handle_multiple_documents(browser, abstract, document):
+    handle_single_document(browser, abstract, document)
+    for _ in range(1, document.number_results):
+        next_result(browser, document)
+        handle_single_document(browser, abstract, document)
 
 
 # Identical to 'eagle' and 'jaguar' handle_search_results
@@ -61,6 +64,7 @@ def handle_search_results(browser, abstract, document):
         handle_single_document(browser, abstract, document)
 
 
+# Identical to 'eagle' & 'jaguar' search_documents_from_list
 def search_documents_from_list(browser, abstract):
     for document in abstract.document_list:
         document.start_time = start_timer()
