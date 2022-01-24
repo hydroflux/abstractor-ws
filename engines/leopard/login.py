@@ -9,7 +9,7 @@ from settings.county_variables.leopard import (credentials, login_title,
                                                website, website_title)
 from settings.general_functions import timeout
 
-from leopard.disclaimer import handle_disclaimer
+from engines.leopard.disclaimer import handle_disclaimer
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("login", __name__)

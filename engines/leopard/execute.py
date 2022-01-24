@@ -7,13 +7,13 @@ from settings.file_management import (bundle_project, check_length,
 from settings.general_functions import start_timer
 from settings.settings import download
 
-from leopard.download import download_document
-from leopard.login import account_login
-from leopard.logout import logout
-from leopard.open_document import open_document
-from leopard.record import next_result, record_document
-from leopard.search import search
-from leopard.transform_document_list import transform_document_list
+from engines.leopard.download import download_document
+from engines.leopard.login import account_login
+from engines.leopard.logout import logout
+from engines.leopard.open_document import open_document
+from engines.leopard.record import next_result, record_document
+from engines.leopard.search import search
+from engines.leopard.transform_document_list import transform_document_list
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("execute", __name__)

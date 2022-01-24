@@ -13,7 +13,7 @@ from settings.file_management import (document_type, document_value,
 from settings.general_functions import (get_element_text, scroll_into_view,
                                         timeout)
 
-from leopard.search import search
+from engines.leopard.search import search
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("open_document", __name__)
