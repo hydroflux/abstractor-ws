@@ -25,6 +25,7 @@ def handle_single_document(browser, abstract, document):
         download_document(browser, abstract, document)
 
 
+# Identical to 'leopard' handle_multiple_documents
 def handle_multiple_documents(browser, abstract, document):
     handle_single_document(browser, abstract, document)
     for result_number in range(1, document.number_results):

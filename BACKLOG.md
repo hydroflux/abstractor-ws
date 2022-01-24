@@ -49,6 +49,7 @@
 - [ ] Turn off 'download' flag if document image is not available?--could be a better solution to checking image available before trying to download
 - [ ] Add date / year into the document class in order to add the option to sort by date
 - [ ] Consolidate the 'value' attribute and the 'document_value' instance function--too confusing and creating problems
+- [ ] Create class functions for 'document_found', 'document_downloaded', 'no_document_found' and 'no_document_downloaded' using the functions from the 'file_management' script
 
 #### Program Class To Do
 
@@ -246,6 +247,8 @@
 - [ ] Fix the 'get_reception_number' function in the 'record' script (use the Document class)
 - [ ] Currently the 'download_only' switch for the 'headless' attribute is in the 'execute_program' function--better placement would probably be in the 'environment' or 'initialization' scripts if possible
 - [ ] Drop the "if not abstract.download_only and not abstract.review:" line from the 'execute_program' function of the 'execute' script in favor of something more elegant--possibly update on the Abstract or Program class
+- [ ] Integrate the 'document.result_number' attribute into the 'handle_multiple_documents' function of the 'execute' script--use eagle as an example template
+- [ ] Integrate 'document_downloaded' function from 'file_management' into the 'download' script
 
 #### Mountain Lion
 

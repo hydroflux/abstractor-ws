@@ -10,15 +10,12 @@ from engines.leopard.download import download_document
 from engines.leopard.login import account_login
 from engines.leopard.logout import logout
 from engines.leopard.open_document import open_document
-from engines.leopard.record import next_result, record
+from engines.leopard.record import get_reception_number, next_result, record
 from engines.leopard.search import search
 from engines.leopard.transform import transform_document_list
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("execute", __name__)
-
-
-
 
 
 def download_single_document(browser, abstract, document):
@@ -43,15 +40,22 @@ def download_multiple_documents(browser, abstract, document):
 
 
 def handle_single_document(browser, abstract, document):
-    record(browser, abstract, document)
+    if not abstract.review or abstract.download_only:
+        record(browser, abstract, document)
+    elif abstract.review:
+        document_found(abstract, document)
+    elif abstract.download_only:
+        get_reception_number(browser, document)
     if abstract.download:
         if not download_document(browser, abstract, document):
             no_document_image(abstract, document)
 
 
+# Identical to 'eagle' handle_multiple_documents
 def handle_multiple_documents(browser, abstract, document):
     handle_single_document(browser, abstract, document)
-    for _ in range(1, document.number_results):
+    for result_number in range(1, document.number_results):
+        document.result_number = result_number  # Pulled from 'eagle' execute, currently unused
         next_result(browser, document)
         handle_single_document(browser, abstract, document)
 
