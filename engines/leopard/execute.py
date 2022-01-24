@@ -41,14 +41,14 @@ def handle_multiple_documents(browser, abstract, document):
 
 def review_multiple_documents(browser, abstract, document):
     document_found(abstract, document)
-    for document_instance in range(0, (document.number_results - 1)):
+    for _ in range(0, (document.number_results - 1)):
         next_result(browser, document)
         document_found(abstract, document)
 
 
 def download_multiple_documents(browser, abstract, document):
     download_single_document(browser, county, target_directory, document)
-    for document_instance in range(0, (document.number_results - 1)):
+    for _ in range(0, (document.number_results - 1)):
         next_result(browser, document)
         download_single_document(browser, county, target_directory, document)
 
