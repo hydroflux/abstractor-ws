@@ -95,19 +95,3 @@ def execute_program(abstract):
         project = export_document(abstract)
         project.bundle_project(abstract)
     browser.close()
-
-
-def execute_review(county, target_directory, document_list):
-    browser = create_webdriver(target_directory, False)
-    account_login(browser)
-    review_documents_from_list(browser, county, target_directory, document_list)
-    logout(browser)
-    browser.close()
-
-
-def execute_document_download(county, target_directory, document_list):
-    browser = create_webdriver(target_directory, False)
-    account_login(browser)
-    download_documents_from_list(browser, county, target_directory, document_list)
-    logout(browser)
-    browser.close()
