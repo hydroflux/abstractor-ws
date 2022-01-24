@@ -23,7 +23,7 @@ def handle_multiple_documents(browser, abstract, document):
     input()
 
 
-# Identical to 'eagle' execute_program
+# Identical to 'eagle' & 'leopard' handle_search_results
 def handle_search_results(browser, abstract, document):
     if document.number_results == 1:
         handle_single_document(browser, abstract, document)
@@ -31,7 +31,7 @@ def handle_search_results(browser, abstract, document):
         handle_multiple_documents(browser, abstract, document)
 
 
-# Identical to 'eagle' execute_program
+# Identical to 'eagle' & 'leopard' search_documents_from_list
 def search_documents_from_list(browser, abstract):
     for document in abstract.document_list:
         document.start_time = start_timer()

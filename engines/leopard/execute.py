@@ -53,22 +53,12 @@ def download_multiple_documents(browser, abstract, document):
         download_single_document(browser, abstract, document)
 
 
-def handle_search_results(browser, abstract, document, alt=None):
-    if alt is None:
-        if document.number_results > 1:
-            handle_multiple_documents(browser, abstract, document)
-        else:
-            handle_single_document(browser, abstract, document)
-    elif alt == 'review':
-        if document.number_results > 1:
-            review_multiple_documents(browser, abstract, document)
-        else:
-            document_found(abstract, document)
-    elif alt == "download":
-        if document.number_results > 1:
-            download_multiple_documents((browser, abstract, document))
-        else:
-            download_single_document((browser, abstract, document))
+# Identical to 'eagle' and 'jaguar' handle_search_results
+def handle_search_results(browser, abstract, document):
+    if document.number_results == 1:
+        handle_multiple_documents(browser, abstract, document)
+    else:
+        handle_single_document(browser, abstract, document)
 
 
 def search_documents_from_list(browser, abstract):

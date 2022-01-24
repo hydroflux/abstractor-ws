@@ -113,6 +113,7 @@
 - [ ] Integrate appropriate functions from other scripts into the more generalized 'invalid' script, which has replaced the 'bad_search' script
 - [ ] Create sub-functions for recording 'invalid' or 'bad' values which can be extrapolated to all working engine scripts
 - [ ] Create a better suited method of using the 'no_document_image' function--currently used in 'armadillo', 'rattlesnake' and 'leopard'
+- [ ] Determine if any other switches need to be put in place for the 'record_invalid_search' function if the abstract program type is 'review' or 'download_only'--further, this function may do well handling additional program logic overall
 
 ### County Programs To Do
 
