@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-from settings.file_management import document_found
 from settings.invalid import record_invalid_search
 from settings.download_management import previously_downloaded
 from settings.driver import create_webdriver
@@ -18,15 +17,12 @@ print("execute", __name__)
 
 
 def handle_single_document(browser, abstract, document):
-    if abstract.review:
-        document_found(abstract, document)
-    else:
-        record(browser, abstract, document)
-        if abstract.download:
-            if document.number_results == 1:
-                if previously_downloaded(abstract.document_directory, document):
-                    return
-            download_document(browser, abstract, document)
+    record(browser, abstract, document)
+    if abstract.download:
+        if document.number_results == 1:
+            if previously_downloaded(abstract.document_directory, document):
+                return
+        download_document(browser, abstract, document)
 
 
 # Identical to 'leopard' handle_multiple_documents

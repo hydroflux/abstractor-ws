@@ -29,8 +29,9 @@
 - [ ] Update parameter (and then argument) order for all instances of 'document_found' and 'no_document_found'
 - [ ] Add a check to the environment file to make sure that the county information is entered correctly before starting the webdriver
 - [ ] Create log files on run returning various metrics => create a comment function that takes a comment as an argument and then updates an object to be exported & prints to the screen
+- [ ] Move the webdriver creation up from all 'execute' files into the 'environment' script and pass into the execute functions as an argument
 
-### Class To Do
+### Classes To Do
 
 #### Abstract Class To Do
 
@@ -215,6 +216,8 @@
 - [ ] Create a double-check option for eagle--possibly under the "review" as a switch in order to check for any related documents missing
 - [ ] Compare the 'switch_into_frame' and dependent 'access_pdf_viewer' functions from the 'download' (and 'record'?) script to try and extrapolate into the generalized 'frame_handling' script
 - [ ] Document does not need to be recorded in the 'handle_single_document' function if 'review' is true--create some sort of replacement to only acknowledge that the document has been 'found' ('document_found')
+- [ ] Create function logic for the 'record' function of the 'record' script to only grab the 'reception_number' if 'review' or 'download_only' are true
+- [ ] Consider eliminating the 'review_entry' function path of the 'record' script--doesn't seem to be in use (could determine if log files are developed)
 
 #### Iguana To Do
 

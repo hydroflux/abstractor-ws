@@ -2,7 +2,6 @@
 from project_management.export import export_document
 
 from settings.driver import create_webdriver
-from settings.file_management import document_found
 from settings.general_functions import start_timer
 from settings.invalid import record_invalid_search
 
