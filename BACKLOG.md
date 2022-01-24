@@ -133,6 +133,7 @@
 - [ ] Options should be created in the environment file, the 'use_prompts' file, or a new file specifically for handling options
 - [ ] Refactor 'record' script into its own directory
 - [ ] Consider lengthening grantor / grantee fields for armadillo
+- [ ] Update all scripts to work with the 'Project' and 'Abstract' classes
 
 #### Buffalo To Do
 
@@ -141,6 +142,7 @@
 - [ ] Create a convert_document_numbers script
 - [ ] Create an "execution", "review", & "download only" option for execution
 - [ ] Update buffalo error_handling with use cases -- currently has none
+- [ ] Update all scripts to work with the 'Project' and 'Abstract' classes
 
 #### Crocodile To Do
 
@@ -253,6 +255,8 @@
 - [ ] Update scripts with new general functions (i.e. assert_window_title)
 - [ ] Update the record function to set the reception number rather than return it
 - [ ] Add Book / Page search option to the 'search' script & forward
+- [ ] Create a new 'tiger' directory inside the 'engines' directory
+- [ ] Update all scripts to work with the 'Project' and 'Abstract' classes
 
 #### Rattlesnake To Do
 
@@ -273,6 +277,8 @@
 - [ ] Add a method for handling "NO DOCUMENT TYPES"
 - [ ] Drop book from Dataframe
 - [ ] Add 'search_url' & 'search_title' (and respective 'old') to the document instances with 'transform' script & the document class
+- [ ] Create a new 'tiger' directory inside the 'engines' directory
+- [ ] Update all scripts to work with the 'Project' and 'Abstract' classes
 
 ## Testing Script To Do
 
