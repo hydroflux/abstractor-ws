@@ -116,13 +116,13 @@ def download_documents_from_list(browser, county, target_directory, document_lis
             no_document_found(start_time, document_list, document)
 
 
-def execute_program(headless, county, target_directory, document_list, file_name, sheet_name):
-    browser = create_webdriver(target_directory, headless)
+def execute_program(abstract):
+    browser = create_webdriver(abstract)
     account_login(browser)
-    dataframe = search_documents_from_list(browser, county, target_directory, document_list)
+    search_documents_from_list(abstract)
     logout(browser)
-    abstraction = export_document(county, target_directory, file_name, dataframe)
-    bundle_project(target_directory, abstraction)
+    project = export_document(abstract)
+    project.bundle_project(abstract)
     browser.close()
 
 
