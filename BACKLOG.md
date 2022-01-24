@@ -214,6 +214,7 @@
 - [ ] Remove an additional space when dropping "see record" in order to cut the new line character out
 - [ ] Create a double-check option for eagle--possibly under the "review" as a switch in order to check for any related documents missing
 - [ ] Compare the 'switch_into_frame' and dependent 'access_pdf_viewer' functions from the 'download' (and 'record'?) script to try and extrapolate into the generalized 'frame_handling' script
+- [ ] Document does not need to be recorded in the 'handle_single_document' function if 'review' is true--create some sort of replacement to only acknowledge that the document has been 'found' ('document_found')
 
 #### Iguana To Do
 
@@ -250,6 +251,7 @@
 - [ ] Integrate the 'document.result_number' attribute into the 'handle_multiple_documents' function of the 'execute' script--use eagle as an example template
 - [ ] Integrate 'document_downloaded' function from 'file_management' into the 'download' script
 - [ ] Integrate 'previously_downloaded' into the 'execute' script instead of calling in the 'download' script--try to set equivalency to the eagle 'execute' script
+- [ ] Logic for the 'previously_downloaded' route goes in the 'handle_single_document' function of the 'execute' script
 
 #### Mountain Lion
 

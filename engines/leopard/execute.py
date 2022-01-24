@@ -10,7 +10,7 @@ from engines.leopard.download import download_document
 from engines.leopard.login import account_login
 from engines.leopard.logout import logout
 from engines.leopard.open_document import open_document
-from engines.leopard.record import get_reception_number, next_result, record
+from engines.leopard.record import next_result, record
 from engines.leopard.search import search
 from engines.leopard.transform import transform_document_list
 
@@ -18,14 +18,15 @@ from engines.leopard.transform import transform_document_list
 print("execute", __name__)
 
 
+# Try to set handle_single_document equivalent to the 'eagle' handle_single_document function
 def handle_single_document(browser, abstract, document):
     if abstract.review:
         document_found(abstract, document)
     else:
         record(browser, abstract, document)
         if abstract.download:
-            if not download_document(browser, abstract, document):
-                no_document_image(abstract, document)
+            # previously_downloaded logic goes here
+            download_document(browser, abstract, document)
 
 
 # Identical to 'eagle' handle_multiple_documents

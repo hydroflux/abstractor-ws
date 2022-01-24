@@ -12,6 +12,7 @@ from settings.download_management import previously_downloaded, update_download
 from settings.file_management import (create_document_directory,
                                       extrapolate_document_value)
 from settings.general_functions import timeout
+from settings.invalid import no_document_image
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("download", __name__)
@@ -59,3 +60,5 @@ def download_document(browser, abstract, document):
         execute_download(browser, document)
         if update_download(browser, county, stock_download, document_directory, number_files, document_number):
             return True
+        else:
+            no_document_image(abstract, document)
