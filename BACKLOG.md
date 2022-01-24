@@ -242,6 +242,7 @@
 - [ ] Update the leopard 'record' script to use the active Abstract and Document class instances
 - [ ] Update the leopard 'download' script to use the active Abstract and Document class instances
 - [ ] Fix the 'get_reception_number' function in the 'record' script (use the Document class)
+- [ ] Currently the 'download_only' switch for the 'headless' attribute is in the 'execute_program' function--better placement would probably be in the 'environment' or 'initialization' scripts if possible
 
 #### Mountain Lion
 
