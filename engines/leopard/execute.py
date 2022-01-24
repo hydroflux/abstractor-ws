@@ -1,10 +1,10 @@
 #!/usr/bin/python3
-from settings.invalid import no_document_image, record_invalid_search
-from settings.download_management import previously_downloaded
-from settings.driver import create_webdriver
 from project_management.export import export_document
-from settings.file_management import document_found, no_document_found
+
+from settings.driver import create_webdriver
+from settings.file_management import document_found
 from settings.general_functions import start_timer
+from settings.invalid import no_document_image, record_invalid_search
 
 from engines.leopard.download import download_document
 from engines.leopard.login import account_login
