@@ -1,5 +1,6 @@
 def convert_document_numbers(abstract):
     for document in abstract.document_list:
+        document.county = abstract.county
         if document.type == "document_number" and document.value.find("-") != -1:
             document_number, year = document.value.split("-")
             year = int(year)
