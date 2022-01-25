@@ -336,6 +336,7 @@
 - [ ] Logic for the 'previously_downloaded' route goes in the 'handle_single_document' function of the 'execute' script
 - [ ] Update the 'record' script to set the 'document.reception_number' for the current Document class instance being recorded (somewhere in the 'aggregate_document_information' function of the 'record' script)
 - [ ] Create a validation check for 'reception_number', 'book', and 'page' for the 'record' script
+- [ ] Extrapolate and generalize the syntax of the 'record_comments' function in leopard 'record' (and all other county engine 'record' scripts)
 
 ### Mountain Lion
 

@@ -78,14 +78,14 @@ def check_rows(rows, title):
     return not_applicable
 
 
-# Function designed to help with development, no production purpose
-def row_title_check(rows):
-    for row in rows:
-        try:
-            row_title, row_content = get_row_data(row)
-            print(rows.index(row), "row_title", row_title, "row content", row_content)
-        except IndexError:
-            continue
+# # Function designed to help with development, no production purpose
+# def row_title_check(rows):
+#     for row in rows:
+#         try:
+#             row_title, row_content = get_row_data(row)
+#             print(rows.index(row), "row_title", row_title, "row content", row_content)
+#         except IndexError:
+#             continue
 
 
 def access_reception_number(document, rows):
@@ -170,9 +170,10 @@ def record_legal(abstract, rows):
 #  Extrapolate this to a generalized file
 def record_comments(abstract, document, rows):
     if document.number_results > 1:
-        abstract.dataframe["Comments"].append(f'Multiple documents located at {document.extrapolate_value()}'
-                                      f' on the {county} recording website; Each of the {document.number_results}'
-                                      f' documents has been listed, please review')
+        comment = (f'Multiple documents located at {document.extrapolate_value()}'
+                   f' on the {document.county} recording website; Each of the {document.number_results}'
+                   f' documents has been listed, please review')
+        abstract.dataframe["Comments"].append(comment)
     else:
         abstract.dataframe["Comments"].append("")
 
