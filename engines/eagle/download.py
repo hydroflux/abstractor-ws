@@ -109,7 +109,7 @@ def execute_download(browser, abstract, document):
 def download_document(browser, abstract, document):
     abstract.document_directory = create_document_directory(abstract.target_directory)
     if download_available(abstract.dataframe, document):
-        if previously_downloaded(abstract.document_directory, document):
+        if previously_downloaded(abstract, document):
             if check_last_download(abstract.dataframe, document):
                 document_downloaded(abstract.document_list, document)
                 return True
