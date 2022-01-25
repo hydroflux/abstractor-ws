@@ -6,6 +6,7 @@ from selenium_utilities.element_interaction import center_element
 from selenium_utilities.inputs import click_button
 from selenium_utilities.locators import (locate_element_by_class_name,
                                          locate_element_by_id)
+from settings.initialization import create_document_directory
 from settings.invalid import no_download
 
 from settings.county_variables.eagle import (pdf_viewer_class_name, purchase_button_class_name,
@@ -106,6 +107,7 @@ def execute_download(browser, abstract, document):
 
 
 def download_document(browser, abstract, document):
+    abstract.document_directory = create_document_directory(abstract.target_directory)
     if download_available(abstract.dataframe, document):
         if previously_downloaded(abstract.document_directory, document):
             if check_last_download(abstract.dataframe, document):

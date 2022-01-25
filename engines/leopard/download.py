@@ -9,9 +9,8 @@ from settings.county_variables.leopard import (download_button_id,
                                                stock_download, view_group_id,
                                                view_panel_id)
 from settings.download_management import previously_downloaded, update_download
-from settings.file_management import (create_document_directory,
-                                      extrapolate_document_value)
 from settings.general_functions import timeout
+from settings.initialization import create_document_directory
 from settings.invalid import no_document_image
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
@@ -51,7 +50,7 @@ def execute_download(browser, document):
 
 
 def download_document(browser, abstract, document):
-    document_directory = create_document_directory(target_directory)
+    abstract.document_directory = create_document_directory(abstract.target_directory)
     if previously_downloaded(county, document_directory, document_number):
         return True
     else:

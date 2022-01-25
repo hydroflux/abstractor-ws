@@ -2,6 +2,7 @@ import os
 
 from selenium_utilities.inputs import click_button
 from selenium_utilities.locators import locate_element_by_class_name
+from settings.initialization import create_document_directory
 from settings.invalid import no_download
 
 from settings.download_management import previously_downloaded, update_download
@@ -27,6 +28,7 @@ def execute_download(browser, abstract, document):
 
 
 def download_document(browser, abstract, document):
+    abstract.document_directory = create_document_directory(abstract.target_directory)
     if previously_downloaded(abstract.document_directory, document):
         document_downloaded(abstract.document_list, document)
         return True

@@ -60,5 +60,4 @@ def initialize_abstraction():
     program_type_update(abstract)
     abstract.document_list = generate_document_list(target_directory, file_name, sheet_name)
     abstract.timer = start_program_timer(abstract.county, abstract.document_list)
-    abstract.document_directory = create_document_directory(abstract.target_directory)
     return abstract
