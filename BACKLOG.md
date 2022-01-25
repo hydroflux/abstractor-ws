@@ -155,6 +155,7 @@
 - [ ] Check if 'document_directory' (.exists?) each time a document is downloaded, & create otherwise
 - [ ] Search both the 'download_name' (is that the correct attribute) and the 'new_name' when determining if a document has been downloaded or not (previously_downloaded)
 - [ ] Create some series of checks (maybe in 'transform' scripts) to check for previously downloaded documents at the outset--just have to be careful about documents with multiple results (but that could probably be handled with the 'number_results' attribute
+- [ ] Move the 'document_downloaded' / 'no_download' logic from the 'download' scripts into the 'previously_downloaded' and 'update_download' functions
 
 ### Driver To Do
 
