@@ -51,13 +51,13 @@ def record_invalid_search(abstract, document):
     no_document_found(abstract, document)
 
 
-def unable_to_download(dataframe, document):
-    last_comment = dataframe["Comments"][-1]
+def unable_to_download(abstract, document):
+    last_comment = abstract.dataframe["Comments"][-1]
     unable_to_download = f'Unable to download document image at {document.extrapolate_value()}, please review'
     if last_comment == "":
-        dataframe["Comments"][-1] = unable_to_download
+        abstract.dataframe["Comments"][-1] = unable_to_download
     else:
-        dataframe["Comments"][-1] = f'{last_comment}; {unable_to_download}'
+        abstract.dataframe["Comments"][-1] = f'{last_comment}; {unable_to_download}'
 
 
 def no_document_image(abstract, document):
@@ -69,5 +69,5 @@ def no_document_image(abstract, document):
 
 
 def no_download(abstract, document):
-    unable_to_download(abstract.dataframe, document)
-    no_document_downloaded(abstract.document_list, document)
+    unable_to_download(abstract, document)
+    no_document_downloaded(abstract, document)
