@@ -101,80 +101,80 @@ def record_reception_number(abstract, document, rows):
 def record_book_and_page(abstract, rows):
     book_and_page = check_rows(rows, row_titles["book_and_page"])
     if book_and_page == not_applicable:
-        dictionary["Book"].append(book_and_page)
-        dictionary["Page"].append(book_and_page)
+        abstract.dataframe["Book"].append(book_and_page)
+        abstract.dataframe["Page"].append(book_and_page)
     else:
         if book_and_page.startswith(book_page_abbreviation):
             book_and_page = book_and_page[len(book_page_abbreviation):]
         book, page = book_and_page.replace("/", "").split()
         if book == "0":
-            dictionary["Book"].append(not_applicable)
+            abstract.dataframe["Book"].append(not_applicable)
         else:
-            dictionary["Book"].append(book)
+            abstract.dataframe["Book"].append(book)
         if page == "0":
-            dictionary["Page"].append(not_applicable)
+            abstract.dataframe["Page"].append(not_applicable)
         else:
-            dictionary["Page"].append(page)
+            abstract.dataframe["Page"].append(page)
 
 
 def record_recording_date(abstract, rows):
     recording_date = check_rows(rows, row_titles["recording_date"])
-    dictionary["Recording Date"].append(recording_date[:10])
+    abstract.dataframe["Recording Date"].append(recording_date[:10])
 
 
 def record_document_type(abstract, rows):
     document_type = check_rows(rows, row_titles["document_type"])
-    dictionary["Document Type"].append(title_strip(document_type))
+    abstract.dataframe["Document Type"].append(title_strip(document_type))
 
 
 def record_grantor(abstract, rows):
     grantor = check_rows(rows, row_titles["grantor"])
-    dictionary["Grantor"].append(title_strip(grantor))
+    abstract.dataframe["Grantor"].append(title_strip(grantor))
 
 
 def record_grantee(abstract, rows):
     grantee = check_rows(rows, row_titles["grantee"])
-    dictionary["Grantee"].append(title_strip(grantee))
+    abstract.dataframe["Grantee"].append(title_strip(grantee))
 
 
 def record_related_documents(abstract, rows):
     related_documents = check_rows(rows, row_titles["related_documents"])
     alt_related_documents = check_rows(rows, row_titles["alt_related_documents"])
     if related_documents == not_applicable and alt_related_documents == not_applicable:
-        dictionary["Related Documents"].append("")
+        abstract.dataframe["Related Documents"].append("")
     else:
         if related_documents == alt_related_documents or alt_related_documents == not_applicable:
-            dictionary["Related Documents"].append(related_documents)
+            abstract.dataframe["Related Documents"].append(related_documents)
         elif related_documents == not_applicable:
-            dictionary["Related Documents"].append(alt_related_documents)
+            abstract.dataframe["Related Documents"].append(alt_related_documents)
         else:
             combined_related_documents = f'{related_documents}\n{alt_related_documents}'
-            dictionary["Related Documents"].append(combined_related_documents)
+            abstract.dataframe["Related Documents"].append(combined_related_documents)
 
 
 def record_legal(abstract, rows):
     legal = check_rows(rows, row_titles["legal"])
     alt_legal = check_rows(rows, row_titles["alt_legal"])
     if legal == not_applicable and alt_legal == not_applicable:
-        dictionary["Legal"].append("")
+        abstract.dataframe["Legal"].append("")
     else:
         if legal == alt_legal or alt_legal == not_applicable:
-            dictionary["Legal"].append(legal)
+            abstract.dataframe["Legal"].append(legal)
         elif legal == not_applicable:
-            dictionary["Legal"].append(alt_legal)
+            abstract.dataframe["Legal"].append(alt_legal)
         else:
             combined_legal = f'{legal}\n{alt_legal}'
-            dictionary["Legal"].append(combined_legal)
+            abstract.dataframe["Legal"].append(combined_legal)
 
 
 #  Extrapolate this to a generalized file
 def record_comments(abstract, document, rows):
     if document.number_results > 1:
-        dictionary["Comments"].append(f'Multiple documents located at {document.extrapolate_value()}'
+        abstract.dataframe["Comments"].append(f'Multiple documents located at {document.extrapolate_value()}'
                                       f' on the {county} recording website; Each of the {document.number_results}'
                                       f' documents has been listed, please review')
     else:
-        dictionary["Comments"].append("")
+        abstract.dataframe["Comments"].append("")
 
 
 def aggregate_document_information(abstract, document, rows):
