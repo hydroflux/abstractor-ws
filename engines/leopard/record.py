@@ -98,7 +98,7 @@ def record_reception_number(abstract, document, rows):
     abstract.dataframe["Reception Number"].append(document.reception_number)
 
 
-def record_book_and_page(rows, dictionary):
+def record_book_and_page(abstract, rows):
     book_and_page = check_rows(rows, row_titles["book_and_page"])
     if book_and_page == not_applicable:
         dictionary["Book"].append(book_and_page)
@@ -117,27 +117,27 @@ def record_book_and_page(rows, dictionary):
             dictionary["Page"].append(page)
 
 
-def record_recording_date(rows, dictionary):
+def record_recording_date(abstract, rows):
     recording_date = check_rows(rows, row_titles["recording_date"])
     dictionary["Recording Date"].append(recording_date[:10])
 
 
-def record_document_type(rows, dictionary):
+def record_document_type(abstract, rows):
     document_type = check_rows(rows, row_titles["document_type"])
     dictionary["Document Type"].append(title_strip(document_type))
 
 
-def record_grantor(rows, dictionary):
+def record_grantor(abstract, rows):
     grantor = check_rows(rows, row_titles["grantor"])
     dictionary["Grantor"].append(title_strip(grantor))
 
 
-def record_grantee(rows, dictionary):
+def record_grantee(abstract, rows):
     grantee = check_rows(rows, row_titles["grantee"])
     dictionary["Grantee"].append(title_strip(grantee))
 
 
-def record_related_documents(rows, dictionary):
+def record_related_documents(abstract, rows):
     related_documents = check_rows(rows, row_titles["related_documents"])
     alt_related_documents = check_rows(rows, row_titles["alt_related_documents"])
     if related_documents == not_applicable and alt_related_documents == not_applicable:
@@ -152,7 +152,7 @@ def record_related_documents(rows, dictionary):
             dictionary["Related Documents"].append(combined_related_documents)
 
 
-def record_legal(rows, dictionary):
+def record_legal(abstract, rows):
     legal = check_rows(rows, row_titles["legal"])
     alt_legal = check_rows(rows, row_titles["alt_legal"])
     if legal == not_applicable and alt_legal == not_applicable:
@@ -168,7 +168,7 @@ def record_legal(rows, dictionary):
 
 
 #  Extrapolate this to a generalized file
-def record_comments(county, dictionary, document):
+def record_comments(abstract, document, rows):
     if document.number_results > 1:
         dictionary["Comments"].append(f'Multiple documents located at {document.extrapolate_value()}'
                                       f' on the {county} recording website; Each of the {document.number_results}'
@@ -186,7 +186,7 @@ def aggregate_document_information(abstract, document, rows):
     record_grantee(abstract, rows)
     record_related_documents(abstract, rows)
     record_legal(abstract, rows)
-    record_comments(abstract, rows)
+    record_comments(abstract, document, rows)
 
 
 def previous_result(browser, document):
