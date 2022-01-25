@@ -8,8 +8,7 @@ from selenium_utilities.inputs import click_button
 from selenium_utilities.locators import locate_element_by_id
 
 from settings.county_variables.leopard import (download_button_id,
-                                               stock_download, view_group_id,
-                                               view_panel_id)
+                                               stock_download, view_group_id)
 from settings.download_management import previously_downloaded, update_download
 from settings.general_functions import timeout
 from settings.initialization import create_document_directory
@@ -19,20 +18,8 @@ from settings.invalid import no_document_image
 print("download", __name__)
 
 
-def locate_download_submenu(browser, document):
-    try:
-        view_panel_present = EC.element_to_be_clickable((By.ID, view_panel_id))
-        WebDriverWait(browser, timeout).until(view_panel_present)
-        view_document_button = browser.find_element_by_id(view_group_id)
-        return view_document_button
-    except TimeoutException:
-        print(f'Browser timed out trying to open document submenu for '
-              f'{extrapolate_document_value(document)}.')
-
-
 def open_download_submenu(browser, document):
-    view_document_button = locate_download_submenu(browser, document)
-    view_document_button.click()
+    click_button(browser, locate_element_by_id, view_group_id, "download submenu",)
 
 
 def execute_download(browser, document):
