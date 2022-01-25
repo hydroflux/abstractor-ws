@@ -2,6 +2,7 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+from selenium_utilities.inputs import click_button
 from selenium_utilities.locators import locate_element_by_id
 
 from settings.county_variables.leopard import (book_page_abbreviation,
@@ -205,21 +206,10 @@ def previous_result(browser, document):
     previous_result_button.click()
 
 
-def get_next_result_button(browser, document):
-    try:
-        next_result_button_present = EC.element_to_be_clickable((By.ID, next_result_id))
-        WebDriverWait(browser, timeout).until(next_result_button_present)
-        next_result_button = browser.find_element_by_id(next_result_id)
-        return next_result_button
-    except TimeoutException:
-        print(f'Browser timed out trying to locate next result button for '
-              f'{document.extrapolate_value()}')
-
-
 def next_result(browser, document):
-    next_result_button = get_next_result_button(browser, document)
-
-    next_result_button.click()
+    # next_result_button = get_next_result_button(browser, document)
+    scroll_to_top(browser)  # should 'scroll_to_top' vs. 'center' be an option when clicking a button?
+    click_button(browser, locate_element_by_id, next_result_id, "next result", document)
 
 
 def record(browser, abstract, document):
