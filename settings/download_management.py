@@ -170,7 +170,7 @@ def check_for_rename(document_directory, document):
 
 def update_download(browser, abstract, document):
     set_download_path_and_name_values(browser, abstract.document_directory, document)
-    wait_for_download(browser, abstract.document_directory, document, number_files)
+    wait_for_download(browser, abstract.document_directory, document, abstract.document_directory_files)
     naptime()
     rename_download(abstract.document_directory, document)
     check_for_rename(abstract.document_directory, document)
