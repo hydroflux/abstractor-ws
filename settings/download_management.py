@@ -149,20 +149,20 @@ def prepare_file_for_download(document_directory, document):
         return False
 
 
-def rename_download(document_directory, document):
+def rename_download(abstract, document):
     try:
-        while not prepare_file_for_download(document_directory, document):
-            prepare_file_for_download(document_directory, document)
+        while not prepare_file_for_download(abstract.document_directory, document):
+            prepare_file_for_download(abstract.document_directory, document)
     except FileNotFoundError:
         print(f'File not found, please review stock download '
               f'"{document.download_value}" & new file name "{document.new_name}"')
         input()
 
 
-def check_for_rename(document_directory, document):
-    rename_path = f'{document_directory}/{document.new_name}'
+def check_for_rename(abstract, document):
+    rename_path = f'{abstract.document_directory}/{document.new_name}'
     if os.path.isfile(rename_path):
-        os.chdir(document_directory)
+        os.chdir(abstract.document_directory)
         check_download_size(document.new_name, document)
     else:
         raise ValueError("%s isn't a file!" % rename_path)
@@ -172,6 +172,6 @@ def update_download(browser, abstract, document):
     set_download_path_and_name_values(browser, abstract, document)
     wait_for_download(browser, abstract, document)
     naptime()
-    rename_download(abstract.document_directory, document)
-    check_for_rename(abstract.document_directory, document)
+    rename_download(abstract, document)
+    check_for_rename(abstract, document)
     return True
