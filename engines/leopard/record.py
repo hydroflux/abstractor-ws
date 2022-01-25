@@ -189,21 +189,10 @@ def aggregate_document_information(abstract, document, rows):
     record_comments(abstract, rows)
 
 
-def get_previous_result_button(browser, document):
-    try:
-        previous_result_button_present = EC.element_to_be_clickable((By.ID, previous_result_id))
-        WebDriverWait(browser, timeout).until(previous_result_button_present)
-        previous_result_button = browser.find_element_by_id(previous_result_id)
-        return previous_result_button
-    except TimeoutException:
-        print(f'Browser timed out trying to locate previous result button for '
-              f'{document.extrapolate_value()}')
-
-
 def previous_result(browser, document):
-    previous_result_button = get_previous_result_button(browser, document)
+    # previous_result_button = get_previous_result_button(browser, document)
     scroll_to_top(browser)
-    previous_result_button.click()
+    click_button(browser, locate_element_by_id, previous_result_id, "previous result", document)
 
 
 def next_result(browser, document):
