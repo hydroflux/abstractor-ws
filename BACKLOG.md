@@ -160,6 +160,8 @@
 - [ ] Search both the 'download_name' (is that the correct attribute) and the 'new_name' when determining if a document has been downloaded or not (previously_downloaded)
 - [ ] Create some series of checks (maybe in 'transform' scripts) to check for previously downloaded documents at the outset--just have to be careful about documents with multiple results (but that could probably be handled with the 'number_results' attribute
 - [ ] Move the 'document_downloaded' / 'no_download' logic from the 'download' scripts into the 'previously_downloaded' and 'update_download' functions
+- [ ] Streamline the functions involved in the 'download_management' script--they're kind of a mess
+- [ ] Work a conditional back into 'update_download'---there's no conditional, so 'no_download' function will never be thrown
 
 ### Driver To Do
 

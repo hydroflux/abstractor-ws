@@ -3,6 +3,7 @@ from time import sleep, time
 
 from selenium.common.exceptions import (NoSuchWindowException, JavascriptException,
                                         WebDriverException)
+from settings.file_management import document_downloaded
 
 from settings.general_functions import medium_nap, naptime
 
@@ -173,4 +174,6 @@ def update_download(browser, abstract, document):
     naptime()
     rename_download(abstract, document)
     check_for_rename(abstract, document)
-    return True
+    document_downloaded(abstract, document)
+    # Without a conditional, no_download will never be thrown???
+    # no_download(abstract, document)
