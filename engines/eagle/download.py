@@ -90,14 +90,14 @@ def access_document_image(browser, abstract, document):
 
 
 def execute_download(browser, abstract, document):
-    number_files = len(os.listdir(abstract.document_directory))
+    abstract.document_directory_files = len(os.listdir(abstract.document_directory))
     build_stock_download(document)
     access_document_image(browser, abstract, document)
     if update_download(
         browser,
         abstract,
         document,
-        number_files
+        abstract.document_directory_files
     ):
         document_downloaded(abstract, document)
     else:

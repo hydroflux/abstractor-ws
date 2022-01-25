@@ -17,14 +17,14 @@ print("download", __name__)
 # Very similar but not identical to 'jaguar' execute_download
 def execute_download(browser, abstract, document):
     document.download_value = stock_download
-    number_files = len(os.listdir(abstract.document_directory))
+    abstract.document_directory_files = len(os.listdir(abstract.document_directory))
     click_button(browser, locate_element_by_id, view_group_id, "download submenu", document)  # Open Download Submenu
     click_button(browser, locate_element_by_id, download_button_id, "download button", document)  # Download Document
     if update_download(
         browser,
         abstract,
         document,
-        number_files
+        abstract.document_directory_files
     ):
         document_downloaded(abstract, document)
     else:

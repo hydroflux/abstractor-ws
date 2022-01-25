@@ -13,13 +13,13 @@ from settings.file_management import document_downloaded
 # Very similar but not identical to 'leopard' execute_download
 def execute_download(browser, abstract, document):
     document.download_value = f'{document.reception_number}.pdf'
-    number_files = len(os.listdir(abstract.document_directory))
+    abstract.document_directory_files = len(os.listdir(abstract.document_directory))
     click_button(browser, locate_element_by_class_name, download_button_class, "download button", document)
     if update_download(
         browser,
         abstract,
         document,
-        number_files
+        abstract.document_directory_files
     ):
         document_downloaded(abstract, document)
     else:

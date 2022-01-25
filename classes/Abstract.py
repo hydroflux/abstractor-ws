@@ -3,7 +3,8 @@ class Abstract:
                  headless, download, dataframe,
                  review=False, download_only=False, document_directory=None,
                  document_list=None, timer=None,
-                 search_name=None):
+                 search_name=None,
+                 document_directory_files=None):
         self.type = type
         self.county = county
         self.target_directory = target_directory
@@ -18,6 +19,7 @@ class Abstract:
         self.document_list = document_list
         self.timer = timer
         self.search_name = search_name
+        self.document_directory_files = document_directory_files
 
     def drop_last_entry(self):
         self.dataframe["Grantor"].pop()
