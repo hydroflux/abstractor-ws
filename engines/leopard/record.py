@@ -3,7 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium_utilities.inputs import click_button
-from selenium_utilities.locators import locate_element_by_id
+from selenium_utilities.locators import locate_element_by_id, locate_element_by_tag_name, locate_elements_by_tag_name
 
 from settings.county_variables.leopard import (book_page_abbreviation,
                                                document_image_id,
@@ -29,33 +29,12 @@ def access_document_information(browser, document):
     return document_information
 
 
-def get_document_table_data(browser, document_information, document):
-    try:
-        document_table_data_present = EC.presence_of_element_located((By.TAG_NAME, document_table_tag))
-        WebDriverWait(browser, timeout).until(document_table_data_present)
-        document_table_data = document_information.find_element_by_tag_name(document_table_tag)
-        return document_table_data
-    except TimeoutException:
-        print(f'Browser timed out getting table data for '
-              f'{document.extrapolate_value()}.')
-
-
-# Used in crocodile without any edits
-def get_table_rows(browser, document_table, document):
-    try:
-        table_rows_present = EC.presence_of_element_located((By.TAG_NAME, table_row_tag))
-        WebDriverWait(browser, timeout).until(table_rows_present)
-        table_rows = document_table.find_elements_by_tag_name(table_row_tag)
-        return table_rows
-    except TimeoutException:
-        print(f'Browser timed out getting table rows for '
-              f'{document.extrapolate_value()}.')
-
-
 def get_document_content(browser, document):
     document_information = access_document_information(browser, document)
-    document_table = get_document_table_data(browser, document_information, document)
-    return get_table_rows(browser, document_table, document)
+    document_table_data = locate_element_by_tag_name(document_information, document_table_tag,
+                                                     "document table data", False, document)
+    table_rows = locate_elements_by_tag_name(document_table_data, table_row_tag, "table rows", False, document)
+    return table_rows
 
 
 def get_row_data(row):
