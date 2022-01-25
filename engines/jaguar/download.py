@@ -21,10 +21,8 @@ def execute_download(browser, abstract, document):
         number_files
     ):
         document_downloaded(abstract.document_list, document)
-        return True
     else:
         no_download(abstract, document)
-        return False
 
 
 def download_document(browser, abstract, document):
@@ -33,4 +31,4 @@ def download_document(browser, abstract, document):
         document_downloaded(abstract.document_list, document)
         return True
     else:
-        return execute_download(browser, abstract, document)
+        execute_download(browser, abstract, document)
