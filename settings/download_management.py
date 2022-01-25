@@ -18,6 +18,7 @@ def build_previous_download_path(abstract, document):
 def previously_downloaded(abstract, document):
     document_download_path = build_previous_download_path(abstract, document)
     if os.path.exists(document_download_path):
+        document_downloaded(abstract, document)
         return True
     else:
         return False

@@ -12,20 +12,21 @@ from settings.initialization import create_document_directory
 print("download", __name__)
 
 
+def prepare_for_download(abstract, document):
+    abstract.document_directory = create_document_directory(abstract.target_directory)
+    abstract.document_directory_files = len(os.listdir(abstract.document_directory))
+    document.download_value = stock_download
+
+
 # Very similar but not identical to 'jaguar' execute_download
 def execute_download(browser, abstract, document):
-    document.download_value = stock_download
-    abstract.document_directory_files = len(os.listdir(abstract.document_directory))
     click_button(browser, locate_element_by_id, view_group_id, "download submenu", document)  # Open Download Submenu
     click_button(browser, locate_element_by_id, download_button_id, "download button", document)  # Download Document
     update_download(browser, abstract, document)
 
 
-# Identical to 'jaguar' download_document
+# Set 'jaguar' download_document equivalent to below if possible
 def download_document(browser, abstract, document):
-    abstract.document_directory = create_document_directory(abstract.target_directory)
-    if previously_downloaded(abstract, document):
-        document_downloaded(abstract, document)
-        return True
-    else:
+    prepare_for_download(abstract, document)
+    if not previously_downloaded(abstract, document):
         execute_download(browser, abstract, document)
