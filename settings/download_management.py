@@ -64,14 +64,14 @@ def set_new_download_name(document):
         document.new_name = f'{document.county.prefix}-{document.reception_number}.pdf'
 
 
-def set_download_path_and_name_values(browser, document_directory, document):
+def set_download_path_and_name_values(browser, abstract, document):
     set_new_download_name(document)
     if document.download_value is not None:
-        document.download_path = f'{document_directory}/{document.download_value}'
+        document.download_path = f'{abstract.document_directory}/{document.download_value}'
     else:
         document.download_value = get_downloaded_file_name(browser)
         close_download_window(browser)
-        document.download_path = f'{document_directory}/{document.download_value}'
+        document.download_path = f'{abstract.document_directory}/{document.download_value}'
 
 
 def check_for_download_error(browser, windows):
@@ -99,17 +99,17 @@ def check_browser_windows(browser):
         check_for_download_error(browser, windows)
 
 
-def wait_for_download(browser, document_directory, document, number_files):
+def wait_for_download(browser, abstract, document):
     download_wait = True
     while not os.path.exists(document.download_path) and download_wait:
         check_browser_windows(browser)
         sleep(1)  # Increase to 2 seconds if still having issues with no such window exception
         download_wait = False
-        directory_files = os.listdir(document_directory)
+        directory_files = os.listdir(abstract.document_directory)
         for file_name in directory_files:
             if file_name.endswith('.crdownload'):
                 download_wait = True
-        if len(directory_files) != number_files + 1:
+        if len(directory_files) != abstract.document_directory_files + 1:
             download_wait = True
 
 
@@ -169,8 +169,8 @@ def check_for_rename(document_directory, document):
 
 
 def update_download(browser, abstract, document):
-    set_download_path_and_name_values(browser, abstract.document_directory, document)
-    wait_for_download(browser, abstract.document_directory, document, abstract.document_directory_files)
+    set_download_path_and_name_values(browser, abstract, document)
+    wait_for_download(browser, abstract, document)
     naptime()
     rename_download(abstract.document_directory, document)
     check_for_rename(abstract.document_directory, document)

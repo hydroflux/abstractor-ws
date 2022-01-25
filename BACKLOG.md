@@ -19,6 +19,10 @@
 
 ## Classes To Do
 
+- [ ] Create a 'Directory' class with two attributes--"files" and "number_files"
+- [ ] The 'target_directory' and 'document_directory' attributes on the Abstract class can be instances of the Directory class
+- [ ] Drop the 'document_directory_files' attribute from the Abstract class
+
 ### Abstract Class To Do
 
 - [ ] Add 'transform' to abstract initialization dependent on the county
