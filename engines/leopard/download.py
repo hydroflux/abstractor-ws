@@ -6,8 +6,9 @@ from selenium_utilities.locators import locate_element_by_id
 from settings.county_variables.leopard import (download_button_id,
                                                stock_download, view_group_id)
 from settings.download_management import previously_downloaded, update_download
+from settings.file_management import document_downloaded
 from settings.initialization import create_document_directory
-from settings.invalid import no_document_image
+from settings.invalid import no_document_image, no_download
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("download", __name__)
@@ -24,9 +25,11 @@ def execute_download(browser, abstract, document):
         document,
         number_files
     ):
+        document_downloaded(abstract.document_list, document)
         return True
     else:
-        no_document_image(abstract, document)
+        no_download(abstract, document)
+        return False
 
 
 def download_document(browser, abstract, document):
