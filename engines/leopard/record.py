@@ -105,15 +105,14 @@ def row_title_check(rows):
             continue
 
 
-# Pull this out, removed during crocodile development (don't see the purpose
-# )
-# def locate_reception_number(rows):
-#     return check_rows(rows, row_titles["reception_number"])
+def access_reception_number(document, rows):
+    reception_number = check_rows(rows, row_titles["reception_number"])
+    document.reception_number = reception_number
+
 
 def record_reception_number(abstract, document, rows):
-    reception_number = check_rows(rows, row_titles["reception_number"])
-    document.reception_number
-    abstract.dataframe["Reception Number"].append(reception_number)
+    access_reception_number(document, rows)
+    abstract.dataframe["Reception Number"].append(document.reception_number)
 
 
 def record_book_and_page(rows, dictionary):
@@ -241,16 +240,11 @@ def next_result(browser, document):
     next_result_button.click()
 
 
-def get_reception_number(browser, rows, document):
-    document.reception_number = locate_reception_number(rows)
-
-
 def record(browser, abstract, document):
     if not abstract.review:
         rows = get_document_content(browser, document)
         if abstract.download_only:
-            get_reception_number(browser, rows, document)
+            access_reception_number(document, rows)
         else:
             aggregate_document_information(abstract, document, rows)
     document_found(abstract, document)
-    # return document_number
