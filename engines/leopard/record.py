@@ -21,20 +21,11 @@ from settings.general_functions import (get_element_text, scroll_to_top,
 print("record", __name__)
 
 
-def get_document_information(browser, document):
-    try:
-        document_information_present = EC.presence_of_element_located((By.ID, document_information_id))
-        WebDriverWait(browser, timeout).until(document_information_present)
-        document_information = browser.find_element_by_id(document_information_id)
-        return document_information
-    except TimeoutException:
-        print(f'Browser timed out waiting for '
-              f'{document.extrapolate_value()} document information to load.')
-
-
-def document_loaded(browser, document):
-    locate_element_by_id(browser, document_image_id, "document image", False, document)
-    return get_document_information(browser, document)
+def access_document_information(browser, document):
+    locate_element_by_id(browser, document_image_id, "document image", False, document)  # Wait for image to load
+    document_information = locate_element_by_id(browser, document_information_id,
+                                                "document information", False, document)
+    return document_information
 
 
 def get_document_table_data(browser, document_information, document):
@@ -61,7 +52,7 @@ def get_table_rows(browser, document_table, document):
 
 
 def get_document_content(browser, document):
-    document_information = document_loaded(browser, document)
+    document_information = access_document_information(browser, document)
     document_table = get_document_table_data(browser, document_information, document)
     return get_table_rows(browser, document_table, document)
 
