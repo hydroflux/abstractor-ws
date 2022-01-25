@@ -21,7 +21,7 @@ def execute_download(browser, abstract, document):
         document,
         number_files
     ):
-        document_downloaded(abstract.document_list, document)
+        document_downloaded(abstract, document)
     else:
         no_download(abstract, document)
 
@@ -30,7 +30,7 @@ def execute_download(browser, abstract, document):
 def download_document(browser, abstract, document):
     abstract.document_directory = create_document_directory(abstract.target_directory)
     if previously_downloaded(abstract, document):
-        document_downloaded(abstract.document_list, document)
+        document_downloaded(abstract, document)
         return True
     else:
         execute_download(browser, abstract, document)

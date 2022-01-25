@@ -99,7 +99,7 @@ def execute_download(browser, abstract, document):
         document,
         number_files
     ):
-        document_downloaded(abstract.document_list, document)
+        document_downloaded(abstract, document)
     else:
         no_download(abstract, document)
 
@@ -109,6 +109,6 @@ def download_document(browser, abstract, document):
     if download_available(abstract.dataframe, document):
         if previously_downloaded(abstract, document):
             if document.number_results == 1 or check_last_download(abstract.dataframe, document):
-                document_downloaded(abstract.document_list, document)
+                document_downloaded(abstract, document)
                 return True
         execute_download(browser, abstract, document)
