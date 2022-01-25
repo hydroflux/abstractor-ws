@@ -4,6 +4,8 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+from selenium_utilities.inputs import click_button
+from selenium_utilities.locators import locate_element_by_id
 
 from settings.county_variables.leopard import (download_button_id,
                                                stock_download, view_group_id,
@@ -33,20 +35,8 @@ def open_download_submenu(browser, document):
     view_document_button.click()
 
 
-def locate_download_button(browser, document):
-    try:
-        download_button_present = EC.element_to_be_clickable((By.ID, download_button_id))
-        WebDriverWait(browser, timeout).until(download_button_present)
-        download_button = browser.find_element_by_id(download_button_id)
-        return download_button
-    except TimeoutException:
-        print(f'Browser timed out trying to click the download button for '
-              f'{extrapolate_document_value(document)}.')
-
-
 def execute_download(browser, document):
-    download_button = locate_download_button(browser, document)
-    download_button.click()
+    click_button(browser, locate_element_by_id, download_button_id, "download button", document)
 
 
 def download_document(browser, abstract, document):
