@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 from settings.invalid import record_invalid_search
-from settings.download_management import previously_downloaded
 from settings.driver import create_webdriver
 from project_management.export import export_document
 from settings.general_functions import start_timer
@@ -16,13 +15,10 @@ from engines.eagle.transform import transform_document_list
 print("execute", __name__)
 
 
-# Try to match to the 'leopard' handle_single_document function
+# Identical to 'leopard' handle_single_document
 def handle_single_document(browser, abstract, document):
     record(browser, abstract, document)
     if abstract.download:
-        if document.number_results == 1:
-            if previously_downloaded(abstract.document_directory, document):
-                return
         download_document(browser, abstract, document)
 
 

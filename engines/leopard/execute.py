@@ -17,11 +17,10 @@ from engines.leopard.transform import transform_document_list
 print("execute", __name__)
 
 
-# Try to set handle_single_document equivalent to the 'eagle' handle_single_document function
+# Identical to 'eagle' handle_single_document
 def handle_single_document(browser, abstract, document):
     record(browser, abstract, document)
     if abstract.download:
-        # previously_downloaded logic goes here
         download_document(browser, abstract, document)
 
 
