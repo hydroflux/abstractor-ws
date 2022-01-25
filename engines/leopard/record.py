@@ -2,6 +2,7 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+from selenium_utilities.locators import locate_element_by_id
 
 from settings.county_variables.leopard import (book_page_abbreviation,
                                                document_image_id,
@@ -18,16 +19,6 @@ from settings.general_functions import (get_element_text, scroll_to_top,
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("record", __name__)
-# Script is similar to tiger but superior at time of testing--needs further review
-
-
-def document_image_loaded(browser, document):
-    try:
-        document_image_present = EC.presence_of_element_located((By.ID, document_image_id))
-        WebDriverWait(browser, timeout).until(document_image_present)
-    except TimeoutException:
-        print(f'Browser timed out waiting for '
-              f'{document.extrapolate_value()} document image to load.')
 
 
 def get_document_information(browser, document):
@@ -42,7 +33,7 @@ def get_document_information(browser, document):
 
 
 def document_loaded(browser, document):
-    document_image_loaded(browser, document)
+    locate_element_by_id(browser, document_image_id, "document image", False, document)
     return get_document_information(browser, document)
 
 
@@ -236,7 +227,7 @@ def get_next_result_button(browser, document):
 
 def next_result(browser, document):
     next_result_button = get_next_result_button(browser, document)
-    scroll_to_top(browser)
+
     next_result_button.click()
 
 
