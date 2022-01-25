@@ -132,13 +132,12 @@ def check_file_size(download_path):
             return False
 
 
-def prepare_file_for_download(document_directory, document):
+def prepare_file_for_download(abstract, document):
     if check_file_size(document.download_path):
         os.rename(document.download_value, document.new_name)
-        # os.chdir(document_directory)  # Changed 12/03/21
         check_download_size(document.new_name, document)
         return True
-    elif os.path.isfile(f'{document_directory}/{document.document.new_name}'):
+    elif os.path.isfile(f'{abstract.document_directory}/{document.document.new_name}'):
         check_download_size(document.new_name, document)
         return True
     else:
