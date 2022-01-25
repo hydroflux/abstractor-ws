@@ -168,10 +168,10 @@ def check_for_rename(document_directory, document):
         raise ValueError("%s isn't a file!" % rename_path)
 
 
-def update_download(browser, document_directory, document, number_files):
-    set_download_path_and_name_values(browser, document_directory, document)
-    wait_for_download(browser, document_directory, document, number_files)
+def update_download(browser, abstract, document, number_files):
+    set_download_path_and_name_values(browser, abstract.document_directory, document)
+    wait_for_download(browser, abstract.document_directory, document, number_files)
     naptime()
-    rename_download(document_directory, document)
-    check_for_rename(document_directory, document)
+    rename_download(abstract.document_directory, document)
+    check_for_rename(abstract.document_directory, document)
     return True

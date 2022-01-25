@@ -17,7 +17,7 @@ def execute_download(browser, abstract, document):
     click_button(browser, locate_element_by_class_name, download_button_class, "download button", document)
     if update_download(
         browser,
-        abstract.document_directory,
+        abstract,
         document,
         number_files
     ):

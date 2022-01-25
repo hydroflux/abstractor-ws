@@ -22,7 +22,7 @@ def execute_download(browser, abstract, document):
     click_button(browser, locate_element_by_id, download_button_id, "download button", document)  # Download Document
     if update_download(
         browser,
-        abstract.document_directory,
+        abstract,
         document,
         number_files
     ):

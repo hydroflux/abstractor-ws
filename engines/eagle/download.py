@@ -95,7 +95,7 @@ def execute_download(browser, abstract, document):
     access_document_image(browser, abstract, document)
     if update_download(
         browser,
-        abstract.document_directory,
+        abstract,
         document,
         number_files
     ):
