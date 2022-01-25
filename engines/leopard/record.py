@@ -110,9 +110,9 @@ def row_title_check(rows):
 # def locate_reception_number(rows):
 #     return check_rows(rows, row_titles["reception_number"])
 
-def record_reception_number(abstract, rows):
-    # reception_number = locate_reception_number(rows)
+def record_reception_number(abstract, document, rows):
     reception_number = check_rows(rows, row_titles["reception_number"])
+    document.reception_number
     abstract.dataframe["Reception Number"].append(reception_number)
 
 
@@ -195,8 +195,8 @@ def record_comments(county, dictionary, document):
         dictionary["Comments"].append("")
 
 
-def aggregate_document_information(abstract, rows, document):
-    record_reception_number(abstract, rows)
+def aggregate_document_information(abstract, document, rows):
+    record_reception_number(abstract, document, rows)
     record_book_and_page(abstract, rows)
     record_recording_date(abstract, rows)
     record_document_type(abstract, rows)
@@ -251,6 +251,6 @@ def record(browser, abstract, document):
         if abstract.download_only:
             get_reception_number(browser, rows, document)
         else:
-            aggregate_document_information(abstract, rows, document)
+            aggregate_document_information(abstract, document, rows)
     document_found(abstract, document)
     # return document_number
