@@ -13,19 +13,25 @@ from settings.invalid import no_document_image
 print("download", __name__)
 
 
-def execute_download(browser, document):
-    number_files = len(os.listdir(document_directory))
+def execute_download(browser, abstract, document):
+    number_files = len(os.listdir(abstract.document_directory))
     click_button(browser, locate_element_by_id, view_group_id, "download submenu", document)  # Open Download Submenu
     click_button(browser, locate_element_by_id, download_button_id, "download button", document)  # Download Document
+    document.download_value = stock_download
+    if update_download(
+        browser,
+        abstract.document_directory,
+        document,
+        number_files
+    ):
+        return True
+    else:
+        no_document_image(abstract, document)
 
 
 def download_document(browser, abstract, document):
     abstract.document_directory = create_document_directory(abstract.target_directory)
-    if previously_downloaded(county, document_directory, document_number):
+    if previously_downloaded(abstract, document):
         return True
     else:
-        execute_download(browser, document)
-        if update_download(browser, county, stock_download, document_directory, number_files, document_number):
-            return True
-        else:
-            no_document_image(abstract, document)
+        execute_download(browser, abstract, document)
