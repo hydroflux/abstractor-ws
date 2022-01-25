@@ -110,11 +110,10 @@ def row_title_check(rows):
 # def locate_reception_number(rows):
 #     return check_rows(rows, row_titles["reception_number"])
 
-def record_reception_number(rows, dictionary):
+def record_reception_number(abstract, rows):
     # reception_number = locate_reception_number(rows)
     reception_number = check_rows(rows, row_titles["reception_number"])
-    dictionary["Reception Number"].append(reception_number)
-    return reception_number
+    abstract.dataframe["Reception Number"].append(reception_number)
 
 
 def record_book_and_page(rows, dictionary):
@@ -197,7 +196,7 @@ def record_comments(county, dictionary, document):
 
 
 def aggregate_document_information(abstract, rows, document):
-    document_number = record_reception_number(abstract, rows)
+    record_reception_number(abstract, rows)
     record_book_and_page(abstract, rows)
     record_recording_date(abstract, rows)
     record_document_type(abstract, rows)
@@ -206,8 +205,6 @@ def aggregate_document_information(abstract, rows, document):
     record_related_documents(abstract, rows)
     record_legal(abstract, rows)
     record_comments(abstract, rows)
-    # document_number return statement not necessary--need to set reception_number attribute
-    return document_number
 
 
 def get_previous_result_button(browser, document):
