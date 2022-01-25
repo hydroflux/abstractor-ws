@@ -27,7 +27,7 @@ def document_image_loaded(browser, document):
         WebDriverWait(browser, timeout).until(document_image_present)
     except TimeoutException:
         print(f'Browser timed out waiting for '
-              f'{extrapolate_document_value(document)} document image to load.')
+              f'{document.extrapolate_value()} document image to load.')
 
 
 def get_document_information(browser, document):
@@ -38,7 +38,7 @@ def get_document_information(browser, document):
         return document_information
     except TimeoutException:
         print(f'Browser timed out waiting for '
-              f'{extrapolate_document_value(document)} document information to load.')
+              f'{document.extrapolate_value()} document information to load.')
 
 
 def document_loaded(browser, document):
@@ -54,7 +54,7 @@ def get_document_table_data(browser, document_information, document):
         return document_table_data
     except TimeoutException:
         print(f'Browser timed out getting table data for '
-              f'{extrapolate_document_value(document)}.')
+              f'{document.extrapolate_value()}.')
 
 
 # Used in crocodile without any edits
@@ -66,7 +66,7 @@ def get_table_rows(browser, document_table, document):
         return table_rows
     except TimeoutException:
         print(f'Browser timed out getting table rows for '
-              f'{extrapolate_document_value(document)}.')
+              f'{document.extrapolate_value()}.')
 
 
 def get_document_content(browser, document):
@@ -187,7 +187,7 @@ def record_legal(rows, dictionary):
 #  Extrapolate this to a generalized file
 def record_comments(county, dictionary, document):
     if document.number_results > 1:
-        dictionary["Comments"].append(f'Multiple documents located at {extrapolate_document_value(document)}'
+        dictionary["Comments"].append(f'Multiple documents located at {document.extrapolate_value()}'
                                       f' on the {county} recording website; Each of the {document.number_results}'
                                       f' documents has been listed, please review')
     else:
@@ -214,7 +214,7 @@ def get_previous_result_button(browser, document):
         return previous_result_button
     except TimeoutException:
         print(f'Browser timed out trying to locate previous result button for '
-              f'{extrapolate_document_value(document)}')
+              f'{document.extrapolate_value()}')
 
 
 def previous_result(browser, document):
@@ -231,7 +231,7 @@ def get_next_result_button(browser, document):
         return next_result_button
     except TimeoutException:
         print(f'Browser timed out trying to locate next result button for '
-              f'{extrapolate_document_value(document)}')
+              f'{document.extrapolate_value()}')
 
 
 def next_result(browser, document):
