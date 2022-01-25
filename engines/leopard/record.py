@@ -196,16 +196,16 @@ def record_comments(county, dictionary, document):
         dictionary["Comments"].append("")
 
 
-def aggregate_document_information(browser, county, document, dictionary, rows):
-    document_number = record_reception_number(rows, dictionary)
-    record_book_and_page(rows, dictionary)
-    record_recording_date(rows, dictionary)
-    record_document_type(rows, dictionary)
-    record_grantor(rows, dictionary)
-    record_grantee(rows, dictionary)
-    record_related_documents(rows, dictionary)
-    record_legal(rows, dictionary)
-    record_comments(county, dictionary, document)
+def aggregate_document_information(abstract, rows, document):
+    document_number = record_reception_number(abstract, rows)
+    record_book_and_page(abstract, rows)
+    record_recording_date(abstract, rows)
+    record_document_type(abstract, rows)
+    record_grantor(abstract, rows)
+    record_grantee(abstract, rows)
+    record_related_documents(abstract, rows)
+    record_legal(abstract, rows)
+    record_comments(abstract, rows)
     # document_number return statement not necessary--need to set reception_number attribute
     return document_number
 
@@ -254,6 +254,6 @@ def record(browser, abstract, document):
         if abstract.download_only:
             get_reception_number(browser, rows, document)
         else:
-            aggregate_document_information(browser, county, document, dictionary, rows)
+            aggregate_document_information(abstract, rows, document)
     document_found(abstract, document)
     # return document_number
