@@ -10,6 +10,7 @@ from settings.county_variables.jaguar import download_button_class
 from settings.file_management import document_downloaded
 
 
+# Very similar but not identical to 'leopard' execute_download
 def execute_download(browser, abstract, document):
     document.download_value = f'{document.reception_number}.pdf'
     number_files = len(os.listdir(abstract.document_directory))
@@ -25,6 +26,7 @@ def execute_download(browser, abstract, document):
         no_download(abstract, document)
 
 
+# Identical to 'leopard' download_document
 def download_document(browser, abstract, document):
     abstract.document_directory = create_document_directory(abstract.target_directory)
     if previously_downloaded(abstract, document):
