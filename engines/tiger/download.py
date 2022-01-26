@@ -34,7 +34,7 @@ def execute_download(browser, document_number):
         print(f'Browser timed out trying to click the download button for document number {document_number}.')
 
 
-def download_document(browser, county, target_directory, document_number):
+def download_document(browser, abstract, document):
     document_directory = create_document_directory(target_directory)
     open_document_submenu(browser, document_number)
     execute_download(browser, document_number)

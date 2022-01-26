@@ -7,33 +7,34 @@ from settings.general_functions import (javascript_script_execution, naptime, st
 from engines.tiger.download import download_document
 from engines.tiger.login import account_login
 from engines.tiger.open_document import open_document
-from engines.tiger.record import record_document
+from engines.tiger.record import record
 from engines.tiger.search import search
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("execute", __name__)
 
 
-def record_single_document(browser, abstract, document):
-    record_document(browser, dataframe, document_number)
-    if download:
-        if not download_document(browser, county, target_directory, document_number):
-            dataframe["Comments"][-1] = f'No document image located at reception number {document_number}.'
-    print(f'Document located at reception number {document_number} recorded, '
-            f'{remaining_downloads(document_list, document_number)} documents remaining.')
+def handle_single_document(browser, abstract, document):
+    record(browser, abstract, document)
+    if abstract.download:
+        download_document(browser, abstract, document)
+    # These (below) are messy--need to move / update
     javascript_script_execution(search_script)
     naptime()
 
 
-def record_multiple_documents(browser, abstract, document):
-    pass
+def handle_multiple_documents(browser, abstract, document):
+    print(f'{document.extrapolate_value()} returned "{document.number_results}" results; '
+          f'Program not currently equipped to handle multiple documents at this point in time, '
+          f'please review...')
+    input()
 
 
 def handle_search_results(browser, abstract, document):
     if document.number_results == 1:
-        record_single_document(browser, abstract, document)
+        handle_single_document(browser, abstract, document)
     elif document.number_results > 1:
-        record_multiple_documents(browser, abstract, document)
+        handle_multiple_documents(browser, abstract, document)
 
 
 # Identical to 'eagle', 'leopard', & 'jaguar' search_documents_from_list

@@ -409,6 +409,8 @@
 - [ ] Update the 'execute_web_program' function to work with the original Django / React setup
 - [ ] Create a 'logout' script and a 'transform' script
 - [ ] Integrate the 'number_results' attribute of the Document class into 'open_document', 'download', 'record', and 'execute'
+- [ ] Update the 'search', 'open', 'record', and 'download' scripts to use the passed Document class instance instead of a raw 'document_number' (like they were set up for)
+- [ ] Add the 'downloaded_document' or 'no_download'(?) functions into the 'download' script
 
 ## Other To Do
 
