@@ -2,12 +2,10 @@ import os
 
 from selenium_utilities.inputs import click_button
 from selenium_utilities.locators import locate_element_by_class_name
-from settings.initialization import create_document_directory
-from settings.invalid import no_download
 
-from settings.download_management import previously_downloaded, update_download
 from settings.county_variables.jaguar import download_button_class
-from settings.file_management import document_downloaded
+from settings.download_management import previously_downloaded, update_download
+from settings.initialization import create_document_directory
 
 
 # Nearly identical to 'leopard' prepare_for_download
