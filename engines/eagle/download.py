@@ -6,14 +6,11 @@ from selenium_utilities.element_interaction import center_element
 from selenium_utilities.inputs import click_button
 from selenium_utilities.locators import (locate_element_by_class_name,
                                          locate_element_by_id)
-from settings.initialization import create_document_directory
-from settings.invalid import no_download
 
+from settings.initialization import create_document_directory
 from settings.county_variables.eagle import (pdf_viewer_class_name, purchase_button_class_name,
                                              stock_download_suffix)
 from settings.download_management import previously_downloaded, update_download
-from settings.error_handling import no_image_comment
-from settings.file_management import document_downloaded
 from settings.general_functions import naptime
 from settings.iframe_handling import switch_to_default_content
 
@@ -25,14 +22,6 @@ def prepare_for_download(abstract, document):
     abstract.document_directory = create_document_directory(abstract.target_directory)
     abstract.document_directory_files = len(os.listdir(abstract.document_directory))
     document.download_value = f'{document.reception_number}-{stock_download_suffix}'
-
-
-def download_available(dataframe, document):
-    if dataframe["Comments"][-1].endswith(no_image_comment(document)):
-        print(no_image_comment(document))
-        return False
-    else:
-        return True
 
 
 def center_purchase_button(browser, document):
