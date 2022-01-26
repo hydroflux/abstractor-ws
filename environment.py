@@ -61,7 +61,7 @@ def execute_program(abstract):
         else:
             currently_unavailable(abstract)
     elif abstract.county.engine == 'tiger':
-        if abstract.program in ["execute", "review"]:
+        if abstract.program in ["execute", "review", "download"]:
             execute_tiger(abstract)
         else:
             currently_unavailable(abstract)

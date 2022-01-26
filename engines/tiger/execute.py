@@ -55,8 +55,18 @@ def create_abstraction(browser, county, target_directory, file_name, sheet_name)
     return dataframe
 
 
-def execute_program():
-    pass
+def execute_program(abstract):
+    if abstract.download_only:
+        abstract.headless = False  # Figure out better placement
+    browser = create_webdriver(abstract)
+    # transform_document_list(abstract)
+    account_login(browser)
+    search_documents_from_list(browser, abstract)
+    # logout(browser)
+    if not abstract.download_only and not abstract.review:
+        project = export_document(abstract)
+        project.bundle_project(abstract)
+    browser.close()
 
 
 # def execute_web_program(county, client, legal, upload_file):
