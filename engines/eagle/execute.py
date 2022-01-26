@@ -39,7 +39,7 @@ def handle_search_results(browser, abstract, document):
         handle_multiple_documents(browser, abstract, document)
 
 
-# Identical to 'jaguar' & 'leopard' search_documents_from_list
+# Identical to 'jaguar', 'tiger', & 'leopard' search_documents_from_list
 def search_documents_from_list(browser, abstract):
     for document in abstract.document_list:
         document.start_time = start_timer()

@@ -14,15 +14,7 @@ from engines.tiger.search import search
 print("execute", __name__)
 
 
-def record_single_document():
-    pass
-
-
-def record_multiple_documents():
-    pass
-
-
-def handle_search_results():
+def record_single_document(browser, abstract, document):
     record_document(browser, dataframe, document_number)
     if download:
         if not download_document(browser, county, target_directory, document_number):
@@ -33,6 +25,18 @@ def handle_search_results():
     naptime()
 
 
+def record_multiple_documents(browser, abstract, document):
+    pass
+
+
+def handle_search_results(browser, abstract, document):
+    if document.number_results == 1:
+        record_single_document(browser, abstract, document)
+    elif document.number_results > 1:
+        record_multiple_documents(browser, abstract, document)
+
+
+# Identical to 'eagle', 'leopard', & 'jaguar' search_documents_from_list
 def search_documents_from_list(browser, abstract):
     for document in abstract.document_list:
         document.start_time = start_timer()
@@ -44,6 +48,7 @@ def search_documents_from_list(browser, abstract):
         # check_length(dataframe)  # Where is the best place to put this???
 
 
+# Identical to 'leopard' execute_program
 def execute_program(abstract):
     if abstract.download_only:
         abstract.headless = False  # Figure out better placement
