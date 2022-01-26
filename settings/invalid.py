@@ -1,4 +1,3 @@
-from settings.error_handling import no_image_comment
 from settings.county_variables.general import search_errors
 from settings.file_management import no_document_downloaded, no_document_found
 
@@ -58,6 +57,12 @@ def unable_to_download(abstract, document):
         abstract.dataframe["Comments"][-1] = unable_to_download
     else:
         abstract.dataframe["Comments"][-1] = f'{last_comment}; {unable_to_download}'
+
+
+def no_image_comment(document):
+    return f'No document image available at reception number "{document.reception_number}", please review'
+    # Add routes for document type
+    # needs to be done after book, volume, and page are added to the document class
 
 
 def no_document_image(abstract, document):
