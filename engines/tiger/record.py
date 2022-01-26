@@ -16,19 +16,12 @@ from settings.general_functions import get_element_text, timeout
 print("record", __name__)
 
 
-def document_information_loaded(browser, document):
-    try:
-        document_information_present = EC.presence_of_element_located((By.ID, document_information_id))
-        WebDriverWait(browser, timeout).until(document_information_present)
-        return browser.find_element_by_id(document_information_id)
-    except TimeoutException:
-        print(f'Browser timed out while waiting for '
-              f'{document.extrapolate_value()} document information to load.')
-
-
 def document_loaded(browser, document):
-    locate_element_by_id(browser, document_image_id, "document image", False, document)
-    return document_information_loaded(browser, document)
+    locate_element_by_id(browser, document_image_id,  # Document Image Loaded
+                         "document image", False, document)
+    document_information = locate_element_by_id(browser, document_information_id,  # Document Information Loaded
+                                                "document information", False, document)
+    return document_information
 
 
 def document_table_data(browser, document_number):
