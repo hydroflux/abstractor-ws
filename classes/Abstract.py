@@ -90,7 +90,9 @@ class Abstract:
             print("Comments: ", comments)
 
     def duplicate_review_and_update(self, document, count=0):
-        if document.result_number > 0 and document.type == "document_number":
+        if document.number_results == 1:
+            return True
+        elif document.result_number > 0 and document.type == "document_number":
             for element in self.dataframe["Reception Number"]:
                 if element == self.dataframe["Reception Number"][-1]:
                     count += 1

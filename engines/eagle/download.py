@@ -72,6 +72,6 @@ def execute_download(browser, abstract, document):
 def download_document(browser, abstract, document):
     prepare_for_download(abstract, document)
     if previously_downloaded(abstract, document):
-        if document.number_results == 1 or check_last_download(abstract.dataframe, document):
+        if abstract.duplicate_review_and_update(document):
             return True
     execute_download(browser, abstract, document)
