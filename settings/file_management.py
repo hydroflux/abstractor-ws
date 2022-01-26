@@ -6,45 +6,10 @@ else:
     from .general_functions import four_character_padding, report_execution_time
 
 
-def remaining_documents(document_list, document):
-    return len(document_list) - document_list.index(document) - 1
-
-
-def list_remaining_documents(document_list, document):
-    return f'{remaining_documents(document_list, document)} documents remaining'
-
-
 def multiple_documents_comment(document):
     return (f'Multiple documents located at {document.extrapolate_value()}'
             f' on the {document.county} recording website; Each of the {document.number_results}'
             f' documents has been listed, please review')
-
-
-# def document_value(document):
-#     if document.type == "document_number" or document.type == "name":
-#         return str(document.value)
-#     elif document.type == "book_and_page":
-#         return [str(document.value["Book"]), str(document.value["Page"])]
-#     elif document.type == "volume_and_page":
-#         return [str(document.value["Volume"]), str(document.value["Page"])]
-#     else:
-#         print('Unable to identify document type while attempting to identify "document value", please review.')
-#         return None
-
-
-# def extrapolate_document_value(document):
-#     value = document.document_value()
-#     if document.type == "book_and_page":
-#         return f'Book: {value[0]}, Page: {value[1]}'
-#     elif document.type == "volume_and_page":
-#         return f'Volume: {value[0]}, Page: {value[1]}'
-#     elif document.type == "document_number":
-#         return f'Document number {value}'
-#     elif document.type == "name":
-#         return f'search name "{value}"'
-#     else:
-#         print('Unable to identify document type while attempting to "extrapolate document value", please review.')
-#         return None
 
 
 # Consolidate split_book_and_page & split_volume_and_page
@@ -61,22 +26,6 @@ def split_volume_and_page(document):
     volume = document.document_value()[0]
     page = document.document_value()[1]
     return volume, page
-
-
-# def drop_last_entry(dataframe):
-#     dataframe["Grantor"].pop()
-#     dataframe["Grantee"].pop()
-#     dataframe["Book"].pop()
-#     dataframe["Volume"].pop()
-#     dataframe["Page"].pop()
-#     dataframe["Reception Number"].pop()
-#     dataframe["Document Link"].pop()
-#     dataframe["Document Type"].pop()
-#     dataframe["Effective Date"].pop()
-#     dataframe["Recording Date"].pop()
-#     dataframe["Legal"].pop()
-#     dataframe["Related Documents"].pop()
-#     dataframe["Comments"].pop()
 
 
 # def check_last_document(dataframe, document_list, document):
@@ -139,6 +88,14 @@ def account_for_number_results(document):
         return f' - {document.number_results} results found for {document.extrapolate_value()}'
     else:
         return ''
+
+
+def remaining_documents(document_list, document):
+    return len(document_list) - document_list.index(document) - 1
+
+
+def list_remaining_documents(document_list, document):
+    return f'{remaining_documents(document_list, document)} documents remaining'
 
 
 def document_found(abstract, document):

@@ -1,13 +1,9 @@
-from settings.objects.abstract_dataframe import abstract_dictionary as dataframe
 from settings.invalid import record_invalid_search
 from settings.county_variables.tiger import search_script
 from settings.driver import create_webdriver
 from project_management.export import export_document
-from settings.file_management import bundle_project, remaining_downloads
-from settings.general_functions import (get_county_data,
-                                        javascript_script_execution, naptime)
+from settings.general_functions import (javascript_script_execution, naptime)
 from project_management.generate_document_list import generate_document_list
-from settings.settings import download, web_directory
 
 from engines.tiger.download import download_document
 from engines.tiger.login import account_login
