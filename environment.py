@@ -10,14 +10,11 @@ if __name__ == '__main__':
     from engines.eagle.execute import execute_program as execute_eagle
     from engines.jaguar.execute import execute_program as execute_jaguar
     from engines.leopard.execute import execute_program as execute_leopard
-    # from tiger.execute import execute_program as execute_tiger
-    # from tiger.execute import execute_review as review_tiger
+    from engines.tiger.execute import execute_program as execute_tiger
     # from rattlesnake.execute import execute_program as execute_rattlesnake
     # from rattlesnake.execute import execute_early_document_download as download_rattlesnake
     from settings.initialization import initialize_abstraction
     from settings.general_functions import stop_program_timer
-    # from settings.settings import (county_name, file_name, headless,
-    #                                sheet_name, target_directory)
     from project_management.user_prompts import currently_unavailable
 
 
@@ -64,11 +61,10 @@ def execute_program(abstract):
         else:
             currently_unavailable(abstract)
     elif abstract.county.engine == 'tiger':
-        pass
-    # #     if program_type == 'execute':
-    # #         execute_tiger()
-    # #     elif program_type == 'review':
-    # #         review_tiger()
+        if abstract.program in ["execute", "review"]:
+            execute_tiger(abstract)
+        else:
+            currently_unavailable(abstract)
     elif abstract.county.engine == 'rattlesnake':
         pass
         # if program_type == 'execute':
