@@ -19,20 +19,16 @@ def prepare_for_download(abstract, document):
 # Very similar but not identical to 'leopard' execute_download
 def execute_download(browser, abstract, document):
     click_button(browser, locate_element_by_class_name, download_button_class, "download button", document)
-    if update_download(
+    update_download(
         browser,
         abstract,
         document
-    ):
-        document_downloaded(abstract, document)
-    else:
-        no_download(abstract, document)
+    )
 
 
 def download_document(browser, abstract, document):
     prepare_for_download(abstract, document)
     if previously_downloaded(abstract, document):
-        document_downloaded(abstract, document)
         return True
     else:
         execute_download(browser, abstract, document)
