@@ -166,6 +166,8 @@
 - [ ] Work a conditional back into 'update_download'---there's no conditional, so 'no_download' function will never be thrown
 - [ ] 'is_duplicate' function needs a route for Document types other than 'document_number' for updating the name of the download
 - [ ] 'is_duplicate' and 'previously_downloaded' functions should be added onto the Abstract(?) class
+- [ ] Create a print statement for if a document is a duplicate and therefore will have a new reception number / download name
+- [ ] Create a print statement to identify if a document has already been downloaded and is therefore has been 'previously_downloaded'
 
 ### Driver To Do
 
