@@ -310,6 +310,7 @@ def record_document_link(dataframe):
     dataframe["Document Link"].append('')
 
 
+# This could be simplified & cleaned up
 def record_comments(dataframe, document):
     if document.number_results == 1:
         dataframe["Comments"].append("")

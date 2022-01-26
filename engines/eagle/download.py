@@ -98,7 +98,7 @@ def execute_download(browser, abstract, document):
 
 def download_document(browser, abstract, document):
     prepare_for_download(abstract, document)
-    if download_available(abstract.dataframe, document):
+    if document.image_available:
         if previously_downloaded(abstract, document):
             if document.number_results == 1 or check_last_download(abstract.dataframe, document):
                 document_downloaded(abstract, document)
