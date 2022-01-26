@@ -15,13 +15,44 @@ def build_previous_download_path(abstract, document):
         return f'{abstract.document_directory}/{document.new_name}'
 
 
+def is_duplicate(abstract, document, count=0):
+    if document.number_results == 1:
+        return False
+    elif document.result_number > 0 and document.type == "document_number":
+        for element in abstract.dataframe["Reception Number"]:
+            if element == abstract.dataframe["Reception Number"][-1]:
+                count += 1
+            elif element == f'{abstract.dataframe["Reception Number"][-1]}-{str(count)}':
+                count += 1
+        if count > 1:
+            abstract.dataframe["Reception Number"][-1] = f'{abstract.dataframe["Reception Number"][-1]}-{str(count - 1)}'
+            document.new_name = f'{document.county.prefix}-{document.reception_number}-{str(count - 1)}.pdf'
+            return True
+        else:
+            return False
+    else:
+        return False
+
+
 def previously_downloaded(abstract, document):
     document_download_path = build_previous_download_path(abstract, document)
     if os.path.exists(document_download_path):
-        document_downloaded(abstract, document)
-        return True
+        if is_duplicate(abstract, document):
+            # print statement about duplicate
+            return False
+        else:
+            document_downloaded(abstract, document)
+            return True
     else:
         return False
+
+
+# def download_document(browser, abstract, document):
+#     prepare_for_download(abstract, document)
+#     if previously_downloaded(abstract, document):
+#         if abstract.duplicate_review_and_update(document):
+#             return True
+#     execute_download(browser, abstract, document)
 
 
 def close_download_window(browser):

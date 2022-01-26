@@ -42,6 +42,7 @@
 - [ ] Consolidate the 'value' attribute and the 'document_value' instance function--too confusing and creating problems
 - [ ] Create class functions for 'document_found', 'document_downloaded', 'no_document_found' and 'no_document_downloaded' using the functions from the 'file_management' script
 - [ ] Set the 'image_available' attribute automatically True, to be turned to 'false' if otherwise noted
+- [ ] Add an 'is_duplicate' attribute to the Document class, set using 'download_management' (or otherwise the 'previously_downloaded' function) and called in the printout statements
 
 ### Program Class To Do
 
@@ -163,6 +164,8 @@
 - [ ] Move the 'document_downloaded' / 'no_download' logic from the 'download' scripts into the 'previously_downloaded' and 'update_download' functions
 - [ ] Streamline the functions involved in the 'download_management' script--they're kind of a mess
 - [ ] Work a conditional back into 'update_download'---there's no conditional, so 'no_download' function will never be thrown
+- [ ] 'is_duplicate' function needs a route for Document types other than 'document_number' for updating the name of the download
+- [ ] 'is_duplicate' and 'previously_downloaded' functions should be added onto the Abstract(?) class
 
 ### Driver To Do
 
