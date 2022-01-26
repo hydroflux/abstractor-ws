@@ -3,7 +3,6 @@ from settings.county_variables.tiger import search_script
 from settings.driver import create_webdriver
 from project_management.export import export_document
 from settings.general_functions import (javascript_script_execution, naptime)
-from project_management.generate_document_list import generate_document_list
 
 from engines.tiger.download import download_document
 from engines.tiger.login import account_login
@@ -27,7 +26,7 @@ def handle_search_results():
     pass
 
 
-def search_documents_from_list(browser, county, target_directory, document_list):
+def search_documents_from_list(browser, abstract):
     for document_number in document_list:
         search(browser, document_number)
         if open_document(browser, document_number):
@@ -43,12 +42,6 @@ def search_documents_from_list(browser, county, target_directory, document_list)
             record_invalid_search(dataframe, document_number)
             print(f'No document found at reception number {document_number}, '
                   f'{remaining_downloads(document_list, document_number)} documents remaining.')
-
-
-def create_abstraction(browser, county, target_directory, file_name, sheet_name):
-    document_list = generate_document_list(target_directory, file_name, sheet_name)
-    search_documents_from_list(browser, county, target_directory, document_list)
-    return dataframe
 
 
 def execute_program(abstract):
@@ -72,7 +65,7 @@ def execute_program(abstract):
 #     target_directory = web_directory
 #     browser = create_webdriver(target_directory, False)
 #     account_login(browser)
-#     dataframe = create_abstraction(browser, county, target_directory, file_name, sheet_name)
+#     search_documents_from_list(browser, abstract)
 #     export_document(target_directory, file_name, dataframe, client, legal)
 #     bundle_project(target_directory, file_name)
 #     browser.close()
