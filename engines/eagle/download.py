@@ -53,22 +53,6 @@ def access_pdf_viewer(browser, document):
         naptime()
 
 
-def check_last_download(dataframe, document, count=0):
-    if document.result_number > 0:
-        for element in dataframe["Reception Number"]:
-            if element == dataframe["Reception Number"][-1]:
-                count += 1
-            elif element == f'{dataframe["Reception Number"][-1]}-{str(count)}':
-                count += 1
-        if count > 1:
-            dataframe["Reception Number"][-1] = f'{dataframe["Reception Number"][-1]}-{str(count - 1)}'
-            document.new_name = f'{document.county.prefix}-{document.reception_number}-{str(count - 1)}.pdf'
-        else:
-            return True
-    else:
-        return True
-
-
 def access_document_image(browser, abstract, document):
     access_pdf_viewer(browser, document)
     while click_button(browser, locate_element_by_id,

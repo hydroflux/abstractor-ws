@@ -89,6 +89,21 @@ class Abstract:
             print("Related Documents: ", related_documents)
             print("Comments: ", comments)
 
+    def duplicate_review_and_update(self, document, count=0):
+        if document.result_number > 0 and document.type == "document_number":
+            for element in self.dataframe["Reception Number"]:
+                if element == self.dataframe["Reception Number"][-1]:
+                    count += 1
+                elif element == f'{self.dataframe["Reception Number"][-1]}-{str(count)}':
+                    count += 1
+            if count > 1:
+                self.dataframe["Reception Number"][-1] = f'{self.dataframe["Reception Number"][-1]}-{str(count - 1)}'
+                document.new_name = f'{document.county.prefix}-{document.reception_number}-{str(count - 1)}.pdf'
+            else:
+                return True
+        else:
+            return True
+
 
 # - [ ] Put general button_ids on the 'abstract' class (login, logout, etc.)
 # - [ ] Put urls on the abstract class
