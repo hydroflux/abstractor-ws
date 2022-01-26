@@ -21,6 +21,13 @@ from settings.iframe_handling import switch_to_default_content
 print("download", __name__)
 
 
+def prepare_for_download(abstract, document):
+    abstract.document_directory = create_document_directory(abstract.target_directory)
+    abstract.document_directory_files = len(os.listdir(abstract.document_directory))
+    document.download_value = f'{document.reception_number}-{stock_download_suffix}'
+
+
+
 def download_available(dataframe, document):
     if dataframe["Comments"][-1].endswith(no_image_comment(document)):
         print(no_image_comment(document))
@@ -58,10 +65,6 @@ def access_pdf_viewer(browser, document):
         naptime()
 
 
-def build_stock_download(document):
-    document.download_value = f'{document.reception_number}-{stock_download_suffix}'
-
-
 def check_last_download(dataframe, document, count=0):
     if document.result_number > 0:
         for element in dataframe["Reception Number"]:
@@ -90,8 +93,6 @@ def access_document_image(browser, abstract, document):
 
 
 def execute_download(browser, abstract, document):
-    abstract.document_directory_files = len(os.listdir(abstract.document_directory))
-    build_stock_download(document)
     access_document_image(browser, abstract, document)
     if update_download(
         browser,
@@ -104,7 +105,7 @@ def execute_download(browser, abstract, document):
 
 
 def download_document(browser, abstract, document):
-    abstract.document_directory = create_document_directory(abstract.target_directory)
+    prepare_for_download(abstract, document)
     if download_available(abstract.dataframe, document):
         if previously_downloaded(abstract, document):
             if document.number_results == 1 or check_last_download(abstract.dataframe, document):
