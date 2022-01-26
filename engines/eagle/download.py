@@ -27,7 +27,6 @@ def prepare_for_download(abstract, document):
     document.download_value = f'{document.reception_number}-{stock_download_suffix}'
 
 
-
 def download_available(dataframe, document):
     if dataframe["Comments"][-1].endswith(no_image_comment(document)):
         print(no_image_comment(document))
@@ -94,14 +93,7 @@ def access_document_image(browser, abstract, document):
 
 def execute_download(browser, abstract, document):
     access_document_image(browser, abstract, document)
-    if update_download(
-        browser,
-        abstract,
-        document
-    ):
-        document_downloaded(abstract, document)
-    else:
-        no_download(abstract, document)
+    update_download(browser, abstract, document)
 
 
 def download_document(browser, abstract, document):
