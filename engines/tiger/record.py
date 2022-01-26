@@ -2,6 +2,7 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+from selenium_utilities.locators import locate_element_by_id
 
 from settings.county_variables.general import empty_value, not_applicable
 from settings.county_variables.tiger import (book_page_abbreviation,
@@ -15,15 +16,6 @@ from settings.general_functions import get_element_text, timeout
 print("record", __name__)
 
 
-def document_image_loaded(browser, document):
-    try:
-        document_image_present = EC.presence_of_element_located((By.ID, document_image_id))
-        WebDriverWait(browser, timeout).until(document_image_present)
-    except TimeoutException:
-        print(f'Browser timed out while waiting for '
-              f'{document.extrapolate_value()} document image to load.')
-
-
 def document_information_loaded(browser, document):
     try:
         document_information_present = EC.presence_of_element_located((By.ID, document_information_id))
@@ -35,7 +27,7 @@ def document_information_loaded(browser, document):
 
 
 def document_loaded(browser, document):
-    document_image_loaded(browser, document)
+    locate_element_by_id(browser, document_image_id, "document image", False, document)
     return document_information_loaded(browser, document)
 
 

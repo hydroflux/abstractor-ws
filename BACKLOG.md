@@ -130,7 +130,7 @@
 
 ### Locators To Do
 
-- [ ] Up-To-Date
+- [ ] Consider adding an option / flag (or even a standalone function which accepts a locator as an argument) to simply return True / False if only waiting for the element to load, rather than looking for the element itself---could use in both tiger and leopard 'record' scripts when dealing with the document image
 
 ### Open To Do
 
@@ -404,6 +404,7 @@
 - [ ] Add Book / Page search option to the 'search' script & forward
 - [ ] Create a new 'tiger' directory inside the 'engines' directory
 - [ ] Update all scripts to work with the 'Project' and 'Abstract' classes
+- [ ] Create a 'transform' script to handle updating document numbers and setting document attributes
 
 ## Other To Do
 
