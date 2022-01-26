@@ -34,10 +34,10 @@ def switch_into_frame(browser, document):
     try:
         pdf_viewer = locate_element_by_class_name(browser, pdf_viewer_class_name, "pdf viewer")
         if not pdf_viewer:
-            print('Unable to locate PDF viewer, trying again.')
-            print(f'PDF Viewer: {pdf_viewer}')
-            print(f'Reception Number: {document.reception_number}')
-            print(f'Download Value: {document.download_value}')
+            # print('Unable to locate PDF viewer, trying again.')
+            # print(f'PDF Viewer: {pdf_viewer}')
+            # print(f'Reception Number: {document.reception_number}')
+            # print(f'Download Value: {document.download_value}')
             return pdf_viewer
         center_purchase_button(browser, document)
         browser.switch_to.frame(pdf_viewer)
@@ -49,6 +49,7 @@ def switch_into_frame(browser, document):
 
 def access_pdf_viewer(browser, document):
     while not switch_into_frame(browser, document):
+        print('Browser failed to access PDF viewer, refreshing and trying again...')
         browser.refresh()
         naptime()
 
@@ -69,6 +70,7 @@ def execute_download(browser, abstract, document):
     update_download(browser, abstract, document)
 
 
+# Identical to 'leopard' & 'jaguar' download_document
 def download_document(browser, abstract, document):
     prepare_for_download(abstract, document)
     if not previously_downloaded(abstract, document):

@@ -311,6 +311,7 @@
 - [ ] Document does not need to be recorded in the 'handle_single_document' function if 'review' is true--create some sort of replacement to only acknowledge that the document has been 'found' ('document_found')
 - [ ] Create function logic for the 'record' function of the 'record' script to only grab the 'reception_number' if 'review' or 'download_only' are true
 - [ ] Consider eliminating the 'review_entry' function path of the 'record' script--doesn't seem to be in use (could determine if log files are developed)
+- [ ] Refactor all of the pdf viewer handling in the 'download' script
 
 ### Iguana To Do
 
