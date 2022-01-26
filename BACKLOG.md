@@ -27,7 +27,7 @@
 
 - [ ] Add 'transform' to abstract initialization dependent on the county
 - [ ] Update either the 'Abstract' or 'Project' class to handle whether to export & bundle a project, rather than having the argument inline of the 'execute_program' functions (across directories)
-- [ ] Add 'number_files' of the document_directory attribute as a new attribute
+- [ ] Add instance functions to add either 'empty' or 'n/a' values to the dataframe, using 'self', some flag trigger, and a string value of the dataframe column to be affected
 
 ### County Class To Do
 

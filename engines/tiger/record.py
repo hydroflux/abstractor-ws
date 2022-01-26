@@ -1,4 +1,4 @@
-from selenium_utilities.locators import locate_element_by_id
+from selenium_utilities.locators import locate_element_by_id, locate_element_by_tag_name
 
 from settings.county_variables.general import empty_value, not_applicable
 from settings.county_variables.tiger import (book_page_abbreviation,
@@ -12,7 +12,7 @@ from settings.general_functions import get_element_text
 print("record", __name__)
 
 
-def document_loaded(browser, document):
+def access_document_information(browser, document):
     locate_element_by_id(browser, document_image_id,  # Document Image Loaded
                          "document image", False, document)
     document_information = locate_element_by_id(browser, document_information_id,  # Document Information Loaded
@@ -20,9 +20,10 @@ def document_loaded(browser, document):
     return document_information
 
 
-def document_table_data(browser, document_number):
-    document = document_loaded(browser, document_number)
-    return document.find_element_by_tag_name(document_table_tag)
+def access_document_table_data(browser, document):
+    document_information = access_document_information(browser, document)
+    table_data = locate_element_by_tag_name(document_information, document_table_tag, "table data", False, document)
+    return table_data
 
 
 def get_table_rows(document_table):
