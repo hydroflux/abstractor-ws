@@ -101,8 +101,8 @@ def record_legal(dictionary, row_1):
 
 
 # Write a function to check additional information for rows 4, 7
-def record_document(browser, dictionary, document_number):
-    document_table = document_table_data(browser, document_number)
+def record_document(browser, dictionary, document):
+    document_table = access_document_table_data(browser, document)
     rows = get_table_rows(document_table)
     record_instrument_number(dictionary, rows[0])
     record_book_and_page(dictionary, rows[1])
