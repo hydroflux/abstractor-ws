@@ -27,10 +27,6 @@ def record_multiple_documents():
     pass
 
 
-def review_multiple_documents():
-    pass
-
-
 def handle_search_results():
     pass
 
@@ -53,10 +49,6 @@ def search_documents_from_list(browser, county, target_directory, document_list)
                   f'{remaining_downloads(document_list, document_number)} documents remaining.')
 
 
-def review_documents_from_list():
-    pass
-
-
 def create_abstraction(browser, county, target_directory, file_name, sheet_name):
     document_list = generate_document_list(target_directory, file_name, sheet_name)
     search_documents_from_list(browser, county, target_directory, document_list)
@@ -67,19 +59,15 @@ def execute_program():
     pass
 
 
-def execute_review():
-    pass
-
-
-def execute_web_program(county, client, legal, upload_file):
-    county = get_county_data(county)
-    sheet_name = 'Documents'
-    file_name = upload_file
-    target_directory = web_directory
-    browser = create_webdriver(target_directory, False)
-    account_login(browser)
-    dataframe = create_abstraction(browser, county, target_directory, file_name, sheet_name)
-    export_document(target_directory, file_name, dataframe, client, legal)
-    bundle_project(target_directory, file_name)
-    browser.close()
-    return dataframe
+# def execute_web_program(county, client, legal, upload_file):
+#     county = get_county_data(county)
+#     sheet_name = 'Documents'
+#     file_name = upload_file
+#     target_directory = web_directory
+#     browser = create_webdriver(target_directory, False)
+#     account_login(browser)
+#     dataframe = create_abstraction(browser, county, target_directory, file_name, sheet_name)
+#     export_document(target_directory, file_name, dataframe, client, legal)
+#     bundle_project(target_directory, file_name)
+#     browser.close()
+#     return dataframe
