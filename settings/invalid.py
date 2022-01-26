@@ -59,18 +59,17 @@ def unable_to_download(abstract, document):
         abstract.dataframe["Comments"][-1] = f'{last_comment}; {unable_to_download}'
 
 
-def no_image_comment(document):
-    return f'No document image available at reception number "{document.reception_number}", please review'
-    # Add routes for document type
-    # needs to be done after book, volume, and page are added to the document class
-
-
 def no_document_image(abstract, document):
     last_comment = abstract.dataframe["Comments"][-1]
+    no_image_comment = (f'No document image available at reception number '
+                        f'"{document.reception_number}", please review')
+    # Add routes for document type
+    # needs to be done after book, volume, and page are added to the document class
+    print(no_image_comment)
     if last_comment == "":
-        abstract.dataframe["Comments"][-1] = no_image_comment(document)
+        abstract.dataframe["Comments"][-1] = no_image_comment
     else:
-        abstract.dataframe["Comments"][-1] = f'{last_comment}; {no_image_comment(document)}'
+        abstract.dataframe["Comments"][-1] = f'{last_comment}; {no_image_comment}'
 
 
 def no_download(abstract, document):
