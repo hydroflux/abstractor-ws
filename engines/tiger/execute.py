@@ -9,11 +9,11 @@ from settings.general_functions import (get_county_data,
 from project_management.generate_document_list import generate_document_list
 from settings.settings import download, web_directory
 
-from tiger.download import download_document
-from tiger.login import account_login
-from tiger.open_document import open_document
-from tiger.record import record_document
-from tiger.search import search
+from engines.tiger.download import download_document
+from engines.tiger.login import account_login
+from engines.tiger.open_document import open_document
+from engines.tiger.record import record_document
+from engines.tiger.search import search
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("execute", __name__)

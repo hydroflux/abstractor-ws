@@ -7,7 +7,7 @@ from settings.county_variables.tiger import (credentials, handle_disclaimer_id,
                                              login_button_name, website,
                                              website_title)
 
-from tiger.search import open_search
+from engines.tiger.search import open_search
 
 
 def enter_credentials(browser):
