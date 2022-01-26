@@ -411,6 +411,7 @@
 - [ ] Integrate the 'number_results' attribute of the Document class into 'open_document', 'download', 'record', and 'execute'
 - [ ] Update the 'search', 'open', 'record', and 'download' scripts to use the passed Document class instance instead of a raw 'document_number' (like they were set up for)
 - [ ] Add the 'downloaded_document' or 'no_download'(?) functions into the 'download' script
+- [ ] Move the 'javascript_execution' and 'naptime' out of the 'handle_single_document' function---currently looks messy and removing will align the 'handle_single_document' function with other 'execute' scripts
 
 ## Other To Do
 
