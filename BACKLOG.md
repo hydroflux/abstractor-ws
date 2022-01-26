@@ -392,7 +392,8 @@
 - [ ] Re-design tiger to work with the code base for leopard
 - [ ] Create a logout script to work with tiger -- again based on leopard primarily
 - [ ] Refactor environment to work with the new export, document_list, & execute functionality
-- [ ] Refactor the execute script
+- [ ] Refactor the 'search' script
+- [ ] Refactor the 'open' script
 - [ ] Refactor tiger record
 - [ ] Refactor tiger download
 - [ ] Update record (after refactoring) to work with multiple documents
