@@ -1,7 +1,3 @@
-from selenium.common.exceptions import TimeoutException
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.wait import WebDriverWait
 from selenium_utilities.locators import locate_element_by_id
 
 from settings.county_variables.general import empty_value, not_applicable
@@ -10,7 +6,7 @@ from settings.county_variables.tiger import (book_page_abbreviation,
                                              document_information_id,
                                              document_table_tag, row_data_tag,
                                              row_titles, table_row_tag)
-from settings.general_functions import get_element_text, timeout
+from settings.general_functions import get_element_text
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("record", __name__)
