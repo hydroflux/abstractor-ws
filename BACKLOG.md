@@ -168,6 +168,9 @@
 - [ ] 'is_duplicate' and 'previously_downloaded' functions should be added onto the Abstract(?) class
 - [ ] Create a print statement for if a document is a duplicate and therefore will have a new reception number / download name
 - [ ] Create a print statement to identify if a document has already been downloaded and is therefore has been 'previously_downloaded'
+- [ ] 'prepare_for_download' function could be extrapolated to a certain point--creating the document directory and getting the number of directory files could be a generalized function (probably on ad Directory class), just need to determine what to do about other 'preparation' steps
+- [ ] Change directory into the document directory during 'prepare_for_download'???
+- [ ] Ideally, the only script specific 'download' function would be the 'execute_download' function
 
 ### Driver To Do
 
@@ -330,19 +333,7 @@
 ### Leopard To Do
 
 - [ ] Update multiple_documents comment to include actual document numbers and / or book & page numbers
-- [ ] HIGH PRIORITY -- refactor leopard execute
-- [ ] move "get_reception_number" around into download document--passing around 'document_number' is redundant & the document can't be downloaded unless it's on the page anyway
-- [ ] Remove anything with the "stock download" name before clicking the download button--avoid creating an issue with crash / restart
-- [ ] Update scripts with new general functions (i.e. assert_window_title)
-- [ ] Update the record function to set the reception number rather than return it
-- [ ] Update 'review' loop so that 'review' comes in as True or False, rather than an 'alt' argument
-- [ ] Fix the issue with the defunct 'get_reception_number' function in leopard 'execute' script
-- [ ] Create a "download_setup" series of functions where if download == yes: create_directory, get current files, change active directory, etc.
-- [ ] Circle back to leopard download after completing the above
-- [ ] Eliminate the 'alt' options in the 'execute' script in favor of using attributes on Document class instances
-- [ ] Update the leopard 'record' script to use the active Abstract and Document class instances
-- [ ] Update the leopard 'download' script to use the active Abstract and Document class instances
-- [ ] Fix the 'get_reception_number' function in the 'record' script (use the Document class)
+- [ ] Remove anything with the "stock download" name before clicking the download button--avoid creating an issue with crash / restart?????
 - [ ] Currently the 'download_only' switch for the 'headless' attribute is in the 'execute_program' function--better placement would probably be in the 'environment' or 'initialization' scripts if possible
 - [ ] Drop the "if not abstract.download_only and not abstract.review:" line from the 'execute_program' function of the 'execute' script in favor of something more elegant--possibly update on the Abstract or Program class
 - [ ] Integrate the 'document.result_number' attribute into the 'handle_multiple_documents' function of the 'execute' script--use eagle as an example template
@@ -411,6 +402,7 @@
 - [ ] Integrate the 'number_results' attribute of the Document class into 'open_document', 'download', 'record', and 'execute'
 - [ ] Update the 'search', 'open', 'record', and 'download' scripts to use the passed Document class instance instead of a raw 'document_number' (like they were set up for)
 - [ ] Add the 'downloaded_document' or 'no_download'(?) functions into the 'download' script
+- [ ] Move the 'javascript_execution' and 'naptime' out of the 'handle_single_document' function---currently looks messy and removing will align the 'handle_single_document' function with other 'execute' scripts
 
 ## Other To Do
 

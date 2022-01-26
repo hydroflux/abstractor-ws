@@ -51,8 +51,6 @@ def search_documents_from_list(browser, abstract):
 
 # Identical to 'leopard' execute_program
 def execute_program(abstract):
-    if abstract.download_only:
-        abstract.headless = False  # Figure out better placement
     browser = create_webdriver(abstract)
     # transform_document_list(abstract)
     account_login(browser)

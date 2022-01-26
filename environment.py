@@ -57,11 +57,15 @@ def execute_program(abstract):
             currently_unavailable(abstract)
     elif abstract.county.engine == 'leopard':
         if abstract.program in ["execute", "review", "download"]:
+            if abstract.program == "download":
+                abstract.headless = False
             execute_leopard(abstract)
         else:
             currently_unavailable(abstract)
     elif abstract.county.engine == 'tiger':
         if abstract.program in ["execute", "review", "download"]:
+            if abstract.program == "download":
+                abstract.headless = False
             execute_tiger(abstract)
         else:
             currently_unavailable(abstract)
