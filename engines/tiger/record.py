@@ -3,14 +3,13 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
+from settings.county_variables.general import empty_value, not_applicable
 from settings.county_variables.tiger import (book_page_abbreviation,
                                              document_image_id,
                                              document_information_id,
                                              document_table_tag, row_data_tag,
                                              row_titles, table_row_tag)
-from settings.file_management import extrapolate_document_value
 from settings.general_functions import get_element_text, timeout
-from settings.settings import empty_value, not_applicable
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("record", __name__)
@@ -22,7 +21,7 @@ def document_image_loaded(browser, document):
         WebDriverWait(browser, timeout).until(document_image_present)
     except TimeoutException:
         print(f'Browser timed out while waiting for '
-              f'{extrapolate_document_value(document)} document image to load.')
+              f'{document.extrapolate_value()} document image to load.')
 
 
 def document_information_loaded(browser, document):
@@ -32,7 +31,7 @@ def document_information_loaded(browser, document):
         return browser.find_element_by_id(document_information_id)
     except TimeoutException:
         print(f'Browser timed out while waiting for '
-              f'{extrapolate_document_value(document)} document information to load.')
+              f'{document.extrapolate_value()} document information to load.')
 
 
 def document_loaded(browser, document):
