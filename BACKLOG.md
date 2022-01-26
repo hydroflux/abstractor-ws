@@ -41,6 +41,7 @@
 - [ ] Add date / year into the document class in order to add the option to sort by date
 - [ ] Consolidate the 'value' attribute and the 'document_value' instance function--too confusing and creating problems
 - [ ] Create class functions for 'document_found', 'document_downloaded', 'no_document_found' and 'no_document_downloaded' using the functions from the 'file_management' script
+- [ ] Set the 'image_available' attribute automatically True, to be turned to 'false' if otherwise noted
 
 ### Program Class To Do
 

@@ -15,10 +15,10 @@ from engines.eagle.transform import transform_document_list
 print("execute", __name__)
 
 
-# Identical to 'leopard' handle_single_document
+# Nearly identical to 'leopard' handle_single_document
 def handle_single_document(browser, abstract, document):
     record(browser, abstract, document)
-    if abstract.download:
+    if abstract.download and document.image_available:
         download_document(browser, abstract, document)
 
 

@@ -17,7 +17,7 @@ from engines.leopard.transform import transform_document_list
 print("execute", __name__)
 
 
-# Identical to 'eagle' handle_single_document
+# Nearly to 'eagle' handle_single_document
 def handle_single_document(browser, abstract, document):
     record(browser, abstract, document)
     if abstract.download:
