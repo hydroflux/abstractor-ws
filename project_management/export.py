@@ -3,10 +3,10 @@ from pandas import DataFrame, ExcelWriter
 
 from classes.Project import Project
 
-from project_management.conditional_formatting import add_conditional_formatting
-from project_management.content import add_content, number_to_letter
-from project_management.font_formats import generate_font_formats
-from project_management.hyperlinks import add_hyperlink_sheet
+from project_management.export_settings.conditional_formatting import add_conditional_formatting
+from project_management.export_settings.content import add_content, number_to_letter
+from project_management.export_settings.font_formats import generate_font_formats
+from project_management.export_settings.hyperlinks import add_hyperlink_sheet
 
 
 def update_dataframe(project):
