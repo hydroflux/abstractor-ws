@@ -55,6 +55,8 @@
 
 ## Program To Do
 
+- [ ] Create a 'closure' script (or named something similar) to handle exporting the document, bundling the project, and closing the browser (and potentially handling a 'logout' function)
+
 ### Runtime To Do
 
 - [ ] Add program_type to the 'started on...' line when starting a program (checks for cases where the wrong program type was chosen & logging in is time extensive)
@@ -315,6 +317,7 @@
 - [ ] Create function logic for the 'record' function of the 'record' script to only grab the 'reception_number' if 'review' or 'download_only' are true
 - [ ] Consider eliminating the 'review_entry' function path of the 'record' script--doesn't seem to be in use (could determine if log files are developed)
 - [ ] Refactor all of the pdf viewer handling in the 'download' script
+- [ ] Add in some semblance of the 'close_program' function used in 'leopard' and 'tiger'
 
 ### Iguana To Do
 
@@ -329,6 +332,7 @@
 - [ ] Needs further manual testing and review
 - [ ] Add paths for multiple documents, review, download only, etc.
 - [ ] Add a function to drop duplicates (from the document list? from the dataframe?)
+- [ ] Add in some semblance of the 'close_program' function used in 'leopard' and 'tiger'
 
 ### Leopard To Do
 

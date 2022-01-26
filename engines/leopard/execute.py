@@ -54,13 +54,19 @@ def search_documents_from_list(browser, abstract):
         # check_length(dataframe)  # Where is the best place to put this???
 
 
-def execute_program(abstract):
-    browser = create_webdriver(abstract)
-    transform_document_list(abstract)
-    account_login(browser)
-    search_documents_from_list(browser, abstract)
+# Identical to 'tiger' close_program
+def close_program(browser, abstract):
     logout(browser)
     if not abstract.download_only and not abstract.review:
         project = export_document(abstract)
         project.bundle_project(abstract)
     browser.close()
+
+
+# Identical to 'tiger' execute_program
+def execute_program(abstract):
+    browser = create_webdriver(abstract)
+    transform_document_list(abstract)
+    account_login(browser)
+    search_documents_from_list(browser, abstract)
+    close_program(browser, abstract)
