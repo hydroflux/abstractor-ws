@@ -11,7 +11,8 @@ def handle_multiple_documents(browser, abstract, document, record, download_docu
     if next_result is None:
         print(f'{document.extrapolate_value()} returned "{document.number_results}" results; '
               f'Program not currently equipped to handle multiple documents at this point in time, '
-              f'please review...')
+              f'and script should not have reached this point; \n'
+              f'Please review...')
         input()
     else:
         handle_single_document(browser, abstract, document, record, download_document)
