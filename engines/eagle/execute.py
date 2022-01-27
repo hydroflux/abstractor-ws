@@ -50,7 +50,7 @@ def search_documents_from_list(browser, abstract):
             record_invalid_search(abstract, document)
 
 
-# Identical to the 'leopard' & 'tiger' close_program
+# Identical to the 'leopard', 'jaguar', & 'tiger' close_program
 def close_program(browser, abstract):
     # logout(browser)
     if not abstract.download_only and not abstract.review:
@@ -59,7 +59,7 @@ def close_program(browser, abstract):
     browser.close()
 
 
-# Identical to 'leopard' & 'tiger' execute_program
+# Identical to 'leopard', 'jaguar', & 'tiger' execute_program
 def execute_program(abstract):
     browser = create_webdriver(abstract)
     transform_document_list(abstract)
