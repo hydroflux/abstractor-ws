@@ -3,7 +3,8 @@ from settings.county_variables.jaguar import (name_input_id,
                                               search_button_name)
 
 
-def update_county(abstract):
+# Similar to the 'leopard' & 'tiger' update_document_attributes
+def update_document_attributes(abstract):
     for document in abstract.document_list:
         document.county = abstract.county
 
@@ -29,6 +30,6 @@ def update_element_attributes(abstract):
 
 
 def transform_document_list(abstract):
-    update_county(abstract)
+    update_document_attributes(abstract)
     convert_document_numbers(abstract)
     update_element_attributes(abstract)

@@ -2,6 +2,7 @@ from settings.county_variables.leopard import stock_download
 
 
 # Identical to the 'tiger' update_document_attributes function
+# Similar to the 'jaguar' update_document_attributes function
 def update_document_attributes(abstract):
     for document in abstract.document_list:
         document.county = abstract.county
@@ -20,6 +21,7 @@ def convert_document_numbers(abstract):
                 document.value = f'{year}{document_number.zfill(7)}'
 
 
+# Identical to the 'tiger' transform_document_list function
 def transform_document_list(abstract):
     update_document_attributes(abstract)
     convert_document_numbers(abstract)
