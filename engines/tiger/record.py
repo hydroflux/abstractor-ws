@@ -78,26 +78,26 @@ def record_document_type(abstract, row):
 
 def record_grantor(abstract, row):
     grantor = get_row_value(row, row_titles["grantor"])
-    dictionary["Grantor"].append(grantor.title())
+    abstract.dataframe["Grantor"].append(grantor.title())
 
 
 def record_grantee(abstract, row):
     grantee = get_row_value(row, row_titles["grantee"])
-    dictionary["Grantee"].append(grantee.title())
+    abstract.dataframe["Grantee"].append(grantee.title())
 
 
 def record_related_documents(abstract, row):
     related_documents = get_row_value(row, row_titles["related_documents"])
-    dictionary["Related Documents"].append(related_documents)
+    abstract.dataframe["Related Documents"].append(related_documents)
 
 
 def record_legal(abstract, row_1):
     legal = get_row_value(row_1, row_titles["legal"])
     # additional_legal = get_row_value(row_2, row_titles["additional_legal"])
     # if legal != additional_legal:
-    #     dictionary["Legal"].append(f'{legal}\n{additional_legal}')
+    #     abstract.dataframe["Legal"].append(f'{legal}\n{additional_legal}')
     # else:
-    dictionary["Legal"].append(legal)
+    abstract.dataframe["Legal"].append(legal)
 
 
 # Write a function to check additional information for rows 4, 7
