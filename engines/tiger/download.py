@@ -25,19 +25,11 @@ def prepare_for_download(abstract):
     abstract.document_directory_files = len(os.listdir(abstract.document_directory))
 
 
-def execute_download(browser, document_number):
-    try:
-        download_button_present = EC.element_to_be_clickable((By.ID, download_button_id))
-        WebDriverWait(browser, timeout).until(download_button_present)
-        download_button = browser.find_element_by_id(download_button_id)
-        download_button.click()
-    except TimeoutException:
-        print(f'Browser timed out trying to click the download button for document number {document_number}.')
-
-
 def download_document(browser, abstract, document):
     prepare_for_download(abstract)
-    click_button(browser, locate_element_by_id, view_panel_id, "download submenu", document)  # Open Document Submenu
-    execute_download(browser, document_number)
+    click_button(browser, locate_element_by_id, view_panel_id,  # Open Document Submenu
+                 "download submenu button", document)
+    click_button(browser, locate_element_by_id, download_button_id,  # Execute Download
+                 "execute download button", document)
     if update_download(browser, county, stock_download, document_directory, document_number):
         return True

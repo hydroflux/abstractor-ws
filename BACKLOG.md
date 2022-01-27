@@ -134,6 +134,8 @@
 ### Locators To Do
 
 - [ ] Consider adding an option / flag (or even a standalone function which accepts a locator as an argument) to simply return True / False if only waiting for the element to load, rather than looking for the element itself---could use in both tiger and leopard 'record' scripts when dealing with the document image
+- [ ] Consider integrating the 'click_button' function from 'inputs' into the 'locators' script (click could be added as an option)
+- [ ] Conversely to the above, if a 'Locator' class is created 'click_button' could be an instance function
 
 ### Open To Do
 
