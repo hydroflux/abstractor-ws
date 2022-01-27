@@ -50,15 +50,22 @@ def search_documents_from_list(browser, abstract):
             record_invalid_search(abstract, document)
 
 
-# Identical to 'jaguar' execute_program
+# Identical to the 'leopard' & 'tiger' close_program
+def close_program(browser, abstract):
+    # logout(browser)
+    if not abstract.download_only and not abstract.review:
+        project = export_document(abstract)
+        project.bundle_project(abstract)
+    browser.close()
+
+
+# Identical to 'leopard' & 'tiger' execute_program
 def execute_program(abstract):
     browser = create_webdriver(abstract)
     transform_document_list(abstract)
     account_login(browser)
     search_documents_from_list(browser, abstract)
-    project = export_document(abstract)
-    project.bundle_project(abstract)
-    browser.close()
+    close_program(browser, abstract)
 
 
 # def execute_web_program(client, legal, upload_file):

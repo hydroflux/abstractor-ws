@@ -320,7 +320,7 @@
 - [ ] Create function logic for the 'record' function of the 'record' script to only grab the 'reception_number' if 'review' or 'download_only' are true
 - [ ] Consider eliminating the 'review_entry' function path of the 'record' script--doesn't seem to be in use (could determine if log files are developed)
 - [ ] Refactor all of the pdf viewer handling in the 'download' script
-- [ ] Add in some semblance of the 'close_program' function used in 'leopard' and 'tiger'
+- [ ] Create a 'logout' script
 
 ### Iguana To Do
 

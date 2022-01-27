@@ -50,7 +50,7 @@ def search_documents_from_list(browser, abstract):
         # check_length(dataframe)  # Where is the best place to put this???
 
 
-# Identical to 'leopard' close_program
+# Identical to 'leopard' & 'eagle' close_program
 def close_program(browser, abstract):
     # logout(browser)
     if not abstract.download_only and not abstract.review:
@@ -59,7 +59,7 @@ def close_program(browser, abstract):
     browser.close()
 
 
-# Identical to 'leopard' execute_program
+# Identical to 'leopard' & 'eagle' execute_program
 def execute_program(abstract):
     browser = create_webdriver(abstract)
     transform_document_list(abstract)
