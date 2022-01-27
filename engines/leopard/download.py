@@ -20,8 +20,10 @@ def prepare_for_download(abstract):
 
 # Very similar but not identical to 'jaguar' execute_download
 def execute_download(browser, abstract, document):
-    click_button(browser, locate_element_by_id, view_group_id, "download submenu", document)  # Open Download Submenu
-    click_button(browser, locate_element_by_id, download_button_id, "download button", document)  # Download Document
+    click_button(browser, locate_element_by_id, view_group_id,  # Open Download Submenu
+                 "download submenu button", document)
+    click_button(browser, locate_element_by_id, download_button_id,  # Execute Download
+                 "execute download button", document)
     update_download(browser, abstract, document)
 
 

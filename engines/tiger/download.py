@@ -25,11 +25,14 @@ def prepare_for_download(abstract):
     abstract.document_directory_files = len(os.listdir(abstract.document_directory))
 
 
-def download_document(browser, abstract, document):
-    prepare_for_download(abstract)
-    click_button(browser, locate_element_by_id, view_panel_id,  # Open Document Submenu
+def execute_download(browser, abstract, document):
+    click_button(browser, locate_element_by_id, view_panel_id,  # Open Download Submenu
                  "download submenu button", document)
     click_button(browser, locate_element_by_id, download_button_id,  # Execute Download
                  "execute download button", document)
-    if update_download(browser, county, stock_download, document_directory, document_number):
-        return True
+    update_download(browser, abstract, document)
+
+
+def download_document(browser, abstract, document):
+    prepare_for_download(abstract)
+    execute_download(browser, abstract, document)
