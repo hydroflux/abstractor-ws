@@ -342,7 +342,6 @@
 - [ ] Consider eliminating the 'review_entry' function path of the 'record' script--doesn't seem to be in use (could determine if log files are developed)
 - [ ] Refactor all of the pdf viewer handling in the 'download' script
 - [ ] Create a 'logout' script
-- [ ] Update 'execute' functions using functions from the 'executor' script
 - [ ] 'record_comments' function was moved in order to add the 'multiple_documents' comment before checking the image status in case of double comments being added; the current script logic needs to be updated because it looks very messy and doesn't flow well as is
 - [ ] Update the 'build_document_download_information' function after the above is fixed
 - [ ] There is a 'handle_search_results' function that should be renamed in the 'open_document' script to avoid overlap with the 'executors' function 'handle_search_results'
@@ -361,7 +360,7 @@
 - [ ] Add a function to drop duplicates (from the document list? from the dataframe?)
 - [ ] Add in some semblance of the 'close_program' function used in 'leopard' and 'tiger'
 - [ ] Consider combining the 'update_element_attributes' and 'update_document_attributes' functions from the 'transform' script into a single function--downside being specific element attribute updates cannot be extrapolated to a higher level (unless all 'class', 'id', 'tag', etc. attributes are made uniform using an 'attribute' replacement)
-- [ ] Update 'execute' functions using functions from the 'executor' script
+- [ ] There is a 'handle_search_results' function that should be renamed in the 'open_document' script to avoid overlap with the 'executors' function 'handle_search_results'
 
 ### Leopard To Do
 
@@ -377,8 +376,8 @@
 - [ ] Create a validation check for 'reception_number', 'book', and 'page' for the 'record' script
 - [ ] Extrapolate and generalize the syntax of the 'record_comments' function in leopard 'record' (and all other county engine 'record' scripts)
 - [ ] Add element attributes onto Document instances in the 'transform' class
-- [ ] Update 'execute' functions using functions from the 'executor' script
 - [ ] The 'document.result_number' attribute is not being used in the 'record' script, but is set using the 'handle_multiple_documents' function from the 'executors' script--integrate this attribute
+- [ ] Create a 'next_result' function to pass into the 'executors' script--goes along with adding a 'multiple_documents' route
 
 ### Mountain Lion
 
@@ -440,7 +439,7 @@
 - [ ] Add the 'downloaded_document' or 'no_download'(?) functions into the 'download' script
 - [ ] Move the 'javascript_execution' and 'naptime' out of the 'handle_single_document' function---currently looks messy and removing will align the 'handle_single_document' function with other 'execute' scripts
 - [ ] Update the 'convert_document_numbers' function in the 'transform' script using the leopard 'convert_document_numbers' function as a model
-- [ ] Update 'execute' functions using functions from the 'executor' script
+- [ ] Create a 'next_result' function to pass into the 'executors' script--goes along with adding a 'multiple_documents' route
 
 ## Other To Do
 
