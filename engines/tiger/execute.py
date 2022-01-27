@@ -17,7 +17,7 @@ print("execute", __name__)
 
 def handle_single_document(browser, abstract, document):
     record(browser, abstract, document)
-    if abstract.download:
+    if abstract.download and not abstract.review:
         download_document(browser, abstract, document)
     # These (below) are messy--need to move / update
     javascript_script_execution(search_script)
@@ -31,6 +31,7 @@ def handle_multiple_documents(browser, abstract, document):
     input()
 
 
+# Identical to 'eagle', 'jaguar', & 'leopard' handle_search_results
 def handle_search_results(browser, abstract, document):
     if document.number_results == 1:
         handle_single_document(browser, abstract, document)

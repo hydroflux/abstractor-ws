@@ -33,7 +33,7 @@ def handle_multiple_documents(browser, abstract, document):
         handle_single_document(browser, abstract, document)
 
 
-# Identical to 'eagle' and 'jaguar' handle_search_results
+# Identical to 'eagle', 'tiger', & 'jaguar' handle_search_results
 def handle_search_results(browser, abstract, document):
     if document.number_results == 1:
         handle_single_document(browser, abstract, document)

@@ -119,6 +119,7 @@
 
 ### User Prompts To Do
 
+- [ ] Add an additional prompt function for 'early_document_downloads' if the program engine is 'rattlesnake' and the 'download_only' option is selected
 - [ ] Demo prompts should have a "go back" option
 
 ## Selenium Utilities To Do
