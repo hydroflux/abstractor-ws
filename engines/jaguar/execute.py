@@ -1,4 +1,4 @@
-from actions.executors import close_program
+from actions.executors import close_program, handle_single_document
 from settings.invalid import record_invalid_search
 from settings.driver import create_webdriver
 from settings.general_functions import start_timer
@@ -11,12 +11,6 @@ from engines.jaguar.search import search
 from engines.jaguar.transform import transform_document_list
 
 
-def handle_single_document(browser, abstract, document):
-    record(browser, abstract, document)
-    if abstract.download and not abstract.review:
-        download_document(browser, abstract, document)
-
-
 def handle_multiple_documents(browser, abstract, document):
     print('Application not equipped to handle multiple documents at the moment; '
           'Script should not have reached this point, please review...')
@@ -26,7 +20,7 @@ def handle_multiple_documents(browser, abstract, document):
 # Identical to 'eagle', 'tiger', & 'leopard' handle_search_results
 def handle_search_results(browser, abstract, document):
     if document.number_results == 1:
-        handle_single_document(browser, abstract, document)
+        handle_single_document(browser, abstract, document, record, download_document)
     elif document.number_results > 1:
         handle_multiple_documents(browser, abstract, document)
 
