@@ -1,9 +1,8 @@
 from actions.executors import close_program, handle_multiple_documents, handle_single_document
 from engines.tiger.transform import transform_document_list
 from settings.invalid import record_invalid_search
-from settings.county_variables.tiger import search_script
 from settings.driver import create_webdriver
-from settings.general_functions import (javascript_script_execution, naptime, start_timer)
+from settings.general_functions import start_timer
 
 from engines.tiger.download import download_document
 from engines.tiger.login import account_login
@@ -19,9 +18,6 @@ print("execute", __name__)
 def handle_search_results(browser, abstract, document):
     if document.number_results == 1:
         handle_single_document(browser, abstract, document, record, download_document)
-        # These (below) are messy--need to move / update
-        javascript_script_execution(search_script)
-        naptime()
     elif document.number_results > 1:
         handle_multiple_documents(browser, abstract, document, record, download_document)
 

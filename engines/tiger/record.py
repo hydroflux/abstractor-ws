@@ -2,11 +2,11 @@ from selenium_utilities.locators import locate_element_by_id, locate_element_by_
 
 from settings.county_variables.general import empty_value, not_applicable
 from settings.county_variables.tiger import (book_page_abbreviation,
-                                             document_image_id,
+                                             document_image_id, search_script,
                                              document_information_id,
                                              document_table_tag, row_data_tag,
                                              row_titles, table_row_tag)
-from settings.general_functions import get_element_text
+from settings.general_functions import get_element_text, javascript_script_execution, naptime
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("record", __name__)
@@ -113,3 +113,7 @@ def record(browser, abstract, document):
     record_related_documents(abstract, rows[9])
     record_legal(abstract, rows[10])
     abstract["Comments"].append(empty_value)
+    if abstract.download and document.image_available and not abstract.review:
+        # These (below) are messy--need to move / update (duplicated in the download script)
+        javascript_script_execution(search_script)
+        naptime()

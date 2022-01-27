@@ -440,6 +440,7 @@
 - [ ] Move the 'javascript_execution' and 'naptime' out of the 'handle_single_document' function---currently looks messy and removing will align the 'handle_single_document' function with other 'execute' scripts
 - [ ] Update the 'convert_document_numbers' function in the 'transform' script using the leopard 'convert_document_numbers' function as a model
 - [ ] Create a 'next_result' function to pass into the 'executors' script--goes along with adding a 'multiple_documents' route
+- [ ] Figure out a better way to integrate the javascript script execution into the 'tiger' script execution instead of it being placed in both the 'record' and 'download' scripts
 
 ## Other To Do
 
