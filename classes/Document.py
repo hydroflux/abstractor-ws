@@ -1,7 +1,7 @@
 class Document:
     def __init__(self, type, value, year=None, index_number=None,
                  number_results=0, multiple_results=None, result_number=0, reception_number=None,
-                 description_link=None, image_available=None, image_link=None,
+                 description_link=None, image_available=True, image_link=None,
                  button_attributes=None, input_attributes=None, search_attributes=None,
                  county=None, start_time=None,
                  download_type=None, download_value=None, download_path=None, new_name=None):

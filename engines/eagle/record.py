@@ -53,16 +53,6 @@ def get_image_container(browser, document):
     return image_container_text
 
 
-def document_image_exists(browser, document):
-    image_container_text = get_image_container(browser, document)
-    if image_container_text == no_image_text or image_container_text == login_error_text:
-        document.image_available = False
-        return False
-    else:
-        document.image_available = True
-        return True
-
-
 def pdf_load_status(browser, document):
     try:
         pdf_viewer_loaded = EC.presence_of_element_located((By.ID, pdf_viewer_load_id))
@@ -86,12 +76,16 @@ def wait_for_pdf_to_load(browser, document):
 
 
 def handle_document_image_status(browser, document):
-    if document_image_exists(browser, document):
-        wait_for_pdf_to_load(browser, document)
-    else:
+    image_container_text = get_image_container(browser, document)
+    if image_container_text == no_image_text or image_container_text == login_error_text:
+        document.image_available = False
         print(f'No document image exists for '
               f'{document.extrapolate_value()}, please review.')
         medium_nap()
+        return False
+    else:
+        wait_for_pdf_to_load(browser, document)
+        return True
 
 
 def get_document_information(browser, document):
