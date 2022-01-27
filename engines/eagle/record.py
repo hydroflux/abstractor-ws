@@ -403,15 +403,7 @@ def next_result(browser, document):
     naptime()  # DO NOT REMOVE NAP -- slow server speeds can cause duplicate recordings of the same document
 
 
-# def get_reception_number(browser, document):
-#     wait_for_pdf_to_load(browser, document)
-#     document_information = get_document_information(browser, document)
-#     document_tables = access_document_information_tables(browser, document, document_information)
-#     reception_field, _ = access_indexing_information(document_tables[1])
-#     document.reception_number = split_reception_field(reception_field)[0]
-
-
-def access_download_information(browser, dataframe, document):
+def access_download_information(browser, abstract, document):
     handle_document_image_status(browser, abstract, document)
     document_tables = access_document_tables(browser, document)
     reception_field, _ = access_indexing_information(document_tables[1])
@@ -420,14 +412,16 @@ def access_download_information(browser, dataframe, document):
 
 
 def build_document_download_information(browser, abstract, document):
-    reception_number = access_download_information(browser, abstract.dataframe, document)
+    reception_number = access_download_information(browser, abstract, document)
     while document.reception_number.strip() == '':
         print('Browser did not correctly access reception number for '
               f'{document.extrapolate_value()}, trying again...')
         naptime()
-        reception_number = access_download_information(browser, abstract.dataframe, document)
+        reception_number = access_download_information(browser, abstract, document)
     abstract.dataframe['Reception Number'].append(reception_number)
-    abstract.dataframe['Comments'].append('')
+    # Below is necessary until better logic order is figured out for 'handle_document_image_status'
+    if len(abstract.dataframe['Reception Number']) != len(abstract.dataframe['Comments']):
+        abstract.dataframe['Comments'].append('')
 
 
 def record(browser, abstract, document):

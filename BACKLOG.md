@@ -59,6 +59,7 @@
 - [ ] Create class functions for 'document_found', 'document_downloaded', 'no_document_found' and 'no_document_downloaded' using the functions from the 'file_management' script
 - [ ] Set the 'image_available' attribute automatically True, to be turned to 'false' if otherwise noted
 - [ ] Add an 'is_duplicate' attribute to the Document class, set using 'download_management' (or otherwise the 'previously_downloaded' function) and called in the printout statements
+- [ ] Consider adding the document 'recording variables' as attributes on the Document class, which can then be recorded with an extrapolated 'record' type script in the 'actions' directory
 
 ### Program Class To Do
 
@@ -343,6 +344,7 @@
 - [ ] Create a 'logout' script
 - [ ] Update 'execute' functions using functions from the 'executor' script
 - [ ] 'record_comments' function was moved in order to add the 'multiple_documents' comment before checking the image status in case of double comments being added; the current script logic needs to be updated because it looks very messy and doesn't flow well as is
+- [ ] Update the 'build_document_download_information' function after the above is fixed
 
 ### Iguana To Do
 
