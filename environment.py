@@ -51,7 +51,7 @@ def execute_program(abstract):
         else:
             currently_unavailable(abstract)
     elif abstract.county.engine == 'jaguar':
-        if abstract.program == "execute":
+        if abstract.program in ["execute", "review", "download"]:
             execute_jaguar(abstract)
         else:
             currently_unavailable(abstract)
