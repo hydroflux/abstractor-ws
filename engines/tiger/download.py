@@ -44,7 +44,7 @@ def execute_download(browser, document_number):
 
 
 def download_document(browser, abstract, document):
-    prepare_for_download(abstract, document)
+    prepare_for_download(abstract)
     open_document_submenu(browser, document_number)
     execute_download(browser, document_number)
     if update_download(browser, county, stock_download, document_directory, document_number):

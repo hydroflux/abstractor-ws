@@ -1,10 +1,14 @@
 from settings.county_variables.leopard import stock_download
 
 
-def convert_document_numbers(abstract):
+def update_document_attributes(abstract):
     for document in abstract.document_list:
         document.county = abstract.county
         document.download_value = stock_download
+
+
+def convert_document_numbers(abstract):
+    for document in abstract.document_list:
         if document.type == "document_number" and document.value.find("-") != -1:
             document_number, year = document.value.split("-")
             year = int(year)
@@ -28,6 +32,6 @@ def convert_document_numbers(abstract):
             document.year = year
 
 
-# Redundant function as it stands, the purpose being to circle back & add additional functionality
 def transform_document_list(abstract):
+    update_document_attributes(abstract)
     convert_document_numbers(abstract)
