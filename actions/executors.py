@@ -7,7 +7,7 @@ def handle_single_document(browser, abstract, document, record, download_documen
         download_document(browser, abstract, document)
 
 
-def handle_multiple_documents(browser, abstract, document, record, download_document, next_result=None):
+def handle_multiple_documents(browser, abstract, document, record, download_document, next_result):
     if next_result is None:
         print(f'{document.extrapolate_value()} returned "{document.number_results}" results; '
               f'Program not currently equipped to handle multiple documents at this point in time, '
