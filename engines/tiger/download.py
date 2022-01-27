@@ -1,18 +1,11 @@
 import os
 
-from selenium.common.exceptions import TimeoutException
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.wait import WebDriverWait
 from selenium_utilities.inputs import click_button
 from selenium_utilities.locators import locate_element_by_id
 
-from settings.county_variables.tiger import (download_button_id,
-                                             stock_download, view_group_id,
-                                             view_panel_id)
+from settings.county_variables.tiger import download_button_id, view_panel_id
 from settings.download_management import previously_downloaded, update_download
-from settings.file_management import create_document_directory
-from settings.general_functions import timeout
+from settings.initialization import create_document_directory
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("download", __name__)
