@@ -70,7 +70,7 @@ def execute_download(browser, abstract, document):
     update_download(browser, abstract, document)
 
 
-# Identical to 'leopard' & 'jaguar' download_document
+# Identical to 'leopard', 'tiger' & 'jaguar' download_document
 def download_document(browser, abstract, document):
     prepare_for_download(abstract, document)
     if not previously_downloaded(abstract, document):
