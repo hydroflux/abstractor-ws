@@ -22,6 +22,7 @@
 - [ ] Create a 'Directory' class with two attributes--"files" and "number_files"
 - [ ] The 'target_directory' and 'document_directory' attributes on the Abstract class can be instances of the Directory class
 - [ ] Drop the 'document_directory_files' attribute from the Abstract class
+- [ ] Add the 'prepare_for_download' function from different 'download' scripts as an instance function--need to include the 'create_document_directory' function in some capacity as well (add optional arguments for things like 'stock_download')
 
 ### Abstract Class To Do
 

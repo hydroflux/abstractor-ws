@@ -4,6 +4,8 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+from selenium_utilities.inputs import click_button
+from selenium_utilities.locators import locate_element_by_id
 
 from settings.county_variables.tiger import (download_button_id,
                                              stock_download, view_group_id,
@@ -23,16 +25,6 @@ def prepare_for_download(abstract):
     abstract.document_directory_files = len(os.listdir(abstract.document_directory))
 
 
-def open_document_submenu(browser, document_number):
-    try:
-        view_panel_present = EC.element_to_be_clickable((By.ID, view_panel_id))
-        WebDriverWait(browser, timeout).until(view_panel_present)
-        view_document = browser.find_element_by_id(view_group_id)
-        view_document.click()
-    except TimeoutException:
-        print(f'Browser timed out trying to open document submenu for document number {document_number}.')
-
-
 def execute_download(browser, document_number):
     try:
         download_button_present = EC.element_to_be_clickable((By.ID, download_button_id))
@@ -45,7 +37,7 @@ def execute_download(browser, document_number):
 
 def download_document(browser, abstract, document):
     prepare_for_download(abstract)
-    open_document_submenu(browser, document_number)
+    click_button(browser, locate_element_by_id, view_panel_id, "download submenu", document)  # Open Document Submenu
     execute_download(browser, document_number)
     if update_download(browser, county, stock_download, document_directory, document_number):
         return True
