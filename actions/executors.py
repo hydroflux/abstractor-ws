@@ -7,6 +7,14 @@ def handle_single_document(browser, abstract, document, record, download_documen
         download_document(browser, abstract, document)
 
 
+def handle_multiple_documents(browser, abstract, document, record, download_document, next_result=None):
+    handle_single_document(browser, abstract, document, record, download_document)
+    for result_number in range(1, document.number_results):
+        document.result_number = result_number
+        next_result(browser, document)
+        handle_single_document(browser, abstract, document, record, download_document)
+
+
 def close_program(browser, abstract, logout=None):
     if logout is not None:
         logout(browser)
