@@ -8,6 +8,7 @@ def update_county(abstract):
         document.county = abstract.county
 
 
+# Similar to the 'leopard' convert_document_numbers function
 def convert_document_numbers(abstract):
     for document in abstract.document_list:
         if document.type == "document_number" and document.value.find("-") != -1:

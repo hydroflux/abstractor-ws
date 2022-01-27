@@ -407,7 +407,7 @@
 - [ ] Update the 'search', 'open', 'record', and 'download' scripts to use the passed Document class instance instead of a raw 'document_number' (like they were set up for)
 - [ ] Add the 'downloaded_document' or 'no_download'(?) functions into the 'download' script
 - [ ] Move the 'javascript_execution' and 'naptime' out of the 'handle_single_document' function---currently looks messy and removing will align the 'handle_single_document' function with other 'execute' scripts
-- [ ] Set the 'stock_download' variable in the 'transform' script after creating it
+- [ ] Update the 'convert_document_numbers' function in the 'transform' script using the leopard 'convert_document_numbers' function as a model
 
 ## Other To Do
 

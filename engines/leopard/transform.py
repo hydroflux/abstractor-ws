@@ -1,35 +1,23 @@
 from settings.county_variables.leopard import stock_download
 
 
+# Identical to the 'tiger' update_document_attributes function
 def update_document_attributes(abstract):
     for document in abstract.document_list:
         document.county = abstract.county
         document.download_value = stock_download
 
 
+# Similar to the 'jaguar' convert_document_numbers function
 def convert_document_numbers(abstract):
     for document in abstract.document_list:
         if document.type == "document_number" and document.value.find("-") != -1:
             document_number, year = document.value.split("-")
-            year = int(year)
+            document.year = int(year)
             if year <= 1984:
-                new_name = document_number
-            elif int(document_number) <= 9:
-                new_name = ('{}000000{}'.format(year, document_number))
-            elif int(document_number) <= 99:
-                new_name = ('{}00000{}'.format(year, document_number))
-            elif int(document_number) <= 999:
-                new_name = ('{}0000{}'.format(year, document_number))
-            elif int(document_number) <= 9999:
-                new_name = ('{}000{}'.format(year, document_number))
-            elif int(document_number) <= 99999:
-                new_name = ('{}00{}'.format(year, document_number))
-            elif int(document_number) <= 999999:
-                new_name = ('{}0{}'.format(year, document_number))
+                document.value = document_number
             else:
-                new_name = ('{}{}'.format(year, document_number))
-            document.value = new_name
-            document.year = year
+                document.value = f'{year}{document_number.zfill(7)}'
 
 
 def transform_document_list(abstract):
