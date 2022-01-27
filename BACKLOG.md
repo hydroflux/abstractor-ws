@@ -342,6 +342,7 @@
 - [ ] Refactor all of the pdf viewer handling in the 'download' script
 - [ ] Create a 'logout' script
 - [ ] Update 'execute' functions using functions from the 'executor' script
+- [ ] 'record_comments' function was moved in order to add the 'multiple_documents' comment before checking the image status in case of double comments being added; the current script logic needs to be updated because it looks very messy and doesn't flow well as is
 
 ### Iguana To Do
 

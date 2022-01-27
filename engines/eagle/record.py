@@ -306,11 +306,11 @@ def record_document_link(dataframe):
 
 
 # This could be simplified & cleaned up
-def record_comments(dataframe, document):
+def record_comments(abstract, document):
     if document.number_results == 1:
-        dataframe["Comments"].append("")
+        abstract.dataframe["Comments"].append("")
     elif document.number_results > 1:
-        dataframe["Comments"].append(multiple_documents_comment(document))
+        abstract.dataframe["Comments"].append(multiple_documents_comment(document))
     # if not document.image_available:
     #     no_document_image(dataframe, document)
 
@@ -330,7 +330,7 @@ def record_document_fields(browser, dataframe, document):
     record_effective_date(dataframe)
     record_volume(dataframe)
     record_document_link(dataframe)
-    record_comments(dataframe, document)
+    # record_comments(dataframe, document)  # Moved after 'handle_document_image_status' integration
     scroll_to_top(browser)
 
 
@@ -435,6 +435,7 @@ def record(browser, abstract, document):
         if abstract.download_only:
             build_document_download_information(browser, abstract, document)
         else:
+            record_comments(abstract, document)  # Before 'handle_document_image_status' to check for multiple documents
             handle_document_image_status(browser, abstract, document)
             record_document_fields(browser, abstract.dataframe, document)
             abstract.check_length()
