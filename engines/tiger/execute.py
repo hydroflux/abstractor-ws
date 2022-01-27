@@ -3,7 +3,6 @@ from engines.tiger.transform import transform_document_list
 from settings.invalid import record_invalid_search
 from settings.county_variables.tiger import search_script
 from settings.driver import create_webdriver
-from project_management.export import export_document
 from settings.general_functions import (javascript_script_execution, naptime, start_timer)
 
 from engines.tiger.download import download_document

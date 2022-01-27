@@ -2,7 +2,6 @@
 from actions.executors import close_program
 from settings.invalid import record_invalid_search
 from settings.driver import create_webdriver
-from project_management.export import export_document
 from settings.general_functions import start_timer
 
 from engines.eagle.download import download_document

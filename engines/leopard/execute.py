@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 from actions.executors import close_program
-from project_management.export import export_document
 
 from settings.driver import create_webdriver
 from settings.general_functions import start_timer
