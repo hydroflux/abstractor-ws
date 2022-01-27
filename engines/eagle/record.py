@@ -81,7 +81,7 @@ def handle_document_image_status(browser, abstract, document):
         document.image_available = False
         print(f'No document image exists for '
               f'{document.extrapolate_value()}, please review.')
-        no_document_image(dataframe, document)
+        no_document_image(abstract, document)
         medium_nap()
         return False
     else:
