@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-from actions.executors import close_program, handle_single_document
+from actions.executors import close_program, handle_multiple_documents, handle_single_document
 
 from settings.driver import create_webdriver
 from settings.general_functions import start_timer
@@ -17,21 +17,12 @@ from engines.leopard.transform import transform_document_list
 print("execute", __name__)
 
 
-# Identical to 'eagle' handle_multiple_documents
-def handle_multiple_documents(browser, abstract, document):
-    handle_single_document(browser, abstract, document, record, download_document)
-    for result_number in range(1, document.number_results):
-        document.result_number = result_number  # Pulled from 'eagle' execute, currently unused
-        next_result(browser, document)
-        handle_single_document(browser, abstract, document, record, download_document)
-
-
 # Identical to 'eagle', 'tiger', & 'jaguar' handle_search_results
 def handle_search_results(browser, abstract, document):
     if document.number_results == 1:
         handle_single_document(browser, abstract, document, record, download_document)
     elif document.number_results > 1:
-        handle_multiple_documents(browser, abstract, document)
+        handle_multiple_documents(browser, abstract, document, record, download_document, next_result)
 
 
 # Identical to 'eagle', 'tiger', & 'jaguar' search_documents_from_list

@@ -377,6 +377,7 @@
 - [ ] Extrapolate and generalize the syntax of the 'record_comments' function in leopard 'record' (and all other county engine 'record' scripts)
 - [ ] Add element attributes onto Document instances in the 'transform' class
 - [ ] Update 'execute' functions using functions from the 'executor' script
+- [ ] The 'document.result_number' attribute is not being used in the 'record' script, but is set using the 'handle_multiple_documents' function from the 'executors' script--integrate this attribute
 
 ### Mountain Lion
 
