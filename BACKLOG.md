@@ -347,7 +347,7 @@
 - [ ] Update the 'record' script to set the 'document.reception_number' for the current Document class instance being recorded (somewhere in the 'aggregate_document_information' function of the 'record' script)
 - [ ] Create a validation check for 'reception_number', 'book', and 'page' for the 'record' script
 - [ ] Extrapolate and generalize the syntax of the 'record_comments' function in leopard 'record' (and all other county engine 'record' scripts)
-- [ ] Add element attributes onto Document instances in the 'transform' class--don't forget 'stock_download' from the 'download' script
+- [ ] Add element attributes onto Document instances in the 'transform' class
 
 ### Mountain Lion
 

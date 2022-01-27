@@ -43,12 +43,12 @@ def get_row_value(row, title):
         print(f'Encountered "{row_title}:{row_content}" when looking for {title}.')
 
 
-def record_instrument_number(dictionary, row):
+def record_instrument_number(abstract, row):
     instrument_number = get_row_value(row, row_titles["reception_number"])
     dictionary["Reception Number"].append(instrument_number)
 
 
-def record_book_and_page(dictionary, row):
+def record_book_and_page(abstract, row):
     book_page_value = get_row_value(row, row_titles["book_and_page"])
     if book_page_value.startswith(book_page_abbreviation):
         book, page = book_page_value[len(book_page_abbreviation):].split("/")
@@ -66,32 +66,32 @@ def record_book_and_page(dictionary, row):
         print(f'Encountered unexpected value "{book_page_value}" when trying to record book & page.')
 
 
-def record_recording_date(dictionary, row):
+def record_recording_date(abstract, row):
     recording_date = get_row_value(row, row_titles["recording_date"])
     dictionary["Recording Date"].append(recording_date[:10])
 
 
-def record_document_type(dictionary, row):
+def record_document_type(abstract, row):
     document_type = get_row_value(row, row_titles["document_type"])
     dictionary["Document Type"].append(document_type.title())
 
 
-def record_grantor(dictionary, row):
+def record_grantor(abstract, row):
     grantor = get_row_value(row, row_titles["grantor"])
     dictionary["Grantor"].append(grantor.title())
 
 
-def record_grantee(dictionary, row):
+def record_grantee(abstract, row):
     grantee = get_row_value(row, row_titles["grantee"])
     dictionary["Grantee"].append(grantee.title())
 
 
-def record_related_documents(dictionary, row):
+def record_related_documents(abstract, row):
     related_documents = get_row_value(row, row_titles["related_documents"])
     dictionary["Related Documents"].append(related_documents)
 
 
-def record_legal(dictionary, row_1):
+def record_legal(abstract, row_1):
     legal = get_row_value(row_1, row_titles["legal"])
     # additional_legal = get_row_value(row_2, row_titles["additional_legal"])
     # if legal != additional_legal:
@@ -104,12 +104,12 @@ def record_legal(dictionary, row_1):
 def record(browser, abstract, document):
     document_table = access_document_table_data(browser, document)
     rows = get_table_rows(document_table)
-    record_instrument_number(dictionary, rows[0])
-    record_book_and_page(dictionary, rows[1])
-    record_recording_date(dictionary, rows[2])
-    record_document_type(dictionary, rows[5])
-    record_grantor(dictionary, rows[7])
-    record_grantee(dictionary, rows[8])
-    record_related_documents(dictionary, rows[9])
-    record_legal(dictionary, rows[10])
-    dictionary["Comments"].append(empty_value)
+    record_instrument_number(abstract, rows[0])
+    record_book_and_page(abstract, rows[1])
+    record_recording_date(abstract, rows[2])
+    record_document_type(abstract, rows[5])
+    record_grantor(abstract, rows[7])
+    record_grantee(abstract, rows[8])
+    record_related_documents(abstract, rows[9])
+    record_legal(abstract, rows[10])
+    abstract["Comments"].append(empty_value)
