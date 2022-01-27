@@ -1,4 +1,4 @@
-from actions.executors import close_program, handle_multiple_documents, handle_single_document
+from actions.executors import close_program, handle_search_results
 from engines.tiger.transform import transform_document_list
 from settings.invalid import record_invalid_search
 from settings.driver import create_webdriver
@@ -14,21 +14,13 @@ from engines.tiger.search import search
 print("execute", __name__)
 
 
-# Identical to 'eagle', 'jaguar', & 'leopard' handle_search_results
-def handle_search_results(browser, abstract, document):
-    if document.number_results == 1:
-        handle_single_document(browser, abstract, document, record, download_document)
-    elif document.number_results > 1:
-        handle_multiple_documents(browser, abstract, document, record, download_document)
-
-
 # Identical to 'eagle', 'leopard', & 'jaguar' search_documents_from_list
 def search_documents_from_list(browser, abstract):
     for document in abstract.document_list:
         document.start_time = start_timer()
         search(browser, document)
         if open_document(browser, document):
-            handle_search_results(browser, abstract, document)
+            handle_search_results(browser, abstract, document, record, download_document)
         else:
             record_invalid_search(abstract, document)
         # check_length(dataframe)  # Where is the best place to put this???
