@@ -45,7 +45,7 @@ def get_row_value(row, title):
 
 def record_instrument_number(abstract, row):
     instrument_number = get_row_value(row, row_titles["reception_number"])
-    dictionary["Reception Number"].append(instrument_number)
+    abstract.dataframe["Reception Number"].append(instrument_number)
 
 
 def record_book_and_page(abstract, row):
@@ -57,23 +57,23 @@ def record_book_and_page(abstract, row):
         if book == '0' and page == '0':
             book = not_applicable
             page = not_applicable
-        dictionary["Book"].append(book)
-        dictionary["Page"].append(page)
+        abstract.dataframe["Book"].append(book)
+        abstract.dataframe["Page"].append(page)
     elif book_page_value == '':
-        dictionary["Book"].append(empty_value)
-        dictionary["Page"].append(empty_value)
+        abstract.dataframe["Book"].append(empty_value)
+        abstract.dataframe["Page"].append(empty_value)
     else:
         print(f'Encountered unexpected value "{book_page_value}" when trying to record book & page.')
 
 
 def record_recording_date(abstract, row):
     recording_date = get_row_value(row, row_titles["recording_date"])
-    dictionary["Recording Date"].append(recording_date[:10])
+    abstract.dataframe["Recording Date"].append(recording_date[:10])
 
 
 def record_document_type(abstract, row):
     document_type = get_row_value(row, row_titles["document_type"])
-    dictionary["Document Type"].append(document_type.title())
+    abstract.dataframe["Document Type"].append(document_type.title())
 
 
 def record_grantor(abstract, row):
