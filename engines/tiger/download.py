@@ -18,7 +18,7 @@ print("download", __name__)
 
 # Very similar but not identical to 'jaguar' prepare_for_download
 # Identical to the 'leopard' prepare_for_download
-def prepare_for_download(abstract, document):
+def prepare_for_download(abstract):
     abstract.document_directory = create_document_directory(abstract.target_directory)
     abstract.document_directory_files = len(os.listdir(abstract.document_directory))
 
