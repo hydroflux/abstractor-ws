@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-from actions.executors import close_program, handle_multiple_documents, handle_search_results, handle_single_document
+from actions.executors import close_program, handle_search_results
 from settings.invalid import record_invalid_search
 from settings.driver import create_webdriver
 from settings.general_functions import start_timer
