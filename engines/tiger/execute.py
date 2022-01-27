@@ -1,3 +1,4 @@
+from engines.tiger.transform import transform_document_list
 from settings.invalid import record_invalid_search
 from settings.county_variables.tiger import search_script
 from settings.driver import create_webdriver
@@ -61,7 +62,7 @@ def close_program(browser, abstract):
 # Identical to 'leopard' execute_program
 def execute_program(abstract):
     browser = create_webdriver(abstract)
-    # transform_document_list(abstract)
+    transform_document_list(abstract)
     account_login(browser)
     search_documents_from_list(browser, abstract)
     close_program(browser, abstract)
