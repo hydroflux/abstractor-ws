@@ -1,9 +1,15 @@
 from project_management.export import export_document
 
 
-def close_program(browser, abstract, logout_function=None):
-    if logout_function is not None:
-        logout_function(browser)
+def handle_single_document(browser, abstract, document, record, download_document):
+    record(browser, abstract, document)
+    if abstract.download and document.image_available:
+        download_document(browser, abstract, document)
+
+
+def close_program(browser, abstract, logout=None):
+    if logout is not None:
+        logout(browser)
     if not abstract.download_only and not abstract.review:
         project = export_document(abstract)
         project.bundle_project(abstract)
