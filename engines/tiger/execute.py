@@ -1,4 +1,4 @@
-from actions.executors import close_program, handle_single_document
+from actions.executors import close_program, handle_multiple_documents, handle_single_document
 from engines.tiger.transform import transform_document_list
 from settings.invalid import record_invalid_search
 from settings.county_variables.tiger import search_script
@@ -15,13 +15,6 @@ from engines.tiger.search import search
 print("execute", __name__)
 
 
-def handle_multiple_documents(browser, abstract, document):
-    print(f'{document.extrapolate_value()} returned "{document.number_results}" results; '
-          f'Program not currently equipped to handle multiple documents at this point in time, '
-          f'please review...')
-    input()
-
-
 # Identical to 'eagle', 'jaguar', & 'leopard' handle_search_results
 def handle_search_results(browser, abstract, document):
     if document.number_results == 1:
@@ -30,7 +23,7 @@ def handle_search_results(browser, abstract, document):
         javascript_script_execution(search_script)
         naptime()
     elif document.number_results > 1:
-        handle_multiple_documents(browser, abstract, document)
+        handle_multiple_documents(browser, abstract, document, record, download_document)
 
 
 # Identical to 'eagle', 'leopard', & 'jaguar' search_documents_from_list
