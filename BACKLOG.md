@@ -17,6 +17,21 @@
 - [ ] If performing a 'refresh' loop, only allow for x # of refreshes before pausing for input--don't want to create too many requests (create a Document class attribute?)
 - [ ] Determine the best place to place the 'check_length' function for all scripts
 
+## Actions To Do
+
+- [ ] Determine if 'actions' is the best name for the directory (alternatives include 'abstractions', 'executors', ...)
+- [ ] Create a script for 'login'
+- [ ] Create a script for 'logout'
+- [ ] Create a script for 'search'
+- [ ] Create a script for 'open_document'
+- [ ] Create a script for 'record'
+- [ ] Create a script for 'download'
+- [ ] Create a script for 'transform'
+
+### Executor To Do
+
+- [ ] Up-To-Date
+
 ## Classes To Do
 
 - [ ] Create a 'Directory' class with two attributes--"files" and "number_files"
@@ -219,7 +234,7 @@
 - [ ] Handle cases where a '-1' document is valid
 - [ ] Consider creating an independent program for the pdf_merger
 
-## County Programs To Do
+## Engines To Do
 
 ### Armadillo To Do
 
@@ -248,6 +263,7 @@
 - [ ] Refactor 'record' script into its own directory
 - [ ] Consider lengthening grantor / grantee fields for armadillo
 - [ ] Update all scripts to work with the 'Project' and 'Abstract' classes
+- [ ] Update 'execute' functions using functions from the 'executor' script
 
 ### Buffalo To Do
 
@@ -257,6 +273,7 @@
 - [ ] Create an "execution", "review", & "download only" option for execution
 - [ ] Update buffalo error_handling with use cases -- currently has none
 - [ ] Update all scripts to work with the 'Project' and 'Abstract' classes
+- [ ] Update 'execute' functions using functions from the 'executor' script
 
 ### Crocodile To Do
 
@@ -278,6 +295,8 @@
 - [ ] Add 'download' decision to Document class & document instances
 - [ ] Add 'start_time' as an optional argument for document found depending on download state
 - [ ] IF not download OR if previously downloaded, add a couple of seconds--thats where I'm losing related documents
+- [ ] Update all scripts to work with the 'Project' and 'Abstract' classes
+- [ ] Update 'execute' functions using functions from the 'executor' script
 
 ### Dolphin To Do
 
@@ -322,6 +341,7 @@
 - [ ] Consider eliminating the 'review_entry' function path of the 'record' script--doesn't seem to be in use (could determine if log files are developed)
 - [ ] Refactor all of the pdf viewer handling in the 'download' script
 - [ ] Create a 'logout' script
+- [ ] Update 'execute' functions using functions from the 'executor' script
 
 ### Iguana To Do
 
@@ -337,6 +357,7 @@
 - [ ] Add a function to drop duplicates (from the document list? from the dataframe?)
 - [ ] Add in some semblance of the 'close_program' function used in 'leopard' and 'tiger'
 - [ ] Consider combining the 'update_element_attributes' and 'update_document_attributes' functions from the 'transform' script into a single function--downside being specific element attribute updates cannot be extrapolated to a higher level (unless all 'class', 'id', 'tag', etc. attributes are made uniform using an 'attribute' replacement)
+- [ ] Update 'execute' functions using functions from the 'executor' script
 
 ### Leopard To Do
 
@@ -352,6 +373,7 @@
 - [ ] Create a validation check for 'reception_number', 'book', and 'page' for the 'record' script
 - [ ] Extrapolate and generalize the syntax of the 'record_comments' function in leopard 'record' (and all other county engine 'record' scripts)
 - [ ] Add element attributes onto Document instances in the 'transform' class
+- [ ] Update 'execute' functions using functions from the 'executor' script
 
 ### Mountain Lion
 
@@ -384,6 +406,7 @@
 - [ ] Consider extrapolating 'record_bad_value' to the 'invalid' script
 - [ ] Create a new 'tiger' directory inside the 'engines' directory
 - [ ] Update all scripts to work with the 'Project' and 'Abstract' classes
+- [ ] Update 'execute' functions using functions from the 'executor' script
 
 ### Tiger To Do
 
@@ -412,6 +435,7 @@
 - [ ] Add the 'downloaded_document' or 'no_download'(?) functions into the 'download' script
 - [ ] Move the 'javascript_execution' and 'naptime' out of the 'handle_single_document' function---currently looks messy and removing will align the 'handle_single_document' function with other 'execute' scripts
 - [ ] Update the 'convert_document_numbers' function in the 'transform' script using the leopard 'convert_document_numbers' function as a model
+- [ ] Update 'execute' functions using functions from the 'executor' script
 
 ## Other To Do
 
