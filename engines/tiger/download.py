@@ -1,3 +1,5 @@
+import os
+
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -12,6 +14,13 @@ from settings.general_functions import timeout
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("download", __name__)
+
+
+# Very similar but not identical to 'jaguar' prepare_for_download
+# Identical to the 'leopard' prepare_for_download
+def prepare_for_download(abstract, document):
+    abstract.document_directory = create_document_directory(abstract.target_directory)
+    abstract.document_directory_files = len(os.listdir(abstract.document_directory))
 
 
 def open_document_submenu(browser, document_number):
@@ -35,7 +44,7 @@ def execute_download(browser, document_number):
 
 
 def download_document(browser, abstract, document):
-    document_directory = create_document_directory(target_directory)
+    prepare_for_download(abstract, document)
     open_document_submenu(browser, document_number)
     execute_download(browser, document_number)
     if update_download(browser, county, stock_download, document_directory, document_number):
