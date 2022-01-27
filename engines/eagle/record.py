@@ -75,12 +75,13 @@ def wait_for_pdf_to_load(browser, document):
         # If the  PDF hasn't loaded properly
 
 
-def handle_document_image_status(browser, document):
+def handle_document_image_status(browser, abstract, document):
     image_container_text = get_image_container(browser, document)
     if image_container_text == no_image_text or image_container_text == login_error_text:
         document.image_available = False
         print(f'No document image exists for '
               f'{document.extrapolate_value()}, please review.')
+        no_document_image(dataframe, document)
         medium_nap()
         return False
     else:
@@ -310,8 +311,8 @@ def record_comments(dataframe, document):
         dataframe["Comments"].append("")
     elif document.number_results > 1:
         dataframe["Comments"].append(multiple_documents_comment(document))
-    if not document.image_available:
-        no_document_image(dataframe, document)
+    # if not document.image_available:
+    #     no_document_image(dataframe, document)
 
 
 def access_document_tables(browser, document):
@@ -411,14 +412,11 @@ def next_result(browser, document):
 
 
 def access_download_information(browser, dataframe, document):
-    handle_document_image_status(browser, document)
-    if not document.image_available:
-        no_document_image(dataframe, document)
-    else:
-        document_tables = access_document_tables(browser, document)
-        reception_field, _ = access_indexing_information(document_tables[1])
-        reception_number, _, _ = split_reception_field(reception_field)
-        document.reception_number = reception_number
+    handle_document_image_status(browser, abstract, document)
+    document_tables = access_document_tables(browser, document)
+    reception_field, _ = access_indexing_information(document_tables[1])
+    reception_number, _, _ = split_reception_field(reception_field)
+    document.reception_number = reception_number
 
 
 def build_document_download_information(browser, abstract, document):
@@ -437,7 +435,7 @@ def record(browser, abstract, document):
         if abstract.download_only:
             build_document_download_information(browser, abstract, document)
         else:
-            handle_document_image_status(browser, document)
+            handle_document_image_status(browser, abstract, document)
             record_document_fields(browser, abstract.dataframe, document)
             abstract.check_length()
             abstract.check_last_document(document)
