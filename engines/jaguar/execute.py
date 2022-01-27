@@ -1,3 +1,4 @@
+from actions.executors import close_program
 from settings.invalid import record_invalid_search
 from settings.driver import create_webdriver
 from project_management.export import export_document
@@ -40,15 +41,6 @@ def search_documents_from_list(browser, abstract):
             handle_search_results(browser, abstract, document)
         else:
             record_invalid_search(abstract, document)
-
-
-# Identical to 'leopard', 'tiger', & 'eagle' close_program
-def close_program(browser, abstract):
-    # logout(browser)
-    if not abstract.download_only and not abstract.review:
-        project = export_document(abstract)
-        project.bundle_project(abstract)
-    browser.close()
 
 
 # Identical to 'leopard', 'tiger', & 'eagle' close_program

@@ -30,7 +30,7 @@
 
 ### Executor To Do
 
-- [ ] Up-To-Date
+- [ ] Consider creating a more elegant solution to the current placement of the 'if logout_function' conditional in the 'close_program' function
 
 ## Classes To Do
 
