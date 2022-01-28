@@ -1,5 +1,6 @@
 from actions.executor import close_program
 from engines.rattlesnake.download_early_documents import download_early_documents
+from engines.rattlesnake.next_result import next_result
 from settings.objects.abstract_dataframe import abstract_dictionary as dataframe
 from settings.invalid import no_document_image, record_invalid_search
 from settings.driver import create_webdriver
@@ -57,9 +58,7 @@ def handle_multiple_documents(browser, abstract, document):
     handle_single_document(browser, abstract, document)
     for result_number in range(1, document.number_results):
         document.result_number = result_number
-        # next_result in 'executor' needs to be 'search' and 'open_document'
-        # search(browser, document)
-        # open_document(browser, document)
+        next_result(browser, document)
         handle_single_document(browser, abstract, document)
 
 
