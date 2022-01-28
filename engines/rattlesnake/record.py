@@ -165,4 +165,5 @@ def record(browser, abstract, document):
         if handle_document_type_verification(browser, document):
             document.description_link = browser.current_url
             record_document_fields(browser, dataframe, document)
+            document_found(document_list, document, review)
     # need to add else statement handlers

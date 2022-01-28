@@ -31,6 +31,7 @@
 ### Executor To Do
 
 - [ ] Consider creating a more elegant solution to the current placement of the 'if logout_function' conditional in the 'close_program' function
+- [ ] Move the 'document_found' function after the 'record' function call in 'handle_single_document'?
 
 ## Classes To Do
 

@@ -21,37 +21,10 @@ from engines.rattlesnake.search import search
 from engines.rattlesnake.transform import transform_document_list
 
 
-def record_document(browser, document_list, document, review):
-    record(browser, dataframe, document)
-    document_found(document_list, document, review)
-
-
-def download_recorded_document(browser, target_directory, document_list, document):
-    if not download_document(
-        browser,
-        abstract,
-        document
-    ):
-        no_document_image(abstract, document)
-        no_document_downloaded(document_list, document)
-    else:
-        document_downloaded(document_list, document)
-
-
 def handle_single_document(browser, abstract, document):
-    record_document(
-        browser,
-        document_list,
-        document,
-        review
-    )
-    if download and not review:
-        download_recorded_document(
-            browser,
-            target_directory,
-            document_list,
-            document
-        )
+    record(browser, abstract, document)
+    if abstract.download and document.image_available and not abstract.review:
+        download_document(browser, abstract, document)
 
 
 def handle_multiple_documents(browser, abstract, document):
