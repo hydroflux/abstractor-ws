@@ -1,8 +1,6 @@
 #!/usr/bin/python3
-from actions.executors import close_program, handle_search_results, search_documents_from_list
-from settings.invalid import record_invalid_search
+from actions.executors import close_program, search_documents_from_list
 from settings.driver import create_webdriver
-from settings.general_functions import start_timer
 
 from engines.eagle.download import download_document
 from engines.eagle.login import account_login

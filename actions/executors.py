@@ -24,7 +24,7 @@ def handle_multiple_documents(browser, abstract, document, record, download_docu
             handle_single_document(browser, abstract, document, record, download_document)
 
 
-def handle_search_results(browser, abstract, document, record, download_document, next_result=None):
+def handle_search_results(browser, abstract, document, record, download_document, next_result):
     if document.number_results == 1:
         handle_single_document(browser, abstract, document, record, download_document)
     elif document.number_results > 1:
