@@ -222,6 +222,8 @@
 ### Initialization To Do
 
 - [ ] "prepare_for_download" function has the same name as one from the "download_management" script with different functionality => review and update
+- [ ] Extra conditionals in 'prepare_for_download' can (and should) be handled more eloquently
+- [ ] Consider moving 'prepare_for_download' and 'create_document_directory' to 'download_management' after cleaning up 'download_management' script
 
 ### Invalid To Do
 

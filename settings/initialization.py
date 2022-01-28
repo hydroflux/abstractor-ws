@@ -55,9 +55,11 @@ def create_document_directory(target_directory):
     return document_directory
 
 
-def prepare_for_download(abstract):
+def prepare_for_download(abstract, document):
     abstract.document_directory = create_document_directory(abstract.target_directory)
     abstract.document_directory_files = len(os.listdir(abstract.document_directory))
+    if abstract.county.engine == 'jaguar':
+        document.download_value = f'{document.reception_number}.pdf'
 
 
 def initialize_abstraction():
