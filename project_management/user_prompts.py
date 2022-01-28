@@ -190,7 +190,7 @@ def sheet_name_prompt(current_sheet_name):
         return current_sheet_name
 
 
-def download_type_prompt(abstract):
+def set_download_type(abstract):
     print(f'\nYou are currently accessing "{abstract.county}", and have a choice between free or paid downloads.')
     input_statement = ('Would you prefer paid or free downloads: \n'
                        '[1] Free \n'
@@ -202,20 +202,14 @@ def download_type_prompt(abstract):
         print(f'You entered "{download_type_input}" Please choose from the following options')
         download_type_input = input(input_statement).lower()
     if download_type_input in ['1', 'f', 'free']:
-        return 'free'
+        abstract.download_type = 'free'
     elif download_type_input in ['2', 'p', 'paid']:
-        return 'paid'
-
-
-def update_document_download_types(abstract):
-    for document in abstract.document_list:
-        document.download_type = download_type
+        abstract.download_type = 'paid'
 
 
 def add_download_type(abstract):
     if abstract.download:
-        abstract.download_type = download_type_prompt(abstract)
-        update_document_download_types(abstract)
+        set_download_type(abstract)
         clear_terminal()
 
 
