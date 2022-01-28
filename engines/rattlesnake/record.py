@@ -125,25 +125,25 @@ def aggregate_party_information(browser, document):
 
 def record_parties_information(browser, abstract, document):
     grantor, grantee = aggregate_party_information(browser, document)
-    record_value(browser, dataframe, document, 'grantor',
+    record_value(browser, abstract, document, 'grantor',
                  value=update_sentence_case_extras(list_to_string(grantor)), alt='empty')  # Grantor
-    record_value(browser, dataframe, document, 'grantee',
+    record_value(browser, abstract, document, 'grantee',
                  value=update_sentence_case_extras(list_to_string(grantee)), alt='empty')  # Grantee
 
 
 def record_book(abstract):
-    dataframe['Book'].append('')
+    abstract.dataframe['Book'].append('')
 
 
 def record_related_documents(abstract):
-    dataframe['Related Documents'].append('')
+    abstract.dataframe['Related Documents'].append('')
 
 
 def record_comments(abstract, document):
     if document.number_results == 1:
-        dataframe['Comments'].append('')
+        abstract.dataframe['Comments'].append('')
     elif document.number_results > 1:
-        dataframe["Comments"].append(multiple_documents_comment(document))
+        abstract.dataframe["Comments"].append(multiple_documents_comment(document))
 
 
 def record_document_fields(browser, abstract, document):
