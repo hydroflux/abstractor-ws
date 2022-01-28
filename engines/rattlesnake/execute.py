@@ -1,24 +1,19 @@
 from actions.executor import close_program
-from engines.rattlesnake.download_early_documents import download_early_documents
-from engines.rattlesnake.next_result import next_result
-from settings.objects.abstract_dataframe import abstract_dictionary as dataframe
-from settings.invalid import no_document_image, record_invalid_search
-from settings.driver import create_webdriver
-from project_management.export import export_document
-from settings.file_management import (bundle_project, check_length,
-                                      document_downloaded, document_found,
-                                      no_document_downloaded,
-                                      no_document_found)
-from settings.general_functions import start_timer
-from settings.settings import download, headless
 
 from engines.rattlesnake.download import download_document
+from engines.rattlesnake.download_early_documents import \
+    download_early_documents
 from engines.rattlesnake.login import account_login
 from engines.rattlesnake.logout import logout
+from engines.rattlesnake.next_result import next_result
 from engines.rattlesnake.open_document import open_document
 from engines.rattlesnake.record import record
 from engines.rattlesnake.search import search
 from engines.rattlesnake.transform import transform_document_list
+
+from settings.driver import create_webdriver
+from settings.general_functions import start_timer
+from settings.invalid import record_invalid_search
 
 
 def handle_single_document(browser, abstract, document):
