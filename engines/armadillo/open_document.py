@@ -76,7 +76,7 @@ def open_result(browser, document, result_number):
         return False
 
 
-def handle_search_results(browser, document, result_number):
+def handle_document_search(browser, document, result_number):
     if document.number_results == 0:
         return False
     else:
@@ -88,6 +88,6 @@ def open_document(browser, document, result_number=0):
     if verify_results_loaded(browser, document):
         if result_number == 0:
             count_results(browser, document)
-        return handle_search_results(browser, document, result_number)
+        return handle_document_search(browser, document, result_number)
     else:
         return False

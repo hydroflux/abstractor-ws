@@ -161,7 +161,7 @@ def open_document_description(browser, document, result):
     open_url(browser, document.description_link, document_description_title, "document description", document)
 
 
-def handle_search_results(browser, document):
+def handle_document_search(browser, document):
     try:
         first_result = get_search_results(browser, document)[0]
         open_document_description(browser, document, first_result)
@@ -176,4 +176,4 @@ def open_document(browser, document):
     while not validate_search(browser, document):
         retry_search(browser, document)
     if check_search_results(browser, document):
-        return handle_search_results(browser, document)
+        return handle_document_search(browser, document)

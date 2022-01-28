@@ -60,7 +60,7 @@ def open_first_result(browser, document):
 
 
 # Very similar to armadillo 'handle_search_results' dependent functions
-def handle_search_results(browser, document):
+def handle_document_search(browser, document):
     if document.number_results == 0:
         return False
     elif document.number_results == 1:
@@ -75,6 +75,6 @@ def open_document(browser, document):
     validate_search(browser, document)
     if verify_results_loaded(browser, document):
         count_results(browser, document)
-        return handle_search_results(browser, document)
+        return handle_document_search(browser, document)
     else:
         return False
