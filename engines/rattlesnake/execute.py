@@ -5,13 +5,17 @@ from engines.rattlesnake.download_early_documents import \
     download_early_documents
 from engines.rattlesnake.login import account_login
 from engines.rattlesnake.logout import logout
-from engines.rattlesnake.next_result import next_result
 from engines.rattlesnake.open_document import open_document
 from engines.rattlesnake.record import record
 from engines.rattlesnake.search import search
 from engines.rattlesnake.transform import transform_document_list
 
 from settings.driver import create_webdriver
+
+
+def next_result(browser, document):
+    search(browser, document)
+    open_document(browser, document)
 
 
 def execute_program(abstract):
