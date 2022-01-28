@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 from actions.executors import close_program, search_documents_from_list
+
 from settings.driver import create_webdriver
 
 from engines.eagle.download import download_document
