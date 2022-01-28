@@ -19,7 +19,7 @@
 
 ## Actions To Do
 
-- [ ] Determine if 'actions' is the best name for the directory (alternatives include 'abstractions', 'executors', ...)
+- [ ] Determine if 'actions' is the best name for the directory (alternatives include 'abstractions', 'executor', ...)
 - [ ] Create a script for 'login'
 - [ ] Create a script for 'logout'
 - [ ] Create a script for 'search'
@@ -347,7 +347,7 @@
 - [ ] Create a 'logout' script
 - [ ] 'record_comments' function was moved in order to add the 'multiple_documents' comment before checking the image status in case of double comments being added; the current script logic needs to be updated because it looks very messy and doesn't flow well as is
 - [ ] Update the 'build_document_download_information' function after the above is fixed
-- [ ] There is a 'handle_search_results' function that should be renamed in the 'open_document' script to avoid overlap with the 'executors' function 'handle_search_results'
+- [ ] There is a 'handle_search_results' function that should be renamed in the 'open_document' script to avoid overlap with the 'executor' function 'handle_search_results'
 - [ ] Moved the document download value setter in the 'download' script into the 'download_document' function in order to integrate the 'prepare_for_download' function from the 'initialization' script--currently placement isn't great, should be integrated into the 'prepare_for_download' function somehow
 
 ### Iguana To Do
@@ -364,7 +364,7 @@
 - [ ] Add a function to drop duplicates (from the document list? from the dataframe?)
 - [ ] Add in some semblance of the 'close_program' function used in 'leopard' and 'tiger'
 - [ ] Consider combining the 'update_element_attributes' and 'update_document_attributes' functions from the 'transform' script into a single function--downside being specific element attribute updates cannot be extrapolated to a higher level (unless all 'class', 'id', 'tag', etc. attributes are made uniform using an 'attribute' replacement)
-- [ ] There is a 'handle_search_results' function that should be renamed in the 'open_document' script to avoid overlap with the 'executors' function 'handle_search_results'
+- [ ] There is a 'handle_search_results' function that should be renamed in the 'open_document' script to avoid overlap with the 'executor' function 'handle_search_results'
 
 ### Leopard To Do
 
@@ -380,9 +380,9 @@
 - [ ] Create a validation check for 'reception_number', 'book', and 'page' for the 'record' script
 - [ ] Extrapolate and generalize the syntax of the 'record_comments' function in leopard 'record' (and all other county engine 'record' scripts)
 - [ ] Add element attributes onto Document instances in the 'transform' class
-- [ ] The 'document.result_number' attribute is not being used in the 'record' script, but is set using the 'handle_multiple_documents' function from the 'executors' script--integrate this attribute
-- [ ] Create a 'next_result' function to pass into the 'executors' script--goes along with adding a 'multiple_documents' route
-- [ ] Execute function 'search_documents_from_list' had a comment  "naptime()  # --- script runs without issues while this nap was in place" before the 'executors' script was worked in => review to determine if the 'search' function needs to be updated
+- [ ] The 'document.result_number' attribute is not being used in the 'record' script, but is set using the 'handle_multiple_documents' function from the 'executor' script--integrate this attribute
+- [ ] Create a 'next_result' function to pass into the 'executor' script--goes along with adding a 'multiple_documents' route
+- [ ] Execute function 'search_documents_from_list' had a comment  "naptime()  # --- script runs without issues while this nap was in place" before the 'executor' script was worked in => review to determine if the 'search' function needs to be updated
 
 ### Mountain Lion
 
@@ -444,7 +444,7 @@
 - [ ] Add the 'downloaded_document' or 'no_download'(?) functions into the 'download' script
 - [ ] Move the 'javascript_execution' and 'naptime' out of the 'handle_single_document' function---currently looks messy and removing will align the 'handle_single_document' function with other 'execute' scripts
 - [ ] Update the 'convert_document_numbers' function in the 'transform' script using the leopard 'convert_document_numbers' function as a model
-- [ ] Create a 'next_result' function to pass into the 'executors' script--goes along with adding a 'multiple_documents' route
+- [ ] Create a 'next_result' function to pass into the 'executor' script--goes along with adding a 'multiple_documents' route
 - [ ] Figure out a better way to integrate the javascript script execution into the 'tiger' script execution instead of it being placed in both the 'record' and 'download' scripts
 
 ## Other To Do
