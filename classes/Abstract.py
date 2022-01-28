@@ -1,8 +1,8 @@
 class Abstract:
     def __init__(self, type, county, target_directory, file_name, program,
                  headless, download, dataframe,
-                 review=False, download_only=False, document_directory=None,
-                 document_list=None, timer=None,
+                 review=False, download_only=False, download_type=None,
+                 document_directory=None, document_list=None, timer=None,
                  search_name=None,
                  document_directory_files=None):
         self.type = type
@@ -15,6 +15,7 @@ class Abstract:
         self.dataframe = dataframe
         self.review = review
         self.download_only = download_only
+        self.download_type = download_type
         self.document_directory = document_directory
         self.document_list = document_list
         self.timer = timer

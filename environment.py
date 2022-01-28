@@ -75,7 +75,7 @@ def execute_program(abstract):
         if abstract.program in ["execute", "review", "download"]:
             # Need an additional prompt to handle early document downloads
             if abstract.program == 'execute':
-                add_download_types(county, document_list)
+                add_download_types(abstract)
             execute_rattlesnake(abstract)
         else:
             currently_unavailable(abstract)
