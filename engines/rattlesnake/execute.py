@@ -1,4 +1,4 @@
-from actions.executor import close_program, handle_multiple_documents, handle_single_document
+from actions.executor import close_program, handle_search_results
 
 from engines.rattlesnake.download import download_document
 from engines.rattlesnake.download_early_documents import \
@@ -16,19 +16,12 @@ from settings.general_functions import start_timer
 from settings.invalid import record_invalid_search
 
 
-def handle_search_results(browser, abstract, document):
-    if document.number_results == 1:
-        handle_single_document(browser, abstract, document, record, download_document)
-    elif document.number_results > 1:
-        handle_multiple_documents(browser, abstract, document, record, download_document, next_result)
-
-
 def search_documents_from_list(browser, abstract):
     for document in abstract.document_list:
         document.start_time = start_timer()
         search(browser, document)
         if open_document(browser, document):
-            handle_search_results(browser, abstract, document)
+            handle_search_results(browser, abstract, document, record, download_document, next_result)
         else:
             record_invalid_search(abstract, document)
 
