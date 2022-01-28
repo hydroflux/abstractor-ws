@@ -13,7 +13,7 @@ from settings.county_variables.rattlesnake import (document_type_id,
                                                    recording_date_id,
                                                    row_data_tag_name,
                                                    volume_id)
-from settings.file_management import multiple_documents_comment
+from settings.file_management import document_found, multiple_documents_comment
 from settings.general_functions import (date_from_string, element_title_strip,
                                         list_to_string, title_strip,
                                         update_sentence_case_extras)
@@ -91,7 +91,7 @@ def handle_value_content(dataframe, document, field_type, value, alt):
         input()
 
 
-def record_value(browser, dataframe, document, field_type, id=None, value=None, alt=None):
+def record_value(browser, abstract, document, field_type, id=None, value=None, alt=None):
     if value is None:
         value = access_field_value(browser, document, id, field_type)
     handle_value_content(dataframe, document, field_type, value, alt)
@@ -123,7 +123,7 @@ def aggregate_party_information(browser, document):
     return map_party_information(rows, document)
 
 
-def record_parties_information(browser, dataframe, document):
+def record_parties_information(browser, abstract, document):
     grantor, grantee = aggregate_party_information(browser, document)
     record_value(browser, dataframe, document, 'grantor',
                  value=update_sentence_case_extras(list_to_string(grantor)), alt='empty')  # Grantor
@@ -131,39 +131,39 @@ def record_parties_information(browser, dataframe, document):
                  value=update_sentence_case_extras(list_to_string(grantee)), alt='empty')  # Grantee
 
 
-def record_book(dataframe):
+def record_book(abstract):
     dataframe['Book'].append('')
 
 
-def record_related_documents(dataframe):
+def record_related_documents(abstract):
     dataframe['Related Documents'].append('')
 
 
-def record_comments(dataframe, document):
+def record_comments(abstract, document):
     if document.number_results == 1:
         dataframe['Comments'].append('')
     elif document.number_results > 1:
         dataframe["Comments"].append(multiple_documents_comment(document))
 
 
-def record_document_fields(browser, dataframe, document):
-    record_value(browser, dataframe, document, 'reception number', id=reception_number_id)  # Reception Number
-    record_value(browser, dataframe, document, 'volume', id=volume_id, alt='null')  # Volume
-    record_value(browser, dataframe, document, 'page', id=page_id, alt='null')  # Page
-    record_value(browser, dataframe, document, 'effective date', id=effective_date_id, alt='empty')  # Effective Date
-    record_value(browser, dataframe, document, 'recording date', id=recording_date_id, alt='empty')  # Recording Date
-    record_value(browser, dataframe, document, 'document type', id=document_type_id, alt='null')  # Document Type
-    record_value(browser, dataframe, document, 'legal', id=legal_id, alt='null')  # Legal
-    record_parties_information(browser, dataframe, document)  # Grantor / Grantee
-    record_book(dataframe)  # Book
-    record_related_documents(dataframe)  # Related Documents
-    record_comments(dataframe, document)  # Comments
+def record_document_fields(browser, abstract, document):
+    record_value(browser, abstract, document, 'reception number', id=reception_number_id)  # Reception Number
+    record_value(browser, abstract, document, 'volume', id=volume_id, alt='null')  # Volume
+    record_value(browser, abstract, document, 'page', id=page_id, alt='null')  # Page
+    record_value(browser, abstract, document, 'effective date', id=effective_date_id, alt='empty')  # Effective Date
+    record_value(browser, abstract, document, 'recording date', id=recording_date_id, alt='empty')  # Recording Date
+    record_value(browser, abstract, document, 'document type', id=document_type_id, alt='null')  # Document Type
+    record_value(browser, abstract, document, 'legal', id=legal_id, alt='null')  # Legal
+    record_parties_information(browser, abstract, document)  # Grantor / Grantee
+    record_book(abstract)  # Book
+    record_related_documents(abstract)  # Related Documents
+    record_comments(abstract, document)  # Comments
 
 
 def record(browser, abstract, document):
     if verify_document_description_page_loaded(browser, document):
         if handle_document_type_verification(browser, document):
             document.description_link = browser.current_url
-            record_document_fields(browser, dataframe, document)
-            document_found(document_list, document, review)
+            record_document_fields(browser, abstract, document)
+            document_found(abstract, document)
     # need to add else statement handlers
