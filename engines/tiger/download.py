@@ -10,10 +10,6 @@ from settings.initialization import prepare_for_download
 print("download", __name__)
 
 
-# Very similar but not identical to 'jaguar' prepare_for_download
-# Identical to 'leopard' prepare_for_download
-
-
 # Very similar but not identical to 'jaguar' execute_download
 # Identical to 'leopard' execute_download
 def execute_download(browser, abstract, document):

@@ -1,5 +1,3 @@
-import os
-
 from selenium_utilities.inputs import click_button
 from selenium_utilities.locators import locate_element_by_id
 
@@ -9,10 +7,6 @@ from settings.initialization import prepare_for_download
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("download", __name__)
-
-
-# Very similar but not identical to 'jaguar' prepare_for_download
-# Identical to 'tiger' prepare_for_download
 
 
 # Very similar but not identical to 'jaguar' execute_download
