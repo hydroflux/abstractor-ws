@@ -4,9 +4,13 @@ from settings.county_variables.eagle import (book_input_id, clear_search_id,
                                              search_button_id)
 
 
-def update_element_attributes(abstract):
+def update_document_attributes(abstract):
     for document in abstract.document_list:
         document.county = abstract.county
+
+
+def update_element_attributes(abstract):
+    for document in abstract.document_list:
         document.input_attributes = {
             "Reception Number": reception_number_input_id,
             "Book": book_input_id,
@@ -20,4 +24,5 @@ def update_element_attributes(abstract):
 
 
 def transform_document_list(abstract):
+    update_document_attributes(abstract)
     update_element_attributes(abstract)
