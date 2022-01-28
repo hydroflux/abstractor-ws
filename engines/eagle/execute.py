@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-from actions.executors import close_program, handle_search_results
+from actions.executors import close_program, handle_search_results, search_documents_from_list
 from settings.invalid import record_invalid_search
 from settings.driver import create_webdriver
 from settings.general_functions import start_timer
@@ -15,23 +15,20 @@ from engines.eagle.transform import transform_document_list
 print("execute", __name__)
 
 
-# Identical to 'jaguar', 'tiger', & 'leopard' search_documents_from_list
-def search_documents_from_list(browser, abstract):
-    for document in abstract.document_list:
-        document.start_time = start_timer()
-        search(browser, document)
-        if open_document(browser, document):
-            handle_search_results(browser, abstract, document, record, download_document, next_result)
-        else:
-            record_invalid_search(abstract, document)
-
-
 # Identical to 'leopard', 'jaguar', & 'tiger' execute_program
 def execute_program(abstract):
     browser = create_webdriver(abstract)
     transform_document_list(abstract)
     account_login(browser)
-    search_documents_from_list(browser, abstract)
+    search_documents_from_list(
+        browser,
+        abstract,
+        search,
+        open_document,
+        record,
+        download_document,
+        next_result
+    )
     close_program(browser, abstract)
 
 
