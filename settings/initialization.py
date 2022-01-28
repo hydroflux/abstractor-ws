@@ -55,6 +55,11 @@ def create_document_directory(target_directory):
     return document_directory
 
 
+def prepare_for_download(abstract):
+    abstract.document_directory = create_document_directory(abstract.target_directory)
+    abstract.document_directory_files = len(os.listdir(abstract.document_directory))
+
+
 def initialize_abstraction():
     abstract = create_abstract_object()
     program_type_update(abstract)
