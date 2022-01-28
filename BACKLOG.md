@@ -398,26 +398,17 @@
 - [ ] Create a 'volume' & 'page' search
 - [ ] Extrapolate access / recording functions in record further to streamline the process further ("id=" will help)
 - [ ] Create a convert_document_numbers script
-- [ ] Create a "download only" option for execution
 - [ ] Update the validation file with the proper use of 'verify' & 'validate' (definitions have been added)
 - [ ] Add 'else' logic for 'record' validation
 - [ ] Consolidate 'validation' functions in 'validation' script
 - [ ] Update 'get downloaded file name' procedure to check for any documents that don't match the correct format in order to avoid renaming the wrong documents
-- [ ] Add 'multiple_documents' logic
 - [ ] Add 'start_time' as an optional argument for document found depending on download state
-- [ ] Refactor 'open_document' selenium functions into selenium utilities directory
-- [ ] Refactor 'record' selenium functions into selenium utilities directory
 - [ ] Add a method for handling "NO DOCUMENT TYPES"
 - [ ] Drop book from Dataframe
 - [ ] Add 'search_url' & 'search_title' (and respective 'old') to the document instances with 'transform' script & the document class
-- [ ] Update the 'record' script 'record_bad_value' to 'record_invalid_value'
 - [ ] Consider extrapolating 'record_bad_value' to the 'invalid' script
-- [ ] Create a new 'tiger' directory inside the 'engines' directory
-- [ ] Update all scripts to work with the 'Project' and 'Abstract' classes
-- [ ] Update 'execute' functions using functions from the 'executor' script
 - [ ] Update the 'download' script to use the 'abstract.download_type' attribute rather than the now defunct 'document.download_type' attribute
-- [ ] Update the 'record' and 'download' scripts with the Abstract argument (parameters & arguments already updated in 'execute' file and in the master function for both 'record' and 'download')
-- [ ] Use the 'document.result_number' attribute in the 'open_document' script (already set and passed through)
+- [ ] Update the 'download' script with the Abstract argument & parameters--already updated in the 'execute' file ('executor' file)
 
 ### Tiger To Do
 

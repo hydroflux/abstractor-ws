@@ -52,7 +52,7 @@ def record_field_value(abstract, value, field_type):
     abstract.dataframe[f'{field_type.title()}'].append(value)
 
 
-def record_bad_value(abstract, document, field_type, alt):
+def record_invalid_value(abstract, document, field_type, alt):
     if alt is None:
         print(f'No alternative trigger provided to record a bad value found in the '
               f'"{field_type}" field for "{document.extrapolate_value()}", please review')
@@ -81,9 +81,9 @@ def handle_value_content(abstract, document, field_type, value, alt):
         if check_dates(field_type, value):
             record_field_value(abstract, value, field_type)
         else:
-            record_bad_value(abstract, document, field_type, alt)
+            record_invalid_value(abstract, document, field_type, alt)
     elif value in empty_value_fields:
-        record_bad_value(abstract, document, field_type, alt)
+        record_invalid_value(abstract, document, field_type, alt)
     else:
         print(f'Encountered an issue with "{field_type}" field for '
               f'{document.extrapolate_value()}, which found a value of '
