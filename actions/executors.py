@@ -39,6 +39,7 @@ def search_documents_from_list(browser, abstract, search, open_document, record,
             handle_search_results(browser, abstract, document, record, download_document, next_result)
         else:
             record_invalid_search(abstract, document)
+        # check_length(dataframe)  # Where is the best place to put this???
 
 
 def close_program(browser, abstract, logout=None):

@@ -378,6 +378,7 @@
 - [ ] Add element attributes onto Document instances in the 'transform' class
 - [ ] The 'document.result_number' attribute is not being used in the 'record' script, but is set using the 'handle_multiple_documents' function from the 'executors' script--integrate this attribute
 - [ ] Create a 'next_result' function to pass into the 'executors' script--goes along with adding a 'multiple_documents' route
+- [ ] Execute function 'search_documents_from_list' had a comment  "naptime()  # --- script runs without issues while this nap was in place" before the 'executors' script was worked in => review to determine if the 'search' function needs to be updated
 
 ### Mountain Lion
 
