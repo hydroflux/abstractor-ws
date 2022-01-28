@@ -1,5 +1,7 @@
 import sys
 
+from project_management.user_prompts import 
+
 sys.path.append(".")
 
 if __name__ == '__main__':
@@ -11,11 +13,11 @@ if __name__ == '__main__':
     from engines.jaguar.execute import execute_program as execute_jaguar
     from engines.leopard.execute import execute_program as execute_leopard
     from engines.tiger.execute import execute_program as execute_tiger
-    # from rattlesnake.execute import execute_program as execute_rattlesnake
+    from engines.rattlesnake.execute import execute_program as execute_rattlesnake
     # from rattlesnake.execute import execute_early_document_download as download_rattlesnake
     from settings.initialization import initialize_abstraction
     from settings.general_functions import stop_program_timer
-    from project_management.user_prompts import currently_unavailable
+    from project_management.user_prompts import currently_unavailable, add_download_types
 
 
 print("environment", __name__)
@@ -70,17 +72,13 @@ def execute_program(abstract):
         else:
             currently_unavailable(abstract)
     elif abstract.county.engine == 'rattlesnake':
-        pass
-        # if program_type == 'execute':
-        #     add_download_types(county, document_list)
-        #     execute_rattlesnake(county, target_directory, document_list, file_name)
-        # elif program_type == 'review':
-        #     execute_rattlesnake(county, target_directory, document_list, file_name, review=True)
-        # elif program_type == 'download':
-        #     download_rattlesnake(county, target_directory, document_list)
-        #     # Need an additional prompt to handle early document downloads
-        # else:
-        #     currently_unavailable(county, program_type)
+        if abstract.program in ["execute", "review", "download"]:
+            # Need an additional prompt to handle early document downloads
+            if abstract.program == 'execute':
+                add_download_types(county, document_list)
+            execute_rattlesnake(abstract)
+        else:
+            currently_unavailable(abstract)
     else:
         print(f'"{abstract.county}" does not match available execution options, please review.')
 

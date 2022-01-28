@@ -212,10 +212,10 @@ def update_document_download_types(download_type, document_list):
         document.download_type = download_type
 
 
-def add_download_types(county, document_list):
-    if download:
-        download_type = download_type_prompt(county)
-        update_document_download_types(download_type, document_list)
+def add_download_types(abstract):
+    if abstract.download:
+        download_type = download_type_prompt(abstract.county)
+        update_document_download_types(download_type, abstract.document_list)
         clear_terminal()
 
 
