@@ -1,3 +1,4 @@
+from actions.executor import close_program
 from engines.rattlesnake.download_early_documents import download_early_documents
 from settings.objects.abstract_dataframe import abstract_dictionary as dataframe
 from settings.invalid import no_document_image, record_invalid_search
@@ -103,20 +104,11 @@ def search_documents_from_list(browser, target_directory, document_list, review)
 
 
 def execute_program(abstract):
-    browser = create_webdriver(target_directory, headless)
-    transform_document_list(document_list, county)
+    browser = create_webdriver(abstract)
+    transform_document_list(abstract)
     account_login(browser)
-    search_documents_from_list(browser, target_directory, document_list, review)
-    if not review:
-        abstraction = export_document(
-            county,
-            target_directory,
-            file_name,
-            dataframe
-        )
-        bundle_project(target_directory, abstraction)
-    logout(browser)
-    browser.close()
+    search_documents_from_list(browser, abstract)
+    close_program(browser, abstract, logout)
 
 
 def execute_early_document_download(county, target_directory, document_list):
