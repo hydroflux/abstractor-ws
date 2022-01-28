@@ -1,4 +1,6 @@
 from project_management.export import export_document
+from settings.general_functions import start_timer
+from settings.invalid import record_invalid_search
 
 
 def handle_single_document(browser, abstract, document, record, download_document):
@@ -27,6 +29,16 @@ def handle_search_results(browser, abstract, document, record, download_document
         handle_single_document(browser, abstract, document, record, download_document)
     elif document.number_results > 1:
         handle_multiple_documents(browser, abstract, document, record, download_document, next_result)
+
+
+def search_documents_from_list(browser, abstract, search, open_document, record, download_document, next_result=None):
+    for document in abstract.document_list:
+        document.start_time = start_timer()
+        search(browser, document)
+        if open_document(browser, document):
+            handle_search_results(browser, abstract, document, record, download_document, next_result)
+        else:
+            record_invalid_search(abstract, document)
 
 
 def close_program(browser, abstract, logout=None):
