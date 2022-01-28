@@ -193,6 +193,7 @@
 - [ ] 'prepare_for_download' function could be extrapolated to a certain point--creating the document directory and getting the number of directory files could be a generalized function (probably on ad Directory class), just need to determine what to do about other 'preparation' steps
 - [ ] Change directory into the document directory during 'prepare_for_download'???
 - [ ] Ideally, the only script specific 'download' function would be the 'execute_download' function
+- [ ] "prepare_for_download" function has the same name as one from the "initialization" script with different functionality => review and update
 
 ### Driver To Do
 
@@ -220,7 +221,7 @@
 
 ### Initialization To Do
 
-- [ ] Up-To-Date
+- [ ] "prepare_for_download" function has the same name as one from the "download_management" script with different functionality => review and update
 
 ### Invalid To Do
 
