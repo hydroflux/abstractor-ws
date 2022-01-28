@@ -5,7 +5,7 @@ from selenium_utilities.inputs import click_button
 from selenium_utilities.locators import (locate_element_by_class_name,
                                          locate_element_by_id)
 
-from settings.initialization import prepare_for_download
+from actions.downloader import prepare_for_download
 from settings.county_variables.eagle import (pdf_viewer_class_name, purchase_button_class_name,
                                              stock_download_suffix)
 from settings.download_management import previously_downloaded, update_download

@@ -3,7 +3,7 @@ from selenium_utilities.locators import locate_element_by_class_name
 
 from settings.county_variables.jaguar import download_button_class
 from settings.download_management import previously_downloaded, update_download
-from settings.initialization import prepare_for_download
+from actions.downloader import prepare_for_download
 
 
 # Very similar but not identical to 'leopard' & 'tiger' execute_download
