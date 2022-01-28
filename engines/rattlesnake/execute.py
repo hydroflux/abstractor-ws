@@ -66,7 +66,7 @@ def handle_multiple_documents(browser, target_directory, document_list, document
         )
 
 
-def handle_search_results(browser, target_directory, document_list, document, review):
+def handle_search_results(browser, abstract, document):
     if open_document(browser, document):
         handle_single_document(
             browser,
@@ -88,19 +88,15 @@ def handle_search_results(browser, target_directory, document_list, document, re
         no_document_found(document_list, document, review)
 
 
-def search_documents_from_list(browser, target_directory, document_list, review):
-    for document in document_list:
+def search_documents_from_list(browser, abstract):
+    for document in abstract.document_list:
         document.start_time = start_timer()
         search(browser, document)
-        handle_search_results(
-            browser,
-            target_directory,
-            document_list,
-            document,
-            review
-        )
-        check_length(dataframe)
-    return dataframe
+        if open_document(browser, document):
+            handle_search_results(browser, abstract, document)
+        else:
+            record_invalid_search(abstract, document)
+        # check_length(dataframe)
 
 
 def execute_program(abstract):
