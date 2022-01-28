@@ -48,19 +48,19 @@ def handle_document_type_verification(browser, document):
         input()
 
 
-def record_field_value(dataframe, value, field_type):
-    dataframe[f'{field_type.title()}'].append(value)
+def record_field_value(abstract, value, field_type):
+    abstract.dataframe[f'{field_type.title()}'].append(value)
 
 
-def record_bad_value(dataframe, document, field_type, alt):
+def record_bad_value(abstract, document, field_type, alt):
     if alt is None:
         print(f'No alternative trigger provided to record a bad value found in the '
               f'"{field_type}" field for "{document.extrapolate_value()}", please review')
         input()
     elif alt == 'empty':
-        record_field_value(dataframe, empty_value_fields[0], field_type)
+        record_field_value(abstract, empty_value_fields[0], field_type)
     elif alt == 'null':
-        record_field_value(dataframe, empty_value_fields[1], field_type)
+        record_field_value(abstract, empty_value_fields[1], field_type)
     else:
         print(f'Encountered an unexpected problem trying to record a bad value found in the '
               f'"{field_type}" field for "{document.extrapolate_value()}" '
@@ -76,14 +76,14 @@ def check_dates(field_type, value):
         return True
 
 
-def handle_value_content(dataframe, document, field_type, value, alt):
+def handle_value_content(abstract, document, field_type, value, alt):
     if value not in empty_value_fields:
         if check_dates(field_type, value):
-            record_field_value(dataframe, value, field_type)
+            record_field_value(abstract, value, field_type)
         else:
-            record_bad_value(dataframe, document, field_type, alt)
+            record_bad_value(abstract, document, field_type, alt)
     elif value in empty_value_fields:
-        record_bad_value(dataframe, document, field_type, alt)
+        record_bad_value(abstract, document, field_type, alt)
     else:
         print(f'Encountered an issue with "{field_type}" field for '
               f'{document.extrapolate_value()}, which found a value of '
@@ -94,7 +94,7 @@ def handle_value_content(dataframe, document, field_type, value, alt):
 def record_value(browser, abstract, document, field_type, id=None, value=None, alt=None):
     if value is None:
         value = access_field_value(browser, document, id, field_type)
-    handle_value_content(dataframe, document, field_type, value, alt)
+    handle_value_content(abstract, document, field_type, value, alt)
 
 
 def access_parties_rows(browser, document, field_type='parties'):
