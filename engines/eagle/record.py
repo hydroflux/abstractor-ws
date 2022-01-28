@@ -22,7 +22,7 @@ from settings.county_variables.eagle import (document_information_id,
                                              result_button_tag,
                                              result_buttons_class)
 from settings.county_variables.general import search_errors
-from settings.file_management import document_found, multiple_documents_comment
+from settings.file_management import multiple_documents_comment
 from settings.general_functions import (long_timeout, medium_nap, naptime,
                                         scroll_to_top, short_nap, timeout,
                                         update_sentence_case_extras)
@@ -435,4 +435,3 @@ def record(browser, abstract, document):
             abstract.check_length()
             abstract.check_last_document(document)
             review_entry(browser, abstract.dataframe, document)
-    document_found(abstract, document)

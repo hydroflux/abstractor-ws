@@ -5,7 +5,7 @@ from selenium_utilities.locators import (locate_element_by_class_name,
 from settings.county_variables.jaguar import (
     document_tables_tag, document_type_and_number_field_id,
     recording_date_field_class)
-from settings.file_management import document_found, multiple_documents_comment
+from settings.file_management import multiple_documents_comment
 from settings.general_functions import (date_from_string, list_to_string, title_strip,
                                         update_sentence_case_extras)
 
@@ -99,4 +99,3 @@ def record(browser, abstract, document):
     aggregate_document_table_information(browser, abstract.dataframe, document)
     record_comments(abstract.dataframe, document)
     record_document_link(abstract.dataframe, document)
-    document_found(abstract, document)

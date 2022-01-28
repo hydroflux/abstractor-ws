@@ -12,7 +12,6 @@ from settings.county_variables.leopard import (book_page_abbreviation,
                                                previous_result_id,
                                                row_data_tag, row_titles,
                                                table_row_tag)
-from settings.file_management import document_found
 from settings.general_functions import (get_element_text, scroll_to_top,
                                         title_strip)
 
@@ -186,4 +185,3 @@ def record(browser, abstract, document):
             access_reception_number(document, rows)
         else:
             aggregate_document_information(abstract, document, rows)
-    document_found(abstract, document)
