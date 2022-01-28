@@ -1,9 +1,10 @@
 import os
 
-from classes.Document import Document
 from classes.counties import county_list
+from classes.Document import Document
+
 from settings.general_functions import title_strip
-from settings.settings import root, search_name, download
+from settings.settings import root, search_name
 
 
 def clear_terminal():

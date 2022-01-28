@@ -4,7 +4,7 @@ class Document:
                  description_link=None, image_available=True, image_link=None,
                  button_attributes=None, input_attributes=None, search_attributes=None,
                  county=None, start_time=None,
-                 download_type=None, download_value=None, download_path=None, new_name=None):
+                 download_value=None, download_path=None, new_name=None):
         self.type = type
         self.value = value
         self.year = year
@@ -21,7 +21,6 @@ class Document:
         self.search_attributes = search_attributes
         self.county = county
         self.start_time = start_time
-        self.download_type = download_type
         self.download_value = download_value
         self.download_path = download_path
         self.new_name = new_name

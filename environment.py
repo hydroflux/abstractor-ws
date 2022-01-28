@@ -1,7 +1,5 @@
 import sys
 
-from project_management.user_prompts import 
-
 sys.path.append(".")
 
 if __name__ == '__main__':

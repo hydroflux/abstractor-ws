@@ -137,6 +137,7 @@
 
 - [ ] Add an additional prompt function for 'early_document_downloads' if the program engine is 'rattlesnake' and the 'download_only' option is selected
 - [ ] Demo prompts should have a "go back" option
+- [ ] Find a better placement of the 'add_download_types' function than inline in the 'environment' file (probably to the 'initialization' script)
 
 ## Selenium Utilities To Do
 
@@ -416,6 +417,7 @@
 - [ ] Create a new 'tiger' directory inside the 'engines' directory
 - [ ] Update all scripts to work with the 'Project' and 'Abstract' classes
 - [ ] Update 'execute' functions using functions from the 'executor' script
+- [ ] Update the 'download' script to use the 'abstract.download_type' attribute rather than the now defunct 'document.download_type' attribute
 
 ### Tiger To Do
 
