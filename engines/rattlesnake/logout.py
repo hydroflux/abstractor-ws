@@ -1,7 +1,7 @@
 from selenium_utilities.inputs import click_button
 from selenium_utilities.locators import locate_element_by_id as locate_button
 
-from rattlesnake.validation import verify_logout
+from engines.rattlesnake.validation import verify_logout
 from settings.county_variables.rattlesnake import logout_button_id
 
 

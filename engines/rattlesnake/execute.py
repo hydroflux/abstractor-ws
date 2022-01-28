@@ -1,4 +1,4 @@
-from rattlesnake.download_early_documents import download_early_documents
+from engines.rattlesnake.download_early_documents import download_early_documents
 from settings.objects.abstract_dataframe import abstract_dictionary as dataframe
 from settings.invalid import no_document_image, record_invalid_search
 from settings.driver import create_webdriver
@@ -10,13 +10,13 @@ from settings.file_management import (bundle_project, check_length,
 from settings.general_functions import start_timer
 from settings.settings import download, headless
 
-from rattlesnake.download import download_document
-from rattlesnake.login import account_login
-from rattlesnake.logout import logout
-from rattlesnake.open_document import open_document
-from rattlesnake.record import record
-from rattlesnake.search import search
-from rattlesnake.transform import transform_document_list
+from engines.rattlesnake.download import download_document
+from engines.rattlesnake.login import account_login
+from engines.rattlesnake.logout import logout
+from engines.rattlesnake.open_document import open_document
+from engines.rattlesnake.record import record
+from engines.rattlesnake.search import search
+from engines.rattlesnake.transform import transform_document_list
 
 
 def record_document(browser, document_list, document, review):

@@ -18,7 +18,7 @@ from settings.general_functions import (date_from_string, element_title_strip,
                                         list_to_string, title_strip,
                                         update_sentence_case_extras)
 
-from rattlesnake.validation import (validate_date, validate_reception_number,
+from engines.rattlesnake.validation import (validate_date, validate_reception_number,
                                     validate_volume_and_page_numbers,
                                     verify_document_description_page_loaded)
 

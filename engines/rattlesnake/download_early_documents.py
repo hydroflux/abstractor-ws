@@ -23,7 +23,7 @@ from settings.general_functions import (four_character_padding,
                                         javascript_script_execution, naptime)
 from project_management.user_prompts import clear_terminal
 
-from rattlesnake.search import clear_search, handle_document_value_numbers
+from engines.rattlesnake.search import clear_search, handle_document_value_numbers
 
 
 def select_book_type(browser, document):

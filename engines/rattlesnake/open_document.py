@@ -10,7 +10,7 @@ from settings.county_variables.rattlesnake import (result_link_tag_name,
 from settings.general_functions import (get_direct_link,
                                         javascript_script_execution)
 
-from rattlesnake.validation import (validate_result_reception_number,
+from engines.rattlesnake.validation import (validate_result_reception_number,
                                     validate_result_volume_and_page_numbers)
 
 

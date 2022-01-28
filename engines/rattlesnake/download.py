@@ -12,7 +12,7 @@ from settings.download_management import previously_downloaded, update_download
 from settings.file_management import create_document_directory
 from settings.general_functions import timeout
 
-from rattlesnake.validation import (verify_document_image_page_loaded,
+from engines.rattlesnake.validation import (verify_document_image_page_loaded,
                                     verify_valid_download)
 
 

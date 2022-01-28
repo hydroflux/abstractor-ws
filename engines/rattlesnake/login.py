@@ -7,7 +7,7 @@ from settings.county_variables.rattlesnake import (credentials,
                                                    home_page_url, login_title,
                                                    login_url)
 
-from rattlesnake.validation import verify_login
+from engines.rattlesnake.validation import verify_login
 
 
 def enter_credentials(browser):
