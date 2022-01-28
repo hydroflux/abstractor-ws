@@ -10,7 +10,7 @@ from engines.jaguar.search import search
 from engines.jaguar.transform import transform_document_list
 
 
-# Identical to 'leopard', 'tiger', & 'eagle' close_program
+# Identical to 'leopard', 'tiger', & 'eagle' execute_program
 def execute_program(abstract):
     browser = create_webdriver(abstract)
     transform_document_list(abstract)
