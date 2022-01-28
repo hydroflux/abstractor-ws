@@ -1,8 +1,6 @@
-from actions.executors import close_program, handle_search_results
+from actions.executors import close_program, search_documents_from_list
 from engines.tiger.transform import transform_document_list
-from settings.invalid import record_invalid_search
 from settings.driver import create_webdriver
-from settings.general_functions import start_timer
 
 from engines.tiger.download import download_document
 from engines.tiger.login import account_login
@@ -14,24 +12,20 @@ from engines.tiger.search import search
 print("execute", __name__)
 
 
-# Identical to 'eagle', 'leopard', & 'jaguar' search_documents_from_list
-def search_documents_from_list(browser, abstract):
-    for document in abstract.document_list:
-        document.start_time = start_timer()
-        search(browser, document)
-        if open_document(browser, document):
-            handle_search_results(browser, abstract, document, record, download_document)
-        else:
-            record_invalid_search(abstract, document)
-        # check_length(dataframe)  # Where is the best place to put this???
-
-
 # Identical to 'leopard', 'jaguar', & 'eagle' execute_program
 def execute_program(abstract):
     browser = create_webdriver(abstract)
     transform_document_list(abstract)
     account_login(browser)
-    search_documents_from_list(browser, abstract)
+    search_documents_from_list(
+        browser,
+        abstract,
+        search,
+        open_document,
+        record,
+        download_document,
+        next_result=None
+    )
     close_program(browser, abstract)
 
 
