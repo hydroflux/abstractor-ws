@@ -1,10 +1,13 @@
 from project_management.export import export_document
+
+from settings.file_management import document_found
 from settings.general_functions import start_timer
 from settings.invalid import record_invalid_search
 
 
 def handle_single_document(browser, abstract, document, record, download_document):
     record(browser, abstract, document)
+    document_found(abstract, document)
     if abstract.download and document.image_available and not abstract.review:
         download_document(browser, abstract, document)
 
