@@ -29,6 +29,10 @@ def handle_search_results(browser, abstract, document, record, download_document
         handle_single_document(browser, abstract, document, record, download_document)
     elif document.number_results > 1:
         handle_multiple_documents(browser, abstract, document, record, download_document, next_result)
+    else:
+        print(f'{document.extrapolate_value()} returned "{str(document.number_results)}" results, '
+              f'which is not applicable for the "handle_search_results" function structure; Please review...')
+        input()
 
 
 def search_documents_from_list(browser, abstract, search, open_document, record, download_document, next_result=None):

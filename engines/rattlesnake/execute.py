@@ -54,37 +54,18 @@ def handle_single_document(browser, abstract, document):
 
 
 def handle_multiple_documents(browser, abstract, document):
+    handle_single_document(browser, abstract, document)
     for result_number in range(1, document.number_results):
-        search(browser, document)
-        open_document(browser, document, result_number)
-        handle_single_document(
-            browser,
-            target_directory,
-            document_list,
-            document,
-            review
-        )
-
-# handle_single_document(
-#             browser,
-#             target_directory,
-#             document_list,
-#             document,
-#             review
-#         )
-#         if document.number_results > 1:
-#             handle_multiple_documents(
-#                 browser,
-#                 target_directory,
-#                 document_list,
-#                 document,
-#                 review
-#             )
+        document.result_number = result_number
+        # next_result in 'executor' needs to be 'search' and 'open_document'
+        # search(browser, document)
+        # open_document(browser, document)
+        handle_single_document(browser, abstract, document)
 
 
 def handle_search_results(browser, abstract, document):
     if document.number_results == 1:
-        handle_single_document(browser, abstract, document)        
+        handle_single_document(browser, abstract, document)
     elif document.number_results > 1:
         handle_multiple_documents(browser, abstract, document)
 

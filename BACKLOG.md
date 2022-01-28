@@ -420,6 +420,9 @@
 - [ ] Update 'execute' functions using functions from the 'executor' script
 - [ ] Update the 'download' script to use the 'abstract.download_type' attribute rather than the now defunct 'document.download_type' attribute
 - [ ] Update the 'record' and 'download' scripts with the Abstract argument (parameters & arguments already updated in 'execute' file and in the master function for both 'record' and 'download')
+- [ ] Use the 'document.result_number' attribute in the 'open_document' script (already set and passed through)
+- [ ] Create a 'next_result' script
+- [ ] Original 'handle_multiple_documents' requires a 'search' and an 'open_document' after the first document is recorded and was removed in order to work with the 'executor' generalization script---figure out how to fix / integrate this back in for full functionality
 
 ### Tiger To Do
 

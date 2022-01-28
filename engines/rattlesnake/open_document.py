@@ -77,7 +77,7 @@ def handle_search_results(browser, document, result_number):
         return open_result(browser, document, result_number)
 
 
-def open_document(browser, document, result_number=0):
+def open_document(browser, document):
     if result_number == 0:
         count_results(browser, document)
     return handle_search_results(browser, document, result_number)
