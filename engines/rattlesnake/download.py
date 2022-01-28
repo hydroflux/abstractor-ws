@@ -70,7 +70,7 @@ def execute_download(browser, document_directory, document):
         return add_to_cart(browser, document)
 
 
-def download_document(browser, target_directory, document):
+def download_document(browser, abstract, document):
     document_directory = create_document_directory(target_directory)
     if previously_downloaded(document_directory, document):
         return True

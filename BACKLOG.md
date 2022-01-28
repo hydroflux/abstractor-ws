@@ -418,6 +418,7 @@
 - [ ] Update all scripts to work with the 'Project' and 'Abstract' classes
 - [ ] Update 'execute' functions using functions from the 'executor' script
 - [ ] Update the 'download' script to use the 'abstract.download_type' attribute rather than the now defunct 'document.download_type' attribute
+- [ ] Update the 'record' and 'download' scripts with the Abstract argument (parameters & arguments already updated in 'execute' file and in the master function for both 'record' and 'download')
 
 ### Tiger To Do
 

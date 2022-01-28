@@ -27,7 +27,7 @@ def record_document(browser, document_list, document, review):
 def download_recorded_document(browser, target_directory, document_list, document):
     if not download_document(
         browser,
-        target_directory,
+        abstract,
         document
     ):
         no_document_image(abstract, document)
