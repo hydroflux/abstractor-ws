@@ -1,4 +1,4 @@
-from actions.executor import close_program, handle_search_results
+from actions.executor import close_program, search_documents_from_list
 
 from engines.rattlesnake.download import download_document
 from engines.rattlesnake.download_early_documents import \
@@ -12,25 +12,21 @@ from engines.rattlesnake.search import search
 from engines.rattlesnake.transform import transform_document_list
 
 from settings.driver import create_webdriver
-from settings.general_functions import start_timer
-from settings.invalid import record_invalid_search
-
-
-def search_documents_from_list(browser, abstract):
-    for document in abstract.document_list:
-        document.start_time = start_timer()
-        search(browser, document)
-        if open_document(browser, document):
-            handle_search_results(browser, abstract, document, record, download_document, next_result)
-        else:
-            record_invalid_search(abstract, document)
 
 
 def execute_program(abstract):
     browser = create_webdriver(abstract)
     transform_document_list(abstract)
     account_login(browser)
-    search_documents_from_list(browser, abstract)
+    search_documents_from_list(
+        browser,
+        abstract,
+        search,
+        open_document,
+        record,
+        download_document,
+        next_result
+    )
     close_program(browser, abstract, logout)
 
 
