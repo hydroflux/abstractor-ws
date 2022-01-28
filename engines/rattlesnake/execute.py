@@ -37,7 +37,7 @@ def download_recorded_document(browser, target_directory, document_list, documen
         document_downloaded(document_list, document)
 
 
-def handle_single_document(browser, target_directory, document_list, document, review):
+def handle_single_document(browser, abstract, document):
     record_document(
         browser,
         document_list,
@@ -53,7 +53,7 @@ def handle_single_document(browser, target_directory, document_list, document, r
         )
 
 
-def handle_multiple_documents(browser, target_directory, document_list, document, review):
+def handle_multiple_documents(browser, abstract, document):
     for result_number in range(1, document.number_results):
         search(browser, document)
         open_document(browser, document, result_number)
@@ -65,27 +65,28 @@ def handle_multiple_documents(browser, target_directory, document_list, document
             review
         )
 
+# handle_single_document(
+#             browser,
+#             target_directory,
+#             document_list,
+#             document,
+#             review
+#         )
+#         if document.number_results > 1:
+#             handle_multiple_documents(
+#                 browser,
+#                 target_directory,
+#                 document_list,
+#                 document,
+#                 review
+#             )
+
 
 def handle_search_results(browser, abstract, document):
-    if open_document(browser, document):
-        handle_single_document(
-            browser,
-            target_directory,
-            document_list,
-            document,
-            review
-        )
-        if document.number_results > 1:
-            handle_multiple_documents(
-                browser,
-                target_directory,
-                document_list,
-                document,
-                review
-            )
-    else:
-        record_invalid_search(dataframe, document)
-        no_document_found(document_list, document, review)
+    if document.number_results == 1:
+        handle_single_document(browser, abstract, document)        
+    elif document.number_results > 1:
+        handle_multiple_documents(browser, abstract, document)
 
 
 def search_documents_from_list(browser, abstract):
@@ -96,7 +97,6 @@ def search_documents_from_list(browser, abstract):
             handle_search_results(browser, abstract, document)
         else:
             record_invalid_search(abstract, document)
-        # check_length(dataframe)
 
 
 def execute_program(abstract):
