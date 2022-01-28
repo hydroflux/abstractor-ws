@@ -14,8 +14,13 @@ from settings.county_variables.rattlesnake import (early_book_type_id,
                                                    volume_input_id)
 
 
-def update_element_attributes(document_list, early_records):
-    for document in document_list:
+def update_document_attributes(abstract):
+    for document in abstract.document_list:
+        document.county = abstract.county
+
+
+def update_element_attributes(abstract, early_records):
+    for document in abstract.document_list:
         if early_records:
             document.input_ids = {
                 "Volume": early_volume_input_id,
@@ -44,11 +49,6 @@ def update_element_attributes(document_list, early_records):
             }
 
 
-def update_county(document_list, county):
-    for document in document_list:
-        document.county = county
-
-
-def transform_document_list(document_list, county, early_records=False):
-    update_element_attributes(document_list, early_records)
-    update_county(document_list, county)
+def transform_document_list(abstract, early_records=False):
+    update_document_attributes(abstract)
+    update_element_attributes(abstract, early_records)

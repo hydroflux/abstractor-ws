@@ -20,7 +20,7 @@ def next_result(browser, document):
 
 def execute_program(abstract):
     browser = create_webdriver(abstract)
-    transform_document_list(abstract)
+    transform_document_list(abstract, early_records=False)
     account_login(browser)
     search_documents_from_list(
         browser,
