@@ -17,7 +17,7 @@ if __name__ == '__main__':
     # from rattlesnake.execute import execute_early_document_download as download_rattlesnake
     from settings.initialization import initialize_abstraction
     from settings.general_functions import stop_program_timer
-    from project_management.user_prompts import currently_unavailable, add_download_types
+    from project_management.user_prompts import currently_unavailable, add_download_type
 
 
 print("environment", __name__)
@@ -27,7 +27,7 @@ def execute_program(abstract):
     if abstract.county.engine == 'armadillo':
         pass
         # if program_type == 'execute' or program_type == 'download':
-        #     add_download_types(county, document_list)
+        #     add_download_type(county, document_list)
         #     if program_type == 'execute':
         #         execute_armadillo(county, target_directory, document_list, file_name)
         #     else:
@@ -75,7 +75,7 @@ def execute_program(abstract):
         if abstract.program in ["execute", "review", "download"]:
             # Need an additional prompt to handle early document downloads
             if abstract.program == 'execute':
-                add_download_types(abstract)
+                add_download_type(abstract)
             execute_rattlesnake(abstract)
         else:
             currently_unavailable(abstract)
@@ -95,7 +95,7 @@ execute_abstractor()
 # def execute_program_type(county, program_type, document_list=None, search_name=None):
 #     if county.program == 'armadillo':
 #         if program_type == 'execute' or program_type == 'download':
-#             add_download_types(county, document_list)
+#             add_download_type(county, document_list)
 #             if program_type == 'execute':
 #                 execute_armadillo(county, target_directory, document_list, file_name)
 #             else:
@@ -147,7 +147,7 @@ execute_abstractor()
 #     #         review_tiger()
 #     elif county.program == 'rattlesnake':
 #         if program_type == 'execute':
-#             add_download_types(county, document_list)
+#             add_download_type(county, document_list)
 #             execute_rattlesnake(county, target_directory, document_list, file_name)
 #         elif program_type == 'review':
 #             execute_rattlesnake(county, target_directory, document_list, file_name, review=True)
