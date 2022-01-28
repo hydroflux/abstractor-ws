@@ -10,8 +10,8 @@ from settings.county_variables.rattlesnake import (result_link_tag_name,
 from settings.general_functions import (get_direct_link,
                                         javascript_script_execution)
 
-from engines.rattlesnake.validation import (validate_result_reception_number,
-                                    validate_result_volume_and_page_numbers)
+from engines.rattlesnake.validation import (
+    validate_result_reception_number, validate_result_volume_and_page_numbers)
 
 
 # Search results can also be used to identify the number of results pages
@@ -31,8 +31,8 @@ def count_results(browser, document):
         print(f'{document.number_results} documents returned while searching {document.extrapolate_value()}.')
 
 
-def get_result(browser, document, result_number=0):
-    return get_search_result_rows(browser, document)[result_number]
+def get_result(browser, document):
+    return get_search_result_rows(browser, document)[document.result_number]
 
 
 def get_result_link(result, document):
@@ -65,8 +65,8 @@ def handle_result_document_type(browser, result, document):
         input()
 
 
-def open_result(browser, document, result_number):
-    result = get_result(browser, document, result_number)
+def open_result(browser, document):
+    result = get_result(browser, document)
     return handle_result_document_type(browser, result, document)
 
 
@@ -74,7 +74,7 @@ def handle_document_search(browser, document):
     if document.number_results == 0:
         return False
     else:
-        return open_result(browser, document, result_number)
+        return open_result(browser, document)
 
 
 def open_document(browser, document):
