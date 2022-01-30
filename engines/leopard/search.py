@@ -133,21 +133,12 @@ def enter_document_number(browser, document):
     enter_key_value(browser, document_search_field, document.document_value())
 
 
-def locate_book_and_page_search_tab(browser, document):
-    try:
-        book_and_page_search_tab_present = EC.element_to_be_clickable((By.ID, book_and_page_search_tab_id))
-        WebDriverWait(browser, timeout).until(book_and_page_search_tab_present)
-        book_and_page_search_tab = browser.find_element_by_id(book_and_page_search_tab_id)
-        return book_and_page_search_tab
-    except TimeoutException:
-        print(f'Browser timed out trying to access the book and page search tab for '
-              f'{document.extrapolate_value()}, please review....')
-
-
-def get_book_and_page_search_tab(browser, document):
-    book_and_page_search_tab = get_parent_element(locate_book_and_page_search_tab(browser, document))
+def access_book_and_page_search_tab(browser, document):
+    book_and_page_search_tab = get_parent_element(locate_element_by_id(browser, book_and_page_search_tab_id,
+                                                                       "book and page search tab", True, document))
     while book_and_page_search_tab is None:
-        book_and_page_search_tab = get_parent_element(locate_book_and_page_search_tab(browser, document))
+        book_and_page_search_tab = get_parent_element(locate_element_by_id(browser, book_and_page_search_tab_id,
+                                                                           "book and page search tab", True, document))
     return book_and_page_search_tab
 
 
@@ -157,7 +148,7 @@ def enter_book_number(browser, document, book):
     while book_search_field is None:
         # book_search_field = access_element(browser, locate_book_search_field, document, "book field")
         book_search_field = locate_element_by_id(browser, book_search_id, "book search field", True, document)
-        open_tab(browser, get_book_and_page_search_tab, document)
+        open_tab(browser, access_book_and_page_search_tab, document)
     enter_key_value(browser, book_search_field, book)
 
 
@@ -167,7 +158,7 @@ def enter_page_number(browser, document, page):
     while page_search_field is None:
         # page_search_field = access_element(browser, locate_page_search_field, "page field")
         page_search_field = locate_element_by_id(browser, page_search_id, "page search field", True, document)
-        open_tab(browser, get_book_and_page_search_tab, document)
+        open_tab(browser, access_book_and_page_search_tab, document)
     enter_key_value(browser, page_search_field, page)
 
 
