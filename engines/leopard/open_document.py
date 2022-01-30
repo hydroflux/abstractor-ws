@@ -2,7 +2,7 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-from selenium_utilities.locators import locate_elements_by_tag_name
+from selenium_utilities.locators import locate_element_by_id, locate_elements_by_tag_name
 
 from settings.county_variables.leopard import (result_cell_tag,
                                                result_row_class,
@@ -57,17 +57,6 @@ def count_total_results(browser, document):
     return result_count.text.split(' ')[-1]
 
 
-def locate_results_table(browser, document):
-    try:
-        results_present = EC.presence_of_element_located((By.ID, results_id))
-        WebDriverWait(browser, timeout).until(results_present)
-        results = browser.find_element_by_id(results_id)
-        return results
-    except TimeoutException:
-        print(f'Browser timed out trying to locate results for '
-              f'{document.extrapolate_value()}, please review.')
-
-
 def locate_results_table_body(browser, document, results_table):
     try:
         results_table_body_present = EC.presence_of_element_located((By.TAG_NAME, results_body_tag))
@@ -80,9 +69,9 @@ def locate_results_table_body(browser, document, results_table):
 
 
 def get_results_table_body(browser, document):
-    results = locate_results_table(browser, document)
-    scroll_into_view(browser, results)
-    return locate_results_table_body(browser, document, results)
+    results_table = locate_element_by_id(browser, results_id, "results table", False, document)
+    scroll_into_view(browser, results_table)
+    return locate_results_table_body(browser, document, results_table)
 
 
 def locate_result_rows(browser, document, results_table_body):
