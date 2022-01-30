@@ -72,9 +72,7 @@ def execute_download(browser, document_directory, document):
 
 def download_document(browser, abstract, document):
     prepare_for_download(abstract, document)
-    if previously_downloaded(document_directory, document):
-        return True
-    else:
+    if not previously_downloaded(abstract, document):
         open_download_page(browser, document)
         if verify_document_image_page_loaded(browser, document):
             return execute_download(browser, document_directory, document)
