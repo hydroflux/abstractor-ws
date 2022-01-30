@@ -15,7 +15,7 @@ from engines.leopard.transform import transform_document_list
 print("execute", __name__)
 
 
-# Identical to 'tiger', 'jaguar', & 'eagle' execute_program
+# Identical to 'tiger', 'jaguar', 'rattlesnake', & 'eagle' execute_program
 def execute_program(abstract):
     browser = create_webdriver(abstract)
     transform_document_list(abstract)

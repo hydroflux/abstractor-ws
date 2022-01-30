@@ -7,7 +7,6 @@ from selenium.webdriver.support.wait import WebDriverWait
 
 from selenium_utilities.element_interaction import center_element
 
-from settings.invalid import no_document_image
 from settings.county_variables.eagle import (document_information_id,
                                              document_table_class,
                                              error_message_text,
@@ -20,12 +19,14 @@ from settings.county_variables.eagle import (document_information_id,
                                              pdf_viewer_load_id,
                                              related_table_class,
                                              result_button_tag,
-                                             result_buttons_class)
+                                             result_buttons_class,
+                                             stock_download_suffix)
 from settings.county_variables.general import search_errors
 from settings.file_management import multiple_documents_comment
 from settings.general_functions import (long_timeout, medium_nap, naptime,
                                         scroll_to_top, short_nap, timeout,
                                         update_sentence_case_extras)
+from settings.invalid import no_document_image
 from settings.settings import execution_review
 
 from engines.eagle.error_handling import check_for_error
@@ -409,6 +410,7 @@ def access_download_information(browser, abstract, document):
     reception_field, _ = access_indexing_information(document_tables[1])
     reception_number, _, _ = split_reception_field(reception_field)
     document.reception_number = reception_number
+    document.download_value = f'{document.reception_number}-{stock_download_suffix}'
 
 
 def build_document_download_information(browser, abstract, document):

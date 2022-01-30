@@ -12,7 +12,7 @@ from engines.tiger.search import search
 print("execute", __name__)
 
 
-# Identical to 'leopard', 'jaguar', & 'eagle' execute_program
+# Identical to 'leopard', 'jaguar', 'rattlesnake', & 'eagle' execute_program
 def execute_program(abstract):
     browser = create_webdriver(abstract)
     transform_document_list(abstract)

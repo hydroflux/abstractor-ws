@@ -18,6 +18,7 @@ def next_result(browser, document):
     open_document(browser, document)
 
 
+# Identical to 'tiger', 'jaguar', 'leopard', & 'eagle' execute_program
 def execute_program(abstract):
     browser = create_webdriver(abstract)
     transform_document_list(abstract, early_records=False)
