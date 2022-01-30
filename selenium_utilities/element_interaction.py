@@ -1,4 +1,8 @@
-from selenium.common.exceptions import StaleElementReferenceException
+from selenium.common.exceptions import StaleElementReferenceException, TimeoutException
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.wait import WebDriverWait
+
+from settings.general_functions import timeout
 
 
 def center_element(browser, element):
@@ -28,3 +32,14 @@ def get_parent_element(element):
 # move out of 'general_functions' & update dependencies
 def get_element_text(element):
     return element.text
+
+
+def handle_alert(browser):
+    try:
+        alert_present = EC.alert_is_present()
+        WebDriverWait(browser, timeout).until(alert_present)
+        alert = browser.switch_to.alert
+        alert.accept()
+        return True
+    except TimeoutException:
+        print("Browser timed out while attempting to locate an alert, please review.")

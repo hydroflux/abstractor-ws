@@ -17,19 +17,6 @@ from engines.leopard.search import search
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("open_document", __name__)
 
-# Script is SIMILAR, but not nearly identical, to tiger open_document
-
-
-def handle_alert(browser):
-    try:
-        alert_present = EC.alert_is_present()
-        WebDriverWait(browser, timeout).until(alert_present)
-        alert = browser.switch_to.alert
-        alert.accept()
-        return True
-    except TimeoutException:
-        print("Browser timed out while attempting to locate an alert, please review.")
-
 
 # def check_for_alert(browser, document):
 #     print("Checking for browser alert related to search...")
