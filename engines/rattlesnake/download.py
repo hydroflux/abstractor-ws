@@ -56,7 +56,7 @@ def add_to_cart(browser, document):
     add_to_cart_button.click()
 
 
-def execute_download(browser, document_directory, document):
+def handle_document_download_type(browser, abstract, document):
     if document.download_type == 'free':
         free_download(browser, document)
         if verify_valid_download(browser):
@@ -70,9 +70,13 @@ def execute_download(browser, document_directory, document):
         return add_to_cart(browser, document)
 
 
+def execute_download(browser, abstract, document):
+    open_download_page(browser, document)
+    if verify_document_image_page_loaded(browser, document):
+        handle_document_download_type(browser, abstract, document)
+
+
 def download_document(browser, abstract, document):
     prepare_for_download(abstract, document)
     if not previously_downloaded(abstract, document):
-        open_download_page(browser, document)
-        if verify_document_image_page_loaded(browser, document):
-            return execute_download(browser, document_directory, document)
+        execute_download(browser, abstract, document)
