@@ -2,7 +2,7 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-from selenium_utilities.locators import locate_element_by_id, locate_element_by_tag_name, locate_elements_by_tag_name
+from selenium_utilities.locators import locate_element_by_id, locate_element_by_tag_name, locate_elements_by_class_name, locate_elements_by_tag_name
 
 from settings.county_variables.leopard import (result_cell_tag,
                                                result_row_class,
@@ -52,20 +52,10 @@ def get_results_table_body(browser, document):
                                       "results table body", False, document)
 
 
-def locate_result_rows(browser, document, results_table_body):
-    try:
-        first_row_present = EC.presence_of_element_located((By.CLASS_NAME, result_row_class))
-        WebDriverWait(browser, timeout).until(first_row_present)
-        result_rows = results_table_body.find_elements_by_class_name(result_row_class)
-        return result_rows
-    except TimeoutException:
-        print(f'Browser timed out while trying to get result rows for '
-              f'{document.extrapolate_value()}, please review.')
-
-
 def get_result_rows(browser, document):
     results_table_body = get_results_table_body(browser, document)
-    return locate_result_rows(browser, document, results_table_body)
+    return locate_elements_by_class_name(results_table_body, result_row_class,
+                                         "result rows", False, document)
 
 
 def verify_document_number(document, cells):
