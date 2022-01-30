@@ -126,7 +126,7 @@ def enter_document_number(browser, document):
     document_search_field = locate_element_by_id(browser, document_search_field_id,
                                                  "document search field", True, document)
     while document_search_field is None:
-        # document_search_field = access_element(browser, locate_document_search_field, document, "document search field")
+        # document_search_field = access_element(browser,locate_document_search_field,document,"document search field")
         document_search_field = locate_element_by_id(browser, document_search_field_id,
                                                      "document search field", True, document)
         open_tab(browser, get_document_search_tab, document)

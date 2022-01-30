@@ -133,23 +133,6 @@ def get_element_attributes(browser, element):
     pprint(attributes)
 
 
-def get_element_onclick(element):
-    return element.get_attribute("onclick")
-
-
-def get_element_class(element):
-    return element.get_attribute("class")
-
-
-def check_active_class(element):
-    if get_element_class(element).endswith("active"):
-        return True
-
-
-def get_parent_element(element):
-    return element.find_element_by_xpath("..")
-
-
 def four_character_padding(value):
     return value.zfill(4)
 
