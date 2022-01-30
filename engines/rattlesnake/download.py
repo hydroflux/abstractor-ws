@@ -6,6 +6,7 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+from selenium_utilities.locators import locate_element_by_id
 
 from settings.county_variables.rattlesnake import (add_to_cart_button_id,
                                                    download_page_id,
@@ -34,25 +35,15 @@ def open_download_page(browser, document):
     download_page.click()
 
 
-def locate_button(browser, document, id, button_type):
-    try:
-        button_present = EC.element_to_be_clickable((By.ID, id))
-        WebDriverWait(browser, timeout).until(button_present)
-        button = browser.find_element_by_id(id)
-        return button
-    except TimeoutException:
-        print(f'Browser timed out trying to locate "{button_type}" button for '
-              f'{document.extrapolate_value()}, please review.')
-        input()
-
-
 def free_download(browser, document):
-    free_download_button = locate_button(browser, document, free_download_button_id, 'free download')
+    free_download_button = locate_element_by_id(browser, free_download_button_id,
+                                                "free download button", True, document)
     free_download_button.click()
 
 
 def add_to_cart(browser, document):
-    add_to_cart_button = locate_button(browser, document, add_to_cart_button_id, 'free download')
+    add_to_cart_button = locate_element_by_id(browser, add_to_cart_button_id,
+                                              "add to cart button", True, document)
     add_to_cart_button.click()
 
 
