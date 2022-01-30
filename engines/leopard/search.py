@@ -14,7 +14,6 @@ from settings.county_variables.leopard import (book_and_page_search_button_id,
                                                search_navigation_id,
                                                search_script, search_title)
 from settings.file_management import (document_type, document_value,
-                                      extrapolate_document_value,
                                       split_book_and_page)
 from settings.general_functions import (check_active_class, get_parent_element,
                                         javascript_script_execution, naptime,
@@ -34,11 +33,11 @@ def locate_search_navigation(browser, document):
         return search_navigation
     except TimeoutException:
         print(f'Browser timed out trying to open the search navigation for '
-              f'{extrapolate_document_value(document)}.')
+              f'{document.extrapolate_value()}, please review....')
     except StaleElementReferenceException:
         print(f'Encountered a stale element reference exception '
               f'locating search navigation for '
-              f'{extrapolate_document_value(document)}.')
+              f'{document.extrapolate_value()}, please review....')
 
 
 def get_search_navigation_tab(browser, document):
@@ -57,7 +56,7 @@ def access_element(browser, access_function, document, element_type):
     except StaleElementReferenceException:
         print(f'Encountered a stale element reference exception '
               f'attempting to access {element_type} for '
-              f'{extrapolate_document_value(document)}')
+              f'{document.extrapolate_value()}, please review...')
 
 
 def wait_for_active(browser, element):
@@ -104,7 +103,7 @@ def locate_document_search_tab(browser, document):
         return document_search_tab
     except TimeoutException:
         print(f'Browser timed out trying to access the document search tab for '
-              f'{extrapolate_document_value(document)}')
+              f'{document.extrapolate_value()}, please review...')
         check_for_browser_error(browser)
 
 
@@ -123,7 +122,7 @@ def locate_document_search_field(browser, document):
         return document_search_field
     except TimeoutException:
         print(f'Browser timed out trying to locate document number field for '
-              f'{extrapolate_document_value(document)}.')
+              f'{document.extrapolate_value()}, please review....')
 
 
 def enter_key_value(browser, field, value):
@@ -148,7 +147,7 @@ def locate_book_and_page_search_tab(browser, document):
         return book_and_page_search_tab
     except TimeoutException:
         print(f'Browser timed out trying to access the book and page search tab for '
-              f'{extrapolate_document_value(document)}.')
+              f'{document.extrapolate_value()}, please review....')
 
 
 def get_book_and_page_search_tab(browser, document):
@@ -166,7 +165,7 @@ def locate_book_search_field(browser, document):
         return book_search_field
     except TimeoutException:
         print(f'Browser timed out trying to locate book field for '
-              f'{extrapolate_document_value(document)}.')
+              f'{document.extrapolate_value()}, please review....')
 
 
 def enter_book_number(browser, document, book):
@@ -185,7 +184,7 @@ def locate_page_search_field(browser, document):
         return page_search_field
     except TimeoutException:
         print(f'Browser timed out trying to locate page field for '
-              f'{extrapolate_document_value(document)}.')
+              f'{document.extrapolate_value()}, please review....')
 
 
 def enter_page_number(browser, document, page):
@@ -204,7 +203,7 @@ def locate_search_button(browser, document, button_id):
         return search_button
     except TimeoutException:
         print(f'Browser timed out trying to locate search button for '
-              f'{extrapolate_document_value(document)}.')
+              f'{document.extrapolate_value()}, please review....')
 
 
 def execute_search(browser, document, button_id):
