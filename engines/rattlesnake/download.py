@@ -1,12 +1,10 @@
-from actions.downloader import prepare_for_download
-
 from selenium_utilities.inputs import click_button
 from selenium_utilities.locators import locate_element_by_id
 
 from settings.county_variables.rattlesnake import (add_to_cart_button_id,
                                                    download_page_id,
                                                    free_download_button_id)
-from settings.download_management import previously_downloaded, update_download
+from settings.download_management import update_download
 
 from engines.rattlesnake.validation import (verify_document_image_page_loaded,
                                             verify_valid_download)

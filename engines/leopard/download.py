@@ -2,8 +2,7 @@ from selenium_utilities.inputs import click_button
 from selenium_utilities.locators import locate_element_by_id
 
 from settings.county_variables.leopard import download_button_id, view_group_id
-from settings.download_management import previously_downloaded, update_download
-from actions.downloader import prepare_for_download
+from settings.download_management import update_download
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("download", __name__)
