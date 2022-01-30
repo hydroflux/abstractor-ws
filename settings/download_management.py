@@ -166,7 +166,7 @@ def prepare_file_for_download(abstract, document):
         os.rename(document.download_value, document.new_name)
         check_download_size(document.new_name, document)
         return True
-    elif os.path.isfile(f'{abstract.document_directory}/{document.document.new_name}'):
+    elif os.path.isfile(f'{abstract.document_directory}/{document.new_name}'):
         check_download_size(document.new_name, document)
         return True
     else:
@@ -179,8 +179,8 @@ def prepare_file_for_download(abstract, document):
 
 def rename_download(abstract, document):
     try:
-        while not prepare_file_for_download(abstract.document_directory, document):
-            prepare_file_for_download(abstract.document_directory, document)
+        while not prepare_file_for_download(abstract, document):
+            prepare_file_for_download(abstract, document)
     except FileNotFoundError:
         print(f'File not found, please review stock download '
               f'"{document.download_value}" & new file name "{document.new_name}"')
