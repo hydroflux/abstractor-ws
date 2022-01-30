@@ -3,7 +3,7 @@ from actions.executor import close_program, search_documents_from_list
 
 from settings.driver import create_webdriver
 
-from engines.leopard.download import download_document
+from engines.leopard.download import execute_download
 from engines.leopard.login import account_login
 from engines.leopard.logout import logout
 from engines.leopard.open_document import open_document
@@ -26,7 +26,7 @@ def execute_program(abstract):
         search,
         open_document,
         record,
-        download_document,
+        execute_download,
         next_result
     )
     close_program(browser, abstract, logout)

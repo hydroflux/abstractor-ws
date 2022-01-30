@@ -17,10 +17,3 @@ def execute_download(browser, abstract, document):
     click_button(browser, locate_element_by_id, download_button_id,  # Execute Download
                  "execute download button", document)
     update_download(browser, abstract, document)
-
-
-# Identical to 'eagle', 'tiger', 'rattlesnake', & 'jaguar' download_document
-def download_document(browser, abstract, document):
-    prepare_for_download(abstract, document)
-    if not previously_downloaded(abstract, document):
-        execute_download(browser, abstract, document)
