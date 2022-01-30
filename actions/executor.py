@@ -1,3 +1,5 @@
+from actions.downloader import download_document
+
 from project_management.export import export_document
 
 from settings.file_management import document_found
@@ -5,14 +7,14 @@ from settings.general_functions import start_timer
 from settings.invalid import record_invalid_search
 
 
-def handle_single_document(browser, abstract, document, record, download_document):
+def handle_single_document(browser, abstract, document, record, execute_download):
     record(browser, abstract, document)
     document_found(abstract, document)
     if abstract.download and document.image_available and not abstract.review:
-        download_document(browser, abstract, document)
+        download_document(browser, abstract, document, execute_download)
 
 
-def handle_multiple_documents(browser, abstract, document, record, download_document, next_result):
+def handle_multiple_documents(browser, abstract, document, record, execute_download, next_result):
     if next_result is None:
         print(f'{document.extrapolate_value()} returned "{document.number_results}" results; '
               f'Program not currently equipped to handle multiple documents at this point in time, '
@@ -20,30 +22,30 @@ def handle_multiple_documents(browser, abstract, document, record, download_docu
               f'Please review...')
         input()
     else:
-        handle_single_document(browser, abstract, document, record, download_document)
+        handle_single_document(browser, abstract, document, record, execute_download)
         for result_number in range(1, document.number_results):
             document.result_number = result_number
             next_result(browser, document)
-            handle_single_document(browser, abstract, document, record, download_document)
+            handle_single_document(browser, abstract, document, record, execute_download)
 
 
-def handle_search_results(browser, abstract, document, record, download_document, next_result):
+def handle_search_results(browser, abstract, document, record, execute_download, next_result):
     if document.number_results == 1:
-        handle_single_document(browser, abstract, document, record, download_document)
+        handle_single_document(browser, abstract, document, record, execute_download)
     elif document.number_results > 1:
-        handle_multiple_documents(browser, abstract, document, record, download_document, next_result)
+        handle_multiple_documents(browser, abstract, document, record, execute_download, next_result)
     else:
         print(f'{document.extrapolate_value()} returned "{str(document.number_results)}" results, '
               f'which is not applicable for the "handle_search_results" function structure; Please review...')
         input()
 
 
-def search_documents_from_list(browser, abstract, search, open_document, record, download_document, next_result=None):
+def search_documents_from_list(browser, abstract, search, open_document, record, execute_download, next_result=None):
     for document in abstract.document_list:
         document.start_time = start_timer()
         search(browser, document)
         if open_document(browser, document):
-            handle_search_results(browser, abstract, document, record, download_document, next_result)
+            handle_search_results(browser, abstract, document, record, execute_download, next_result)
         else:
             record_invalid_search(abstract, document)
         abstract.check_length()  # Is this the best placement for this?
