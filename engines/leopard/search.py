@@ -3,6 +3,8 @@ from selenium.common.exceptions import (StaleElementReferenceException,
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+from selenium_utilities.element_interaction import get_parent_element, is_active_class
+
 from selenium_utilities.inputs import click_button
 from selenium_utilities.locators import locate_element_by_id
 
@@ -16,8 +18,7 @@ from settings.county_variables.leopard import (book_and_page_search_button_id,
                                                search_navigation_id,
                                                search_script, search_title)
 from settings.file_management import split_book_and_page
-from settings.general_functions import (check_active_class, get_parent_element,
-                                        javascript_script_execution, naptime,
+from settings.general_functions import (javascript_script_execution, naptime,
                                         scroll_into_view, timeout)
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
@@ -62,7 +63,7 @@ def access_element(browser, access_function, document, element_type):
 
 def wait_for_active(browser, element):
     try:
-        return check_active_class(element)
+        return is_active_class(element)
     except StaleElementReferenceException:
         print('Encountered a stale element reference exception '
               'trying to access element class, trying again.')
@@ -94,18 +95,6 @@ def check_for_browser_error(browser):
         print("Browser encountered an error during the search, refreshing the page to attempt to fix the problem.")
         # Review after hitting this error again, browser needs to still be logged in during error to see if this works
         browser.refresh()
-
-
-def locate_document_search_tab(browser, document):
-    try:
-        document_search_tab_present = EC.element_to_be_clickable((By.ID, document_search_tab_id))
-        WebDriverWait(browser, timeout).until(document_search_tab_present)
-        document_search_tab = browser.find_element_by_id(document_search_tab_id)
-        return document_search_tab
-    except TimeoutException:
-        print(f'Browser timed out trying to access the document search tab for '
-              f'{document.extrapolate_value()}, please review...')
-        check_for_browser_error(browser)
 
 
 def access_document_search_tab(browser, document):
@@ -167,14 +156,14 @@ def enter_page_number(browser, document, page):
 
 
 def execute_document_number_search(browser, document):
-    open_tab(browser, get_document_search_tab, document)
+    open_tab(browser, access_document_search_tab, document)
     enter_document_number(browser, document)
     click_button(browser, locate_element_by_id, document_search_button_id,
                  "document search button", document)  # Execute Search
 
 
 def execute_book_and_page_search(browser, document):
-    open_tab(browser, get_book_and_page_search_tab, document)
+    open_tab(browser, access_book_and_page_search_tab, document)
     book, page = split_book_and_page(document)
     enter_book_number(browser, document, book)
     enter_page_number(browser, document, page)
