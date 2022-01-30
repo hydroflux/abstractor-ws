@@ -13,8 +13,7 @@ from settings.county_variables.leopard import (book_and_page_search_button_id,
                                                page_search_id,
                                                search_navigation_id,
                                                search_script, search_title)
-from settings.file_management import (document_type, document_value,
-                                      split_book_and_page)
+from settings.file_management import split_book_and_page
 from settings.general_functions import (check_active_class, get_parent_element,
                                         javascript_script_execution, naptime,
                                         scroll_into_view, timeout)
@@ -136,7 +135,7 @@ def enter_document_number(browser, document):
     while document_search_field is None:
         document_search_field = access_element(browser, locate_document_search_field, document, "document search field")
         open_tab(browser, get_document_search_tab, document)
-    enter_key_value(browser, document_search_field, document_value(document))
+    enter_key_value(browser, document_search_field, document.document_value())
 
 
 def locate_book_and_page_search_tab(browser, document):
@@ -227,7 +226,7 @@ def execute_book_and_page_search(browser, document):
 
 def search(browser, document):
     open_search(browser, document)
-    if document_type(document) == "document_number":
+    if document.type == "document_number":
         execute_document_number_search(browser, document)
-    elif document_type(document) == "book_and_page":
+    elif document.type == "book_and_page":
         execute_book_and_page_search(browser, document)
