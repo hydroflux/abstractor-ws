@@ -9,7 +9,7 @@ if __name__ == '__main__':
     # from crocodile.execute import execute_review as review_crocodile
     from engines.eagle.execute import execute_program as execute_eagle
     from engines.jaguar.execute import execute_program as execute_jaguar
-    # from engines.leopard.execute import execute_program as execute_leopard
+    from engines.leopard.execute import execute_program as execute_leopard
     from engines.tiger.execute import execute_program as execute_tiger
     from engines.rattlesnake.execute import execute_program as execute_rattlesnake
     # from rattlesnake.execute import execute_early_document_download as download_rattlesnake

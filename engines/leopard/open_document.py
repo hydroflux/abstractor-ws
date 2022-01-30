@@ -8,7 +8,6 @@ from settings.county_variables.leopard import (result_cell_tag,
                                                results_body_tag,
                                                results_count_id, results_id)
 from settings.file_management import (document_type, document_value,
-                                      extrapolate_document_value,
                                       split_book_and_page)
 from settings.general_functions import (get_element_text, scroll_into_view,
                                         timeout)
@@ -48,7 +47,7 @@ def locate_result_count(browser, document):
         return result_count
     except TimeoutException:
         print(f'Browser timed out trying to locate the number of results returned for '
-              f'{extrapolate_document_value(document)}.')
+              f'{document.extrapolate_value()}.')
         check_for_alert(browser)
 
 
@@ -66,7 +65,7 @@ def locate_results_table(browser, document):
         return results
     except TimeoutException:
         print(f'Browser timed out trying to locate results for '
-              f'{extrapolate_document_value(document)}, please review.')
+              f'{document.extrapolate_value()}, please review.')
 
 
 def locate_results_table_body(browser, document, results_table):
@@ -77,7 +76,7 @@ def locate_results_table_body(browser, document, results_table):
         return results_table_body
     except TimeoutException:
         print(f'Browser timed out trying to extrapolate the results table for '
-              f'{extrapolate_document_value(document)}, please review.')
+              f'{document.extrapolate_value()}, please review.')
 
 
 def get_results_table_body(browser, document):
@@ -94,7 +93,7 @@ def locate_result_rows(browser, document, results_table_body):
         return result_rows
     except TimeoutException:
         print(f'Browser timed out while trying to get result rows for '
-              f'{extrapolate_document_value(document)}, please review.')
+              f'{document.extrapolate_value()}, please review.')
 
 
 def get_result_rows(browser, document):
@@ -111,7 +110,7 @@ def get_row_cells(browser, document, row):
         return row_cells
     except TimeoutException:
         print(f'Browser timed out trying to identify row cells for '
-              f'{extrapolate_document_value(document)}, please review.')
+              f'{document.extrapolate_value()}, please review.')
 
 
 def verify_document_number(document, cells):
