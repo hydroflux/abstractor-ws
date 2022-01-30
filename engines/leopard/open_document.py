@@ -31,28 +31,29 @@ def handle_alert(browser):
         print("Browser timed out while attempting to locate an alert, please review.")
 
 
-def check_for_alert(browser, document):
-    print("Checking for browser alert related to search...")
-    if handle_alert(browser):
-        print("Alert located & handled, performing search execution again.")
-        search(browser, document)
-        return locate_result_count(browser, document)
+# def check_for_alert(browser, document):
+#     print("Checking for browser alert related to search...")
+#     if handle_alert(browser):
+#         print("Alert located & handled, performing search execution again.")
+#         search(browser, document)
+#         return locate_result_count(browser, document)
 
 
-def locate_result_count(browser, document):
-    try:
-        result_count_present = EC.presence_of_element_located((By.ID, results_count_id))
-        WebDriverWait(browser, timeout).until(result_count_present)
-        result_count = browser.find_element_by_id(results_count_id)
-        return result_count
-    except TimeoutException:
-        print(f'Browser timed out trying to locate the number of results returned for '
-              f'{document.extrapolate_value()}.')
-        check_for_alert(browser)
+# def locate_result_count(browser, document):
+#     try:
+#         result_count_present = EC.presence_of_element_located((By.ID, results_count_id))
+#         WebDriverWait(browser, timeout).until(result_count_present)
+#         result_count = browser.find_element_by_id(results_count_id)
+#         return result_count
+#     except TimeoutException:
+#         print(f'Browser timed out trying to locate the number of results returned for '
+#               f'{document.extrapolate_value()}.')
+#         check_for_alert(browser)
 
 
 def count_total_results(browser, document):
-    result_count = locate_result_count(browser, document)
+    result_count = locate_element_by_id(browser, results_count_id, "results count", False, document)
+    # 'check_For_alert' function originally followed the timeout exception in 'locate_result_count' function
     #  If result count == none, perform a "re-search"
     return result_count.text.split(' ')[-1]
 

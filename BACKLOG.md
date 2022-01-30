@@ -383,6 +383,7 @@
 - [ ] The 'document.result_number' attribute is not being used in the 'record' script, but is set using the 'handle_multiple_documents' function from the 'executor' script--integrate this attribute
 - [ ] Create a 'next_result' function to pass into the 'executor' script--goes along with adding a 'multiple_documents' route
 - [ ] Execute function 'search_documents_from_list' had a comment  "naptime()  # --- script runs without issues while this nap was in place" before the 'executor' script was worked in => review to determine if the 'search' function needs to be updated
+- [ ] Open document function 'locate_result_count' function had a 'check_for_alert' function (still in the script) which followed a timeout--figure out how this was thrown and how to integrate back into the program (probably in the 'locators' script) => appeared to be recursive with the 'locate_result_count' function
 
 ### Mountain Lion
 
