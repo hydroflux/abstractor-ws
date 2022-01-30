@@ -1,6 +1,6 @@
 from actions.executor import close_program, search_documents_from_list
 
-from engines.rattlesnake.download import download_document
+from engines.rattlesnake.download import execute_download
 from engines.rattlesnake.download_early_documents import \
     download_early_documents
 from engines.rattlesnake.login import account_login
@@ -28,7 +28,7 @@ def execute_program(abstract):
         search,
         open_document,
         record,
-        download_document,
+        execute_download,
         next_result
     )
     close_program(browser, abstract, logout)

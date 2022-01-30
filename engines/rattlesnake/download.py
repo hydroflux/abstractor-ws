@@ -28,10 +28,3 @@ def execute_download(browser, abstract, document):
                  "download page button", document)  # Open Download Page
     if verify_document_image_page_loaded(browser, document):
         handle_document_download_type(browser, abstract, document)
-
-
-# Identical to 'leopard', 'tiger', 'jaguar', & 'eagle' download_document
-def download_document(browser, abstract, document):
-    prepare_for_download(abstract, document)
-    if not previously_downloaded(abstract, document):
-        execute_download(browser, abstract, document)
