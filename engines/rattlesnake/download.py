@@ -60,14 +60,9 @@ def handle_document_download_type(browser, abstract, document):
     if document.download_type == 'free':
         free_download(browser, document)
         if verify_valid_download(browser):
-            return update_download(
-                browser,
-                document_directory,
-                document,
-                number_files
-                )
+            update_download(browser, abstract, document)
     elif document.download_type == 'paid':
-        return add_to_cart(browser, document)
+        add_to_cart(browser, document)
 
 
 def execute_download(browser, abstract, document):
