@@ -1,6 +1,7 @@
 import os
 
 from selenium.webdriver.support.ui import Select
+from actions.downloader import create_document_directory
 from selenium_utilities.inputs import click_button
 from selenium_utilities.locators import locate_element_by_id as locate_element
 from selenium_utilities.locators import locate_elements_by_tag_name
@@ -17,7 +18,7 @@ from settings.county_variables.rattlesnake import (early_document_image_title,
                                                    result_link_tag_name,
                                                    results_tag_name)
 from settings.download_management import update_download
-from settings.file_management import create_document_directory, last_document
+from settings.file_management import last_document
 from settings.general_functions import (four_character_padding,
                                         get_direct_link,
                                         javascript_script_execution, naptime)
@@ -159,7 +160,8 @@ def download_early_document_image(browser, document, document_directory, count=0
             count += 1
             page_value += 1
             # if next_page_prompt():
-            click_button(browser, locate_element, document.button_attributes["Next Button"], "next page button", document)
+            click_button(browser, locate_element, document.button_attributes["Next Button"],
+                         "next page button", document)
         else:
             next_page = False
 
