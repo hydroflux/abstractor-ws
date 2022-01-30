@@ -1,5 +1,7 @@
 import os
 
+from actions.downloader import prepare_for_download
+
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -9,7 +11,6 @@ from settings.county_variables.rattlesnake import (add_to_cart_button_id,
                                                    download_page_id,
                                                    free_download_button_id)
 from settings.download_management import previously_downloaded, update_download
-from settings.file_management import create_document_directory
 from settings.general_functions import timeout
 
 from engines.rattlesnake.validation import (verify_document_image_page_loaded,
@@ -57,7 +58,6 @@ def add_to_cart(browser, document):
 
 def execute_download(browser, document_directory, document):
     if document.download_type == 'free':
-        number_files = len(os.listdir(document_directory))
         free_download(browser, document)
         if verify_valid_download(browser):
             return update_download(
@@ -71,7 +71,7 @@ def execute_download(browser, document_directory, document):
 
 
 def download_document(browser, abstract, document):
-    document_directory = create_document_directory(target_directory)
+    prepare_for_download(abstract, document)
     if previously_downloaded(document_directory, document):
         return True
     else:
