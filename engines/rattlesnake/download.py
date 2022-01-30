@@ -6,6 +6,7 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+from selenium_utilities.inputs import click_button
 from selenium_utilities.locators import locate_element_by_id
 
 from settings.county_variables.rattlesnake import (add_to_cart_button_id,
@@ -35,12 +36,6 @@ def open_download_page(browser, document):
     download_page.click()
 
 
-def free_download(browser, document):
-    free_download_button = locate_element_by_id(browser, free_download_button_id,
-                                                "free download button", True, document)
-    free_download_button.click()
-
-
 def add_to_cart(browser, document):
     add_to_cart_button = locate_element_by_id(browser, add_to_cart_button_id,
                                               "add to cart button", True, document)
@@ -49,7 +44,8 @@ def add_to_cart(browser, document):
 
 def handle_document_download_type(browser, abstract, document):
     if document.download_type == 'free':
-        free_download(browser, document)
+        click_button(browser, locate_element_by_id, free_download_button_id,
+                     "free download button", document)
         if verify_valid_download(browser):
             update_download(browser, abstract, document)
     elif document.download_type == 'paid':
