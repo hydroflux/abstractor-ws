@@ -7,8 +7,7 @@ from settings.county_variables.leopard import (result_cell_tag,
                                                result_row_class,
                                                results_body_tag,
                                                results_count_id, results_id)
-from settings.file_management import (document_type, document_value,
-                                      split_book_and_page)
+from settings.file_management import split_book_and_page
 from settings.general_functions import (get_element_text, scroll_into_view,
                                         timeout)
 
@@ -114,7 +113,7 @@ def get_row_cells(browser, document, row):
 
 
 def verify_document_number(document, cells):
-    if document_value(document) in map(get_element_text, cells):
+    if document.document_value() in map(get_element_text, cells):
         return True
 
 
@@ -125,9 +124,9 @@ def verify_book_and_page_numbers(document, cells):
 
 
 def verify_result(document, cells):
-    if document_type(document) == "document_number":
+    if document.type == "document_number":
         return verify_document_number(document, cells)
-    elif document_type(document) == "book_and_page":
+    elif document.type == "book_and_page":
         return verify_book_and_page_numbers(document, cells)
 
 
