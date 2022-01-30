@@ -3,6 +3,7 @@ from selenium.common.exceptions import (StaleElementReferenceException,
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+from selenium_utilities.inputs import click_button
 from selenium_utilities.locators import locate_element_by_id
 
 from settings.county_variables.leopard import (book_and_page_search_button_id,
@@ -195,15 +196,11 @@ def enter_page_number(browser, document, page):
     enter_key_value(browser, page_search_field, page)
 
 
-def execute_search(browser, document, button_id):
-    search_button = locate_element_by_id(browser, button_id, "search button", True, document)
-    search_button.click()
-
-
 def execute_document_number_search(browser, document):
     open_tab(browser, get_document_search_tab, document)
     enter_document_number(browser, document)
-    execute_search(browser, document, document_search_button_id)
+    click_button(browser, locate_element_by_id, document_search_button_id,
+                 "document search button", document)
 
 
 def execute_book_and_page_search(browser, document):
@@ -211,7 +208,8 @@ def execute_book_and_page_search(browser, document):
     book, page = split_book_and_page(document)
     enter_book_number(browser, document, book)
     enter_page_number(browser, document, page)
-    execute_search(browser, document, book_and_page_search_button_id)
+    click_button(browser, locate_element_by_id, book_and_page_search_button_id,
+                 "book and page search button", document)  # Execute Search
 
 
 def search(browser, document):
