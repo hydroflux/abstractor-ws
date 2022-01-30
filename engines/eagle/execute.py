@@ -3,7 +3,7 @@ from actions.executor import close_program, search_documents_from_list
 
 from settings.driver import create_webdriver
 
-from engines.eagle.download import download_document
+from engines.eagle.download import execute_download
 from engines.eagle.login import account_login
 from engines.eagle.open_document import open_document
 from engines.eagle.record import next_result, record
@@ -25,7 +25,7 @@ def execute_program(abstract):
         search,
         open_document,
         record,
-        download_document,
+        execute_download,
         next_result
     )
     close_program(browser, abstract)

@@ -1,5 +1,3 @@
-from actions.downloader import prepare_for_download
-
 from selenium.common.exceptions import TimeoutException
 
 from selenium_utilities.element_interaction import center_element
@@ -9,7 +7,7 @@ from selenium_utilities.locators import (locate_element_by_class_name,
 
 from settings.county_variables.eagle import (pdf_viewer_class_name,
                                              purchase_button_class_name)
-from settings.download_management import previously_downloaded, update_download
+from settings.download_management import update_download
 from settings.general_functions import naptime
 from settings.iframe_handling import switch_to_default_content
 
@@ -61,10 +59,3 @@ def access_document_image(browser, abstract, document):
 def execute_download(browser, abstract, document):
     access_document_image(browser, abstract, document)
     update_download(browser, abstract, document)
-
-
-# Identical to 'leopard', 'tiger', 'rattlesnake', & 'jaguar' download_document
-def download_document(browser, abstract, document):
-    prepare_for_download(abstract, document)
-    if not previously_downloaded(abstract, document):
-        execute_download(browser, abstract, document)
