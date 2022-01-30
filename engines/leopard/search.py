@@ -115,17 +115,6 @@ def get_document_search_tab(browser, document):
     return document_search_tab
 
 
-def locate_document_search_field(browser, document):
-    try:
-        document_search_field_present = EC.element_to_be_clickable((By.ID, document_search_field_id))
-        WebDriverWait(browser, timeout).until(document_search_field_present)
-        document_search_field = browser.find_element_by_id(document_search_field_id)
-        return document_search_field
-    except TimeoutException:
-        print(f'Browser timed out trying to locate document number field for '
-              f'{document.extrapolate_value()}, please review....')
-
-
 def enter_key_value(browser, field, value):
     scroll_into_view(browser, field)
     field.clear()
@@ -133,9 +122,13 @@ def enter_key_value(browser, field, value):
 
 
 def enter_document_number(browser, document):
-    document_search_field = access_element(browser, locate_document_search_field, document, "document search field")
+    # document_search_field = access_element(browser, locate_document_search_field, document, "document search field")
+    document_search_field = locate_element_by_id(browser, document_search_field_id,
+                                                 "document search field", True, document)
     while document_search_field is None:
-        document_search_field = access_element(browser, locate_document_search_field, document, "document search field")
+        # document_search_field = access_element(browser, locate_document_search_field, document, "document search field")
+        document_search_field = locate_element_by_id(browser, document_search_field_id,
+                                                     "document search field", True, document)
         open_tab(browser, get_document_search_tab, document)
     enter_key_value(browser, document_search_field, document.document_value())
 
