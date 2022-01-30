@@ -108,10 +108,13 @@ def locate_document_search_tab(browser, document):
         check_for_browser_error(browser)
 
 
-def get_document_search_tab(browser, document):
-    document_search_tab = get_parent_element(locate_document_search_tab(browser, document))
+def access_document_search_tab(browser, document):
+    document_search_tab = get_parent_element(locate_element_by_id(browser, document_search_tab_id,
+                                                                  "document search tab", True, document))
     while document_search_tab is None:
-        document_search_tab = get_parent_element(locate_document_search_tab(browser, document))
+        check_for_browser_error(browser)
+        document_search_tab = get_parent_element(locate_element_by_id(browser, document_search_tab_id,
+                                                                      "document search tab", True, document))
     return document_search_tab
 
 
@@ -129,7 +132,7 @@ def enter_document_number(browser, document):
         # document_search_field = access_element(browser,locate_document_search_field,document,"document search field")
         document_search_field = locate_element_by_id(browser, document_search_field_id,
                                                      "document search field", True, document)
-        open_tab(browser, get_document_search_tab, document)
+        open_tab(browser, access_document_search_tab, document)
     enter_key_value(browser, document_search_field, document.document_value())
 
 
@@ -137,6 +140,7 @@ def access_book_and_page_search_tab(browser, document):
     book_and_page_search_tab = get_parent_element(locate_element_by_id(browser, book_and_page_search_tab_id,
                                                                        "book and page search tab", True, document))
     while book_and_page_search_tab is None:
+        check_for_browser_error(browser)
         book_and_page_search_tab = get_parent_element(locate_element_by_id(browser, book_and_page_search_tab_id,
                                                                            "book and page search tab", True, document))
     return book_and_page_search_tab
