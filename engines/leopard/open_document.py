@@ -2,6 +2,7 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+from selenium_utilities.locators import locate_elements_by_tag_name
 
 from settings.county_variables.leopard import (result_cell_tag,
                                                result_row_class,
@@ -100,18 +101,6 @@ def get_result_rows(browser, document):
     return locate_result_rows(browser, document, results_table_body)
 
 
-# get_row_cells could be tweaked to be a standardized function
-def get_row_cells(browser, document, row):
-    try:
-        row_cells_present = EC.presence_of_element_located((By.TAG_NAME, result_cell_tag))
-        WebDriverWait(browser, timeout).until(row_cells_present)
-        row_cells = row.find_elements_by_tag_name(result_cell_tag)
-        return row_cells
-    except TimeoutException:
-        print(f'Browser timed out trying to identify row cells for '
-              f'{document.extrapolate_value()}, please review.')
-
-
 def verify_document_number(document, cells):
     if document.document_value() in map(get_element_text, cells):
         return True
@@ -131,7 +120,8 @@ def verify_result(document, cells):
 
 
 def check_result(browser, document, row):
-    row_cells = get_row_cells(browser, document, row)
+    row_cells = locate_elements_by_tag_name(row, result_cell_tag,
+                                            "result row cells", False, document)
     if verify_result(document, row_cells):
         document.number_results += 1
         return True
