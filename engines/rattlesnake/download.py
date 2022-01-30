@@ -36,20 +36,15 @@ def open_download_page(browser, document):
     download_page.click()
 
 
-def add_to_cart(browser, document):
-    add_to_cart_button = locate_element_by_id(browser, add_to_cart_button_id,
-                                              "add to cart button", True, document)
-    add_to_cart_button.click()
-
-
 def handle_document_download_type(browser, abstract, document):
     if document.download_type == 'free':
         click_button(browser, locate_element_by_id, free_download_button_id,
-                     "free download button", document)
+                     "free download button", document)  # Click Free Download Button
         if verify_valid_download(browser):
             update_download(browser, abstract, document)
     elif document.download_type == 'paid':
-        add_to_cart(browser, document)
+        click_button(browser, locate_element_by_id, free_download_button_id,
+                     "add to cart button", document)  # Click Add To Cart Button
 
 
 def execute_download(browser, abstract, document):
