@@ -3,6 +3,7 @@ from selenium.common.exceptions import (StaleElementReferenceException,
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+from selenium_utilities.locators import locate_element_by_id
 
 from settings.county_variables.leopard import (book_and_page_search_button_id,
                                                book_and_page_search_tab_id,
@@ -194,19 +195,8 @@ def enter_page_number(browser, document, page):
     enter_key_value(browser, page_search_field, page)
 
 
-def locate_search_button(browser, document, button_id):
-    try:
-        search_button_present = EC.element_to_be_clickable((By.ID, button_id))
-        WebDriverWait(browser, timeout).until(search_button_present)
-        search_button = browser.find_element_by_id(button_id)
-        return search_button
-    except TimeoutException:
-        print(f'Browser timed out trying to locate search button for '
-              f'{document.extrapolate_value()}, please review....')
-
-
 def execute_search(browser, document, button_id):
-    search_button = locate_search_button(browser, document, button_id)
+    search_button = locate_element_by_id(browser, button_id, "search button", True, document)
     search_button.click()
 
 
