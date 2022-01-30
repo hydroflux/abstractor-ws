@@ -19,23 +19,6 @@ from engines.rattlesnake.validation import (verify_document_image_page_loaded,
                                     verify_valid_download)
 
 
-def locate_download_page(browser, document):
-    try:
-        download_page_present = EC.presence_of_element_located((By.ID, download_page_id))
-        WebDriverWait(browser, timeout).until(download_page_present)
-        download_page = browser.find_element_by_id(download_page_id)
-        return download_page
-    except TimeoutException:
-        print(f'Browser timed out trying to locate download page for '
-              f'{document.extrapolate_value()}, please review.')
-        input()
-
-
-def open_download_page(browser, document):
-    download_page = locate_download_page(browser, document)
-    download_page.click()
-
-
 def handle_document_download_type(browser, abstract, document):
     if document.download_type == 'free':
         click_button(browser, locate_element_by_id, free_download_button_id,
@@ -48,7 +31,8 @@ def handle_document_download_type(browser, abstract, document):
 
 
 def execute_download(browser, abstract, document):
-    open_download_page(browser, document)
+    click_button(browser, locate_element_by_id, download_page_id,
+                 "download page button", document)  # Open Download Page
     if verify_document_image_page_loaded(browser, document):
         handle_document_download_type(browser, abstract, document)
 
