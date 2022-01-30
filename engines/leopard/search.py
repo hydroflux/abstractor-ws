@@ -177,21 +177,12 @@ def enter_book_number(browser, document, book):
     enter_key_value(browser, book_search_field, book)
 
 
-def locate_page_search_field(browser, document):
-    try:
-        page_search_field_present = EC.element_to_be_clickable((By.ID, page_search_id))
-        WebDriverWait(browser, timeout).until(page_search_field_present)
-        page_search_field = browser.find_element_by_id(page_search_id)
-        return page_search_field
-    except TimeoutException:
-        print(f'Browser timed out trying to locate page field for '
-              f'{document.extrapolate_value()}, please review....')
-
-
 def enter_page_number(browser, document, page):
-    page_search_field = access_element(browser, locate_page_search_field, "page field")
+    # page_search_field = access_element(browser, locate_page_search_field, "page field")
+    page_search_field = locate_element_by_id(browser, page_search_id, "page search field", True, document)
     while page_search_field is None:
-        page_search_field = access_element(browser, locate_page_search_field, "page field")
+        # page_search_field = access_element(browser, locate_page_search_field, "page field")
+        page_search_field = locate_element_by_id(browser, page_search_id, "page search field", True, document)
         open_tab(browser, get_book_and_page_search_tab, document)
     enter_key_value(browser, page_search_field, page)
 
@@ -200,7 +191,7 @@ def execute_document_number_search(browser, document):
     open_tab(browser, get_document_search_tab, document)
     enter_document_number(browser, document)
     click_button(browser, locate_element_by_id, document_search_button_id,
-                 "document search button", document)
+                 "document search button", document)  # Execute Search
 
 
 def execute_book_and_page_search(browser, document):
