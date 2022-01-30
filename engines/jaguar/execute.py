@@ -2,7 +2,7 @@ from actions.executor import close_program, search_documents_from_list
 
 from settings.driver import create_webdriver
 
-from engines.jaguar.download import download_document
+from engines.jaguar.download import execute_download
 from engines.jaguar.login import account_login
 from engines.jaguar.open_document import open_document
 from engines.jaguar.record import record
@@ -21,7 +21,7 @@ def execute_program(abstract):
         search,
         open_document,
         record,
-        download_document,
+        execute_download,
         next_result=None
     )
     close_program(browser, abstract)
