@@ -7,7 +7,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 
 from selenium_utilities.element_interaction import center_element
 from selenium_utilities.locators import locate_element_by_class_name
-from serializers.recorder import record_comments
+from serializers.recorder import record_comments, record_value
 
 from settings.county_variables.eagle import (document_information_id,
                                              document_table_class,
@@ -296,18 +296,6 @@ def aggregate_document_information(browser, document_tables, dataframe, document
     record_notes(document_tables, dataframe)
 
 
-def record_effective_date(dataframe):
-    dataframe['Effective Date'].append('')
-
-
-def record_volume(dataframe):
-    dataframe['Volume'].append('')
-
-
-def record_document_link(dataframe):
-    dataframe["Document Link"].append('')
-
-
 def access_document_tables(browser, document):
     document_information = get_document_information(browser, document)
     return access_document_information_tables(browser, document, document_information)
@@ -320,9 +308,6 @@ def record_document_fields(browser, dataframe, document):
         # should probably be it's own function if continue using in this manner
     display_all_information(browser, document)
     aggregate_document_information(browser, document_tables, dataframe, document)
-    record_effective_date(dataframe)
-    record_volume(dataframe)
-    record_document_link(dataframe)
     # record_comments(dataframe, document)  # Moved after 'handle_document_image_status' integration
     scroll_to_top(browser)
 
@@ -408,6 +393,13 @@ def build_document_download_information(browser, abstract, document):
         abstract.dataframe['Comments'].append('')
 
 
+# Similar to the 'jaguar' record_empty_values
+def record_empty_values(abstract, document):
+    record_value(abstract, 'effective date', '')
+    record_value(abstract, 'volume', '')
+    record_value(abstract, 'document_link', '')
+
+
 def record(browser, abstract, document):
     if not abstract.review:
         if abstract.download_only:
@@ -418,4 +410,5 @@ def record(browser, abstract, document):
             record_document_fields(browser, abstract.dataframe, document)
             abstract.check_length()
             abstract.check_last_document(document)
+            record_empty_values(abstract, document)
             review_entry(browser, abstract.dataframe, document)

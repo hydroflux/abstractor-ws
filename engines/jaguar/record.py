@@ -87,7 +87,8 @@ def aggregate_document_table_information(browser, abstract, document):
     record_legal(abstract, document_tables[10], document)
 
 
-def record_empty_values(abstract, document):
+# Similar to the 'eagle' record_empty_values function
+def record_empty_values(abstract):
     record_value(abstract, 'effective date', '')
     record_value(abstract, 'book', '')
     record_value(abstract, 'volume', '')
@@ -103,4 +104,4 @@ def record(browser, abstract, document):
     record_document_type_and_number(browser, abstract, document)
     aggregate_document_table_information(browser, abstract, document)
     record_comments(abstract, document)
-    record_empty_values(abstract, document)
+    record_empty_values(abstract)
