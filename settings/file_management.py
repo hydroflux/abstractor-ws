@@ -1,9 +1,9 @@
 import os
 
 if __name__ == '__main__':
-    from settings.general_functions import four_character_padding, report_execution_time
+    from settings.general_functions import report_execution_time
 else:
-    from .general_functions import four_character_padding, report_execution_time
+    from .general_functions import report_execution_time
 
 
 def multiple_documents_comment(document):
