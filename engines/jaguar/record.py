@@ -47,28 +47,20 @@ def record_indexing_information(abstract, document_table, document):
     recording_date = date_from_string(recording_date_field.text[:10])
     # abstract.dataframe['Recording Date'].append(recording_date)
     record_value(abstract, 'recording date', recording_date)
-    record_value(abstract, 'effective date', '')
-    record_value(abstract, 'book', '')
-    record_value(abstract, 'volume', '')
-    record_value(abstract, 'page', '')
-    # dataframe['Effective Date'].append('')
-    # dataframe['Book'].append('N/A')
-    # dataframe['Volume'].append('')
-    # dataframe['Page'].append('N/A')
 
 
 def record_grantor(abstract, document_table, document):
     grantor_text = document_table.text.split('\n')[1:]
     grantor_list = list(map(title_strip, grantor_text))
     grantor = update_sentence_case_extras(list_to_string(grantor_list))
-    abstract.dataframe['Grantor'].append(grantor)
+    record_value(abstract, 'grantor', grantor)
 
 
 def record_grantee(abstract, document_table, document):
     grantee_text = document_table.text.split('\n')[1:]
     grantee_list = list(map(title_strip, grantee_text))
     grantee = update_sentence_case_extras(list_to_string(grantee_list))
-    abstract.dataframe['Grantee'].append(grantee)
+    record_value(abstract, 'grantee', grantee)
 
 
 def record_related_documents(abstract, document_table, document):
@@ -95,8 +87,15 @@ def aggregate_document_table_information(browser, abstract, document):
     record_legal(abstract, document_tables[10], document)
 
 
-def record_document_link(abstract, document):
-    # dataframe['Document Link'].append('')
+def record_empty_values(abstract, document):
+    record_value(abstract, 'effective date', '')
+    record_value(abstract, 'book', '')
+    record_value(abstract, 'volume', '')
+    record_value(abstract, 'page', '')
+    # dataframe['Effective Date'].append('')
+    # dataframe['Book'].append('N/A')
+    # dataframe['Volume'].append('')
+    # dataframe['Page'].append('N/A')
     record_value(abstract, 'document_link', '')
 
 
@@ -104,4 +103,4 @@ def record(browser, abstract, document):
     record_document_type_and_number(browser, abstract, document)
     aggregate_document_table_information(browser, abstract, document)
     record_comments(abstract, document)
-    record_document_link(abstract, document)
+    record_empty_values(abstract, document)
