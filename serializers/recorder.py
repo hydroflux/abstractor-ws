@@ -11,5 +11,5 @@ def record_comments(abstract, document):
         abstract.dataframe["Comments"].append(multiple_documents_comment(document))
 
 
-def record_invalid_value(abstract, column, value):
+def record_value(abstract, column, value):
     abstract.dataframe[column.title()].append(value)

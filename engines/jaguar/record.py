@@ -1,7 +1,7 @@
 from selenium_utilities.locators import (locate_element_by_class_name,
                                          locate_element_by_id,
                                          locate_elements_by_tag_name)
-from serializers.recorder import record_comments, record_invalid_value
+from serializers.recorder import record_comments, record_value
 
 from settings.county_variables.jaguar import (
     document_tables_tag, document_type_and_number_field_id,
@@ -24,7 +24,7 @@ def access_document_type_and_number(browser, document):
 
 
 def handle_reception_number(dataframe, document):
-    if validate_reception_number(document):
+    if validate_reception_number(document, document.reception_number):
         dataframe['Reception Number'].append(document.reception_number)
     else:
         print(f'Reception number "{document.reception_number}" does not match the expected value for '
@@ -44,10 +44,10 @@ def record_indexing_information(abstract, document_table, document):
                                                         "recording date", document=document)
     recording_date = date_from_string(recording_date_field.text[:10])
     abstract.dataframe['Recording Date'].append(recording_date)
-    record_invalid_value(abstract, 'effective date', '')
-    record_invalid_value(abstract, 'book', '')
-    record_invalid_value(abstract, 'volume', '')
-    record_invalid_value(abstract, 'page', '')
+    record_value(abstract, 'effective date', '')
+    record_value(abstract, 'book', '')
+    record_value(abstract, 'volume', '')
+    record_value(abstract, 'page', '')
     # dataframe['Effective Date'].append('')
     # dataframe['Book'].append('N/A')
     # dataframe['Volume'].append('')
@@ -86,12 +86,13 @@ def aggregate_document_table_information(browser, abstract, document):
     record_legal(abstract, document_tables[10], document)
 
 
-def record_document_link(dataframe, document):
-    dataframe['Document Link'].append('')
+def record_document_link(abstract, document):
+    # dataframe['Document Link'].append('')
+    record_value(abstract, 'document_link', '')
 
 
 def record(browser, abstract, document):
     record_document_type_and_number(browser, abstract, document)
     aggregate_document_table_information(browser, abstract, document)
     record_comments(abstract, document)
-    record_document_link(abstract.dataframe, document)
+    record_document_link(abstract, document)
