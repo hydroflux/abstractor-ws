@@ -272,7 +272,7 @@ def record_related_documents(browser, abstract, document_table, document):
     # dataframe["Related Documents"].append(drop_superfluous_information(related_documents))
 
 
-def record_notes(document_tables, dataframe):
+def record_notes(abstract, document_tables):
     try:
         notes = access_field_body_no_title(document_tables[5])
         if notes == search_errors[3] or notes == search_errors[4] or notes == search_errors[5]:
@@ -282,10 +282,10 @@ def record_notes(document_tables, dataframe):
         else:
             if notes.strip() != "":
                 notes = f'Notes: {notes}'
-                if dataframe["Legal"][-1] == "":
-                    dataframe["Legal"][-1] = notes
+                if abstract.dataframe["Legal"][-1] == "":
+                    abstract.dataframe["Legal"][-1] = notes
                 else:
-                    dataframe["Legal"][-1] = f'{dataframe["Legal"][-1]}\n{notes}'
+                    abstract.dataframe["Legal"][-1] = f'{abstract.dataframe["Legal"][-1]}\n{notes}'
     except IndexError:
         pass
 
@@ -296,7 +296,7 @@ def aggregate_document_information(browser, abstract, document_tables, document)
     record_name_data(abstract, document_tables[2])
     record_legal_data(abstract, document_tables[4])
     record_related_documents(browser, abstract, document_tables[-2], document)
-    record_notes(document_tables, dataframe)
+    record_notes(abstract, document_tables)
 
 
 def access_document_tables(browser, document):
@@ -304,7 +304,7 @@ def access_document_tables(browser, document):
     return access_document_information_tables(browser, document, document_information)
 
 
-def record_document_fields(browser, dataframe, document):
+def record_document_fields(browser, abstract, document):
     document_tables = access_document_tables(browser, document)
     if execution_review:
         medium_nap()   # Adding a flag instead of having to comment the line our every time for review
@@ -315,18 +315,20 @@ def record_document_fields(browser, dataframe, document):
     scroll_to_top(browser)
 
 
-def review_entry(browser, dataframe, document):
-    while dataframe["Grantor"][-1] == missing_values[0] and dataframe["Grantee"][-1] == missing_values[0]\
-            and dataframe["Related Documents"][-1] == missing_values[1] or document.reception_number.strip() == '':
+def review_entry(browser, abstract, document):
+    while (abstract.dataframe["Grantor"][-1] == missing_values[0] and
+           abstract.dataframe["Grantee"][-1] == missing_values[0] and
+           abstract.dataframe["Related Documents"][-1] == missing_values[1] or
+           document.reception_number.strip() == ''):
         print("Recording of last document was processed incorrectly, attempting to record again.")
-        re_record_document_fields(browser, dataframe, document)
+        re_record_document_fields(browser, abstract, document)
 
 
 def re_record_document_fields(browser, abstract, document):
     abstract.drop_last_entry()
     browser.refresh()
     medium_nap()
-    record_document_fields(browser, abstract.dataframe, document)
+    record_document_fields(browser, abstract, document)
 
 
 def get_previous_result_button(browser, document):
@@ -403,8 +405,8 @@ def record(browser, abstract, document):
         else:
             record_comments(abstract, document)  # Before 'handle_document_image_status' to check for multiple documents
             handle_document_image_status(browser, abstract, document)
-            record_document_fields(browser, abstract.dataframe, document)
+            record_document_fields(browser, abstract, document)
             abstract.check_length()
             abstract.check_last_document(document)
             record_empty_values(abstract, ['effective date', 'volume', 'document link'])
-            review_entry(browser, abstract.dataframe, document)
+            review_entry(browser, abstract, document)
