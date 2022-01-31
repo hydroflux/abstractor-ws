@@ -1,12 +1,6 @@
 import os
 
 
-def multiple_documents_comment(document):
-    return (f'Multiple documents located at {document.extrapolate_value()}'
-            f' on the {document.county} recording website; Each of the {document.number_results}'
-            f' documents has been listed, please review')
-
-
 def rename_documents_in_directory(county, directory):
     os.chdir(directory)
     for pdf in os.listdir(directory):

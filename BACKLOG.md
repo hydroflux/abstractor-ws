@@ -43,7 +43,6 @@
 - [ ] Turn off 'download' flag if document image is not available?--could be a better solution to checking image available before trying to download
 - [ ] Add date / year into the document class in order to add the option to sort by date
 - [ ] Consolidate the 'value' attribute and the 'document_value' instance function--too confusing and creating problems
-- [ ] Create class functions for 'document_found', 'document_downloaded', 'no_document_found' and 'no_document_downloaded' using the functions from the 'file_management' script
 - [ ] Set the 'image_available' attribute automatically True, to be turned to 'false' if otherwise noted
 - [ ] Add an 'is_duplicate' attribute to the Document class, set using 'download_management' (or otherwise the 'previously_downloaded' function) and called in the printout statements
 - [ ] Consider adding the document 'recording variables' as attributes on the Document class, which can then be recorded with an extrapolated 'record' type script in the 'actions' directory
@@ -339,7 +338,6 @@
 - [ ] Remove an additional space when dropping "see record" in order to cut the new line character out
 - [ ] Create a double-check option for eagle--possibly under the "review" as a switch in order to check for any related documents missing
 - [ ] Compare the 'switch_into_frame' and dependent 'access_pdf_viewer' functions from the 'download' (and 'record'?) script to try and extrapolate into the generalized 'frame_handling' script
-- [ ] Document does not need to be recorded in the 'handle_single_document' function if 'review' is true--create some sort of replacement to only acknowledge that the document has been 'found' ('document_found')
 - [ ] Create function logic for the 'record' function of the 'record' script to only grab the 'reception_number' if 'review' or 'download_only' are true
 - [ ] Consider eliminating the 'review_entry' function path of the 'record' script--doesn't seem to be in use (could determine if log files are developed)
 - [ ] Refactor all of the pdf viewer handling in the 'download' script

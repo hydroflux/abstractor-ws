@@ -41,7 +41,7 @@ def previously_downloaded(abstract, document):
     document_download_path = build_previous_download_path(abstract, document)
     if os.path.exists(document_download_path):
         if is_duplicate(abstract, document):
-            abstract.document_downloaded(document)  # Add an alternative for 'already downloaded'
+            abstract.report_document_download(document)  # Add an alternative for 'already downloaded'
             return True
         else:
             # print statement about duplicate
