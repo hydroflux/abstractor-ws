@@ -1,3 +1,6 @@
+from datetime import datetime
+
+
 class Abstract:
     def __init__(self, type, county, target_directory, file_name, program,
                  headless, download, dataframe,
@@ -105,19 +108,22 @@ class Abstract:
     def list_remaining_documents(self, document):
         return f'{self.remaining_documents(document)} documents remaining'
 
+    def report_execution_time(document):
+        return str(datetime.now() - document.start_time)
+
     def document_found(self, document):
         if self.review is False:
             print('Document located at '
-                f'{document.extrapolate_value()} recorded'
-                f'{account_for_number_results(document)}, '
-                f'{list_remaining_documents(self.document_list, document)} '
-                f'({report_execution_time(document.start_time)})')
+                  f'{document.extrapolate_value()} recorded'
+                  f'{self.account_for_number_results(document)}, '
+                  f'{self.list_remaining_documents(document)} '
+                  f'({self.report_execution_time(document)})')
         elif self.review is True:
             input(f'Document located at {document.extrapolate_value()} found'
-                f'{account_for_number_results(document)}, '
-                'please review & press enter to continue... '
-                f'({list_remaining_documents(self.document_list, document)}) '
-                f'({report_execution_time(document.start_time)})')
+                  f'{self.account_for_number_results(document)}, '
+                  'please review & press enter to continue... '
+                  f'({self.list_remaining_documents(document)}) '
+                  f'({self.report_execution_time(document)})')
         # elif alt == "download":
         #     print('Document located at '
         #           f'{document.extrapolate_value()} downloaded, '
@@ -127,14 +133,14 @@ class Abstract:
     def no_document_found(self, document):
         if self.review is False:
             print('No document found at '
-                f'{document.extrapolate_value()}, '
-                f'{list_remaining_documents(self.document_list, document)} '
-                f'({report_execution_time(document.start_time)})')
+                  f'{document.extrapolate_value()}, '
+                  f'{self.list_remaining_documents(document)} '
+                  f'({self.report_execution_time(document)})')
         elif self.review is True:
             input(f'No document found at {document.extrapolate_value()}, '
-                'please review & press enter to continue... '
-                f'({list_remaining_documents(self.document_list, document)}) '
-                f'({report_execution_time(document.start_time)})')
+                  'please review & press enter to continue... '
+                  f'({self.list_remaining_documents(document)}) '
+                  f'({self.report_execution_time(document)})')
 
 
 # - [ ] Put general button_ids on the 'abstract' class (login, logout, etc.)
