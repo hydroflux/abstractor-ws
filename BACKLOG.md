@@ -24,6 +24,7 @@
 - [ ] Drop the 'document_directory_files' attribute from the Abstract class
 - [ ] Add the 'prepare_for_download' function from different 'download' scripts as an instance function--need to include the 'create_document_directory' function in some capacity as well (add optional arguments for things like 'stock_download')
 - [ ] Create a 'CountyFunctions' class (or use the 'county' class??) to set the functions to be used in the 'actions' directory as attributes
+- [ ] Change "Document Found" so that it lists either "recorded" or "recorded & downloaded" instead of located
 
 ### Abstract Class To Do
 
@@ -179,8 +180,7 @@
 
 ### Dataframe Management To Do
 
-- [ ] Change "Document Found" so that it lists either "recorded" or "recorded & downloaded" instead of located
-- [ ] Best order of operations for file management should be to create the folder first & then put the documents folder inside of it, rather than bundling at the end
+- [ ] Up-To-Date
 
 ### Download Management To Do
 

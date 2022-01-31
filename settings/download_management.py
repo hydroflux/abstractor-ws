@@ -3,7 +3,6 @@ from time import sleep, time
 
 from selenium.common.exceptions import (NoSuchWindowException, JavascriptException,
                                         WebDriverException)
-from settings.dataframe_management import document_downloaded
 
 from settings.general_functions import medium_nap, naptime
 
@@ -42,7 +41,7 @@ def previously_downloaded(abstract, document):
     document_download_path = build_previous_download_path(abstract, document)
     if os.path.exists(document_download_path):
         if is_duplicate(abstract, document):
-            document_downloaded(abstract, document)  # Add an alternative for 'already downloaded'
+            abstract.document_downloaded(document)  # Add an alternative for 'already downloaded'
             return True
         else:
             # print statement about duplicate
@@ -202,6 +201,6 @@ def update_download(browser, abstract, document):
     naptime()
     rename_download(abstract, document)
     check_for_rename(abstract, document)
-    document_downloaded(abstract, document)
+    abstract.document_downloaded(document)
     # Without a conditional, no_download will never be thrown???
     # no_download(abstract, document)
