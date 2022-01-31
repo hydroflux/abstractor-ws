@@ -13,7 +13,7 @@ from settings.county_variables.crocodile import (document_image_title,
                                                  download_menu_id,
                                                  stock_download)
 from settings.download_management import previously_downloaded, update_download
-from settings.file_management import (create_document_directory,
+from settings.dataframe_management import (create_document_directory,
                                       extrapolate_document_value)
 from settings.general_functions import javascript_script_execution, timeout
 

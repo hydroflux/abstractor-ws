@@ -17,7 +17,7 @@ from settings.county_variables.rattlesnake import (document_type_id,
                                                    recording_date_id,
                                                    row_data_tag_name,
                                                    volume_id)
-from settings.file_management import multiple_documents_comment
+from settings.dataframe_management import multiple_documents_comment
 from settings.general_functions import (date_from_string, element_title_strip,
                                         list_to_string, title_strip,
                                         update_sentence_case_extras)

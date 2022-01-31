@@ -22,7 +22,7 @@ from settings.county_variables.eagle import (document_information_id,
                                              result_buttons_class,
                                              stock_download_suffix)
 from settings.county_variables.general import search_errors
-from settings.file_management import multiple_documents_comment
+from settings.dataframe_management import multiple_documents_comment
 from settings.general_functions import (long_timeout, medium_nap, naptime,
                                         scroll_to_top, short_nap, timeout,
                                         update_sentence_case_extras)

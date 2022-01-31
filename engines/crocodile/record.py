@@ -13,7 +13,7 @@ from settings.county_variables.crocodile import (
     row_header_tag, row_titles, show_all_rows_text, table_body_tag,
     table_row_tag)
 from settings.county_variables.general import not_applicable
-from settings.file_management import (extrapolate_document_value,
+from settings.dataframe_management import (extrapolate_document_value,
                                       multiple_documents_comment)
 from settings.general_functions import (get_direct_children, get_element_text,
                                         list_to_string, set_image_link,

@@ -12,7 +12,7 @@ from settings.county_variables.crocodile import (document_description_title,
                                                  results_page_id,
                                                  results_statement_tag,
                                                  results_table_id)
-from settings.file_management import document_value, extrapolate_document_value
+from settings.dataframe_management import document_value, extrapolate_document_value
 from settings.general_functions import (get_direct_children, get_direct_link,
                                         get_element_text,
                                         javascript_script_execution,

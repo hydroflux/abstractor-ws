@@ -3,7 +3,7 @@ from time import sleep, time
 
 from selenium.common.exceptions import (NoSuchWindowException, JavascriptException,
                                         WebDriverException)
-from settings.file_management import document_downloaded
+from settings.dataframe_management import document_downloaded
 
 from settings.general_functions import medium_nap, naptime
 

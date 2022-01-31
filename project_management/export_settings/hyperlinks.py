@@ -1,5 +1,5 @@
 import os
-from settings.file_management import strip_document_number_from_file_name
+from settings.dataframe_management import strip_document_number_from_file_name
 
 # The purposed of this script is to create hyperlinks for abstract exports
 # it's "temporary" because the ideal situation will be to add hyperlinks directly into

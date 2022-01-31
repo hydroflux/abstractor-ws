@@ -11,7 +11,7 @@ from settings.county_variables.armadillo import (book_and_page_text,
                                                  related_documents_text,
                                                  related_types,
                                                  type_and_number_table_id)
-from settings.file_management import multiple_documents_comment
+from settings.dataframe_management import multiple_documents_comment
 from settings.general_functions import (date_from_string, element_title_strip,
                                         four_character_padding, list_to_string,
                                         newline_split, print_list_by_index,

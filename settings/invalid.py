@@ -1,5 +1,5 @@
 from settings.county_variables.general import search_errors
-from settings.file_management import no_document_downloaded, no_document_found
+from settings.dataframe_management import no_document_downloaded, no_document_found
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("bad_search", __name__)

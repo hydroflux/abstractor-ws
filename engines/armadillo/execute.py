@@ -2,7 +2,7 @@ from settings.objects.abstract_dataframe import abstract_dictionary as dataframe
 from settings.invalid import no_document_image, record_invalid_search
 from settings.driver import create_webdriver
 from project_management.export import export_document, export_hyperlinks
-from settings.file_management import (bundle_project, check_length,
+from settings.dataframe_management import (bundle_project, check_length,
                                       document_downloaded, document_found,
                                       no_document_downloaded,
                                       no_document_found)
