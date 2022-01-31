@@ -1,4 +1,4 @@
-from actions.executor import close_program, search_documents_from_list
+from serializers.executor import close_program, search_documents_from_list
 
 from engines.rattlesnake.download import execute_download
 from engines.rattlesnake.download_early_documents import \

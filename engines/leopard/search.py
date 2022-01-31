@@ -17,7 +17,7 @@ from settings.county_variables.leopard import (book_and_page_search_button_id,
                                                page_search_id,
                                                search_navigation_id,
                                                search_script, search_title)
-from settings.file_management import split_book_and_page
+
 from settings.general_functions import (javascript_script_execution, naptime,
                                         scroll_into_view, timeout)
 
@@ -164,7 +164,7 @@ def execute_document_number_search(browser, document):
 
 def execute_book_and_page_search(browser, document):
     open_tab(browser, access_book_and_page_search_tab, document)
-    book, page = split_book_and_page(document)
+    book, page = document.document_value()
     enter_book_number(browser, document, book)
     enter_page_number(browser, document, page)
     click_button(browser, locate_element_by_id, book_and_page_search_button_id,
