@@ -71,11 +71,6 @@ def record_grantee(abstract, document_table, document):
     abstract.dataframe['Grantee'].append(grantee)
 
 
-def record_parties_information(abstract, document_tables, document):
-    record_grantor(abstract, document_tables[6], document)
-    record_grantee(abstract, document_tables[7], document)
-
-
 def record_related_documents(abstract, document_table, document):
     related_documents_text = document_table.text.split('\n')[1:]
     related_documents_list = list(map(title_strip, related_documents_text))
@@ -94,7 +89,8 @@ def aggregate_document_table_information(browser, abstract, document):
     document_tables = locate_elements_by_tag_name(browser, document_tables_tag,
                                                   "document tables", document=document)
     record_indexing_information(abstract, document_tables[2], document)
-    record_parties_information(abstract, document_tables, document)
+    record_grantor(abstract, document_tables[6], document)
+    record_grantee(abstract, document_tables[7], document)
     record_related_documents(abstract, document_tables[8], document)
     record_legal(abstract, document_tables[10], document)
 
