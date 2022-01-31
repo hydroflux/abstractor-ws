@@ -1,4 +1,4 @@
-from actions.executor import close_program, search_documents_from_list
+from serializers.executor import close_program, search_documents_from_list
 from engines.tiger.transform import transform_document_list
 from settings.driver import create_webdriver
 

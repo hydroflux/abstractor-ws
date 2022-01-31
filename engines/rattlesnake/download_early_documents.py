@@ -1,7 +1,7 @@
 import os
 
 from selenium.webdriver.support.ui import Select
-from actions.downloader import create_document_directory
+from serializers.downloader import create_document_directory
 from selenium_utilities.inputs import click_button
 from selenium_utilities.locators import locate_element_by_id as locate_element
 from selenium_utilities.locators import locate_elements_by_tag_name

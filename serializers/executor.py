@@ -1,4 +1,4 @@
-from actions.downloader import download_document
+from serializers.downloader import download_document
 
 from project_management.export import export_document
 
