@@ -55,36 +55,36 @@ def record_indexing_information(abstract, document_table, document):
     # dataframe['Page'].append('N/A')
 
 
-def record_parties_information(document_tables, dataframe, document):
+def record_parties_information(abstract, document_tables, document):
     grantor_text = document_tables[6].text.split('\n')[1:]
     grantee_text = document_tables[7].text.split('\n')[1:]
     grantor_list = list(map(title_strip, grantor_text))
     grantee_list = list(map(title_strip, grantee_text))
     grantor = update_sentence_case_extras(list_to_string(grantor_list))
     grantee = update_sentence_case_extras(list_to_string(grantee_list))
-    dataframe['Grantor'].append(grantor)
-    dataframe['Grantee'].append(grantee)
+    abstract.dataframe['Grantor'].append(grantor)
+    abstract.dataframe['Grantee'].append(grantee)
 
 
-def record_related_documents(document_table, dataframe, document):
+def record_related_documents(abstract, document_table, document):
     related_documents_text = document_table.text.split('\n')[1:]
     related_documents_list = list(map(title_strip, related_documents_text))
     related_documents = list_to_string(related_documents_list)
-    dataframe['Related Documents'].append(related_documents)
+    abstract.dataframe['Related Documents'].append(related_documents)
 
 
-def record_legal(document_table, dataframe, document):
+def record_legal(abstract, document_table, document):
     legal = title_strip(document_table.text)
-    dataframe['Legal'].append(legal)
+    abstract.dataframe['Legal'].append(legal)
 
 
 def aggregate_document_table_information(browser, abstract, document):
     document_tables = locate_elements_by_tag_name(browser, document_tables_tag,
                                                   "document tables", document=document)
     record_indexing_information(abstract, document_tables[2], document)
-    record_parties_information(document_tables, dataframe, document)
-    record_related_documents(document_tables[8], dataframe, document)
-    record_legal(document_tables[10], dataframe, document)
+    record_parties_information(abstract, document_tables, document)
+    record_related_documents(abstract, document_tables[8], document)
+    record_legal(abstract, document_tables[10], document)
 
 
 def record_comments(dataframe, document):
