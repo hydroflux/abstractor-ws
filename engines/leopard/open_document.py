@@ -7,7 +7,7 @@ from settings.county_variables.leopard import (result_cell_tag,
                                                result_row_class,
                                                results_body_tag,
                                                results_count_id, results_id)
-from settings.file_management import split_book_and_page
+
 from settings.general_functions import get_element_text, scroll_into_view
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
@@ -60,7 +60,7 @@ def verify_document_number(document, cells):
 
 
 def verify_book_and_page_numbers(document, cells):
-    book, page = split_book_and_page(document)
+    book, page = document.document_value()
     if book and page in map(get_element_text, cells):
         return True
 
