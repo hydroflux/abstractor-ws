@@ -93,6 +93,18 @@ class Abstract:
     def last_document(self, document):
         return self.document_list[self.document_list.index(document) - 1]
 
+    def account_for_number_results(document):
+        if document.number_results > 1:
+            return f' - {document.number_results} results found for {document.extrapolate_value()}'
+        else:
+            return ''
+
+    def remaining_documents(document_list, document):
+        return len(document_list) - document_list.index(document) - 1
+
+    def list_remaining_documents(self, document):
+        return f'{self.remaining_documents(document)} documents remaining'
+
     def document_found(self, document):
         if self.review is False:
             print('Document located at '

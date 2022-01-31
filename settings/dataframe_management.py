@@ -28,21 +28,6 @@ def multiple_documents_comment(document):
 #     return volume, page
 
 
-def account_for_number_results(document):
-    if document.number_results > 1:
-        return f' - {document.number_results} results found for {document.extrapolate_value()}'
-    else:
-        return ''
-
-
-def remaining_documents(document_list, document):
-    return len(document_list) - document_list.index(document) - 1
-
-
-def list_remaining_documents(document_list, document):
-    return f'{remaining_documents(document_list, document)} documents remaining'
-
-
 def document_downloaded(abstract, document):
     print(f'Document located at '
           f'{document.extrapolate_value()} downloaded'
