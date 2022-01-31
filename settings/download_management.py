@@ -201,6 +201,6 @@ def update_download(browser, abstract, document):
     naptime()
     rename_download(abstract, document)
     check_for_rename(abstract, document)
-    abstract.document_downloaded(document)
+    abstract.report_document_download(document)
     # Without a conditional, no_download will never be thrown???
     # no_download(abstract, document)

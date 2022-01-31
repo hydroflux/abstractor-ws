@@ -71,4 +71,4 @@ def no_document_image(abstract, document):
 
 def no_download(abstract, document):
     unable_to_download(abstract, document)
-    abstract.no_document_downloaded(document)
+    abstract.report_document_download(document, False)
