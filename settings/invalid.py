@@ -1,5 +1,4 @@
 from settings.county_variables.general import search_errors
-from settings.dataframe_management import no_document_downloaded, no_document_found
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("bad_search", __name__)
@@ -47,7 +46,7 @@ def record_invalid_search(abstract, document):
         abstract.dataframe["Legal"].append(search_errors[-2])
         abstract.dataframe["Related Documents"].append(search_errors[-2])
         add_bad_search_message(abstract.dataframe, document)
-    no_document_found(abstract, document)
+    abstract.no_document_found(document)
 
 
 def unable_to_download(abstract, document):
@@ -72,4 +71,4 @@ def no_document_image(abstract, document):
 
 def no_download(abstract, document):
     unable_to_download(abstract, document)
-    no_document_downloaded(abstract, document)
+    abstract.no_document_downloaded(document)
