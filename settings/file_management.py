@@ -12,20 +12,20 @@ def multiple_documents_comment(document):
             f' documents has been listed, please review')
 
 
-# Consolidate split_book_and_page & split_volume_and_page
-def split_book_and_page(document):
-    book = four_character_padding(document.document_value()[0])
-    page = four_character_padding(document.document_value()[1])
-    return book, page
-    # Check to see if the padding is affecting search results
-    # Consider only adding the padding when updating the document frame
+# # Consolidate split_book_and_page & split_volume_and_page
+# def split_book_and_page(document):
+#     book = four_character_padding(document.document_value()[0])
+#     page = four_character_padding(document.document_value()[1])
+#     return book, page
+#     # Check to see if the padding is affecting search results
+#     # Consider only adding the padding when updating the document frame
 
 
 # This function isn't necessary, just split instead of call
-def split_volume_and_page(document):
-    volume = document.document_value()[0]
-    page = document.document_value()[1]
-    return volume, page
+# def split_volume_and_page(document):
+#     volume = document.document_value()[0]
+#     page = document.document_value()[1]
+#     return volume, page
 
 
 def account_for_number_results(document):
