@@ -23,9 +23,10 @@ def access_document_type_and_number(browser, document):
     return document_type_and_number.split(' - ')
 
 
-def handle_reception_number(dataframe, document):
+def handle_reception_number(abstract, document):
     if validate_reception_number(document, document.reception_number):
-        dataframe['Reception Number'].append(document.reception_number)
+        record_value(abstract, 'reception number', document.reception_number)
+        # dataframe['Reception Number'].append(document.reception_number)
     else:
         print(f'Reception number "{document.reception_number}" does not match the expected value for '
               f'{document.extrapolate_value()}, please review and press enter to continue...')
@@ -35,7 +36,8 @@ def handle_reception_number(dataframe, document):
 def record_document_type_and_number(browser, abstract, document):
     document_type, reception_number = access_document_type_and_number(browser, document)
     document.reception_number = reception_number
-    abstract.dataframe['Document Type'].append(update_sentence_case_extras(title_strip(document_type)))
+    record_value(abstract, 'document type', update_sentence_case_extras(title_strip(document_type)))
+    # abstract.dataframe['Document Type'].append(update_sentence_case_extras(title_strip(document_type)))
     handle_reception_number(abstract, document)
 
 
@@ -43,7 +45,8 @@ def record_indexing_information(abstract, document_table, document):
     recording_date_field = locate_element_by_class_name(document_table, recording_date_field_class,
                                                         "recording date", document=document)
     recording_date = date_from_string(recording_date_field.text[:10])
-    abstract.dataframe['Recording Date'].append(recording_date)
+    # abstract.dataframe['Recording Date'].append(recording_date)
+    record_value(abstract, 'recording date', recording_date)
     record_value(abstract, 'effective date', '')
     record_value(abstract, 'book', '')
     record_value(abstract, 'volume', '')
@@ -54,27 +57,37 @@ def record_indexing_information(abstract, document_table, document):
     # dataframe['Page'].append('N/A')
 
 
-def record_parties_information(abstract, document_tables, document):
-    grantor_text = document_tables[6].text.split('\n')[1:]
-    grantee_text = document_tables[7].text.split('\n')[1:]
+def record_grantor(abstract, document_table, document):
+    grantor_text = document_table.text.split('\n')[1:]
     grantor_list = list(map(title_strip, grantor_text))
-    grantee_list = list(map(title_strip, grantee_text))
     grantor = update_sentence_case_extras(list_to_string(grantor_list))
-    grantee = update_sentence_case_extras(list_to_string(grantee_list))
     abstract.dataframe['Grantor'].append(grantor)
+
+
+def record_grantee(abstract, document_table, document):
+    grantee_text = document_table.text.split('\n')[1:]
+    grantee_list = list(map(title_strip, grantee_text))
+    grantee = update_sentence_case_extras(list_to_string(grantee_list))
     abstract.dataframe['Grantee'].append(grantee)
+
+
+def record_parties_information(abstract, document_tables, document):
+    record_grantor(abstract, document_tables[6], document)
+    record_grantee(abstract, document_tables[7], document)
 
 
 def record_related_documents(abstract, document_table, document):
     related_documents_text = document_table.text.split('\n')[1:]
     related_documents_list = list(map(title_strip, related_documents_text))
     related_documents = list_to_string(related_documents_list)
-    abstract.dataframe['Related Documents'].append(related_documents)
+    record_value(abstract, 'related documents', related_documents)
+    # abstract.dataframe['Related Documents'].append(related_documents)
 
 
 def record_legal(abstract, document_table, document):
     legal = title_strip(document_table.text)
-    abstract.dataframe['Legal'].append(legal)
+    record_value(abstract, 'legal', legal)
+    # abstract.dataframe['Legal'].append(legal)
 
 
 def aggregate_document_table_information(browser, abstract, document):
