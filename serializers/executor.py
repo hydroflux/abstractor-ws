@@ -9,7 +9,7 @@ from settings.invalid import record_invalid_search
 
 def handle_single_document(browser, abstract, document, record, execute_download):
     record(browser, abstract, document)
-    abstract.document_found(document)
+    abstract.report_document_found(document)
     if abstract.download and document.image_available and not abstract.review:
         download_document(browser, abstract, document, execute_download)
 

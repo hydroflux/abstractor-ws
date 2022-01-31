@@ -46,7 +46,7 @@ def record_invalid_search(abstract, document):
         abstract.dataframe["Legal"].append(search_errors[-2])
         abstract.dataframe["Related Documents"].append(search_errors[-2])
         add_bad_search_message(abstract.dataframe, document)
-    abstract.no_document_found(document)
+    abstract.report_document_found(document, False)
 
 
 def unable_to_download(abstract, document):

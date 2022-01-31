@@ -111,36 +111,36 @@ class Abstract:
     def report_execution_time(self, time):
         return str(datetime.now() - time)
 
-    def document_found(self, document):
-        if self.review is False:
-            print('Document located at '
-                  f'{document.extrapolate_value()} recorded'
-                  f'{self.account_for_number_results(document)}, '
-                  f'{self.list_remaining_documents(document)} '
-                  f'({self.report_execution_time(document.start_time)})')
-        elif self.review is True:
-            input(f'Document located at {document.extrapolate_value()} found'
-                  f'{self.account_for_number_results(document)}, '
-                  'please review & press enter to continue... '
-                  f'({self.list_remaining_documents(document)}) '
-                  f'({self.report_execution_time(document.start_time)})')
-        # elif alt == "download":
-        #     print('Document located at '
-        #           f'{document.extrapolate_value()} downloaded, '
-        #           f'{list_remaining_documents(document_list, document)} '
-        #           f'({report_execution_time(start_time)})')
-
-    def no_document_found(self, document):
-        if self.review is False:
-            print('No document found at '
-                  f'{document.extrapolate_value()}, '
-                  f'{self.list_remaining_documents(document)} '
-                  f'({self.report_execution_time(document.start_time)})')
-        elif self.review is True:
-            input(f'No document found at {document.extrapolate_value()}, '
-                  'please review & press enter to continue... '
-                  f'({self.list_remaining_documents(document)}) '
-                  f'({self.report_execution_time(document.start_time)})')
+    def report_document_found(self, document, located=True):
+        if located:
+            if self.review is False:
+                print('Document located at '
+                      f'{document.extrapolate_value()} recorded'
+                      f'{self.account_for_number_results(document)}, '
+                      f'{self.list_remaining_documents(document)} '
+                      f'({self.report_execution_time(document.start_time)})')
+            elif self.review is True:
+                input(f'Document located at {document.extrapolate_value()} found'
+                      f'{self.account_for_number_results(document)}, '
+                      'please review & press enter to continue... '
+                      f'({self.list_remaining_documents(document)}) '
+                      f'({self.report_execution_time(document.start_time)})')
+            # elif alt == "download":
+            #     print('Document located at '
+            #           f'{document.extrapolate_value()} downloaded, '
+            #           f'{list_remaining_documents(document_list, document)} '
+            #           f'({report_execution_time(start_time)})')
+        else:
+            if self.review is False:
+                print('No document found at '
+                      f'{document.extrapolate_value()}, '
+                      f'{self.list_remaining_documents(document)} '
+                      f'({self.report_execution_time(document.start_time)})')
+            elif self.review is True:
+                input(f'No document found at {document.extrapolate_value()}, '
+                      'please review & press enter to continue... '
+                      f'({self.list_remaining_documents(document)}) '
+                      f'({self.report_execution_time(document.start_time)})')
 
     def report_document_download(self, document, downloaded=True):
         if downloaded:
