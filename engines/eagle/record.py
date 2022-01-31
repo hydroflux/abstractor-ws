@@ -6,6 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
 from selenium_utilities.element_interaction import center_element
+from serializers.recorder import record_comments
 
 from settings.county_variables.eagle import (document_information_id,
                                              document_table_class,
@@ -22,7 +23,6 @@ from settings.county_variables.eagle import (document_information_id,
                                              result_buttons_class,
                                              stock_download_suffix)
 from settings.county_variables.general import search_errors
-from settings.dataframe_management import multiple_documents_comment
 from settings.general_functions import (long_timeout, medium_nap, naptime,
                                         scroll_to_top, short_nap, timeout,
                                         update_sentence_case_extras)
@@ -305,16 +305,6 @@ def record_volume(dataframe):
 
 def record_document_link(dataframe):
     dataframe["Document Link"].append('')
-
-
-# This could be simplified & cleaned up
-def record_comments(abstract, document):
-    if document.number_results == 1:
-        abstract.dataframe["Comments"].append("")
-    elif document.number_results > 1:
-        abstract.dataframe["Comments"].append(multiple_documents_comment(document))
-    # if not document.image_available:
-    #     no_document_image(dataframe, document)
 
 
 def access_document_tables(browser, document):

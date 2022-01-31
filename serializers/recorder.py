@@ -9,6 +9,8 @@ def record_comments(abstract, document):
         abstract.dataframe['Comments'].append('')
     elif document.number_results > 1:
         abstract.dataframe["Comments"].append(multiple_documents_comment(document))
+    # if not document.image_available:
+        #     no_document_image(dataframe, document)
 
 
 def record_value(abstract, column, value):
