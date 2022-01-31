@@ -1,7 +1,7 @@
 from selenium_utilities.locators import (locate_element_by_class_name,
                                          locate_element_by_id,
                                          locate_elements_by_tag_name)
-from serializers.recorder import record_comments, record_value
+from serializers.recorder import record_comments, record_empty_values, record_value
 
 from settings.county_variables.jaguar import (
     document_tables_tag, document_type_and_number_field_id,
@@ -87,21 +87,8 @@ def aggregate_document_table_information(browser, abstract, document):
     record_legal(abstract, document_tables[10], document)
 
 
-# Similar to the 'eagle' record_empty_values function
-def record_empty_values(abstract):
-    record_value(abstract, 'effective date', '')
-    record_value(abstract, 'book', '')
-    record_value(abstract, 'volume', '')
-    record_value(abstract, 'page', '')
-    # dataframe['Effective Date'].append('')
-    # dataframe['Book'].append('N/A')
-    # dataframe['Volume'].append('')
-    # dataframe['Page'].append('N/A')
-    record_value(abstract, 'document_link', '')
-
-
 def record(browser, abstract, document):
     record_document_type_and_number(browser, abstract, document)
     aggregate_document_table_information(browser, abstract, document)
     record_comments(abstract, document)
-    record_empty_values(abstract)
+    record_empty_values(abstract, ['effective date', 'book', 'volume', 'page', 'document link'])

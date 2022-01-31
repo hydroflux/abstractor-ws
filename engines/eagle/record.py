@@ -7,7 +7,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 
 from selenium_utilities.element_interaction import center_element
 from selenium_utilities.locators import locate_element_by_class_name
-from serializers.recorder import record_comments, record_value
+from serializers.recorder import record_comments, record_empty_values, record_value
 
 from settings.county_variables.eagle import (document_information_id,
                                              document_table_class,
@@ -393,13 +393,6 @@ def build_document_download_information(browser, abstract, document):
         abstract.dataframe['Comments'].append('')
 
 
-# Similar to the 'jaguar' record_empty_values
-def record_empty_values(abstract, document):
-    record_value(abstract, 'effective date', '')
-    record_value(abstract, 'volume', '')
-    record_value(abstract, 'document_link', '')
-
-
 def record(browser, abstract, document):
     if not abstract.review:
         if abstract.download_only:
@@ -410,5 +403,5 @@ def record(browser, abstract, document):
             record_document_fields(browser, abstract.dataframe, document)
             abstract.check_length()
             abstract.check_last_document(document)
-            record_empty_values(abstract, document)
+            record_empty_values(abstract, ['effective date', 'volume', 'document link'])
             review_entry(browser, abstract.dataframe, document)

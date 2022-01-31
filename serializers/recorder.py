@@ -15,3 +15,8 @@ def record_comments(abstract, document):
 
 def record_value(abstract, column, value):
     abstract.dataframe[column.title()].append(value)
+
+
+def record_empty_values(abstract, columns):
+    for column in columns:
+        record_value(abstract, column, '')
