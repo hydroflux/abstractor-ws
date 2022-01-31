@@ -6,6 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
 from selenium_utilities.element_interaction import center_element
+from selenium_utilities.locators import locate_element_by_class_name
 from serializers.recorder import record_comments
 
 from settings.county_variables.eagle import (document_information_id,
@@ -340,18 +341,8 @@ def re_record_document_fields(browser, abstract, document):
     record_document_fields(browser, abstract.dataframe, document)
 
 
-def get_result_buttons(browser, document):
-    try:
-        result_buttons_present = EC.presence_of_element_located((By.CLASS_NAME, result_buttons_class))
-        WebDriverWait(browser, timeout).until(result_buttons_present)
-        result_buttons = browser.find_element_by_class_name(result_buttons_class)
-        return result_buttons
-    except TimeoutException:
-        print(f'Browser timed out while trying to locate result buttons for {document.extrapolate_value()}.')
-
-
 def get_previous_result_button(browser, document):
-    result_buttons = get_result_buttons(browser, document)
+    result_buttons = locate_element_by_class_name(browser, result_buttons_class, "result buttons", False, document)
     return result_buttons.find_elements_by_tag_name(result_button_tag)[0]
 
 
@@ -363,7 +354,7 @@ def previous_result(browser, document):
 
 
 def get_next_result_button(browser, document):
-    result_buttons = get_result_buttons(browser, document)
+    result_buttons = locate_element_by_class_name(browser, result_buttons_class, "result buttons", False, document)
     return result_buttons.find_elements_by_tag_name(result_button_tag)[1]
 
 
