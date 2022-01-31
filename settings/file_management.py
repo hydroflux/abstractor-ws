@@ -28,61 +28,6 @@ def split_volume_and_page(document):
     return volume, page
 
 
-# def check_last_document(dataframe, document_list, document):
-#     if len(dataframe['Reception Number']) >= 2:
-#         if document.index_number == document_list[document_list.index(document) - 1].index_number and \
-#           document.result_number == 0:
-#             if dataframe["Grantor"][-1] == dataframe["Grantor"][-2] and \
-#               dataframe["Grantee"][-1] == dataframe["Grantee"][-2] and \
-#               dataframe["Book"][-1] == dataframe["Book"][-2] and \
-#               dataframe["Volume"][-1] == dataframe["Volume"][-2] and \
-#               dataframe["Page"][-1] == dataframe["Page"][-2] and \
-#               dataframe["Reception Number"][-1] == dataframe["Reception Number"][-2] and \
-#               dataframe["Document Link"][-1] == dataframe["Document Link"][-2] and \
-#               dataframe["Document Type"][-1] == dataframe["Document Type"][-2] and \
-#               dataframe["Effective Date"][-1] == dataframe["Effective Date"][-2] and \
-#               dataframe["Recording Date"][-1] == dataframe["Recording Date"][-2] and \
-#               dataframe["Legal"][-1] == dataframe["Legal"][-2] and \
-#               dataframe["Related Documents"][-1] == dataframe["Related Documents"][-2] and \
-#               dataframe["Comments"][-1] == dataframe["Comments"][-2]:
-#                 drop_last_entry(dataframe)
-
-
-# def check_length(dataframe):
-#     grantors = len(dataframe["Grantor"])
-#     grantees = len(dataframe["Grantee"])
-#     books = len(dataframe["Book"])
-#     volumes = len(dataframe["Volume"])
-#     pages = len(dataframe["Page"])
-#     reception_numbers = len(dataframe["Reception Number"])
-#     document_links = len(dataframe["Document Link"])
-#     document_types = len(dataframe["Document Type"])
-#     effective_dates = len(dataframe["Effective Date"])
-#     recording_dates = len(dataframe["Recording Date"])
-#     legals = len(dataframe["Legal"])
-#     related_documents = len(dataframe["Related Documents"])
-#     comments = len(dataframe["Comments"])
-#     if (grantors == grantees == books == volumes == pages
-#             == reception_numbers == document_links == document_types
-#             == effective_dates == recording_dates == legals
-#             == related_documents == comments):
-#         pass
-#     else:
-#         print("Grantors: ", grantors)
-#         print("Grantees: ", grantees)
-#         print("Books: ", books)
-#         print("Volumes: ", volumes)
-#         print("Pages: ", pages)
-#         print("Reception Numbers: ", reception_numbers)
-#         print("Document Links: ", document_links)
-#         print("Document Types: ", document_types)
-#         print("Effective Dates: ", effective_dates)
-#         print("Recording Dates: ", recording_dates)
-#         print("Legals: ", legals)
-#         print("Related Documents: ", related_documents)
-#         print("Comments: ", comments)
-
-
 def account_for_number_results(document):
     if document.number_results > 1:
         return f' - {document.number_results} results found for {document.extrapolate_value()}'

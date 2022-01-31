@@ -212,6 +212,7 @@ def record_indexing_data(document_table, dataframe, document):
     reception_field, recording_date = access_indexing_information(document_table)
     reception_number, book, page = split_reception_field(reception_field)
     document.reception_number = reception_number
+    document.download_value = f'{document.reception_number}-{stock_download_suffix}'
     dataframe["Reception Number"].append(reception_number)
     dataframe["Book"].append(book)
     dataframe["Page"].append(page)

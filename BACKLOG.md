@@ -24,8 +24,8 @@
 - [ ] Create a script for 'logout'
 - [ ] Create a script for 'search'
 - [ ] Create a script for 'open_document'
-- [ ] Create a script for 'record'
-- [ ] Create a script for 'download'
+- [ ] Continue updating the 'recorder' script
+- [ ] Continue updating the 'downloader' script
 - [ ] Create a script for 'transform'
 
 ### Executor To Do
@@ -102,7 +102,6 @@
 
 ### Export To Do
 
-- [ ] Create an 'export' subdirectory inside project management (come up with a better name)
 - [ ] If nothing is recorded, do not create a base runsheet or a folder
 - [ ] Add hyperlinks not if 'download' flag is true on abstract, but rather if a document_directory exists--maybe check length of the document_directory for files with the county prefix
 - [ ] Add volume & document date (effective date for now) to the dataframe at outset, then remove for each county not needed in "transform"
@@ -210,10 +209,10 @@
 
 ### File Management To Do
 
-- [ ] Consolidate 'split_book_and_page' and 'split_volume_and_page' functions
 - [ ] Change "Document Found" so that it lists either "recorded" or "recorded & downloaded" instead of located
 - [ ] Change 'file_management' to 'dataframe_management' & split out functions into multiple utility scripts
 - [ ] Best order of operations for file management should be to create the folder first & then put the documents folder inside of it, rather than bundling at the end
+- [ ] Move 'last_document' onto the Abstract class as an instance function
 
 ### General Functions To Do
 
@@ -385,6 +384,7 @@
 - [ ] Create a 'next_result' function to pass into the 'executor' script--goes along with adding a 'multiple_documents' route
 - [ ] Execute function 'search_documents_from_list' had a comment  "naptime()  # --- script runs without issues while this nap was in place" before the 'executor' script was worked in => review to determine if the 'search' function needs to be updated
 - [ ] Open document function 'locate_result_count' function had a 'check_for_alert' function (still in the script) which followed a timeout--figure out how this was thrown and how to integrate back into the program (probably in the 'locators' script) => appeared to be recursive with the 'locate_result_count' function
+- [ ] Finish refactoring the 'search' script with selenium utilities scripts
 
 ### Mountain Lion
 
