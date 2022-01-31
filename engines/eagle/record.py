@@ -191,7 +191,7 @@ def access_indexing_information(document_table):
     return map(access_field_body, table_rows)
 
 
-def record_document_type(document_table, dataframe):
+def record_document_type(abstract, document_table):
     document_type = update_sentence_case_extras(document_table.text.title())
     record_value(abstract, 'document type', document_type)
 
@@ -209,7 +209,7 @@ def split_reception_field(reception_field):
     return reception_number, book, page
 
 
-def record_indexing_data(document_table, dataframe, document):
+def record_indexing_data(abstract, document_table, document):
     reception_field, recording_date = access_indexing_information(document_table)
     reception_number, book, page = split_reception_field(reception_field)
     document.reception_number = reception_number
@@ -220,7 +220,7 @@ def record_indexing_data(document_table, dataframe, document):
     record_value(abstract, 'recording date', recording_date[:10])
 
 
-def record_name_data(document_table, dataframe):
+def record_name_data(abstract, document_table):
     grantor_text, grantee_text = access_indexing_information(document_table)
     grantor = update_sentence_case_extras(drop_superfluous_information(grantor_text))
     grantee = update_sentence_case_extras(drop_superfluous_information(grantee_text))
@@ -228,7 +228,7 @@ def record_name_data(document_table, dataframe):
     record_value(abstract, 'grantee', grantee)
 
 
-def record_legal_data(document_table, dataframe):
+def record_legal_data(abstract, document_table):
     table_rows = access_table_rows(document_table)
     legal_data = table_rows[1].find_elements_by_tag_name(index_table_tags[2])
     if legal_data == []:
@@ -262,7 +262,7 @@ def get_related_documents_table_rows(browser, document_table, document):
     return related_documents_table_rows
 
 
-def record_related_documents(browser, document_table, dataframe, document):
+def record_related_documents(browser, abstract, document_table, document):
     # If none then ... ? conditional -- need to test with some print statements to see general feedback first
     related_table_rows = get_related_documents_table_rows(browser, document_table, document)
     related_documents_info = list(map(access_table_body, related_table_rows))
@@ -290,12 +290,12 @@ def record_notes(document_tables, dataframe):
         pass
 
 
-def aggregate_document_information(browser, document_tables, dataframe, document):
-    record_indexing_data(document_tables[1], dataframe, document)
-    record_document_type(document_tables[0], dataframe)
-    record_name_data(document_tables[2], dataframe)
-    record_legal_data(document_tables[4], dataframe)
-    record_related_documents(browser, document_tables[-2], dataframe, document)
+def aggregate_document_information(browser, abstract, document_tables, document):
+    record_indexing_data(abstract, document_tables[1], document)
+    record_document_type(abstract, document_tables[0])
+    record_name_data(abstract, document_tables[2])
+    record_legal_data(abstract, document_tables[4])
+    record_related_documents(browser, abstract, document_tables[-2], document)
     record_notes(document_tables, dataframe)
 
 
@@ -310,7 +310,7 @@ def record_document_fields(browser, dataframe, document):
         medium_nap()   # Adding a flag instead of having to comment the line our every time for review
         # should probably be it's own function if continue using in this manner
     display_all_information(browser, document)
-    aggregate_document_information(browser, document_tables, dataframe, document)
+    aggregate_document_information(browser, abstract, document_tables, document)
     # record_comments(dataframe, document)  # Moved after 'handle_document_image_status' integration
     scroll_to_top(browser)
 
