@@ -17,22 +17,6 @@
 - [ ] If performing a 'refresh' loop, only allow for x # of refreshes before pausing for input--don't want to create too many requests (create a Document class attribute?)
 - [ ] Determine the best place to place the 'check_length' function for all scripts
 
-## Actions To Do
-
-- [ ] Determine if 'actions' is the best name for the directory (alternatives include 'abstractions', 'executor', ...)
-- [ ] Create a script for 'login'
-- [ ] Create a script for 'logout'
-- [ ] Create a script for 'search'
-- [ ] Create a script for 'open_document'
-- [ ] Continue updating the 'recorder' script
-- [ ] Continue updating the 'downloader' script
-- [ ] Create a script for 'transform'
-
-### Executor To Do
-
-- [ ] Consider creating a more elegant solution to the current placement of the 'if logout_function' conditional in the 'close_program' function
-- [ ] Move the 'document_found' function after the 'record' function call in 'handle_single_document'?
-
 ## Classes To Do
 
 - [ ] Create a 'Directory' class with two attributes--"files" and "number_files"
@@ -161,6 +145,22 @@
 
 - [ ] Up-To-Date
 
+## Serializers To Do
+
+- [ ] Determine if 'actions' is the best name for the directory (alternatives include 'abstractions', 'executor', ...)
+- [ ] Create a script for 'login'
+- [ ] Create a script for 'logout'
+- [ ] Create a script for 'search'
+- [ ] Create a script for 'open_document'
+- [ ] Continue updating the 'recorder' script
+- [ ] Continue updating the 'downloader' script
+- [ ] Create a script for 'transform'
+
+### Executor To Do
+
+- [ ] Consider creating a more elegant solution to the current placement of the 'if logout_function' conditional in the 'close_program' function
+- [ ] Move the 'document_found' function after the 'record' function call in 'handle_single_document'?
+
 ## Settings To Do
 
 ### Assets To Do
@@ -177,6 +177,12 @@
 ### Objects To Do
 
 - [ ] Up-To-Date
+
+### Dataframe Management To Do
+
+- [ ] Change "Document Found" so that it lists either "recorded" or "recorded & downloaded" instead of located
+- [ ] Change 'file_management' to 'dataframe_management' & split out functions into multiple utility scripts
+- [ ] Best order of operations for file management should be to create the folder first & then put the documents folder inside of it, rather than bundling at the end
 
 ### Download Management To Do
 
@@ -206,13 +212,6 @@
 
 - [ ] Consider creating an error_handling function for exceptions which takes a screenshot & throws an input together with the above suggestion
 - [ ] Add input() to every timeout which doesn't have a natural resolution in order to pause the program at each exception (& create a correction)--maybe something to follow up 'extrapolate_document_value', like 'input(, please review.\nPlease press enter after reviewing error)' + a screenshot
-
-### File Management To Do
-
-- [ ] Change "Document Found" so that it lists either "recorded" or "recorded & downloaded" instead of located
-- [ ] Change 'file_management' to 'dataframe_management' & split out functions into multiple utility scripts
-- [ ] Best order of operations for file management should be to create the folder first & then put the documents folder inside of it, rather than bundling at the end
-- [ ] Move 'last_document' onto the Abstract class as an instance function
 
 ### General Functions To Do
 
