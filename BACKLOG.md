@@ -155,6 +155,7 @@
 - [ ] Continue updating the 'recorder' script
 - [ ] Continue updating the 'downloader' script
 - [ ] Create a script for 'transform'
+- [ ] Create a script for 'validate'
 
 ### Executor To Do
 

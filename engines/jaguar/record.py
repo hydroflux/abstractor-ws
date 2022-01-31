@@ -1,11 +1,11 @@
 from selenium_utilities.locators import (locate_element_by_class_name,
                                          locate_element_by_id,
                                          locate_elements_by_tag_name)
+from serializers.recorder import multiple_documents_comment, record_invalid_value
 
 from settings.county_variables.jaguar import (
     document_tables_tag, document_type_and_number_field_id,
     recording_date_field_class)
-from settings.dataframe_management import multiple_documents_comment
 from settings.general_functions import (date_from_string, list_to_string, title_strip,
                                         update_sentence_case_extras)
 
@@ -40,15 +40,19 @@ def record_document_type_and_number(browser, dataframe, document):
     handle_reception_number(dataframe, document, reception_number)
 
 
-def record_indexing_information(document_table, dataframe, document):
+def record_indexing_information(abstract, document_table, document):
     recording_date_field = locate_element_by_class_name(document_table, recording_date_field_class,
                                                         "recording date", document=document)
     recording_date = date_from_string(recording_date_field.text[:10])
-    dataframe['Recording Date'].append(recording_date)
-    dataframe['Effective Date'].append('')
-    dataframe['Book'].append('N/A')
-    dataframe['Volume'].append('')
-    dataframe['Page'].append('N/A')
+    abstract.dataframe['Recording Date'].append(recording_date)
+    record_invalid_value(abstract, 'effective date', '')
+    record_invalid_value(abstract, 'book', '')
+    record_invalid_value(abstract, 'volume', '')
+    record_invalid_value(abstract, 'page', '')
+    # dataframe['Effective Date'].append('')
+    # dataframe['Book'].append('N/A')
+    # dataframe['Volume'].append('')
+    # dataframe['Page'].append('N/A')
 
 
 def record_parties_information(document_tables, dataframe, document):
@@ -74,10 +78,10 @@ def record_legal(document_table, dataframe, document):
     dataframe['Legal'].append(legal)
 
 
-def aggregate_document_table_information(browser, dataframe, document):
+def aggregate_document_table_information(browser, abstract, document):
     document_tables = locate_elements_by_tag_name(browser, document_tables_tag,
                                                   "document tables", document=document)
-    record_indexing_information(document_tables[2], dataframe, document)
+    record_indexing_information(abstract, document_tables[2], document)
     record_parties_information(document_tables, dataframe, document)
     record_related_documents(document_tables[8], dataframe, document)
     record_legal(document_tables[10], dataframe, document)
@@ -96,6 +100,6 @@ def record_document_link(dataframe, document):
 
 def record(browser, abstract, document):
     record_document_type_and_number(browser, abstract.dataframe, document)
-    aggregate_document_table_information(browser, abstract.dataframe, document)
+    aggregate_document_table_information(browser, abstract, document)
     record_comments(abstract.dataframe, document)
     record_document_link(abstract.dataframe, document)
