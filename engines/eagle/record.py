@@ -193,7 +193,7 @@ def access_indexing_information(document_table):
 
 def record_document_type(document_table, dataframe):
     document_type = update_sentence_case_extras(document_table.text.title())
-    dataframe["Document Type"].append(document_type)
+    record_value(abstract, 'document type', document_type)
 
 
 def split_reception_field(reception_field):
@@ -214,28 +214,30 @@ def record_indexing_data(document_table, dataframe, document):
     reception_number, book, page = split_reception_field(reception_field)
     document.reception_number = reception_number
     document.download_value = f'{document.reception_number}-{stock_download_suffix}'
-    dataframe["Reception Number"].append(reception_number)
-    dataframe["Book"].append(book)
-    dataframe["Page"].append(page)
-    dataframe["Recording Date"].append(recording_date[:10])
+    record_value(abstract, 'reception number', reception_number)
+    record_value(abstract, 'book', book)
+    record_value(abstract, 'page', page)
+    record_value(abstract, 'recording date', recording_date[:10])
 
 
 def record_name_data(document_table, dataframe):
-    grantor, grantee = access_indexing_information(document_table)
-    dataframe["Grantor"].append(update_sentence_case_extras(drop_superfluous_information(grantor)))
-    dataframe["Grantee"].append(update_sentence_case_extras(drop_superfluous_information(grantee)))
+    grantor_text, grantee_text = access_indexing_information(document_table)
+    grantor = update_sentence_case_extras(drop_superfluous_information(grantor_text))
+    grantee = update_sentence_case_extras(drop_superfluous_information(grantee_text))
+    record_value(abstract, 'grantor', grantor)
+    record_value(abstract, 'grantee', grantee)
 
 
 def record_legal_data(document_table, dataframe):
     table_rows = access_table_rows(document_table)
     legal_data = table_rows[1].find_elements_by_tag_name(index_table_tags[2])
     if legal_data == []:
-        dataframe["Legal"].append(search_errors[2])
+        record_value(abstract, 'legal', search_errors[2])
     else:
         legal = legal_data[-1].text
         if legal.endswith(search_errors[4]):
             legal = legal.strip()  # Running along with test 1
-        dataframe["Legal"].append(drop_superfluous_information(legal))
+        record_value(abstract, 'legal', drop_superfluous_information(legal))
 
 
 def locate_related_documents_table_rows(document, document_table):
@@ -266,7 +268,8 @@ def record_related_documents(browser, document_table, dataframe, document):
     related_documents_info = list(map(access_table_body, related_table_rows))
     related_document_list = list(map(access_title_case_text, related_documents_info))
     related_documents = "\n".join(related_document_list)
-    dataframe["Related Documents"].append(drop_superfluous_information(related_documents))
+    record_value(abstract, 'related documents', drop_superfluous_information(related_documents))
+    # dataframe["Related Documents"].append(drop_superfluous_information(related_documents))
 
 
 def record_notes(document_tables, dataframe):
@@ -390,7 +393,7 @@ def build_document_download_information(browser, abstract, document):
     abstract.dataframe['Reception Number'].append(reception_number)
     # Below is necessary until better logic order is figured out for 'handle_document_image_status'
     if len(abstract.dataframe['Reception Number']) != len(abstract.dataframe['Comments']):
-        abstract.dataframe['Comments'].append('')
+        record_value(abstract, 'comments', '')
 
 
 def record(browser, abstract, document):
