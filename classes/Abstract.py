@@ -108,8 +108,8 @@ class Abstract:
     def list_remaining_documents(self, document):
         return f'{self.remaining_documents(document)} documents remaining'
 
-    def report_execution_time(document):
-        return str(datetime.now() - document.start_time)
+    def report_execution_time(time):
+        return str(datetime.now() - time)
 
     def document_found(self, document):
         if self.review is False:
@@ -117,13 +117,13 @@ class Abstract:
                   f'{document.extrapolate_value()} recorded'
                   f'{self.account_for_number_results(document)}, '
                   f'{self.list_remaining_documents(document)} '
-                  f'({self.report_execution_time(document)})')
+                  f'({self.report_execution_time(document.start_time)})')
         elif self.review is True:
             input(f'Document located at {document.extrapolate_value()} found'
                   f'{self.account_for_number_results(document)}, '
                   'please review & press enter to continue... '
                   f'({self.list_remaining_documents(document)}) '
-                  f'({self.report_execution_time(document)})')
+                  f'({self.report_execution_time(document.start_time)})')
         # elif alt == "download":
         #     print('Document located at '
         #           f'{document.extrapolate_value()} downloaded, '
@@ -135,19 +135,19 @@ class Abstract:
             print('No document found at '
                   f'{document.extrapolate_value()}, '
                   f'{self.list_remaining_documents(document)} '
-                  f'({self.report_execution_time(document)})')
+                  f'({self.report_execution_time(document.start_time)})')
         elif self.review is True:
             input(f'No document found at {document.extrapolate_value()}, '
                   'please review & press enter to continue... '
                   f'({self.list_remaining_documents(document)}) '
-                  f'({self.report_execution_time(document)})')
+                  f'({self.report_execution_time(document.start_time)})')
 
     def document_downloaded(self, document):
         print(f'Document located at '
               f'{document.extrapolate_value()} downloaded'
               f'{self.account_for_number_results(document)}, '
               f'{self.list_remaining_documents(self, document)} '
-              f'{"(" + (self.report_execution_time(document)) + ")" if self.download_only else ""}')
+              f'{"(" + (self.report_execution_time(document.start_time)) + ")" if self.download_only else ""}')
 
     def no_document_downloaded(self, document):
         print(f'Unable to download document at '
@@ -156,8 +156,8 @@ class Abstract:
               f'({self.list_remaining_documents(self, document)}) '
               f'{"(" + (self.report_execution_time(document.start_time)) + ")" if self.download_only else ""}')
 
-    def stop_program_timer(self, document):
-        print(f'Total Run Time: {self.report_execution_time(document)}')
+    def stop_program_timer(self):
+        print(f'Total Run Time: {self.report_execution_time(self.timer)}')
 
 
 # - [ ] Put general button_ids on the 'abstract' class (login, logout, etc.)

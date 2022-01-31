@@ -14,7 +14,6 @@ if __name__ == '__main__':
     from engines.rattlesnake.execute import execute_program as execute_rattlesnake
     # from rattlesnake.execute import execute_early_document_download as download_rattlesnake
     from settings.initialization import initialize_abstraction
-    from settings.general_functions import stop_program_timer
     from project_management.user_prompts import currently_unavailable, add_download_type
 
 
@@ -84,7 +83,7 @@ def execute_program(abstract):
 def execute_abstractor():
     abstract = initialize_abstraction()
     execute_program(abstract)
-    stop_program_timer(abstract.timer)
+    abstract.stop_program_timer()
     quit()
 
 
