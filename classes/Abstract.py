@@ -93,6 +93,37 @@ class Abstract:
     def last_document(self, document):
         return self.document_list[self.document_list.index(document) - 1]
 
+    def document_found(self, document):
+        if self.review is False:
+            print('Document located at '
+                f'{document.extrapolate_value()} recorded'
+                f'{account_for_number_results(document)}, '
+                f'{list_remaining_documents(self.document_list, document)} '
+                f'({report_execution_time(document.start_time)})')
+        elif self.review is True:
+            input(f'Document located at {document.extrapolate_value()} found'
+                f'{account_for_number_results(document)}, '
+                'please review & press enter to continue... '
+                f'({list_remaining_documents(self.document_list, document)}) '
+                f'({report_execution_time(document.start_time)})')
+        # elif alt == "download":
+        #     print('Document located at '
+        #           f'{document.extrapolate_value()} downloaded, '
+        #           f'{list_remaining_documents(document_list, document)} '
+        #           f'({report_execution_time(start_time)})')
+
+    def no_document_found(self, document):
+        if self.review is False:
+            print('No document found at '
+                f'{document.extrapolate_value()}, '
+                f'{list_remaining_documents(self.document_list, document)} '
+                f'({report_execution_time(document.start_time)})')
+        elif self.review is True:
+            input(f'No document found at {document.extrapolate_value()}, '
+                'please review & press enter to continue... '
+                f'({list_remaining_documents(self.document_list, document)}) '
+                f'({report_execution_time(document.start_time)})')
+
 
 # - [ ] Put general button_ids on the 'abstract' class (login, logout, etc.)
 # - [ ] Put urls on the abstract class

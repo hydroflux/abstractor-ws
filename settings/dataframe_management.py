@@ -43,39 +43,6 @@ def list_remaining_documents(document_list, document):
     return f'{remaining_documents(document_list, document)} documents remaining'
 
 
-def document_found(abstract, document):
-    if abstract.review is False:
-        print('Document located at '
-              f'{document.extrapolate_value()} recorded'
-              f'{account_for_number_results(document)}, '
-              f'{list_remaining_documents(abstract.document_list, document)} '
-              f'({report_execution_time(document.start_time)})')
-    elif abstract.review is True:
-        input(f'Document located at {document.extrapolate_value()} found'
-              f'{account_for_number_results(document)}, '
-              'please review & press enter to continue... '
-              f'({list_remaining_documents(abstract.document_list, document)}) '
-              f'({report_execution_time(document.start_time)})')
-    # elif alt == "download":
-    #     print('Document located at '
-    #           f'{document.extrapolate_value()} downloaded, '
-    #           f'{list_remaining_documents(document_list, document)} '
-    #           f'({report_execution_time(start_time)})')
-
-
-def no_document_found(abstract, document):
-    if abstract.review is False:
-        print('No document found at '
-              f'{document.extrapolate_value()}, '
-              f'{list_remaining_documents(abstract.document_list, document)} '
-              f'({report_execution_time(document.start_time)})')
-    elif abstract.review is True:
-        input(f'No document found at {document.extrapolate_value()}, '
-              'please review & press enter to continue... '
-              f'({list_remaining_documents(abstract.document_list, document)}) '
-              f'({report_execution_time(document.start_time)})')
-
-
 def document_downloaded(abstract, document):
     print(f'Document located at '
           f'{document.extrapolate_value()} downloaded'

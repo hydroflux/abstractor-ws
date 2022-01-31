@@ -158,8 +158,7 @@
 
 ### Executor To Do
 
-- [ ] Consider creating a more elegant solution to the current placement of the 'if logout_function' conditional in the 'close_program' function
-- [ ] Move the 'document_found' function after the 'record' function call in 'handle_single_document'?
+- [ ] Up-To-Date
 
 ## Settings To Do
 
@@ -181,7 +180,6 @@
 ### Dataframe Management To Do
 
 - [ ] Change "Document Found" so that it lists either "recorded" or "recorded & downloaded" instead of located
-- [ ] Change 'file_management' to 'dataframe_management' & split out functions into multiple utility scripts
 - [ ] Best order of operations for file management should be to create the folder first & then put the documents folder inside of it, rather than bundling at the end
 
 ### Download Management To Do
