@@ -5,7 +5,10 @@ def multiple_documents_comment(document):
 
 
 def record_comments(abstract, document):
-    pass
+    if document.number_results == 1:
+        abstract.dataframe['Comments'].append('')
+    elif document.number_results > 1:
+        abstract.dataframe["Comments"].append(multiple_documents_comment(document))
 
 
 def record_invalid_value(abstract, column, value):

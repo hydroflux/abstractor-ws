@@ -1,7 +1,7 @@
 from selenium_utilities.locators import (locate_element_by_class_name,
                                          locate_element_by_id,
                                          locate_elements_by_tag_name)
-from serializers.recorder import multiple_documents_comment, record_invalid_value
+from serializers.recorder import record_comments, record_invalid_value
 
 from settings.county_variables.jaguar import (
     document_tables_tag, document_type_and_number_field_id,
@@ -87,13 +87,6 @@ def aggregate_document_table_information(browser, abstract, document):
     record_legal(abstract, document_tables[10], document)
 
 
-def record_comments(dataframe, document):
-    if document.number_results == 1:
-        dataframe['Comments'].append('')
-    elif document.number_results > 1:
-        dataframe["Comments"].append(multiple_documents_comment(document))
-
-
 def record_document_link(dataframe, document):
     dataframe['Document Link'].append('')
 
@@ -101,5 +94,5 @@ def record_document_link(dataframe, document):
 def record(browser, abstract, document):
     record_document_type_and_number(browser, abstract.dataframe, document)
     aggregate_document_table_information(browser, abstract, document)
-    record_comments(abstract.dataframe, document)
+    record_comments(abstract, document)
     record_document_link(abstract.dataframe, document)
