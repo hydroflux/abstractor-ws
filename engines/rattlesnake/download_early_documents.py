@@ -1,7 +1,7 @@
 import os
 
 from selenium.webdriver.support.ui import Select
-from serializers.downloader import create_document_directory
+from serializers.downloader import prepare_for_download
 from selenium_utilities.inputs import click_button
 from selenium_utilities.locators import locate_element_by_id as locate_element
 from selenium_utilities.locators import locate_elements_by_tag_name
@@ -122,19 +122,18 @@ def open_download_page(browser, document):
     open_url(browser, page_source, page_image_title, "page image", document)
 
 
-def download_page(browser, document, document_directory, count):
-    number_files = len(os.listdir(document_directory))
+def download_page(browser, abstract, document, count):
+    prepare_for_download(abstract, document)
     open_download_page(browser, document)
     browser.execute_script('window.print();')
     naptime()
-    if update_download(browser, document_directory, document, number_files):
-        print(f'Successfully downloaded page {count + 1} for '
-              f'{document.extrapolate_value()}.')
-        browser.back()
-    else:
-        print('Browser failed to downloaded page {count + 1} for '
-              f'{document.document_value()}, please review.')
-        input()
+    update_download(browser, abstract, document)
+    print(f'Successfully downloaded page {count + 1} for {document.extrapolate_value()}.')
+    browser.back()
+    # else:
+    #     print('Browser failed to downloaded page {count + 1} for '
+    #           f'{document.document_value()}, please review.')
+    #     input()
 
 
 def next_page_prompt():
@@ -148,14 +147,14 @@ def next_page_prompt():
     return True if user_input.lower() in ["1", "y", "yes"] else False
 
 
-def download_early_document_image(browser, document, document_directory, count=0, next_page=True):
+def download_early_document_image(browser, abstract, document, count=0, next_page=True):
     page_value = int(document.document_value()[1]) - 1
     go_to_page(browser, document, page_value)
     while next_page is True:
         if download_page_prompt():
-            os.chdir(document_directory)
+            os.chdir(abstract.document_directory)
             set_early_document_download_name(document, count)
-            download_page(browser, document, document_directory, count)
+            download_page(browser, abstract, document, count)
             count += 1
             page_value += 1
             # if next_page_prompt():
@@ -168,11 +167,11 @@ def download_early_document_image(browser, document, document_directory, count=0
 def handle_search_results(browser, abstract, document):
     if check_results(browser, document):
         open_result(browser, document)
-        download_early_document_image(browser, document, document_directory)
+        download_early_document_image(browser, abstract, document)
     else:
         print('Unable to locate correct search result on first try, please locate and open the correct Volume.')
         if check_document_image_page(browser):
-            download_early_document_image(browser, document, document_directory)
+            download_early_document_image(browser, abstract, document)
 
 
 def handle_document_search(browser, abstract, document):
@@ -187,7 +186,6 @@ def handle_document_search(browser, abstract, document):
 
 
 def download_early_documents(browser, abstract):
-    abstract.document_directory = create_document_directory(abstract)
     for document in abstract.document_list:
         clear_terminal()
         print(f'Now searching {document.extrapolate_value()}...')
