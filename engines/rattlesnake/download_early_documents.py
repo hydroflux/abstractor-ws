@@ -165,7 +165,7 @@ def download_early_document_image(browser, document, document_directory, count=0
             next_page = False
 
 
-def handle_search_results(browser, document, document_directory):
+def handle_search_results(browser, abstract, document):
     if check_results(browser, document):
         open_result(browser, document)
         download_early_document_image(browser, document, document_directory)
@@ -175,20 +175,20 @@ def handle_search_results(browser, document, document_directory):
             download_early_document_image(browser, document, document_directory)
 
 
-def handle_document_search(browser, document_list, document, document_directory):
+def handle_document_search(browser, abstract, document):
     volume = document.document_value()[0]
-    if volume == abstract.last_document(document).document_value()[0] and len(document_list) > 1:
-        download_early_document_image(browser, document, document_directory)
+    if volume == abstract.last_document(document).document_value()[0] and len(abstract.document_list) > 1:
+        download_early_document_image(browser, abstract, document)
     else:
         open_url(browser, early_search_url, early_search_title, "old document search")
         clear_search(browser, document)
         search_early_document(browser, document)
-        handle_search_results(browser, document, document_directory)
+        handle_search_results(browser, abstract, document)
 
 
-def download_early_documents(browser, abtstract):
-    document_directory = create_document_directory(target_directory)
-    for document in document_list:
+def download_early_documents(browser, abstract):
+    abstract.document_directory = create_document_directory(abstract)
+    for document in abstract.document_list:
         clear_terminal()
         print(f'Now searching {document.extrapolate_value()}...')
-        handle_document_search(browser, document_list, document, document_directory)
+        handle_document_search(browser, abstract, document)
