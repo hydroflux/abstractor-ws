@@ -90,6 +90,9 @@ class Abstract:
             print("Related Documents: ", related_documents)
             print("Comments: ", comments)
 
+    def last_document(self, document):
+        return self.document_list[self.document_list.index(document) - 1]
+
 
 # - [ ] Put general button_ids on the 'abstract' class (login, logout, etc.)
 # - [ ] Put urls on the abstract class
