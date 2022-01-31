@@ -35,9 +35,9 @@ def execute_program(abstract):
     close_program(browser, abstract, logout)
 
 
-def execute_early_document_download(county, target_directory, document_list):
-    browser = create_webdriver(target_directory, False)
-    transform_document_list(document_list, county, True)
+def execute_early_document_download(abstract):
+    browser = create_webdriver(abstract)
+    transform_document_list(abstract, True)
     account_login(browser)
-    download_early_documents(browser, target_directory, document_list)
+    download_early_documents(browser, abstract)
     browser.close()

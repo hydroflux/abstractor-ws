@@ -18,7 +18,6 @@ from settings.county_variables.rattlesnake import (early_document_image_title,
                                                    result_link_tag_name,
                                                    results_tag_name)
 from settings.download_management import update_download
-from settings.file_management import last_document
 from settings.general_functions import (four_character_padding,
                                         get_direct_link,
                                         javascript_script_execution, naptime)
@@ -178,7 +177,7 @@ def handle_search_results(browser, document, document_directory):
 
 def handle_document_search(browser, document_list, document, document_directory):
     volume = document.document_value()[0]
-    if volume == last_document(document_list, document).document_value()[0] and len(document_list) > 1:
+    if volume == abstract.last_document(document).document_value()[0] and len(document_list) > 1:
         download_early_document_image(browser, document, document_directory)
     else:
         open_url(browser, early_search_url, early_search_title, "old document search")
@@ -187,7 +186,7 @@ def handle_document_search(browser, document_list, document, document_directory)
         handle_search_results(browser, document, document_directory)
 
 
-def download_early_documents(browser, target_directory, document_list):
+def download_early_documents(browser, abtstract):
     document_directory = create_document_directory(target_directory)
     for document in document_list:
         clear_terminal()
