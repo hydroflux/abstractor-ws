@@ -142,6 +142,23 @@ class Abstract:
                   f'({self.list_remaining_documents(document)}) '
                   f'({self.report_execution_time(document)})')
 
+    def document_downloaded(self, document):
+        print(f'Document located at '
+              f'{document.extrapolate_value()} downloaded'
+              f'{self.account_for_number_results(document)}, '
+              f'{self.list_remaining_documents(self, document)} '
+              f'{"(" + (self.report_execution_time(document)) + ")" if self.download_only else ""}')
+
+    def no_document_downloaded(self, document):
+        print(f'Unable to download document at '
+              f'{document.extrapolate_value()}'
+              f'{self.account_for_number_results(document)}, '
+              f'({self.list_remaining_documents(self, document)}) '
+              f'{"(" + (self.report_execution_time(document.start_time)) + ")" if self.download_only else ""}')
+
+    def stop_program_timer(self, document):
+        print(f'Total Run Time: {self.report_execution_time(document)}')
+
 
 # - [ ] Put general button_ids on the 'abstract' class (login, logout, etc.)
 # - [ ] Put urls on the abstract class

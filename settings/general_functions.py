@@ -77,10 +77,6 @@ def start_program_timer(county, document_list=None):
     return start_time
 
 
-def stop_program_timer(start_time):
-    print(f'Total Run Time: {report_execution_time(start_time)}')
-
-
 def scroll_into_view(browser, element):
     browser.execute_script("arguments[0].scrollIntoView();", element)
 

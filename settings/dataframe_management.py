@@ -1,10 +1,5 @@
 import os
 
-if __name__ == '__main__':
-    from settings.general_functions import report_execution_time
-else:
-    from .general_functions import report_execution_time
-
 
 def multiple_documents_comment(document):
     return (f'Multiple documents located at {document.extrapolate_value()}'
@@ -26,22 +21,6 @@ def multiple_documents_comment(document):
 #     volume = document.document_value()[0]
 #     page = document.document_value()[1]
 #     return volume, page
-
-
-def document_downloaded(abstract, document):
-    print(f'Document located at '
-          f'{document.extrapolate_value()} downloaded'
-          f'{account_for_number_results(document)}, '
-          f'{list_remaining_documents(abstract.document_list, document)} '
-          f'{"(" + (report_execution_time(document.start_time)) + ")" if abstract.download_only else ""}')
-
-
-def no_document_downloaded(abstract, document):
-    print(f'Unable to download document at '
-          f'{document.extrapolate_value()}'
-          f'{account_for_number_results(document)}, '
-          f'({list_remaining_documents(abstract.document_list, document)}) '
-          f'{"(" + (report_execution_time(document.start_time)) + ")" if abstract.download_only else ""}')
 
 
 def rename_documents_in_directory(county, directory):
