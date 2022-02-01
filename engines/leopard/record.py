@@ -2,7 +2,7 @@ from selenium_utilities.inputs import click_button
 from selenium_utilities.locators import (locate_element_by_id,
                                          locate_element_by_tag_name,
                                          locate_elements_by_tag_name)
-from serializers.recorder import record_value
+from serializers.recorder import record_comments, record_value
 
 from settings.county_variables.general import not_applicable
 from settings.county_variables.leopard import (book_page_abbreviation,
@@ -137,17 +137,6 @@ def record_legal(abstract, rows):
         else:
             combined_legal = f'{legal}\n{alt_legal}'
             abstract.dataframe["Legal"].append(combined_legal)
-
-
-#  Extrapolate this to a generalized file
-def record_comments(abstract, document, rows):
-    if document.number_results > 1:
-        comment = (f'Multiple documents located at {document.extrapolate_value()}'
-                   f' on the {document.county} recording website; Each of the {document.number_results}'
-                   f' documents has been listed, please review')
-        abstract.dataframe["Comments"].append(comment)
-    else:
-        abstract.dataframe["Comments"].append("")
 
 
 def aggregate_document_information(abstract, document, rows):
