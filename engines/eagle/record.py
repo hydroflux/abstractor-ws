@@ -24,8 +24,7 @@ from settings.county_variables.eagle import (document_information_id,
                                              stock_download_suffix)
 from settings.county_variables.general import search_errors
 from settings.general_functions import (medium_nap, naptime, scroll_to_top,
-                                        short_nap, timeout,
-                                        update_sentence_case_extras)
+                                        short_nap, update_sentence_case_extras)
 from settings.invalid import no_document_image
 from settings.settings import execution_review
 
@@ -340,7 +339,7 @@ def build_document_download_information(browser, abstract, document):
               f'{document.extrapolate_value()}, trying again...')
         naptime()
         reception_number = access_download_information(browser, abstract, document)
-    abstract.dataframe['Reception Number'].append(reception_number)
+    record_value(abstract, 'reception number', reception_number)
     # Below is necessary until better logic order is figured out for 'handle_document_image_status'
     if len(abstract.dataframe['Reception Number']) != len(abstract.dataframe['Comments']):
         record_value(abstract, 'comments', '')
