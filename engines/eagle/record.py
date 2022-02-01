@@ -6,8 +6,12 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
 from selenium_utilities.element_interaction import center_element
-from selenium_utilities.locators import locate_element_by_class_name, locate_element_by_id, locate_elements_by_class_name
-from serializers.recorder import record_comments, record_empty_values, record_value
+from selenium_utilities.locators import (locate_element_by_class_name,
+                                         locate_element_by_id,
+                                         locate_elements_by_class_name)
+
+from serializers.recorder import (record_comments, record_empty_values,
+                                  record_value)
 
 from settings.county_variables.eagle import (document_information_id,
                                              document_table_class,
@@ -23,8 +27,8 @@ from settings.county_variables.eagle import (document_information_id,
                                              result_buttons_class,
                                              stock_download_suffix)
 from settings.county_variables.general import search_errors
-from settings.general_functions import (medium_nap, naptime,
-                                        scroll_to_top, short_nap, timeout,
+from settings.general_functions import (medium_nap, naptime, scroll_to_top,
+                                        short_nap, timeout,
                                         update_sentence_case_extras)
 from settings.invalid import no_document_image
 from settings.settings import execution_review
