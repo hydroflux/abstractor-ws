@@ -36,10 +36,12 @@ print("record", __name__)
 
 
 def access_image_container(browser, document):
-    image_container = locate_element_by_id(browser, image_container_id, "image container", False, document)
+    image_container = locate_element_by_id(browser, image_container_id,
+                                           "image container", False, document)
     while image_container is None:
         check_for_error(browser, document)
-        image_container = locate_element_by_id(browser, image_container_id, "image container", False, document)
+        image_container = locate_element_by_id(browser, image_container_id,
+                                               "image container", False, document)
     return image_container.text
 
 
@@ -70,18 +72,6 @@ def handle_document_image_status(browser, abstract, document):
     else:
         wait_for_pdf_to_load(browser, document)
         return True
-
-
-def get_document_information(browser, document):
-    try:
-        document_information_present = EC.presence_of_element_located((By.ID, document_information_id))
-        WebDriverWait(browser, timeout).until(document_information_present)
-        document_information = browser.find_element_by_id(document_information_id)
-        return document_information
-    except TimeoutException:
-        print(f'Browser timed out while trying to get document information for '
-              f'{document.extrapolate_value()}.')
-
 
 def access_document_information_tables(browser, document, document_information):
     try:
@@ -133,7 +123,8 @@ def review_and_open_links(browser, links):
 
 
 def display_all_information(browser, document):
-    document_information = get_document_information(browser, document)
+    document_information = locate_element_by_id(browser, document_information_id,
+                                                "document information", False, document)
     information_links = get_informational_links(browser, document, document_information)
     review_and_open_links(browser, information_links)
 
@@ -281,7 +272,8 @@ def aggregate_document_information(browser, abstract, document_tables, document)
 
 
 def access_document_tables(browser, document):
-    document_information = get_document_information(browser, document)
+    document_information = locate_element_by_id(browser, document_information_id,
+                                                "document information", False, document)
     return access_document_information_tables(browser, document, document_information)
 
 
