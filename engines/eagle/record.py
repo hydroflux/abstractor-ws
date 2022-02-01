@@ -1,3 +1,10 @@
+from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.wait import WebDriverWait
+
+from project_management.timers import timeout
+
 from selenium.common.exceptions import (ElementClickInterceptedException,
                                         StaleElementReferenceException)
 
@@ -96,11 +103,23 @@ def review_and_open_links(browser, links):
         handle_information_links(browser, link)
 
 
+def get_informational_links(browser, document, document_information):
+    try:
+        informational_links_present = EC.presence_of_element_located((By.CLASS_NAME, information_links_class))
+        WebDriverWait(browser, timeout).until(informational_links_present)
+        informational_links = document_information.find_elements_by_class_name(information_links_class)
+        print("informational_links 3", informational_links)
+        return informational_links
+    except TimeoutException:
+        print(f'Browser timed out while trying to get informational links for {document.extrapolate_value()}.')
+
+
 def display_all_information(browser, document):
     document_information = locate_element_by_id(browser, document_information_id,
                                                 "document information", False, document)
-    information_links = locate_elements_by_class_name(document_information, information_links_class,
-                                                      "information links", False, document)
+    # information_links = locate_elements_by_class_name(document_information, information_links_class,
+    #                                                   "information links", False, document)
+    information_links = get_informational_links(browser, document, document_information)
     review_and_open_links(browser, information_links)
 
 
