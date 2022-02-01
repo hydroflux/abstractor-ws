@@ -3,11 +3,12 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
+from project_management.timers import naptime, timeout
+
 from settings.county_variables.leopard import (disclaimer_active_class,
                                                disclaimer_button_id,
                                                disclaimer_id, open_script)
-from settings.general_functions import (javascript_script_execution, naptime,
-                                        timeout)
+from settings.general_functions import javascript_script_execution
 
 
 def locate_disclaimer(browser):

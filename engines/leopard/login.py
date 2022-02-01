@@ -4,10 +4,11 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
+from project_management.timers import timeout
+
 from settings.county_variables.leopard import (credentials, login_title,
                                                validation_errors_class,
                                                website, website_title)
-from settings.general_functions import timeout
 
 from engines.leopard.disclaimer import handle_disclaimer
 
