@@ -99,7 +99,7 @@ def print_timeout_statement(type, document):
     else:
         print(f'Browser timed out trying to locate "{type}" for '
               f'{document.extrapolate_value()}, please review.')
-    return False
+    # return False
 
 
 def print_no_such_element_statement(type, document):
@@ -108,4 +108,4 @@ def print_no_such_element_statement(type, document):
     else:
         print(f'Browser unable to locate any element "{type}" for '
               f'{document.extrapolate_value()}, please review.')
-    return False
+    # return False

@@ -6,7 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
 from selenium_utilities.element_interaction import center_element
-from selenium_utilities.locators import locate_element_by_class_name
+from selenium_utilities.locators import locate_element_by_class_name, locate_element_by_id
 from serializers.recorder import record_comments, record_empty_values, record_value
 
 from settings.county_variables.eagle import (document_information_id,
@@ -36,23 +36,12 @@ from engines.eagle.error_handling import check_for_error
 print("record", __name__)
 
 
-def access_image_container_text(browser, document):
-    try:
-        image_container_present = EC.presence_of_element_located((By.ID, image_container_id))
-        WebDriverWait(browser, timeout).until(image_container_present)
-        image_container = browser.find_element_by_id(image_container_id)
-        return image_container.text
-    except TimeoutException:
-        print('Browser timed out waiting for image container to load for '
-              f'{document.extrapolate_value()}, please review.')
-        return check_for_error(browser, document)
-
-
-def get_image_container(browser, document):
-    image_container_text = access_image_container_text(browser, document)
-    while image_container_text == error_message_text or image_container_text is None:
-        image_container_text = access_image_container_text(browser, document)
-    return image_container_text
+def access_image_container(browser, document):
+    image_container = locate_element_by_id(browser, image_container_id, "image container", False, document)
+    while image_container is None:
+        check_for_error(browser, document)
+        image_container = locate_element_by_id(browser, image_container_id, "image container", False, document)
+    return image_container.text
 
 
 def pdf_load_status(browser, document):
