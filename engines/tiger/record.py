@@ -1,4 +1,5 @@
 from selenium_utilities.locators import locate_element_by_id, locate_element_by_tag_name
+from serializers.recorder import record_value
 
 from settings.county_variables.general import empty_value, not_applicable
 from settings.county_variables.tiger import (book_page_abbreviation,
@@ -43,9 +44,10 @@ def get_row_value(row, title):
         print(f'Encountered "{row_title}:{row_content}" when looking for {title}.')
 
 
-def record_instrument_number(abstract, row):
-    instrument_number = get_row_value(row, row_titles["reception_number"])
-    abstract.dataframe["Reception Number"].append(instrument_number)
+def record_reception_number(abstract, row, document):
+    reception_number = get_row_value(row, row_titles["reception_number"])
+    document.reception_number = reception_number
+    record_value(abstract, 'reception number', reception_number)
 
 
 def record_book_and_page(abstract, row):
@@ -104,7 +106,7 @@ def record_legal(abstract, row_1):
 def record(browser, abstract, document):
     document_table = access_document_table_data(browser, document)
     rows = get_table_rows(document_table)
-    record_instrument_number(abstract, rows[0])
+    record_reception_number(abstract, rows[0], document)
     record_book_and_page(abstract, rows[1])
     record_recording_date(abstract, rows[2])
     record_document_type(abstract, rows[5])
