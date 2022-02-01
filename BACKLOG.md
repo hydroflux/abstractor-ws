@@ -94,6 +94,8 @@
 - [ ] Add a print statement at the end to indicate what type of run sheet was created (& the section)
 - [ ] If a base runsheet folder has already been created, create a new one
 - [ ] Create an export sheet with statistics (total documents, no document found, instances of multiple documents, etc.)
+- [ ] If download only export only the hyperlink sheet ***************** !!!!!!!!! IMPORTANT
+- [ ] If download only or review don't hit the 'check_length()'
 
 ### Font Formats To Do
 

@@ -115,11 +115,8 @@ def get_informational_links(browser, document, document_information):
 
 
 def display_all_information(browser, document):
-    document_information = locate_element_by_id(browser, document_information_id,
-                                                "document information", False, document)
-    # information_links = locate_elements_by_class_name(document_information, information_links_class,
-    #                                                   "information links", False, document)
-    information_links = get_informational_links(browser, document, document_information)
+    information_links = locate_elements_by_class_name(browser, information_links_class,
+                                                      "information links", False, document)
     review_and_open_links(browser, information_links)
 
 
