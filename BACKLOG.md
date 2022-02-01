@@ -96,6 +96,7 @@
 - [ ] Add watermark
 - [ ] Add a print statement at the end to indicate what type of run sheet was created (& the section)
 - [ ] If a base runsheet folder has already been created, create a new one
+- [ ] Create an export sheet with statistics (total documents, no document found, instances of multiple documents, etc.)
 
 ### Font Formats To Do
 
@@ -112,6 +113,7 @@
 - [ ] Update 'display_document_list' to show all available attributes attached to a document
 - [ ] Entire header should be created in the settings block, rather than relying on first & last recording dates in the dataframe
 - [ ] Compare parallel scripts from leopard & eagle in order to help refactoring
+- [ ] Perhaps the "year" attribute could be used to check the recording date and add a comment (or conversely perform an update if "No document found...")
 
 ### Hyperlinks To Do
 
@@ -159,7 +161,8 @@
 
 ### Executor To Do
 
-- [ ] Up-To-Date
+- [ ] Move 'check_length' into the 'handle_single_document' function (make sure that the order-of-events still makes sense)
+- [ ] Integrate 'check_last_document' (currently only used in eagle record??) into the 'handle_single_document' or 'handle_multiple_documents' script
 
 ## Settings To Do
 
@@ -346,6 +349,7 @@
 - [ ] 'record_comments' function was moved in order to add the 'multiple_documents' comment before checking the image status in case of double comments being added; the current script logic needs to be updated because it looks very messy and doesn't flow well as is
 - [ ] Update the 'build_document_download_information' function after the above is fixed
 - [ ] Moved the document download value setter in the 'download' script into the 'download_document' function in order to integrate the 'prepare_for_download' function from the 'initialization' script--currently placement isn't great, should be integrated into the 'prepare_for_download' function somehow
+- [ ] Update 'multiple_documents' download in the 'download' script -- the multiple document download has broken at some point during refactoring => only encounters the error with "book_and_page" (and presumably "volume_and_page" document types)
 
 ### Iguana To Do
 
@@ -407,6 +411,7 @@
 - [ ] Consider extrapolating 'record_bad_value' to the 'invalid' script
 - [ ] Update the 'download' script to use the 'abstract.download_type' attribute rather than the now defunct 'document.download_type' attribute
 - [ ] Update the 'download' script with the Abstract argument & parameters--already updated in the 'execute' file ('executor' file)
+- [ ] Drop 'record_value' from the 'record' script or integrate into the 'recorder' script in some manner
 
 ### Tiger To Do
 

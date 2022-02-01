@@ -5,6 +5,7 @@ from engines.rattlesnake.validation import (
 from selenium_utilities.inputs import get_field_value
 from selenium_utilities.locators import (locate_element_by_id,
                                          locate_elements_by_tag_name)
+from serializers.recorder import record_comments
 
 from settings.county_variables.rattlesnake import (document_type_id,
                                                    effective_date_id,
@@ -17,7 +18,6 @@ from settings.county_variables.rattlesnake import (document_type_id,
                                                    recording_date_id,
                                                    row_data_tag_name,
                                                    volume_id)
-from settings.dataframe_management import multiple_documents_comment
 from settings.general_functions import (date_from_string, element_title_strip,
                                         list_to_string, title_strip,
                                         update_sentence_case_extras)
@@ -137,13 +137,6 @@ def record_book(abstract):
 
 def record_related_documents(abstract):
     abstract.dataframe['Related Documents'].append('')
-
-
-def record_comments(abstract, document):
-    if document.number_results == 1:
-        abstract.dataframe['Comments'].append('')
-    elif document.number_results > 1:
-        abstract.dataframe["Comments"].append(multiple_documents_comment(document))
 
 
 def record_document_fields(browser, abstract, document):
