@@ -1,5 +1,5 @@
 from selenium_utilities.locators import locate_element_by_id, locate_element_by_tag_name
-from serializers.recorder import record_value
+from serializers.recorder import record_comments, record_value
 
 from settings.county_variables.general import empty_value, not_applicable
 from settings.county_variables.tiger import (book_page_abbreviation,
@@ -103,10 +103,7 @@ def record_legal(abstract, row_1):
     record_value(abstract, 'legal', legal)
 
 
-# Write a function to check additional information for rows 4, 7
-def record(browser, abstract, document):
-    document_table = access_document_table_data(browser, document)
-    rows = get_table_rows(document_table)
+def aggregate_document_information(abstract, rows, document):
     record_reception_number(abstract, rows[0], document)
     record_book_and_page(abstract, rows[1])
     record_recording_date(abstract, rows[2])
@@ -115,8 +112,15 @@ def record(browser, abstract, document):
     record_grantee(abstract, rows[8])
     record_related_documents(abstract, rows[9])
     record_legal(abstract, rows[10])
-    abstract["Comments"].append(empty_value)
-    if abstract.download and document.image_available and not abstract.review:
+    record_comments(abstract, document)
+
+
+# Write a function to check additional information for rows 4, 7
+def record(browser, abstract, document):
+    document_table = access_document_table_data(browser, document)
+    rows = get_table_rows(document_table)
+    aggregate_document_information(abstract, rows, document)
+    if not abstract.download or abstract.review:
         # These (below) are messy--need to move / update (duplicated in the download script)
         javascript_script_execution(search_script)
         naptime()
