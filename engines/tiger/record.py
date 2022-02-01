@@ -1,4 +1,7 @@
+from project_management.timers import naptime
+
 from selenium_utilities.locators import locate_element_by_id, locate_element_by_tag_name
+
 from serializers.recorder import record_comments, record_value
 
 from settings.county_variables.general import not_applicable
@@ -7,7 +10,7 @@ from settings.county_variables.tiger import (book_page_abbreviation,
                                              document_information_id,
                                              document_table_tag, row_data_tag,
                                              row_titles, table_row_tag)
-from settings.general_functions import get_element_text, javascript_script_execution, naptime
+from settings.general_functions import get_element_text, javascript_script_execution
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("record", __name__)
