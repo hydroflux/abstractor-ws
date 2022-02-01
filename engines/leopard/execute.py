@@ -6,8 +6,9 @@ from settings.driver import create_webdriver
 from engines.leopard.download import execute_download
 from engines.leopard.login import account_login
 from engines.leopard.logout import logout
+from engines.leopard.navigation import next_result
 from engines.leopard.open_document import open_document
-from engines.leopard.record import next_result, record
+from engines.leopard.record import record
 from engines.leopard.search import search
 from engines.leopard.transform import transform_document_list
 
