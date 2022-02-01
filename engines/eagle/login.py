@@ -64,7 +64,6 @@ def check_login_status(browser):
 
 
 def execute_login_process(browser):
-    # try:
     open_site(browser)
     check_for_disclaimer(browser)
     click_button(browser, locate_element_by_class_name,
@@ -72,10 +71,6 @@ def execute_login_process(browser):
     enter_credentials(browser)
     confirm_login(browser)
     return True
-    # I don't think this try / exception is necessary--testing without
-    # except TimeoutException:
-    #     print("Browser timed out while trying to execute login sequence.")
-    #     return False
 
 
 def account_login(browser):
