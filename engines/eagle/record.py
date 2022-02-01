@@ -6,7 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
 from selenium_utilities.element_interaction import center_element
-from selenium_utilities.locators import locate_element_by_class_name, locate_element_by_id
+from selenium_utilities.locators import locate_element_by_class_name, locate_element_by_id, locate_elements_by_class_name
 from serializers.recorder import record_comments, record_empty_values, record_value
 
 from settings.county_variables.eagle import (document_information_id,
@@ -73,16 +73,6 @@ def handle_document_image_status(browser, abstract, document):
         wait_for_pdf_to_load(browser, document)
         return True
 
-def access_document_information_tables(browser, document, document_information):
-    try:
-        document_tables_present = EC.presence_of_element_located((By.CLASS_NAME, document_table_class))
-        WebDriverWait(browser, timeout).until(document_tables_present)
-        document_tables = document_information.find_elements_by_class_name(document_table_class)
-        return document_tables
-    except TimeoutException:
-        print(f'Browser timed out while trying to access document table information for '
-              f'{document.extrapolate_value()}.')
-
 
 def get_informational_links(browser, document, document_information):
     try:
@@ -92,13 +82,6 @@ def get_informational_links(browser, document, document_information):
         return informational_links
     except TimeoutException:
         print(f'Browser timed out while trying to get informational links for {document.extrapolate_value()}.')
-
-
-# def open_informational_grandparent(browser, link):
-#     grandparent = link.find_element_by_xpath("../..")
-#     scroll_into_view(browser, grandparent)
-#     short_nap()  # Using for testing -- does not work consistently
-#     link.click()
 
 
 def open_informational_link(browser, link):  # needs to be updated to work on a smaller screen
@@ -274,7 +257,8 @@ def aggregate_document_information(browser, abstract, document_tables, document)
 def access_document_tables(browser, document):
     document_information = locate_element_by_id(browser, document_information_id,
                                                 "document information", False, document)
-    return access_document_information_tables(browser, document, document_information)
+    return locate_elements_by_class_name(document_information, document_table_class,
+                                         "document information tables", False, document)
 
 
 def record_document_fields(browser, abstract, document):
