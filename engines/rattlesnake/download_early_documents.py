@@ -1,7 +1,11 @@
 import os
 
 from selenium.webdriver.support.ui import Select
+
+from project_management.timers import naptime
+
 from serializers.downloader import prepare_for_download
+
 from selenium_utilities.inputs import click_button
 from selenium_utilities.locators import locate_element_by_id as locate_element
 from selenium_utilities.locators import locate_elements_by_tag_name
@@ -20,7 +24,7 @@ from settings.county_variables.rattlesnake import (early_document_image_title,
 from settings.download_management import update_download
 from settings.general_functions import (four_character_padding,
                                         get_direct_link,
-                                        javascript_script_execution, naptime)
+                                        javascript_script_execution)
 from project_management.user_prompts import clear_terminal
 
 from engines.rattlesnake.search import clear_search, handle_document_value_numbers

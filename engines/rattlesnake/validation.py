@@ -1,10 +1,13 @@
+from project_management.timers import naptime
+
 from selenium_utilities.open import assert_window_title
 
 from settings.county_variables.rattlesnake import (
     bad_download_title, bad_login_title, document_description_page_title,
     document_image_page_title, home_page_title, home_page_url,
     post_login_title, post_logout_title)
-from settings.general_functions import date_from_string, naptime
+
+from settings.general_functions import date_from_string
 
 
 def verify_home_page(browser):
