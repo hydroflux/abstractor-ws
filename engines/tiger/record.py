@@ -1,7 +1,7 @@
 from selenium_utilities.locators import locate_element_by_id, locate_element_by_tag_name
 from serializers.recorder import record_comments, record_value
 
-from settings.county_variables.general import empty_value, not_applicable
+from settings.county_variables.general import not_applicable
 from settings.county_variables.tiger import (book_page_abbreviation,
                                              document_image_id, search_script,
                                              document_information_id,

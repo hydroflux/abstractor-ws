@@ -2,6 +2,7 @@ from selenium_utilities.inputs import click_button
 from selenium_utilities.locators import (locate_element_by_id,
                                          locate_element_by_tag_name,
                                          locate_elements_by_tag_name)
+from serializers.recorder import record_value
 
 from settings.county_variables.general import not_applicable
 from settings.county_variables.leopard import (book_page_abbreviation,
@@ -67,11 +68,6 @@ def check_rows(rows, title):
 def access_reception_number(document, rows):
     reception_number = check_rows(rows, row_titles["reception_number"])
     document.reception_number = reception_number
-
-
-def record_reception_number(abstract, document, rows):
-    access_reception_number(document, rows)
-    abstract.dataframe["Reception Number"].append(document.reception_number)
 
 
 def record_book_and_page(abstract, rows):
@@ -155,7 +151,8 @@ def record_comments(abstract, document, rows):
 
 
 def aggregate_document_information(abstract, document, rows):
-    record_reception_number(abstract, document, rows)
+    access_reception_number(document, rows)
+    record_value(abstract, 'reception number', document.reception_number)
     record_book_and_page(abstract, rows)
     record_recording_date(abstract, rows)
     record_document_type(abstract, rows)
