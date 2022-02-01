@@ -1,6 +1,7 @@
 from selenium_utilities.locators import (locate_element_by_id,
                                          locate_element_by_tag_name,
                                          locate_elements_by_tag_name)
+
 from serializers.recorder import record_comments, record_value
 
 from settings.county_variables.general import not_applicable
@@ -10,7 +11,7 @@ from settings.county_variables.leopard import (book_page_abbreviation,
                                                document_table_tag,
                                                row_data_tag, row_titles,
                                                table_row_tag)
-from settings.general_functions import (get_element_text, title_strip)
+from settings.general_functions import get_element_text, title_strip
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("record", __name__)
@@ -49,16 +50,6 @@ def check_rows(rows, title):
         except IndexError:
             continue
     return not_applicable
-
-
-# # Function designed to help with development, no production purpose
-# def row_title_check(rows):
-#     for row in rows:
-#         try:
-#             row_title, row_content = get_row_data(row)
-#             print(rows.index(row), "row_title", row_title, "row content", row_content)
-#         except IndexError:
-#             continue
 
 
 def access_reception_number(document, rows):
