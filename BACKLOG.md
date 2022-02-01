@@ -117,6 +117,11 @@
 - [ ] Integrate useful functions from the 'defunct_hyperlinks' script into the 'hyperlinks' script
 - [ ] Determine a way to add hyperlinks into the xlsx document prior to export instead of creating a separate sheet--try using some kind of 'replacement' function, or otherwise avoid writing the 'Reception Number' column until the hyperlinks can be created
 
+### Timers To Do
+
+- [ ] Move the 'start_program_timer' function either into the 'initialization' script or onto the Abstract class as an instance method
+- [ ] Drop the 'handle_document_list_option' function => this can be a switch based on the program type
+
 ### User Prompts To Do
 
 - [ ] Add an additional prompt function for 'early_document_downloads' if the program engine is 'rattlesnake' and the 'download_only' option is selected

@@ -2,13 +2,16 @@ import os
 
 from classes.Abstract import Abstract
 from classes.counties import county_dictionary
-from settings.general_functions import start_program_timer
+
 from project_management.generate_document_list import generate_document_list
+from project_management.timers import start_program_timer
+from project_management.user_prompts import get_program_type
+
 from settings.objects.abstract_dataframe import \
     abstract_dictionary as dataframe
-from settings.settings import (county_name, download, file_name, headless, abstraction_type,
-                               sheet_name, target_directory)
-from project_management.user_prompts import get_program_type
+from settings.settings import (abstraction_type, county_name, download,
+                               file_name, headless, sheet_name,
+                               target_directory)
 
 
 def access_county_instance(county_name):

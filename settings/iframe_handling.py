@@ -5,7 +5,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 
 from selenium_utilities.locators import locate_elements_by_tag_name
 
-from settings.general_functions import timeout
+from project_management.timers import timeout
 
 
 def access_iframe_by_tag(browser):
