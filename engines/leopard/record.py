@@ -1,4 +1,3 @@
-from selenium_utilities.inputs import click_button
 from selenium_utilities.locators import (locate_element_by_id,
                                          locate_element_by_tag_name,
                                          locate_elements_by_tag_name)
@@ -9,12 +8,9 @@ from settings.county_variables.leopard import (book_page_abbreviation,
                                                document_image_id,
                                                document_information_id,
                                                document_table_tag,
-                                               next_result_id,
-                                               previous_result_id,
                                                row_data_tag, row_titles,
                                                table_row_tag)
-from settings.general_functions import (get_element_text, scroll_to_top,
-                                        title_strip)
+from settings.general_functions import (get_element_text, title_strip)
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("record", __name__)
@@ -150,18 +146,6 @@ def aggregate_document_information(abstract, document, rows):
     record_related_documents(abstract, rows)
     record_legal(abstract, rows)
     record_comments(abstract, document, rows)
-
-
-def previous_result(browser, document):
-    # previous_result_button = get_previous_result_button(browser, document)
-    scroll_to_top(browser)
-    click_button(browser, locate_element_by_id, previous_result_id, "previous result", document)
-
-
-def next_result(browser, document):
-    # next_result_button = get_next_result_button(browser, document)
-    scroll_to_top(browser)  # should 'scroll_to_top' vs. 'center' be an option when clicking a button?
-    click_button(browser, locate_element_by_id, next_result_id, "next result", document)
 
 
 def record(browser, abstract, document):
