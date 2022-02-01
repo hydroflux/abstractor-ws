@@ -21,6 +21,7 @@ def update_element_attributes(abstract):
             "Submit Search": search_button_id,
             "Download Button": download_button_id
         }
+        # Create a 'program' or 'engine' class to handle these elements & attributes
         # document.titles = {
         #     "Home Page": home_page_title,
 

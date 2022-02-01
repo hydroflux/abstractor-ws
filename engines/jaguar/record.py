@@ -26,7 +26,6 @@ def access_document_type_and_number(browser, document):
 def handle_reception_number(abstract, document):
     if validate_reception_number(document, document.reception_number):
         record_value(abstract, 'reception number', document.reception_number)
-        # dataframe['Reception Number'].append(document.reception_number)
     else:
         print(f'Reception number "{document.reception_number}" does not match the expected value for '
               f'{document.extrapolate_value()}, please review and press enter to continue...')
@@ -37,7 +36,6 @@ def record_document_type_and_number(browser, abstract, document):
     document_type, reception_number = access_document_type_and_number(browser, document)
     document.reception_number = reception_number
     record_value(abstract, 'document type', update_sentence_case_extras(title_strip(document_type)))
-    # abstract.dataframe['Document Type'].append(update_sentence_case_extras(title_strip(document_type)))
     handle_reception_number(abstract, document)
 
 
@@ -45,7 +43,6 @@ def record_indexing_information(abstract, document_table, document):
     recording_date_field = locate_element_by_class_name(document_table, recording_date_field_class,
                                                         "recording date", document=document)
     recording_date = date_from_string(recording_date_field.text[:10])
-    # abstract.dataframe['Recording Date'].append(recording_date)
     record_value(abstract, 'recording date', recording_date)
 
 
@@ -68,13 +65,11 @@ def record_related_documents(abstract, document_table, document):
     related_documents_list = list(map(title_strip, related_documents_text))
     related_documents = list_to_string(related_documents_list)
     record_value(abstract, 'related documents', related_documents)
-    # abstract.dataframe['Related Documents'].append(related_documents)
 
 
 def record_legal(abstract, document_table, document):
     legal = title_strip(document_table.text)
     record_value(abstract, 'legal', legal)
-    # abstract.dataframe['Legal'].append(legal)
 
 
 def aggregate_document_table_information(browser, abstract, document):
