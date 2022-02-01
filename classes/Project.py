@@ -1,8 +1,10 @@
 import os
 import shutil
 
-from project_management.settings import (authorship, disclaimer, text_formats,
-                                         worksheet_properties)
+from project_management.export_settings.settings import (authorship,
+                                                         disclaimer,
+                                                         text_formats,
+                                                         worksheet_properties)
 
 
 class Project:
