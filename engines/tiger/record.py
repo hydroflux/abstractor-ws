@@ -59,38 +59,39 @@ def record_book_and_page(abstract, row):
         if book == '0' and page == '0':
             book = not_applicable
             page = not_applicable
-        abstract.dataframe["Book"].append(book)
-        abstract.dataframe["Page"].append(page)
+        record_value(abstract, 'book', book)
+        record_value(abstract, 'page', page)
     elif book_page_value == '':
-        abstract.dataframe["Book"].append(empty_value)
-        abstract.dataframe["Page"].append(empty_value)
+        record_value(abstract, 'book', '')
+        record_value(abstract, 'page', '')
     else:
+        # Below seems unnecessary, check with testing
         print(f'Encountered unexpected value "{book_page_value}" when trying to record book & page.')
 
 
 def record_recording_date(abstract, row):
     recording_date = get_row_value(row, row_titles["recording_date"])
-    abstract.dataframe["Recording Date"].append(recording_date[:10])
+    record_value(abstract, 'recording date', recording_date[:10])
 
 
 def record_document_type(abstract, row):
     document_type = get_row_value(row, row_titles["document_type"])
-    abstract.dataframe["Document Type"].append(document_type.title())
+    record_value(abstract, 'document_type', document_type.title())
 
 
 def record_grantor(abstract, row):
     grantor = get_row_value(row, row_titles["grantor"])
-    abstract.dataframe["Grantor"].append(grantor.title())
+    record_value(abstract, 'grantor', grantor.title())
 
 
 def record_grantee(abstract, row):
     grantee = get_row_value(row, row_titles["grantee"])
-    abstract.dataframe["Grantee"].append(grantee.title())
+    record_value(abstract, 'grantee', grantee.title())
 
 
 def record_related_documents(abstract, row):
     related_documents = get_row_value(row, row_titles["related_documents"])
-    abstract.dataframe["Related Documents"].append(related_documents)
+    record_value(abstract, 'related documents', related_documents)
 
 
 def record_legal(abstract, row_1):
@@ -99,7 +100,7 @@ def record_legal(abstract, row_1):
     # if legal != additional_legal:
     #     abstract.dataframe["Legal"].append(f'{legal}\n{additional_legal}')
     # else:
-    abstract.dataframe["Legal"].append(legal)
+    record_value(abstract, 'legal', legal)
 
 
 # Write a function to check additional information for rows 4, 7
