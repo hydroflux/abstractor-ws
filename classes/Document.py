@@ -1,13 +1,14 @@
 class Document:
-    def __init__(self, type, value, year=None, index_number=None,
+    def __init__(self, type, value, year=None, recording_date=None, index_number=None,
                  number_results=0, multiple_results=None, result_number=0, reception_number=None,
                  description_link=None, image_available=True, image_link=None,
                  button_attributes=None, input_attributes=None, search_attributes=None,
                  county=None, start_time=None,
-                 download_value=None, download_path=None, new_name=None):
+                 download_value=None, download_path=None, new_name=None, is_duplicate=None):
         self.type = type
         self.value = value
         self.year = year
+        self.recording_date = recording_date
         self.index_number = index_number
         self.number_results = number_results
         self.multiple_results = multiple_results
@@ -24,6 +25,7 @@ class Document:
         self.download_value = download_value
         self.download_path = download_path
         self.new_name = new_name
+        self.is_duplicate = is_duplicate
 
     def document_value(self):
         if self.type == "document_number" or self.type == "name":

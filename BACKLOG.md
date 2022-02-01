@@ -15,7 +15,6 @@
 - [ ] Eliminate iframe_handling script?
 - [ ] Update & uncomment the the 'execute_demo' function in the 'environment' file
 - [ ] If performing a 'refresh' loop, only allow for x # of refreshes before pausing for input--don't want to create too many requests (create a Document class attribute?)
-- [ ] Determine the best place to place the 'check_length' function for all scripts
 
 ## Classes To Do
 
@@ -29,7 +28,6 @@
 ### Abstract Class To Do
 
 - [ ] Add 'transform' to abstract initialization dependent on the county
-- [ ] Update either the 'Abstract' or 'Project' class to handle whether to export & bundle a project, rather than having the argument inline of the 'execute_program' functions (across directories)
 - [ ] Add instance functions to add either 'empty' or 'n/a' values to the dataframe, using 'self', some flag trigger, and a string value of the dataframe column to be affected
 
 ### County Class To Do
@@ -40,12 +38,9 @@
 ### Document Class To Do
 
 - [ ] Update 'document.value' to 'document.search_value' to create a better differentiation between 'document.reception_number'???
-- [ ] Turn off 'download' flag if document image is not available?--could be a better solution to checking image available before trying to download
-- [ ] Add date / year into the document class in order to add the option to sort by date
+- [ ] Turn off 'download' flag if document image is not available?--could be a better solution to checking image available before trying to download (I think this is solved with the conditional before 'download' in the 'executor' script)
 - [ ] Consolidate the 'value' attribute and the 'document_value' instance function--too confusing and creating problems
-- [ ] Set the 'image_available' attribute automatically True, to be turned to 'false' if otherwise noted
-- [ ] Add an 'is_duplicate' attribute to the Document class, set using 'download_management' (or otherwise the 'previously_downloaded' function) and called in the printout statements
-- [ ] Consider adding the document 'recording variables' as attributes on the Document class, which can then be recorded with an extrapolated 'record' type script in the 'actions' directory
+- [ ] Set 'is_duplicate' attribute using 'download_management' (or otherwise the 'previously_downloaded' function) and called in the printout statements
 
 ### Program Class To Do
 
@@ -54,11 +49,11 @@
 
 ### Project Class To Do
 
-- [ ] Update either the 'Abstract' or 'Project' class to handle whether to export & bundle a project, rather than having the argument inline of the 'execute_program' functions (across directories)
+- [ ] Up-To-Date
 
 ## Program To Do
 
-- [ ] Create a 'closure' script (or named something similar) to handle exporting the document, bundling the project, and closing the browser (and potentially handling a 'logout' function)
+- [ ] Up-To-Date
 
 ### Runtime To Do
 
