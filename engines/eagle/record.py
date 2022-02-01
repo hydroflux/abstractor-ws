@@ -1,9 +1,5 @@
 from selenium.common.exceptions import (ElementClickInterceptedException,
-                                        StaleElementReferenceException,
-                                        TimeoutException)
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.wait import WebDriverWait
+                                        StaleElementReferenceException)
 
 from selenium_utilities.element_interaction import center_element
 from selenium_utilities.locators import (locate_element_by_class_name,
@@ -78,16 +74,6 @@ def handle_document_image_status(browser, abstract, document):
         return True
 
 
-def get_informational_links(browser, document, document_information):
-    try:
-        informational_links_present = EC.presence_of_element_located((By.CLASS_NAME, information_links_class))
-        WebDriverWait(browser, timeout).until(informational_links_present)
-        informational_links = document_information.find_elements_by_class_name(information_links_class)
-        return informational_links
-    except TimeoutException:
-        print(f'Browser timed out while trying to get informational links for {document.extrapolate_value()}.')
-
-
 def open_informational_link(browser, link):  # needs to be updated to work on a smaller screen
     center_element(browser, link)
     link.click()
@@ -112,7 +98,8 @@ def review_and_open_links(browser, links):
 def display_all_information(browser, document):
     document_information = locate_element_by_id(browser, document_information_id,
                                                 "document information", False, document)
-    information_links = get_informational_links(browser, document, document_information)
+    information_links = locate_elements_by_class_name(document_information, information_links_class,
+                                                      "information links", False, document)
     review_and_open_links(browser, information_links)
 
 
