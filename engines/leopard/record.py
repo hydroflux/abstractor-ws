@@ -59,71 +59,69 @@ def access_reception_number(document, rows):
 
 def record_book_and_page(abstract, rows):
     book_and_page = check_rows(rows, row_titles["book_and_page"])
-    if book_and_page == not_applicable:
-        abstract.dataframe["Book"].append(book_and_page)
-        abstract.dataframe["Page"].append(book_and_page)
+    if book_and_page == 'N/A':
+        record_value(abstract, 'book', '')
+        record_value(abstract, 'page', '')
     else:
         if book_and_page.startswith(book_page_abbreviation):
             book_and_page = book_and_page[len(book_page_abbreviation):]
         book, page = book_and_page.replace("/", "").split()
-        if book == "0":
-            abstract.dataframe["Book"].append(not_applicable)
+        if book == '0' and page == '0':
+            record_value(abstract, 'book', '')
+            record_value(abstract, 'page', '')
         else:
-            abstract.dataframe["Book"].append(book)
-        if page == "0":
-            abstract.dataframe["Page"].append(not_applicable)
-        else:
-            abstract.dataframe["Page"].append(page)
+            record_value(abstract, 'book', book)
+            record_value(abstract, 'page', page)
 
 
 def record_recording_date(abstract, rows):
     recording_date = check_rows(rows, row_titles["recording_date"])
-    abstract.dataframe["Recording Date"].append(recording_date[:10])
+    record_value(abstract, 'recording date', recording_date[:10])
 
 
 def record_document_type(abstract, rows):
     document_type = check_rows(rows, row_titles["document_type"])
-    abstract.dataframe["Document Type"].append(title_strip(document_type))
+    record_value(abstract, 'document type', title_strip(document_type))
 
 
 def record_grantor(abstract, rows):
     grantor = check_rows(rows, row_titles["grantor"])
-    abstract.dataframe["Grantor"].append(title_strip(grantor))
+    record_value(abstract, 'grantor', title_strip(grantor))
 
 
 def record_grantee(abstract, rows):
     grantee = check_rows(rows, row_titles["grantee"])
-    abstract.dataframe["Grantee"].append(title_strip(grantee))
+    record_value(abstract, 'grantee', title_strip(grantee))
 
 
 def record_related_documents(abstract, rows):
     related_documents = check_rows(rows, row_titles["related_documents"])
     alt_related_documents = check_rows(rows, row_titles["alt_related_documents"])
     if related_documents == not_applicable and alt_related_documents == not_applicable:
-        abstract.dataframe["Related Documents"].append("")
+        record_value(abstract, 'related documents', '')
     else:
         if related_documents == alt_related_documents or alt_related_documents == not_applicable:
-            abstract.dataframe["Related Documents"].append(related_documents)
+            record_value(abstract, 'related documents', related_documents)
         elif related_documents == not_applicable:
-            abstract.dataframe["Related Documents"].append(alt_related_documents)
+            record_value(abstract, 'related documents', alt_related_documents)
         else:
             combined_related_documents = f'{related_documents}\n{alt_related_documents}'
-            abstract.dataframe["Related Documents"].append(combined_related_documents)
+            record_value(abstract, 'related documents', combined_related_documents)
 
 
 def record_legal(abstract, rows):
     legal = check_rows(rows, row_titles["legal"])
     alt_legal = check_rows(rows, row_titles["alt_legal"])
     if legal == not_applicable and alt_legal == not_applicable:
-        abstract.dataframe["Legal"].append("")
+        record_value(abstract, 'legal', '')
     else:
         if legal == alt_legal or alt_legal == not_applicable:
-            abstract.dataframe["Legal"].append(legal)
+            record_value(abstract, 'legal', legal)
         elif legal == not_applicable:
-            abstract.dataframe["Legal"].append(alt_legal)
+            record_value(abstract, 'legal', alt_legal)
         else:
             combined_legal = f'{legal}\n{alt_legal}'
-            abstract.dataframe["Legal"].append(combined_legal)
+            record_value(abstract, 'legal', combined_legal)
 
 
 def aggregate_document_information(abstract, document, rows):
