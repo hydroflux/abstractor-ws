@@ -1,6 +1,6 @@
 from settings.county_variables.eagle import (book_input_id, clear_search_id,
                                              download_button_id, page_input_id,
-                                             reception_number_input_id, home_page_title, home_page_url,
+                                             reception_number_input_id,
                                              search_button_id)
 
 
@@ -21,15 +21,14 @@ def update_element_attributes(abstract):
             "Submit Search": search_button_id,
             "Download Button": download_button_id
         }
-        document.titles = {
-            "Home Page": home_page_title,
+        # document.titles = {
+        #     "Home Page": home_page_title,
 
-        }
-        document.urls = {
-            "Home Page": home_page_url,
+        # }
+        # document.urls = {
+        #     "Home Page": home_page_url,
 
-        }
-
+        # }
 
 
 def transform_document_list(abstract):

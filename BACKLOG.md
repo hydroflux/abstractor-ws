@@ -42,10 +42,11 @@
 - [ ] Consolidate the 'value' attribute and the 'document_value' instance function--too confusing and creating problems
 - [ ] Set 'is_duplicate' attribute using 'download_management' (or otherwise the 'previously_downloaded' function) and called in the printout statements
 
-### Program Class To Do
+### Program / Engine Class To Do
 
 - [ ] Create a 'Program' class
-- [ ] Use the 'Program' class to create a united 'execute' function across multiple directories
+- [ ] Add the 'button_attributes' and various other 'element_attributes' located on the Document class onto the 'Program' class
+- [ ] Set the 'program' / 'engine' instance as an attribute on the abstract class?
 
 ### Project Class To Do
 
