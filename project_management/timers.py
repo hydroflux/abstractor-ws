@@ -2,6 +2,8 @@ from datetime import datetime
 from random import randint
 from time import sleep
 
+from settings.settings import abstraction_type
+
 # Timeout / Wait Variables
 timeout = randint(20, 30)
 long_timeout = randint(120, 180)
@@ -37,3 +39,19 @@ def start_timer():
 
 def stop_timer(start_time):
     return datetime.now() - start_time
+
+
+# DOES NOT BELONG AND IS SUPERFLUOUS IN THE FIRST PLACE
+def handle_document_list_option(document_list):
+    if document_list is not None:
+        return f'\n{len(document_list)} documents imported for processing.'
+    else:
+        return ''
+
+
+def start_program_timer(county, document_list=None):
+    start_time = start_timer()
+    print(f'{county} - {abstraction_type} started on: \n'
+          f'{str(start_time.strftime("%B %d, %Y %H:%M:%S"))}'
+          f'{handle_document_list_option(document_list)}')
+    return start_time

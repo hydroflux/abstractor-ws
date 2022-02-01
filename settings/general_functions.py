@@ -1,16 +1,18 @@
+from datetime import datetime
 from pprint import pprint
 from time import sleep
 from selenium.common.exceptions import StaleElementReferenceException
 
 from selenium.webdriver.common.keys import Keys
+from project_management.timers import short_nap
 
-from settings.settings import abstraction_type
 
-
+# Is this function being used in any capacity?
 def bell():
     print("\a")
 
 
+# Is this function being used in any capacity?
 def throw_alert():
     print("Please review webdriver status.")
     for _ in range(3):
@@ -22,21 +24,6 @@ def throw_alert():
 def repeat(function, times):
     for _ in range(times):
         function()
-
-
-def handle_document_list_option(document_list):
-    if document_list is not None:
-        return f'\n{len(document_list)} documents imported for processing.'
-    else:
-        return ''
-
-
-def start_program_timer(county, document_list=None):
-    start_time = start_timer()
-    print(f'{county} - {abstraction_type} started on: \n'
-          f'{str(start_time.strftime("%B %d, %Y %H:%M:%S"))}'
-          f'{handle_document_list_option(document_list)}')
-    return start_time
 
 
 def scroll_into_view(browser, element):
@@ -93,10 +80,6 @@ def four_character_padding(value):
 
 def eight_character_padding(value):
     return value.zfill(8)
-
-
-def update_number_results(document, total_results):
-    document.number_results = int(total_results)
 
 
 def zipped_list(list1, list2):
