@@ -2,7 +2,7 @@ from selenium.common.exceptions import StaleElementReferenceException, TimeoutEx
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-from settings.general_functions import timeout
+from project_management.timers import timeout
 
 
 def center_element(browser, element):

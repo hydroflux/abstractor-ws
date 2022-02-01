@@ -1,9 +1,9 @@
 from serializers.downloader import download_document
 
 from project_management.export import export_document
-from settings.driver import create_webdriver
+from project_management.timers import start_timer
 
-from settings.general_functions import start_timer
+from settings.driver import create_webdriver
 from settings.invalid import record_invalid_search
 
 

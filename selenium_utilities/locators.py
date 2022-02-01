@@ -3,7 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-from settings.general_functions import timeout
+from project_management.timers import timeout
 
 
 def locate_element_by_id(locator, id, type, clickable=False, document=None, quick=False):
