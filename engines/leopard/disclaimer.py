@@ -4,6 +4,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
 from project_management.timers import naptime, timeout
+from selenium_utilities.locators import locate_element_by_id
 
 from settings.county_variables.leopard import (disclaimer_active_class,
                                                disclaimer_button_id,
@@ -21,20 +22,10 @@ def locate_disclaimer(browser):
         print("Browser timed out while trying to locate disclaimer while logging in, please review.")
 
 
-def locate_disclaimer_button(browser):
-    try:
-        disclaimer_button_present = EC.element_to_be_clickable((By.ID, disclaimer_button_id))
-        WebDriverWait(browser, timeout).until(disclaimer_button_present)
-        disclaimer_button = browser.find_element_by_id(disclaimer_button_id)
-        return disclaimer_button
-    except TimeoutException:
-        print("Browser timed out while trying to locate disclaimer button while logging in, please review.")
-
-
 def handle_disclaimer(browser):
     javascript_script_execution(browser, open_script)
     disclaimer = locate_disclaimer(browser)
     if disclaimer.get_attribute('class') == disclaimer_active_class:
-        disclaimer_button = locate_disclaimer_button(browser)
+        disclaimer_button = locate_element_by_id(browser, disclaimer_button_id, "disclaimer button", True)
         disclaimer_button.click()
         naptime()
