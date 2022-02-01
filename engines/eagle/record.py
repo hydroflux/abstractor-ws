@@ -11,7 +11,6 @@ from serializers.recorder import record_comments, record_empty_values, record_va
 
 from settings.county_variables.eagle import (document_information_id,
                                              document_table_class,
-                                             error_message_text,
                                              image_container_id,
                                              index_table_tags,
                                              information_links_class,
@@ -24,7 +23,7 @@ from settings.county_variables.eagle import (document_information_id,
                                              result_buttons_class,
                                              stock_download_suffix)
 from settings.county_variables.general import search_errors
-from settings.general_functions import (long_timeout, medium_nap, naptime,
+from settings.general_functions import (medium_nap, naptime,
                                         scroll_to_top, short_nap, timeout,
                                         update_sentence_case_extras)
 from settings.invalid import no_document_image
@@ -44,30 +43,23 @@ def access_image_container(browser, document):
     return image_container.text
 
 
-def pdf_load_status(browser, document):
-    try:
-        pdf_viewer_loaded = EC.presence_of_element_located((By.ID, pdf_viewer_load_id))
-        WebDriverWait(browser, long_timeout).until(pdf_viewer_loaded)
-        load_status = browser.find_element_by_id(pdf_viewer_load_id).text
-        return load_status
-    except TimeoutException:
-        print("Browser timed out while waiting for the PDF Viewer to load, checking for error.")
-        return check_for_error(browser, document)
+def access_pdf_load_status(browser, document):
+    loading_status_element = locate_element_by_id(browser, pdf_viewer_load_id,
+                                                  "PDF Viewer load status", False, document)
+    while loading_status_element is None:
+        check_for_error(browser, document)
+        loading_status_element = locate_element_by_id(browser, pdf_viewer_load_id,
+                                                      "PDF Viewer load status", False, document)
+    return loading_status_element.text
 
 
 def wait_for_pdf_to_load(browser, document):
-    while pdf_load_status(browser, document).startswith(loading_status) or \
-            pdf_load_status(browser, document) == error_message_text:
+    while access_pdf_load_status(browser, document).startswith(loading_status):
         medium_nap()
-        # Status Quo (below) as of 06/23/21 changing to try & work with related documents issue
-        # short_nap()  # using short_nap in order to try & grab all related documents
-        # Consider changing to even naptime ~~~ originally 0.5 second sleep
-        # Updating sleep time would be more efficient here because it would force a nap only
-        # If the  PDF hasn't loaded properly
 
 
 def handle_document_image_status(browser, abstract, document):
-    image_container_text = get_image_container(browser, document)
+    image_container_text = access_image_container(browser, document)
     if image_container_text == no_image_text or image_container_text == login_error_text:
         document.image_available = False
         print(f'No document image exists for '
