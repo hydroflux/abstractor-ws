@@ -1,13 +1,14 @@
 # from eagle.error_handling import check_for_error
-from engines.eagle.error_handling import check_for_error
+from project_management.timers import naptime
+
 from selenium_utilities.inputs import (clear_input, click_button,
                                        enter_input_value)
 from selenium_utilities.locators import locate_element_by_id as locate_input
 from selenium_utilities.open import open_url
 
 from settings.county_variables.eagle import search_title, search_url
-from settings.general_functions import naptime
 
+from engines.eagle.error_handling import check_for_error
 from engines.eagle.login import check_login_status
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder

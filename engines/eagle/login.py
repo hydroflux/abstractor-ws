@@ -1,6 +1,8 @@
 from selenium.common.exceptions import (StaleElementReferenceException,
                                         TimeoutException)
 
+from project_management.timers import micro_nap
+
 from selenium_utilities.inputs import click_button, enter_input_value
 from selenium_utilities.locators import (locate_element_by_class_name,
                                          locate_element_by_id)
@@ -11,7 +13,6 @@ from settings.county_variables.eagle import (credentials, fallback_search_url,
                                              logged_out_redirect_url,
                                              login_button_id,
                                              login_prompt_class)
-from settings.general_functions import micro_nap
 
 from engines.eagle.disclaimer import check_for_disclaimer
 

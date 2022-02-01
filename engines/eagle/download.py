@@ -5,10 +5,11 @@ from selenium_utilities.inputs import click_button
 from selenium_utilities.locators import (locate_element_by_class_name,
                                          locate_element_by_id)
 
+from project_management.timers import naptime
+
 from settings.county_variables.eagle import (pdf_viewer_class_name,
                                              purchase_button_class_name)
 from settings.download_management import update_download
-from settings.general_functions import naptime
 from settings.iframe_handling import switch_to_default_content
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder

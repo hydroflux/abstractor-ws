@@ -4,6 +4,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
+from project_management.timers import naptime, short_nap, timeout
+
 from selenium_utilities.locators import (locate_element_by_class_name,
                                          locate_elements_by_class_name,
                                          locate_elements_by_tag_name)
@@ -19,8 +21,7 @@ from settings.county_variables.eagle import (currently_searching,
                                              results_row_class_name,
                                              search_status_tag,
                                              validation_class_name)
-from settings.general_functions import (get_direct_link, naptime, short_nap,
-                                        timeout)
+from settings.general_functions import get_direct_link
 
 from engines.eagle.search import execute_search, search
 

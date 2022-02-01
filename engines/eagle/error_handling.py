@@ -1,6 +1,6 @@
 from selenium_utilities.locators import locate_element_by_class_name
 
-from settings.general_functions import naptime
+from project_management.timers import naptime
 
 from settings.county_variables.eagle import error_message_class, error_message_text
 
