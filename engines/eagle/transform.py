@@ -4,7 +4,8 @@ from settings.county_variables.eagle import (book_input_id, clear_search_id,
                                              home_page_title, home_page_url, inaccessible, welcome_message,
                                              logged_out_redirect_url, disclaimer_id,
                                              login_button_id, page_input_id, search_url, search_title,
-                                             reception_number_input_id, login_prompt_class,
+                                             reception_number_input_id, login_prompt_class, document_description_title,
+                                             currently_searching, failed_search, invalid_search_message,
                                              search_button_id)
 
 
@@ -23,7 +24,8 @@ def update_county_attributes(abstract):
     }
     abstract.county.titles = {
         "Home Page": home_page_title,
-        "Search Page": search_title
+        "Search Page": search_title,
+        "Document Description": document_description_title
     }
     abstract.county.classes = {
         "Login Prompt": login_prompt_class

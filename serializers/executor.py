@@ -44,7 +44,7 @@ def search_documents_from_list(browser, abstract, search, open_document, record,
     for document in abstract.document_list:
         document.start_time = start_timer()
         search(browser, abstract, document)
-        if open_document(browser, document):
+        if open_document(browser, abstract, document):
             handle_search_results(browser, abstract, document, record, execute_download, next_result)
         else:
             record_invalid_search(abstract, document)

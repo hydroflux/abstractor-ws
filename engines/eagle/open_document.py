@@ -145,7 +145,7 @@ def handle_document_search(browser, document):
               f'{document.extrapolate_value()}, trying again.')
 
 
-def open_document(browser, document):
+def open_document(browser, abstract, document):
     while not validate_search(browser, document):
         retry_search(browser, document)
     if check_search_results(browser, document):
