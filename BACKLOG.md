@@ -35,6 +35,7 @@
 
 - [ ] If websites & logins are added to the county class the open_site function can be generalized across all scripts
 - [ ] The above can also be used for the 'Program' class instead
+- [ ] Logic to get 'name' assigned to the Engine class using the 'county' class is convoluted--clean up both classes
 
 ### Document Class To Do
 
@@ -48,6 +49,7 @@
 - [ ] Create a 'Program' class
 - [ ] Add the 'button_attributes' and various other 'element_attributes' located on the Document class onto the 'Program' class
 - [ ] Set the 'program' / 'engine' instance as an attribute on the abstract class?
+- [ ] Logic to get 'name' assigned to the Engine class using the 'county' class is convoluted--clean up both classes
 
 ### Project Class To Do
 
