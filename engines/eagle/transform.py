@@ -57,7 +57,7 @@ def update_county_attributes(abstract):
         # Record
         "Image Container": eagle.image_container_id,
         "Document Information": eagle.document_information_id,
-        "PDF Viewer": eagle.pdf_viewer_load_id
+        "PDF Viewer Load Marker": eagle.pdf_viewer_load_id
     }
     abstract.county.inputs = {  # Consider changing to 'search_inputs'
         # Search
