@@ -115,7 +115,7 @@ def check_search_results(browser, abstract, document):
 def get_document_link(abstract, result, document):
     result_actions_list = locate_element_by_class_name(result, abstract.county.classes["Result Actions"],
                                                        "search results actions list", document=document)
-    return locate_elements_by_tag_name(result_actions_list, abstract.county.tag["Result Actions"],
+    return locate_elements_by_tag_name(result_actions_list, abstract.county.tags["Result Actions"],
                                        "search actions", document=document)[1]
 
 
