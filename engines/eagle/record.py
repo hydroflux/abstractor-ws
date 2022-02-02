@@ -60,7 +60,7 @@ def handle_document_image_status(browser, abstract, document):
         medium_nap()
         return False
     else:
-        wait_for_pdf_to_load(browser, document)
+        wait_for_pdf_to_load(browser, abstract, document)
         return True
 
 
