@@ -15,28 +15,29 @@ from settings.settings import (abstraction_type, county_name, download,
                                target_directory)
 
 
+# def update_engine_attributes(engine):
+#     pass
+
+
+# def create_engine_object():
+#     engine = Engine(
+#         name="",  # Need to pass name into the engine
+#         county=access_county_instance(county_name),
+#     )
+#     update_engine_attributes(engine)
+#     return engine
+
+
 def access_county_instance(county_name):
     county_instance = county_dictionary.get(county_name.lower())
     print(county_instance)
     return county_instance
 
 
-def update_engine_attributes(engine):
-    pass
-
-
-def create_engine_object():
-    engine = Engine(
-        county=access_county_instance(county_name),
-    )
-    update_engine_attributes(engine)
-    return engine
-
-
-def create_abstract_object(engine):
+def create_abstract_object():
     return Abstract(
         type=abstraction_type,
-        engine=engine,
+        county=access_county_instance(county_name),
         target_directory=target_directory,
         file_name=file_name,
         program=get_program_type(),
@@ -65,8 +66,7 @@ def create_folder(directory):
 
 
 def initialize_abstraction():
-    engine = create_engine_object()
-    abstract = create_abstract_object(engine)
+    abstract = create_abstract_object()
     program_type_update(abstract)
     abstract.document_list = generate_document_list(target_directory, file_name, sheet_name)
     abstract.timer = start_program_timer(abstract.county, abstract.document_list)

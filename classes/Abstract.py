@@ -2,17 +2,17 @@ from datetime import datetime
 
 
 class Abstract:
-    def __init__(self, type, engine, target_directory, file_name, program,
+    def __init__(self, type, county, target_directory, file_name, program,
                  headless, download, dataframe,
                  review=False, download_only=False, download_type=None,
                  document_directory=None, document_list=None, timer=None,
                  search_name=None,
                  document_directory_files=None):
         self.type = type
-        self.engine = engine
+        self.county = county
         self.target_directory = target_directory
         self.file_name = file_name
-        self.program = engine
+        self.program = program
         self.headless = headless
         self.download = download
         self.dataframe = dataframe
