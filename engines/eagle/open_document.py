@@ -52,7 +52,7 @@ def get_search_status(browser):
         return None
 
 
-def wait_for_results(browser):
+def wait_for_results(browser, abstract):
     search_status = get_search_status(browser)
     while search_status == abstract.county.messages["Currently Searching"] or search_status is None:
         short_nap()
@@ -60,13 +60,13 @@ def wait_for_results(browser):
     return search_status
 
 
-def retry_execute_search(browser, document, search_status):
+def retry_execute_search(browser, abstract, document, search_status):
     while search_status == abstract.county.messages["Failed Search"]:
         print(f'Search failed for {document.extrapolate_value()},'
               f' executing search again.')
         execute_search(browser, document)
         naptime()
-        search_status = wait_for_results(browser)
+        search_status = wait_for_results(browser, abstract)
     return search_status
 
 
@@ -93,20 +93,20 @@ def count_results(browser, document):
     #     return None
 
 
-def handle_result_count(browser, document):
-    search_status = wait_for_results(browser)
+def handle_result_count(browser, abstract, document):
+    search_status = wait_for_results(browser, abstract)
     if search_status == abstract.county.messages["Failed Search"]:
         print(f'Initial search failed, attempting to execute search again for '
               f'{document.extrapolate_value()}')
-        search_status = retry_execute_search(browser, document, search_status)
+        search_status = retry_execute_search(browser, abstract, document, search_status)
     if search_status == abstract.county.messages["No Results"]:
         print(f'No results located at {document.extrapolate_value()}, please review.')
     else:
         count_results(browser, document)
 
 
-def check_search_results(browser, document):
-    handle_result_count(browser, document)
+def check_search_results(browser, abstract, document):
+    handle_result_count(browser, abstract, document)
     # number_results = process_result_count_from_search(browser, document)
     if document.number_results == 0:
         return False
@@ -124,7 +124,7 @@ def get_document_link(result, document):
                                        "search actions", document=document)[1]
 
 
-def open_document_description(browser, document, result):
+def open_document_description(browser, abstract, document, result):
     document_link = get_document_link(result, document)
     document.description_link = get_direct_link(document_link)
     open_url(browser, document.description_link, abstract.county.titles["Document Description"],
@@ -134,7 +134,7 @@ def open_document_description(browser, document, result):
 def handle_document_search(browser, abstract, document):
     try:
         first_result = get_search_results(browser, document)[0]
-        open_document_description(browser, document, first_result)
+        open_document_description(browser, abstract, document, first_result)
         short_nap()  # W/O nap pdf fails to load properly on first try
         return True
     except StaleElementReferenceException:
@@ -145,5 +145,5 @@ def handle_document_search(browser, abstract, document):
 def open_document(browser, abstract, document):
     while not validate_search(browser, abstract, document):
         retry_search(browser, document)
-    if check_search_results(browser, document):
+    if check_search_results(browser, abstract, document):
         return handle_document_search(browser, abstract, document)
