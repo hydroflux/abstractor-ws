@@ -43,7 +43,7 @@ def handle_search_results(browser, abstract, document, record, execute_download,
 def search_documents_from_list(browser, abstract, search, open_document, record, execute_download, next_result=None):
     for document in abstract.document_list:
         document.start_time = start_timer()
-        search(browser, document)
+        search(browser, abstract, document)
         if open_document(browser, document):
             handle_search_results(browser, abstract, document, record, execute_download, next_result)
         else:

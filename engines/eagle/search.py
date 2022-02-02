@@ -40,7 +40,7 @@ def execute_search(browser, document):
                  "execute search button", document)
 
 
-def search(browser, document):
+def search(browser, abstract, document):
     open_url(browser, search_url, search_title, "document search page")
     check_login_status(browser)
     if not check_for_error(browser, document, 'search'):
