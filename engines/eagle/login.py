@@ -75,9 +75,9 @@ def execute_login_process(browser, abstract):
 
 def login(browser, abstract):
     print("\nWebdriver initialized, attempting to login...")
-    if not execute_login_process(browser):
+    if not execute_login_process(browser, abstract):
         print("Login sequence failed, attempting again before closing out.")
-        if not execute_login_process(browser):
+        if not execute_login_process(browser, abstract):
             print("Browser failed to properly login, please review & try again later.")
             browser.quit()
             exit()

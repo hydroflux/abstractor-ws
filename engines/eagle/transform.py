@@ -10,6 +10,9 @@ def update_document_attributes(abstract):
 
 
 def update_county_attributes(abstract):
+    abstract.county.credentials = {
+
+    }
     abstract.county.urls = {
 
     }

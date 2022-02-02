@@ -3,6 +3,7 @@ class County:
     number_counties = 0
 
     def __init__(self, county_name, prefix, state, state_prefix, engine,
+                 credentials=None,
                  urls=None, buttons=None, inputs=None, searches=None):
         self.county_name = county_name
         self.prefix = prefix
@@ -10,6 +11,7 @@ class County:
         self.state_prefix = state_prefix
         self.engine = engine
 
+        self.credentials = credentials
         self.urls = urls
         self.buttons = buttons
         self.inputs = inputs
