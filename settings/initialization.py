@@ -21,11 +21,16 @@ def access_county_instance(county_name):
     return county_instance
 
 
+def update_engine_attributes(engine):
+    pass
+
+
 def create_engine_object():
-    return Engine(
-        name="",
-        county=access_county_instance(county_name)
+    engine = Engine(
+        county=access_county_instance(county_name),
     )
+    update_engine_attributes(engine)
+    return engine
 
 
 def create_abstract_object(engine):

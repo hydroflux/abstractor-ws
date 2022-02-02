@@ -15,6 +15,8 @@
 - [ ] Eliminate iframe_handling script?
 - [ ] Update & uncomment the the 'execute_demo' function in the 'environment' file
 - [ ] If performing a 'refresh' loop, only allow for x # of refreshes before pausing for input--don't want to create too many requests (create a Document class attribute?)
+- [ ] Use some sort of numbering system for BACKLOG in order to track different to do lists and make linked references at different points in the BACKLOG file
+- [ ] Add documentation to code scripts (look up the best way to perform documentation for selenium programs)
 
 ## Classes To Do
 
@@ -233,6 +235,7 @@
 - [ ] "prepare_for_download" function has the same name as one from the "download_management" script with different functionality => review and update
 - [ ] Extra conditionals in 'prepare_for_download' can (and should) be handled more eloquently
 - [ ] Consider moving 'prepare_for_download' and 'create_document_directory' to 'download_management' after cleaning up 'download_management' script
+- [ ] Update the 'create_engine_object' after fixing the 'engine' and 'county' classes
 
 ### Invalid To Do
 
