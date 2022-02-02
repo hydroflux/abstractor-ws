@@ -84,10 +84,11 @@ def update_county_attributes(abstract):
         "Information Links": information_links_class,
         "Related Documents Table": related_table_class,
         "Result Buttons": result_buttons_class,
-        "Error Message": error_message_class,
         # Download
         "PDF Viewer": pdf_viewer_class_name,
-        "Purchase Button": purchase_button_class_name
+        "Purchase Button": purchase_button_class_name,
+        # Error Handling
+        "Error Message": error_message_class
     }
     abstract.county.ids = {
         # Record
@@ -114,8 +115,9 @@ def update_county_attributes(abstract):
         "Loading": loading_status,
         "More Information": more_info_message,
         "Less Information": less_info_message,
-        "Error Message": error_message,
-        "Login Error": login_error_message
+        "Login Error": login_error_message,
+        # Error Handling
+        "Error Message": error_message
     }
     abstract.county.tags = {
         # Open Document

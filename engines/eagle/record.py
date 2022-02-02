@@ -28,7 +28,7 @@ def access_image_container(browser, abstract, document):
     image_container = locate_element_by_id(browser, abstract.county.ids["Image Container"],
                                            "image container", False, document)
     while image_container is None:
-        check_for_error(browser, document)
+        check_for_error(browser, abstract, document)
         image_container = locate_element_by_id(browser, abstract.county.ids["Image Container"],
                                                "image container", False, document)
     return image_container.text
@@ -38,7 +38,7 @@ def access_pdf_load_status(browser, abstract, document):
     loading_status_element = locate_element_by_id(browser, abstract.county.ids["PDF Viewer Loaded"],
                                                   "PDF Viewer load status", False, document)
     while loading_status_element is None:
-        check_for_error(browser, document)
+        check_for_error(browser, abstract, document)
         loading_status_element = locate_element_by_id(browser, abstract.county.ids["PDF Viewer Loaded"],
                                                       "PDF Viewer load status", False, document)
     return loading_status_element.text

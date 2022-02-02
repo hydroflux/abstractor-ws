@@ -38,7 +38,7 @@ def search(browser, abstract, document):
     open_url(browser, abstract.county.urls["Search Page"],
              abstract.county.titles["Search Page"], "document search page")
     check_login_status(browser, abstract)
-    if not check_for_error(browser, document, 'search'):
+    if not check_for_error(browser, abstract, document, 'search'):
         clear_search(browser, abstract, document)
         naptime()  # Consider testing without this nap to see if necessary
         execute_search(browser, abstract, document)
