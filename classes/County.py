@@ -19,6 +19,8 @@ class County:
         self.buttons = buttons
         self.classes = classes
         self.inputs = inputs
+
+        # "Other" handles attributes that don't fit into neat categories
         self.other = other
 
         County.number_counties += 1

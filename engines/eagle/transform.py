@@ -1,7 +1,7 @@
 from settings.county_variables.eagle import (book_input_id, clear_search_id,
                                              credentials, download_button_id,
                                              fallback_search_url,
-                                             home_page_title, home_page_url, inaccessible,
+                                             home_page_title, home_page_url, inaccessible, welcome_message,
                                              logged_out_redirect_url, disclaimer_id,
                                              login_button_id, page_input_id,
                                              reception_number_input_id, login_prompt_class,
@@ -39,7 +39,8 @@ def update_county_attributes(abstract):
             "Page": page_input_id,
         }
     abstract.county.other = {
-        "Inaccessible": inaccessible
+        "Inaccessible": inaccessible,
+        "Welcome": welcome_message
     }
     # Create a 'program' or 'engine' class to handle these elements & attributes
     # document.titles = {
