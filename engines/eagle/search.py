@@ -6,8 +6,6 @@ from selenium_utilities.inputs import (clear_input, click_button,
 from selenium_utilities.locators import locate_element_by_id as locate_input
 from selenium_utilities.open import open_url
 
-from settings.county_variables.eagle import search_title, search_url
-
 from engines.eagle.error_handling import check_for_error
 from engines.eagle.login import check_login_status
 
@@ -41,7 +39,8 @@ def execute_search(browser, document):
 
 
 def search(browser, abstract, document):
-    open_url(browser, search_url, search_title, "document search page")
+    open_url(browser, abstract.county.urls["Search Page"],
+             abstract.county.titles["Search Page"], "document search page")
     check_login_status(browser)
     if not check_for_error(browser, document, 'search'):
         clear_search(browser, document)
