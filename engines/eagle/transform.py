@@ -42,9 +42,14 @@ def update_county_attributes(abstract):
         "Book": book_input_id,
         "Page": page_input_id,
     }
+    abstract.county.messages = {
+        "Welcome": welcome_message,
+        "Invalid Search": invalid_search_message,
+        "Failed Search": failed_search,
+        "Currently Searching": currently_searching
+    }
     abstract.county.other = {
         "Inaccessible": inaccessible,
-        "Welcome": welcome_message
     }
     # Create a 'program' or 'engine' class to handle these elements & attributes
     # document.titles = {
