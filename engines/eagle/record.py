@@ -18,15 +18,13 @@ from project_management.timers import medium_nap, naptime
 from serializers.recorder import (record_comments, record_empty_values,
                                   record_value)
 
-from settings.county_variables.eagle import (document_information_id,
+from settings.county_variables.eagle import (
                                              document_table_class,
-                                             image_container_id,
                                              index_table_tags,
                                              information_links_class,
                                              less_info, loading_status,
                                              login_error_text, missing_values,
                                              more_info, no_image_text,
-                                             pdf_viewer_load_id,
                                              related_table_class,
                                              result_button_tag,
                                              result_buttons_class,
@@ -43,33 +41,33 @@ from engines.eagle.error_handling import check_for_error
 print("record", __name__)
 
 
-def access_image_container(browser, document):
-    image_container = locate_element_by_id(browser, image_container_id,
+def access_image_container(browser, abstract, document):
+    image_container = locate_element_by_id(browser, abstract.county.ids["Image Container"],
                                            "image container", False, document)
     while image_container is None:
         check_for_error(browser, document)
-        image_container = locate_element_by_id(browser, image_container_id,
+        image_container = locate_element_by_id(browser, abstract.county.ids["Image Container"],
                                                "image container", False, document)
     return image_container.text
 
 
-def access_pdf_load_status(browser, document):
-    loading_status_element = locate_element_by_id(browser, pdf_viewer_load_id,
+def access_pdf_load_status(browser, abstract, document):
+    loading_status_element = locate_element_by_id(browser, abstract.county.ids["PDF Viewer Loaded"],
                                                   "PDF Viewer load status", False, document)
     while loading_status_element is None:
         check_for_error(browser, document)
-        loading_status_element = locate_element_by_id(browser, pdf_viewer_load_id,
+        loading_status_element = locate_element_by_id(browser, abstract.county.ids["PDF Viewer Loaded"],
                                                       "PDF Viewer load status", False, document)
     return loading_status_element.text
 
 
-def wait_for_pdf_to_load(browser, document):
-    while access_pdf_load_status(browser, document).startswith(loading_status):
+def wait_for_pdf_to_load(browser, abstract, document):
+    while access_pdf_load_status(browser, abstract, document).startswith(loading_status):
         medium_nap()
 
 
 def handle_document_image_status(browser, abstract, document):
-    image_container_text = access_image_container(browser, document)
+    image_container_text = access_image_container(browser, abstract, document)
     if image_container_text == no_image_text or image_container_text == login_error_text:
         document.image_available = False
         print(f'No document image exists for '
@@ -262,15 +260,15 @@ def aggregate_document_information(browser, abstract, document_tables, document)
     record_notes(abstract, document_tables)
 
 
-def access_document_tables(browser, document):
-    document_information = locate_element_by_id(browser, document_information_id,
+def access_document_tables(browser, abstract, document):
+    document_information = locate_element_by_id(browser, abstract.county.ids["Document Information"],
                                                 "document information", False, document)
     return locate_elements_by_class_name(document_information, document_table_class,
                                          "document information tables", False, document)
 
 
 def record_document_fields(browser, abstract, document):
-    document_tables = access_document_tables(browser, document)
+    document_tables = access_document_tables(browser, abstract, document)
     if execution_review:
         medium_nap()   # Adding a flag instead of having to comment the line our every time for review
         # should probably be it's own function if continue using in this manner

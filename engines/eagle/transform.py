@@ -9,7 +9,9 @@ from settings.county_variables.eagle import (book_input_id, clear_search_id, no_
                                              search_button_id, result_actions_tag_name,
                                              result_actions_class_name,
                                              results_row_class_name,
-                                             search_status_tag,
+                                             search_status_tag, image_container_id,
+                                             document_information_id,
+                                             pdf_viewer_load_id,
                                              validation_class_name)
 
 
@@ -58,7 +60,10 @@ def update_county_attributes(abstract):
         "Result Actions": result_actions_class_name
     }
     abstract.county.ids = {
-
+        # Record
+        "Image Container": image_container_id,
+        "Document Information": document_information_id,
+        "PDF Viewer": pdf_viewer_load_id
     }
     abstract.county.inputs = {  # Consider changing to 'search_inputs'
         # Search

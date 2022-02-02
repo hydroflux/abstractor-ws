@@ -172,7 +172,7 @@
 
 - [ ] Move 'check_length' into the 'handle_single_document' function (make sure that the order-of-events still makes sense)
 - [ ] Integrate 'check_last_document' (currently only used in eagle record??) into the 'handle_single_document' or 'handle_multiple_documents' script
-- [ ] Update all dependent scripts with the 'abstract' argument
+- [ ] Update all dependent scripts with the 'abstract' argument (open, login, search scripts)
 
 ## Settings To Do
 
