@@ -24,9 +24,10 @@ from engines.eagle.search import execute_search, search
 print("open", __name__)
 
 
-def validate_search(browser, document):
-    return abstract.county.messages["Invalid Search"] != locate_element_by_class_name(browser, validation_class_name,
-                                                                  "search validation message", document=document)
+def validate_search(browser, abstract, document):
+    return (abstract.county.messages["Invalid Search"] !=
+                locate_element_by_class_name(browser, validation_class_name,
+                                             "search validation message", document=document))
 
 
 def retry_search(browser, document):
@@ -111,7 +112,8 @@ def check_search_results(browser, document):
         return False
     else:
         if document.number_results > 1:
-            print(f'{document.number_results} documents returned while searching {document.extrapolate_value()}.')
+            print(f'{document.number_results} documents returned while searching '
+                  f'{document.extrapolate_value()}.')
         return True
 
 
@@ -129,7 +131,7 @@ def open_document_description(browser, document, result):
              "document description", document)
 
 
-def handle_document_search(browser, document):
+def handle_document_search(browser, abstract, document):
     try:
         first_result = get_search_results(browser, document)[0]
         open_document_description(browser, document, first_result)
@@ -141,7 +143,7 @@ def handle_document_search(browser, document):
 
 
 def open_document(browser, abstract, document):
-    while not validate_search(browser, document):
+    while not validate_search(browser, abstract, document):
         retry_search(browser, document)
     if check_search_results(browser, document):
-        return handle_document_search(browser, document)
+        return handle_document_search(browser, abstract, document)
