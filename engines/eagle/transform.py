@@ -1,4 +1,4 @@
-from settings.county_variables.eagle import (book_input_id, clear_search_id,
+from settings.county_variables.eagle import (book_input_id, clear_search_id, no_results_message,
                                              credentials, download_button_id,
                                              fallback_search_url,
                                              home_page_title, home_page_url, inaccessible, welcome_message,
@@ -44,6 +44,7 @@ def update_county_attributes(abstract):
     }
     abstract.county.messages = {
         "Welcome": welcome_message,
+        "No Results": no_results_message,
         "Invalid Search": invalid_search_message,
         "Failed Search": failed_search,
         "Currently Searching": currently_searching

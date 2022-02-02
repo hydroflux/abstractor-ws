@@ -11,12 +11,7 @@ from selenium_utilities.locators import (locate_element_by_class_name,
                                          locate_elements_by_tag_name)
 from selenium_utilities.open import open_url
 
-from settings.county_variables.eagle import (currently_searching,
-                                             document_description_title,
-                                             failed_search,
-                                             invalid_search_message,
-                                             no_results_message,
-                                             result_action_tag_name,
+from settings.county_variables.eagle import (result_action_tag_name,
                                              result_actions_class_name,
                                              results_row_class_name,
                                              search_status_tag,
@@ -30,7 +25,7 @@ print("open", __name__)
 
 
 def validate_search(browser, document):
-    return invalid_search_message != locate_element_by_class_name(browser, validation_class_name,
+    return abstract.county.messages["Invalid Search"] != locate_element_by_class_name(browser, validation_class_name,
                                                                   "search validation message", document=document)
 
 
@@ -58,14 +53,14 @@ def get_search_status(browser):
 
 def wait_for_results(browser):
     search_status = get_search_status(browser)
-    while search_status == currently_searching or search_status is None:
+    while search_status == abstract.county.messages["Currently Searching"] or search_status is None:
         short_nap()
         search_status = get_search_status(browser)
     return search_status
 
 
 def retry_execute_search(browser, document, search_status):
-    while search_status == failed_search:
+    while search_status == abstract.county.messages["Failed Search"]:
         print(f'Search failed for {document.extrapolate_value()},'
               f' executing search again.')
         execute_search(browser, document)
@@ -99,11 +94,11 @@ def count_results(browser, document):
 
 def handle_result_count(browser, document):
     search_status = wait_for_results(browser)
-    if search_status == failed_search:
+    if search_status == abstract.county.messages["Failed Search"]:
         print(f'Initial search failed, attempting to execute search again for '
               f'{document.extrapolate_value()}')
         search_status = retry_execute_search(browser, document, search_status)
-    if search_status == no_results_message:
+    if search_status == abstract.county.messages["No Results"]:
         print(f'No results located at {document.extrapolate_value()}, please review.')
     else:
         count_results(browser, document)
@@ -130,7 +125,7 @@ def get_document_link(result, document):
 def open_document_description(browser, document, result):
     document_link = get_document_link(result, document)
     document.description_link = get_direct_link(document_link)
-    open_url(browser, document.description_link, document_description_title,
+    open_url(browser, document.description_link, abstract.county.titles["Document Description"],
              "document description", document)
 
 
