@@ -3,6 +3,7 @@ import os
 from classes.Abstract import Abstract
 # from classes.Engine import Engine
 from classes.counties import county_dictionary
+from engines.eagle.transform import transform as transform_eagle
 
 from project_management.generate_document_list import generate_document_list
 from project_management.timers import start_program_timer
@@ -59,7 +60,7 @@ def program_type_update(abstract):
 
 def update_abstract_and_county_attributes(abstract):
     if abstract.county.engine == "eagle":
-        pass
+        transform_eagle(abstract)
 
 
 def create_folder(directory):
@@ -73,7 +74,7 @@ def create_folder(directory):
 def initialize_abstraction():
     abstract = create_abstract_object()
     program_type_update(abstract)
-    update_abstract_and_county_attributes(abstract)
     abstract.document_list = generate_document_list(target_directory, file_name, sheet_name)
     abstract.timer = start_program_timer(abstract.county, abstract.document_list)
+    update_abstract_and_county_attributes(abstract)
     return abstract

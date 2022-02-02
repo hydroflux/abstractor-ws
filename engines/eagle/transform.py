@@ -10,26 +10,28 @@ def update_document_attributes(abstract):
 
 
 def update_county_attributes(abstract):
-    for document in abstract.document_list:
-        document.input_attributes = {
+    abstract.county.inputs = {
             "Reception Number": reception_number_input_id,
             "Book": book_input_id,
             "Page": page_input_id,
         }
-        document.button_attributes = {
+    abstract.county.buttons = {
             "Clear Search": clear_search_id,
             "Submit Search": search_button_id,
             "Download Button": download_button_id
-        }
-        # Create a 'program' or 'engine' class to handle these elements & attributes
-        # document.titles = {
-        #     "Home Page": home_page_title,
+    }
+    abstract.county.searches = {
 
-        # }
-        # document.urls = {
-        #     "Home Page": home_page_url,
+    }
+    # Create a 'program' or 'engine' class to handle these elements & attributes
+    # document.titles = {
+    #     "Home Page": home_page_title,
 
-        # }
+    # }
+    # document.urls = {
+    #     "Home Page": home_page_url,
+
+    # }
 
 
 def transform(abstract):
