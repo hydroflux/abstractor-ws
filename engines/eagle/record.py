@@ -109,7 +109,7 @@ def drop_superfluous_information(abstract, string):
         return string
 
 
-def access_table_body(abstract, document_table):
+def access_table_body(document_table, abstract):  # Argument order important in order to work with 'map'
     return document_table.find_element_by_tag_name(abstract.county.tags["Index Table"][0])
 
 
@@ -131,7 +131,7 @@ def access_field_body(field_info):
 
 
 def access_indexing_information(abstract, document_table):
-    table_body = access_table_body(abstract, document_table)
+    table_body = access_table_body(document_table, abstract)
     table_rows = access_table_rows(abstract, table_body)
     return map(access_field_body, table_rows)
 
@@ -174,7 +174,7 @@ def record_name_data(abstract, document_table):
 
 
 def record_legal_data(abstract, document_table):
-    table_rows = access_table_rows(document_table)
+    table_rows = access_table_rows(abstract, document_table)
     legal_data = table_rows[1].find_elements_by_tag_name(abstract.county.tags["Index Table"][2])
     if legal_data == []:
         record_value(abstract, 'legal', search_errors[2])

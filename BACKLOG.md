@@ -387,6 +387,7 @@
 - [ ] Add a function to drop duplicates (from the document list? from the dataframe?)
 - [ ] Add in some semblance of the 'close_program' function used in 'leopard' and 'tiger'
 - [ ] Consider combining the 'update_element_attributes' and 'update_document_attributes' functions from the 'transform' script into a single function--downside being specific element attribute updates cannot be extrapolated to a higher level (unless all 'class', 'id', 'tag', etc. attributes are made uniform using an 'attribute' replacement)
+- [ ] Update 'transform' script to match the functionality of the eagle 'transform' script => update 'execute', 'initialization', and dependent 'executor' functions afterwards
 
 ### Leopard To Do
 
