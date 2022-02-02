@@ -17,6 +17,7 @@
 - [ ] If performing a 'refresh' loop, only allow for x # of refreshes before pausing for input--don't want to create too many requests (create a Document class attribute?)
 - [ ] Use some sort of numbering system for BACKLOG in order to track different to do lists and make linked references at different points in the BACKLOG file
 - [ ] Add documentation to code scripts (look up the best way to perform documentation for selenium programs)
+- [ ] Figure out how to search all scripts for a particular variable name
 
 ## Classes To Do
 
