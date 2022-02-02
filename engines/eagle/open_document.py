@@ -26,7 +26,7 @@ print("open", __name__)
 
 def validate_search(browser, abstract, document):
     return (abstract.county.messages["Invalid Search"] !=
-            locate_element_by_class_name(browser, validation_class_name,
+            locate_element_by_class_name(browser, abstract.county.classes["Validation"],
                                          "search validation message", document=document))
 
 
