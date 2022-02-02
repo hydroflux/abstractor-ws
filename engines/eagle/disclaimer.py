@@ -1,7 +1,5 @@
 from selenium.common.exceptions import NoSuchElementException
 
-from settings.county_variables.eagle import inaccessible
-
 
 def locate_disclaimer(browser, abstract):
     try:
@@ -15,9 +13,9 @@ def handle_disclaimer(browser, abstract):
     disclaimer = locate_disclaimer(browser, abstract)
     if not disclaimer:
         return True
-    elif disclaimer.get_attribute(inaccessible) is not None:
+    elif disclaimer.get_attribute(abstract.county.other["Inaccessible"]) is not None:
         return False
-    elif disclaimer.get_attribute(inaccessible) is None:
+    elif disclaimer.get_attribute(abstract.county.other["Inaccessible"]) is None:
         disclaimer.click()
         return True
 
