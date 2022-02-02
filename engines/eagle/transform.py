@@ -10,17 +10,20 @@ def update_document_attributes(abstract):
 
 
 def update_county_attributes(abstract):
-    abstract.county.inputs = {
-            "Reception Number": reception_number_input_id,
-            "Book": book_input_id,
-            "Page": page_input_id,
-        }
+    abstract.county.urls = {
+
+    }
     abstract.county.buttons = {
             "Login": login_button_id,
             "Clear Search": clear_search_id,
             "Submit Search": search_button_id,
             "Download Button": download_button_id
     }
+    abstract.county.inputs = {
+            "Reception Number": reception_number_input_id,
+            "Book": book_input_id,
+            "Page": page_input_id,
+        }
     abstract.county.searches = {
 
     }
