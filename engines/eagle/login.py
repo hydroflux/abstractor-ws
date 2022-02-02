@@ -8,17 +8,15 @@ from selenium_utilities.locators import (locate_element_by_class_name,
                                          locate_element_by_id)
 from selenium_utilities.open import open_url
 
-from settings.county_variables.eagle import (home_page_title,
-                                             login_prompt_class)
-
 from engines.eagle.disclaimer import check_for_disclaimer
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("login", __name__)
 
 
-def open_site(browser):
-    open_url(browser, abstract.county.titles["Home Page"], home_page_title, "county site")
+def open_site(browser, abstract):
+    open_url(browser, abstract.county.urls["Home Page"],
+             abstract.county.titles["Home Page"], "county site")
     input("Press enter to login...")
 
 
@@ -47,8 +45,8 @@ def confirm_login(browser, abstract):
 
 def log_back_in(browser, abstract):
     try:
-        click_button(browser, locate_element_by_class_name,
-                     login_prompt_class, abstract.buttons["Login"], "login button prompt")
+        click_button(browser, locate_element_by_class_name, abstract.county.classes["Login Prompt"],
+                     abstract.buttons["Login"], "login button prompt")
         enter_credentials(browser, abstract)
         confirm_login(browser, abstract)
     except TimeoutException:
@@ -56,19 +54,19 @@ def log_back_in(browser, abstract):
 
 
 def check_login_status(browser, abstract):
-    while browser.current_url == logged_out_redirect_url:
+    while browser.current_url == abstract.county.urls["Log Out Redirect"]:
         print('Browser redirected to login screen, checking login status & returning to search.')
         if read_login_message(browser, abstract) != abstract.county.credentials[4]:
             print('Browser logged out, attempting to log back in.')
             log_back_in(browser, abstract)
-        browser.get(fallback_search_url)
+        browser.get(abstract.county.urls["Fallback Search"])
 
 
 def execute_login_process(browser, abstract):
-    open_site(browser)
+    open_site(browser, abstract)
     check_for_disclaimer(browser)
-    click_button(browser, locate_element_by_class_name,
-                 login_prompt_class, abstract.buttons["Login"], "login button prompt")
+    click_button(browser, locate_element_by_class_name, abstract.county.classes["Login Prompt"],
+                 abstract.buttons["Login"], "login button prompt")
     enter_credentials(browser, abstract)
     confirm_login(browser, abstract)
     return True

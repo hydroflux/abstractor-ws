@@ -4,7 +4,7 @@ from settings.county_variables.eagle import (book_input_id, clear_search_id,
                                              home_page_title, home_page_url,
                                              logged_out_redirect_url,
                                              login_button_id, page_input_id,
-                                             reception_number_input_id,
+                                             reception_number_input_id, login_prompt_class,
                                              search_button_id)
 
 
@@ -24,7 +24,7 @@ def update_county_attributes(abstract):
         "Home Page": home_page_title
     }
     abstract.county.classes = {
-
+        "Login Prompt": login_prompt_class
     }
     abstract.county.buttons = {
             "Login": login_button_id,
