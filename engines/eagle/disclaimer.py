@@ -20,6 +20,6 @@ def handle_disclaimer(browser, abstract):
         return True
 
 
-def check_for_disclaimer(browser):
-    while not handle_disclaimer(browser):
+def check_for_disclaimer(browser, abstract):
+    while not handle_disclaimer(browser, abstract):
         input('Disclaimer has not been handled properly, please press enter after resolving.')
