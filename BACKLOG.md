@@ -370,6 +370,7 @@
 - [ ] Change the name of the 'drop_superfluous_information' function in the 'record' script to something more meaningful
 - [ ] Import the entire 'eagle' settings script into transform instead of the individual variables in order to clean up the script
 - [ ] Update 'locate_related_documents_table_rows' function in record to use a 'quick' locator
+- [ ] May need to update the 'record' function if the attempted partial doesn't work ('https://stackoverflow.com/questions/49301880/pass-several-arguments-to-function-from-map')
 
 ### Iguana To Do
 

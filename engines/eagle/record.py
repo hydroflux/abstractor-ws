@@ -1,3 +1,4 @@
+from functools import partial
 from selenium.common.exceptions import (ElementClickInterceptedException,
                                         StaleElementReferenceException)
 
@@ -210,8 +211,10 @@ def get_related_documents_table_rows(browser, abstract, document_table, document
 def record_related_documents(browser, abstract, document_table, document):
     # If none then ... ? conditional -- need to test with some print statements to see general feedback first
     related_table_rows = get_related_documents_table_rows(browser, abstract, document_table, document)
-    related_documents_info = list(map(access_table_body, related_table_rows))
+    related_documents_info = list(map(partial(access_table_body, abstract=abstract), related_table_rows))
     related_document_list = list(map(access_title_case_text, related_documents_info))
+    # related_documents_info = list(map(access_table_body, related_table_rows))
+    # related_document_list = list(map(access_title_case_text, related_documents_info))
     related_documents = "\n".join(related_document_list)
     record_value(abstract, 'related documents', drop_superfluous_information(abstract, related_documents))
     # dataframe["Related Documents"].append(drop_superfluous_information(related_documents))
