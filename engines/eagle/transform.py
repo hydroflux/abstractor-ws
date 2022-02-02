@@ -6,7 +6,11 @@ from settings.county_variables.eagle import (book_input_id, clear_search_id, no_
                                              login_button_id, page_input_id, search_url, search_title,
                                              reception_number_input_id, login_prompt_class, document_description_title,
                                              currently_searching, failed_search, invalid_search_message,
-                                             search_button_id)
+                                             search_button_id, result_action_tag_name,
+                                             result_actions_class_name,
+                                             results_row_class_name,
+                                             search_status_tag,
+                                             validation_class_name)
 
 
 def update_document_attributes(abstract):
@@ -15,41 +19,57 @@ def update_document_attributes(abstract):
 
 
 def update_county_attributes(abstract):
-    abstract.county.credentials = credentials
+    abstract.county.credentials = credentials  # Login
     abstract.county.urls = {
+        # Login
         "Home Page": home_page_url,
         "Fallback Search": fallback_search_url,
         "Log Out Redirect": logged_out_redirect_url,
+        # Search
         "Search Page": search_url
     }
     abstract.county.titles = {
+        # Login
         "Home Page": home_page_title,
+        # Search
         "Search Page": search_title,
+        # Document Description
         "Document Description": document_description_title
     }
     abstract.county.classes = {
+        # Login
         "Login Prompt": login_prompt_class
     }
     abstract.county.buttons = {
+        # Login
         "Login": login_button_id,
+        # Disclaimer
         "Disclaimer": disclaimer_id,
+        # Search
         "Clear Search": clear_search_id,
         "Submit Search": search_button_id,
+        # Open Document
+        # Record
+        # Download
         "Download Button": download_button_id
     }
     abstract.county.inputs = {
+        # Search
         "Reception Number": reception_number_input_id,
         "Book": book_input_id,
         "Page": page_input_id,
     }
     abstract.county.messages = {
+        # Login
         "Welcome": welcome_message,
+        # Open
         "No Results": no_results_message,
-        "Invalid Search": invalid_search_message,
         "Failed Search": failed_search,
+        "Invalid Search": invalid_search_message,
         "Currently Searching": currently_searching
     }
     abstract.county.other = {
+        # Disclaimer
         "Inaccessible": inaccessible,
     }
     # Create a 'program' or 'engine' class to handle these elements & attributes

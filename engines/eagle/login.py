@@ -25,7 +25,7 @@ def enter_credentials(browser, abstract):
                       "username input", abstract.county.credentials[1])
     enter_input_value(browser, locate_element_by_id, abstract.county.credentials[2],
                       "password input", abstract.county.credentials[3])
-    click_button(browser, locate_element_by_id, abstract.buttons["Login"], "login button")
+    click_button(browser, locate_element_by_id, abstract.county.buttons["Login"], "login button")
 
 
 def read_login_message(browser, abstract):
@@ -46,7 +46,7 @@ def confirm_login(browser, abstract):
 def log_back_in(browser, abstract):
     try:
         click_button(browser, locate_element_by_class_name, abstract.county.classes["Login Prompt"],
-                     abstract.buttons["Login"], "login button prompt")
+                     abstract.county.buttons["Login"], "login button prompt")
         enter_credentials(browser, abstract)
         confirm_login(browser, abstract)
     except TimeoutException:
@@ -66,7 +66,7 @@ def execute_login_process(browser, abstract):
     open_site(browser, abstract)
     check_for_disclaimer(browser, abstract)
     click_button(browser, locate_element_by_class_name, abstract.county.classes["Login Prompt"],
-                 abstract.buttons["Login"], "login button prompt")
+                 abstract.county.buttons["Login"], "login button prompt")
     enter_credentials(browser, abstract)
     confirm_login(browser, abstract)
     return True

@@ -362,7 +362,6 @@
 - [ ] Moved the document download value setter in the 'download' script into the 'download_document' function in order to integrate the 'prepare_for_download' function from the 'initialization' script--currently placement isn't great, should be integrated into the 'prepare_for_download' function somehow
 - [ ] Update 'multiple_documents' download in the 'download' script -- the multiple document download has broken at some point during refactoring => only encounters the error with "book_and_page" (and presumably "volume_and_page" document types)
 - [ ] 'access_pdf_load' status originally used the 'long_timeout' variable => does this need to be re-adjusted?
-- [ ] Where did the 'welcome_message' check go?
 
 ### Iguana To Do
 
