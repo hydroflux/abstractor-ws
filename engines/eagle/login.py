@@ -64,7 +64,7 @@ def check_login_status(browser, abstract):
 
 def execute_login_process(browser, abstract):
     open_site(browser, abstract)
-    check_for_disclaimer(browser)
+    check_for_disclaimer(browser, abstract)
     click_button(browser, locate_element_by_class_name, abstract.county.classes["Login Prompt"],
                  abstract.buttons["Login"], "login button prompt")
     enter_credentials(browser, abstract)

@@ -1,18 +1,18 @@
 from selenium.common.exceptions import NoSuchElementException
 
-from settings.county_variables.eagle import disclaimer_id, inaccessible
+from settings.county_variables.eagle import inaccessible
 
 
-def locate_disclaimer(browser):
+def locate_disclaimer(browser, abstract):
     try:
-        disclaimer = browser.find_element_by_id(disclaimer_id)
+        disclaimer = browser.find_element_by_id(abstract.county.buttons["Disclaimer"])
         return disclaimer
     except NoSuchElementException:
         return False
 
 
-def handle_disclaimer(browser):
-    disclaimer = locate_disclaimer(browser)
+def handle_disclaimer(browser, abstract):
+    disclaimer = locate_disclaimer(browser, abstract)
     if not disclaimer:
         return True
     elif disclaimer.get_attribute(inaccessible) is not None:

@@ -2,7 +2,7 @@ from settings.county_variables.eagle import (book_input_id, clear_search_id,
                                              credentials, download_button_id,
                                              fallback_search_url,
                                              home_page_title, home_page_url,
-                                             logged_out_redirect_url,
+                                             logged_out_redirect_url, disclaimer_id,
                                              login_button_id, page_input_id,
                                              reception_number_input_id, login_prompt_class,
                                              search_button_id)
@@ -28,6 +28,7 @@ def update_county_attributes(abstract):
     }
     abstract.county.buttons = {
             "Login": login_button_id,
+            "Disclaimer": disclaimer_id,
             "Clear Search": clear_search_id,
             "Submit Search": search_button_id,
             "Download Button": download_button_id
