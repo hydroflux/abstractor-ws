@@ -74,7 +74,7 @@ def execute_login_process(browser):
     return True
 
 
-def account_login(browser):
+def login(browser):
     print("\nWebdriver initialized, attempting to login...")
     if not execute_login_process(browser):
         print("Login sequence failed, attempting again before closing out.")

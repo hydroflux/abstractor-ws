@@ -64,7 +64,7 @@ def execute_program(abstract, transform, login, search, open_document, record,
                     execute_download, next_result=None, logout=None):
     browser = create_webdriver(abstract)
     transform(abstract)
-    login(browser)
+    login(browser, abstract)
     search_documents_from_list(
         browser,
         abstract,
