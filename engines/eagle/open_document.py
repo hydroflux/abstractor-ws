@@ -11,11 +11,6 @@ from selenium_utilities.locators import (locate_element_by_class_name,
                                          locate_elements_by_tag_name)
 from selenium_utilities.open import open_url
 
-from settings.county_variables.eagle import (result_action_tag_name,
-                                             result_actions_class_name,
-                                             results_row_class_name,
-                                             search_status_tag,
-                                             validation_class_name)
 from settings.general_functions import get_direct_link
 
 from engines.eagle.search import execute_search, search
@@ -38,9 +33,9 @@ def retry_search(browser, document):
 
 def get_search_status(browser):
     try:
-        search_status_present = EC.presence_of_element_located((By.TAG_NAME, search_status_tag))
+        search_status_present = EC.presence_of_element_located((By.TAG_NAME, abstract.county.tags["Search Status"]))
         WebDriverWait(browser, timeout).until(search_status_present)
-        search_status = browser.find_element_by_tag_name(search_status_tag).text
+        search_status = browser.find_element_by_tag_name(abstract.county.tags["Search Status"]).text
         return search_status
     except TimeoutException:
         print("Browser timed out trying to get current results.")
@@ -71,11 +66,11 @@ def retry_execute_search(browser, abstract, document, search_status):
 
 
 def get_search_results(browser, document):
-    result_rows = locate_elements_by_class_name(browser, results_row_class_name,
+    result_rows = locate_elements_by_class_name(browser, abstract.county.classes["Results Row"],
                                                 "search results", True, document=document)
     while type(result_rows) is None:
         retry_search(browser, document)
-        result_rows = locate_elements_by_class_name(browser, results_row_class_name,
+        result_rows = locate_elements_by_class_name(browser, abstract.county.classes["Results Row"],
                                                     "search results", True, document=document)
     return result_rows
 
@@ -118,9 +113,9 @@ def check_search_results(browser, abstract, document):
 
 
 def get_document_link(result, document):
-    result_actions_list = locate_element_by_class_name(result, result_actions_class_name,
+    result_actions_list = locate_element_by_class_name(result, abstract.county.classes["Result Actions"],
                                                        "search results actions list", document=document)
-    return locate_elements_by_tag_name(result_actions_list, result_action_tag_name,
+    return locate_elements_by_tag_name(result_actions_list, abstract.county.tag["Result Actions"],
                                        "search actions", document=document)[1]
 
 
