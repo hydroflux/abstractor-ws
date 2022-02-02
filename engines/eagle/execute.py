@@ -8,7 +8,7 @@ from engines.eagle.login import account_login
 from engines.eagle.open_document import open_document
 from engines.eagle.record import next_result, record
 from engines.eagle.search import search
-from engines.eagle.transform import transform_document_list
+# from engines.eagle.transform import transform_document_list
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("execute", __name__)
@@ -17,7 +17,7 @@ print("execute", __name__)
 # Identical to 'leopard', 'jaguar', 'rattlesnake', & 'tiger' execute_program
 def execute_program(abstract):
     browser = create_webdriver(abstract)
-    transform_document_list(abstract)
+    # transform_document_list(abstract)
     account_login(browser)
     search_documents_from_list(
         browser,
