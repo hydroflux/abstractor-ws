@@ -4,7 +4,8 @@ class County:
 
     def __init__(self, county_name, prefix, state, state_prefix, engine,
                  credentials=None, urls=None, titles=None,
-                 buttons=None, classes=None, inputs=None):
+                 buttons=None, classes=None, inputs=None,
+                 other=None):
         self.county_name = county_name
         self.prefix = prefix
         self.state = state
@@ -18,6 +19,7 @@ class County:
         self.buttons = buttons
         self.classes = classes
         self.inputs = inputs
+        self.other = other
 
         County.number_counties += 1
 
