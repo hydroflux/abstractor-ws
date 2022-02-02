@@ -2,12 +2,17 @@ class County:
 
     number_counties = 0
 
-    def __init__(self, county_name, prefix, state, state_prefix, engine):
+    def __init__(self, county_name, prefix, state, state_prefix, engine,
+                 button_attributes=None, input_attributes=None, search_attributes=None):
         self.county_name = county_name
         self.prefix = prefix
         self.state = state
         self.state_prefix = state_prefix
         self.engine = engine
+
+        self.button_attributes = button_attributes
+        self.input_attributes = input_attributes
+        self.search_attributes = search_attributes
 
         County.number_counties += 1
 
