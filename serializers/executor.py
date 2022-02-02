@@ -3,7 +3,7 @@ from serializers.downloader import download_document
 from project_management.export import export_document
 from project_management.timers import start_timer
 
-from settings.driver import create_webdriver
+# from settings.driver import create_webdriver
 from settings.invalid import record_invalid_search
 
 
@@ -60,18 +60,18 @@ def close_program(browser, abstract, logout=None):
     browser.close()
 
 
-def execute_program(abstract, transform, login, search, open_document, record,
-                    execute_download, next_result=None, logout=None):
-    browser = create_webdriver(abstract)
-    transform(abstract)
-    login(browser, abstract)
-    search_documents_from_list(
-        browser,
-        abstract,
-        search,
-        open_document,
-        record,
-        execute_download,
-        next_result
-    )
-    close_program(browser, abstract, logout)
+# def execute_program(abstract, transform, login, search, open_document, record,
+#                     execute_download, next_result=None, logout=None):
+#     browser = create_webdriver(abstract)
+#     transform(abstract)
+#     login(browser, abstract)
+#     search_documents_from_list(
+#         browser,
+#         abstract,
+#         search,
+#         open_document,
+#         record,
+#         execute_download,
+#         next_result
+#     )
+#     close_program(browser, abstract, logout)

@@ -8,7 +8,7 @@ from selenium_utilities.locators import (locate_element_by_class_name,
                                          locate_element_by_id)
 from selenium_utilities.open import open_url
 
-from settings.county_variables.eagle import (credentials, fallback_search_url,
+from settings.county_variables.eagle import (fallback_search_url,
                                              home_page_title, home_page_url,
                                              logged_out_redirect_url,
                                              login_prompt_class)
@@ -25,22 +25,25 @@ def open_site(browser):
 
 
 def enter_credentials(browser, abstract):
-    enter_input_value(browser, locate_element_by_id, credentials[0], "username input", credentials[1])
-    enter_input_value(browser, locate_element_by_id, credentials[2], "password input", credentials[3])
+    enter_input_value(browser, locate_element_by_id, abstract.county.credentials[0],
+                      "username input", abstract.county.credentials[1])
+    enter_input_value(browser, locate_element_by_id, abstract.county.credentials[2],
+                      "password input", abstract.county.credentials[3])
     click_button(browser, locate_element_by_id, abstract.buttons["Login"], "login button")
 
 
-def read_login_message(browser):
+def read_login_message(browser, abstract):
     try:
-        login_message = locate_element_by_id(browser, credentials[5], "login message", True)
+        login_message = locate_element_by_id(browser, abstract.county.credentials[5],
+                                             "login message", True)
         return login_message.text
     except StaleElementReferenceException:
         print('Encountered StaleElementReferenceException '
               'attempting to read login message, trying again.')
 
 
-def confirm_login(browser):
-    while read_login_message(browser) != credentials[4]:
+def confirm_login(browser, abstract):
+    while read_login_message(browser, abstract) != abstract.county.credentials[4]:
         micro_nap()
 
 
@@ -48,18 +51,18 @@ def log_back_in(browser, abstract):
     try:
         click_button(browser, locate_element_by_class_name,
                      login_prompt_class, abstract.buttons["Login"], "login button prompt")
-        enter_credentials(browser)
-        confirm_login(browser)
+        enter_credentials(browser, abstract)
+        confirm_login(browser, abstract)
     except TimeoutException:
         print("Browser timed out while trying to log back in after logout.")
 
 
-def check_login_status(browser):
+def check_login_status(browser, abstract):
     while browser.current_url == logged_out_redirect_url:
         print('Browser redirected to login screen, checking login status & returning to search.')
-        if read_login_message(browser) != credentials[4]:
+        if read_login_message(browser, abstract) != abstract.county.credentials[4]:
             print('Browser logged out, attempting to log back in.')
-            log_back_in(browser)
+            log_back_in(browser, abstract)
         browser.get(fallback_search_url)
 
 
@@ -69,7 +72,7 @@ def execute_login_process(browser, abstract):
     click_button(browser, locate_element_by_class_name,
                  login_prompt_class, abstract.buttons["Login"], "login button prompt")
     enter_credentials(browser, abstract)
-    confirm_login(browser)
+    confirm_login(browser, abstract)
     return True
 
 

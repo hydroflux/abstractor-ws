@@ -1,4 +1,4 @@
-from settings.county_variables.eagle import (book_input_id, clear_search_id, login_button_id,
+from settings.county_variables.eagle import (credentials, book_input_id, clear_search_id, login_button_id,
                                              download_button_id, page_input_id,
                                              reception_number_input_id,
                                              search_button_id)
@@ -10,9 +10,7 @@ def update_document_attributes(abstract):
 
 
 def update_county_attributes(abstract):
-    abstract.county.credentials = {
-
-    }
+    abstract.county.credentials = credentials
     abstract.county.urls = {
 
     }
