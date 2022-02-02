@@ -7,8 +7,6 @@ from selenium_utilities.locators import (locate_element_by_class_name,
 
 from project_management.timers import naptime
 
-from settings.county_variables.eagle import (pdf_viewer_class_name,
-                                             purchase_button_class_name)
 from settings.download_management import update_download
 from settings.iframe_handling import switch_to_default_content
 
@@ -16,22 +14,22 @@ from settings.iframe_handling import switch_to_default_content
 print("download", __name__)
 
 
-def center_purchase_button(browser, document):
-    purchase_button = locate_element_by_class_name(browser, purchase_button_class_name, "purchase button",
-                                                   clickable=True, document=document)
+def center_purchase_button(browser, abstract, document):
+    purchase_button = locate_element_by_class_name(browser, abstract.county.classes["Purchase Button"],
+                                                   "purchase button", clickable=True, document=document)
     center_element(browser, purchase_button)
 
 
-def switch_into_frame(browser, document):
+def switch_into_frame(browser, abstract, document):
     try:
-        pdf_viewer = locate_element_by_class_name(browser, pdf_viewer_class_name, "pdf viewer")
+        pdf_viewer = locate_element_by_class_name(browser, abstract.county.classes["PDF Viewer"], "pdf viewer")
         if not pdf_viewer:
             # print('Unable to locate PDF viewer, trying again.')
             # print(f'PDF Viewer: {pdf_viewer}')
             # print(f'Reception Number: {document.reception_number}')
             # print(f'Download Value: {document.download_value}')
             return pdf_viewer
-        center_purchase_button(browser, document)
+        center_purchase_button(browser, abstract, document)
         browser.switch_to.frame(pdf_viewer)
         return True
     except TimeoutException:
@@ -39,21 +37,21 @@ def switch_into_frame(browser, document):
         return False
 
 
-def access_pdf_viewer(browser, document):
-    while not switch_into_frame(browser, document):
+def access_pdf_viewer(browser, abstract, document):
+    while not switch_into_frame(browser, abstract, document):
         print('Browser failed to access PDF viewer, refreshing and trying again...')
         browser.refresh()
         naptime()
 
 
 def access_document_image(browser, abstract, document):
-    access_pdf_viewer(browser, document)
+    access_pdf_viewer(browser, abstract, document)
     while click_button(browser, locate_element_by_id,
-                       document.button_attributes["Download Button"],
+                       abstract.county.buttons["Download Button"],
                        "download button", document) is False:
         print('Browser failed to access document image, refreshing and trying again...')
         browser.refresh()
-        access_pdf_viewer(browser, document)
+        access_pdf_viewer(browser, abstract, document)
     switch_to_default_content(browser)
 
 

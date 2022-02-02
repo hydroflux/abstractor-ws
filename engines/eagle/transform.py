@@ -21,7 +21,9 @@ from settings.county_variables.eagle import (book_input_id, clear_search_id,
                                              missing_values, more_info_message,
                                              no_image_message,
                                              no_results_message, page_input_id,
+                                             pdf_viewer_class_name,
                                              pdf_viewer_load_id,
+                                             purchase_button_class_name,
                                              reception_number_input_id,
                                              related_table_class,
                                              result_actions_class_name,
@@ -82,7 +84,10 @@ def update_county_attributes(abstract):
         "Information Links": information_links_class,
         "Related Documents Table": related_table_class,
         "Result Buttons": result_buttons_class,
-        "Error Message": error_message_class
+        "Error Message": error_message_class,
+        # Download
+        "PDF Viewer": pdf_viewer_class_name,
+        "Purchase Button": purchase_button_class_name
     }
     abstract.county.ids = {
         # Record
