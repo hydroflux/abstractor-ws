@@ -1,4 +1,3 @@
-# from eagle.error_handling import check_for_error
 from project_management.timers import naptime
 
 from selenium_utilities.inputs import (clear_input, click_button,
@@ -9,13 +8,11 @@ from selenium_utilities.open import open_url
 from engines.eagle.error_handling import check_for_error
 from engines.eagle.login import check_login_status
 
-# Use the following print statement to identify the best way to manage imports for Django vs the script folder
-print("search", __name__)
-
 
 def clear_search(browser, document):
     for id in document.input_attributes:
-        clear_input(browser, locate_input, document.input_attributes[id], f'{id} Input', document)
+        clear_input(browser, locate_input, document.input_attributes[id],
+                    f'{id} Input', document)
 
 
 # Same as rattlesnake
@@ -41,7 +38,7 @@ def execute_search(browser, document):
 def search(browser, abstract, document):
     open_url(browser, abstract.county.urls["Search Page"],
              abstract.county.titles["Search Page"], "document search page")
-    check_login_status(browser)
+    check_login_status(browser, abstract)
     if not check_for_error(browser, document, 'search'):
         clear_search(browser, document)
         naptime()  # Consider testing without this nap to see if necessary
