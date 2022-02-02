@@ -1,4 +1,4 @@
-from settings.county_variables.eagle import (book_input_id, clear_search_id,
+from settings.county_variables.eagle import (book_input_id, clear_search_id, login_button_id,
                                              download_button_id, page_input_id,
                                              reception_number_input_id,
                                              search_button_id)
@@ -16,6 +16,7 @@ def update_county_attributes(abstract):
             "Page": page_input_id,
         }
     abstract.county.buttons = {
+            "Login": login_button_id,
             "Clear Search": clear_search_id,
             "Submit Search": search_button_id,
             "Download Button": download_button_id

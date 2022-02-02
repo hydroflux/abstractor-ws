@@ -11,7 +11,6 @@ from selenium_utilities.open import open_url
 from settings.county_variables.eagle import (credentials, fallback_search_url,
                                              home_page_title, home_page_url,
                                              logged_out_redirect_url,
-                                             login_button_id,
                                              login_prompt_class)
 
 from engines.eagle.disclaimer import check_for_disclaimer
@@ -25,10 +24,10 @@ def open_site(browser):
     input("Press enter to login...")
 
 
-def enter_credentials(browser):
+def enter_credentials(browser, abstract):
     enter_input_value(browser, locate_element_by_id, credentials[0], "username input", credentials[1])
     enter_input_value(browser, locate_element_by_id, credentials[2], "password input", credentials[3])
-    click_button(browser, locate_element_by_id, login_button_id, "login button")
+    click_button(browser, locate_element_by_id, abstract.buttons["Login"], "login button")
 
 
 def read_login_message(browser):
@@ -45,10 +44,10 @@ def confirm_login(browser):
         micro_nap()
 
 
-def log_back_in(browser):
+def log_back_in(browser, abstract):
     try:
         click_button(browser, locate_element_by_class_name,
-                     login_prompt_class, login_button_id, "login button prompt")
+                     login_prompt_class, abstract.buttons["Login"], "login button prompt")
         enter_credentials(browser)
         confirm_login(browser)
     except TimeoutException:
@@ -64,17 +63,17 @@ def check_login_status(browser):
         browser.get(fallback_search_url)
 
 
-def execute_login_process(browser):
+def execute_login_process(browser, abstract):
     open_site(browser)
     check_for_disclaimer(browser)
     click_button(browser, locate_element_by_class_name,
-                 login_prompt_class, login_button_id, "login button prompt")
-    enter_credentials(browser)
+                 login_prompt_class, abstract.buttons["Login"], "login button prompt")
+    enter_credentials(browser, abstract)
     confirm_login(browser)
     return True
 
 
-def login(browser):
+def login(browser, abstract):
     print("\nWebdriver initialized, attempting to login...")
     if not execute_login_process(browser):
         print("Login sequence failed, attempting again before closing out.")
