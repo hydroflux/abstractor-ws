@@ -1,6 +1,7 @@
 import os
 
 from classes.Abstract import Abstract
+from classes.Engine import Engine
 from classes.counties import county_dictionary
 
 from project_management.generate_document_list import generate_document_list
@@ -20,10 +21,17 @@ def access_county_instance(county_name):
     return county_instance
 
 
-def create_abstract_object():
+def create_engine_object():
+    return Engine(
+        name="",
+        county=access_county_instance(county_name)
+    )
+
+
+def create_abstract_object(engine):
     return Abstract(
         type=abstraction_type,
-        county=access_county_instance(county_name),
+        engine=engine,
         target_directory=target_directory,
         file_name=file_name,
         program=get_program_type(),
@@ -52,7 +60,8 @@ def create_folder(directory):
 
 
 def initialize_abstraction():
-    abstract = create_abstract_object()
+    engine = create_engine_object()
+    abstract = create_abstract_object(engine)
     program_type_update(abstract)
     abstract.document_list = generate_document_list(target_directory, file_name, sheet_name)
     abstract.timer = start_program_timer(abstract.county, abstract.document_list)

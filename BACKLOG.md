@@ -2,7 +2,7 @@
 
 ## General To Do
 
-- [ ] Create a 'timers' script (pull from 'file_management' and 'general_functions') or otherwise a 'time_management' script to handle sleeps, dates, timers, etc.
+- [ ] 'abstraction_type' variable doesn't need to be imported anywhere because it's on the Abstract class as an attribute
 - [ ] Comment imports and section by type
 - [ ] In the same vein as the two above, create an indicator for any instances that are repeated (don't necessarily remove them)
 - [ ] Figure out how to send cookies through to browser instances in order to get faster page load times
@@ -43,7 +43,7 @@
 - [ ] Consolidate the 'value' attribute and the 'document_value' instance function--too confusing and creating problems
 - [ ] Set 'is_duplicate' attribute using 'download_management' (or otherwise the 'previously_downloaded' function) and called in the printout statements
 
-### Program / Engine Class To Do
+### Engine Class To Do
 
 - [ ] Create a 'Program' class
 - [ ] Add the 'button_attributes' and various other 'element_attributes' located on the Document class onto the 'Program' class
