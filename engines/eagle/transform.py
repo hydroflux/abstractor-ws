@@ -1,6 +1,10 @@
-from settings.county_variables.eagle import (credentials, book_input_id, clear_search_id, login_button_id,
-                                             download_button_id, page_input_id,
-                                             reception_number_input_id, home_page_url, fallback_search_url, logged_out_redirect_url,
+from settings.county_variables.eagle import (book_input_id, clear_search_id,
+                                             credentials, download_button_id,
+                                             fallback_search_url,
+                                             home_page_title, home_page_url,
+                                             logged_out_redirect_url,
+                                             login_button_id, page_input_id,
+                                             reception_number_input_id,
                                              search_button_id)
 
 
@@ -16,6 +20,12 @@ def update_county_attributes(abstract):
         "Fallback Search": fallback_search_url,
         "Log Out Redirect": logged_out_redirect_url,
     }
+    abstract.county.titles = {
+        "Home Page": home_page_title
+    }
+    abstract.county.classes = {
+
+    }
     abstract.county.buttons = {
             "Login": login_button_id,
             "Clear Search": clear_search_id,
@@ -27,9 +37,6 @@ def update_county_attributes(abstract):
             "Book": book_input_id,
             "Page": page_input_id,
         }
-    abstract.county.searches = {
-
-    }
     # Create a 'program' or 'engine' class to handle these elements & attributes
     # document.titles = {
     #     "Home Page": home_page_title,

@@ -18,7 +18,7 @@ print("login", __name__)
 
 
 def open_site(browser):
-    open_url(browser, home_page_url, home_page_title, "county site")
+    open_url(browser, abstract.county.titles["Home Page"], home_page_title, "county site")
     input("Press enter to login...")
 
 
