@@ -25,7 +25,7 @@ def handle_multiple_documents(browser, abstract, document, record, execute_downl
         handle_single_document(browser, abstract, document, record, execute_download)
         for result_number in range(1, document.number_results):
             document.result_number = result_number
-            next_result(browser, document)
+            next_result(browser, abstract, document)
             handle_single_document(browser, abstract, document, record, execute_download)
 
 

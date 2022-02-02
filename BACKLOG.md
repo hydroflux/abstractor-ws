@@ -367,6 +367,7 @@
 - [ ] Create a 'navigation' script to pull the 'next_result' and 'previous_result' functions out of the 'record' script
 - [ ] Move the 'buttons' variables for next result and previous result into the buttons portion of the transform script
 - [ ] Change the name of the 'drop_superfluous_information' function in the 'record' script to something more meaningful
+- [ ] Import the entire 'eagle' settings script into transform instead of the individual variables in order to clean up the script
 
 ### Iguana To Do
 
