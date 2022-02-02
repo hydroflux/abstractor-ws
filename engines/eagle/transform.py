@@ -1,6 +1,6 @@
 from settings.county_variables.eagle import (credentials, book_input_id, clear_search_id, login_button_id,
                                              download_button_id, page_input_id,
-                                             reception_number_input_id,
+                                             reception_number_input_id, home_page_url, fallback_search_url, logged_out_redirect_url,
                                              search_button_id)
 
 
@@ -12,7 +12,9 @@ def update_document_attributes(abstract):
 def update_county_attributes(abstract):
     abstract.county.credentials = credentials
     abstract.county.urls = {
-
+        "Home Page": home_page_url,
+        "Fallback Search": fallback_search_url,
+        "Log Out Redirect": logged_out_redirect_url,
     }
     abstract.county.buttons = {
             "Login": login_button_id,

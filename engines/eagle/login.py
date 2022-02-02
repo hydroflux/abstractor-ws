@@ -8,9 +8,7 @@ from selenium_utilities.locators import (locate_element_by_class_name,
                                          locate_element_by_id)
 from selenium_utilities.open import open_url
 
-from settings.county_variables.eagle import (fallback_search_url,
-                                             home_page_title, home_page_url,
-                                             logged_out_redirect_url,
+from settings.county_variables.eagle import (home_page_title,
                                              login_prompt_class)
 
 from engines.eagle.disclaimer import check_for_disclaimer
