@@ -11,12 +11,6 @@ from project_management.timers import medium_nap, naptime
 from serializers.recorder import (record_comments, record_empty_values,
                                   record_value)
 
-from settings.county_variables.eagle import (
-                                             index_table_tags,
-                                             missing_values,
-                                             related_table_class,
-                                             result_button_tag,
-                                             stock_download_suffix)
 from settings.county_variables.general import search_errors
 from settings.general_functions import (scroll_to_top,
                                         short_nap, update_sentence_case_extras)
@@ -114,12 +108,12 @@ def drop_superfluous_information(abstract, string):
         return string
 
 
-def access_table_body(document_table):
-    return document_table.find_element_by_tag_name(index_table_tags[0])
+def access_table_body(abstract, document_table):
+    return document_table.find_element_by_tag_name(abstract.county.tags["Index Table"][0])
 
 
-def access_table_rows(table_body):
-    body_text = table_body.find_elements_by_tag_name(index_table_tags[1])
+def access_table_rows(abstract, table_body):
+    body_text = table_body.find_elements_by_tag_name(abstract.county.tags["Index Table"][1])
     return body_text
 
 
@@ -135,9 +129,9 @@ def access_field_body(field_info):
     return "\n".join(field_info.text.split("\n")[1:]).title()
 
 
-def access_indexing_information(document_table):
-    table_body = access_table_body(document_table)
-    table_rows = access_table_rows(table_body)
+def access_indexing_information(abstract, document_table):
+    table_body = access_table_body(abstract, document_table)
+    table_rows = access_table_rows(abstract, table_body)
     return map(access_field_body, table_rows)
 
 
@@ -160,10 +154,10 @@ def split_reception_field(reception_field):
 
 
 def record_indexing_data(abstract, document_table, document):
-    reception_field, recording_date = access_indexing_information(document_table)
+    reception_field, recording_date = access_indexing_information(abstract, document_table)
     reception_number, book, page = split_reception_field(reception_field)
     document.reception_number = reception_number
-    document.download_value = f'{document.reception_number}-{stock_download_suffix}'
+    document.download_value = f'{document.reception_number}-{abstract.county.other["Stock Download"]}'
     record_value(abstract, 'reception number', reception_number)
     record_value(abstract, 'book', book)
     record_value(abstract, 'page', page)
@@ -171,7 +165,7 @@ def record_indexing_data(abstract, document_table, document):
 
 
 def record_name_data(abstract, document_table):
-    grantor_text, grantee_text = access_indexing_information(document_table)
+    grantor_text, grantee_text = access_indexing_information(abstract, document_table)
     grantor = update_sentence_case_extras(drop_superfluous_information(abstract, grantor_text))
     grantee = update_sentence_case_extras(drop_superfluous_information(abstract, grantee_text))
     record_value(abstract, 'grantor', grantor)
@@ -180,7 +174,7 @@ def record_name_data(abstract, document_table):
 
 def record_legal_data(abstract, document_table):
     table_rows = access_table_rows(document_table)
-    legal_data = table_rows[1].find_elements_by_tag_name(index_table_tags[2])
+    legal_data = table_rows[1].find_elements_by_tag_name(abstract.county.tags["Index Table"][2])
     if legal_data == []:
         record_value(abstract, 'legal', search_errors[2])
     else:
@@ -190,9 +184,10 @@ def record_legal_data(abstract, document_table):
         record_value(abstract, 'legal', drop_superfluous_information(abstract, legal))
 
 
-def locate_related_documents_table_rows(document, document_table):
+def locate_related_documents_table_rows(abstract, document, document_table):
     try:
-        related_table_rows = document_table.find_elements_by_class_name(related_table_class)
+        related_table_rows = document_table.find_elements_by_class_name(
+            abstract.county.classes["Related Documents Table"])
         return related_table_rows
     except StaleElementReferenceException:
         print(f'Browser encountered StaleElementReferenceException trying to '
@@ -201,20 +196,20 @@ def locate_related_documents_table_rows(document, document_table):
         return False
 
 
-def get_related_documents_table_rows(browser, document_table, document):
+def get_related_documents_table_rows(browser, abstract, document_table, document):
     center_element(browser, document_table)
-    related_documents_table_rows = locate_related_documents_table_rows(document, document_table)
+    related_documents_table_rows = locate_related_documents_table_rows(abstract, document, document_table)
     while related_documents_table_rows is False:
         print(f'Unable to locate the "Related Documents Table" rows for '
               f'{document.extrapolate_value()}, trying again...')
         naptime()
-        related_documents_table_rows = locate_related_documents_table_rows(document, document_table)
+        related_documents_table_rows = locate_related_documents_table_rows(abstract, document, document_table)
     return related_documents_table_rows
 
 
 def record_related_documents(browser, abstract, document_table, document):
     # If none then ... ? conditional -- need to test with some print statements to see general feedback first
-    related_table_rows = get_related_documents_table_rows(browser, document_table, document)
+    related_table_rows = get_related_documents_table_rows(browser, abstract, document_table, document)
     related_documents_info = list(map(access_table_body, related_table_rows))
     related_document_list = list(map(access_title_case_text, related_documents_info))
     related_documents = "\n".join(related_document_list)
@@ -268,9 +263,9 @@ def record_document_fields(browser, abstract, document):
 
 
 def review_entry(browser, abstract, document):
-    while (abstract.dataframe["Grantor"][-1] == missing_values[0] and
-           abstract.dataframe["Grantee"][-1] == missing_values[0] and
-           abstract.dataframe["Related Documents"][-1] == missing_values[1] or
+    while (abstract.dataframe["Grantor"][-1] == abstract.county.other["Missing Values"][0] and
+           abstract.dataframe["Grantee"][-1] == abstract.county.other["Missing Values"][0] and
+           abstract.dataframe["Related Documents"][-1] == abstract.county.other["Missing Values"][1] or
            document.reception_number.strip() == ''):
         print("Recording of last document was processed incorrectly, attempting to record again.")
         re_record_document_fields(browser, abstract, document)
@@ -286,7 +281,7 @@ def re_record_document_fields(browser, abstract, document):
 def get_previous_result_button(browser, abstract, document):
     result_buttons = locate_element_by_class_name(browser, abstract.county.classes["Result Buttons"],
                                                   "result buttons", False, document)
-    return result_buttons.find_elements_by_tag_name(result_button_tag)[0]
+    return result_buttons.find_elements_by_tag_name(abstract.county.tags["Result Button"])[0]
 
 
 def previous_result(browser, abstract, document):
@@ -299,7 +294,7 @@ def previous_result(browser, abstract, document):
 def get_next_result_button(browser, abstract, document):
     result_buttons = locate_element_by_class_name(browser, abstract.county.classes["Result Buttons"],
                                                   "result buttons", False, document)
-    return result_buttons.find_elements_by_tag_name(result_button_tag)[1]
+    return result_buttons.find_elements_by_tag_name(abstract.county.tags["Result Button"])[1]
 
 
 def click_result_button(browser, button):
@@ -333,10 +328,10 @@ def next_result(browser, abstract, document):
 def access_download_information(browser, abstract, document):
     handle_document_image_status(browser, abstract, document)
     document_tables = access_document_tables(browser, document)
-    reception_field, _ = access_indexing_information(document_tables[1])
+    reception_field, _ = access_indexing_information(abstract, document_tables[1])
     reception_number, _, _ = split_reception_field(reception_field)
     document.reception_number = reception_number
-    document.download_value = f'{document.reception_number}-{stock_download_suffix}'
+    document.download_value = f'{document.reception_number}-{abstract.county.other["Stock Download"]}'
 
 
 def build_document_download_information(browser, abstract, document):

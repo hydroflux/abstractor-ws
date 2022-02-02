@@ -18,6 +18,7 @@
 - [ ] Use some sort of numbering system for BACKLOG in order to track different to do lists and make linked references at different points in the BACKLOG file
 - [ ] Add documentation to code scripts (look up the best way to perform documentation for selenium programs)
 - [ ] Figure out how to search all scripts for a particular variable name
+- [ ] Consider eliminating the 'search_errors' variable in the 'general' settings script
 
 ## Classes To Do
 
@@ -364,10 +365,11 @@
 - [ ] 'access_pdf_load' status originally used the 'long_timeout' variable => does this need to be re-adjusted?
 - [ ] Consider changing 'inputs' to 'search_inputs' in the 'transform' and 'search' scripts (then need to update the county class as well)
 - [ ] In the 'transform' script, if 'abstract.county' is passed instead of abstract it would clean up the function syntax a lot
-- [ ] Create a 'navigation' script to pull the 'next_result' and 'previous_result' functions out of the 'record' script
+- [ ] Create a 'navigation' script to pull the 'next_result' and 'previous_result' functions out of the 'record' script (also 'result_button')
 - [ ] Move the 'buttons' variables for next result and previous result into the buttons portion of the transform script
 - [ ] Change the name of the 'drop_superfluous_information' function in the 'record' script to something more meaningful
 - [ ] Import the entire 'eagle' settings script into transform instead of the individual variables in order to clean up the script
+- [ ] Update 'locate_related_documents_table_rows' function in record to use a 'quick' locator
 
 ### Iguana To Do
 

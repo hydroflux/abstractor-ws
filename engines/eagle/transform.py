@@ -10,6 +10,7 @@ from settings.county_variables.eagle import (book_input_id, clear_search_id,
                                              fallback_search_url,
                                              home_page_title, home_page_url,
                                              image_container_id, inaccessible,
+                                             index_table_tags,
                                              information_links_class,
                                              invalid_search_message,
                                              less_info_message, loading_status,
@@ -17,7 +18,7 @@ from settings.county_variables.eagle import (book_input_id, clear_search_id,
                                              login_button_id,
                                              login_error_message,
                                              login_prompt_class,
-                                             more_info_message,
+                                             missing_values, more_info_message,
                                              no_image_message,
                                              no_results_message, page_input_id,
                                              pdf_viewer_load_id,
@@ -25,11 +26,13 @@ from settings.county_variables.eagle import (book_input_id, clear_search_id,
                                              related_table_class,
                                              result_actions_class_name,
                                              result_actions_tag_name,
+                                             result_button_tag,
                                              result_buttons_class,
                                              results_row_class_name,
                                              search_button_id,
                                              search_status_tag, search_title,
-                                             search_url, validation_class_name,
+                                             search_url, stock_download_suffix,
+                                             validation_class_name,
                                              welcome_message)
 
 
@@ -64,8 +67,6 @@ def update_county_attributes(abstract):
         # Search
         "Clear Search": clear_search_id,
         "Submit Search": search_button_id,
-        # Open Document
-        # Record
         # Download
         "Download Button": download_button_id
     }
@@ -114,11 +115,17 @@ def update_county_attributes(abstract):
     abstract.county.tags = {
         # Open Document
         "Search Status": search_status_tag,
-        "Result Actions": result_actions_tag_name
+        "Result Actions": result_actions_tag_name,
+        # Record
+        "Index Table": index_table_tags,
+        "Result Button": result_button_tag
     }
     abstract.county.other = {
         # Disclaimer
         "Inaccessible": inaccessible,
+        # Record
+        "Missing Values": missing_values,
+        "Stock Download": stock_download_suffix
     }
 
 
