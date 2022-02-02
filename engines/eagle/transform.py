@@ -9,7 +9,7 @@ def update_document_attributes(abstract):
         document.county = abstract.county
 
 
-def update_element_attributes(abstract):
+def update_county_attributes(abstract):
     for document in abstract.document_list:
         document.input_attributes = {
             "Reception Number": reception_number_input_id,
@@ -32,6 +32,6 @@ def update_element_attributes(abstract):
         # }
 
 
-def transform_document_list(abstract):
+def transform(abstract):
     update_document_attributes(abstract)
-    update_element_attributes(abstract)
+    update_county_attributes(abstract)

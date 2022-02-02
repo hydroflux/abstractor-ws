@@ -1,7 +1,7 @@
 import os
 
 from classes.Abstract import Abstract
-from classes.Engine import Engine
+# from classes.Engine import Engine
 from classes.counties import county_dictionary
 
 from project_management.generate_document_list import generate_document_list
@@ -57,6 +57,11 @@ def program_type_update(abstract):
         abstract.download = True
 
 
+def update_abstract_and_county_attributes(abstract):
+    if abstract.county.engine == "eagle":
+        pass
+
+
 def create_folder(directory):
     try:
         if not os.path.exists(directory):
@@ -68,6 +73,7 @@ def create_folder(directory):
 def initialize_abstraction():
     abstract = create_abstract_object()
     program_type_update(abstract)
+    update_abstract_and_county_attributes(abstract)
     abstract.document_list = generate_document_list(target_directory, file_name, sheet_name)
     abstract.timer = start_program_timer(abstract.county, abstract.document_list)
     return abstract
