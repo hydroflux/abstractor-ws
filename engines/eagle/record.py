@@ -1,10 +1,3 @@
-from selenium.common.exceptions import TimeoutException
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.wait import WebDriverWait
-
-from project_management.timers import timeout
-
 from selenium.common.exceptions import (ElementClickInterceptedException,
                                         StaleElementReferenceException)
 
@@ -19,15 +12,10 @@ from serializers.recorder import (record_comments, record_empty_values,
                                   record_value)
 
 from settings.county_variables.eagle import (
-                                             document_table_class,
                                              index_table_tags,
-                                             information_links_class,
-                                             less_info, loading_status,
-                                             login_error_text, missing_values,
-                                             more_info, no_image_text,
+                                             missing_values,
                                              related_table_class,
                                              result_button_tag,
-                                             result_buttons_class,
                                              stock_download_suffix)
 from settings.county_variables.general import search_errors
 from settings.general_functions import (scroll_to_top,
@@ -62,13 +50,14 @@ def access_pdf_load_status(browser, abstract, document):
 
 
 def wait_for_pdf_to_load(browser, abstract, document):
-    while access_pdf_load_status(browser, abstract, document).startswith(loading_status):
+    while access_pdf_load_status(browser, abstract, document).startswith(abstract.county.messages["Loading"]):
         medium_nap()
 
 
 def handle_document_image_status(browser, abstract, document):
     image_container_text = access_image_container(browser, abstract, document)
-    if image_container_text == no_image_text or image_container_text == login_error_text:
+    if (image_container_text == abstract.county.messages["No Image Available"] or
+            image_container_text == abstract.county.messages["Login Error"]):
         document.image_available = False
         print(f'No document image exists for '
               f'{document.extrapolate_value()}, please review.')
@@ -85,9 +74,9 @@ def open_informational_link(browser, link):  # needs to be updated to work on a 
     link.click()
 
 
-def handle_information_links(browser, link):
+def handle_information_links(browser, abstract, link):
     try:
-        while link.text == more_info:
+        while link.text == abstract.county.messages["More Information"]:
             open_informational_link(browser, link)
             short_nap()
     except StaleElementReferenceException:
@@ -96,31 +85,31 @@ def handle_information_links(browser, link):
         input()
 
 
-def review_and_open_links(browser, links):
+def review_and_open_links(browser, abstract, links):
     for link in links:
-        handle_information_links(browser, link)
+        handle_information_links(browser, abstract, link)
 
 
-def get_informational_links(browser, document, document_information):
-    try:
-        informational_links_present = EC.presence_of_element_located((By.CLASS_NAME, information_links_class))
-        WebDriverWait(browser, timeout).until(informational_links_present)
-        informational_links = document_information.find_elements_by_class_name(information_links_class)
-        print("informational_links 3", informational_links)
-        return informational_links
-    except TimeoutException:
-        print(f'Browser timed out while trying to get informational links for {document.extrapolate_value()}.')
+# def get_informational_links(browser, abstract, document, document_information):
+#     try:
+#         informational_links_present = EC.presence_of_element_located((By.CLASS_NAME, information_links_class))
+#         WebDriverWait(browser, timeout).until(informational_links_present)
+#         informational_links = document_information.find_elements_by_class_name(information_links_class)
+#         print("informational_links 3", informational_links)
+#         return informational_links
+#     except TimeoutException:
+#         print(f'Browser timed out while trying to get informational links for {document.extrapolate_value()}.')
 
 
-def display_all_information(browser, document):
-    information_links = locate_elements_by_class_name(browser, information_links_class,
+def display_all_information(browser, abstract, document):
+    information_links = locate_elements_by_class_name(browser, abstract.county.classes["Information Links"],
                                                       "information links", False, document)
-    review_and_open_links(browser, information_links)
+    review_and_open_links(browser, abstract, information_links)
 
 
-def drop_superfluous_information(string):
-    if string.endswith(less_info):
-        return string[:-(len(less_info) + 1)]
+def drop_superfluous_information(abstract, string):
+    if string.endswith(abstract.county.messages["Less Information"]):
+        return string[:-(len(abstract.county.messages["Less Information"]) + 1)]
     else:
         return string
 
@@ -183,8 +172,8 @@ def record_indexing_data(abstract, document_table, document):
 
 def record_name_data(abstract, document_table):
     grantor_text, grantee_text = access_indexing_information(document_table)
-    grantor = update_sentence_case_extras(drop_superfluous_information(grantor_text))
-    grantee = update_sentence_case_extras(drop_superfluous_information(grantee_text))
+    grantor = update_sentence_case_extras(drop_superfluous_information(abstract, grantor_text))
+    grantee = update_sentence_case_extras(drop_superfluous_information(abstract, grantee_text))
     record_value(abstract, 'grantor', grantor)
     record_value(abstract, 'grantee', grantee)
 
@@ -198,7 +187,7 @@ def record_legal_data(abstract, document_table):
         legal = legal_data[-1].text
         if legal.endswith(search_errors[4]):
             legal = legal.strip()  # Running along with test 1
-        record_value(abstract, 'legal', drop_superfluous_information(legal))
+        record_value(abstract, 'legal', drop_superfluous_information(abstract, legal))
 
 
 def locate_related_documents_table_rows(document, document_table):
@@ -229,7 +218,7 @@ def record_related_documents(browser, abstract, document_table, document):
     related_documents_info = list(map(access_table_body, related_table_rows))
     related_document_list = list(map(access_title_case_text, related_documents_info))
     related_documents = "\n".join(related_document_list)
-    record_value(abstract, 'related documents', drop_superfluous_information(related_documents))
+    record_value(abstract, 'related documents', drop_superfluous_information(abstract, related_documents))
     # dataframe["Related Documents"].append(drop_superfluous_information(related_documents))
 
 
@@ -263,7 +252,7 @@ def aggregate_document_information(browser, abstract, document_tables, document)
 def access_document_tables(browser, abstract, document):
     document_information = locate_element_by_id(browser, abstract.county.ids["Document Information"],
                                                 "document information", False, document)
-    return locate_elements_by_class_name(document_information, document_table_class,
+    return locate_elements_by_class_name(document_information, abstract.county.classes["Document Table"],
                                          "document information tables", False, document)
 
 
@@ -272,7 +261,7 @@ def record_document_fields(browser, abstract, document):
     if execution_review:
         medium_nap()   # Adding a flag instead of having to comment the line our every time for review
         # should probably be it's own function if continue using in this manner
-    display_all_information(browser, document)
+    display_all_information(browser, abstract, document)
     aggregate_document_information(browser, abstract, document_tables, document)
     # record_comments(dataframe, document)  # Moved after 'handle_document_image_status' integration
     scroll_to_top(browser)
@@ -294,20 +283,22 @@ def re_record_document_fields(browser, abstract, document):
     record_document_fields(browser, abstract, document)
 
 
-def get_previous_result_button(browser, document):
-    result_buttons = locate_element_by_class_name(browser, result_buttons_class, "result buttons", False, document)
+def get_previous_result_button(browser, abstract, document):
+    result_buttons = locate_element_by_class_name(browser, abstract.county.classes["Result Buttons"],
+                                                  "result buttons", False, document)
     return result_buttons.find_elements_by_tag_name(result_button_tag)[0]
 
 
-def previous_result(browser, document):
-    previous_result_button = get_previous_result_button(browser, document)
+def previous_result(browser, abstract, document):
+    previous_result_button = get_previous_result_button(browser, abstract, document)
     scroll_to_top(browser)
     previous_result_button.click()
     naptime()
 
 
-def get_next_result_button(browser, document):
-    result_buttons = locate_element_by_class_name(browser, result_buttons_class, "result buttons", False, document)
+def get_next_result_button(browser, abstract, document):
+    result_buttons = locate_element_by_class_name(browser, abstract.county.classes["Result Buttons"],
+                                                  "result buttons", False, document)
     return result_buttons.find_elements_by_tag_name(result_button_tag)[1]
 
 
@@ -327,15 +318,15 @@ def click_result_button(browser, button):
         # button.click()
 
 
-def handle_click_next_result_button(browser, document, button):
+def handle_click_next_result_button(browser, abstract, document, button):
     while not click_result_button(browser, button):
         naptime()
-        button = get_next_result_button(browser, document)
+        button = get_next_result_button(browser, abstract, document)
 
 
-def next_result(browser, document):
-    next_result_button = get_next_result_button(browser, document)
-    handle_click_next_result_button(browser, document, next_result_button)
+def next_result(browser, abstract, document):
+    next_result_button = get_next_result_button(browser, abstract, document)
+    handle_click_next_result_button(browser, abstract, document, next_result_button)
     naptime()  # DO NOT REMOVE NAP -- slow server speeds can cause duplicate recordings of the same document
 
 

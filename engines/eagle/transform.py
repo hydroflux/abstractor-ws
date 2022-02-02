@@ -1,17 +1,25 @@
 from settings.county_variables.eagle import (book_input_id, clear_search_id, no_results_message,
                                              credentials, download_button_id,
                                              fallback_search_url,
-                                             home_page_title, home_page_url, inaccessible, welcome_message,
+                                             home_page_title, home_page_url, inaccessible, welcome_message, loading_status,
                                              logged_out_redirect_url, disclaimer_id,
                                              login_button_id, page_input_id, search_url, search_title,
                                              reception_number_input_id, login_prompt_class, document_description_title,
                                              currently_searching, failed_search, invalid_search_message,
                                              search_button_id, result_actions_tag_name,
-                                             result_actions_class_name,
+                                             result_actions_class_name, more_info_message, less_info_message,
                                              results_row_class_name,
                                              search_status_tag, image_container_id,
                                              document_information_id,
                                              pdf_viewer_load_id,
+                                             document_table_class,
+                                             information_links_class,
+                                             related_table_class,
+                                             result_buttons_class,
+                                             error_message_class,
+                                             error_message,
+                                             login_error_message,
+                                             no_image_message,
                                              validation_class_name)
 
 
@@ -57,7 +65,13 @@ def update_county_attributes(abstract):
         # Open Document
         "Validation": validation_class_name,
         "Results Row": results_row_class_name,
-        "Result Actions": result_actions_class_name
+        "Result Actions": result_actions_class_name,
+        # Record
+        "Document Table": document_table_class,
+        "Information Links": information_links_class,
+        "Related Documents Table": related_table_class,
+        "Result Buttons": result_buttons_class,
+        "Error Message": error_message_class
     }
     abstract.county.ids = {
         # Record
@@ -74,11 +88,18 @@ def update_county_attributes(abstract):
     abstract.county.messages = {
         # Login
         "Welcome": welcome_message,  # Not used
-        # Open
+        # Open Document
         "Currently Searching": currently_searching,
         "No Results": no_results_message,
         "Failed Search": failed_search,
-        "Invalid Search": invalid_search_message
+        "Invalid Search": invalid_search_message,
+        # Record
+        "No Image Available": no_image_message,
+        "Loading": loading_status,
+        "More Information": more_info_message,
+        "Less Information": less_info_message,
+        "Error Message": error_message,
+        "Login Error": login_error_message
     }
     abstract.county.tags = {
         # Open Document
@@ -89,15 +110,6 @@ def update_county_attributes(abstract):
         # Disclaimer
         "Inaccessible": inaccessible,
     }
-    # Create a 'program' or 'engine' class to handle these elements & attributes
-    # document.titles = {
-    #     "Home Page": home_page_title,
-
-    # }
-    # document.urls = {
-    #     "Home Page": home_page_url,
-
-    # }
 
 
 def transform(abstract):

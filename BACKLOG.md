@@ -364,6 +364,9 @@
 - [ ] 'access_pdf_load' status originally used the 'long_timeout' variable => does this need to be re-adjusted?
 - [ ] Consider changing 'inputs' to 'search_inputs' in the 'transform' and 'search' scripts (then need to update the county class as well)
 - [ ] In the 'transform' script, if 'abstract.county' is passed instead of abstract it would clean up the function syntax a lot
+- [ ] Create a 'navigation' script to pull the 'next_result' and 'previous_result' functions out of the 'record' script
+- [ ] Move the 'buttons' variables for next result and previous result into the buttons portion of the transform script
+- [ ] Change the name of the 'drop_superfluous_information' function in the 'record' script to something more meaningful
 
 ### Iguana To Do
 
