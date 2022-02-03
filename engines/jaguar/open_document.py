@@ -9,7 +9,7 @@ from selenium_utilities.open import open_url
 from settings.general_functions import get_direct_link
 
 
-def count_results(browser, document):
+def count_results(browser, abstract, document):
     result_count = locate_element_by_class_name(browser, abstract.county.classes["Number Results"],
                                                 "number results", document=document)
     if result_count.text == abstract.county.messages["Single Result"]:
@@ -24,7 +24,7 @@ def count_results(browser, document):
         input()
 
 
-def get_results(browser, document):
+def get_results(browser, abstract, document):
     search_results_table = locate_element_by_id(browser, abstract.county.ids["Search Results"],
                                                 "search results table", document=document)
     # Need a separate function path if multiple results are returned
@@ -32,33 +32,34 @@ def get_results(browser, document):
                                         "search results", True, document)
 
 
-def access_result_link(document, result):
-    result_link_element = locate_element_by_tag_name(result, abstract.county.tags["Link"], "result link", True, document)
+def access_result_link(abstract, document, result):
+    result_link_element = locate_element_by_tag_name(result, abstract.county.tags["Link"],
+                                                     "result link", True, document)
     return get_direct_link(result_link_element)
 
 
-def open_result_link(browser, document, result):
-    document_link = access_result_link(document, result)
+def open_result_link(browser, abstract, document, result):
+    document_link = access_result_link(abstract, document, result)
     open_url(browser, document_link, abstract.county.titles["Document Description"],
              "document description", document)
     return True
 
 
-def open_first_result(browser, document):
+def open_first_result(browser, abstract, document):
     # Need a separate function path if multiple results are returned
-    first_result = get_results(browser, document)
-    if validate_result(first_result, document):
-        return open_result_link(browser, document, first_result)
+    first_result = get_results(browser, abstract, document)
+    if validate_result(abstract, document, first_result):
+        return open_result_link(browser, abstract, document, first_result)
     else:
         return False
 
 
 # Very similar to armadillo 'handle_search_results' dependent functions
-def handle_document_search(browser, document):
+def handle_document_search(browser, abstract, document):
     if document.number_results == 0:
         return False
     elif document.number_results == 1:
-        return open_first_result(browser, document)
+        return open_first_result(browser, abstract, document)
     else:
         print(f'Search results for {document.extrapolate_value()} returned '
               f'"{document.number_results}" results, please review...')
@@ -66,9 +67,9 @@ def handle_document_search(browser, document):
 
 
 def open_document(browser, abstract, document):
-    validate_search(browser, document)
-    if verify_results_loaded(browser, document):
-        count_results(browser, document)
-        return handle_document_search(browser, document)
+    validate_search(browser, abstract, document)
+    if verify_results_loaded(browser, abstract, document):
+        count_results(browser, abstract, document)
+        return handle_document_search(browser, abstract, document)
     else:
         return False
