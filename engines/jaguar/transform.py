@@ -1,5 +1,5 @@
 from settings.county_variables.jaguar import (name_input_id,
-                                              reception_number_input_id,
+                                              reception_number_input_id, home_page_title, home_page_url, login_button_name,
                                               search_button_name)
 
 
@@ -22,6 +22,7 @@ def update_county_attributes(abstract):
     # abstract.county.credentials = credentials  # LOGIN
     abstract.county.urls = {
         # LOGIN
+        "Home Page": home_page_url
         # SEARCH
         # OPEN DOCUMENT
         # RECORD
@@ -30,6 +31,7 @@ def update_county_attributes(abstract):
     }
     abstract.county.titles = {
         # LOGIN
+        "Home Page": home_page_title
         # SEARCH
         # OPEN DOCUMENT
         # RECORD
@@ -38,6 +40,7 @@ def update_county_attributes(abstract):
     }
     abstract.county.buttons = {
         # LOGIN
+        "Login": login_button_name,
         # SEARCH
         "Search": search_button_name
         # OPEN DOCUMENT
