@@ -40,7 +40,6 @@ def update_county_attributes(abstract):
         "Search": search_page_url
         # RECORD
         # DOWNLOAD
-        # VALIDATION
     }
     abstract.county.titles = {
         # LOGIN
@@ -48,11 +47,10 @@ def update_county_attributes(abstract):
         # SEARCH
         "Search": search_page_title,
         # OPEN DOCUMENT
-        "Results": search_results_title,
+        "Search Results": search_results_title,
         "Document Description": document_description_title,
         # RECORD
         # DOWNLOAD
-        # VALIDATION
     }
     abstract.county.buttons = {
         # LOGIN
@@ -61,7 +59,6 @@ def update_county_attributes(abstract):
         "Search": search_button_name
         # RECORD
         # DOWNLOAD
-        # VALIDATION
     }
     abstract.county.classes = {
         # OPEN DOCUMENT
@@ -74,19 +71,17 @@ def update_county_attributes(abstract):
         "No Results": no_results_text_class
     }
     abstract.county.ids = {
+        # OPEN DOCUMENT
+        "Search Results": search_results_id,
         # RECORD
         # DOWNLOAD
-        # VALIDATION
     }
     abstract.county.inputs = {  # Consider changing to 'SEARCH_inputs'
         # SEARCH
         "Reception Number": reception_number_input_id,
         "Name": name_input_id,
-        # OPEN DOCUMENT
-        "Search Results": search_results_id,
         # RECORD
         # DOWNLOAD
-        # VALIDATION
     }
     abstract.county.messages = {
         # OPEN DOCUMENT
@@ -102,12 +97,10 @@ def update_county_attributes(abstract):
         "Link": link_tag
         # RECORD
         # DOWNLOAD
-        # VALIDATION
     }
     abstract.county.other = {
         # RECORD
         # DOWNLOAD
-        # VALIDATION
     }
 
 
