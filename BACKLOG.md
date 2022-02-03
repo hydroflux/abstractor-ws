@@ -408,6 +408,7 @@
 - [ ] Execute function 'search_documents_from_list' had a comment  "naptime()  # --- script runs without issues while this nap was in place" before the 'executor' script was worked in => review to determine if the 'search' function needs to be updated
 - [ ] Open document function 'locate_result_count' function had a 'check_for_alert' function (still in the script) which followed a timeout--figure out how this was thrown and how to integrate back into the program (probably in the 'locators' script) => appeared to be recursive with the 'locate_result_count' function
 - [ ] Finish refactoring the 'search' script with selenium utilities scripts
+- [ ] Create either an 'error_handling' or 'validation' script for leopard (pull functions from the login script to verify login)
 
 ### Mountain Lion
 
