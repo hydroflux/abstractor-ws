@@ -1,5 +1,5 @@
 import os
-from settings.download_management import previously_downloaded
+from settings.download_management import previously_downloaded, update_download
 
 from settings.initialization import create_folder
 
@@ -22,7 +22,4 @@ def download_document(browser, abstract, document, execute_download):
     prepare_for_download(abstract, document)
     if not previously_downloaded(abstract, document):
         execute_download(browser, abstract, document)
-
-
-def download(browser, abstract, document, execute_download):
-    pass
+        update_download(browser, abstract, document)
