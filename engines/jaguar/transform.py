@@ -2,7 +2,9 @@ from settings.county_variables.jaguar import (home_page_title, home_page_url,
                                               login_button_name, name_input_id,
                                               reception_number_input_id,
                                               search_button_name,
-                                              search_page_title,
+                                              search_page_title, search_results_title, number_results_class_name,
+                                              single_result_message, multiple_results_message, search_results_id,
+                                              results_class_name, link_tag, document_description_title,
                                               search_page_url)
 
 
@@ -37,8 +39,10 @@ def update_county_attributes(abstract):
         # LOGIN
         "Home": home_page_title,
         # SEARCH
-        "Search": search_page_title
+        "Search": search_page_title,
         # OPEN DOCUMENT
+        "Results": search_results_title,
+        "Document Description": document_description_title,
         # RECORD
         # DOWNLOAD
         # VALIDATION
@@ -55,6 +59,8 @@ def update_county_attributes(abstract):
     }
     abstract.county.classes = {
         # OPEN DOCUMENT
+        "Number Results": number_results_class_name,
+        "Results": results_class_name,
         # RECORD
         # DOWNLOAD
         # VALIDATION
@@ -68,20 +74,24 @@ def update_county_attributes(abstract):
     abstract.county.inputs = {  # Consider changing to 'SEARCH_inputs'
         # SEARCH
         "Reception Number": reception_number_input_id,
-        "Name": name_input_id
+        "Name": name_input_id,
         # OPEN DOCUMENT
+        "Search Results": search_results_id,
         # RECORD
         # DOWNLOAD
         # VALIDATION
     }
     abstract.county.messages = {
         # OPEN DOCUMENT
+        "Single Result": single_result_message,
+        "Multiple Results": multiple_results_message,
         # RECORD
         # DOWNLOAD
         # VALIDATION
     }
     abstract.county.tags = {
         # OPEN DOCUMENT
+        "Link": link_tag
         # RECORD
         # DOWNLOAD
         # VALIDATION
