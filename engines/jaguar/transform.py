@@ -25,9 +25,9 @@ def update_county_attributes(abstract):
     # abstract.county.credentials = credentials  # LOGIN
     abstract.county.urls = {
         # LOGIN
-        "Home Page": home_page_url,
+        "Home": home_page_url,
         # SEARCH
-        "Search Page": search_page_url
+        "Search": search_page_url
         # OPEN DOCUMENT
         # RECORD
         # DOWNLOAD
@@ -35,9 +35,9 @@ def update_county_attributes(abstract):
     }
     abstract.county.titles = {
         # LOGIN
-        "Home Page": home_page_title,
+        "Home": home_page_title,
         # SEARCH
-        "Search Page": search_page_title
+        "Search": search_page_title
         # OPEN DOCUMENT
         # RECORD
         # DOWNLOAD

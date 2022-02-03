@@ -2,19 +2,17 @@ from selenium_utilities.inputs import clear_input, click_button, enter_input_val
 from selenium_utilities.locators import locate_element_by_class_name, locate_element_by_id
 from selenium_utilities.open import open_url
 
-from settings.county_variables.jaguar import search_url, search_title
 
-
-def clear_search(browser, document):
-    for attribute in document.input_attributes:
-        clear_input(browser, locate_element_by_id, document.input_attributes[attribute],
+def clear_search(browser, abstract, document):
+    for attribute in abstract.county.inputs:
+        clear_input(browser, locate_element_by_id, abstract.county.inputs[attribute],
                     f'{attribute} Input', document)
 
 
-def handle_document_value_numbers(browser, document):
+def handle_document_value_numbers(browser, abstract, document):
     value = document.document_value()
     if document.type == "document_number":
-        enter_input_value(browser, locate_element_by_id, document.input_attributes["Reception Number"],
+        enter_input_value(browser, locate_element_by_id, abstract.county.inputs["Reception Number"],
                           "reception number input", value, document)
     else:
         print(f'Unable to search "{document.extrapolate_value()}" document type "{document.type}".')
@@ -22,13 +20,14 @@ def handle_document_value_numbers(browser, document):
         input()
 
 
-def execute_search(browser, document):
-    handle_document_value_numbers(browser, document)
-    click_button(browser, locate_element_by_class_name, document.button_attributes["Submit Search"],
+def execute_search(browser, abstract, document):
+    handle_document_value_numbers(browser, abstract, document)
+    click_button(browser, locate_element_by_class_name, abstract.county.buttons["Search"],
                  "execute search button", document)
 
 
-def search(browser, document):
-    open_url(browser, search_url, search_title, "document search page")
-    clear_search(browser, document)
-    execute_search(browser, document)
+def search(browser, abstract, document):
+    open_url(browser, abstract.county.urls["Search"],
+             abstract.county.titles["Search"], "document search page")
+    clear_search(browser, abstract, document)
+    execute_search(browser, abstract, document)
