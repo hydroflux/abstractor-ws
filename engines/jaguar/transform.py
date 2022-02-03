@@ -16,6 +16,7 @@ from settings.county_variables.jaguar import (document_description_title,
                                               single_result_message,
                                               document_type_and_number_field_id,
                                               document_tables_tag,
+                                              download_button_class,
                                               recording_date_field_class,
                                               validation_class_name)
 
@@ -57,8 +58,9 @@ def update_county_attributes(abstract):
         # LOGIN
         "Login": login_button_name,
         # SEARCH
-        "Search": search_button_name
+        "Search": search_button_name,
         # DOWNLOAD
+        "Download": download_button_class
     }
     abstract.county.classes = {
         # OPEN DOCUMENT
