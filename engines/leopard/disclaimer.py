@@ -9,7 +9,7 @@ from settings.county_variables.leopard import (disclaimer_active_class,
 from settings.general_functions import javascript_script_execution
 
 
-def handle_disclaimer(browser):
+def handle_disclaimer(browser, abstract):
     javascript_script_execution(browser, open_script)
     disclaimer = locate_element_by_id(browser, disclaimer_id, "disclaimer", False)
     if disclaimer.get_attribute('class') == disclaimer_active_class:

@@ -32,4 +32,4 @@ def login(browser, abstract):
     open_site(browser, abstract)
     enter_credentials(browser, abstract)
     verify_login(browser, abstract)
-    handle_disclaimer(browser)
+    handle_disclaimer(browser, abstract)
