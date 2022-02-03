@@ -21,7 +21,7 @@ def update_county_attributes(abstract):
         "Home Page": eagle.home_page_title,
         # Search
         "Search Page": eagle.search_title,
-        # Document Description
+        # Open Document
         "Document Description": eagle.document_description_title
     }
     abstract.county.buttons = {
@@ -46,6 +46,7 @@ def update_county_attributes(abstract):
         "Document Table": eagle.document_table_class,
         "Information Links": eagle.information_links_class,
         "Related Documents Table": eagle.related_table_class,
+        # Navigation
         "Result Buttons": eagle.result_buttons_class,
         # Download
         "PDF Viewer": eagle.pdf_viewer_class_name,
@@ -88,6 +89,7 @@ def update_county_attributes(abstract):
         "Result Actions": eagle.result_actions_tag_name,
         # Record
         "Index Table": eagle.index_table_tags,
+        # Navigation
         "Result Button": eagle.result_button_tag
     }
     abstract.county.other = {
