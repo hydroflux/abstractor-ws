@@ -59,14 +59,14 @@ def update_county_attributes(abstract):
         "Logout": logout_button_id
     }
     abstract.county.classes = {
+        # LOGIN
+        "Validation Error": validation_error_class
         # DISCLAIMER
         # SEARCH
         # OPEN DOCUMENT
         # RECORD
         # DOWNLOAD
         # NAVIGATION
-        # LOGOUT
-        "Validation Error": validation_error_class
     }
     abstract.county.ids = {
         # DISCLAIMER
@@ -92,7 +92,7 @@ def update_county_attributes(abstract):
         # DOWNLOAD
         # NAVIGATION
         # LOGOUT
-        "Validation Error": validation_error_message
+        # "Validation Error": validation_error_message  # Not being used?
     }
     abstract.county.tags = {
         # DISCLAIMER

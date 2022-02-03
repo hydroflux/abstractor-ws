@@ -1,10 +1,4 @@
-from selenium.common.exceptions import TimeoutException
-from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.wait import WebDriverWait
-
-from project_management.timers import timeout
 
 from engines.leopard.disclaimer import handle_disclaimer
 from selenium_utilities.locators import locate_element_by_class_name, locate_element_by_id
