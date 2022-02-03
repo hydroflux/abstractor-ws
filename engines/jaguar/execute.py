@@ -7,13 +7,12 @@ from engines.jaguar.login import account_login
 from engines.jaguar.open_document import open_document
 from engines.jaguar.record import record
 from engines.jaguar.search import search
-from engines.jaguar.transform import transform_document_list
 
 
 # Identical to 'leopard', 'tiger', 'rattlesnake', & 'eagle' execute_program
 def execute_program(abstract):
     browser = create_webdriver(abstract)
-    transform_document_list(abstract)
+    # transform_document_list(abstract)
     account_login(browser)
     search_documents_from_list(
         browser,
