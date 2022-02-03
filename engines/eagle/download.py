@@ -7,7 +7,6 @@ from selenium_utilities.locators import (locate_element_by_class_name,
 
 from project_management.timers import naptime
 
-from settings.download_management import update_download
 from settings.iframe_handling import switch_to_default_content
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
@@ -57,4 +56,3 @@ def access_document_image(browser, abstract, document):
 
 def execute_download(browser, abstract, document):
     access_document_image(browser, abstract, document)
-    update_download(browser, abstract, document)
