@@ -1,24 +1,4 @@
-from settings.county_variables.jaguar import (document_description_title,
-                                              home_page_title, home_page_url,
-                                              invalid_search_message, link_tag,
-                                              login_button_name,
-                                              multiple_results_message,
-                                              name_input_id,
-                                              no_results_text_class,
-                                              number_results_class_name,
-                                              reception_number_input_id,
-                                              results_class_name,
-                                              search_button_name,
-                                              search_page_title,
-                                              search_page_url,
-                                              search_results_id,
-                                              search_results_title,
-                                              single_result_message,
-                                              document_type_and_number_field_id,
-                                              document_tables_tag,
-                                              download_button_class,
-                                              recording_date_field_class,
-                                              validation_class_name)
+import settings.county_variables.jaguar as jaguar
 
 
 # Similar to the 'leopard' & 'tiger' update_document_attributes
@@ -39,60 +19,60 @@ def convert_document_numbers(abstract):
 def update_county_attributes(abstract):
     abstract.county.urls = {
         # LOGIN
-        "Home": home_page_url,
+        "Home": jaguar.home_page_url,
         # SEARCH
-        "Search": search_page_url
+        "Search": jaguar.search_page_url
     }
     abstract.county.titles = {
         # LOGIN
-        "Home": home_page_title,
+        "Home": jaguar.home_page_title,
         # SEARCH
-        "Search": search_page_title,
+        "Search": jaguar.search_page_title,
         # OPEN DOCUMENT
-        "Search Results": search_results_title,
-        "Document Description": document_description_title,
+        "Search Results": jaguar.search_results_title,
+        "Document Description": jaguar.document_description_title
     }
     abstract.county.buttons = {
         # LOGIN
-        "Login": login_button_name,
+        "Login": jaguar.login_button_name,
         # SEARCH
-        "Search": search_button_name,
+        "Search": jaguar.search_button_name,
         # DOWNLOAD
-        "Download": download_button_class
+        "Download": jaguar.download_button_class
     }
     abstract.county.classes = {
         # OPEN DOCUMENT
-        "Number Results": number_results_class_name,
-        "Results": results_class_name,
+        "Number Results": jaguar.number_results_class_name,
+        "Results": jaguar.results_class_name,
         # RECORD
-        "Recording Date": recording_date_field_class,
+        "Recording Date": jaguar.recording_date_field_class,
         # VALIDATION
-        "Validation": validation_class_name,
-        "No Results": no_results_text_class
+        "Validation": jaguar.validation_class_name,
+        "No Results": jaguar.no_results_text_class
     }
     abstract.county.ids = {
         # OPEN DOCUMENT
-        "Search Results": search_results_id,
+        "Search Results": jaguar.search_results_id,
         # RECORD
-        "Document Type And Number": document_type_and_number_field_id
+        "Document Type And Number": jaguar.document_type_and_number_field_id
     }
     abstract.county.inputs = {  # Consider changing to 'SEARCH_inputs'
         # SEARCH
-        "Reception Number": reception_number_input_id,
-        "Name": name_input_id,
+        "Reception Number": jaguar.reception_number_input_id,
+        "Name": jaguar.name_input_id
     }
     abstract.county.messages = {
         # OPEN DOCUMENT
-        "Single Result": single_result_message,
-        "Multiple Results": multiple_results_message,
+        "Single Result": jaguar.single_result_message,
+        "Multiple Results": jaguar.multiple_results_message,
         # VALIDATION
-        "Invalid Search": invalid_search_message
+        "Invalid Search": jaguar.invalid_search_message
     }
     abstract.county.tags = {
         # OPEN DOCUMENT
-        "Link": link_tag,
+        "Link": jaguar.link_tag,
         # RECORD
-        "Document Tables": document_tables_tag
+        "Document Tables": jaguar.document_tables_tag
     }
 
 
