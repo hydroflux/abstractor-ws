@@ -48,7 +48,7 @@ def open_result_link(browser, abstract, document, result):
 def open_first_result(browser, abstract, document):
     # Need a separate function path if multiple results are returned
     first_result = get_results(browser, abstract, document)
-    if validate_result(abstract, document, first_result):
+    if validate_result(document, first_result):
         return open_result_link(browser, abstract, document, first_result)
     else:
         return False

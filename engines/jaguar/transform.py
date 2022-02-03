@@ -1,11 +1,20 @@
-from settings.county_variables.jaguar import (home_page_title, home_page_url,
-                                              login_button_name, name_input_id,
+from settings.county_variables.jaguar import (document_description_title,
+                                              home_page_title, home_page_url,
+                                              invalid_search_message, link_tag,
+                                              login_button_name,
+                                              multiple_results_message,
+                                              name_input_id,
+                                              no_results_text_class,
+                                              number_results_class_name,
                                               reception_number_input_id,
+                                              results_class_name,
                                               search_button_name,
-                                              search_page_title, search_results_title, number_results_class_name,
-                                              single_result_message, multiple_results_message, search_results_id,
-                                              results_class_name, link_tag, document_description_title,
-                                              search_page_url)
+                                              search_page_title,
+                                              search_page_url,
+                                              search_results_id,
+                                              search_results_title,
+                                              single_result_message,
+                                              validation_class_name)
 
 
 # Similar to the 'leopard' & 'tiger' update_document_attributes
@@ -24,13 +33,11 @@ def convert_document_numbers(abstract):
 
 
 def update_county_attributes(abstract):
-    # abstract.county.credentials = credentials  # LOGIN
     abstract.county.urls = {
         # LOGIN
         "Home": home_page_url,
         # SEARCH
         "Search": search_page_url
-        # OPEN DOCUMENT
         # RECORD
         # DOWNLOAD
         # VALIDATION
@@ -52,7 +59,6 @@ def update_county_attributes(abstract):
         "Login": login_button_name,
         # SEARCH
         "Search": search_button_name
-        # OPEN DOCUMENT
         # RECORD
         # DOWNLOAD
         # VALIDATION
@@ -64,9 +70,10 @@ def update_county_attributes(abstract):
         # RECORD
         # DOWNLOAD
         # VALIDATION
+        "Validation": validation_class_name,
+        "No Results": no_results_text_class
     }
     abstract.county.ids = {
-        # OPEN DOCUMENT
         # RECORD
         # DOWNLOAD
         # VALIDATION
@@ -88,6 +95,7 @@ def update_county_attributes(abstract):
         # RECORD
         # DOWNLOAD
         # VALIDATION
+        "Invalid Search": invalid_search_message
     }
     abstract.county.tags = {
         # OPEN DOCUMENT
@@ -97,7 +105,6 @@ def update_county_attributes(abstract):
         # VALIDATION
     }
     abstract.county.other = {
-        # OPEN DOCUMENT
         # RECORD
         # DOWNLOAD
         # VALIDATION

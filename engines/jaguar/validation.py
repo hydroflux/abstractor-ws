@@ -7,7 +7,7 @@ from settings.county_variables.jaguar import (invalid_search_message,
                                               validation_class_name)
 
 
-def validate_search(browser, document):
+def validate_search(browser, abstract, document):
     if not assert_window_title(browser, search_results_title):
         print(f'Browser failed to successfully execute search for '
               f'"{document.extrapolate_value()}", validating search...')
@@ -22,7 +22,7 @@ def validate_search(browser, document):
         input()
 
 
-def verify_results_loaded(browser, document):
+def verify_results_loaded(browser, abstract, document):
     no_results_element = locate_element_by_class_name(browser, no_results_text_class, "no results",
                                                       document=document, quick=True)
     if no_results_element is None:
@@ -33,7 +33,7 @@ def validate_reception_number(document, text):
     return text.endswith(document.value)
 
 
-def validate_result(result, document):
+def validate_result(document, result):
     result_text = result.text.split('\n')
     if document.type == 'document_number':
         return validate_reception_number(document, result_text[1])
