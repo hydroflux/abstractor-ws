@@ -1,10 +1,7 @@
 from selenium_utilities.inputs import click_button
 from selenium_utilities.locators import locate_element_by_id
 
-from serializers.downloader import prepare_for_download
-
 from settings.county_variables.tiger import download_button_id, view_panel_id
-from settings.download_management import previously_downloaded, update_download
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("download", __name__)
@@ -17,11 +14,3 @@ def execute_download(browser, abstract, document):
                  "download submenu button", document)
     click_button(browser, locate_element_by_id, download_button_id,  # Execute Download
                  "execute download button", document)
-    update_download(browser, abstract, document)
-
-
-# Identical to 'eagle', 'leopard', 'rattlesnake', & 'jaguar' download_document
-def download_document(browser, abstract, document):
-    prepare_for_download(abstract, document)
-    if not previously_downloaded(abstract, document):
-        execute_download(browser, abstract, document)
