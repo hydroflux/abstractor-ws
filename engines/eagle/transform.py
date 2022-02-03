@@ -7,95 +7,95 @@ def update_document_attributes(abstract):
 
 
 def update_county_attributes(abstract):
-    abstract.county.credentials = eagle.credentials  # Login
+    abstract.county.credentials = eagle.credentials  # LOGIN
     abstract.county.urls = {
-        # Login
+        # LOGIN
         "Home Page": eagle.home_page_url,
         "Fallback Search": eagle.fallback_search_url,
         "Log Out Redirect": eagle.logged_out_redirect_url,
-        # Search
+        # SEARCH
         "Search Page": eagle.search_url
     }
     abstract.county.titles = {
-        # Login
+        # LOGIN
         "Home Page": eagle.home_page_title,
-        # Search
+        # SEARCH
         "Search Page": eagle.search_title,
-        # Open Document
+        # OPEN DOCUMENT
         "Document Description": eagle.document_description_title
     }
     abstract.county.buttons = {
-        # Login
+        # LOGIN
         "Login": eagle.login_button_id,
-        # Disclaimer
+        # DISCLAIMER
         "Disclaimer": eagle.disclaimer_id,
-        # Search
+        # SEARCH
         "Clear Search": eagle.clear_search_id,
         "Submit Search": eagle.search_button_id,
-        # Download
+        # DOWNLOAD
         "Download Button": eagle.download_button_id
     }
     abstract.county.classes = {
-        # Login
+        # LOGIN
         "Login Prompt": eagle.login_prompt_class,
-        # Open Document
+        # OPEN DOCUMENT
         "Validation": eagle.validation_class_name,
         "Results Row": eagle.results_row_class_name,
         "Result Actions": eagle.result_actions_class_name,
-        # Record
+        # RECORD
         "Document Table": eagle.document_table_class,
         "Information Links": eagle.information_links_class,
         "Related Documents Table": eagle.related_table_class,
-        # Navigation
+        # NAVIGATION
         "Result Buttons": eagle.result_buttons_class,
-        # Download
+        # DOWNLOAD
         "PDF Viewer": eagle.pdf_viewer_class_name,
         "Purchase Button": eagle.purchase_button_class_name,
-        # Error Handling
+        # ERROR HANDLING
         "Error Message": eagle.error_message_class
     }
     abstract.county.ids = {
-        # Record
+        # RECORD
         "Image Container": eagle.image_container_id,
         "Document Information": eagle.document_information_id,
         "PDF Viewer Load Marker": eagle.pdf_viewer_load_id
     }
     abstract.county.inputs = {  # Consider changing to 'search_inputs'
-        # Search
+        # SEARCH
         "Reception Number": eagle.reception_number_input_id,
         "Book": eagle.book_input_id,
         "Page": eagle.page_input_id,
     }
     abstract.county.messages = {
-        # Login
+        # LOGIN
         "Welcome": eagle.welcome_message,  # Not used
-        # Open Document
+        # OPEN DOCUMENT
         "Currently Searching": eagle.currently_searching,
         "No Results": eagle.no_results_message,
         "Failed Search": eagle.failed_search,
         "Invalid Search": eagle.invalid_search_message,
-        # Record
+        # RECORD
         "No Image Available": eagle.no_image_message,
         "Loading": eagle.loading_status,
         "More Information": eagle.more_info_message,
         "Less Information": eagle.less_info_message,
         "Login Error": eagle.login_error_message,
-        # Error Handling
+        # ERROR HANDLING
         "Error Message": eagle.error_message
     }
     abstract.county.tags = {
         # Open Document
         "Search Status": eagle.search_status_tag,
         "Result Actions": eagle.result_actions_tag_name,
-        # Record
+        # RECORD
         "Index Table": eagle.index_table_tags,
-        # Navigation
+        # NAVIGATION
         "Result Button": eagle.result_button_tag
     }
     abstract.county.other = {
-        # Disclaimer
+        # DISCLAIMER
         "Inaccessible": eagle.inaccessible,
-        # Record
+        # RECORD
         "Missing Values": eagle.missing_values,
         "Stock Download": eagle.stock_download_suffix
     }
