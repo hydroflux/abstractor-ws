@@ -19,56 +19,82 @@ def convert_document_numbers(abstract):
 
 
 def update_county_attributes(abstract):
-    # abstract.county.credentials = credentials  # Login
+    # abstract.county.credentials = credentials  # LOGIN
     abstract.county.urls = {
-        # Login
-        # Search
+        # LOGIN
+        # SEARCH
+        # OPEN DOCUMENT
+        # RECORD
+        # DOWNLOAD
+        # VALIDATION
     }
     abstract.county.titles = {
-        # Login
+        # LOGIN
+        # SEARCH
+        # OPEN DOCUMENT
+        # RECORD
+        # DOWNLOAD
+        # VALIDATION
     }
     abstract.county.buttons = {
-        # Login
-        # Disclaimer
-        # Search
-        # Download
+        # LOGIN
+        # SEARCH
+        "Search": search_button_name
+        # OPEN DOCUMENT
+        # RECORD
+        # DOWNLOAD
+        # VALIDATION
     }
     abstract.county.classes = {
-        # Login
-        # Open Document
-        # Record
-        # Download
-        # Error Handling
+        # LOGIN
+        # SEARCH
+        # OPEN DOCUMENT
+        # RECORD
+        # DOWNLOAD
+        # VALIDATION
     }
     abstract.county.ids = {
-        # Record
+        # LOGIN
+        # SEARCH
+        # OPEN DOCUMENT
+        # RECORD
+        # DOWNLOAD
+        # VALIDATION
     }
-    abstract.county.inputs = {  # Consider changing to 'search_inputs'
-        # Search
+    abstract.county.inputs = {  # Consider changing to 'SEARCH_inputs'
+        # LOGIN
+        # SEARCH
+        "Reception Number": reception_number_input_id,
+        "Name": name_input_id
+        # OPEN DOCUMENT
+        # RECORD
+        # DOWNLOAD
+        # VALIDATION
     }
     abstract.county.messages = {
-        # Login
-        # Open Document
-        # Record
-        # Error Handling
+        # LOGIN
+        # SEARCH
+        # OPEN DOCUMENT
+        # RECORD
+        # DOWNLOAD
+        # VALIDATION
     }
     abstract.county.tags = {
-        # Open Document
-        # Record
+        # LOGIN
+        # SEARCH
+        # OPEN DOCUMENT
+        # RECORD
+        # DOWNLOAD
+        # VALIDATION
     }
     abstract.county.other = {
-        # Disclaimer
-        # Record
+        # LOGIN
+        # SEARCH
+        # OPEN DOCUMENT
+        # RECORD
+        # DOWNLOAD
+        # VALIDATION
     }
-
-    # for document in abstract.document_list:
-    #     document.input_attributes = {
-    #         "Reception Number": reception_number_input_id,
-    #         "Name": name_input_id
-    #     }
-    #     document.button_attributes = {
-    #         "Submit Search": search_button_name
-    #     }
 
 
 def transform(abstract):
