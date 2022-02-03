@@ -1,10 +1,8 @@
 from functools import partial
-from selenium.common.exceptions import (ElementClickInterceptedException,
-                                        StaleElementReferenceException)
+from selenium.common.exceptions import StaleElementReferenceException
 
 from selenium_utilities.element_interaction import center_element
-from selenium_utilities.locators import (locate_element_by_class_name,
-                                         locate_element_by_id,
+from selenium_utilities.locators import (locate_element_by_id,
                                          locate_elements_by_class_name)
 
 from project_management.timers import medium_nap, naptime

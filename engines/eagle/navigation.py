@@ -1,3 +1,8 @@
+from project_management.timers import naptime, short_nap
+from selenium_utilities.locators import locate_element_by_class_name
+from selenium.common.exceptions import ElementClickInterceptedException, StaleElementReferenceException
+
+from settings.general_functions import scroll_to_top
 
 
 def get_previous_result_button(browser, abstract, document):
