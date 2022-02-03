@@ -14,6 +14,9 @@ from settings.county_variables.jaguar import (document_description_title,
                                               search_results_id,
                                               search_results_title,
                                               single_result_message,
+                                              document_type_and_number_field_id,
+                                              document_tables_tag,
+                                              recording_date_field_class,
                                               validation_class_name)
 
 
@@ -38,7 +41,6 @@ def update_county_attributes(abstract):
         "Home": home_page_url,
         # SEARCH
         "Search": search_page_url
-        # RECORD
         # DOWNLOAD
     }
     abstract.county.titles = {
@@ -49,7 +51,6 @@ def update_county_attributes(abstract):
         # OPEN DOCUMENT
         "Search Results": search_results_title,
         "Document Description": document_description_title,
-        # RECORD
         # DOWNLOAD
     }
     abstract.county.buttons = {
@@ -57,7 +58,6 @@ def update_county_attributes(abstract):
         "Login": login_button_name,
         # SEARCH
         "Search": search_button_name
-        # RECORD
         # DOWNLOAD
     }
     abstract.county.classes = {
@@ -65,7 +65,7 @@ def update_county_attributes(abstract):
         "Number Results": number_results_class_name,
         "Results": results_class_name,
         # RECORD
-        # DOWNLOAD
+        "Recording Date": recording_date_field_class,
         # VALIDATION
         "Validation": validation_class_name,
         "No Results": no_results_text_class
@@ -74,33 +74,27 @@ def update_county_attributes(abstract):
         # OPEN DOCUMENT
         "Search Results": search_results_id,
         # RECORD
-        # DOWNLOAD
+        "Document Type And Number": document_type_and_number_field_id
     }
     abstract.county.inputs = {  # Consider changing to 'SEARCH_inputs'
         # SEARCH
         "Reception Number": reception_number_input_id,
         "Name": name_input_id,
-        # RECORD
-        # DOWNLOAD
     }
     abstract.county.messages = {
         # OPEN DOCUMENT
         "Single Result": single_result_message,
         "Multiple Results": multiple_results_message,
-        # RECORD
-        # DOWNLOAD
         # VALIDATION
         "Invalid Search": invalid_search_message
     }
     abstract.county.tags = {
         # OPEN DOCUMENT
-        "Link": link_tag
+        "Link": link_tag,
         # RECORD
-        # DOWNLOAD
+        "Document Tables": document_tables_tag
     }
     abstract.county.other = {
-        # RECORD
-        # DOWNLOAD
     }
 
 
