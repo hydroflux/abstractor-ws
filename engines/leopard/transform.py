@@ -1,4 +1,6 @@
-from settings.county_variables.leopard import stock_download
+from settings.county_variables.leopard import (stock_download, credentials, validation_error_message,
+    validation_error_class,
+    logout_button_id, login_page_title, login_page_url)
 
 
 # Similar to the 'jaguar' convert_document_numbers function
@@ -22,8 +24,10 @@ def update_document_attributes(abstract):
 
 
 def update_county_attributes(abstract):
+    abstract.county.credentials = credentials
     abstract.county.urls = {
         # LOGIN
+        "Login": login_page_url
         # DISCLAIMER
         # SEARCH
         # OPEN DOCUMENT
@@ -34,6 +38,7 @@ def update_county_attributes(abstract):
     }
     abstract.county.titles = {
         # LOGIN
+        "Login": login_page_title
         # DISCLAIMER
         # SEARCH
         # OPEN DOCUMENT
@@ -51,6 +56,7 @@ def update_county_attributes(abstract):
         # DOWNLOAD
         # NAVIGATION
         # LOGOUT
+        "Logout": logout_button_id
     }
     abstract.county.classes = {
         # LOGIN
@@ -61,6 +67,7 @@ def update_county_attributes(abstract):
         # DOWNLOAD
         # NAVIGATION
         # LOGOUT
+        "Validation Errors": validation_error_class
     }
     abstract.county.ids = {
         # LOGIN
@@ -91,6 +98,7 @@ def update_county_attributes(abstract):
         # DOWNLOAD
         # NAVIGATION
         # LOGOUT
+        "Validation Error": validation_error_message
     }
     abstract.county.tags = {
         # LOGIN
