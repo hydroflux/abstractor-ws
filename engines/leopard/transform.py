@@ -21,6 +21,99 @@ def convert_document_numbers(abstract):
                 document.value = f'{year}{document_number.zfill(7)}'
 
 
+def update_county_attributes(abstract):
+    abstract.county.urls = {
+        # LOGIN
+        # DISCLAIMER
+        # SEARCH
+        # OPEN DOCUMENT
+        # RECORD
+        # DOWNLOAD
+        # NAVIGATION
+        # LOGOUT
+    }
+    abstract.county.titles = {
+        # LOGIN
+        # DISCLAIMER
+        # SEARCH
+        # OPEN DOCUMENT
+        # RECORD
+        # DOWNLOAD
+        # NAVIGATION
+        # LOGOUT
+    }
+    abstract.county.buttons = {
+        # LOGIN
+        # DISCLAIMER
+        # SEARCH
+        # OPEN DOCUMENT
+        # RECORD
+        # DOWNLOAD
+        # NAVIGATION
+        # LOGOUT
+    }
+    abstract.county.classes = {
+        # LOGIN
+        # DISCLAIMER
+        # SEARCH
+        # OPEN DOCUMENT
+        # RECORD
+        # DOWNLOAD
+        # NAVIGATION
+        # LOGOUT
+    }
+    abstract.county.ids = {
+        # LOGIN
+        # DISCLAIMER
+        # SEARCH
+        # OPEN DOCUMENT
+        # RECORD
+        # DOWNLOAD
+        # NAVIGATION
+        # LOGOUT
+    }
+    abstract.county.inputs = {  # Consider changing to 'search_inputs'
+        # LOGIN
+        # DISCLAIMER
+        # SEARCH
+        # OPEN DOCUMENT
+        # RECORD
+        # DOWNLOAD
+        # NAVIGATION
+        # LOGOUT
+    }
+    abstract.county.messages = {
+        # LOGIN
+        # DISCLAIMER
+        # SEARCH
+        # OPEN DOCUMENT
+        # RECORD
+        # DOWNLOAD
+        # NAVIGATION
+        # LOGOUT
+    }
+    abstract.county.tags = {
+        # LOGIN
+        # DISCLAIMER
+        # SEARCH
+        # OPEN DOCUMENT
+        # RECORD
+        # DOWNLOAD
+        # NAVIGATION
+        # LOGOUT
+    }
+    abstract.county.other = {
+        # LOGIN
+        # DISCLAIMER
+        # SEARCH
+        # OPEN DOCUMENT
+        # RECORD
+        # DOWNLOAD
+        # NAVIGATION
+        # LOGOUT
+    }
+
+
 # Identical to the 'tiger' transform_document_list function
 def transform(abstract):
     update_document_attributes(abstract)

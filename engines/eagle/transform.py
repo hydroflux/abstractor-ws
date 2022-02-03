@@ -46,11 +46,11 @@ def update_county_attributes(abstract):
         "Document Table": eagle.document_table_class,
         "Information Links": eagle.information_links_class,
         "Related Documents Table": eagle.related_table_class,
-        # NAVIGATION
-        "Result Buttons": eagle.result_buttons_class,
         # DOWNLOAD
         "PDF Viewer": eagle.pdf_viewer_class_name,
         "Purchase Button": eagle.purchase_button_class_name,
+        # NAVIGATION
+        "Result Buttons": eagle.result_buttons_class,
         # ERROR HANDLING
         "Error Message": eagle.error_message_class
     }
@@ -84,7 +84,7 @@ def update_county_attributes(abstract):
         "Error Message": eagle.error_message
     }
     abstract.county.tags = {
-        # Open Document
+        # OPEN DOCUMENT
         "Search Status": eagle.search_status_tag,
         "Result Actions": eagle.result_actions_tag_name,
         # RECORD
