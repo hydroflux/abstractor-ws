@@ -1,6 +1,9 @@
-from settings.county_variables.leopard import (stock_download, credentials, validation_error_message,
-    validation_error_class,
-    logout_button_id, login_page_title, login_page_url)
+from settings.county_variables.leopard import (credentials, login_page_title,
+                                               login_page_url,
+                                               logout_button_id,
+                                               stock_download,
+                                               validation_error_class,
+                                               validation_error_message)
 
 
 # Similar to the 'jaguar' convert_document_numbers function
@@ -34,7 +37,6 @@ def update_county_attributes(abstract):
         # RECORD
         # DOWNLOAD
         # NAVIGATION
-        # LOGOUT
     }
     abstract.county.titles = {
         # LOGIN
@@ -45,10 +47,8 @@ def update_county_attributes(abstract):
         # RECORD
         # DOWNLOAD
         # NAVIGATION
-        # LOGOUT
     }
     abstract.county.buttons = {
-        # LOGIN
         # DISCLAIMER
         # SEARCH
         # OPEN DOCUMENT
@@ -59,7 +59,6 @@ def update_county_attributes(abstract):
         "Logout": logout_button_id
     }
     abstract.county.classes = {
-        # LOGIN
         # DISCLAIMER
         # SEARCH
         # OPEN DOCUMENT
@@ -70,27 +69,22 @@ def update_county_attributes(abstract):
         "Validation Errors": validation_error_class
     }
     abstract.county.ids = {
-        # LOGIN
         # DISCLAIMER
         # SEARCH
         # OPEN DOCUMENT
         # RECORD
         # DOWNLOAD
         # NAVIGATION
-        # LOGOUT
     }
     abstract.county.inputs = {  # Consider changing to 'search_inputs'
-        # LOGIN
         # DISCLAIMER
         # SEARCH
         # OPEN DOCUMENT
         # RECORD
         # DOWNLOAD
         # NAVIGATION
-        # LOGOUT
     }
     abstract.county.messages = {
-        # LOGIN
         # DISCLAIMER
         # SEARCH
         # OPEN DOCUMENT
@@ -101,24 +95,20 @@ def update_county_attributes(abstract):
         "Validation Error": validation_error_message
     }
     abstract.county.tags = {
-        # LOGIN
         # DISCLAIMER
         # SEARCH
         # OPEN DOCUMENT
         # RECORD
         # DOWNLOAD
         # NAVIGATION
-        # LOGOUT
     }
     abstract.county.other = {
-        # LOGIN
         # DISCLAIMER
         # SEARCH
         # OPEN DOCUMENT
         # RECORD
         # DOWNLOAD
         # NAVIGATION
-        # LOGOUT
     }
 
 
