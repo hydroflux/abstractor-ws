@@ -5,9 +5,11 @@ from settings.driver import create_webdriver
 
 from engines.eagle.download import execute_download
 from engines.eagle.login import login
+from engines.eagle.navigation import next_result
 from engines.eagle.open_document import open_document
-from engines.eagle.record import next_result, record
+from engines.eagle.record import record
 from engines.eagle.search import search
+
 # from engines.eagle.transform import transform_document_list
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
