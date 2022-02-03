@@ -29,7 +29,7 @@ def update_element_attributes(abstract):
         }
 
 
-def transform_document_list(abstract):
+def transform(abstract):
     update_document_attributes(abstract)
     convert_document_numbers(abstract)
     update_element_attributes(abstract)

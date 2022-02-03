@@ -4,6 +4,7 @@ from classes.Abstract import Abstract
 # from classes.Engine import Engine
 from classes.counties import county_dictionary
 from engines.eagle.transform import transform as transform_eagle
+from engines.jaguar.transform import transform as transform_jaguar
 
 from project_management.generate_document_list import generate_document_list
 from project_management.timers import start_program_timer
@@ -61,6 +62,8 @@ def program_type_update(abstract):
 def update_abstract_and_county_attributes(abstract):
     if abstract.county.engine == "eagle":
         transform_eagle(abstract)
+    elif abstract.county.engine == "jaguar":
+        transform_jaguar(abstract)
 
 
 def create_folder(directory):
