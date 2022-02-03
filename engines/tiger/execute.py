@@ -2,7 +2,7 @@ from serializers.executor import close_program, search_documents_from_list
 from engines.tiger.transform import transform_document_list
 from settings.driver import create_webdriver
 
-from engines.tiger.download import download_document
+from engines.tiger.download import execute_download
 from engines.tiger.login import account_login
 from engines.tiger.open_document import open_document
 from engines.tiger.record import record
@@ -23,7 +23,7 @@ def execute_program(abstract):
         search,
         open_document,
         record,
-        download_document,
+        execute_download,
         next_result=None
     )
     close_program(browser, abstract)
