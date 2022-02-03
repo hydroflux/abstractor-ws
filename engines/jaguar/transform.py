@@ -1,6 +1,9 @@
-from settings.county_variables.jaguar import (name_input_id,
-                                              reception_number_input_id, home_page_title, home_page_url, login_button_name,
-                                              search_button_name)
+from settings.county_variables.jaguar import (home_page_title, home_page_url,
+                                              login_button_name, name_input_id,
+                                              reception_number_input_id,
+                                              search_button_name,
+                                              search_page_title,
+                                              search_page_url)
 
 
 # Similar to the 'leopard' & 'tiger' update_document_attributes
@@ -22,8 +25,9 @@ def update_county_attributes(abstract):
     # abstract.county.credentials = credentials  # LOGIN
     abstract.county.urls = {
         # LOGIN
-        "Home Page": home_page_url
+        "Home Page": home_page_url,
         # SEARCH
+        "Search Page": search_page_url
         # OPEN DOCUMENT
         # RECORD
         # DOWNLOAD
@@ -31,8 +35,9 @@ def update_county_attributes(abstract):
     }
     abstract.county.titles = {
         # LOGIN
-        "Home Page": home_page_title
+        "Home Page": home_page_title,
         # SEARCH
+        "Search Page": search_page_title
         # OPEN DOCUMENT
         # RECORD
         # DOWNLOAD
@@ -49,23 +54,18 @@ def update_county_attributes(abstract):
         # VALIDATION
     }
     abstract.county.classes = {
-        # LOGIN
-        # SEARCH
         # OPEN DOCUMENT
         # RECORD
         # DOWNLOAD
         # VALIDATION
     }
     abstract.county.ids = {
-        # LOGIN
-        # SEARCH
         # OPEN DOCUMENT
         # RECORD
         # DOWNLOAD
         # VALIDATION
     }
     abstract.county.inputs = {  # Consider changing to 'SEARCH_inputs'
-        # LOGIN
         # SEARCH
         "Reception Number": reception_number_input_id,
         "Name": name_input_id
@@ -75,24 +75,18 @@ def update_county_attributes(abstract):
         # VALIDATION
     }
     abstract.county.messages = {
-        # LOGIN
-        # SEARCH
         # OPEN DOCUMENT
         # RECORD
         # DOWNLOAD
         # VALIDATION
     }
     abstract.county.tags = {
-        # LOGIN
-        # SEARCH
         # OPEN DOCUMENT
         # RECORD
         # DOWNLOAD
         # VALIDATION
     }
     abstract.county.other = {
-        # LOGIN
-        # SEARCH
         # OPEN DOCUMENT
         # RECORD
         # DOWNLOAD

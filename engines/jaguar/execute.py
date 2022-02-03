@@ -3,7 +3,7 @@ from serializers.executor import close_program, search_documents_from_list
 from settings.driver import create_webdriver
 
 from engines.jaguar.download import execute_download
-from engines.jaguar.login import account_login
+from engines.jaguar.login import login
 from engines.jaguar.open_document import open_document
 from engines.jaguar.record import record
 from engines.jaguar.search import search
@@ -13,7 +13,7 @@ from engines.jaguar.search import search
 def execute_program(abstract):
     browser = create_webdriver(abstract)
     # transform_document_list(abstract)
-    account_login(browser)
+    login(browser, abstract)
     search_documents_from_list(
         browser,
         abstract,
