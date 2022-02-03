@@ -22,6 +22,6 @@ def convert_document_numbers(abstract):
 
 
 # Identical to the 'tiger' transform_document_list function
-def transform_document_list(abstract):
+def transform(abstract):
     update_document_attributes(abstract)
     convert_document_numbers(abstract)

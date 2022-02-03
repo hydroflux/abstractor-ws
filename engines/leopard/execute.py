@@ -10,7 +10,6 @@ from engines.leopard.navigation import next_result
 from engines.leopard.open_document import open_document
 from engines.leopard.record import record
 from engines.leopard.search import search
-from engines.leopard.transform import transform_document_list
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("execute", __name__)
@@ -19,7 +18,7 @@ print("execute", __name__)
 # Identical to 'tiger', 'jaguar', 'rattlesnake', & 'eagle' execute_program
 def execute_program(abstract):
     browser = create_webdriver(abstract)
-    transform_document_list(abstract)
+    # transform_document_list(abstract)
     account_login(browser)
     search_documents_from_list(
         browser,
