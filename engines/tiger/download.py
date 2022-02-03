@@ -1,13 +1,10 @@
-from project_management.timers import naptime
-
 from selenium_utilities.inputs import click_button
 from selenium_utilities.locators import locate_element_by_id
 
 from serializers.downloader import prepare_for_download
 
-from settings.county_variables.tiger import download_button_id, view_panel_id, search_script
+from settings.county_variables.tiger import download_button_id, view_panel_id
 from settings.download_management import previously_downloaded, update_download
-from settings.general_functions import javascript_script_execution
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("download", __name__)
@@ -28,6 +25,3 @@ def download_document(browser, abstract, document):
     prepare_for_download(abstract, document)
     if not previously_downloaded(abstract, document):
         execute_download(browser, abstract, document)
-    # These (below) are messy--need to move / update (duplicated in the record script)
-    javascript_script_execution(search_script)
-    naptime()

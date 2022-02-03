@@ -1,16 +1,14 @@
-from project_management.timers import naptime
-
 from selenium_utilities.locators import locate_element_by_id, locate_element_by_tag_name
 
 from serializers.recorder import record_comments, record_value
 
 from settings.county_variables.general import not_applicable
 from settings.county_variables.tiger import (book_page_abbreviation,
-                                             document_image_id, search_script,
+                                             document_image_id,
                                              document_information_id,
                                              document_table_tag, row_data_tag,
                                              row_titles, table_row_tag)
-from settings.general_functions import get_element_text, javascript_script_execution
+from settings.general_functions import get_element_text
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("record", __name__)
@@ -123,7 +121,3 @@ def record(browser, abstract, document):
     document_table = access_document_table_data(browser, document)
     rows = get_table_rows(document_table)
     aggregate_document_information(abstract, rows, document)
-    if not abstract.download or abstract.review:
-        # These (below) are messy--need to move / update (duplicated in the download script)
-        javascript_script_execution(search_script)
-        naptime()

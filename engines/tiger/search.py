@@ -1,3 +1,4 @@
+from project_management.timers import naptime
 from selenium_utilities.element_interaction import (center_element,
                                                     get_parent_element,
                                                     is_active_class)
@@ -10,9 +11,14 @@ from settings.county_variables.tiger import (instrument_search_id,
                                              search_navigation_id,
                                              search_script, search_tab_id,
                                              search_title)
+from settings.general_functions import javascript_script_execution
 
 
 def open_search(browser):
+    # Messy => figure out a better way to do this
+    javascript_script_execution(search_script)
+    naptime()
+    ######
     search_navigation = locate_element_by_id(browser, search_navigation_id, "search navigation", True)
     if is_active_class(search_navigation):
         return
