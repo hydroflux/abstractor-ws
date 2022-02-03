@@ -53,7 +53,7 @@ def search_documents_from_list(browser, abstract, search, open_document, record,
 
 def close_program(browser, abstract, logout=None):
     if logout is not None:
-        logout(browser)
+        logout(browser, abstract)
     if not abstract.download_only and not abstract.review:
         project = export_document(abstract)
         project.bundle_project(abstract)

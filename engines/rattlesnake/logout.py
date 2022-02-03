@@ -5,6 +5,6 @@ from engines.rattlesnake.validation import verify_logout
 from settings.county_variables.rattlesnake import logout_button_id
 
 
-def logout(browser):
+def logout(browser, abstract):
     click_button(browser, locate_button, logout_button_id, "logout button")
     verify_logout(browser)
