@@ -42,7 +42,6 @@ def update_county_attributes(abstract):
         "Home": home_page_url,
         # SEARCH
         "Search": search_page_url
-        # DOWNLOAD
     }
     abstract.county.titles = {
         # LOGIN
@@ -52,7 +51,6 @@ def update_county_attributes(abstract):
         # OPEN DOCUMENT
         "Search Results": search_results_title,
         "Document Description": document_description_title,
-        # DOWNLOAD
     }
     abstract.county.buttons = {
         # LOGIN
@@ -95,8 +93,6 @@ def update_county_attributes(abstract):
         "Link": link_tag,
         # RECORD
         "Document Tables": document_tables_tag
-    }
-    abstract.county.other = {
     }
 
 
