@@ -4,7 +4,7 @@ from serializers.executor import close_program, search_documents_from_list
 from settings.driver import create_webdriver
 
 from engines.leopard.download import execute_download
-from engines.leopard.login import account_login
+from engines.leopard.login import login
 from engines.leopard.logout import logout
 from engines.leopard.navigation import next_result
 from engines.leopard.open_document import open_document
@@ -19,7 +19,7 @@ print("execute", __name__)
 def execute_program(abstract):
     browser = create_webdriver(abstract)
     # transform_document_list(abstract)
-    account_login(browser)
+    login(browser, abstract)
     search_documents_from_list(
         browser,
         abstract,
