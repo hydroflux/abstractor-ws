@@ -7,6 +7,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from project_management.timers import timeout
 
 from engines.leopard.disclaimer import handle_disclaimer
+from selenium_utilities.locators import locate_element_by_id
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("login", __name__)
@@ -19,18 +20,8 @@ def open_site(browser, abstract):
     assert abstract.county.titles["Login"] in browser.title
 
 
-def locate_login_prompt(browser, abstract):
-    try:
-        login_prompt_open = EC.presence_of_element_located((By.ID, abstract.county.credentials[1]))
-        WebDriverWait(browser, timeout).until(login_prompt_open)
-        login_prompt = browser.find_element_by_id(abstract.county.credentials[1])
-        return login_prompt
-    except TimeoutException:
-        print("Browser timed out while trying to locate login prompt.")
-
-
 def enter_credentials(browser, abstract):
-    login_prompt = locate_login_prompt(browser, abstract)
+    login_prompt = locate_element_by_id(browser, abstract.county.credentials[1], "login prompt")
     login_prompt.send_keys(abstract.county.credentials[0] + Keys.TAB + abstract.county.credentials[2] + Keys.RETURN)
 
 
