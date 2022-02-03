@@ -3,23 +3,20 @@ from selenium_utilities.locators import (locate_element_by_class_name,
                                          locate_elements_by_tag_name)
 from serializers.recorder import record_comments, record_empty_values, record_value
 
-from settings.county_variables.jaguar import (
-    document_tables_tag, document_type_and_number_field_id,
-    recording_date_field_class)
 from settings.general_functions import (date_from_string, list_to_string, title_strip,
                                         update_sentence_case_extras)
 
 from engines.jaguar.validation import validate_reception_number
 
 
-def get_document_type_and_number(browser, document):
-    document_type_and_number_field = locate_element_by_id(browser, document_type_and_number_field_id,
+def get_document_type_and_number(browser, abstract, document):
+    document_type_and_number_field = locate_element_by_id(browser, abstract.county.ids["Document Type And Number"],
                                                           "document type and number field", document=document)
     return document_type_and_number_field.text.split('\n')[0]
 
 
-def access_document_type_and_number(browser, document):
-    document_type_and_number = get_document_type_and_number(browser, document)
+def access_document_type_and_number(browser, abstract, document):
+    document_type_and_number = get_document_type_and_number(browser, abstract, document)
     return document_type_and_number.split(' - ')
 
 
@@ -33,14 +30,14 @@ def handle_reception_number(abstract, document):
 
 
 def record_document_type_and_number(browser, abstract, document):
-    document_type, reception_number = access_document_type_and_number(browser, document)
+    document_type, reception_number = access_document_type_and_number(browser, abstract, document)
     document.reception_number = reception_number
     record_value(abstract, 'document type', update_sentence_case_extras(title_strip(document_type)))
     handle_reception_number(abstract, document)
 
 
 def record_indexing_information(abstract, document_table, document):
-    recording_date_field = locate_element_by_class_name(document_table, recording_date_field_class,
+    recording_date_field = locate_element_by_class_name(document_table, abstract.county.classes["Recording Date"],
                                                         "recording date", document=document)
     recording_date = date_from_string(recording_date_field.text[:10])
     record_value(abstract, 'recording date', recording_date)
@@ -73,7 +70,7 @@ def record_legal(abstract, document_table, document):
 
 
 def aggregate_document_table_information(browser, abstract, document):
-    document_tables = locate_elements_by_tag_name(browser, document_tables_tag,
+    document_tables = locate_elements_by_tag_name(browser, abstract.county.tags["Document Tables"],
                                                   "document tables", document=document)
     record_indexing_information(abstract, document_tables[2], document)
     record_grantor(abstract, document_tables[6], document)
