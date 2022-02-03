@@ -4,5 +4,5 @@ from selenium_utilities.open import open_url
 
 
 def login(browser, abstract):
-    open_url(browser, abstract.county.urls["Home Page"], abstract.county.titles["Home Page"], "county site")
+    open_url(browser, abstract.county.urls["Home"], abstract.county.titles["Home"], "county site")
     click_button(browser, locate_element_by_name, abstract.county.buttons["Login"], "login button")
