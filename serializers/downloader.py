@@ -18,8 +18,9 @@ def prepare_for_download(abstract, document):
         document.download_value = f'{document.reception_number}.pdf'
 
 
-def download_document(browser, abstract, document, execute_download):
+def download_document(browser, abstract, document, execute_download, update=True):
     prepare_for_download(abstract, document)
     if not previously_downloaded(abstract, document):
         execute_download(browser, abstract, document)
-        update_download(browser, abstract, document)
+        if update:
+            update_download(browser, abstract, document)
