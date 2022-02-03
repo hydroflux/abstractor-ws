@@ -6,22 +6,16 @@ from selenium_utilities.locators import (locate_element_by_class_name,
                                          locate_element_by_tag_name)
 from selenium_utilities.open import open_url
 
-from settings.county_variables.jaguar import (document_description_title,
-                                              link_tag,
-                                              multiple_results_message,
-                                              number_results_class_name,
-                                              results_class, search_results_id,
-                                              single_result_message)
 from settings.general_functions import get_direct_link
 
 
 def count_results(browser, document):
-    result_count = locate_element_by_class_name(browser, number_results_class_name,
+    result_count = locate_element_by_class_name(browser, abstract.county.classes["Number Results"],
                                                 "number results", document=document)
-    if result_count.text == single_result_message:
+    if result_count.text == abstract.county.messages["Single Result"]:
         document.number_results = 1
-    elif result_count.text.endswith(multiple_results_message):
-        document.number_results += int(result_count.text[:-len(multiple_results_message)])
+    elif result_count.text.endswith(abstract.county.messages["Multiple Results"]):
+        document.number_results += int(result_count.text[:-len(abstract.county.messages["Multiple Results"])])
         print(f'{document.number_results} documents returned while searching {document.extrapolate_value()}.')
     else:
         print(f'Browser unable to determine results for '
@@ -31,21 +25,21 @@ def count_results(browser, document):
 
 
 def get_results(browser, document):
-    search_results_table = locate_element_by_id(browser, search_results_id,
+    search_results_table = locate_element_by_id(browser, abstract.county.ids["Search Results"],
                                                 "search results table", document=document)
     # Need a separate function path if multiple results are returned
-    return locate_element_by_class_name(search_results_table, results_class,
+    return locate_element_by_class_name(search_results_table, abstract.county.classes["Results"],
                                         "search results", True, document)
 
 
 def access_result_link(document, result):
-    result_link_element = locate_element_by_tag_name(result, link_tag, "result link", True, document)
+    result_link_element = locate_element_by_tag_name(result, abstract.county.tags["Link"], "result link", True, document)
     return get_direct_link(result_link_element)
 
 
 def open_result_link(browser, document, result):
     document_link = access_result_link(document, result)
-    open_url(browser, document_link, document_description_title,
+    open_url(browser, document_link, abstract.county.titles["Document Description"],
              "document description", document)
     return True
 
@@ -71,7 +65,7 @@ def handle_document_search(browser, document):
         input()
 
 
-def open_document(browser, document):
+def open_document(browser, abstract, document):
     validate_search(browser, document)
     if verify_results_loaded(browser, document):
         count_results(browser, document)
