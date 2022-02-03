@@ -43,7 +43,7 @@ def access_pdf_viewer(browser, abstract, document):
         naptime()
 
 
-def access_document_image(browser, abstract, document):
+def execute_download(browser, abstract, document):
     access_pdf_viewer(browser, abstract, document)
     while click_button(browser, locate_element_by_id,
                        abstract.county.buttons["Download Button"],
@@ -52,7 +52,3 @@ def access_document_image(browser, abstract, document):
         browser.refresh()
         access_pdf_viewer(browser, abstract, document)
     switch_to_default_content(browser)
-
-
-def execute_download(browser, abstract, document):
-    access_document_image(browser, abstract, document)
