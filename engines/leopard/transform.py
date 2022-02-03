@@ -66,7 +66,7 @@ def update_county_attributes(abstract):
         # DOWNLOAD
         # NAVIGATION
         # LOGOUT
-        "Validation Errors": validation_error_class
+        "Validation Error": validation_error_class
     }
     abstract.county.ids = {
         # DISCLAIMER
