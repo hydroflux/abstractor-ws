@@ -1,4 +1,5 @@
 from selenium.common.exceptions import StaleElementReferenceException
+from engines.leopard.error_handling import check_for_browser_error
 
 from project_management.timers import naptime
 
@@ -70,13 +71,6 @@ def open_tab(browser, document, access_function):
     while not wait_for_active(browser, tab):
         tab = access_element(browser, access_function, document, "search tab")
         tab.click()
-
-
-def check_for_browser_error(browser):
-    if browser.title == "Error":
-        print("Browser encountered an error during the search, refreshing the page to attempt to fix the problem.")
-        # Review after hitting this error again, browser needs to still be logged in during error to see if this works
-        browser.refresh()
 
 
 def access_search_type_tab(browser, document, attribute, type):
