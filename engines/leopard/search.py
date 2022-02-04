@@ -114,6 +114,15 @@ def access_book_and_page_search_tab(browser, document):
     return book_and_page_search_tab
 
 
+def clear_search(browser, document):
+    if document.type == "document_number":
+        # do something
+        pass
+    elif document.type == "book_and_page":
+        # do something else
+        pass
+
+
 def execute_document_number_search(browser, document):
     open_tab(browser, access_document_search_tab, document)
     enter_document_number(browser, document)
@@ -124,7 +133,7 @@ def execute_document_number_search(browser, document):
 def execute_book_and_page_search(browser, document):
     open_tab(browser, access_book_and_page_search_tab, document)
     book, page = document.document_value()
-    # Need to clear the inputs first
+    clear_search(browser, document)
     enter_input_value(browser, locate_element_by_id, book_search_id, "book search field", book, document)
     enter_input_value(browser, locate_element_by_id, page_search_id, "page search field", page, document)
     click_button(browser, locate_element_by_id, book_and_page_search_button_id,
