@@ -65,7 +65,7 @@ def open_search(browser, document):
     assert search_title
 
 
-def open_tab(browser, access_function, document):
+def open_tab(browser, document, access_function):
     tab = access_element(browser, access_function, document, "search tab")
     while not wait_for_active(browser, tab):
         tab = access_element(browser, access_function, document, "search tab")
@@ -98,7 +98,7 @@ def access_book_and_page_search_tab(browser, document):
 
 
 def execute_document_number_search(browser, document):
-    open_tab(browser, access_search_type_tab(attribute=document_search_tab_id, type="document search tab"), document)
+    open_tab(browser, document, access_search_type_tab(attribute=document_search_tab_id, type="document search tab"))
     # dropped a 'scroll_into_view' before entering inputs => update the 'enter_input_value' function accordingly
     enter_input_value(browser, locate_element_by_id, document_search_field_id, "document search field", document.document_value())
     click_button(browser, locate_element_by_id, document_search_button_id,
@@ -106,7 +106,7 @@ def execute_document_number_search(browser, document):
 
 
 def execute_book_and_page_search(browser, document):
-    open_tab(browser, access_book_and_page_search_tab, document)
+    open_tab(browser, document, access_book_and_page_search_tab)
     book, page = document.document_value()
     # dropped a 'scroll_into_view' before entering inputs => update the 'enter_input_value' function accordingly
     enter_input_value(browser, locate_element_by_id, book_search_field_id, "book search field", book, document)
