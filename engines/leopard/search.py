@@ -1,10 +1,6 @@
-from selenium.common.exceptions import (StaleElementReferenceException,
-                                        TimeoutException)
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.wait import WebDriverWait
+from selenium.common.exceptions import StaleElementReferenceException
 
-from project_management.timers import naptime, timeout
+from project_management.timers import naptime
 
 from selenium_utilities.element_interaction import get_parent_element, is_active_class
 from selenium_utilities.inputs import click_button
@@ -24,23 +20,6 @@ from settings.general_functions import javascript_script_execution, scroll_into_
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("search", __name__)
-
-# Script FUNCTIONALLY is nearly identical to tiger search
-
-
-def locate_search_navigation(browser, document):
-    try:
-        search_navigation_present = EC.element_to_be_clickable((By.ID, search_navigation_id))
-        WebDriverWait(browser, timeout).until(search_navigation_present)
-        search_navigation = browser.find_element_by_id(search_navigation_id)
-        return search_navigation
-    except TimeoutException:
-        print(f'Browser timed out trying to open the search navigation for '
-              f'{document.extrapolate_value()}, please review....')
-    except StaleElementReferenceException:
-        print(f'Encountered a stale element reference exception '
-              f'locating search navigation for '
-              f'{document.extrapolate_value()}, please review....')
 
 
 def get_search_navigation_tab(browser, document):
