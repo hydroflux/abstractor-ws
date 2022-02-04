@@ -16,7 +16,7 @@ from settings.county_variables.leopard import (book_and_page_search_button_id,
                                                search_navigation_id,
                                                search_script, search_title)
 
-from settings.general_functions import javascript_script_execution, scroll_into_view
+from settings.general_functions import javascript_script_execution
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("search", __name__)
@@ -99,17 +99,8 @@ def access_book_and_page_search_tab(browser, document):
     return book_and_page_search_tab
 
 
-def clear_search(browser, document):
-    if document.type == "document_number":
-        clear_input(browser, locate_element_by_id, document_search_field_id, "document search field", document)
-    elif document.type == "book_and_page":
-        clear_input(browser, locate_element_by_id, book_search_field_id, "book search field", document)
-        clear_input(browser, locate_element_by_id, page_search_field_id, "page search field", document)
-
-
 def execute_document_number_search(browser, document):
     open_tab(browser, access_document_search_tab, document)
-    clear_search(browser, document)
     # dropped a 'scroll_into_view' before entering inputs => update the 'enter_input_value' function accordingly
     enter_input_value(browser, locate_element_by_id, document_search_field_id, "document search field", document.document_value())
     click_button(browser, locate_element_by_id, document_search_button_id,
@@ -119,7 +110,6 @@ def execute_document_number_search(browser, document):
 def execute_book_and_page_search(browser, document):
     open_tab(browser, access_book_and_page_search_tab, document)
     book, page = document.document_value()
-    clear_search(browser, document)
     # dropped a 'scroll_into_view' before entering inputs => update the 'enter_input_value' function accordingly
     enter_input_value(browser, locate_element_by_id, book_search_field_id, "book search field", book, document)
     enter_input_value(browser, locate_element_by_id, page_search_field_id, "page search field", page, document)
@@ -130,6 +120,9 @@ def execute_book_and_page_search(browser, document):
 def search(browser, document):
     open_search(browser, document)
     if document.type == "document_number":
+        clear_input(browser, locate_element_by_id, document_search_field_id, "document search field", document)
         execute_document_number_search(browser, document)
     elif document.type == "book_and_page":
+        clear_input(browser, locate_element_by_id, book_search_field_id, "book search field", document)
+        clear_input(browser, locate_element_by_id, page_search_field_id, "page search field", document)
         execute_book_and_page_search(browser, document)
