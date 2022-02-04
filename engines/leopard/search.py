@@ -89,8 +89,7 @@ def execute_search(browser, abstract, document):
 
 def search(browser, abstract, document):
     open_search(browser, abstract, document)
+    open_search_type_tab(browser, abstract, document)
     clear_search(browser, abstract, document)
-    if document.type == "document_number":
-        execute_document_number_search(browser, abstract, document)
-    elif document.type == "book_and_page":
-        execute_book_and_page_search(browser, abstract, document)
+    enter_input(browser, abstract, document)
+    execute_search(browser, abstract, document)
