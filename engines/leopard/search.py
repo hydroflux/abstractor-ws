@@ -44,9 +44,11 @@ def locate_search_navigation(browser, document):
 
 
 def get_search_navigation_tab(browser, document):
-    search_navigation_tab = locate_search_navigation(browser, document)
+    search_navigation_tab = locate_element_by_id(browser, search_navigation_id, "search navigation",
+                                                 True, document)
     while search_navigation_tab is None:
-        search_navigation_tab = locate_search_navigation(browser, document)
+        search_navigation_tab = locate_element_by_id(browser, search_navigation_id, "search navigation",
+                                                     True, document)
     return search_navigation_tab
 
 
