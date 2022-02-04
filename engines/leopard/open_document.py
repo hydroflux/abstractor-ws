@@ -17,18 +17,6 @@ print("open_document", __name__)
 #         return locate_result_count(browser, document)
 
 
-# def locate_result_count(browser, document):
-#     try:
-#         result_count_present = EC.presence_of_element_located((By.ID, results_count_id))
-#         WebDriverWait(browser, timeout).until(result_count_present)
-#         result_count = browser.find_element_by_id(results_count_id)
-#         return result_count
-#     except TimeoutException:
-#         print(f'Browser timed out trying to locate the number of results returned for '
-#               f'{document.extrapolate_value()}.')
-#         check_for_alert(browser)
-
-
 def count_results(browser, abstract, document):
     result_count = locate_element_by_id(browser, abstract.county.ids["Results Count"],
                                         "results count", False, document)
