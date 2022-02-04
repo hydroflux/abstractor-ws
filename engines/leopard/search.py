@@ -114,13 +114,6 @@ def access_book_and_page_search_tab(browser, document):
     return book_and_page_search_tab
 
 
-def enter_page_number(browser, document, page):
-    page_search_field = locate_element_by_id(browser, page_search_id, "page search field", True, document)
-    while page_search_field is None:
-        page_search_field = locate_element_by_id(browser, page_search_id, "page search field", True, document)
-    enter_key_value(browser, page_search_field, page)
-
-
 def execute_document_number_search(browser, document):
     open_tab(browser, access_document_search_tab, document)
     enter_document_number(browser, document)
@@ -133,7 +126,7 @@ def execute_book_and_page_search(browser, document):
     book, page = document.document_value()
     # Need to clear the inputs first
     enter_input_value(browser, locate_element_by_id, book_search_id, "book search field", book, document)
-    enter_page_number(browser, document, page)
+    enter_input_value(browser, locate_element_by_id, page_search_id, "page search field", page, document)
     click_button(browser, locate_element_by_id, book_and_page_search_button_id,
                  "book and page search button", document)  # Execute Search
 
