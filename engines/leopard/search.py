@@ -1,4 +1,3 @@
-from selenium.common.exceptions import StaleElementReferenceException
 from engines.leopard.error_handling import check_for_browser_error
 
 from project_management.timers import naptime
@@ -81,11 +80,7 @@ def execute_document_number_search(browser, document):
 
 
 def execute_book_and_page_search(browser, document):
-    open_tab(
-        browser,
-        document,
-        access_search_type_tab(attribute=book_and_page_search_tab_id, type="book and page search tab")
-    )
+    open_tab(browser, document, book_and_page_search_tab_id, "book and page search tab")
     book, page = document.document_value()
     # dropped a 'scroll_into_view' before entering inputs => update the 'enter_input_value' function accordingly
     enter_input_value(browser, locate_element_by_id, book_search_field_id, "book search field", book, document)
