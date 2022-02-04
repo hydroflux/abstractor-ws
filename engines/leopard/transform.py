@@ -30,7 +30,6 @@ def update_county_attributes(abstract):
     abstract.county.urls = {
         # LOGIN
         "Login": login_page_url
-        # DISCLAIMER
         # SEARCH
         # OPEN DOCUMENT
         # RECORD
@@ -40,7 +39,6 @@ def update_county_attributes(abstract):
     abstract.county.titles = {
         # LOGIN
         "Login": login_page_title
-        # DISCLAIMER
         # SEARCH
         # OPEN DOCUMENT
         # RECORD
@@ -79,7 +77,6 @@ def update_county_attributes(abstract):
         # NAVIGATION
     }
     abstract.county.inputs = {  # Consider changing to 'search_inputs'
-        # DISCLAIMER
         # SEARCH
         # OPEN DOCUMENT
         # RECORD
@@ -87,7 +84,6 @@ def update_county_attributes(abstract):
         # NAVIGATION
     }
     abstract.county.messages = {
-        # DISCLAIMER
         # SEARCH
         # OPEN DOCUMENT
         # RECORD
@@ -95,7 +91,6 @@ def update_county_attributes(abstract):
         # NAVIGATION
     }
     abstract.county.tags = {
-        # DISCLAIMER
         # SEARCH
         # OPEN DOCUMENT
         # RECORD
