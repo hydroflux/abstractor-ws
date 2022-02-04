@@ -26,6 +26,8 @@ def clear_input(browser, locator_function, attribute, type, document=None):
         # consider returning False or none & addressing the error handler
 
 
+# Enter input value should include 'clearing' as part of its functionality
+# => get rid of 'clear_search' functions altogether by simply clearing any input before updating
 def enter_input_value(browser, locator_function, attribute, type, value, document=None):
     while get_field_value(locator_function(browser, attribute, type, True, document)) != value:
         # add a 'scroll_into_view' or 'center_element' function

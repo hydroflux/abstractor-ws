@@ -95,15 +95,6 @@ def enter_key_value(browser, field, value):
     field.send_keys(value)
 
 
-def enter_document_number(browser, document):
-    document_search_field = locate_element_by_id(browser, document_search_field_id,
-                                                 "document search field", True, document)
-    while document_search_field is None:
-        document_search_field = locate_element_by_id(browser, document_search_field_id,
-                                                     "document search field", True, document)
-    enter_key_value(browser, document_search_field, document.document_value())
-
-
 def access_book_and_page_search_tab(browser, document):
     book_and_page_search_tab = get_parent_element(locate_element_by_id(browser, book_and_page_search_tab_id,
                                                                        "book and page search tab", True, document))
@@ -125,7 +116,9 @@ def clear_search(browser, document):
 
 def execute_document_number_search(browser, document):
     open_tab(browser, access_document_search_tab, document)
-    enter_document_number(browser, document)
+    clear_search(browser, document)
+    # dropped a 'scroll_into_view' before entering inputs => update the 'enter_input_value' function accordingly
+    enter_input_value(browser, locate_element_by_id, document_search_field_id, "document search field", document.document_value())
     click_button(browser, locate_element_by_id, document_search_button_id,
                  "document search button", document)  # Execute Search
 
@@ -134,6 +127,7 @@ def execute_book_and_page_search(browser, document):
     open_tab(browser, access_book_and_page_search_tab, document)
     book, page = document.document_value()
     clear_search(browser, document)
+    # dropped a 'scroll_into_view' before entering inputs => update the 'enter_input_value' function accordingly
     enter_input_value(browser, locate_element_by_id, book_search_id, "book search field", book, document)
     enter_input_value(browser, locate_element_by_id, page_search_id, "page search field", page, document)
     click_button(browser, locate_element_by_id, book_and_page_search_button_id,

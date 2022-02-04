@@ -145,6 +145,7 @@
 ### Inputs To Do
 
 - [ ] Add an option before clicking a button to allow for scrolling to 'top', 'bottom', or 'centering'--instead of automatically centering the element
+- [ ] Enter input value should include 'clearing' as part of its functionality => get rid of 'clear_search' functions altogether by simply clearing any input before updating
 
 ### Locators To Do
 
