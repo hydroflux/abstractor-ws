@@ -6,20 +6,6 @@ from selenium.webdriver.support.wait import WebDriverWait
 from project_management.timers import timeout
 
 
-def locate_element_by_id(locator, id, type, clickable=False, document=None, quick=False):
-    try:
-        if not quick:
-            if clickable:
-                element_present = EC.element_to_be_clickable((By.ID, id))
-            else:
-                element_present = EC.presence_of_element_located((By.ID, id))
-            WebDriverWait(locator, timeout).until(element_present)
-        element = locator.find_element_by_id(id)
-        return element
-    except TimeoutException:
-        return print_timeout_statement(type, document)
-
-
 def locate_element_by_class_name(locator, class_name, type, clickable=False, document=None, quick=False):
     try:
         if not quick:
@@ -49,6 +35,21 @@ def locate_elements_by_class_name(locator, class_name, type, clickable=False, do
         return elements
     except TimeoutException:
         return print_timeout_statement(type, document)
+
+
+def locate_element_by_id(locator, id, type, clickable=False, document=None, quick=False):
+    try:
+        if not quick:
+            if clickable:
+                element_present = EC.element_to_be_clickable((By.ID, id))
+            else:
+                element_present = EC.presence_of_element_located((By.ID, id))
+            WebDriverWait(locator, timeout).until(element_present)
+        element = locator.find_element_by_id(id)
+        return element
+    except TimeoutException:
+        return print_timeout_statement(type, document)
+
 
 
 def locate_element_by_name(locator, name, type, clickable=False, document=None, quick=False):
