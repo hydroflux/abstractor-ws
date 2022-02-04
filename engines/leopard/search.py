@@ -96,11 +96,9 @@ def enter_key_value(browser, field, value):
 
 
 def enter_document_number(browser, document):
-    # document_search_field = access_element(browser, locate_document_search_field, document, "document search field")
     document_search_field = locate_element_by_id(browser, document_search_field_id,
                                                  "document search field", True, document)
     while document_search_field is None:
-        # document_search_field = access_element(browser,locate_document_search_field,document,"document search field")
         document_search_field = locate_element_by_id(browser, document_search_field_id,
                                                      "document search field", True, document)
         open_tab(browser, access_document_search_tab, document)
@@ -118,20 +116,16 @@ def access_book_and_page_search_tab(browser, document):
 
 
 def enter_book_number(browser, document, book):
-    # book_search_field = access_element(browser, locate_book_search_field, document, "book field")
     book_search_field = locate_element_by_id(browser, book_search_id, "book search field", True, document)
     while book_search_field is None:
-        # book_search_field = access_element(browser, locate_book_search_field, document, "book field")
         book_search_field = locate_element_by_id(browser, book_search_id, "book search field", True, document)
         open_tab(browser, access_book_and_page_search_tab, document)
     enter_key_value(browser, book_search_field, book)
 
 
 def enter_page_number(browser, document, page):
-    # page_search_field = access_element(browser, locate_page_search_field, "page field")
     page_search_field = locate_element_by_id(browser, page_search_id, "page search field", True, document)
     while page_search_field is None:
-        # page_search_field = access_element(browser, locate_page_search_field, "page field")
         page_search_field = locate_element_by_id(browser, page_search_id, "page search field", True, document)
         open_tab(browser, access_book_and_page_search_tab, document)
     enter_key_value(browser, page_search_field, page)

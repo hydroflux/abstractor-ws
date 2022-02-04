@@ -409,6 +409,7 @@
 - [ ] Open document function 'locate_result_count' function had a 'check_for_alert' function (still in the script) which followed a timeout--figure out how this was thrown and how to integrate back into the program (probably in the 'locators' script) => appeared to be recursive with the 'locate_result_count' function
 - [ ] Finish refactoring the 'search' script with selenium utilities scripts
 - [ ] Create either an 'error_handling' or 'validation' script for leopard (pull functions from the login script to verify login)
+- [ ] Search should click tab, wait for active, then enter input value => purposely broke in order to simplify, then can build it back up at a later date
 
 ### Mountain Lion
 
