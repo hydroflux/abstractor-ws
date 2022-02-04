@@ -42,13 +42,6 @@ def open_search(browser, document):
     assert search_title
 
 
-def open_tab(browser, document, access_function):
-    tab = access_element(browser, access_function, document, "search tab")
-    while not is_active_class(tab):
-        tab = access_element(browser, access_function, document, "search tab")
-        tab.click()
-
-
 def access_search_type_tab(browser, document, attribute, type):
     search_type_tab = get_parent_element(
         locate_element_by_id(browser, attribute, type, True, document)
@@ -59,6 +52,13 @@ def access_search_type_tab(browser, document, attribute, type):
             locate_element_by_id(browser, attribute, type, True, document)
         )
     return search_type_tab
+
+
+def open_tab(browser, document, attribute, type):
+    tab = access_search_type_tab(browser, document, attribute, type)
+    while not is_active_class(tab):
+        tab = access_search_type_tab(browser, document, attribute, type)
+        tab.click()
 
 
 def execute_document_number_search(browser, document):
