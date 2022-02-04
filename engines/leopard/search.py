@@ -67,13 +67,6 @@ def execute_document_number_search(browser, abstract, document):
         "document search field",
         document.document_value()
     )
-    click_button(  # Execute Search
-        browser,
-        locate_element_by_id,
-        abstract.county.buttons["Document Search"],
-        "document search button",
-        document
-    )
 
 
 def execute_book_and_page_search(browser, abstract, document):
@@ -84,8 +77,15 @@ def execute_book_and_page_search(browser, abstract, document):
                       "book search field", book, document)
     enter_input_value(browser, locate_element_by_id, abstract.county.inputs["Page"],
                       "page search field", page, document)
-    click_button(browser, locate_element_by_id, abstract.county.buttons["Book And Page Search"],
-                 "book and page search button", document)  # Execute Search
+
+
+def execute_search(browser, abstract, document):
+    if document.type == "document_number":
+        click_button(browser, locate_element_by_id, abstract.county.buttons["Document Search"],
+                        "document search button", document)
+    elif document.type == "book_and_page":
+        click_button(browser, locate_element_by_id, abstract.county.buttons["Book And Page Search"],
+                     "book and page search button", document)  # Execute Search
 
 
 def search(browser, abstract, document):
