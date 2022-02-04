@@ -8,11 +8,11 @@ from selenium_utilities.locators import locate_element_by_id
 
 from settings.county_variables.leopard import (book_and_page_search_button_id,
                                                book_and_page_search_tab_id,
-                                               book_search_id,
+                                               book_search_field_id,
                                                document_search_button_id,
                                                document_search_field_id,
                                                document_search_tab_id,
-                                               page_search_id,
+                                               page_search_field_id,
                                                search_navigation_id,
                                                search_script, search_title)
 
@@ -103,8 +103,8 @@ def clear_search(browser, document):
     if document.type == "document_number":
         clear_input(browser, locate_element_by_id, document_search_field_id, "document search field", document)
     elif document.type == "book_and_page":
-        clear_input(browser, locate_element_by_id, book_search_id, "book search field", document)
-        clear_input(browser, locate_element_by_id, page_search_id, "page search field", document)
+        clear_input(browser, locate_element_by_id, book_search_field_id, "book search field", document)
+        clear_input(browser, locate_element_by_id, page_search_field_id, "page search field", document)
 
 
 def execute_document_number_search(browser, document):
@@ -121,8 +121,8 @@ def execute_book_and_page_search(browser, document):
     book, page = document.document_value()
     clear_search(browser, document)
     # dropped a 'scroll_into_view' before entering inputs => update the 'enter_input_value' function accordingly
-    enter_input_value(browser, locate_element_by_id, book_search_id, "book search field", book, document)
-    enter_input_value(browser, locate_element_by_id, page_search_id, "page search field", page, document)
+    enter_input_value(browser, locate_element_by_id, book_search_field_id, "book search field", book, document)
+    enter_input_value(browser, locate_element_by_id, page_search_field_id, "page search field", page, document)
     click_button(browser, locate_element_by_id, book_and_page_search_button_id,
                  "book and page search button", document)  # Execute Search
 

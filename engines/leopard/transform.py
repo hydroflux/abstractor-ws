@@ -1,6 +1,6 @@
 from settings.county_variables.leopard import (book_and_page_search_button_id,
                                                book_and_page_search_tab_id,
-                                               book_search_id, credentials,
+                                               book_search_field_id, credentials,
                                                disclaimer_active_class,
                                                disclaimer_button_id,
                                                disclaimer_id,
@@ -10,7 +10,7 @@ from settings.county_variables.leopard import (book_and_page_search_button_id,
                                                login_page_title,
                                                login_page_url,
                                                logout_button_id, open_script,
-                                               page_search_id,
+                                               page_search_field_id,
                                                search_navigation_id,
                                                search_script, search_title,
                                                stock_download,
@@ -97,8 +97,8 @@ def update_county_attributes(abstract):
     abstract.county.inputs = {  # Consider changing to 'search_inputs'
         # SEARCH
         "Reception Number": document_search_field_id,
-        "Book": book_search_id,
-        "Page": page_search_id,
+        "Book": book_search_field_id,
+        "Page": page_search_field_id,
         # OPEN DOCUMENT
         # RECORD
         # DOWNLOAD
