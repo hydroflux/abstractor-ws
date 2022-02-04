@@ -22,7 +22,7 @@ from settings.general_functions import javascript_script_execution
 print("search", __name__)
 
 
-def access_search_navigation_tab(browser, document):
+def access_search_navigation_tab(browser, abstract, document):
     search_navigation_tab = locate_element_by_id(browser, search_navigation_id, "search navigation",
                                                  True, document)
     while search_navigation_tab is None:
@@ -31,17 +31,17 @@ def access_search_navigation_tab(browser, document):
     return search_navigation_tab
 
 
-def open_search(browser, document):
+def open_search(browser, abstract, document):
     javascript_script_execution(browser, search_script)
-    navigation_tab = access_search_navigation_tab(browser, document)
+    navigation_tab = access_search_navigation_tab(browser, abstract, document)
     while not is_active_class(navigation_tab):
         print("Navigation tab not active, attempting to connect again.")
         naptime()  # Allows time for navigation to load
-        navigation_tab = access_search_navigation_tab(browser, document)
+        navigation_tab = access_search_navigation_tab(browser, abstract, document)
     assert search_title
 
 
-def clear_search(browser, document):
+def clear_search(browser, abstract, document):
     if document.type == "document_number":
         clear_input(browser, locate_element_by_id, document_search_field_id, "document search field", document)
     elif document.type == "book_and_page_number":
@@ -50,14 +50,10 @@ def clear_search(browser, document):
 
 
 def access_search_type_tab(browser, document, attribute, type):
-    search_type_tab = get_parent_element(
-        locate_element_by_id(browser, attribute, type, True, document)
-    )
+    search_type_tab = get_parent_element(locate_element_by_id(browser, attribute, type, True, document))
     while search_type_tab is None:
         check_for_browser_error(browser)
-        search_type_tab = get_parent_element(
-            locate_element_by_id(browser, attribute, type, True, document)
-        )
+        search_type_tab = get_parent_element(locate_element_by_id(browser, attribute, type, True, document))
     return search_type_tab
 
 
@@ -68,7 +64,7 @@ def open_tab(browser, document, attribute, type):
         tab.click()
 
 
-def execute_document_number_search(browser, document):
+def execute_document_number_search(browser, abstract, document):
     open_tab(browser, document, document_search_tab_id, "document search tab")
     # dropped a 'scroll_into_view' before entering inputs => update the 'enter_input_value' function accordingly
     enter_input_value(
@@ -87,7 +83,7 @@ def execute_document_number_search(browser, document):
     )
 
 
-def execute_book_and_page_search(browser, document):
+def execute_book_and_page_search(browser, abstract, document):
     open_tab(browser, document, book_and_page_search_tab_id, "book and page search tab")
     book, page = document.document_value()
     # dropped a 'scroll_into_view' before entering inputs => update the 'enter_input_value' function accordingly
@@ -97,10 +93,10 @@ def execute_book_and_page_search(browser, document):
                  "book and page search button", document)  # Execute Search
 
 
-def search(browser, document):
-    open_search(browser, document)
-    clear_search(browser, document)
+def search(browser, abstract, document):
+    open_search(browser, abstract, document)
+    clear_search(browser, abstract, document)
     if document.type == "document_number":
-        execute_document_number_search(browser, document)
+        execute_document_number_search(browser, abstract, document)
     elif document.type == "book_and_page":
-        execute_book_and_page_search(browser, document)
+        execute_book_and_page_search(browser, abstract, document)
