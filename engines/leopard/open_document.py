@@ -30,14 +30,16 @@ print("open_document", __name__)
 
 
 def count_results(browser, abstract, document):
-    result_count = locate_element_by_id(browser, abstract.county.ids["Results Count"], "results count", False, document)
+    result_count = locate_element_by_id(browser, abstract.county.ids["Results Count"],
+                                        "results count", False, document)
     # 'check_For_alert' function originally followed the timeout exception in 'locate_result_count' function
     #  If result count == none, perform a "re-search"
     return result_count.text.split(' ')[-1]
 
 
 def get_results_table_body(browser, abstract, document):
-    results_table = locate_element_by_id(browser, abstract.county.ids["Results Table"], "results table", False, document)
+    results_table = locate_element_by_id(browser, abstract.county.ids["Results Table"],
+                                         "results table", False, document)
     scroll_into_view(browser, results_table)
     return locate_element_by_tag_name(results_table, abstract.county.tags["Results Table Body"],
                                       "results table body", False, document)
@@ -45,7 +47,7 @@ def get_results_table_body(browser, abstract, document):
 
 def get_result_rows(browser, abstract, document):
     results_table_body = get_results_table_body(browser, abstract, document)
-    return locate_elements_by_class_name(results_table_body, result_row_class,
+    return locate_elements_by_class_name(results_table_body, abstract.county.classes["Result Rows"],
                                          "result rows", False, document)
 
 
@@ -68,7 +70,7 @@ def verify_result(document, cells):
 
 
 def check_result(browser, abstract, document, row):
-    row_cells = locate_elements_by_tag_name(row, result_cell_tag,
+    row_cells = locate_elements_by_tag_name(row, abstract.county.tags["Result Cell"],
                                             "result row cells", False, document)
     if verify_result(document, row_cells):
         document.number_results += 1

@@ -1,7 +1,7 @@
 from settings.county_variables.leopard import (book_and_page_search_button_id,
                                                results_body_tag,
                                                result_cell_tag,
-                                               result_row_class,
+                                               result_rows_class,
                                                results_count_id,
                                                results_table_id,
                                                book_and_page_search_tab_id,
@@ -78,7 +78,7 @@ def update_county_attributes(abstract):
         # DISCLAIMER
         "Disclaimer Active": disclaimer_active_class,
         # OPEN DOCUMENT
-        "Result Row": result_row_class,
+        "Result Rows": result_rows_class,
         # RECORD
         # DOWNLOAD
         # NAVIGATION
