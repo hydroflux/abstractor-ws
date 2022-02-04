@@ -79,6 +79,14 @@ def check_for_browser_error(browser):
         browser.refresh()
 
 
+def access_search_type_tab(browser, document, attribute, type):
+    search_type_tab = get_parent_element(locate_element_by_id(browser, attribute, type, True, document))
+    while search_type_tab is None:
+        check_for_browser_error(browser)
+        search_type_tab = search_type_tab = get_parent_element(locate_element_by_id(browser, attribute, type, True, document))
+    return search_type_tab
+
+
 def access_document_search_tab(browser, document):
     document_search_tab = get_parent_element(locate_element_by_id(browser, document_search_tab_id,
                                                                   "document search tab", True, document))
