@@ -31,17 +31,6 @@ def open_search(browser, abstract, document):
     assert abstract.county.titles["Search"]
 
 
-def clear_search(browser, abstract, document):
-    if document.type == "document_number":
-        clear_input(browser, locate_element_by_id, abstract.county.inputs["Reception Number"],
-                    "document search field", document)
-    elif document.type == "book_and_page_number":
-        clear_input(browser, locate_element_by_id, abstract.county.inputs["Book"],
-                    "book search field", document)
-        clear_input(browser, locate_element_by_id, abstract.county.inputs["Page"],
-                    "page search field", document)
-
-
 def access_search_type_tab(browser, document, attribute, type):
     search_type_tab = get_parent_element(locate_element_by_id(browser, attribute, type, True, document))
     while search_type_tab is None:
@@ -57,12 +46,22 @@ def open_tab(browser, document, attribute, type):
         tab.click()
 
 
-def execute_document_number_search(browser, abstract, document):
-    open_tab(browser, document, abstract.county.ids["Document Search Tab"], "document search tab")
+def open_search_type_tab(browser, abstract, document):
+    if document.type == "document_number":
+        open_tab(browser, document, abstract.county.ids["Document Search Tab"], "document search tab")
+    elif document.type == "book_and_page":
+        open_tab(browser, document, abstract.county.ids["Book And Page Search Tab"], "book and page search tab")
 
 
-def execute_book_and_page_search(browser, abstract, document):
-    open_tab(browser, document, abstract.county.ids["Book And Page Search Tab"], "book and page search tab")
+def clear_search(browser, abstract, document):
+    if document.type == "document_number":
+        clear_input(browser, locate_element_by_id, abstract.county.inputs["Reception Number"],
+                    "document search field", document)
+    elif document.type == "book_and_page":
+        clear_input(browser, locate_element_by_id, abstract.county.inputs["Book"],
+                    "book search field", document)
+        clear_input(browser, locate_element_by_id, abstract.county.inputs["Page"],
+                    "page search field", document)
 
 
 def enter_input(browser, abstract, document):
