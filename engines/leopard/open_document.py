@@ -34,22 +34,22 @@ print("open_document", __name__)
 #         check_for_alert(browser)
 
 
-def count_total_results(browser, document):
+def count_results(browser, abstract, document):
     result_count = locate_element_by_id(browser, results_count_id, "results count", False, document)
     # 'check_For_alert' function originally followed the timeout exception in 'locate_result_count' function
     #  If result count == none, perform a "re-search"
     return result_count.text.split(' ')[-1]
 
 
-def get_results_table_body(browser, document):
+def get_results_table_body(browser, abstract, document):
     results_table = locate_element_by_id(browser, results_id, "results table", False, document)
     scroll_into_view(browser, results_table)
     return locate_element_by_tag_name(results_table, results_body_tag,
                                       "results table body", False, document)
 
 
-def get_result_rows(browser, document):
-    results_table_body = get_results_table_body(browser, document)
+def get_result_rows(browser, abstract, document):
+    results_table_body = get_results_table_body(browser, abstract, document)
     return locate_elements_by_class_name(results_table_body, result_row_class,
                                          "result rows", False, document)
 
@@ -72,7 +72,7 @@ def verify_result(document, cells):
         return verify_book_and_page_numbers(document, cells)
 
 
-def check_result(browser, document, row):
+def check_result(browser, abstract, document, row):
     row_cells = locate_elements_by_tag_name(row, result_cell_tag,
                                             "result row cells", False, document)
     if verify_result(document, row_cells):
@@ -80,25 +80,25 @@ def check_result(browser, document, row):
         return True
 
 
-def count_matching_results(browser, document):
-    result_rows = get_result_rows(browser, document)
+def count_matching_results(browser, abstract, document):
+    result_rows = get_result_rows(browser, abstract, document)
     for row in result_rows:
-        if not check_result(browser, document, row):
+        if not check_result(browser, abstract, document, row):
             break
 
 
-def get_first_row(browser, document):
-    result_rows = get_result_rows(browser, document)
+def get_first_row(browser, abstract, document):
+    result_rows = get_result_rows(browser, abstract, document)
     return result_rows[0]
 
 
-def verify_results(browser, document):
-    count_matching_results(browser, document)
+def verify_results(browser, abstract, document):
+    count_matching_results(browser, abstract, document)
     if document.number_results > 0:
-        get_first_row(browser, document).click()
+        get_first_row(browser, abstract, document).click()
         return True
 
 
-def open_document(browser, document):
-    count_total_results(browser, document)
-    return verify_results(browser, document)
+def open_document(browser, abstract, document):
+    count_results(browser, abstract, document)
+    return verify_results(browser, abstract, document)
