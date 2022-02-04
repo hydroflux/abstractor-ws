@@ -111,8 +111,16 @@ def print_no_such_element_statement(type, document):
     # return False
 
 
-def access_element(locator, attribute, type, attribute_type, document=None, clickable=False, quick=False):
+def locate_element(locator, attribute, type, attribute_type, document=None, clickable=False, quick=False):
     if attribute_type == "id":
-        return locate_element_by_id(locator, attribute, type, clickable=False, document=None, quick=False)
+        return locate_element_by_id(locator, attribute, type, clickable, document, quick)
     elif attribute_type == "class":
-        locate_element_by_class_name(locator, attribute, type, clickable=False, document=None, quick=False)
+        return locate_element_by_class_name(locator, attribute, type, clickable, document, quick)
+    elif attribute_type == "classes":
+        return locate_elements_by_class_name(locator, attribute, type, clickable, document, quick)
+    elif attribute_type == "name":
+        return locate_element_by_name(locator, attribute, type, clickable, document, quick)
+    elif attribute_type == "tag":
+        return locate_element_by_tag_name(locator, attribute, type, clickable, document, quick)
+    elif attribute_type == "tags":
+        return locate_elements_by_tag_name(locator, attribute, type, clickable, document, quick)
