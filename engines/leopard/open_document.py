@@ -3,11 +3,6 @@ from selenium_utilities.locators import (locate_element_by_id,
                                          locate_elements_by_class_name,
                                          locate_elements_by_tag_name)
 
-from settings.county_variables.leopard import (result_cell_tag,
-                                               result_row_class,
-                                               results_body_tag,
-                                               results_count_id, results_id)
-
 from settings.general_functions import get_element_text, scroll_into_view
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
@@ -35,16 +30,16 @@ print("open_document", __name__)
 
 
 def count_results(browser, abstract, document):
-    result_count = locate_element_by_id(browser, results_count_id, "results count", False, document)
+    result_count = locate_element_by_id(browser, abstract.county.ids["Results Count"], "results count", False, document)
     # 'check_For_alert' function originally followed the timeout exception in 'locate_result_count' function
     #  If result count == none, perform a "re-search"
     return result_count.text.split(' ')[-1]
 
 
 def get_results_table_body(browser, abstract, document):
-    results_table = locate_element_by_id(browser, results_id, "results table", False, document)
+    results_table = locate_element_by_id(browser, abstract.county.ids["Results Table"], "results table", False, document)
     scroll_into_view(browser, results_table)
-    return locate_element_by_tag_name(results_table, results_body_tag,
+    return locate_element_by_tag_name(results_table, abstract.county.tags["Results Table Body"],
                                       "results table body", False, document)
 
 

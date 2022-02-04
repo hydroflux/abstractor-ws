@@ -1,4 +1,9 @@
 from settings.county_variables.leopard import (book_and_page_search_button_id,
+                                               results_body_tag,
+                                               result_cell_tag,
+                                               result_row_class,
+                                               results_count_id,
+                                               results_table_id,
                                                book_and_page_search_tab_id,
                                                book_search_field_id, credentials,
                                                disclaimer_active_class,
@@ -42,8 +47,6 @@ def update_county_attributes(abstract):
     abstract.county.urls = {
         # LOGIN
         "Login": login_page_url,
-        # SEARCH
-        # OPEN DOCUMENT
         # RECORD
         # DOWNLOAD
         # NAVIGATION
@@ -53,7 +56,6 @@ def update_county_attributes(abstract):
         "Login": login_page_title,
         # SEARCH
         "Search": search_title
-        # OPEN DOCUMENT
         # RECORD
         # DOWNLOAD
         # NAVIGATION
@@ -64,7 +66,6 @@ def update_county_attributes(abstract):
         # SEARCH
         "Document Search": document_search_button_id,
         "Book And Page Search": book_and_page_search_button_id,
-        # OPEN DOCUMENT
         # RECORD
         # DOWNLOAD
         # NAVIGATION
@@ -76,8 +77,8 @@ def update_county_attributes(abstract):
         "Validation Error": validation_error_class,
         # DISCLAIMER
         "Disclaimer Active": disclaimer_active_class,
-        # SEARCH
         # OPEN DOCUMENT
+        "Result Row": result_row_class,
         # RECORD
         # DOWNLOAD
         # NAVIGATION
@@ -88,8 +89,10 @@ def update_county_attributes(abstract):
         # SEARCH
         "Search Navigation": search_navigation_id,
         "Document Search Tab": document_search_tab_id,
-        "Book And Page Search Tab": book_and_page_search_tab_id
+        "Book And Page Search Tab": book_and_page_search_tab_id,
         # OPEN DOCUMENT
+        "Results Count": results_count_id,
+        "Results Table": results_table_id,
         # RECORD
         # DOWNLOAD
         # NAVIGATION
@@ -99,21 +102,19 @@ def update_county_attributes(abstract):
         "Reception Number": document_search_field_id,
         "Book": book_search_field_id,
         "Page": page_search_field_id,
-        # OPEN DOCUMENT
         # RECORD
         # DOWNLOAD
         # NAVIGATION
     }
     abstract.county.messages = {
-        # SEARCH
-        # OPEN DOCUMENT
         # RECORD
         # DOWNLOAD
         # NAVIGATION
     }
     abstract.county.tags = {
-        # SEARCH
         # OPEN DOCUMENT
+        "Results Table Body": results_body_tag,
+        "Result Cell": result_cell_tag,
         # RECORD
         # DOWNLOAD
         # NAVIGATION
