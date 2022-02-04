@@ -23,7 +23,7 @@ from settings.general_functions import javascript_script_execution
 print("search", __name__)
 
 
-def get_search_navigation_tab(browser, document):
+def access_search_navigation_tab(browser, document):
     search_navigation_tab = locate_element_by_id(browser, search_navigation_id, "search navigation",
                                                  True, document)
     while search_navigation_tab is None:
@@ -42,10 +42,6 @@ def access_element(browser, access_function, document, element_type):
         print(f'Encountered a stale element reference exception '
               f'attempting to access {element_type} for '
               f'{document.extrapolate_value()}, please review...')
-
-
-def access_search_navigation_tab(browser, document):
-    return access_element(browser, get_search_navigation_tab, document, "search navigation")
 
 
 def open_search(browser, document):
