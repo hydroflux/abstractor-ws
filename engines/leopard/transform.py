@@ -29,7 +29,7 @@ def update_county_attributes(abstract):
     abstract.county.credentials = credentials
     abstract.county.urls = {
         # LOGIN
-        "Login": login_page_url
+        "Login": login_page_url,
         # SEARCH
         # OPEN DOCUMENT
         # RECORD
@@ -38,8 +38,9 @@ def update_county_attributes(abstract):
     }
     abstract.county.titles = {
         # LOGIN
-        "Login": login_page_title
+        "Login": login_page_title,
         # SEARCH
+        "Search": search_title
         # OPEN DOCUMENT
         # RECORD
         # DOWNLOAD
@@ -49,6 +50,8 @@ def update_county_attributes(abstract):
         # DISCLAIMER
         "Disclaimer": disclaimer_button_id,
         # SEARCH
+        "Document Search": document_search_button_id,
+        "Book And Page Search": book_and_page_search_id,
         # OPEN DOCUMENT
         # RECORD
         # DOWNLOAD
@@ -71,6 +74,9 @@ def update_county_attributes(abstract):
         # DISCLAIMER
         "Disclaimer": disclaimer_id,
         # SEARCH
+        "Search Navigation": search_navigation_id,
+        "Document Search Tab": document_search_tab_id,
+        "Book And Page Search Tab": book_and_page_search_tab_id
         # OPEN DOCUMENT
         # RECORD
         # DOWNLOAD
@@ -78,6 +84,9 @@ def update_county_attributes(abstract):
     }
     abstract.county.inputs = {  # Consider changing to 'search_inputs'
         # SEARCH
+        "Reception Number": document_search_field_id,
+        "Book": book_search_id,
+        "Page": page_search_id,
         # OPEN DOCUMENT
         # RECORD
         # DOWNLOAD
@@ -98,9 +107,9 @@ def update_county_attributes(abstract):
         # NAVIGATION
     }
     abstract.county.other = {
-        # DISCLAIMER
-        "Open Script": open_script,
         # SEARCH
+        "Open Script": open_script,  # DISCLAIMER & SEARCH
+        "Search Script": search_script,  # DISCLAIMER & SEARCH
         # OPEN DOCUMENT
         # RECORD
         # DOWNLOAD
