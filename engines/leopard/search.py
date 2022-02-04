@@ -44,14 +44,6 @@ def access_element(browser, access_function, document, element_type):
               f'{document.extrapolate_value()}, please review...')
 
 
-def wait_for_active(browser, element):
-    try:
-        return is_active_class(element)
-    except StaleElementReferenceException:
-        print('Encountered a stale element reference exception '
-              'trying to access element class, trying again.')
-
-
 def access_search_navigation_tab(browser, document):
     return access_element(browser, get_search_navigation_tab, document, "search navigation")
 
@@ -59,7 +51,7 @@ def access_search_navigation_tab(browser, document):
 def open_search(browser, document):
     javascript_script_execution(browser, search_script)
     navigation_tab = access_search_navigation_tab(browser, document)
-    while not wait_for_active(browser, navigation_tab):
+    while not is_active_class(navigation_tab):
         print("Navigation tab not active, attempting to connect again.")
         naptime()  # Allows time for navigation to load
         navigation_tab = access_search_navigation_tab(browser, document)
@@ -68,29 +60,52 @@ def open_search(browser, document):
 
 def open_tab(browser, document, access_function):
     tab = access_element(browser, access_function, document, "search tab")
-    while not wait_for_active(browser, tab):
+    while not is_active_class(tab):
         tab = access_element(browser, access_function, document, "search tab")
         tab.click()
 
 
 def access_search_type_tab(browser, document, attribute, type):
-    search_type_tab = get_parent_element(locate_element_by_id(browser, attribute, type, True, document))
+    search_type_tab = get_parent_element(
+        locate_element_by_id(browser, attribute, type, True, document)
+    )
     while search_type_tab is None:
         check_for_browser_error(browser)
-        search_type_tab = search_type_tab = get_parent_element(locate_element_by_id(browser, attribute, type, True, document))
+        search_type_tab = get_parent_element(
+            locate_element_by_id(browser, attribute, type, True, document)
+        )
     return search_type_tab
 
 
 def execute_document_number_search(browser, document):
-    open_tab(browser, document, access_search_type_tab(attribute=document_search_tab_id, type="document search tab"))
+    open_tab(
+        browser,
+        document,
+        access_search_type_tab(attribute=document_search_tab_id, type="document search tab")
+    )
     # dropped a 'scroll_into_view' before entering inputs => update the 'enter_input_value' function accordingly
-    enter_input_value(browser, locate_element_by_id, document_search_field_id, "document search field", document.document_value())
-    click_button(browser, locate_element_by_id, document_search_button_id,
-                 "document search button", document)  # Execute Search
+    enter_input_value(
+        browser,
+        locate_element_by_id,
+        document_search_field_id,
+        "document search field",
+        document.document_value()
+    )
+    click_button(  # Execute Search
+        browser,
+        locate_element_by_id,
+        document_search_button_id,
+        "document search button",
+        document
+    )
 
 
 def execute_book_and_page_search(browser, document):
-    open_tab(browser, document, access_search_type_tab(attribute=book_and_page_search_tab_id, type="book and page search tab"))
+    open_tab(
+        browser,
+        document,
+        access_search_type_tab(attribute=book_and_page_search_tab_id, type="book and page search tab")
+    )
     book, page = document.document_value()
     # dropped a 'scroll_into_view' before entering inputs => update the 'enter_input_value' function accordingly
     enter_input_value(browser, locate_element_by_id, book_search_field_id, "book search field", book, document)

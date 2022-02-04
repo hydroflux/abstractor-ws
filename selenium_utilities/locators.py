@@ -51,7 +51,6 @@ def locate_element_by_id(locator, id, type, clickable=False, document=None, quic
         return print_timeout_statement(type, document)
 
 
-
 def locate_element_by_name(locator, name, type, clickable=False, document=None, quick=False):
     try:
         if not quick:

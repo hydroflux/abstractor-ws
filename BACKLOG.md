@@ -155,6 +155,7 @@
 - [ ] Update all 'locator' functions imports to using the 'locate_element' master function
 - [ ] Drop the '=None' & '=False' parameters from the 'locator' functions => first requires updating everything to use 'locate_element'
 - [ ] Swap the 'document' and 'quick' parameters (and arguments in the 'locate_element' function) after performing the above
+= [ ] Consider wrapping the entire 'locate_element' master function in a 'try' / 'except' StaleElementReferenceException function (used originally in the 'leopard' search script)
 
 ### Open To Do
 
