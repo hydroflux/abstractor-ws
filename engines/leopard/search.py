@@ -41,6 +41,14 @@ def open_search(browser, document):
     assert search_title
 
 
+def clear_search(browser, document):
+    if document.type == "document_number":
+        clear_input(browser, locate_element_by_id, document_search_field_id, "document search field", document)
+    elif document.type == "book_and_page_number":
+        clear_input(browser, locate_element_by_id, book_search_field_id, "book search field", document)
+        clear_input(browser, locate_element_by_id, page_search_field_id, "page search field", document)
+
+
 def access_search_type_tab(browser, document, attribute, type):
     search_type_tab = get_parent_element(
         locate_element_by_id(browser, attribute, type, True, document)
@@ -91,10 +99,8 @@ def execute_book_and_page_search(browser, document):
 
 def search(browser, document):
     open_search(browser, document)
+    clear_search(browser, document)
     if document.type == "document_number":
-        clear_input(browser, locate_element_by_id, document_search_field_id, "document search field", document)
         execute_document_number_search(browser, document)
     elif document.type == "book_and_page":
-        clear_input(browser, locate_element_by_id, book_search_field_id, "book search field", document)
-        clear_input(browser, locate_element_by_id, page_search_field_id, "page search field", document)
         execute_book_and_page_search(browser, document)
