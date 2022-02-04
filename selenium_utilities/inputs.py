@@ -13,6 +13,7 @@ def get_field_value(field):
 def clear_input(browser, locator_function, attribute, type, document=None):
     try:
         while get_field_value(locator_function(browser, attribute, type, True, document)) != '':
+            # add a 'scroll_into_view' or 'center_element' function
             locator_function(browser, attribute, type, True, document).clear()
     except AttributeError:
         # print(f'Encountered an attribute error attempting to "clear input" for '
@@ -27,6 +28,7 @@ def clear_input(browser, locator_function, attribute, type, document=None):
 
 def enter_input_value(browser, locator_function, attribute, type, value, document=None):
     while get_field_value(locator_function(browser, attribute, type, True, document)) != value:
+        # add a 'scroll_into_view' or 'center_element' function
         locator_function(browser, attribute, type, True, document).send_keys(Keys.UP + value)
 
 

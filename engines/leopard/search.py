@@ -3,7 +3,7 @@ from selenium.common.exceptions import StaleElementReferenceException
 from project_management.timers import naptime
 
 from selenium_utilities.element_interaction import get_parent_element, is_active_class
-from selenium_utilities.inputs import click_button
+from selenium_utilities.inputs import click_button, enter_input_value
 from selenium_utilities.locators import locate_element_by_id
 
 from settings.county_variables.leopard import (book_and_page_search_button_id,
@@ -114,13 +114,6 @@ def access_book_and_page_search_tab(browser, document):
     return book_and_page_search_tab
 
 
-def enter_book_number(browser, document, book):
-    book_search_field = locate_element_by_id(browser, book_search_id, "book search field", True, document)
-    while book_search_field is None:
-        book_search_field = locate_element_by_id(browser, book_search_id, "book search field", True, document)
-    enter_key_value(browser, book_search_field, book)
-
-
 def enter_page_number(browser, document, page):
     page_search_field = locate_element_by_id(browser, page_search_id, "page search field", True, document)
     while page_search_field is None:
@@ -138,7 +131,8 @@ def execute_document_number_search(browser, document):
 def execute_book_and_page_search(browser, document):
     open_tab(browser, access_book_and_page_search_tab, document)
     book, page = document.document_value()
-    enter_book_number(browser, document, book)
+    # Need to clear the inputs first
+    enter_input_value(browser, locate_element_by_id, book_search_id, "book search field", book, document)
     enter_page_number(browser, document, page)
     click_button(browser, locate_element_by_id, book_and_page_search_button_id,
                  "book and page search button", document)  # Execute Search
