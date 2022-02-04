@@ -89,12 +89,6 @@ def access_document_search_tab(browser, document):
     return document_search_tab
 
 
-def enter_key_value(browser, field, value):
-    scroll_into_view(browser, field)
-    field.clear()
-    field.send_keys(value)
-
-
 def access_book_and_page_search_tab(browser, document):
     book_and_page_search_tab = get_parent_element(locate_element_by_id(browser, book_and_page_search_tab_id,
                                                                        "book and page search tab", True, document))
@@ -107,11 +101,10 @@ def access_book_and_page_search_tab(browser, document):
 
 def clear_search(browser, document):
     if document.type == "document_number":
-        # do something
-        pass
+        clear_input(browser, locate_element_by_id, document_search_field_id, "document search field", document)
     elif document.type == "book_and_page":
         clear_input(browser, locate_element_by_id, book_search_id, "book search field", document)
-        clear_input(browser, locate_element_by_id, book_search_id, "page search field", document)
+        clear_input(browser, locate_element_by_id, page_search_id, "page search field", document)
 
 
 def execute_document_number_search(browser, document):
