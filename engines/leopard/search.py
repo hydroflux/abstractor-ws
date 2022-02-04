@@ -62,11 +62,7 @@ def open_tab(browser, document, attribute, type):
 
 
 def execute_document_number_search(browser, document):
-    open_tab(
-        browser,
-        document,
-        access_search_type_tab(attribute=document_search_tab_id, type="document search tab")
-    )
+    open_tab(browser, document, document_search_tab_id, "document search tab")
     # dropped a 'scroll_into_view' before entering inputs => update the 'enter_input_value' function accordingly
     enter_input_value(
         browser,
