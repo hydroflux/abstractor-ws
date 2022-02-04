@@ -109,3 +109,10 @@ def print_no_such_element_statement(type, document):
         print(f'Browser unable to locate any element "{type}" for '
               f'{document.extrapolate_value()}, please review.')
     # return False
+
+
+def access_element(locator, attribute, type, attribute_type, document=None, clickable=False, quick=False):
+    if attribute_type == "id":
+        return locate_element_by_id(locator, attribute, type, clickable=False, document=None, quick=False)
+    elif attribute_type == "class":
+        locate_element_by_class_name(locator, attribute, type, clickable=False, document=None, quick=False)
