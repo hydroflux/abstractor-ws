@@ -3,7 +3,7 @@ from selenium.common.exceptions import StaleElementReferenceException
 from project_management.timers import naptime
 
 from selenium_utilities.element_interaction import get_parent_element, is_active_class
-from selenium_utilities.inputs import click_button, enter_input_value
+from selenium_utilities.inputs import clear_input, click_button, enter_input_value
 from selenium_utilities.locators import locate_element_by_id
 
 from settings.county_variables.leopard import (book_and_page_search_button_id,
@@ -119,8 +119,8 @@ def clear_search(browser, document):
         # do something
         pass
     elif document.type == "book_and_page":
-        # do something else
-        pass
+        clear_input(browser, locate_element_by_id, book_search_id, "book search field", document)
+        clear_input(browser, locate_element_by_id, book_search_id, "page search field", document)
 
 
 def execute_document_number_search(browser, document):
