@@ -32,18 +32,6 @@ def access_search_navigation_tab(browser, document):
     return search_navigation_tab
 
 
-# Can be extrapolated into "selenium_functions" once the script is created
-def access_element(browser, access_function, document, element_type):
-    try:
-        element = access_function(browser, document)
-        print("element", element)
-        return element
-    except StaleElementReferenceException:
-        print(f'Encountered a stale element reference exception '
-              f'attempting to access {element_type} for '
-              f'{document.extrapolate_value()}, please review...')
-
-
 def open_search(browser, document):
     javascript_script_execution(browser, search_script)
     navigation_tab = access_search_navigation_tab(browser, document)
