@@ -87,16 +87,6 @@ def access_search_type_tab(browser, document, attribute, type):
     return search_type_tab
 
 
-def access_book_and_page_search_tab(browser, document):
-    book_and_page_search_tab = get_parent_element(locate_element_by_id(browser, book_and_page_search_tab_id,
-                                                                       "book and page search tab", True, document))
-    while book_and_page_search_tab is None:
-        check_for_browser_error(browser)
-        book_and_page_search_tab = get_parent_element(locate_element_by_id(browser, book_and_page_search_tab_id,
-                                                                           "book and page search tab", True, document))
-    return book_and_page_search_tab
-
-
 def execute_document_number_search(browser, document):
     open_tab(browser, document, access_search_type_tab(attribute=document_search_tab_id, type="document search tab"))
     # dropped a 'scroll_into_view' before entering inputs => update the 'enter_input_value' function accordingly
@@ -106,7 +96,7 @@ def execute_document_number_search(browser, document):
 
 
 def execute_book_and_page_search(browser, document):
-    open_tab(browser, document, access_book_and_page_search_tab)
+    open_tab(browser, document, access_search_type_tab(attribute=book_and_page_search_tab_id, type="book and page search tab"))
     book, page = document.document_value()
     # dropped a 'scroll_into_view' before entering inputs => update the 'enter_input_value' function accordingly
     enter_input_value(browser, locate_element_by_id, book_search_field_id, "book search field", book, document)
