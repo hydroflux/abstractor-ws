@@ -1,15 +1,14 @@
-from settings.county_variables.tiger import (credentials,
+from settings.county_variables.tiger import (book_page_abbreviation,
+                                             credentials, document_image_id,
+                                             document_information_id,
                                              document_search_field_id,
                                              first_result_tag,
-                                             book_page_abbreviation,
-                                             document_information_id,
-                                             document_image_id, row_titles,
                                              handle_disclaimer_button_id,
                                              login_button_name, login_page,
                                              login_title, result_cell_tag,
                                              result_count_button_id,
                                              result_count_id, results_body_tag,
-                                             results_table_id,
+                                             results_table_id, row_titles,
                                              search_button_id,
                                              search_navigation_id,
                                              search_script, search_tab_id,
@@ -34,7 +33,6 @@ def update_county_attributes(abstract):
     abstract.county.urls = {
         # LOGIN
         "Login": login_page,
-        # RECORD
         # DOWNLOAD
     }
     abstract.county.titles = {
@@ -54,11 +52,9 @@ def update_county_attributes(abstract):
         "Search": search_button_id,
         # OPEN DOCUMENT
         "Result Count": result_count_button_id,
-        # RECORD
         # DOWNLOAD
     }
     abstract.county.classes = {
-        # RECORD
         # DOWNLOAD
     }
     abstract.county.ids = {
@@ -76,28 +72,24 @@ def update_county_attributes(abstract):
     abstract.county.inputs = {  # Consider changing to 'search_inputs'
         # SEARCH
         "Reception Number": document_search_field_id
-        # RECORD
         # DOWNLOAD
     }
     abstract.county.messages = {  # Consider changing to 'search_inputs'
-        # RECORD
         # DOWNLOAD
     }
     abstract.county.scripts = {
         # SEARCH
         "Search": search_script,
-        # RECORD
         # DOWNLOAD
     }
     abstract.county.tags = {
-        # OPEN DOCUMENT
+        # OPEN / RECORD DOCUMENT
         "Body": results_body_tag,
         "Rows": first_result_tag,
         "Data": result_cell_tag,
         # "Body": document_table_tag,
         # "Rows": table_row_tag,
         # "Data": row_data_tag,
-        # RECORD
         # DOWNLOAD
     }
     abstract.county.other = {
