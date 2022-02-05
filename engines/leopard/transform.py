@@ -1,5 +1,6 @@
 from settings.county_variables.leopard import (book_and_page_search_button_id,
                                                results_body_tag,
+                                               book_page_abbreviation,
                                                result_cell_tag,
                                                result_rows_class,
                                                results_count_id,
@@ -19,6 +20,12 @@ from settings.county_variables.leopard import (book_and_page_search_button_id,
                                                search_navigation_id,
                                                search_script, search_title,
                                                stock_download,
+                                               document_image_id,
+                                               document_information_id,
+                                               document_table_tag,
+                                               table_row_tag,
+                                               row_data_tag,
+                                               row_titles,
                                                validation_error_class)
 
 
@@ -55,8 +62,9 @@ def update_county_attributes(abstract):
         # LOGIN
         "Login": login_page_title,
         # SEARCH
-        "Search": search_title
+        "Search": search_title,
         # RECORD
+        "Row Titles": row_titles
         # DOWNLOAD
         # NAVIGATION
     }
@@ -94,6 +102,8 @@ def update_county_attributes(abstract):
         "Results Count": results_count_id,
         "Results Table": results_table_id,
         # RECORD
+        "Document Image": document_image_id,
+        "Document Information": document_information_id,
         # DOWNLOAD
         # NAVIGATION
     }
@@ -116,6 +126,9 @@ def update_county_attributes(abstract):
         "Results Table Body": results_body_tag,
         "Result Cell": result_cell_tag,
         # RECORD
+        "Document Table": document_table_tag,
+        "Table Row": table_row_tag,
+        "Row Data": row_data_tag,
         # DOWNLOAD
         # NAVIGATION
     }
@@ -123,8 +136,8 @@ def update_county_attributes(abstract):
         # SEARCH
         "Open Script": open_script,  # DISCLAIMER & SEARCH
         "Search Script": search_script,  # DISCLAIMER & SEARCH
-        # OPEN DOCUMENT
         # RECORD
+        "Abbreviation": book_page_abbreviation
         # DOWNLOAD
         # NAVIGATION
     }
