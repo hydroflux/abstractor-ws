@@ -1,8 +1,5 @@
 from settings.county_variables.leopard import (book_and_page_search_button_id,
                                                book_and_page_search_tab_id,
-                                               view_panel_id,
-                                               download_button_id,
-                                               view_group_id,
                                                book_page_abbreviation,
                                                book_search_field_id,
                                                credentials,
@@ -15,6 +12,7 @@ from settings.county_variables.leopard import (book_and_page_search_button_id,
                                                document_search_field_id,
                                                document_search_tab_id,
                                                document_table_tag,
+                                               download_button_id,
                                                login_page_title,
                                                login_page_url,
                                                logout_button_id, open_script,
@@ -28,7 +26,8 @@ from settings.county_variables.leopard import (book_and_page_search_button_id,
                                                search_navigation_id,
                                                search_script, search_title,
                                                stock_download, table_rows_tag,
-                                               validation_error_class)
+                                               validation_error_class,
+                                               view_group_id, view_panel_id)
 
 
 # Similar to the 'jaguar' convert_document_numbers function
@@ -56,7 +55,6 @@ def update_county_attributes(abstract):
     abstract.county.urls = {
         # LOGIN
         "Login": login_page_url,
-        # DOWNLOAD
         # NAVIGATION
     }
     abstract.county.titles = {
@@ -66,7 +64,6 @@ def update_county_attributes(abstract):
         "Search": search_title,
         # RECORD
         "Row Titles": row_titles
-        # DOWNLOAD
         # NAVIGATION
     }
     abstract.county.buttons = {
@@ -88,7 +85,6 @@ def update_county_attributes(abstract):
         "Disclaimer Active": disclaimer_active_class,
         # OPEN DOCUMENT
         "Result Rows": result_rows_class,
-        # DOWNLOAD
         # NAVIGATION
     }
     abstract.county.ids = {
@@ -114,12 +110,9 @@ def update_county_attributes(abstract):
         "Reception Number": document_search_field_id,
         "Book": book_search_field_id,
         "Page": page_search_field_id,
-        # DOWNLOAD
         # NAVIGATION
     }
     abstract.county.messages = {
-        # RECORD
-        # DOWNLOAD
         # NAVIGATION
     }
     abstract.county.tags = {
@@ -130,7 +123,6 @@ def update_county_attributes(abstract):
         "Document Table": document_table_tag,
         "Table Rows": table_rows_tag,
         "Row Data": row_data_tag,
-        # DOWNLOAD
         # NAVIGATION
     }
     abstract.county.other = {
@@ -139,7 +131,6 @@ def update_county_attributes(abstract):
         "Search Script": search_script,  # DISCLAIMER & SEARCH
         # RECORD
         "Abbreviation": book_page_abbreviation
-        # DOWNLOAD
         # NAVIGATION
     }
 
