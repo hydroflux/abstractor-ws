@@ -7,12 +7,10 @@ from serializers.recorder import record_comments, record_value
 from settings.county_variables.general import not_applicable
 from settings.general_functions import get_element_text, title_strip
 
-# Use the following print statement to identify the best way to manage imports for Django vs the script folder
-print("record", __name__)
-
 
 def access_document_information(browser, abstract, document):
-    locate_element_by_id(browser, abstract.county.ids["Document Image"], "document image", False, document)  # Wait for image to load
+    locate_element_by_id(browser, abstract.county.ids["Document Image"],
+                         "document image", False, document)  # Wait for image to load
     document_information = locate_element_by_id(browser, abstract.county.ids["Document Information"],
                                                 "document information", False, document)
     return document_information
@@ -22,7 +20,8 @@ def get_document_content(browser, abstract, document):
     document_information = access_document_information(browser, abstract, document)
     document_table_data = locate_element_by_tag_name(document_information, abstract.county.tags["Document Table"],
                                                      "document table data", False, document)
-    table_rows = locate_elements_by_tag_name(document_table_data, abstract.county.tags["Table Rows"], "table rows", False, document)
+    table_rows = locate_elements_by_tag_name(document_table_data, abstract.county.tags["Table Rows"],
+                                             "table rows", False, document)
     return table_rows
 
 
