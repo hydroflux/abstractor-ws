@@ -86,8 +86,8 @@ def update_county_attributes(abstract):
     abstract.county.tags = {
         # OPEN DOCUMENT
         "Body": results_body_tag,
-        "Row": first_result_tag,
-        "Cell": result_cell_tag,
+        "Rows": first_result_tag,
+        "Cells": result_cell_tag,
         # RECORD
         # DOWNLOAD
     }
