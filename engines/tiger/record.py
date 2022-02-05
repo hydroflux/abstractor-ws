@@ -12,14 +12,15 @@ print("record", __name__)
 def access_document_information(browser, abstract, document):
     locate_element_by_id(browser, abstract.county.ids["Document Image"],  # Document Image Loaded
                          "document image", False, document)
-    document_information = locate_element_by_id(browser, abstract.county.ids["Document Information"],  # Document Information Loaded
-                                                "document information", False, document)
+    document_information = locate_element_by_id(browser, abstract.county.ids["Document Information"],
+                                                "document information", False, document)  # Document Information Loaded
     return document_information
 
 
 def access_document_table_data(browser, abstract, document):
     document_information = access_document_information(browser, abstract, document)
-    table_data = locate_element_by_tag_name(document_information, abstract.county.tags["Data"], "table data", False, document)
+    table_data = locate_element_by_tag_name(document_information, abstract.county.tags["Data"],
+                                            "table data", False, document)
     return table_data
 
 
