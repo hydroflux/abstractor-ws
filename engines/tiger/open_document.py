@@ -6,7 +6,7 @@ from selenium_utilities.locators import (locate_element_by_id,
                                          locate_elements_by_tag_name)
 
 
-def count_results(browser, document):
+def count_results(browser, abstract, document):
     click_button(browser, locate_element_by_id, abstract.county.buttons["Result Count"],
                  "result count button", document)  # Open Result Count
     result_count = locate_element_by_id(browser, abstract.county.ids["Result Count"],
@@ -14,7 +14,7 @@ def count_results(browser, document):
     return result_count.text.split(' ')[-1]
 
 
-def access_results_table(browser, document):
+def access_results_table(browser, abstract, document):
     results = locate_element_by_id(browser, abstract.county.ids["Results Table"],
                                    "results section", document=document)
     center_element(browser, results)
@@ -23,22 +23,22 @@ def access_results_table(browser, document):
     return results_table
 
 
-def access_first_row(results_table_body, document):
-    all_results = locate_elements_by_tag_name(results_table_body, abstract.county.tags["Rows"],
+def access_first_row(abstract, document, results_table):
+    all_results = locate_elements_by_tag_name(results_table, abstract.county.tags["Rows"],
                                               "search results", document=document)
     return all_results[0]
 
 
-def check_result(results_table, document):
-    first_result = access_first_row(results_table, document)
+def check_result(abstract, document, results_table):
+    first_result = access_first_row(abstract, document, results_table)
     first_result_cells = first_result.find_elements_by_tag_name(abstract.county.tags["Cells"])
     if document.value() in map(get_element_text, first_result_cells):
         return True
 
 
-def open_document(browser, document):
-    count_results(browser, document)
-    results_table = access_results_table(browser, document)
-    if check_result(results_table, document):
-        access_first_row(results_table, document).click()
+def open_document(browser, abstract, document):
+    count_results(browser, abstract, document)
+    results_table = access_results_table(browser, abstract, document)
+    if check_result(abstract, document, results_table):
+        access_first_row(abstract, document, results_table).click()
         return True
