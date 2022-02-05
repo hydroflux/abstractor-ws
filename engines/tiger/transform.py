@@ -2,6 +2,7 @@ from settings.county_variables.tiger import (book_page_abbreviation,
                                              credentials, document_image_id,
                                              document_information_id,
                                              document_search_field_id,
+                                             download_button_id,
                                              first_result_tag,
                                              handle_disclaimer_button_id,
                                              login_button_name, login_page,
@@ -12,7 +13,8 @@ from settings.county_variables.tiger import (book_page_abbreviation,
                                              search_button_id,
                                              search_navigation_id,
                                              search_script, search_tab_id,
-                                             search_title, stock_download)
+                                             search_title, stock_download,
+                                             view_panel_id)
 
 
 # Identical to the 'leopard' update_document_attributes function
@@ -32,8 +34,7 @@ def update_county_attributes(abstract):
     abstract.county.credentials = credentials
     abstract.county.urls = {
         # LOGIN
-        "Login": login_page,
-        # DOWNLOAD
+        "Login": login_page
     }
     abstract.county.titles = {
         # LOGIN
@@ -41,8 +42,7 @@ def update_county_attributes(abstract):
         # SEARCH
         "Search": search_title,
         # RECORD
-        "Row Titles": row_titles,
-        # DOWNLOAD
+        "Row Titles": row_titles
     }
     abstract.county.buttons = {
         # LOGIN
@@ -53,9 +53,9 @@ def update_county_attributes(abstract):
         # OPEN DOCUMENT
         "Result Count": result_count_button_id,
         # DOWNLOAD
+        "Download": download_button_id
     }
     abstract.county.classes = {
-        # DOWNLOAD
     }
     abstract.county.ids = {
         # SEARCH
@@ -68,19 +68,17 @@ def update_county_attributes(abstract):
         "Document Image": document_image_id,
         "Document Information": document_information_id,
         # DOWNLOAD
+        "View Panel": view_panel_id
     }
     abstract.county.inputs = {  # Consider changing to 'search_inputs'
         # SEARCH
         "Reception Number": document_search_field_id
-        # DOWNLOAD
     }
     abstract.county.messages = {  # Consider changing to 'search_inputs'
-        # DOWNLOAD
     }
     abstract.county.scripts = {
         # SEARCH
-        "Search": search_script,
-        # DOWNLOAD
+        "Search": search_script
     }
     abstract.county.tags = {
         # OPEN / RECORD DOCUMENT
@@ -89,13 +87,11 @@ def update_county_attributes(abstract):
         "Data": result_cell_tag,
         # "Body": document_table_tag,
         # "Rows": table_row_tag,
-        # "Data": row_data_tag,
-        # DOWNLOAD
+        # "Data": row_data_tag
     }
     abstract.county.other = {
         # RECORD
         "Abbreviation": book_page_abbreviation
-        # DOWNLOAD
     }
 
 
