@@ -24,7 +24,7 @@ def access_document_information(browser, document):
     return document_information
 
 
-def get_document_content(browser, document):
+def get_document_content(browser, abstract, document):
     document_information = access_document_information(browser, document)
     document_table_data = locate_element_by_tag_name(document_information, document_table_tag,
                                                      "document table data", False, document)
@@ -38,10 +38,10 @@ def get_row_data(row):
 
 
 # Copied & audited in crocodile
-def check_rows(rows, title):
+def check_rows(abstract, rows, title):
     for row in rows:
         try:
-            row_title, row_content = get_row_data(row)
+            row_title, row_content = get_row_data(abstract, row)
             if row_title == title:
                 if row_content != "":
                     return row_content
@@ -52,13 +52,13 @@ def check_rows(rows, title):
     return not_applicable
 
 
-def access_reception_number(document, rows):
-    reception_number = check_rows(rows, row_titles["reception_number"])
+def access_reception_number(abstract, document, rows):
+    reception_number = check_rows(abstract, rows, row_titles["reception_number"])
     document.reception_number = reception_number
 
 
 def record_book_and_page(abstract, rows):
-    book_and_page = check_rows(rows, row_titles["book_and_page"])
+    book_and_page = check_rows(abstract, rows, row_titles["book_and_page"])
     if book_and_page == 'N/A':
         record_value(abstract, 'book', '')
         record_value(abstract, 'page', '')
@@ -75,28 +75,28 @@ def record_book_and_page(abstract, rows):
 
 
 def record_recording_date(abstract, rows):
-    recording_date = check_rows(rows, row_titles["recording_date"])
+    recording_date = check_rows(abstract, rows, row_titles["recording_date"])
     record_value(abstract, 'recording date', recording_date[:10])
 
 
 def record_document_type(abstract, rows):
-    document_type = check_rows(rows, row_titles["document_type"])
+    document_type = check_rows(abstract, rows, row_titles["document_type"])
     record_value(abstract, 'document type', title_strip(document_type))
 
 
 def record_grantor(abstract, rows):
-    grantor = check_rows(rows, row_titles["grantor"])
+    grantor = check_rows(abstract, rows, row_titles["grantor"])
     record_value(abstract, 'grantor', title_strip(grantor))
 
 
 def record_grantee(abstract, rows):
-    grantee = check_rows(rows, row_titles["grantee"])
+    grantee = check_rows(abstract, rows, row_titles["grantee"])
     record_value(abstract, 'grantee', title_strip(grantee))
 
 
 def record_related_documents(abstract, rows):
-    related_documents = check_rows(rows, row_titles["related_documents"])
-    alt_related_documents = check_rows(rows, row_titles["alt_related_documents"])
+    related_documents = check_rows(abstract, rows, row_titles["related_documents"])
+    alt_related_documents = check_rows(abstract, rows, row_titles["alt_related_documents"])
     if related_documents == not_applicable and alt_related_documents == not_applicable:
         record_value(abstract, 'related documents', '')
     else:
@@ -110,8 +110,8 @@ def record_related_documents(abstract, rows):
 
 
 def record_legal(abstract, rows):
-    legal = check_rows(rows, row_titles["legal"])
-    alt_legal = check_rows(rows, row_titles["alt_legal"])
+    legal = check_rows(abstract, rows, row_titles["legal"])
+    alt_legal = check_rows(abstract, rows, row_titles["alt_legal"])
     if legal == not_applicable and alt_legal == not_applicable:
         record_value(abstract, 'legal', '')
     else:
@@ -125,7 +125,7 @@ def record_legal(abstract, rows):
 
 
 def aggregate_document_information(abstract, document, rows):
-    access_reception_number(document, rows)
+    access_reception_number(abstract, document, rows)
     record_value(abstract, 'reception number', document.reception_number)
     record_book_and_page(abstract, rows)
     record_recording_date(abstract, rows)
@@ -139,8 +139,8 @@ def aggregate_document_information(abstract, document, rows):
 
 def record(browser, abstract, document):
     if not abstract.review:
-        rows = get_document_content(browser, document)
+        rows = get_document_content(browser, abstract, document)
         if abstract.download_only:
-            access_reception_number(document, rows)
+            access_reception_number(abstract, document, rows)
         else:
             aggregate_document_information(abstract, document, rows)
