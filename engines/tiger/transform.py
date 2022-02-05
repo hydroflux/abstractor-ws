@@ -1,4 +1,4 @@
-from settings.county_variables.tiger import stock_download, credentials
+from settings.county_variables.tiger import stock_download, credentials, login_button_name, login_page, login_title, handle_disclaimer_button_id
 
 
 # Identical to the 'leopard' update_document_attributes function
@@ -18,6 +18,7 @@ def update_county_attributes(abstract):
     abstract.county.credentials = credentials
     abstract.county.urls = {
         # LOGIN
+        "Login": login_page,
         # SEARCH
         # OPEN DOCUMENT
         # RECORD
@@ -25,6 +26,7 @@ def update_county_attributes(abstract):
     }
     abstract.county.titles = {
         # LOGIN
+        "Login": login_title,
         # SEARCH
         # OPEN DOCUMENT
         # RECORD
@@ -32,6 +34,8 @@ def update_county_attributes(abstract):
     }
     abstract.county.buttons = {
         # LOGIN
+        "Login": login_button_name,
+        "Handle Disclaimer": handle_disclaimer_button_id,
         # SEARCH
         # OPEN DOCUMENT
         # RECORD
