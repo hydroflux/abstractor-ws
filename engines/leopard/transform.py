@@ -1,6 +1,4 @@
 from settings.county_variables.leopard import (book_and_page_search_button_id,
-                                               next_result_id,
-                                               previous_result_id,
                                                book_and_page_search_tab_id,
                                                book_page_abbreviation,
                                                book_search_field_id,
@@ -17,8 +15,10 @@ from settings.county_variables.leopard import (book_and_page_search_button_id,
                                                download_button_id,
                                                login_page_title,
                                                login_page_url,
-                                               logout_button_id, open_script,
+                                               logout_button_id,
+                                               next_result_id, open_script,
                                                page_search_field_id,
+                                               previous_result_id,
                                                result_cell_tag,
                                                result_rows_class,
                                                results_body_tag,
@@ -57,7 +57,6 @@ def update_county_attributes(abstract):
     abstract.county.urls = {
         # LOGIN
         "Login": login_page_url,
-        # NAVIGATION
     }
     abstract.county.titles = {
         # LOGIN
@@ -66,7 +65,6 @@ def update_county_attributes(abstract):
         "Search": search_title,
         # RECORD
         "Row Titles": row_titles
-        # NAVIGATION
     }
     abstract.county.buttons = {
         # DISCLAIMER
@@ -90,7 +88,6 @@ def update_county_attributes(abstract):
         "Disclaimer Active": disclaimer_active_class,
         # OPEN DOCUMENT
         "Result Rows": result_rows_class,
-        # NAVIGATION
     }
     abstract.county.ids = {
         # DISCLAIMER
@@ -105,17 +102,12 @@ def update_county_attributes(abstract):
         # RECORD
         "Document Image": document_image_id,
         "Document Information": document_information_id,
-        # NAVIGATION
     }
     abstract.county.inputs = {  # Consider changing to 'search_inputs'
         # SEARCH
         "Reception Number": document_search_field_id,
         "Book": book_search_field_id,
         "Page": page_search_field_id,
-        # NAVIGATION
-    }
-    abstract.county.messages = {
-        # NAVIGATION
     }
     abstract.county.tags = {
         # OPEN DOCUMENT
@@ -125,15 +117,13 @@ def update_county_attributes(abstract):
         "Document Table": document_table_tag,
         "Table Rows": table_rows_tag,
         "Row Data": row_data_tag,
-        # NAVIGATION
     }
     abstract.county.other = {
         # SEARCH
         "Open Script": open_script,  # DISCLAIMER & SEARCH
-        "Search Script": search_script,  # DISCLAIMER & SEARCH
+        "Search Script": search_script,
         # RECORD
         "Abbreviation": book_page_abbreviation
-        # NAVIGATION
     }
 
 
