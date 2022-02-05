@@ -40,8 +40,6 @@ def update_county_attributes(abstract):
         "Download Submenu": tiger.view_panel_id,
         "Download": tiger.download_button_id
     }
-    abstract.county.classes = {
-    }
     abstract.county.ids = {
         # SEARCH
         "Search Navigation": tiger.search_navigation_id,
@@ -56,8 +54,6 @@ def update_county_attributes(abstract):
     abstract.county.inputs = {  # Consider changing to 'search_inputs'
         # SEARCH
         "Reception Number": tiger.document_search_field_id
-    }
-    abstract.county.messages = {  # Consider changing to 'search_inputs'
     }
     abstract.county.scripts = {
         # SEARCH
