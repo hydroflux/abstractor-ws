@@ -1,5 +1,8 @@
 from settings.county_variables.leopard import (book_and_page_search_button_id,
                                                book_and_page_search_tab_id,
+                                               view_panel_id,
+                                               download_button_id,
+                                               view_group_id,
                                                book_page_abbreviation,
                                                book_search_field_id,
                                                credentials,
@@ -73,6 +76,7 @@ def update_county_attributes(abstract):
         "Document Search": document_search_button_id,
         "Book And Page Search": book_and_page_search_button_id,
         # DOWNLOAD
+        "Download": download_button_id,
         # NAVIGATION
         # LOGOUT
         "Logout": logout_button_id
@@ -101,6 +105,8 @@ def update_county_attributes(abstract):
         "Document Image": document_image_id,
         "Document Information": document_information_id,
         # DOWNLOAD
+        "View Panel": view_panel_id,
+        "View Group": view_group_id
         # NAVIGATION
     }
     abstract.county.inputs = {  # Consider changing to 'search_inputs'
