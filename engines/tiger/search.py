@@ -15,7 +15,8 @@ def open_search(browser, abstract):
     naptime()
     # This will probably not work great when called during the 'login' process
     ######
-    search_navigation = locate_element_by_id(browser, abstract.county.ids["Search Navigation"], "search navigation", True)
+    search_navigation = locate_element_by_id(browser, abstract.county.ids["Search Navigation"],
+                                             "search navigation", True)
     if is_active_class(search_navigation):
         return
     else:
@@ -24,7 +25,8 @@ def open_search(browser, abstract):
 
 
 def open_search_tab(browser, abstract):
-    search_tab = locate_element_by_id(browser, abstract.county.ids["Search Tab"], "search tab", True)
+    search_tab = locate_element_by_id(browser, abstract.county.ids["Search Tab"],
+                                      "search tab", True)
     center_element(browser, search_tab)
     if is_active_class(get_parent_element(search_tab)):
         return
@@ -33,7 +35,8 @@ def open_search_tab(browser, abstract):
 
 
 def clear_search(browser, abstract, document):
-    clear_input(browser, locate_element_by_id, abstract.county.inputs["Reception Number"], "reception number input", document)
+    clear_input(browser, locate_element_by_id, abstract.county.inputs["Reception Number"],
+                "reception number input", document)
 
 
 def handle_document_value_numbers(browser, abstract, document):
