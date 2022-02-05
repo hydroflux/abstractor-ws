@@ -47,18 +47,18 @@ def check_rows(abstract, rows, title):
 
 
 def access_reception_number(abstract, document, rows):
-    reception_number = check_rows(abstract, rows, row_titles["reception_number"])
+    reception_number = check_rows(abstract, rows, abstract.county.titles["Row Titles"]["reception_number"])
     document.reception_number = reception_number
 
 
 def record_book_and_page(abstract, rows):
-    book_and_page = check_rows(abstract, rows, row_titles["book_and_page"])
+    book_and_page = check_rows(abstract, rows, abstract.county.titles["Row Titles"]["book_and_page"])
     if book_and_page == 'N/A':
         record_value(abstract, 'book', '')
         record_value(abstract, 'page', '')
     else:
-        if book_and_page.startswith(book_page_abbreviation):
-            book_and_page = book_and_page[len(book_page_abbreviation):]
+        if book_and_page.startswith(abstract.county.other["Abbreviation"]):
+            book_and_page = book_and_page[len(abstract.county.other["Abbreviation"]):]
         book, page = book_and_page.replace("/", "").split()
         if book == '0' and page == '0':
             record_value(abstract, 'book', '')
@@ -69,28 +69,28 @@ def record_book_and_page(abstract, rows):
 
 
 def record_recording_date(abstract, rows):
-    recording_date = check_rows(abstract, rows, row_titles["recording_date"])
+    recording_date = check_rows(abstract, rows, abstract.county.titles["Row Titles"]["recording_date"])
     record_value(abstract, 'recording date', recording_date[:10])
 
 
 def record_document_type(abstract, rows):
-    document_type = check_rows(abstract, rows, row_titles["document_type"])
+    document_type = check_rows(abstract, rows, abstract.county.titles["Row Titles"]["document_type"])
     record_value(abstract, 'document type', title_strip(document_type))
 
 
 def record_grantor(abstract, rows):
-    grantor = check_rows(abstract, rows, row_titles["grantor"])
+    grantor = check_rows(abstract, rows, abstract.county.titles["Row Titles"]["grantor"])
     record_value(abstract, 'grantor', title_strip(grantor))
 
 
 def record_grantee(abstract, rows):
-    grantee = check_rows(abstract, rows, row_titles["grantee"])
+    grantee = check_rows(abstract, rows, abstract.county.titles["Row Titles"]["grantee"])
     record_value(abstract, 'grantee', title_strip(grantee))
 
 
 def record_related_documents(abstract, rows):
-    related_documents = check_rows(abstract, rows, row_titles["related_documents"])
-    alt_related_documents = check_rows(abstract, rows, row_titles["alt_related_documents"])
+    related_documents = check_rows(abstract, rows, abstract.county.titles["Row Titles"]["related_documents"])
+    alt_related_documents = check_rows(abstract, rows, abstract.county.titles["Row Titles"]["alt_related_documents"])
     if related_documents == not_applicable and alt_related_documents == not_applicable:
         record_value(abstract, 'related documents', '')
     else:
@@ -104,8 +104,8 @@ def record_related_documents(abstract, rows):
 
 
 def record_legal(abstract, rows):
-    legal = check_rows(abstract, rows, row_titles["legal"])
-    alt_legal = check_rows(abstract, rows, row_titles["alt_legal"])
+    legal = check_rows(abstract, rows, abstract.county.titles["Row Titles"]["legal"])
+    alt_legal = check_rows(abstract, rows, abstract.county.titles["Row Titles"]["alt_legal"])
     if legal == not_applicable and alt_legal == not_applicable:
         record_value(abstract, 'legal', '')
     else:

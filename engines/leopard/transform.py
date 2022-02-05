@@ -24,7 +24,7 @@ from settings.county_variables.leopard import (book_and_page_search_button_id,
                                                row_titles,
                                                search_navigation_id,
                                                search_script, search_title,
-                                               stock_download, table_row_tag,
+                                               stock_download, table_rows_tag,
                                                validation_error_class)
 
 
