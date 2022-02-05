@@ -1,31 +1,30 @@
 from settings.county_variables.leopard import (book_and_page_search_button_id,
-                                               results_body_tag,
-                                               book_page_abbreviation,
-                                               result_cell_tag,
-                                               result_rows_class,
-                                               results_count_id,
-                                               results_table_id,
                                                book_and_page_search_tab_id,
-                                               book_search_field_id, credentials,
+                                               book_page_abbreviation,
+                                               book_search_field_id,
+                                               credentials,
                                                disclaimer_active_class,
                                                disclaimer_button_id,
                                                disclaimer_id,
+                                               document_image_id,
+                                               document_information_id,
                                                document_search_button_id,
                                                document_search_field_id,
                                                document_search_tab_id,
+                                               document_table_tag,
                                                login_page_title,
                                                login_page_url,
                                                logout_button_id, open_script,
                                                page_search_field_id,
+                                               result_cell_tag,
+                                               result_rows_class,
+                                               results_body_tag,
+                                               results_count_id,
+                                               results_table_id, row_data_tag,
+                                               row_titles,
                                                search_navigation_id,
                                                search_script, search_title,
-                                               stock_download,
-                                               document_image_id,
-                                               document_information_id,
-                                               document_table_tag,
-                                               table_row_tag,
-                                               row_data_tag,
-                                               row_titles,
+                                               stock_download, table_row_tag,
                                                validation_error_class)
 
 
@@ -54,7 +53,6 @@ def update_county_attributes(abstract):
     abstract.county.urls = {
         # LOGIN
         "Login": login_page_url,
-        # RECORD
         # DOWNLOAD
         # NAVIGATION
     }
@@ -74,7 +72,6 @@ def update_county_attributes(abstract):
         # SEARCH
         "Document Search": document_search_button_id,
         "Book And Page Search": book_and_page_search_button_id,
-        # RECORD
         # DOWNLOAD
         # NAVIGATION
         # LOGOUT
@@ -87,7 +84,6 @@ def update_county_attributes(abstract):
         "Disclaimer Active": disclaimer_active_class,
         # OPEN DOCUMENT
         "Result Rows": result_rows_class,
-        # RECORD
         # DOWNLOAD
         # NAVIGATION
     }
@@ -112,7 +108,6 @@ def update_county_attributes(abstract):
         "Reception Number": document_search_field_id,
         "Book": book_search_field_id,
         "Page": page_search_field_id,
-        # RECORD
         # DOWNLOAD
         # NAVIGATION
     }
