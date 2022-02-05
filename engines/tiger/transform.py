@@ -1,7 +1,11 @@
-from settings.county_variables.tiger import (credentials, search_script, search_navigation_id,
-                                             handle_disclaimer_button_id, search_title, search_tab_id, search_button_id, document_search_field_id,
+from settings.county_variables.tiger import (credentials,
+                                             document_search_field_id,
+                                             handle_disclaimer_button_id,
                                              login_button_name, login_page,
-                                             login_title, stock_download)
+                                             login_title, search_button_id,
+                                             search_navigation_id,
+                                             search_script, search_tab_id,
+                                             search_title, stock_download)
 
 
 # Identical to the 'leopard' update_document_attributes function
@@ -22,7 +26,6 @@ def update_county_attributes(abstract):
     abstract.county.urls = {
         # LOGIN
         "Login": login_page,
-        # SEARCH
         # OPEN DOCUMENT
         # RECORD
         # DOWNLOAD
@@ -47,7 +50,6 @@ def update_county_attributes(abstract):
         # DOWNLOAD
     }
     abstract.county.classes = {
-        # SEARCH
         # OPEN DOCUMENT
         # RECORD
         # DOWNLOAD
@@ -68,7 +70,6 @@ def update_county_attributes(abstract):
         # DOWNLOAD
     }
     abstract.county.messages = {  # Consider changing to 'search_inputs'
-        # SEARCH
         # OPEN DOCUMENT
         # RECORD
         # DOWNLOAD
@@ -81,13 +82,11 @@ def update_county_attributes(abstract):
         # DOWNLOAD
     }
     abstract.county.tags = {
-        # SEARCH
         # OPEN DOCUMENT
         # RECORD
         # DOWNLOAD
     }
     abstract.county.other = {
-        # SEARCH
         # OPEN DOCUMENT
         # RECORD
         # DOWNLOAD
