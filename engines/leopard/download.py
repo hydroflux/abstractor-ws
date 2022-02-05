@@ -1,9 +1,6 @@
 from selenium_utilities.inputs import click_button
 from selenium_utilities.locators import locate_element_by_id
 
-# Use the following print statement to identify the best way to manage imports for Django vs the script folder
-print("download", __name__)
-
 
 # Very similar but not identical to 'jaguar' execute_download
 def execute_download(browser, abstract, document):
