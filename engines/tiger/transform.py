@@ -1,4 +1,4 @@
-from settings.county_variables.tiger import stock_download
+from settings.county_variables.tiger import stock_download, credentials
 
 
 # Identical to the 'leopard' update_document_attributes function
@@ -15,6 +15,7 @@ def convert_document_numbers(abstract):
 
 
 def update_county_attributes(abstract):
+    abstract.county.credentials = credentials
     abstract.county.urls = {
         # LOGIN
         # SEARCH
