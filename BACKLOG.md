@@ -20,6 +20,7 @@
 - [ ] Figure out how to search all scripts for a particular variable name
 - [ ] Consider eliminating the 'search_errors' variable in the 'general' settings script
 - [ ] County attribute 'types' should match their key values => can simplify functions if all match type correctly (variable names should follow the same naming convention as well if possible)
+- [ ] Consider setting the 'attributes' on a single class instance, but importing them on each script instead of individually and then having to pass the abstract instance back and forth? => i.e. don't set them on Abstract, set them on 'engine' and then just import the ***_engine on each subscript
 
 ## Classes To Do
 

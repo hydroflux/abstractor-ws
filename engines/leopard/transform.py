@@ -27,7 +27,7 @@ from settings.county_variables.leopard import (book_and_page_search_button_id,
                                                search_script, search_title,
                                                stock_download, table_rows_tag,
                                                validation_error_class,
-                                               view_group_id, view_panel_id)
+                                               view_group_id)
 
 
 # Similar to the 'jaguar' convert_document_numbers function
@@ -73,6 +73,7 @@ def update_county_attributes(abstract):
         "Document Search": document_search_button_id,
         "Book And Page Search": book_and_page_search_button_id,
         # DOWNLOAD
+        "Download Submenu": view_group_id,
         "Download": download_button_id,
         # NAVIGATION
         # LOGOUT
@@ -100,9 +101,6 @@ def update_county_attributes(abstract):
         # RECORD
         "Document Image": document_image_id,
         "Document Information": document_information_id,
-        # DOWNLOAD
-        "View Panel": view_panel_id,
-        "View Group": view_group_id
         # NAVIGATION
     }
     abstract.county.inputs = {  # Consider changing to 'search_inputs'
