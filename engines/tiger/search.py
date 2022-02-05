@@ -14,10 +14,11 @@ from settings.county_variables.tiger import (instrument_search_id,
 from settings.general_functions import javascript_script_execution
 
 
-def open_search(browser):
+def open_search(browser, abstract):
     # Messy => figure out a better way to do this
     javascript_script_execution(search_script)
     naptime()
+    # This will probably not work great when called during the 'login' process
     ######
     search_navigation = locate_element_by_id(browser, search_navigation_id, "search navigation", True)
     if is_active_class(search_navigation):
@@ -27,7 +28,7 @@ def open_search(browser):
         assert search_title
 
 
-def open_search_tab(browser):
+def open_search_tab(browser, abstract):
     search_tab = locate_element_by_id(browser, search_tab_id, "search tab", True)
     center_element(browser, search_tab)
     if is_active_class(get_parent_element(search_tab)):
@@ -36,11 +37,11 @@ def open_search_tab(browser):
         search_tab.click()
 
 
-def clear_search(browser, document):
+def clear_search(browser, abstract, document):
     clear_input(browser, locate_element_by_id, instrument_search_id, "reception number input", document)
 
 
-def handle_document_value_numbers(browser, document):
+def handle_document_value_numbers(browser, abstract, document):
     value = document.value()
     if document.type == "document_number":
         enter_input_value(browser, locate_element_by_id, instrument_search_id,
@@ -52,14 +53,14 @@ def handle_document_value_numbers(browser, document):
         input()
 
 
-def execute_search(browser, document):
-    handle_document_value_numbers(browser, document)
+def execute_search(browser, abstract, document):
+    handle_document_value_numbers(browser, abstract, document)
     click_button(browser, locate_element_by_id, search_button_id,
                  "execute search button", document)
 
 
-def search(browser, document):
-    open_search(browser)
-    open_search_tab(browser)
-    clear_search(browser, document)
-    execute_search(browser, document)
+def search(browser, abstract, document):
+    open_search(browser, abstract)
+    open_search_tab(browser, abstract)
+    clear_search(browser, abstract, document)
+    execute_search(browser, abstract, document)

@@ -25,7 +25,7 @@ def update_county_attributes(abstract):
     abstract.county.credentials = leopard.credentials
     abstract.county.urls = {
         # LOGIN
-        "Login": leopard.login_page_url,
+        "Login": leopard.login_page_url
     }
     abstract.county.titles = {
         # LOGIN
@@ -56,7 +56,7 @@ def update_county_attributes(abstract):
         # DISCLAIMER
         "Disclaimer Active": leopard.disclaimer_active_class,
         # OPEN DOCUMENT
-        "Result Rows": leopard.result_rows_class,
+        "Result Rows": leopard.result_rows_class
     }
     abstract.county.ids = {
         # DISCLAIMER
@@ -70,13 +70,13 @@ def update_county_attributes(abstract):
         "Results Table": leopard.results_table_id,
         # RECORD
         "Document Image": leopard.document_image_id,
-        "Document Information": leopard.document_information_id,
+        "Document Information": leopard.document_information_id
     }
     abstract.county.inputs = {  # Consider changing to 'search_inputs'
         # SEARCH
         "Reception Number": leopard.document_search_field_id,
         "Book": leopard.book_search_field_id,
-        "Page": leopard.page_search_field_id,
+        "Page": leopard.page_search_field_id
     }
     abstract.county.scripts = {
         # DISCLAIMER
@@ -91,7 +91,7 @@ def update_county_attributes(abstract):
         # RECORD
         "Document Table": leopard.document_table_tag,
         "Table Rows": leopard.table_rows_tag,
-        "Row Data": leopard.row_data_tag,
+        "Row Data": leopard.row_data_tag
     }
     abstract.county.other = {
         # RECORD
