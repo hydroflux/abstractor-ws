@@ -3,22 +3,18 @@ from selenium_utilities.locators import (locate_element_by_id,
                                          locate_element_by_name)
 from selenium_utilities.open import open_url
 
-from settings.county_variables.tiger import (credentials, handle_disclaimer_id,
-                                             login_button_name, website,
-                                             website_title)
-
 from engines.tiger.search import open_search
 
 
-def enter_credentials(browser):
-    enter_input_value(browser, locate_element_by_id, credentials[0], "username input", credentials[1])
-    enter_input_value(browser, locate_element_by_id, credentials[2], "password input", credentials[3])
-    click_button(browser, locate_element_by_name, login_button_name, "login button")
+def enter_credentials(browser, abstract):
+    enter_input_value(browser, locate_element_by_id, abstract.county.credentials[0], "username input", abstract.county.credentials[1])
+    enter_input_value(browser, locate_element_by_id, abstract.county.credentials[2], "password input", abstract.county.credentials[3])
+    click_button(browser, locate_element_by_name, abstract.county.buttons["Login"], "login button")
 
 
-def account_login(browser):
-    open_url(browser, website, website_title, "county site")
-    enter_credentials(browser)
-    open_search(browser)
+def account_login(browser, abstract):
+    open_url(browser, abstract.county.urls["Login"], abstract.county.titles["Login"], "county site")
+    enter_credentials(browser, abstract)
+    open_search(browser, abstract)
     click_button(browser, locate_element_by_id,
-                 handle_disclaimer_id, "login disclaimer")  # Handle Disclaimer
+                 abstract.county.buttons["Disclaimer"], "login disclaimer")  # Handle Disclaimer

@@ -38,7 +38,7 @@ def update_county_attributes(abstract):
     abstract.county.buttons = {
         # LOGIN
         "Login": login_button_name,
-        "Handle Disclaimer": handle_disclaimer_button_id,
+        "Disclaimer": handle_disclaimer_button_id,
         # SEARCH
         # OPEN DOCUMENT
         # RECORD
