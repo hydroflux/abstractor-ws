@@ -1,4 +1,7 @@
-from settings.county_variables.tiger import (credentials,
+from settings.county_variables.tiger import (credentials, results_body_tag,
+                                             first_result_tag,
+                                             result_cell_tag,
+                                             result_count_button_id, result_count_id, results_table_id,
                                              document_search_field_id,
                                              handle_disclaimer_button_id,
                                              login_button_name, login_page,
@@ -46,6 +49,7 @@ def update_county_attributes(abstract):
         # SEARCH
         "Search": search_button_id,
         # OPEN DOCUMENT
+        "Result Count": result_count_button_id,
         # RECORD
         # DOWNLOAD
     }
@@ -59,6 +63,8 @@ def update_county_attributes(abstract):
         "Search Navigation": search_navigation_id,
         "Search Tab": search_tab_id,
         # OPEN DOCUMENT
+        "Result County": result_count_id,
+        "Results Table": results_table_id,
         # RECORD
         # DOWNLOAD
     }
@@ -83,6 +89,9 @@ def update_county_attributes(abstract):
     }
     abstract.county.tags = {
         # OPEN DOCUMENT
+        "Body": results_body_tag,
+        "Row": first_result_tag,
+        "Cell": result_cell_tag,
         # RECORD
         # DOWNLOAD
     }
