@@ -5,35 +5,29 @@ from selenium_utilities.locators import (locate_element_by_id,
 from serializers.recorder import record_comments, record_value
 
 from settings.county_variables.general import not_applicable
-from settings.county_variables.leopard import (book_page_abbreviation,
-                                               document_image_id,
-                                               document_information_id,
-                                               document_table_tag,
-                                               row_data_tag, row_titles,
-                                               table_row_tag)
 from settings.general_functions import get_element_text, title_strip
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("record", __name__)
 
 
-def access_document_information(browser, document):
-    locate_element_by_id(browser, document_image_id, "document image", False, document)  # Wait for image to load
-    document_information = locate_element_by_id(browser, document_information_id,
+def access_document_information(browser, abstract, document):
+    locate_element_by_id(browser, abstract.county.ids["Document Image"], "document image", False, document)  # Wait for image to load
+    document_information = locate_element_by_id(browser, abstract.county.ids["Document Information"],
                                                 "document information", False, document)
     return document_information
 
 
 def get_document_content(browser, abstract, document):
-    document_information = access_document_information(browser, document)
-    document_table_data = locate_element_by_tag_name(document_information, document_table_tag,
+    document_information = access_document_information(browser, abstract, document)
+    document_table_data = locate_element_by_tag_name(document_information, abstract.county.tags["Document Table"],
                                                      "document table data", False, document)
-    table_rows = locate_elements_by_tag_name(document_table_data, table_row_tag, "table rows", False, document)
+    table_rows = locate_elements_by_tag_name(document_table_data, abstract.county.tags["Table Rows"], "table rows", False, document)
     return table_rows
 
 
-def get_row_data(row):
-    row_data = row.find_elements_by_tag_name(row_data_tag)
+def get_row_data(abstract, row):
+    row_data = row.find_elements_by_tag_name(abstract.county.tags["Row Data"])
     return get_element_text(row_data[0]), get_element_text(row_data[1])
 
 

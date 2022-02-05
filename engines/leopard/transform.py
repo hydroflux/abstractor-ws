@@ -122,7 +122,7 @@ def update_county_attributes(abstract):
         "Result Cell": result_cell_tag,
         # RECORD
         "Document Table": document_table_tag,
-        "Table Row": table_row_tag,
+        "Table Rows": table_rows_tag,
         "Row Data": row_data_tag,
         # DOWNLOAD
         # NAVIGATION
