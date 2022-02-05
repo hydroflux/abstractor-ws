@@ -78,6 +78,12 @@ def update_county_attributes(abstract):
         "Book": leopard.book_search_field_id,
         "Page": leopard.page_search_field_id,
     }
+    abstract.county.scripts = {
+        # DISCLAIMER
+        "Open Script": leopard.open_script,
+        # SEARCH
+        "Search Script": leopard.search_script
+    }
     abstract.county.tags = {
         # OPEN DOCUMENT
         "Results Table Body": leopard.results_body_tag,
@@ -88,9 +94,6 @@ def update_county_attributes(abstract):
         "Row Data": leopard.row_data_tag,
     }
     abstract.county.other = {
-        # SEARCH
-        "Open Script": leopard.open_script,  # DISCLAIMER & SEARCH
-        "Search Script": leopard.search_script,
         # RECORD
         "Abbreviation": leopard.book_page_abbreviation
     }

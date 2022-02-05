@@ -22,7 +22,7 @@ def access_search_navigation_tab(browser, abstract, document):
 
 
 def open_search(browser, abstract, document):
-    javascript_script_execution(browser, abstract.county.other["Search Script"])
+    javascript_script_execution(browser, abstract.county.scripts["Search"])
     navigation_tab = access_search_navigation_tab(browser, abstract, document)
     while not is_active_class(navigation_tab):
         print("Navigation tab not active, attempting to connect again.")

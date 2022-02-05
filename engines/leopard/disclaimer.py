@@ -9,7 +9,7 @@ from settings.general_functions import javascript_script_execution
 def handle_disclaimer(browser, abstract):
     javascript_script_execution(
         browser,
-        abstract.county.other["Open Script"]
+        abstract.county.scripts["Open Script"]
     )
     disclaimer = locate_element_by_id(browser,
                                       abstract.county.ids["Disclaimer"],
