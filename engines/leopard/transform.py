@@ -1,4 +1,6 @@
 from settings.county_variables.leopard import (book_and_page_search_button_id,
+                                               next_result_id,
+                                               previous_result_id,
                                                book_and_page_search_tab_id,
                                                book_page_abbreviation,
                                                book_search_field_id,
@@ -76,6 +78,8 @@ def update_county_attributes(abstract):
         "Download Submenu": view_group_id,
         "Download": download_button_id,
         # NAVIGATION
+        "Next Result": next_result_id,
+        "Previous Result": previous_result_id,
         # LOGOUT
         "Logout": logout_button_id
     }
