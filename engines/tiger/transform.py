@@ -53,6 +53,7 @@ def update_county_attributes(abstract):
         # OPEN DOCUMENT
         "Result Count": result_count_button_id,
         # DOWNLOAD
+        "Download Submenu": view_panel_id,
         "Download": download_button_id
     }
     abstract.county.classes = {
@@ -67,8 +68,6 @@ def update_county_attributes(abstract):
         # RECORD
         "Document Image": document_image_id,
         "Document Information": document_information_id,
-        # DOWNLOAD
-        "View Panel": view_panel_id
     }
     abstract.county.inputs = {  # Consider changing to 'search_inputs'
         # SEARCH
