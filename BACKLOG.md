@@ -416,6 +416,7 @@
 - [ ] Finish refactoring the 'search' script with selenium utilities scripts
 - [ ] Create either an 'error_handling' or 'validation' script for leopard (pull functions from the login script to verify login)
 - [ ] Search should click tab, wait for active, then enter input value => purposely broke in order to simplify, then can build it back up at a later date
+- [ ] Move the 'scripts' variables to the new 'scripts' attributes
 
 ### Mountain Lion
 

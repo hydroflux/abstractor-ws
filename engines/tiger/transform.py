@@ -1,5 +1,5 @@
-from settings.county_variables.tiger import (credentials,
-                                             handle_disclaimer_button_id,
+from settings.county_variables.tiger import (credentials, search_script, search_navigation_id,
+                                             handle_disclaimer_button_id, search_title, search_tab_id, search_button_id, document_search_field_id,
                                              login_button_name, login_page,
                                              login_title, stock_download)
 
@@ -31,6 +31,7 @@ def update_county_attributes(abstract):
         # LOGIN
         "Login": login_title,
         # SEARCH
+        "Search": search_title,
         # OPEN DOCUMENT
         # RECORD
         # DOWNLOAD
@@ -40,6 +41,7 @@ def update_county_attributes(abstract):
         "Login": login_button_name,
         "Disclaimer": handle_disclaimer_button_id,
         # SEARCH
+        "Search": search_button_id,
         # OPEN DOCUMENT
         # RECORD
         # DOWNLOAD
@@ -52,18 +54,28 @@ def update_county_attributes(abstract):
     }
     abstract.county.ids = {
         # SEARCH
+        "Search Navigation": search_navigation_id,
+        "Search Tab": search_tab_id,
         # OPEN DOCUMENT
         # RECORD
         # DOWNLOAD
     }
     abstract.county.inputs = {  # Consider changing to 'search_inputs'
         # SEARCH
+        "Reception Number": document_search_field_id
         # OPEN DOCUMENT
         # RECORD
         # DOWNLOAD
     }
     abstract.county.messages = {  # Consider changing to 'search_inputs'
         # SEARCH
+        # OPEN DOCUMENT
+        # RECORD
+        # DOWNLOAD
+    }
+    abstract.county.scripts = {
+        # SEARCH
+        "Search": search_script,
         # OPEN DOCUMENT
         # RECORD
         # DOWNLOAD
