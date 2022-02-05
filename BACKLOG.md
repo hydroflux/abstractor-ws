@@ -473,6 +473,7 @@
 - [ ] Update the 'convert_document_numbers' function in the 'transform' script using the leopard 'convert_document_numbers' function as a model
 - [ ] Create a 'next_result' function to pass into the 'executor' script--goes along with adding a 'multiple_documents' route
 - [ ] Figure out a better way to integrate the javascript script execution into the 'tiger' script execution instead of it being placed at the top of 'open_search'
+- [ ] The 'open_search' function call in the 'login' script doesn't work great--might not work with the new placement of the 'javascript' execution => consider adding a flag that will indicate whether the JS execution is executed or not when opening search
 
 ## Other To Do
 
