@@ -23,7 +23,7 @@ def enter_credentials(browser, abstract):
                  "login button")
 
 
-def account_login(browser, abstract):
+def login(browser, abstract):
     open_url(browser,
              abstract.county.urls["Login"],
              abstract.county.titles["Login"],

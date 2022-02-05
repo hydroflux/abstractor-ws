@@ -3,7 +3,7 @@ from engines.tiger.transform import transform_document_list
 from settings.driver import create_webdriver
 
 from engines.tiger.download import execute_download
-from engines.tiger.login import account_login
+from engines.tiger.login import login
 from engines.tiger.open_document import open_document
 from engines.tiger.record import record
 from engines.tiger.search import search
@@ -16,7 +16,7 @@ print("execute", __name__)
 def execute_program(abstract):
     browser = create_webdriver(abstract)
     transform_document_list(abstract)
-    account_login(browser)
+    login(browser, abstract)
     search_documents_from_list(
         browser,
         abstract,
