@@ -1,6 +1,9 @@
 from settings.county_variables.tiger import (credentials,
                                              document_search_field_id,
                                              first_result_tag,
+                                             book_page_abbreviation,
+                                             document_information_id,
+                                             document_image_id, row_titles,
                                              handle_disclaimer_button_id,
                                              login_button_name, login_page,
                                              login_title, result_cell_tag,
@@ -40,6 +43,7 @@ def update_county_attributes(abstract):
         # SEARCH
         "Search": search_title,
         # RECORD
+        "Row Titles": row_titles,
         # DOWNLOAD
     }
     abstract.county.buttons = {
@@ -65,6 +69,8 @@ def update_county_attributes(abstract):
         "Result County": result_count_id,
         "Results Table": results_table_id,
         # RECORD
+        "Document Image": document_image_id,
+        "Document Information": document_information_id,
         # DOWNLOAD
     }
     abstract.county.inputs = {  # Consider changing to 'search_inputs'
@@ -87,12 +93,16 @@ def update_county_attributes(abstract):
         # OPEN DOCUMENT
         "Body": results_body_tag,
         "Rows": first_result_tag,
-        "Cells": result_cell_tag,
+        "Data": result_cell_tag,
+        # "Body": document_table_tag,
+        # "Rows": table_row_tag,
+        # "Data": row_data_tag,
         # RECORD
         # DOWNLOAD
     }
     abstract.county.other = {
         # RECORD
+        "Abbreviation": book_page_abbreviation
         # DOWNLOAD
     }
 

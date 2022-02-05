@@ -31,7 +31,7 @@ def access_first_row(abstract, document, results_table):
 
 def check_result(abstract, document, results_table):
     first_result = access_first_row(abstract, document, results_table)
-    first_result_cells = first_result.find_elements_by_tag_name(abstract.county.tags["Cells"])
+    first_result_cells = first_result.find_elements_by_tag_name(abstract.county.tags["Data"])
     if document.value() in map(get_element_text, first_result_cells):
         return True
 
