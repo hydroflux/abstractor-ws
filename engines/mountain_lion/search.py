@@ -1,4 +1,4 @@
-from engines.mountain_lion.iframe_handling import switch_to_main_frame
+from engines.mountain_lion.iframe_handling import switch_to_main_frame, switch_to_search_menu_frame
 from engines.mountain_lion.validation import page_is_loaded
 from selenium_utilities.inputs import click_button
 from selenium_utilities.locators import locate_element_by_id
@@ -11,9 +11,18 @@ def open_search_page(browser, abstract, document):
                  abstract.county.buttons['Open Search'], "open search", document)
 
 
+def menu_is_active(abstract, menu):
+    if menu.get_attribute("class").endswith(abstract.county.classes["Active"]):
+        return True
+
+
 # Use leopard as a guide when adding book & page routes
 def open_search_type_tab(browser, abstract, document):
-    pass
+    switch_to_search_menu_frame(browser, abstract)
+    document_search_menu = locate_element_by_id(browser, abstract.county.buttons['Document Search Menu'],
+                                                'document search menu button', True, document)
+    while not menu_is_active(document_search_menu):
+        document_search_menu.click()
 
 
 # Use leopard as a guide when adding book & page routes

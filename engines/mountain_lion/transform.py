@@ -92,6 +92,7 @@ def update_county_attributes(abstract):
     abstract.county.buttons = {
         # SEARCH
         'Open Search': mountain_lion.open_search_page_button_id,
+        'Document Search Menu': mountain_lion.document_search_menu_button_id,
         # OPEN DOCUMENT
         # RECORD
         # DOWNLOAD
@@ -99,6 +100,7 @@ def update_county_attributes(abstract):
     }
     abstract.county.classes = {
         # SEARCH
+        'Active': mountain_lion.search_menu_active_class
         # OPEN DOCUMENT
         # RECORD
         # DOWNLOAD
@@ -155,6 +157,7 @@ def update_county_attributes(abstract):
     abstract.county.iframes = {
         'Main': mountain_lion.main_frame_name,
         'Header': mountain_lion.header_frame_name,
+        'Search Menu': mountain_lion.search_menu_frame_name,
     }
     abstract.county.other = {
         # SEARCH

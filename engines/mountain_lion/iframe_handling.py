@@ -12,3 +12,9 @@ def switch_to_header_frame(browser, abstract):
     switch_to_default_content(browser)
     header_frame = locate_element_by_name(browser, abstract.county.iframes['Header'], 'header iframe')
     browser.switch_to.frame(header_frame)
+
+
+def switch_to_search_menu_frame(browser, abstract):
+    switch_to_default_content(browser)
+    search_menu_frame = locate_element_by_name(browser, abstract.county.iframes['Search Menu'], 'search menu iframe')
+    browser.switch_to.frame(search_menu_frame)
