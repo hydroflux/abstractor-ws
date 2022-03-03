@@ -1,7 +1,8 @@
-from engines.mountain_lion.iframe_handling import switch_to_main_frame, switch_to_search_menu_frame
+from engines.mountain_lion.iframe_handling import switch_to_main_frame, switch_to_search_input_frame, switch_to_search_menu_frame
 from engines.mountain_lion.validation import page_is_loaded
-from selenium_utilities.inputs import click_button
-from selenium_utilities.locators import locate_element_by_id
+from selenium_utilities.inputs import clear_input, click_button, enter_input_value
+from selenium_utilities.locators import locate_element_by_class_name, locate_element_by_id
+from settings.general_functions import javascript_script_execution
 
 
 def open_search_page(browser, abstract, document):
@@ -27,22 +28,38 @@ def open_search_type_tab(browser, abstract, document):
 
 # Use leopard as a guide when adding book & page routes
 def clear_search(browser, abstract, document):
-    pass
+    switch_to_search_input_frame(browser, abstract)
+    if document.type == "document_number":
+        clear_input(browser, locate_element_by_class_name, abstract.county.inputs["Reception Number"],
+                    "document search field", document)
+    # else:
+
+
+# If running into issues, look at the buffalo search script for this function
+# def clear_double_entry(browser, abstract, document):
+#     pass
 
 
 # Use leopard as a guide when adding book & page routes
 def enter_input(browser, abstract, document):
-    pass
+    if document.type == 'document_number':
+        enter_input_value(browser, locate_element_by_class_name, abstract.county.inputs["Reception Number"],
+                          "document search field", document)
+    # else:
 
 
 # Use leopard as a guide when adding book & page routes
-def execute_search(browser, abstract, document):
-    pass
+def execute_search(browser, abstract):
+    switch_to_search_menu_frame(browser, abstract)
+    javascript_script_execution(browser, abstract.county.scripts["Search"])
 
 
 # Use leopard as a guide when adding book & page routes
 def execute_document_number_search(browser, abstract, document):
-    pass
+    open_search_type_tab(browser, abstract, document)
+    # clear_search(browser, abstract, document)
+    enter_input(browser, abstract, document)
+    execute_search(browser, abstract)
 
 
 def handle_document_search(browser, abstract, document):

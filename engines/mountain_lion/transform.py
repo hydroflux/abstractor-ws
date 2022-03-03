@@ -117,6 +117,7 @@ def update_county_attributes(abstract):
     }
     abstract.county.inputs = {  # Consider changing to 'search_inputs'
         # SEARCH
+        'Reception Number': mountain_lion.document_search_field_class_name
         # OPEN DOCUMENT
         # RECORD
         # DOWNLOAD
@@ -139,6 +140,7 @@ def update_county_attributes(abstract):
         # DISCLAIMER
         'Disclaimer': mountain_lion.disclaimer_script,
         # SEARCH
+        'Search': mountain_lion.document_search_script,
         # OPEN DOCUMENT
         # RECORD
         # DOWNLOAD
@@ -158,6 +160,7 @@ def update_county_attributes(abstract):
         'Main': mountain_lion.main_frame_name,
         'Header': mountain_lion.header_frame_name,
         'Search Menu': mountain_lion.search_menu_frame_name,
+        'Search Input': mountain_lion.search_input_frame_name,
     }
     abstract.county.other = {
         # SEARCH
