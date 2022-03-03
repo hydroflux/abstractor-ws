@@ -124,7 +124,9 @@ def update_county_attributes(abstract):
         # LOGIN
         'Post Login': mountain_lion.post_login_message,
         # SEARCH
+        'Search Header': mountain_lion.header_search_message,
         # OPEN DOCUMENT
+        'Results Header': mountain_lion.header_results_message,
         # RECORD
         # DOWNLOAD
         # LOGOUT
@@ -139,6 +141,7 @@ def update_county_attributes(abstract):
         # RECORD
         # DOWNLOAD
         # LOGOUT
+        'Logout': mountain_lion.logout_script
     }
     abstract.county.tags = {
         # SEARCH
@@ -146,9 +149,12 @@ def update_county_attributes(abstract):
         # RECORD
         # DOWNLOAD
         # LOGOUT
+        # VALIDATION
+        'Header Text': mountain_lion.header_text_tag
     }
     abstract.county.iframes = {
         'Main': mountain_lion.main_frame_name,
+        'Header': mountain_lion.header_frame_name,
     }
     abstract.county.other = {
         # SEARCH

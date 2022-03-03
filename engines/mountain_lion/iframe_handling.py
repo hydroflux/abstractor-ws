@@ -6,3 +6,9 @@ def switch_to_main_frame(browser, abstract):
     switch_to_default_content(browser)
     main_frame = locate_element_by_name(browser, abstract.county.iframes['Main'], 'main iframe')
     browser.switch_to.frame(main_frame)
+
+
+def switch_to_header_frame(browser, abstract):
+    switch_to_default_content(browser)
+    header_frame = locate_element_by_name(browser, abstract.county.iframes['Header'], 'header iframe')
+    browser.switch_to.frame(header_frame)
