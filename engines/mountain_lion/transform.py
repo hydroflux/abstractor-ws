@@ -1,5 +1,7 @@
 from datetime import datetime
 
+import settings.county_variables.mountain_lion as mountain_lion
+
 
 def convert_document_numbers(abstract):
     for row in abstract.document_list:
@@ -67,7 +69,79 @@ def update_document_attributes(abstract):
 
 
 def update_county_attributes(abstract):
-    pass
+    abstract.county.credentials = mountain_lion.credentials
+    abstract.county.urls = {
+        # LOGIN
+        # SEARCH
+        # OPEN DOCUMENT
+        # RECORD
+        # DOWNLOAD
+        # LOGOUT
+    }
+    abstract.county.titles = {
+        # LOGIN
+        # SEARCH
+        # OPEN DOCUMENT
+        # RECORD
+        # DOWNLOAD
+        # LOGOUT
+    }
+    abstract.county.buttons = {
+        # LOGIN
+        # SEARCH
+        # OPEN DOCUMENT
+        # RECORD
+        # DOWNLOAD
+        # LOGOUT
+    }
+    abstract.county.classes = {
+        # LOGIN
+        # SEARCH
+        # OPEN DOCUMENT
+        # RECORD
+        # DOWNLOAD
+        # LOGOUT
+    }
+    abstract.county.ids = {
+        # LOGIN
+        # SEARCH
+        # OPEN DOCUMENT
+        # RECORD
+        # DOWNLOAD
+        # LOGOUT
+    }
+    abstract.county.inputs = {  # Consider changing to 'search_inputs'
+        # LOGIN
+        # SEARCH
+        # OPEN DOCUMENT
+        # RECORD
+        # DOWNLOAD
+        # LOGOUT
+    }
+    abstract.county.scripts = {
+        # LOGIN
+        # SEARCH
+        # OPEN DOCUMENT
+        # RECORD
+        # DOWNLOAD
+        # LOGOUT
+    }
+    abstract.county.tags = {
+        # LOGIN
+        # SEARCH
+        # OPEN DOCUMENT
+        # RECORD
+        # DOWNLOAD
+        # LOGOUT
+    }
+    abstract.county.other = {
+        # LOGIN
+        # SEARCH
+        # OPEN DOCUMENT
+        # RECORD
+        # DOWNLOAD
+        # LOGOUT
+    }
 
 
 def transform(abstract):
