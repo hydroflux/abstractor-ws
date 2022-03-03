@@ -72,6 +72,7 @@ def update_county_attributes(abstract):
     abstract.county.credentials = mountain_lion.credentials
     abstract.county.urls = {
         # LOGIN
+        # DISCLAIMER
         # SEARCH
         # OPEN DOCUMENT
         # RECORD
@@ -80,6 +81,7 @@ def update_county_attributes(abstract):
     }
     abstract.county.titles = {
         # LOGIN
+        # DISCLAIMER
         # SEARCH
         # OPEN DOCUMENT
         # RECORD
@@ -88,6 +90,7 @@ def update_county_attributes(abstract):
     }
     abstract.county.buttons = {
         # LOGIN
+        # DISCLAIMER
         # SEARCH
         # OPEN DOCUMENT
         # RECORD
@@ -96,6 +99,7 @@ def update_county_attributes(abstract):
     }
     abstract.county.classes = {
         # LOGIN
+        # DISCLAIMER
         # SEARCH
         # OPEN DOCUMENT
         # RECORD
@@ -104,6 +108,7 @@ def update_county_attributes(abstract):
     }
     abstract.county.ids = {
         # LOGIN
+        # DISCLAIMER
         # SEARCH
         # OPEN DOCUMENT
         # RECORD
@@ -112,6 +117,7 @@ def update_county_attributes(abstract):
     }
     abstract.county.inputs = {  # Consider changing to 'search_inputs'
         # LOGIN
+        # DISCLAIMER
         # SEARCH
         # OPEN DOCUMENT
         # RECORD
@@ -120,6 +126,7 @@ def update_county_attributes(abstract):
     }
     abstract.county.scripts = {
         # LOGIN
+        # DISCLAIMER
         # SEARCH
         # OPEN DOCUMENT
         # RECORD
@@ -128,6 +135,7 @@ def update_county_attributes(abstract):
     }
     abstract.county.tags = {
         # LOGIN
+        # DISCLAIMER
         # SEARCH
         # OPEN DOCUMENT
         # RECORD
@@ -136,6 +144,7 @@ def update_county_attributes(abstract):
     }
     abstract.county.other = {
         # LOGIN
+        # DISCLAIMER
         # SEARCH
         # OPEN DOCUMENT
         # RECORD
