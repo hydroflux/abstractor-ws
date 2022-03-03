@@ -73,7 +73,6 @@ def update_county_attributes(abstract):
     abstract.county.urls = {
         # LOGIN
         'Login': mountain_lion.login_url,
-        # DISCLAIMER
         # SEARCH
         # OPEN DOCUMENT
         # RECORD
@@ -84,7 +83,6 @@ def update_county_attributes(abstract):
         # LOGIN
         'Login': mountain_lion.login_title,
         'Post Login': mountain_lion.post_login_title,
-        # DISCLAIMER
         # SEARCH
         # OPEN DOCUMENT
         # RECORD
@@ -92,8 +90,6 @@ def update_county_attributes(abstract):
         # LOGOUT
     }
     abstract.county.buttons = {
-        # LOGIN
-        # DISCLAIMER
         # SEARCH
         # OPEN DOCUMENT
         # RECORD
@@ -101,8 +97,6 @@ def update_county_attributes(abstract):
         # LOGOUT
     }
     abstract.county.classes = {
-        # LOGIN
-        # DISCLAIMER
         # SEARCH
         # OPEN DOCUMENT
         # RECORD
@@ -112,7 +106,6 @@ def update_county_attributes(abstract):
     abstract.county.ids = {
         # LOGIN
         'Post Login': mountain_lion.post_login_message_id,
-        # DISCLAIMER
         # SEARCH
         # OPEN DOCUMENT
         # RECORD
@@ -120,8 +113,6 @@ def update_county_attributes(abstract):
         # LOGOUT
     }
     abstract.county.inputs = {  # Consider changing to 'search_inputs'
-        # LOGIN
-        # DISCLAIMER
         # SEARCH
         # OPEN DOCUMENT
         # RECORD
@@ -131,7 +122,6 @@ def update_county_attributes(abstract):
     abstract.county.messages = {
         # LOGIN
         'Post Login': mountain_lion.post_login_message,
-        # DISCLAIMER
         # SEARCH
         # OPEN DOCUMENT
         # RECORD
@@ -150,8 +140,6 @@ def update_county_attributes(abstract):
         # LOGOUT
     }
     abstract.county.tags = {
-        # LOGIN
-        # DISCLAIMER
         # SEARCH
         # OPEN DOCUMENT
         # RECORD
@@ -162,8 +150,6 @@ def update_county_attributes(abstract):
         'Main': mountain_lion.main_frame_name,
     }
     abstract.county.other = {
-        # LOGIN
-        # DISCLAIMER
         # SEARCH
         # OPEN DOCUMENT
         # RECORD
