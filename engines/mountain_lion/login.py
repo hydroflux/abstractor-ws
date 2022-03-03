@@ -1,3 +1,4 @@
+from engines.mountain_lion.frame_handling import switch_to_main_frame
 from selenium_utilities.inputs import enter_input_value
 from selenium_utilities.locators import locate_element_by_name
 from selenium_utilities.open import open_url
@@ -18,7 +19,7 @@ def enter_credentials(browser, abstract):
 
 # Move to disclaimer script
 def handle_disclaimer(browser, abstract):
-    pass
+    switch_to_main_frame(browser, abstract)
 
 
 def login(browser, abstract):
