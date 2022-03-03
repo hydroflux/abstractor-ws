@@ -7,7 +7,7 @@ from engines.mountain_lion.login import login
 # from engines.mountain_lion.navigation import next_result
 # from engines.mountain_lion.open_document import open_document
 # from engines.mountain_lion.record import record
-# from engines.mountain_lion.search import search
+from engines.mountain_lion.search import search
 
 
 def execute_program(abstract):
@@ -16,7 +16,7 @@ def execute_program(abstract):
     search_documents_from_list(
         browser,
         abstract,
-        # search,
+        search,
         # open_document,
         # record,
         # execute_download
