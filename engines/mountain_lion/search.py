@@ -11,4 +11,4 @@ def open_search_page(browser, abstract, document):
 
 
 def search(browser, abstract, document):
-    pass
+    open_search_page(browser, abstract, document)

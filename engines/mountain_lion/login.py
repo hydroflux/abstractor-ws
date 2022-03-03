@@ -1,9 +1,11 @@
-from engines.mountain_lion.iframe_handling import switch_to_main_frame
 from selenium_utilities.inputs import enter_input_value
-from selenium_utilities.locators import locate_element_by_id, locate_element_by_name
+from selenium_utilities.locators import locate_element_by_name
 from selenium_utilities.open import assert_window_title, open_url
 
 from settings.general_functions import javascript_script_execution
+
+from engines.mountain_lion.disclaimer import handle_disclaimer
+from engines.mountain_lion.validation import validate_login
 
 
 def enter_credentials(browser, abstract):
@@ -13,30 +15,10 @@ def enter_credentials(browser, abstract):
                       'password input', abstract.county.credentials[3])
 
 
-# Move to disclaimer script
-def handle_disclaimer(browser, abstract):
-    switch_to_main_frame(browser, abstract)
-    javascript_script_execution(browser, abstract.county.scripts['Disclaimer'])
-
-
 def execute_login(browser, abstract):
     javascript_script_execution(browser, abstract.county.scripts['Login'])
     handle_disclaimer(browser, abstract)
     assert_window_title(browser, abstract.county.titles['Post Login'])
-
-
-# Move to validation script
-def validate_login(browser, abstract):
-    switch_to_main_frame(browser, abstract)
-    welcome_message = locate_element_by_id(browser, abstract.county.ids['Post Login'], 'post login')
-    if welcome_message.text.strip() == abstract.county.messages['Post Login']:
-        print('\nLogin successful, continuing program execution.')
-    else:
-        # print('\nBrowser failed to successfully login, exiting program.')
-        # browser.quit()
-        # exit()
-        print('\nBrowser failed to successfully login, please review...')
-        input()
 
 
 def login(browser, abstract):
