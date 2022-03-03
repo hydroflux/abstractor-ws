@@ -72,6 +72,7 @@ def update_county_attributes(abstract):
     abstract.county.credentials = mountain_lion.credentials
     abstract.county.urls = {
         # LOGIN
+        'Login': mountain_lion.login_url,
         # DISCLAIMER
         # SEARCH
         # OPEN DOCUMENT
@@ -81,6 +82,7 @@ def update_county_attributes(abstract):
     }
     abstract.county.titles = {
         # LOGIN
+        'Login': mountain_lion.login_title,
         # DISCLAIMER
         # SEARCH
         # OPEN DOCUMENT
@@ -126,6 +128,7 @@ def update_county_attributes(abstract):
     }
     abstract.county.scripts = {
         # LOGIN
+        'Login': mountain_lion.login_script,
         # DISCLAIMER
         # SEARCH
         # OPEN DOCUMENT
