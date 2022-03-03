@@ -1,8 +1,14 @@
-from engines.mountain_lion.iframe_handling import switch_to_main_frame, switch_to_search_input_frame, switch_to_search_menu_frame
-from engines.mountain_lion.validation import page_is_loaded
-from selenium_utilities.inputs import clear_input, click_button, enter_input_value
-from selenium_utilities.locators import locate_element_by_class_name, locate_element_by_id
+from selenium_utilities.inputs import (clear_input, click_button,
+                                       enter_input_value)
+from selenium_utilities.locators import (locate_element_by_class_name,
+                                         locate_element_by_id)
+
 from settings.general_functions import javascript_script_execution
+
+from engines.mountain_lion.iframe_handling import (
+    switch_to_main_frame, switch_to_search_input_frame,
+    switch_to_search_menu_frame)
+from engines.mountain_lion.validation import page_is_loaded
 
 
 def open_search_page(browser, abstract, document):

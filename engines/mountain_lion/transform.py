@@ -161,6 +161,8 @@ def update_county_attributes(abstract):
         'Header': mountain_lion.header_frame_name,
         'Search Menu': mountain_lion.search_menu_frame_name,
         'Search Input': mountain_lion.search_input_frame_name,
+        'Search Results': mountain_lion.result_frame_name,
+        'Search Results List': mountain_lion.result_list_frame_name
     }
     abstract.county.other = {
         # SEARCH
