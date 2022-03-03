@@ -145,6 +145,9 @@ def update_county_attributes(abstract):
         # DOWNLOAD
         # LOGOUT
     }
+    abstract.county.iframes = {
+        'Main': mountain_lion.main_frame_name
+    }
     abstract.county.other = {
         # LOGIN
         # DISCLAIMER
