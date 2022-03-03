@@ -91,6 +91,7 @@ def update_county_attributes(abstract):
     }
     abstract.county.buttons = {
         # SEARCH
+        'Open Search': mountain_lion.open_search_page_button_id,
         # OPEN DOCUMENT
         # RECORD
         # DOWNLOAD
