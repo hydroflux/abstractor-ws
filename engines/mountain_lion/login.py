@@ -1,4 +1,4 @@
-from engines.mountain_lion.frame_handling import switch_to_main_frame
+from engines.mountain_lion.iframe_handling import switch_to_main_frame
 from selenium_utilities.inputs import enter_input_value
 from selenium_utilities.locators import locate_element_by_name
 from selenium_utilities.open import open_url
