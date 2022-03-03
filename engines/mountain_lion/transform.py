@@ -111,6 +111,7 @@ def update_county_attributes(abstract):
     }
     abstract.county.ids = {
         # LOGIN
+        'Post Login': mountain_lion.post_login_message_id,
         # DISCLAIMER
         # SEARCH
         # OPEN DOCUMENT
@@ -129,7 +130,7 @@ def update_county_attributes(abstract):
     }
     abstract.county.messages = {
         # LOGIN
-        'Post Login': mountain_lion.post_login_message
+        'Post Login': mountain_lion.post_login_message,
         # DISCLAIMER
         # SEARCH
         # OPEN DOCUMENT
@@ -141,7 +142,7 @@ def update_county_attributes(abstract):
         # LOGIN
         'Login': mountain_lion.login_script,
         # DISCLAIMER
-        'Disclaimer': mountain_lion.disclaimer_script
+        'Disclaimer': mountain_lion.disclaimer_script,
         # SEARCH
         # OPEN DOCUMENT
         # RECORD
@@ -158,7 +159,7 @@ def update_county_attributes(abstract):
         # LOGOUT
     }
     abstract.county.iframes = {
-        'Main': mountain_lion.main_frame_name
+        'Main': mountain_lion.main_frame_name,
     }
     abstract.county.other = {
         # LOGIN
