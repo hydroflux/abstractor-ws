@@ -5,7 +5,7 @@ from settings.county_variables.armadillo import (page_input_id,
 
 def convert_document_numbers(document_list):
     for document in document_list:
-        if document.type == 'document_number' and '-' not in document.value:
+        if document.type == 'document_number' and '-' not in document.value and len(document.value) >= 12:
             document.year = document.value[:4]
             document.value = f'{document.year}-{document.value[4:]}'
 
