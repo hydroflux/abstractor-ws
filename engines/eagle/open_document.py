@@ -59,7 +59,7 @@ def retry_execute_search(browser, abstract, document, search_status):
     while search_status == abstract.county.messages["Failed Search"]:
         print(f'Search failed for {document.extrapolate_value()},'
               f' executing search again.')
-        execute_search(browser, document)
+        execute_search(browser, abstract, document)
         naptime()
         search_status = wait_for_results(browser, abstract)
     return search_status
