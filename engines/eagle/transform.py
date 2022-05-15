@@ -65,6 +65,9 @@ def update_county_attributes(abstract):
         "Reception Number": eagle.reception_number_input_id,
         "Book": eagle.book_input_id,
         "Page": eagle.page_input_id,
+        "Name": eagle.name_input_id,
+        "Start Date": eagle.start_date_id,
+        "End Date": eagle.end_date_id
     }
     abstract.county.messages = {
         # LOGIN
