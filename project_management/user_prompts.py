@@ -35,7 +35,7 @@ def get_program_type():
     elif user_input == "3":
         program_type = "download"
     elif user_input == "4":
-        program_type = "name search"
+        program_type = "name_search"
     clear_terminal()
     return program_type
 
