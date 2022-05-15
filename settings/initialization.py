@@ -15,8 +15,8 @@ from project_management.user_prompts import get_program_type
 from settings.objects.abstract_dataframe import \
     abstract_dictionary as dataframe
 from settings.settings import (abstraction_type, county_name, download,
-                               file_name, headless, sheet_name,
-                               target_directory)
+                               file_name, headless, sheet_name, search_name,
+                               start_date, end_date, target_directory)
 
 
 # def update_engine_attributes(engine):
@@ -47,7 +47,10 @@ def create_abstract_object():
         program=get_program_type(),
         headless=headless,
         download=download,
-        dataframe=dataframe
+        dataframe=dataframe,
+        search_name=search_name,
+        start_date=start_date,
+        end_date=end_date
     )
 
 
@@ -59,6 +62,17 @@ def program_type_update(abstract):
     elif abstract.program == "download":
         abstract.download_only = True
         abstract.download = True
+    elif abstract.program == 'name_search':
+        abstract.download = False
+        abstract.download_only = False
+
+
+def handle_program_type(abstract):
+    program_type_update(abstract)
+    if abstract.program == 'name_search':
+        return
+    else:
+        abstract.document_list = generate_document_list(target_directory, file_name, sheet_name)
 
 
 def update_abstract_and_county_attributes(abstract):
@@ -82,8 +96,7 @@ def create_folder(directory):
 
 def initialize_abstraction():
     abstract = create_abstract_object()
-    program_type_update(abstract)
-    abstract.document_list = generate_document_list(target_directory, file_name, sheet_name)
+    handle_program_type(abstract)
     abstract.timer = start_program_timer(abstract.county, abstract.document_list)
     update_abstract_and_county_attributes(abstract)
     return abstract
