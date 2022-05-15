@@ -25,10 +25,10 @@ def validate_search(browser, abstract, document):
                                          "search validation message", document=document))
 
 
-def retry_search(browser, document):
+def retry_search(browser, abstract, document):
     browser.refresh()
     naptime()
-    search(browser, document)
+    search(browser, abstract, document)
 
 
 def get_search_status(browser, abstract):
@@ -68,8 +68,8 @@ def retry_execute_search(browser, abstract, document, search_status):
 def get_search_results(browser, abstract, document):
     result_rows = locate_elements_by_class_name(browser, abstract.county.classes["Results Row"],
                                                 "search results", True, document=document)
-    while type(result_rows) is None:
-        retry_search(browser, document)
+    while result_rows is None:
+        retry_search(browser, abstract, document)
         result_rows = locate_elements_by_class_name(browser, abstract.county.classes["Results Row"],
                                                     "search results", True, document=document)
     return result_rows
@@ -139,6 +139,6 @@ def handle_document_search(browser, abstract, document):
 
 def open_document(browser, abstract, document):
     while not validate_search(browser, abstract, document):
-        retry_search(browser, document)
+        retry_search(browser, abstract, document)
     if check_search_results(browser, abstract, document):
         return handle_document_search(browser, abstract, document)
