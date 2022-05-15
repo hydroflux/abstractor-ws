@@ -5,8 +5,8 @@ class Abstract:
     def __init__(self, type, county, target_directory, file_name, program,
                  headless, download, dataframe,
                  review=False, download_only=False, download_type=None,
-                 document_directory=None, document_list=None, timer=None,
-                 search_name=None,
+                 document_directory=None, document_list=[], timer=None,
+                 search_name=None, start_date=None, end_date=None,
                  document_directory_files=None):
         self.type = type
         self.county = county
@@ -23,6 +23,8 @@ class Abstract:
         self.document_list = document_list
         self.timer = timer
         self.search_name = search_name
+        self.start_date = start_date
+        self.end_date = end_date
         self.document_directory_files = document_directory_files
 
     def drop_last_entry(self):
@@ -39,6 +41,21 @@ class Abstract:
         self.dataframe["Legal"].pop()
         self.dataframe["Related Documents"].pop()
         self.dataframe["Comments"].pop()
+
+    def drop_all_entries(self):
+        self.dataframe["Grantor"] = []
+        self.dataframe["Grantee"] = []
+        self.dataframe["Book"] = []
+        self.dataframe["Volume"] = []
+        self.dataframe["Page"] = []
+        self.dataframe["Reception Number"] = []
+        self.dataframe["Document Link"] = []
+        self.dataframe["Document Type"] = []
+        self.dataframe["Effective Date"] = []
+        self.dataframe["Recording Date"] = []
+        self.dataframe["Legal"] = []
+        self.dataframe["Related Documents"] = []
+        self.dataframe["Comments"] = []
 
     def check_last_document(self, document):
         if len(self.dataframe['Reception Number']) >= 2:
