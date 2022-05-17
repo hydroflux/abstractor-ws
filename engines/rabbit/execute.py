@@ -8,7 +8,7 @@ from engines.rabbit.login import login
 # from engines.rabbit.logout import logout
 # from engines.rabbit.navigation import next_result
 from engines.rabbit.open_document import open_document
-# from engines.rabbit.record import record
+from engines.rabbit.record import record
 from engines.rabbit.search import search
 from engines.rabbit.transform import transform
 
@@ -22,7 +22,7 @@ def execute_program(abstract):
         abstract,
         search,
         open_document,
-        # record,
+        record,
         # execute_download,
         # next_result
     )
