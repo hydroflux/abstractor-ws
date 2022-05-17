@@ -2,7 +2,7 @@ from selenium_utilities.locators import (locate_element_by_id,
                                          locate_element_by_tag_name,
                                          locate_elements_by_tag_name)
 
-from serializers.recorder import record_comments, record_value
+from serializers.recorder import record_comments, record_empty_values, record_value
 
 from settings.county_variables.general import not_applicable
 from settings.general_functions import get_element_text, title_strip
@@ -127,7 +127,8 @@ def aggregate_document_information(abstract, document, rows):
     record_grantee(abstract, rows)
     record_related_documents(abstract, rows)
     record_legal(abstract, rows)
-    record_comments(abstract, document, rows)
+    record_empty_values(abstract, ['effective date', 'volume', 'document link'])
+    record_comments(abstract, document)
 
 
 def record(browser, abstract, document):
