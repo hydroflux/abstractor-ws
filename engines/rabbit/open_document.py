@@ -10,13 +10,14 @@ def count_results(browser, abstract, document):
     # Wait for results table to load before getting count
     locate_element_by_id(browser, abstract.county.ids["Results Table"],
                          "results table", False, document)
+    # I don't think the above is doing anything useful
     naptime()
     # Need to find a better trigger to wait on
     result_count = locate_element_by_id(browser, abstract.county.ids["Result Count"],
                                         "result count", False, document)
     # This doesn't work the way it's supposed to
     # Need to perform a match against the document number in order to find the correct count
-    # Check tiger & leopard for options
+    # Check leopard for options
     if int(result_count.text.split(' ')[-1]) > 1:
         document.number_results = 1
 
