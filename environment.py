@@ -15,6 +15,7 @@ if __name__ == '__main__':
     from engines.jaguar.execute import execute_program as execute_jaguar
     from engines.leopard.execute import execute_program as execute_leopard
     from engines.tiger.execute import execute_program as execute_tiger
+    from engines.rabbit.execute import execute_program as execute_rabbit
     from engines.rattlesnake.execute import execute_program as execute_rattlesnake
     # from rattlesnake.execute import execute_early_document_download as download_rattlesnake
     from settings.initialization import initialize_abstraction
@@ -79,6 +80,13 @@ def execute_program(abstract):
             if abstract.program == "download":
                 abstract.headless = False
             execute_tiger(abstract)
+        else:
+            currently_unavailable(abstract)
+    elif abstract.county.engine == 'rabbit':
+        if abstract.program in ["execute", "review", "download"]:
+            if abstract.program == "download":
+                abstract.headless = False
+            execute_rabbit(abstract)
         else:
             currently_unavailable(abstract)
     elif abstract.county.engine == 'rattlesnake':
