@@ -3,7 +3,7 @@ from serializers.executor import close_program, search_documents_from_list
 
 from settings.driver import create_webdriver
 
-# from engines.rabbit.download import execute_download
+from engines.rabbit.download import execute_download
 from engines.rabbit.login import login
 # from engines.rabbit.logout import logout
 # from engines.rabbit.navigation import next_result
@@ -23,7 +23,7 @@ def execute_program(abstract):
         search,
         open_document,
         record,
-        # execute_download,
+        execute_download
         # next_result
     )
     close_program(browser, abstract)
