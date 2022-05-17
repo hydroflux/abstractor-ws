@@ -10,7 +10,7 @@ from settings.general_functions import get_element_text, title_strip
 
 def access_document_information(browser, abstract, document):
     locate_element_by_id(browser, abstract.county.ids["Document Image"],
-                         "document image", False, document)  # Wait for image to load
+                         "document image", False, document)  # Wait for image to load (doesn't work, need to test with throttling)
     document_information = locate_element_by_id(browser, abstract.county.ids["Document Information"],
                                                 "document information", False, document)
     return document_information
