@@ -80,9 +80,9 @@ def update_county_attributes(abstract):
     }
     abstract.county.scripts = {
         # DISCLAIMER
-        "Open Script": leopard.open_script,
+        "Open Search": leopard.open_script,
         # SEARCH
-        "Search Script": leopard.search_script
+        "Search": leopard.search_script
     }
     abstract.county.tags = {
         # OPEN DOCUMENT
