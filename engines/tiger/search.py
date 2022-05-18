@@ -11,7 +11,7 @@ from settings.general_functions import javascript_script_execution
 
 def open_search(browser, abstract):
     # Messy => figure out a better way to do this
-    javascript_script_execution(abstract.county.scripts["Search"])
+    javascript_script_execution(browser, abstract.county.scripts["Search"])
     naptime()
     # This will probably not work great when called during the 'login' process
     ######
@@ -40,7 +40,7 @@ def clear_search(browser, abstract, document):
 
 
 def handle_document_value_numbers(browser, abstract, document):
-    value = document.value()
+    value = document.value
     if document.type == "document_number":
         enter_input_value(browser, locate_element_by_id, abstract.county.inputs["Reception Number"],
                           "reception number input", value, document)
