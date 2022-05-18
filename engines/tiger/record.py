@@ -65,21 +65,25 @@ def record_reception_number(abstract, row, document):
 
 def record_book_and_page(abstract, row):
     book_page_value = check_rows(abstract, row, abstract.county.titles["Row Titles"]["book_and_page"])
-    if book_page_value.startswith(abstract.county.other["Abbreviation"]):
-        book, page = book_page_value[len(abstract.county.other["Abbreviation"]):].split("/")
-        book = book.strip()
-        page = page.strip()
-        if book == '0' and page == '0':
-            book = not_applicable
-            page = not_applicable
-        record_value(abstract, 'book', book)
-        record_value(abstract, 'page', page)
-    elif book_page_value == '':
+    if book_page_value == 'N/A':
         record_value(abstract, 'book', '')
         record_value(abstract, 'page', '')
     else:
-        # Below seems unnecessary, check with testing
-        print(f'Encountered unexpected value "{book_page_value}" when trying to record book & page.')
+        if book_page_value.startswith(abstract.county.other["Abbreviation"]):
+            book, page = book_page_value[len(abstract.county.other["Abbreviation"]):].split("/")
+            book = book.strip()
+            page = page.strip()
+            if book == '0' and page == '0':
+                book = not_applicable
+                page = not_applicable
+            record_value(abstract, 'book', book)
+            record_value(abstract, 'page', page)
+        elif book_page_value == '':
+            record_value(abstract, 'book', '')
+            record_value(abstract, 'page', '')
+        else:
+            # Below seems unnecessary, check with testing
+            print(f'Encountered unexpected value "{book_page_value}" when trying to record book & page.')
 
 
 def record_recording_date(abstract, rows):
