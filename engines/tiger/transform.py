@@ -37,7 +37,7 @@ def update_county_attributes(abstract):
         # OPEN DOCUMENT
         "Result Count": tiger.result_count_button_id,
         # DOWNLOAD
-        "Download Submenu": tiger.view_panel_id,
+        "Download Submenu": tiger.download_submenu_id,
         "Download": tiger.download_button_id
     }
     abstract.county.ids = {
@@ -45,7 +45,7 @@ def update_county_attributes(abstract):
         "Search Navigation": tiger.search_navigation_id,
         "Search Tab": tiger.search_tab_id,
         # OPEN DOCUMENT
-        "Result County": tiger.result_count_id,
+        "Result Count": tiger.result_count_id,
         "Results Table": tiger.results_table_id,
         # RECORD
         "Document Image": tiger.document_image_id,
@@ -64,9 +64,6 @@ def update_county_attributes(abstract):
         "Body": tiger.results_body_tag,
         "Rows": tiger.first_result_tag,
         "Data": tiger.result_cell_tag,
-        # "Body": document_table_tag,
-        # "Rows": table_row_tag,
-        # "Data": row_data_tag
     }
     abstract.county.other = {
         # RECORD
