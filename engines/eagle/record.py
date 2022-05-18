@@ -275,6 +275,8 @@ def review_entry(browser, abstract, document):
 def re_record_document_fields(browser, abstract, document):
     abstract.drop_last_entry()
     browser.refresh()
+    record_comments(abstract, document)
+    record_empty_values(abstract, ['effective date', 'volume', 'document link'])
     medium_nap()
     record_document_fields(browser, abstract, document)
 
@@ -309,6 +311,5 @@ def record(browser, abstract, document):
             record_comments(abstract, document)  # Before 'handle_document_image_status' to check for multiple documents
             handle_document_image_status(browser, abstract, document)
             record_document_fields(browser, abstract, document)
-            record_empty_values(abstract, ['effective date', 'volume', 'document link'])
             abstract.check_last_document(document)
             review_entry(browser, abstract, document)
