@@ -12,13 +12,17 @@ def update_county_attributes(abstract):
         # LOGIN
         "Home": rabbit.home_page_url,
         # SEARCH
-        "Search": rabbit.search_page_url
+        "Document Search": rabbit.document_search_url,
+        # NAME SEARCH
+        "Name Search": rabbit.name_search_url
     }
     abstract.county.titles = {
         # LOGIN
         "Home": rabbit.home_page_title,
         # SEARCH
-        "Search": rabbit.search_page_title,
+        "Document Search": rabbit.document_search_title,
+        # NAME SEARCH
+        "Name Search": rabbit.name_search_title,
         # OPEN DOCUMENT
         "Row Titles": rabbit.row_titles
     }
@@ -27,6 +31,8 @@ def update_county_attributes(abstract):
         "Disclaimer": rabbit.disclaimer_button_id,
         # SEARCH
         "Document Search": rabbit.document_search_button_id,
+        # NAME SEARCH
+        "Name Search": rabbit.name_search_button_id,
         # DOWNLOAD
         "Download Submenu": rabbit.download_submenu_id,
         "Download": rabbit.download_button_id
@@ -41,6 +47,8 @@ def update_county_attributes(abstract):
         # SEARCH
         "Search Navigation": rabbit.search_navigation_id,
         "Document Search Tab": rabbit.document_search_tab_id,
+        # NAME SEARCH
+        "Name Search Tab": rabbit.name_search_tab_id,
         # OPEN DOCUMENT
         "Result Count": rabbit.results_count_id,
         "Results Table": rabbit.results_table_id,
@@ -50,7 +58,11 @@ def update_county_attributes(abstract):
     }
     abstract.county.inputs = {
         # SEARCH
-        "Reception Number": rabbit.document_search_field_id
+        "Reception Number": rabbit.document_search_field_id,
+        # NAME SEARCH
+        "Name": rabbit.name_search_field_id,
+        "Start Date": rabbit.name_search_start_date_field_id,
+        "End Date": rabbit.name_search_end_date_field_id
     }
     abstract.county.tags = {
         # OPEN DOCUMENT
