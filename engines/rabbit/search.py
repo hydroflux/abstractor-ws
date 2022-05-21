@@ -1,7 +1,5 @@
 from engines.rabbit.error_handling import check_for_browser_error
 
-from project_management.timers import naptime
-
 from selenium_utilities.element_interaction import get_parent_element, is_active_class
 from selenium_utilities.inputs import clear_input, click_button, enter_input_value
 from selenium_utilities.locators import locate_element_by_id
@@ -100,7 +98,7 @@ def execute_search(browser, abstract, document):
                      "document search button", document)
     elif document.type == "name":
         click_button(browser, locate_element_by_id, abstract.county.buttons["Name Search"],
-                    "name search button", document)
+                     "name search button", document)
     else:
         print(f'Abstractor path has not yet been developed to "execute_search" for document type "\
                {document.type}", please review...')
