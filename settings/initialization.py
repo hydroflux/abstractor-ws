@@ -85,7 +85,7 @@ def update_abstract_and_county_attributes(abstract):
         transform_leopard(abstract)
     elif abstract.county.engine == "mountain_lion":
         transform_mountain_lion(abstract)
-    elif abstract.counthy.engine == "rabbit":
+    elif abstract.county.engine == "rabbit":
         transform_rabbit(abstract)
 
 
