@@ -10,12 +10,10 @@ from engines.rabbit.login import login
 from engines.rabbit.open_document import open_document
 from engines.rabbit.record import record
 from engines.rabbit.search import search
-from engines.rabbit.transform import transform
 
 
 def execute_program(abstract):
     browser = create_webdriver(abstract)
-    transform(abstract)
     login(browser, abstract)
     search_documents_from_list(
         browser,
