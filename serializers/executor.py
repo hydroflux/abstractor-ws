@@ -48,7 +48,8 @@ def search_documents_from_list(browser, abstract, search, open_document, record,
             handle_search_results(browser, abstract, document, record, execute_download, next_result)
         else:
             record_invalid_search(abstract, document)
-        abstract.check_length()  # Is this the best placement for this?
+        if abstract.download_only is False:
+            abstract.check_length()  # Is this the best placement for this?
 
 
 def close_program(browser, abstract, logout=None):
