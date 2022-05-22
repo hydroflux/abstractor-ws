@@ -19,7 +19,7 @@ def execute_program(abstract):
         abstract,
         search,
         open_document,
-        # record,
+        record,
         # execute_download,
         # next_result
     )
