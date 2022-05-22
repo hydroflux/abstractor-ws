@@ -18,7 +18,7 @@ def execute_program(abstract):
         browser,
         abstract,
         search,
-        # open_document,
+        open_document,
         # record,
         # execute_download,
         # next_result
