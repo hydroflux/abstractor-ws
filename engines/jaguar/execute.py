@@ -17,7 +17,7 @@ def execute_program(abstract):
     search_documents_from_list(
         browser,
         abstract,
-        # search,
+        search,
         # open_document,
         # record,
         # execute_download,
