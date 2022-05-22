@@ -13,7 +13,7 @@ from selenium_utilities.open import open_url
 
 from settings.general_functions import get_direct_link
 
-from engines.eagle.search import execute_search, search
+from engines.jaguar.search import execute_search, search
 
 
 def validate_search(browser, abstract, document):
