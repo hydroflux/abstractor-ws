@@ -34,8 +34,10 @@ def confirm_login(browser, abstract):
 def execute_login_process(browser, abstract):
     open_url(browser, abstract.county.urls["Home Page"],
              abstract.county.titles["Home Page"], "county site")
-    click_button(browser, locate_element_by_class_name, abstract.county.classes["Login Prompt"],
-                 abstract.county.buttons["Login"], "login button prompt")
+    click_button(browser, locate_element_by_id, abstract.county.buttons["Disclaimer"],
+                 "disclaimer button")
+    click_button(browser, locate_element_by_class_name, abstract.county.buttons["Login Prompt"],
+                 "login button prompt")
     enter_credentials(browser, abstract)
     confirm_login(browser, abstract)
     return True
