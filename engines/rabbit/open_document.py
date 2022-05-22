@@ -19,7 +19,10 @@ def count_results(browser, abstract, document):
     # Need to perform a match against the document number in order to find the correct count
     # Check leopard for options
     if int(result_count.text.split(' ')[-1]) > 1:
-        document.number_results = 1
+        if document.type == "document_search":
+            document.number_results = 1
+        elif document.type == "name":
+            document.number_results = int(result_count.text.split(' ')[-1])
 
 
 def access_results_table(browser, abstract, document):
