@@ -11,6 +11,7 @@ def count_results(browser, abstract, document):
     click_button(browser, locate_element_by_id, abstract.county.buttons["Result Count"],
                  "result count button", document)  # Open Result Count
     naptime()
+    naptime()
     result_count = locate_element_by_id(browser, abstract.county.ids["Result Count"],
                                         "result count", document=document)  # Get Result Count
     # This doesn't work the way it's supposed to
