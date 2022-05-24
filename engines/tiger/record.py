@@ -121,10 +121,12 @@ def record_related_documents(abstract, rows):
 
 def record_legal(abstract, rows):
     legal = check_rows(abstract, rows, abstract.county.titles["Row Titles"]["legal"])
-    # additional_legal = check_rows(row_2, row_titles["additional_legal"])
-    # if legal != additional_legal:
-    #     abstract.dataframe["Legal"].append(f'{legal}\n{additional_legal}')
-    # else:
+    additional_legal = check_rows(abstract, rows, abstract.county.titles["Row Titles"]["additional_legal"])
+    if additional_legal != not_applicable:
+        if legal == not_applicable:
+            legal = additional_legal
+        elif additional_legal != legal:
+            legal = f'{legal}\n{additional_legal}'
     record_value(abstract, 'legal', legal)
 
 
