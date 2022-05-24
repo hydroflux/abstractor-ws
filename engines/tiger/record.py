@@ -98,11 +98,19 @@ def record_document_type(abstract, rows):
 
 def record_grantor(abstract, rows):
     grantor = check_rows(abstract, rows, abstract.county.titles["Row Titles"]["grantor"])
+    if grantor == not_applicable:
+        grantor = check_rows(abstract, rows, abstract.county.titles["Row Titles"]["alt_grantor"])
+        if grantor == not_applicable:
+            grantor = check_rows(abstract, rows, abstract.county.titles["Row Titles"]["second_alt_grantor"])
     record_value(abstract, 'grantor', grantor.title())
 
 
 def record_grantee(abstract, rows):
     grantee = check_rows(abstract, rows, abstract.county.titles["Row Titles"]["grantee"])
+    if grantee == not_applicable:
+        grantee = check_rows(abstract, rows, abstract.county.titles["Row Titles"]["alt_grantee"])
+        if grantee == not_applicable:
+            grantee = check_rows(abstract, rows, abstract.county.titles["Row Titles"]["second_alt_grantee"])
     record_value(abstract, 'grantee', grantee.title())
 
 
