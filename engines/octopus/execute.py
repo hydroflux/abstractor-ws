@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-from serializers.executor import close_program, search_documents_from_list
+from serializers.executor import close_program
 
 from settings.driver import create_webdriver
 
@@ -12,16 +12,7 @@ from engines.octopus.logout import logout
 # from engines.octopus.search import search
 
 
-def execute_program(abstract):
+def execute_legal_search(abstract):
     browser = create_webdriver(abstract)
     login(browser, abstract)
-    search_documents_from_list(
-        browser,
-        abstract,
-        # search,
-        # open_document,
-        # record,
-        # execute_download,
-        # next_result
-    )
     close_program(browser, abstract, logout)

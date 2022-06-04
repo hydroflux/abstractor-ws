@@ -14,7 +14,7 @@ if __name__ == '__main__':
     from engines.eagle.execute import execute_program as execute_eagle
     from engines.jaguar.execute import execute_program as execute_jaguar
     from engines.leopard.execute import execute_program as execute_leopard
-    from engines.octopus.execute import execute_program as execute_octopus
+    from engines.octopus.execute import execute_legal_search as execute_octopus_legal
     from engines.tiger.execute import execute_program as execute_tiger
     from engines.rabbit.execute import execute_program as execute_rabbit
     from engines.rabbit.execute import execute_name_search as rabbit_name_search
@@ -81,7 +81,7 @@ def execute_program(abstract):
         if abstract.program in ["legal"]:
             if abstract.program == "download":
                 abstract.headless = False
-            execute_octopus(abstract)
+            execute_octopus_legal(abstract)
         else:
             currently_unavailable(abstract)
     elif abstract.county.engine == 'tiger':
