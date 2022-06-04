@@ -8,6 +8,7 @@ from engines.jaguar.transform import transform as transform_jaguar
 from engines.leopard.transform import transform as transform_leopard
 from engines.mountain_lion.transform import transform as transform_mountain_lion
 from engines.rabbit.transform import transform as transform_rabbit
+from engines.octopus.transform import transform as transform_octopus
 
 from project_management.generate_document_list import generate_document_list
 from project_management.timers import start_program_timer
@@ -17,7 +18,7 @@ from settings.objects.abstract_dataframe import \
     abstract_dictionary as dataframe
 from settings.settings import (abstraction_type, county_name, download,
                                file_name, headless, sheet_name, search_name,
-                               start_date, end_date, target_directory)
+                               start_date, end_date, legal, target_directory)
 
 
 # def update_engine_attributes(engine):
@@ -51,7 +52,8 @@ def create_abstract_object():
         dataframe=dataframe,
         search_name=search_name,
         start_date=start_date,
-        end_date=end_date
+        end_date=end_date,
+        legal=legal
     )
 
 
@@ -70,7 +72,7 @@ def program_type_update(abstract):
 
 def handle_program_type(abstract):
     program_type_update(abstract)
-    if abstract.program == 'name_search':
+    if abstract.program in ['name_search', 'legal']:
         return
     else:
         abstract.document_list = generate_document_list(target_directory, file_name, sheet_name)
@@ -87,6 +89,8 @@ def update_abstract_and_county_attributes(abstract):
         transform_mountain_lion(abstract)
     elif abstract.county.engine == "rabbit":
         transform_rabbit(abstract)
+    elif abstract.county.engine == "octopus":
+        transform_octopus(abstract)
 
 
 def create_folder(directory):
