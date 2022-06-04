@@ -23,8 +23,8 @@ def get_element_onclick(element):
     return element.get_attribute("onclick")
 
 
-# def get_element_class(element):
-#     return element.get_attribute("class")
+def get_element_class(element):
+    return element.get_attribute("class")
 
 
 # def check_active_class(element):
