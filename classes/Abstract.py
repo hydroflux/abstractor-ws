@@ -6,7 +6,7 @@ class Abstract:
                  headless, download, dataframe,
                  review=False, download_only=False, download_type=None,
                  document_directory=None, document_list=[], timer=None,
-                 search_name=None, start_date=None, end_date=None,
+                 search_name=None, start_date=None, end_date=None, legal=None,
                  document_directory_files=None):
         self.type = type
         self.county = county
@@ -25,6 +25,7 @@ class Abstract:
         self.search_name = search_name
         self.start_date = start_date
         self.end_date = end_date
+        self.legal = legal
         self.document_directory_files = document_directory_files
 
     def drop_last_entry(self):
