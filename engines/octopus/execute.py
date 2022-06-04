@@ -4,7 +4,7 @@ from serializers.executor import close_program, search_documents_from_list
 from settings.driver import create_webdriver
 
 # from engines.octopus.download import execute_download
-# from engines.octopus.login import login
+from engines.octopus.login import login
 # from engines.octopus.navigation import next_result
 # from engines.octopus.open_document import open_document
 # from engines.octopus.record import record
@@ -13,7 +13,7 @@ from settings.driver import create_webdriver
 
 def execute_program(abstract):
     browser = create_webdriver(abstract)
-    # login(browser, abstract)
+    login(browser, abstract)
     search_documents_from_list(
         browser,
         abstract,
