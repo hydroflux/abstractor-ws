@@ -2,13 +2,16 @@ import os
 
 from classes.Abstract import Abstract
 # from classes.Engine import Engine
+
 from classes.counties import county_dictionary
+
 from engines.eagle.transform import transform as transform_eagle
 from engines.jaguar.transform import transform as transform_jaguar
 from engines.leopard.transform import transform as transform_leopard
-from engines.mountain_lion.transform import transform as transform_mountain_lion
-from engines.rabbit.transform import transform as transform_rabbit
+from engines.mountain_lion.transform import \
+    transform as transform_mountain_lion
 from engines.octopus.transform import transform as transform_octopus
+from engines.rabbit.transform import transform as transform_rabbit
 
 from project_management.generate_document_list import generate_document_list
 from project_management.timers import start_program_timer
@@ -17,9 +20,9 @@ from project_management.user_prompts import get_program_type
 from settings.objects.abstract_dataframe import \
     abstract_dictionary as dataframe
 from settings.settings import (abstraction_type, county_name, download,
-                               file_name, headless, sheet_name, search_name,
-                               start_date, end_date, legal, target_directory)
-
+                               end_date, file_name, headless, legal,
+                               search_name, sheet_name, start_date,
+                               target_directory)
 
 # def update_engine_attributes(engine):
 #     pass
@@ -87,10 +90,10 @@ def update_abstract_and_county_attributes(abstract):
         transform_leopard(abstract)
     elif abstract.county.engine == "mountain_lion":
         transform_mountain_lion(abstract)
-    elif abstract.county.engine == "rabbit":
-        transform_rabbit(abstract)
     elif abstract.county.engine == "octopus":
         transform_octopus(abstract)
+    elif abstract.county.engine == "rabbit":
+        transform_rabbit(abstract)
 
 
 def create_folder(directory):
