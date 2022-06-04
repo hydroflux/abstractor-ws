@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 from classes.Document import Document
+from project_management.export import export_document
 
 from serializers.executor import close_program
 
@@ -19,4 +20,6 @@ def execute_legal_search(abstract):
     document = Document("legal", abstract.legal)
     login(browser, abstract)
     search(browser, abstract, document)
+    project = export_document(abstract)
+    project.bundle_project(abstract)
     close_program(browser, abstract, logout)
