@@ -28,7 +28,7 @@ class Document:
         self.is_duplicate = is_duplicate
 
     def document_value(self):
-        if self.type == "document_number" or self.type == "name":
+        if self.type in ["document_number", "name", "legal"]:
             return str(self.value)
         elif self.type == "book_and_page":
             return [str(self.value["Book"]), str(self.value["Page"])]
@@ -47,6 +47,8 @@ class Document:
             return f'Document number {self.value}'
         elif self.type == "name":
             return f'search name "{self.value}"'
+        elif self.type == "legal":
+            return f'search legal "{self.value}"'
         else:
             print('Unable to identify document type while attempting to "extrapolate document value", please review.')
             return None
