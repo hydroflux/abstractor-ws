@@ -2,6 +2,7 @@
 
 ## General To Do
 
+- [ ] Change 'county_variables' to config
 - [ ] 'abstraction_type' variable doesn't need to be imported anywhere because it's on the Abstract class as an attribute
 - [ ] Comment imports and section by type
 - [ ] In the same vein as the two above, create an indicator for any instances that are repeated (don't necessarily remove them)
