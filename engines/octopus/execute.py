@@ -5,6 +5,7 @@ from settings.driver import create_webdriver
 
 # from engines.octopus.download import execute_download
 from engines.octopus.login import login
+from engines.octopus.logout import logout
 # from engines.octopus.navigation import next_result
 # from engines.octopus.open_document import open_document
 # from engines.octopus.record import record
@@ -23,4 +24,4 @@ def execute_program(abstract):
         # execute_download,
         # next_result
     )
-    close_program(browser, abstract)
+    close_program(browser, abstract, logout)
