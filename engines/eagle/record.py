@@ -12,7 +12,7 @@ from serializers.recorder import (record_comments, record_empty_values,
 
 from settings.county_variables.general import search_errors
 from settings.general_functions import (scroll_to_top,
-                                        short_nap, update_sentence_case_extras)
+                                        short_nap)
 from settings.invalid import no_document_image
 from settings.settings import execution_review
 
@@ -117,7 +117,7 @@ def access_table_rows(abstract, table_body):
 
 
 def access_title_case_text(data):
-    return update_sentence_case_extras(data.text.title())
+    return data.text.title()
 
 
 def access_field_body_no_title(field_info):
@@ -135,7 +135,7 @@ def access_indexing_information(abstract, document_table):
 
 
 def record_document_type(abstract, document_table):
-    document_type = update_sentence_case_extras(document_table.text.title())
+    document_type = access_title_case_text(document_table)
     record_value(abstract, 'document type', document_type)
 
 
@@ -165,8 +165,8 @@ def record_indexing_data(abstract, document_table, document):
 
 def record_name_data(abstract, document_table):
     grantor_text, grantee_text = access_indexing_information(abstract, document_table)
-    grantor = update_sentence_case_extras(drop_superfluous_information(abstract, grantor_text))
-    grantee = update_sentence_case_extras(drop_superfluous_information(abstract, grantee_text))
+    grantor = drop_superfluous_information(abstract, grantor_text)
+    grantee = drop_superfluous_information(abstract, grantee_text)
     record_value(abstract, 'grantor', grantor)
     record_value(abstract, 'grantee', grantee)
 

@@ -12,8 +12,6 @@ from serializers.recorder import record_value
 #                                   record_value)
 
 from settings.county_variables.general import search_errors
-# from settings.general_functions import (scroll_to_top,
-#                                         short_nap, update_sentence_case_extras)
 from settings.invalid import no_document_image
 # from settings.settings import execution_review
 
