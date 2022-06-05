@@ -152,11 +152,15 @@ def split_reception_field(reception_field):
     return reception_number, book, page
 
 
+def set_document_download_values(abstract, document, reception_number):
+    document.reception_number = reception_number
+    document.download_value = f'{document.reception_number}-{abstract.county.other["Stock Download"]}'
+
+
 def record_indexing_data(abstract, document_table, document):
     reception_field, recording_date = access_indexing_information(abstract, document_table)
     reception_number, book, page = split_reception_field(reception_field)
-    document.reception_number = reception_number
-    document.download_value = f'{document.reception_number}-{abstract.county.other["Stock Download"]}'
+    set_document_download_values(abstract, document, reception_number)
     record_value(abstract, 'reception number', reception_number)
     record_value(abstract, 'book', book)
     record_value(abstract, 'page', page)
@@ -286,18 +290,17 @@ def access_download_information(browser, abstract, document):
     document_tables = access_document_tables(browser, document)
     reception_field, _ = access_indexing_information(abstract, document_tables[1])
     reception_number, _, _ = split_reception_field(reception_field)
-    document.reception_number = reception_number
-    document.download_value = f'{document.reception_number}-{abstract.county.other["Stock Download"]}'
+    set_document_download_values(abstract, document, reception_number)
 
 
 def build_document_download_information(browser, abstract, document):
-    reception_number = access_download_information(browser, abstract, document)
+    access_download_information(browser, abstract, document)
     while document.reception_number.strip() == '':
         print('Browser did not correctly access reception number for '
               f'{document.extrapolate_value()}, trying again...')
         naptime()
-        reception_number = access_download_information(browser, abstract, document)
-    record_value(abstract, 'reception number', reception_number)
+        access_download_information(browser, abstract, document)
+    record_value(abstract, 'reception number', document.reception_number)
     # Below is necessary until better logic order is figured out for 'handle_document_image_status'
     if len(abstract.dataframe['Reception Number']) != len(abstract.dataframe['Comments']):
         record_value(abstract, 'comments', '')
