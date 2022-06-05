@@ -12,8 +12,9 @@ def record_document_type(browser, abstract, document):
     record_value(abstract, 'document type', document_type_field.text.title())
 
 
-def record_reception_number(abstract, reception_number_text):
+def record_reception_number(abstract, document, reception_number_text):
     reception_number = reception_number_text[1:]
+    document.download_value = reception_number
     record_value(abstract, 'reception number', reception_number)
 
 
@@ -38,7 +39,7 @@ def record_indexing_information(browser, abstract, document):
                                                           "indexing information", False, document)
     indexing_text = indexing_information_container.text.split('\n')
     reception_number_text, book_and_page_text, effective_date_text, recording_date_text = indexing_text
-    record_reception_number(abstract, reception_number_text)
+    record_reception_number(abstract, document, reception_number_text)
     record_book_and_page(abstract, book_and_page_text)
     record_effective_date(abstract, effective_date_text)
     record_recording_date(abstract, recording_date_text)
