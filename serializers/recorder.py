@@ -55,7 +55,7 @@ def record_value(abstract, column, value):
 
 
 def record_comments(abstract, document):
-    if abstract.program_type in ['name', 'legal'] or document.number_results == 1:
+    if abstract.program in ['name', 'legal'] or document.number_results == 1:
         abstract.dataframe['Comments'].append('')
     elif document.number_results > 1:
         abstract.dataframe["Comments"].append(multiple_documents_comment(document))
