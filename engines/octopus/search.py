@@ -24,7 +24,7 @@ def execute_search(browser, abstract, document):
                  "execute search button", document)
 
 
-def search(browser, abstract, document):
+def search(browser, abstract, document=None):
     open_url(browser, abstract.county.urls["Search Page"],
              abstract.county.titles["Search Page"], "search page")
     execute_search(browser, abstract, document)

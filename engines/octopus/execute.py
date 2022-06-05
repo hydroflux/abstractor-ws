@@ -20,9 +20,8 @@ from engines.octopus.search import search
 
 def execute_legal_search(abstract):
     browser = create_webdriver(abstract)
-    document = Document("legal", abstract.legal, county=abstract.county)
     login(browser, abstract)
-    search(browser, abstract, document)
+    search(browser, abstract)
     collect(browser, abstract)
     # result_links = get_results(browser, abstract, document)
     # for result in result_links[:5]:
