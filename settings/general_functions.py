@@ -1,4 +1,3 @@
-from datetime import datetime
 from pprint import pprint
 from time import sleep
 from selenium.common.exceptions import StaleElementReferenceException
@@ -69,10 +68,6 @@ def get_direct_children(element):
     return element.find_elements_by_xpath("./*")
 
 
-def list_to_string(list):
-    return "\n".join(list)
-
-
 def newline_split(string):
     return string.split('\n')
 
@@ -91,14 +86,6 @@ def set_image_link(document, link):
 
 def get_direct_link(link):
     return link.get_attribute("href")
-
-
-def date_from_string(string):
-    try:
-        format = '%m/%d/%Y'
-        return datetime.strptime(string, format).strftime(format)
-    except ValueError:
-        return string
 
 
 # def clear_search_field(handle_field_function):

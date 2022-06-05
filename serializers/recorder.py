@@ -1,16 +1,18 @@
+from datetime import datetime
+
+
 def multiple_documents_comment(document):
     return (f'Multiple documents located at {document.extrapolate_value()}'
             f' on the {document.county} recording website; Each of the {document.number_results}'
             f' documents has been listed, please review')
 
 
-def record_comments(abstract, document):
-    if abstract.program_type in ['name', 'legal'] or document.number_results == 1:
-        abstract.dataframe['Comments'].append('')
-    elif document.number_results > 1:
-        abstract.dataframe["Comments"].append(multiple_documents_comment(document))
-    # if not document.image_available:
-        #     no_document_image(dataframe, document)
+def date_from_string(string):
+    try:
+        format = '%m/%d/%Y'
+        return datetime.strptime(string, format).strftime(format)
+    except ValueError:
+        return string
 
 
 def update_sentence_case_extras(text):
@@ -42,10 +44,23 @@ def remove_empty_list_items(list):
     return list
 
 
+def list_to_string(list):
+    return "\n".join(list)
+
+
 def record_value(abstract, column, value):
     if isinstance(value, str):
         value = update_sentence_case_extras(value)
     abstract.dataframe[column.title()].append(value)
+
+
+def record_comments(abstract, document):
+    if abstract.program_type in ['name', 'legal'] or document.number_results == 1:
+        abstract.dataframe['Comments'].append('')
+    elif document.number_results > 1:
+        abstract.dataframe["Comments"].append(multiple_documents_comment(document))
+    # if not document.image_available:
+        #     no_document_image(dataframe, document)
 
 
 def record_empty_values(abstract, columns):
