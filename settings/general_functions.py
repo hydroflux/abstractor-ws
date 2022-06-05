@@ -1,6 +1,8 @@
+import os
 from pprint import pprint
 from time import sleep
 from selenium.common.exceptions import StaleElementReferenceException
+from settings.settings import root
 
 from selenium.webdriver.common.keys import Keys
 from project_management.timers import short_nap
@@ -117,3 +119,12 @@ def print_list_by_index(list, web_element=None):
         [print(list.index(element), element, '\n---------------\n') for element in list]
     else:
         [print(list.index(element), element.text, '\n---------------\n') for element in list]
+
+
+def save_screenshot(browser, function_name, exception_type):
+    working_directory = os.getcwd()
+    os.chdir(root)
+    screenshot_name = f'{function_name}_{exception_type}.png'
+    browser.save_screenshot(screenshot_name)
+    os.chdir(working_directory)
+    print(f'Browser saved a screenshot titled "{screenshot_name}" in the Abstractor root folder {root} for review.')
