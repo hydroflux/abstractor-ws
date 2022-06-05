@@ -4,9 +4,7 @@ from selenium_utilities.locators import (locate_element_by_class_name,
                                          locate_elements_by_class_name)
 
 
-# Use this script for name & legal searches
-
-def count_results(browser, abstract, document):
+def register_result_count(browser, abstract, document):
     result_count_container = locate_elements_by_class_name(browser, abstract.county.classes["Result Count Container"],
                                                            "result count container", False)[1]
     result_count_text = result_count_container.text.split("\n")[1]
@@ -14,6 +12,11 @@ def count_results(browser, abstract, document):
         abstract.number_search_results = int(result_count_text.split(" ")[-2])
     else:
         document.number_results = int(result_count_text.split(" ")[-2])
+
+
+def count_results(browser, abstract, document):
+    if not abstract.number_search_results:
+        register_result_count(browser, abstract, document)
 
 
 def access_result_rows(browser, abstract, document=None):
@@ -51,4 +54,4 @@ def collect(browser, abstract, document=None):
     else:
         result_rows = access_result_rows(browser, abstract, document)
         result = result_rows[document.result_number]
-        return access_result_button(abstract, result, document)
+        document.description_link = access_result_button(abstract, result, document)
