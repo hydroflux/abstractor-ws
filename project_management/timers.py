@@ -52,7 +52,7 @@ def update_user(abstract):
         section, township, range, quarter = abstract.legal
         quarter = 'ALL' if quarter == '' else quarter
         return (f'Searching "Township {township} North - Range {range} West, Section {section}: {quarter}" '
-                'for any available documents in "{abstract.county}"...')
+                f'for any available documents in "{abstract.county}"...')
     elif abstract.program == 'name':
         return f'Searching "{abstract.county}" for any documents related to {abstract.search_name}...'
     else:
