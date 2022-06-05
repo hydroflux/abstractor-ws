@@ -14,7 +14,6 @@ from engines.octopus.transform import transform as transform_octopus
 from engines.rabbit.transform import transform as transform_rabbit
 
 from project_management.generate_document_list import generate_document_list
-from project_management.timers import start_program_timer
 from project_management.user_prompts import get_program_type
 
 from settings.objects.abstract_dataframe import \
@@ -107,6 +106,5 @@ def create_folder(directory):
 def initialize_abstraction():
     abstract = create_abstract_object()
     handle_program_type(abstract)
-    abstract.timer = start_program_timer(abstract)
     update_abstract_and_county_attributes(abstract)
     return abstract

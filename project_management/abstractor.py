@@ -1,3 +1,4 @@
+from project_management.timers import start_program_timer
 from settings.driver import create_webdriver
 
 from engines.eagle.execute import execute_name_search as eagle_name_search
@@ -78,4 +79,5 @@ def execute_program(abstract):
         quit()
     else:
         browser = create_webdriver(abstract)
+        abstract.timer = start_program_timer(abstract)
         abstractor(browser, abstract)
