@@ -2,8 +2,8 @@ import os
 
 from classes.counties import county_list
 from classes.Document import Document
+from serializers.recorder import title_strip
 
-from settings.general_functions import title_strip
 from settings.settings import root, search_name
 
 

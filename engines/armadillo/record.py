@@ -2,6 +2,7 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+from serializers.recorder import update_sentence_case_extras, element_title_strip, title_strip
 
 from settings.county_variables.armadillo import (book_and_page_text,
                                                  document_tables_tag,
@@ -12,11 +13,10 @@ from settings.county_variables.armadillo import (book_and_page_text,
                                                  related_types,
                                                  type_and_number_table_id)
 from settings.dataframe_management import multiple_documents_comment
-from settings.general_functions import (date_from_string, element_title_strip,
+from settings.general_functions import (date_from_string,
                                         four_character_padding, list_to_string,
                                         newline_split, print_list_by_index,
-                                        timeout, title_strip,
-                                        update_sentence_case_extras)
+                                        timeout)
 
 from engines.armadillo.validation import (validate_date,
                                           validate_reception_number,

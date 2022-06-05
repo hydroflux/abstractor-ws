@@ -2,10 +2,10 @@ from selenium_utilities.locators import (locate_element_by_id,
                                          locate_element_by_tag_name,
                                          locate_elements_by_tag_name)
 
-from serializers.recorder import record_comments, record_empty_values, record_value
+from serializers.recorder import record_comments, record_empty_values, record_value, title_strip
 
 from settings.county_variables.general import not_applicable
-from settings.general_functions import get_element_text, title_strip
+from settings.general_functions import get_element_text
 
 
 def access_document_information(browser, abstract, document):

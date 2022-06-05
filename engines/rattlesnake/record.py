@@ -5,7 +5,7 @@ from engines.rattlesnake.validation import (
 from selenium_utilities.inputs import get_field_value
 from selenium_utilities.locators import (locate_element_by_id,
                                          locate_elements_by_tag_name)
-from serializers.recorder import record_comments
+from serializers.recorder import record_comments, title_strip, element_title_strip, update_sentence_case_extras
 
 from settings.county_variables.rattlesnake import (document_type_id,
                                                    effective_date_id,
@@ -18,9 +18,8 @@ from settings.county_variables.rattlesnake import (document_type_id,
                                                    recording_date_id,
                                                    row_data_tag_name,
                                                    volume_id)
-from settings.general_functions import (date_from_string, element_title_strip,
-                                        list_to_string, title_strip,
-                                        update_sentence_case_extras)
+from settings.general_functions import (date_from_string,
+                                        list_to_string)
 
 
 def access_field_value(browser, document, id, field_type):
