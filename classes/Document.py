@@ -27,8 +27,9 @@ class Document:
         self.new_name = new_name
         self.is_duplicate = is_duplicate
 
+    # Take name out of document value
     def document_value(self):
-        if self.type in ["document_number", "name", "legal"]:
+        if self.type in ["document_number", "name"]:
             return [str(self.value)]
         elif self.type == "book_and_page":
             return [str(self.value["Book"]), str(self.value["Page"])]
@@ -38,6 +39,7 @@ class Document:
             print('Unable to identify document type while attempting to identify "document value", please review.')
             return None
 
+    # Take name out of extrapolate value
     def extrapolate_value(self):
         if self.type == "book_and_page":
             return f'Book: {self.value["Book"]}, Page: {self.value["Page"]}'
@@ -47,8 +49,6 @@ class Document:
             return f'Document number {self.value}'
         elif self.type == "name":
             return f'search name "{self.value}"'
-        elif self.type == "legal":
-            return f'Township {self.value[1]} - Range {self.value[2]}, Section {self.value[0]}'
         else:
             print('Unable to identify document type while attempting to "extrapolate document value", please review.')
             return None
