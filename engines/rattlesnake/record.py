@@ -18,7 +18,6 @@ from settings.county_variables.rattlesnake import (document_type_id,
                                                    recording_date_id,
                                                    row_data_tag_name,
                                                    volume_id)
-from settings.general_functions import (date_from_string)
 
 
 def access_field_value(browser, document, id, field_type):
