@@ -107,6 +107,6 @@ def create_folder(directory):
 def initialize_abstraction():
     abstract = create_abstract_object()
     handle_program_type(abstract)
-    abstract.timer = start_program_timer(abstract.county, abstract.document_list)
+    abstract.timer = start_program_timer(abstract)
     update_abstract_and_county_attributes(abstract)
     return abstract
