@@ -8,11 +8,9 @@ from engines.octopus.record import record
 from engines.octopus.search import search
 
 from serializers.executor import close_program, search_documents_from_list
-from settings.driver import create_webdriver
 
 
-def execute_legal_search(abstract):
-    browser = create_webdriver(abstract)
+def execute_legal_search(browser, abstract):
     login(browser, abstract)
     search(browser, abstract)
     collect(browser, abstract)

@@ -3,8 +3,6 @@ from engines.eagle.name_search import name_search
 from project_management.export import export_document
 from serializers.executor import close_program, search_documents_from_list
 
-from settings.driver import create_webdriver
-
 from engines.eagle.download import execute_download
 from engines.eagle.login import login
 from engines.eagle.navigation import next_result
@@ -14,8 +12,7 @@ from engines.eagle.search import search
 
 
 # Identical to 'leopard', 'jaguar', 'rattlesnake', & 'tiger' execute_program
-def execute_program(abstract):
-    browser = create_webdriver(abstract)
+def execute_program(browser, abstract):
     login(browser, abstract)
     search_documents_from_list(
         browser,
@@ -29,8 +26,7 @@ def execute_program(abstract):
     close_program(browser, abstract)
 
 
-def execute_name_search(abstract):
-    browser = create_webdriver(abstract)
+def execute_name_search(browser, abstract):
     login(browser, abstract)
     name_search(browser, abstract)
     project = export_document(abstract)
