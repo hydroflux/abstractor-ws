@@ -4,6 +4,7 @@
 
 - [ ] Change 'county_variables' to config
 - [ ] Continue testing Octopus in headless chrome (use browser.save_screenshot('') to see what current feedback is returning)
+- [ ] Add more robust options to "create_output_file" in the "export" script
 - [ ] Consider moving the browser initialization out of the 'abstractor' file and into the 'environment' file??? (appears to be failing on any browser methods)
 - [ ] Create a way to check for login on different counties by grabbing the token
 - [ ] For 'open document' check for the title before executing the url???
