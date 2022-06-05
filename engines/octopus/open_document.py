@@ -11,7 +11,7 @@ def count_results(browser, abstract, document):
 
 
 def access_result_rows(browser, abstract, document):
-    return locate_elements_by_class_name(browser, abstract.county.classes["Result Row"], False, document)
+    return locate_elements_by_class_name(browser, abstract.county.classes["Result Row"], "result rows", False, document)
 
 
 def access_result_button(browser, abstract, document, result_rows):
@@ -36,9 +36,10 @@ def get_results(browser, abstract, document):
 def open_result(browser, abstract, document, result):
     if result:
         javascript_script_execution(browser, result)
-    result_rows = access_result_rows(browser, abstract, document)
-    result_link = access_result_button(browser, abstract, document, result_rows)
-    javascript_script_execution(browser, result_link)
+    else:
+        result_rows = access_result_rows(browser, abstract, document)
+        result_link = access_result_button(browser, abstract, document, result_rows)
+        javascript_script_execution(browser, result_link)
 
 
 # Not currently in use (only legal search set up)
