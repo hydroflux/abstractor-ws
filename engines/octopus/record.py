@@ -12,10 +12,14 @@ def record_document_type(browser, abstract, document):
     record_value(abstract, 'document type', document_type_field.text.title())
 
 
-def record_reception_number(abstract, document, reception_number_text):
-    reception_number = reception_number_text[1:]
+def set_document_download_values(document, reception_number):
     document.download_value = reception_number
     document.reception_number = reception_number
+
+
+def record_reception_number(abstract, document, reception_number_text):
+    reception_number = reception_number_text[1:]
+    set_document_download_values(abstract, document, reception_number)
     record_value(abstract, 'reception number', reception_number)
 
 
