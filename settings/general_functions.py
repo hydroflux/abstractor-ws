@@ -47,19 +47,6 @@ def element_title_strip(element):
     return element.text.title().strip()
 
 
-def update_sentence_case_extras(text):
-    return (text.replace("'S ", "'s ")
-            .replace("1St ", "1st ")
-            .replace("2Nd ", "2nd ")
-            .replace("3Rd ", "3rd ")
-            .replace("4Th ", "4th ")
-            .replace("Llc ", "LLC ")
-            .replace("Llp ", "LLP ")
-            .replace("Ii ", "II ")
-            .replace("Iii ", "III ")
-            )
-
-
 def scroll_to_top(browser):
     body_element = browser.find_element_by_tag_name("body")
     scroll_into_view(browser, body_element)
