@@ -26,6 +26,14 @@ def update_sentence_case_extras(text):
             )
 
 
+def title_strip(text):
+    return text.title().strip()
+
+
+def element_title_strip(element):
+    return element.text.title().strip()
+
+
 def record_value(abstract, column, value):
     if isinstance(value, str):
         value = update_sentence_case_extras(value)

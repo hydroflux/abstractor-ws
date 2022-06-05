@@ -39,14 +39,6 @@ def get_element_text(element):
     return element.text.strip()
 
 
-def title_strip(text):
-    return text.title().strip()
-
-
-def element_title_strip(element):
-    return element.text.title().strip()
-
-
 def scroll_to_top(browser):
     body_element = browser.find_element_by_tag_name("body")
     scroll_into_view(browser, body_element)
