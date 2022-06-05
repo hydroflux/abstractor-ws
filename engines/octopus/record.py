@@ -14,7 +14,7 @@ def record_document_type(browser, abstract, document):
 
 def set_document_download_values(document, reception_number):
     document.download_value = reception_number
-    document.reception_number = reception_number
+    document.reception_number = f'{reception_number}.pdf'
 
 
 def record_reception_number(abstract, document, reception_number_text):
