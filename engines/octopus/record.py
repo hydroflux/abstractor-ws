@@ -19,7 +19,7 @@ def set_document_download_values(document, reception_number):
 
 def record_reception_number(abstract, document, reception_number_text):
     reception_number = reception_number_text[1:]
-    set_document_download_values(abstract, document, reception_number)
+    set_document_download_values(document, reception_number)
     record_value(abstract, 'reception number', reception_number)
 
 
