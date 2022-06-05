@@ -51,7 +51,6 @@ def list_to_string(list, newline=True):
         return " ".join(list)
 
 
-
 def record_value(abstract, column, value):
     if isinstance(value, str):
         value = update_sentence_case_extras(value)
