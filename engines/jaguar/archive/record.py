@@ -1,9 +1,7 @@
 from selenium_utilities.locators import (locate_element_by_class_name,
                                          locate_element_by_id,
                                          locate_elements_by_tag_name)
-from serializers.recorder import record_comments, record_empty_values, record_value, title_strip, update_sentence_case_extras
-
-from settings.general_functions import (date_from_string, list_to_string)
+from serializers.recorder import record_comments, record_empty_values, record_value, title_strip, update_sentence_case_extras, list_to_string, date_from_string
 
 from engines.jaguar.validation import validate_reception_number
 

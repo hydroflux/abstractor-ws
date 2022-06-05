@@ -4,6 +4,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
 from selenium_utilities.open import assert_window_title
+from serializers.recorder import date_from_string
 
 from settings.county_variables.armadillo import (bad_login_text,
                                                  document_information_title,
@@ -13,7 +14,7 @@ from settings.county_variables.armadillo import (bad_login_text,
                                                  no_results_message,
                                                  no_results_text_class,
                                                  post_login_title)
-from settings.general_functions import date_from_string, timeout
+from settings.general_functions import timeout
 
 
 def get_login_validation_text(browser):

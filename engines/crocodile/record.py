@@ -4,7 +4,7 @@ from selenium.common.exceptions import (NoSuchElementException,
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-from serializers.recorder import title_strip
+from serializers.recorder import title_strip, list_to_string
 
 from settings.invalid import no_document_image
 from settings.county_variables.crocodile import (
@@ -17,7 +17,7 @@ from settings.county_variables.general import not_applicable
 from settings.dataframe_management import (extrapolate_document_value,
                                       multiple_documents_comment)
 from settings.general_functions import (get_direct_children, get_element_text,
-                                        list_to_string, set_image_link,
+                                        set_image_link,
                                         set_reception_number, short_nap,
                                         timeout, zipped_list)
 
