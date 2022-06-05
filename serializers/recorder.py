@@ -44,8 +44,12 @@ def remove_empty_list_items(list):
     return list
 
 
-def list_to_string(list):
-    return "\n".join(list)
+def list_to_string(list, newline=True):
+    if newline:
+        return "\n".join(list)
+    else:
+        return " ".join(list)
+
 
 
 def record_value(abstract, column, value):
