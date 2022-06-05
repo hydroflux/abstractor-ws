@@ -15,6 +15,7 @@ def record_document_type(browser, abstract, document):
 def record_reception_number(abstract, document, reception_number_text):
     reception_number = reception_number_text[1:]
     document.download_value = reception_number
+    document.reception_number = reception_number
     record_value(abstract, 'reception number', reception_number)
 
 
@@ -38,6 +39,8 @@ def record_indexing_information(browser, abstract, document):
     indexing_information_container = locate_element_by_id(browser, abstract.county.record["Indexing Information"],
                                                           "indexing information", False, document)
     indexing_text = indexing_information_container.text.split('\n')
+    if len(indexing_text) == 5:
+        indexing_text = indexing_text[:-1]
     reception_number_text, book_and_page_text, effective_date_text, recording_date_text = indexing_text
     record_reception_number(abstract, document, reception_number_text)
     record_book_and_page(abstract, book_and_page_text)
@@ -81,4 +84,4 @@ def record_document_fields(browser, abstract, document):
 def record(browser, abstract, document):
     if not abstract.review:
         record_document_fields(browser, abstract, document)
-        abstract.check_last_document(document)
+        # abstract.check_last_document(document)
