@@ -5,6 +5,7 @@ from selenium.common.exceptions import (NoSuchWindowException, JavascriptExcepti
                                         WebDriverException)
 
 from project_management.timers import medium_nap, naptime
+from settings.general_functions import save_screenshot
 
 
 def build_previous_download_path(abstract, document):
@@ -109,7 +110,8 @@ def check_for_download_error(browser, windows):
             browser.switch_to.window(windows[0])
             return True
         else:
-            browser.close()  # Added this line on 06/05/22 to handle multiple windows opening during headless downloads
+            # browser.close()  # Added this line on 06/05/22 to handle multiple windows in headless downloads
+            # Instead of doing here wait for the download to finish and then close extra windows
             browser.switch_to.window(windows[0])
     except NoSuchWindowException:
         print('Encountered a "no such window exception" error while trying to close the download window, '
@@ -118,6 +120,7 @@ def check_for_download_error(browser, windows):
     except WebDriverException:
         print('Encountered a "web driver exception" error while trying to close the download window, '
               'switching back to the original window.')
+        save_screenshot(browser, 'check_for_download_error', 'WebDriverException')
         browser.switch_to.window(windows[0])
 
 
