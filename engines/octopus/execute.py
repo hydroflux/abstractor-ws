@@ -10,9 +10,8 @@ from settings.driver import create_webdriver
 # from engines.octopus.download import execute_download
 from engines.octopus.login import login
 from engines.octopus.logout import logout
-# from engines.octopus.navigation import next_result
 # from engines.octopus.open_document import open_document
-# from engines.octopus.record import record
+from engines.octopus.record import record
 from engines.octopus.search import search
 
 
@@ -25,7 +24,7 @@ def execute_legal_search(abstract):
     for result in result_links:
         # naptime()
         open_result(browser, abstract, document, result)
-        # record
+        record(browser, abstract, document)
         # download
         browser.back()
         # naptime()
