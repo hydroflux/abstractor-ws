@@ -1,4 +1,3 @@
-from selenium_utilities.element_interaction import get_parent_element
 from selenium_utilities.locators import (locate_element_by_class_name,
                                          locate_element_by_id)
 from serializers.recorder import (date_from_string, list_to_string,
@@ -82,7 +81,7 @@ def record_legal(browser, abstract, document):
     if notes == '' or notes == ' ':
         record_value(abstract, 'legal', legal)
     else:
-        record_value(abstract, 'legal', f'{notes}\n{legal}')
+        record_value(abstract, 'legal', f'{notes}\n\n{legal}')
 
 
 def record_related_documents(browser, abstract, document):
