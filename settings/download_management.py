@@ -109,6 +109,7 @@ def check_for_download_error(browser, windows):
             browser.switch_to.window(windows[0])
             return True
         else:
+            browser.close()  # Added this line on 06/05/22 to handle multiple windows opening during headless downloads
             browser.switch_to.window(windows[0])
     except NoSuchWindowException:
         print('Encountered a "no such window exception" error while trying to close the download window, '
