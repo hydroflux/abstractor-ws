@@ -8,14 +8,19 @@ def register_result_count(browser, abstract, document):
     result_count_container = locate_elements_by_class_name(browser, abstract.county.classes["Result Count Container"],
                                                            "result count container", False)[1]
     result_count_text = result_count_container.text.split("\n")[1]
+    result_count = int(result_count_text.split(" ")[-2])
     if document is None:
-        abstract.number_search_results = int(result_count_text.split(" ")[-2])
+        print(f'Collection search returned "{str(result_count)}" results.')
+        abstract.number_search_results = result_count
     else:
-        document.number_results = int(result_count_text.split(" ")[-2])
+        document.number_results = result_count
 
 
 def count_results(browser, abstract, document):
-    if not abstract.number_search_results and document.number_results == 0:
+    # need to create a unified handler rather than calling the function twice
+    if document is not None and document.result_count == 0:
+        register_result_count(browser, abstract, document)
+    elif not abstract.number_search_results:
         register_result_count(browser, abstract, document)
 
 

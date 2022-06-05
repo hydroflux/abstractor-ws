@@ -10,7 +10,7 @@ def handle_continuing_collection_search(browser, abstract, document):
 
 
 def handle_search_values(browser, abstract, document):
-    if document.type == "legal":
+    if abstract.program == "legal":
         enter_input_value(browser, locate_element_by_id, abstract.county.inputs["Section"],
                           "section input", abstract.legal[0])
         enter_input_value(browser, locate_element_by_id, abstract.county.inputs["Township"],
@@ -30,7 +30,7 @@ def execute_search(browser, abstract, document):
 
 
 def search(browser, abstract, document=None):
-    if abstract.number_search_result:
+    if abstract.number_search_results:
         handle_continuing_collection_search(browser, abstract, document)
     else:
         open_url(browser, abstract.county.urls["Search Page"],
