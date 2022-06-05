@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-from classes.Document import Document
 # from engines.octopus.open_document import get_results, open_result
 from project_management.export import export_document
 # from project_management.timers import naptime
