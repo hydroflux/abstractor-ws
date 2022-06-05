@@ -2,6 +2,7 @@
 from classes.Document import Document
 from engines.octopus.open_document import get_results, open_result
 from project_management.export import export_document
+from serializers.downloader import download_document
 
 from serializers.executor import close_program
 
@@ -17,15 +18,15 @@ from engines.octopus.search import search
 
 def execute_legal_search(abstract):
     browser = create_webdriver(abstract)
-    document = Document("legal", abstract.legal)
+    document = Document("legal", abstract.legal, county=abstract.county)
     login(browser, abstract)
     search(browser, abstract, document)
     result_links = get_results(browser, abstract, document)
-    for result in result_links:
+    for result in result_links[:5]:
         # naptime()
         open_result(browser, abstract, document, result)
         record(browser, abstract, document)
-        execute_download(browser, abstract, document)
+        download_document(browser, abstract, document, execute_download)
         browser.back()
         # naptime()
     project = export_document(abstract)
