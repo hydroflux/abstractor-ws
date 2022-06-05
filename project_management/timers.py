@@ -41,17 +41,29 @@ def stop_timer(start_time):
     return datetime.now() - start_time
 
 
-# DOES NOT BELONG AND IS SUPERFLUOUS IN THE FIRST PLACE
-def handle_document_list_option(document_list):
-    if document_list is not None:
-        return f'\n{len(document_list)} documents imported for processing.'
+def update_user(abstract):
+    if abstract.program in ["execute", "review", "download"]:
+        if len(abstract.document_list) != 0:
+            return f'\n{len(abstract.document_list)} documents imported for processing.'
+        else:
+            input(f'Something went wrong, the "{abstract.program}" search returned \
+                  "{len(abstract.document_list)} for processing; Please review and press enter to continue...')
+    elif abstract.program == 'legal':
+        section, township, range, quarter = abstract.legal
+        quarter = 'ALL' if quarter == '' else quarter
+        return f'Searching "Township: {township} - {range}, {section}: {quarter}" \
+                 for any available documents in "{abstract.county}"...'
+    elif abstract.program == 'name':
+        return f'Searching "{abstract.county}" for any documents related to {abstract.search_name}...'
     else:
+        input(f'Something went wrong, no user update available for a "{abstract.program}" program \
+               "Please review and press enter to continue...')
         return ''
 
 
-def start_program_timer(county, document_list=None):
+def start_program_timer(abstract):
     start_time = start_timer()
-    print(f'{county} - {abstraction_type} started on: \n'
+    print(f'{abstract.county} - {abstraction_type} started on: \n'
           f'{str(start_time.strftime("%B %d, %Y %H:%M:%S"))}'
-          f'{handle_document_list_option(document_list)}')
+          f'{update_user(abstract)}')
     return start_time
