@@ -1,3 +1,4 @@
+from selenium_utilities.element_interaction import get_parent_element
 from selenium_utilities.locators import (locate_element_by_class_name,
                                          locate_element_by_id)
 from serializers.recorder import (date_from_string, list_to_string,
@@ -62,10 +63,24 @@ def record_parties(browser, abstract, document):
     record_value(abstract, 'grantee', list_to_string(grantee))
 
 
+def access_notes(browser, abstract, document):
+    notes_container = locate_element_by_id(browser, abstract.county.record["Notes"], "notes", False, document)
+    notes_field = notes_container.find_element_by_tag_name(abstract.county.record["Notes Tag"])
+    notes_text = title_strip(get_parent_element(notes_field).text)
+    if notes_text.startswith('N'):
+        return notes_text[7:]
+    elif notes_text.startswith('L'):
+        return notes_text[6:]
+
+
 def record_legal(browser, abstract, document):
     legal_field = locate_element_by_class_name(browser, abstract.county.record["Legal"], "legal", False, document)
     legal = list_to_string(legal_field.text.split('\n')[1:])
-    record_value(abstract, 'legal', legal)
+    notes = access_notes(browser, abstract, document)
+    if notes == '' or notes == ' ':
+        record_value(abstract, 'legal', legal)
+    else:
+        record_value(abstract, 'legal', f'{notes}\n{legal}')
 
 
 def record_related_documents(browser, abstract, document):

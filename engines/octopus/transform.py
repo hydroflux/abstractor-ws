@@ -63,6 +63,8 @@ def update_county_attributes(abstract):
         "Document Type": octopus.document_type_class_name,
         "Indexing Information": octopus.indexing_information_id,
         "Parties": octopus.parties_id,
+        "Notes": octopus.notes_id,
+        "Notes Tag": octopus.notes_tag,
         "Legal": octopus.legal_class_name,
         "Related Documents": octopus.related_documents_class_name
     }
