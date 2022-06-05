@@ -3,10 +3,12 @@
 ## General To Do
 
 - [ ] Change 'county_variables' to config
+- [ ] Create a way to check for login on different counties by grabbing the token
 - [ ] For 'open document' check for the title before executing the url???
 - [ ] Create a way to report to the user that legal / name searches are starting
 - [ ] Update previously_downloaded to determine if the intended document has already been downloaded, and therefore can just be renamed
 - [ ] Drop all ".pdf" extensions from the 'download_value' setter and update in the 'set_download_path_and_name_values' function
+- [ ] Add all initial program readouts in the 'timers' script--apparently need to drop the list option which reports the number of documents anyway
 - [ ] Create a function to remove any duplicates (i.e. documents with a (1), (2), etc.)
 - [ ] In the environment file you can return the 'execute_program' function and extrapolate the 'create_webdriver' function into the 'execute_abstractor' function from all of the 'execute' files (will simplify overall program execution)
 - [ ] Create a better file start for handling the "documents for importing" for name searches & legal searches
