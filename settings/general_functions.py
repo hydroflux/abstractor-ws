@@ -127,4 +127,4 @@ def save_screenshot(browser, function_name, exception_type):
     screenshot_name = f'{function_name}_{exception_type}.png'
     browser.save_screenshot(screenshot_name)
     os.chdir(working_directory)
-    print(f'Browser saved a screenshot titled "{screenshot_name}" in the Abstractor root folder {root} for review.')
+    print(f'Browser saved a screenshot titled "{screenshot_name}" in the Abstractor root folder "{root}" for review.')
