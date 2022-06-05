@@ -5,6 +5,7 @@ from serializers.recorder import (date_from_string, list_to_string,
                                   record_comments, record_empty_values,
                                   record_value, remove_empty_list_items,
                                   title_strip)
+from settings.general_functions import get_direct_children
 
 
 def record_document_type(browser, abstract, document):
@@ -65,12 +66,13 @@ def record_parties(browser, abstract, document):
 
 def access_notes(browser, abstract, document):
     notes_container = locate_element_by_id(browser, abstract.county.record["Notes"], "notes", False, document)
-    notes_field = notes_container.find_element_by_tag_name(abstract.county.record["Notes Tag"])
-    notes_text = title_strip(get_parent_element(notes_field).text)
-    if notes_text.startswith('N'):
-        return notes_text[7:]
-    elif notes_text.startswith('L'):
-        return notes_text[6:]
+    notes_text = get_direct_children(notes_container)[2].text
+    if notes_text.startswith('Legals'):
+        return list_to_string(notes_text.split('\n')[1:])
+    elif notes_text.startswith('Notes'):
+        return list_to_string(notes_text.split(' ')[1:], False)
+    else:
+        input('Unexpected result while parsing notes, please review and update accordingly...')
 
 
 def record_legal(browser, abstract, document):
