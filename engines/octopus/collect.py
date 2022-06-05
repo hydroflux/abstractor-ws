@@ -10,7 +10,7 @@ def register_result_count(browser, abstract, document):
     result_count_text = result_count_container.text.split("\n")[1]
     result_count = int(result_count_text.split(" ")[-2])
     if document is None:
-        print(f'Collection search returned "{str(result_count)}" results.')
+        print(f'Collection search returned "{str(result_count)}" results for processing.')
         abstract.number_search_results = result_count
     else:
         document.number_results = result_count
@@ -42,7 +42,12 @@ def access_result_button(abstract, result, document=None):
 def build_document(abstract, result):
     reception_number = access_result_reception_number(result)
     description_link = access_result_button(abstract, result)
-    return Document("document_number", reception_number, county=abstract.county, description_link=description_link)
+    return Document("document_number",
+                    reception_number,
+                    county=abstract.county,
+                    description_link=description_link,
+                    number_results=1
+                    )
 
 
 def build_document_list(browser, abstract):
