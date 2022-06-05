@@ -7,13 +7,13 @@ from selenium_utilities.open import open_url
 def handle_search_values(browser, abstract, document):
     if document.type == "legal":
         enter_input_value(browser, locate_element_by_id, abstract.county.inputs["Section"],
-                          "section input", document.value[0], document)
+                          "section input", abstract.legal[0])
         enter_input_value(browser, locate_element_by_id, abstract.county.inputs["Township"],
-                          "township input", document.value[1], document)
+                          "township input", abstract.legal[1])
         enter_input_value(browser, locate_element_by_id, abstract.county.inputs["Range"],
-                          "range input", document.value[2], document)
+                          "range input", abstract.legal[2])
     else:
-        print(f'Abstractor path has not yet been developed to "open_search_type_tab" for document type "\
+        print(f'Abstractor path has not yet been developed to "handle search values" for document type "\
                {document.type}", please review...')
         input()
 
