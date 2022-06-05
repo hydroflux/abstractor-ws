@@ -34,6 +34,13 @@ def element_title_strip(element):
     return element.text.title().strip()
 
 
+def remove_empty_list_items(list):
+    while (" " in list):
+        list.remove(" ")
+    while ("" in list):
+        list.remove("")
+
+
 def record_value(abstract, column, value):
     if isinstance(value, str):
         value = update_sentence_case_extras(value)
