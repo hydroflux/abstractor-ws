@@ -44,7 +44,7 @@ def stop_timer(start_time):
 def update_user(abstract):
     if abstract.program in ["execute", "review", "download"]:
         if len(abstract.document_list) != 0:
-            return f'\n{len(abstract.document_list)} documents imported for processing.'
+            return f'{len(abstract.document_list)} documents imported for processing.'
         else:
             input(f'Something went wrong, the "{abstract.program}" search returned \
                   "{len(abstract.document_list)} for processing; Please review and press enter to continue...')
@@ -64,6 +64,6 @@ def update_user(abstract):
 def start_program_timer(abstract):
     start_time = start_timer()
     print(f'{abstract.county} - {abstraction_type} started on: \n'
-          f'{str(start_time.strftime("%B %d, %Y %H:%M:%S"))}'
+          f'{str(start_time.strftime("%B %d, %Y %H:%M:%S"))}\n'
           f'{update_user(abstract)}')
     return start_time
