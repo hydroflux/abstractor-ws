@@ -18,7 +18,8 @@ def enter_credentials(browser, abstract):
 
 def check_for_redirect(browser, abstract):
     micro_nap()
-    redirect_modal = locate_element_by_id(browser, abstract.county.ids["Redirect Modal"], "redirect modal")
+    redirect_modal = locate_element_by_id(browser, abstract.county.ids["Redirect Modal"],
+                                          "redirect modal", quick=True)
     if redirect_modal is None:
         return
     elif get_element_class(redirect_modal) == abstract.county.classes["Redirect Active"]:
