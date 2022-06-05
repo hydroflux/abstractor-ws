@@ -13,7 +13,22 @@ def record_comments(abstract, document):
         #     no_document_image(dataframe, document)
 
 
+def update_sentence_case_extras(text):
+    return (text.replace("'S ", "'s ")
+            .replace("1St ", "1st ")
+            .replace("2Nd ", "2nd ")
+            .replace("3Rd ", "3rd ")
+            .replace("4Th ", "4th ")
+            .replace("Llc ", "LLC ")
+            .replace("Llp ", "LLP ")
+            .replace("Ii ", "II ")
+            .replace("Iii ", "III ")
+            )
+
+
 def record_value(abstract, column, value):
+    if isinstance(value, str):
+        value = update_sentence_case_extras(value)
     abstract.dataframe[column.title()].append(value)
 
 
