@@ -5,7 +5,7 @@ class County:
     def __init__(self, county_name, prefix, state, state_prefix, engine,
                  credentials=None, urls=None, titles=None,
                  buttons=None, classes=None, ids=None, inputs=None,
-                 messages=None, scripts=None, tags=None, iframes=None, other=None):
+                 messages=None, record=None, scripts=None, tags=None, iframes=None, other=None):
         self.county_name = county_name
         self.prefix = prefix
         self.state = state
@@ -21,6 +21,7 @@ class County:
         self.ids = ids
         self.inputs = inputs
         self.messages = messages
+        self.record = record
         self.scripts = scripts
         self.tags = tags
         self.iframes = iframes
