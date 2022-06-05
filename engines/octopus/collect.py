@@ -15,7 +15,7 @@ def register_result_count(browser, abstract, document):
 
 
 def count_results(browser, abstract, document):
-    if not abstract.number_search_results:
+    if not abstract.number_search_results and document.number_results == 0:
         register_result_count(browser, abstract, document)
 
 
