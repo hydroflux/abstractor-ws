@@ -70,6 +70,9 @@ def program_type_update(abstract):
     elif abstract.program == 'name_search':
         abstract.download = False
         abstract.download_only = False
+    elif abstract.program == 'legal':
+        section, township, range, quarter = abstract.legal
+        abstract.file_name = f'{abstract.county.prefix}-T{township}N-R{range}W-{section}-{quarter}-LEGAL-SEARCH'
 
 
 def handle_program_type(abstract):
