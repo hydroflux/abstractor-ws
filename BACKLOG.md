@@ -3,6 +3,7 @@
 ## General To Do
 
 - [ ] Change 'county_variables' to config
+- [ ] For 'open document' check for the title before executing the url???
 - [ ] In the environment file you can return the 'execute_program' function and extrapolate the 'create_webdriver' function into the 'execute_abstractor' function from all of the 'execute' files (will simplify overall program execution)
 - [ ] Create a 'validator' consolidation file to handle login and document validation
 - [ ] Eliminate the rabbit 'name_search' script by moving the document initialization into the search script (keep the execute function just drop the name search script)
