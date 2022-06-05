@@ -7,7 +7,7 @@ from serializers.executor import close_program
 
 from settings.driver import create_webdriver
 
-# from engines.octopus.download import execute_download
+from engines.octopus.download import execute_download
 from engines.octopus.login import login
 from engines.octopus.logout import logout
 # from engines.octopus.open_document import open_document
@@ -25,7 +25,7 @@ def execute_legal_search(abstract):
         # naptime()
         open_result(browser, abstract, document, result)
         record(browser, abstract, document)
-        # download
+        execute_download(browser, abstract, document)
         browser.back()
         # naptime()
     project = export_document(abstract)
