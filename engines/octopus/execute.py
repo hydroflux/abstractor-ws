@@ -2,6 +2,7 @@
 from classes.Document import Document
 from engines.octopus.open_document import get_results, open_result
 from project_management.export import export_document
+from project_management.timers import naptime
 from serializers.downloader import download_document
 
 from serializers.executor import close_program
@@ -27,8 +28,8 @@ def execute_legal_search(abstract):
         open_result(browser, abstract, document, result)
         record(browser, abstract, document)
         download_document(browser, abstract, document, execute_download)
+        naptime()
         browser.back()
-        # naptime()
     project = export_document(abstract)
     project.bundle_project(abstract)
     close_program(browser, abstract, logout)
