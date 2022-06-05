@@ -39,6 +39,7 @@ def remove_empty_list_items(list):
         list.remove(" ")
     while ("" in list):
         list.remove("")
+    return list
 
 
 def record_value(abstract, column, value):
