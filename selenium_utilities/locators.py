@@ -49,8 +49,12 @@ def locate_element_by_id(locator, id, type, clickable=False, document=None, quic
         element = locator.find_element_by_id(id)
         return element
     except TimeoutException:
+        return print_timeout_statement(type, document)
+    except NoSuchElementException:
         if not quick:
-            return print_timeout_statement(type, document)
+            return print_no_such_element_statement(type, document)
+        else:
+            input('Browser hit a "NoSuchElementException", but has no instructed direction, please review...')
 
 
 def locate_element_by_name(locator, name, type, clickable=False, document=None, quick=False):
