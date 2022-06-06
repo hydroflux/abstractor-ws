@@ -53,8 +53,6 @@ def locate_element_by_id(locator, id, type, clickable=False, document=None, quic
     except NoSuchElementException:
         if not quick:
             return print_no_such_element_statement(type, document)
-        else:
-            input('Browser hit a "NoSuchElementException", but has no instructed direction, please review...')
 
 
 def locate_element_by_name(locator, name, type, clickable=False, document=None, quick=False):
