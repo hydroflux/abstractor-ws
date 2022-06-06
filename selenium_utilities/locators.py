@@ -34,7 +34,8 @@ def locate_elements_by_class_name(locator, class_name, type, clickable=False, do
         elements = locator.find_elements_by_class_name(class_name)
         return elements
     except TimeoutException:
-        return print_timeout_statement(type, document)
+        if not quick:
+            return print_timeout_statement(type, document)
 
 
 def locate_element_by_id(locator, id, type, clickable=False, document=None, quick=False):
@@ -48,7 +49,8 @@ def locate_element_by_id(locator, id, type, clickable=False, document=None, quic
         element = locator.find_element_by_id(id)
         return element
     except TimeoutException:
-        return print_timeout_statement(type, document)
+        if not quick:
+            return print_timeout_statement(type, document)
 
 
 def locate_element_by_name(locator, name, type, clickable=False, document=None, quick=False):
@@ -62,7 +64,8 @@ def locate_element_by_name(locator, name, type, clickable=False, document=None, 
         element = locator.find_element_by_name(name)
         return element
     except TimeoutException:
-        return print_timeout_statement(type, document)
+        if not quick:
+            return print_timeout_statement(type, document)
 
 
 def locate_element_by_tag_name(locator, tag_name, type, clickable=False, document=None, quick=False):
@@ -76,7 +79,8 @@ def locate_element_by_tag_name(locator, tag_name, type, clickable=False, documen
         element = locator.find_element_by_tag_name(tag_name)
         return element
     except TimeoutException:
-        return print_timeout_statement(type, document)
+        if not quick:
+            return print_timeout_statement(type, document)
 
 
 def locate_elements_by_tag_name(locator, tag_name, type, clickable=False, document=None, quick=False):
@@ -90,7 +94,8 @@ def locate_elements_by_tag_name(locator, tag_name, type, clickable=False, docume
         elements = locator.find_elements_by_tag_name(tag_name)
         return elements
     except TimeoutException:
-        return print_timeout_statement(type, document)
+        if not quick:
+            return print_timeout_statement(type, document)
 
 
 def print_timeout_statement(type, document):
