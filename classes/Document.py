@@ -30,7 +30,7 @@ class Document:
     # Take name out of document value
     def document_value(self):
         if self.type in ["document_number", "name"]:
-            return [str(self.value)]
+            return str(self.value)
         elif self.type == "book_and_page":
             return [str(self.value["Book"]), str(self.value["Page"])]
         elif self.type == "volume_and_page":
