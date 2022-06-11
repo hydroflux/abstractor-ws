@@ -4,9 +4,12 @@
 
 - [ ] Change 'county_variables' to config
 - [ ] Continue testing Octopus in headless chrome (use browser.save_screenshot('') to see what current feedback is returning)
+- [ ] - [ ] Build print statements and returns for "NoSuchElementException" in the locators script
+- [ ] Revert the "quick" flag on the "TimeoutExceptions" in the "locators" script--if its quick it doesn't hit timeout, "."
 - [ ] Add more robust options to "create_output_file" in the "export" script
 - [ ] Consider moving the browser initialization out of the 'abstractor' file and into the 'environment' file??? (appears to be failing on any browser methods)
 - [ ] Create a way to check for login on different counties by grabbing the token
+- [ ] Get rid of the 'execution_review' variable (only used in eagle??)
 - [ ] For 'open document' check for the title before executing the url???
 - [ ] Create a way to report to the user that legal / name searches are starting
 - [ ] Update previously_downloaded to determine if the intended document has already been downloaded, and therefore can just be renamed
