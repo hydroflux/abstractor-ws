@@ -136,6 +136,10 @@ def record_related_documents(abstract):
     abstract.dataframe['Related Documents'].append('')
 
 
+def record_document_link(abstract):
+    abstract.dataframe['Document Link'].append('')
+
+
 def record_document_fields(browser, abstract, document):
     record_value(browser, abstract, document, 'reception number', id=reception_number_id)  # Reception Number
     record_value(browser, abstract, document, 'volume', id=volume_id, alt='null')  # Volume
@@ -148,6 +152,7 @@ def record_document_fields(browser, abstract, document):
     record_book(abstract)  # Book
     record_related_documents(abstract)  # Related Documents
     record_comments(abstract, document)  # Comments
+    record_document_link(abstract)
 
 
 def record(browser, abstract, document):
