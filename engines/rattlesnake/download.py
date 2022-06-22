@@ -25,4 +25,4 @@ def execute_download(browser, abstract, document):
     click_button(browser, locate_element_by_id, download_page_id,
                  "download page button", document)  # Open Download Page
     if verify_document_image_page_loaded(browser, document):
-    handle_document_download_type(browser, abstract, document)
+        handle_document_download_type(browser, abstract, document)
