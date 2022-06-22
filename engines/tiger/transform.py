@@ -10,8 +10,14 @@ def update_document_attributes(abstract):
 
 
 def convert_document_numbers(abstract):
-    # Use the leopard 'transform' script as a model
-    pass
+    for document in abstract.document_list:
+        if document.type == "document_number" and document.value.find("-") != -1:
+            document_number, year = document.value.split("-")
+            document.year = int(year)
+            if year <= 2004:
+                input("Please review previously written code in order to create a more robust transformation script.")
+            else:
+                document.value = f'{year}{document_number.zfill(9)}'
 
 
 def update_county_attributes(abstract):
