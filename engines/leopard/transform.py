@@ -7,7 +7,7 @@ def convert_document_numbers(abstract):
         if document.type == "document_number" and document.value.find("-") != -1:
             document_number, year = document.value.split("-")
             document.year = int(year)
-            if year <= 1984:
+            if document.year <= 1984:
                 document.value = document_number
             else:
                 document.value = f'{year}{document_number.zfill(7)}'
