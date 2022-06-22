@@ -1,6 +1,5 @@
 from serializers.executor import close_program, search_documents_from_list
 from engines.tiger.transform import transform_document_list
-from settings.driver import create_webdriver
 
 from engines.tiger.download import execute_download
 from engines.tiger.login import login
@@ -13,8 +12,7 @@ print("execute", __name__)
 
 
 # Identical to 'leopard', 'jaguar', 'rattlesnake', & 'eagle' execute_program
-def execute_program(abstract):
-    browser = create_webdriver(abstract)
+def execute_program(browser, abstract):
     transform_document_list(abstract)
     login(browser, abstract)
     search_documents_from_list(
