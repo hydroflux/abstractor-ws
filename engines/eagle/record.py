@@ -287,7 +287,7 @@ def re_record_document_fields(browser, abstract, document):
 
 def access_download_information(browser, abstract, document):
     handle_document_image_status(browser, abstract, document)
-    document_tables = access_document_tables(browser, document)
+    document_tables = access_document_tables(browser, abstract, document)
     reception_field, _ = access_indexing_information(abstract, document_tables[1])
     reception_number, _, _ = split_reception_field(reception_field)
     set_document_download_values(abstract, document, reception_number)
