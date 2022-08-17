@@ -174,6 +174,8 @@ def prepare_file_for_download(abstract, document):
         return True
     else:
         # raise ValueError("%s isn't a file!" % document.download_path)
+        print(f'Expected Download Path: {document.download_path}')
+        print(f'Is File?: {abstract.document_directory}/{document.new_name}')
         print('Encountered an issue preparing file for download for '
               f'{document.extrapolate_value()}, trying again...')
         medium_nap()
