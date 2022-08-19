@@ -160,6 +160,7 @@ def set_document_download_values(abstract, document, reception_number):
 def record_indexing_data(abstract, document_table, document):
     reception_field, recording_date = access_indexing_information(abstract, document_table)
     reception_number, book, page = split_reception_field(reception_field)
+    reception_number = reception_number.split('\n')[0]
     set_document_download_values(abstract, document, reception_number)
     record_value(abstract, 'reception number', reception_number)
     record_value(abstract, 'book', book)
