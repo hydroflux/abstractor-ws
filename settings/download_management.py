@@ -133,9 +133,14 @@ def check_browser_windows(browser):
 
 def wait_for_download(browser, abstract, document):
     download_wait = True
+    count = 0
     while not os.path.exists(document.download_path) and download_wait:
+        count += 1
+        if count == 60:
+            input(f'Waiting for document "{document.new_name}" to be added into the document directory, '
+                  f'please press enter to continue...')
         check_browser_windows(browser)
-        sleep(1)  # Increase to 2 seconds if still having issues with no such window exception
+        sleep(2)  # Increase to 2 seconds if still having issues with no such window exception
         download_wait = False
         directory_files = os.listdir(abstract.document_directory)
         for file_name in directory_files:
