@@ -7,6 +7,8 @@ from engines.jaguar.execute import execute_program as execute_jaguar
 from engines.leopard.execute import execute_program as execute_leopard
 from engines.octopus.execute import \
     execute_legal_search as execute_octopus_legal
+from engines.platypus.execute import \
+    execute_legal_search as execute_platypus_legal
 from engines.rabbit.execute import execute_name_search as rabbit_name_search
 from engines.rabbit.execute import execute_program as execute_rabbit
 from engines.rattlesnake.execute import execute_early_document_download
@@ -42,6 +44,12 @@ def engine_switch(abstract):
                 abstract.headless = False
             return execute_octopus_legal
             # return execute_octopus_legal(abstract)
+    elif abstract.county.engine == 'platypus':
+        if abstract.program in ["legal"]:
+            if abstract.program == "download":
+                abstract.headless = False
+            return execute_platypus_legal
+            # return execute_platypus_legal(abstract)
     elif abstract.county.engine == 'tiger':
         if abstract.program in ["execute", "review", "download"]:
             if abstract.program == "download":
