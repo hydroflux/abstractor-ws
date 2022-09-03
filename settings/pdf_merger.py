@@ -39,7 +39,7 @@ def remove_original_files(target_directory):
     for file in os.listdir(target_directory):
         # if len(file) > 19 or file.endswith('.DS_Store'):  # Rattlesnake
         print(len(file))
-        if len(file) > 17 or file.endswith('.DS_Store'):  # Octopus
+        if len(file) > 17 or file.endswith('.DS_Store'):  # Octopus & # Platypus
             os.remove(file)
 
 
