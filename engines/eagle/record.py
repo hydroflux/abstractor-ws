@@ -2,7 +2,7 @@ from functools import partial
 from selenium.common.exceptions import StaleElementReferenceException
 
 from selenium_utilities.element_interaction import center_element
-from selenium_utilities.locators import (locate_element_by_id,
+from selenium_utilities.locators import (locate_element_by_id, locate_element_by_tag_name,
                                          locate_elements_by_class_name)
 
 from project_management.timers import medium_nap, naptime
@@ -108,11 +108,15 @@ def drop_superfluous_information(abstract, string):
 
 
 def access_table_body(document_table, abstract):  # Argument order important in order to work with 'map'
-    return document_table.find_element_by_tag_name(abstract.county.tags["Index Table"][0])
+    # return document_table.find_element_by_tag_name(abstract.county.tags["Index Table"][0])
+    return locate_element_by_tag_name(document_table, abstract.county.tags["Index Table"][0],
+                                      "document table body", False, quick=True)
 
 
 def access_table_rows(abstract, table_body):
     body_text = table_body.find_elements_by_tag_name(abstract.county.tags["Index Table"][1])
+    # body_text = locate_element_by_tag_name(table_body, abstract.county.tags["Index Table"][1],
+    #                                        "document_table_rows", False, quick=True)
     return body_text
 
 
@@ -154,6 +158,7 @@ def split_reception_field(reception_field):
 
 def set_document_download_values(abstract, document, reception_number):
     document.reception_number = reception_number
+    print("document reception number", document.reception_number)
     document.download_value = f'{document.reception_number}-{abstract.county.other["Stock Download"]}'
 
 
