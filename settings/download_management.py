@@ -9,9 +9,10 @@ from settings.general_functions import save_screenshot
 
 
 def build_previous_download_path(abstract, document):
-    if document.new_name is None:
+    if document.new_name is None or document.new_name and document.number_results > 1:
         return f'{abstract.document_directory}/{document.county.prefix}-{document.reception_number}.pdf'
     else:
+        print("document new name", document.new_name)
         return f'{abstract.document_directory}/{document.new_name}'
 
 
@@ -40,6 +41,8 @@ def is_duplicate(abstract, document, count=0):
 
 def previously_downloaded(abstract, document):
     document_download_path = build_previous_download_path(abstract, document)
+    print("document new name 2", document.new_name)
+    print("document download path", document_download_path)
     if os.path.exists(document_download_path):
         if is_duplicate(abstract, document):
             abstract.report_document_download(document)  # Add an alternative for 'already downloaded'
@@ -89,12 +92,14 @@ def get_downloaded_file_name(browser, wait_time=300):
 
 
 def set_new_download_name(document):
-    if document.new_name is None:
+    if document.new_name is None or document.new_name and document.number_results > 1:
+        print("prime new name", document.new_name)
         document.new_name = f'{document.county.prefix}-{document.reception_number}.pdf'
 
 
 def set_download_path_and_name_values(browser, abstract, document):
     set_new_download_name(document)
+    print("secondary new name", document.new_name)
     if document.download_value is not None:
         document.download_path = f'{abstract.document_directory}/{document.download_value}'
     else:
@@ -136,7 +141,7 @@ def wait_for_download(browser, abstract, document):
     count = 0
     while not os.path.exists(document.download_path) and download_wait:
         count += 1
-        if count == 60:
+        if count == 100:
             input(f'Waiting for document "{document.new_name}" to be added into the document directory, '
                   f'please press enter to continue...')
         check_browser_windows(browser)
@@ -208,6 +213,8 @@ def check_for_rename(abstract, document):
 
 def update_download(browser, abstract, document):
     set_download_path_and_name_values(browser, abstract, document)
+    attrs = vars(document)
+    print(', '.join("%s: %s" % item for item in attrs.items()))
     wait_for_download(browser, abstract, document)
     naptime()
     rename_download(abstract, document)
