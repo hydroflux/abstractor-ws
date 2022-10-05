@@ -11,9 +11,9 @@ from serializers.recorder import record_value
 # from serializers.recorder import (record_comments, record_empty_values,
 #                                   record_value)
 
-from settings.county_variables.general import search_errors
+# from settings.county_variables.general import search_errors
 from settings.invalid import no_document_image
-# from settings.settings import execution_review
+# from settings.county_variables.general import execution_review
 
 from engines.jaguar.error_handling import check_for_error
 
