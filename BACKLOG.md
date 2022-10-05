@@ -22,6 +22,8 @@
 - [ ] Take 'name' out as an option on the Document class and use a 'collect' script to gather numbers prior to searching
 - [ ] Create a 'validator' consolidation file to handle login and document validation
 - [ ] Eliminate the rabbit 'name_search' script by moving the document initialization into the search script (keep the execute function just drop the name search script)
+- [ ] "previously_downloaded" and subsequent downloads should also check for "-1", etc. consecutive prints in order to avoid re-downloading documents with multiple results
+- [ ] Print a different result statement if the last result was popped with document.check_last_document
 - [ ] Removed 'update sentence case extras' and update 'record_value' in the rattlesnake record script
 - [ ] 'abstraction_type' variable doesn't need to be imported anywhere because it's on the Abstract class as an attribute
 - [ ] Comment imports and section by type
@@ -191,14 +193,11 @@
 - [ ] Create a script for 'logout'
 - [ ] Create a script for 'search'
 - [ ] Create a script for 'open_document'
-- [ ] Continue updating the 'recorder' script
-- [ ] Continue updating the 'downloader' script
 - [ ] Create a script for 'transform'
 - [ ] Create a script for 'validate'
 
 ### Executor To Do
 
-- [ ] Move 'check_length' into the 'handle_single_document' function (make sure that the order-of-events still makes sense)
 - [ ] Integrate 'check_last_document' (currently only used in eagle record??) into the 'handle_single_document' or 'handle_multiple_documents' script
 - [ ] Update all dependent scripts with the 'abstract' argument (open, login, search, next_result (navigation) scripts)
 
@@ -210,7 +209,6 @@
 
 ### County Variables To Do
 
-- [ ] Eliminate superfluous lines of code commented out at previous testing stages across all scripts
 - [ ] Check all variables in each 'county_variables' script to make sure they are still being used
 - [ ] Streamline variable names across all 'county_variables' scripts
 - [ ] Create class variables on the Document class for any 'county_variables' used across multiple / all scripts
@@ -229,7 +227,7 @@
 - [ ] Along with above, the new function for waiting for a download & then renaming it could probably be worked together in a new logic path
 - [ ] The 'document_directory' should be created if 'download' is true but not otherwise
 - [ ] Check if 'document_directory' (.exists?) each time a document is downloaded, & create otherwise
-- [ ] Search both the 'download_name' (is that the correct attribute) and the 'new_name' when determining if a document has been downloaded or not (previously_downloaded)
+- [ ] Search both the 'download_name' (is that the correct attribute) and the 'target_name' when determining if a document has been downloaded or not (previously_downloaded)
 - [ ] Create some series of checks (maybe in 'transform' scripts) to check for previously downloaded documents at the outset--just have to be careful about documents with multiple results (but that could probably be handled with the 'number_results' attribute
 - [ ] Move the 'document_downloaded' / 'no_download' logic from the 'download' scripts into the 'previously_downloaded' and 'update_download' functions
 - [ ] Streamline the functions involved in the 'download_management' script--they're kind of a mess
