@@ -1,111 +1,11 @@
 import os
-from time import sleep, time
+from time import sleep
 
-from selenium.common.exceptions import (NoSuchWindowException, JavascriptException,
+from selenium.common.exceptions import (NoSuchWindowException,
                                         WebDriverException)
 
 from project_management.timers import medium_nap, naptime
 from settings.general_functions import save_screenshot
-
-
-def build_previous_download_path(abstract, document):
-    if document.new_name is None or document.new_name and document.number_results > 1:
-        return f'{abstract.document_directory}/{document.county.prefix}-{document.reception_number}.pdf'
-    else:
-        print("document new name", document.new_name)
-        return f'{abstract.document_directory}/{document.new_name}'
-
-
-def is_duplicate(abstract, document, count=0):
-    if document.number_results == 1:
-        return True
-    elif document.result_number > 0 and document.type == "document_number":
-        for element in abstract.dataframe["Reception Number"]:
-            if element == abstract.dataframe["Reception Number"][-1]:
-                count += 1
-            elif element == f'{abstract.dataframe["Reception Number"][-1]}-{str(count)}':
-                count += 1
-        if count > 1:
-            abstract.dataframe["Reception Number"][-1] = (
-                f'{abstract.dataframe["Reception Number"][-1]}-{str(count - 1)}'
-            )
-            document.new_name = (
-                f'{document.county.prefix}-{document.reception_number}-{str(count - 1)}.pdf'
-            )
-            return False
-        else:
-            return True
-    else:
-        return True
-
-
-def previously_downloaded(abstract, document):
-    document_download_path = build_previous_download_path(abstract, document)
-    print("document new name 2", document.new_name)
-    print("document download path", document_download_path)
-    if os.path.exists(document_download_path):
-        if is_duplicate(abstract, document):
-            abstract.report_document_download(document)  # Add an alternative for 'already downloaded'
-            return True
-        else:
-            # print statement about duplicate
-            return False
-    else:
-        return False
-
-
-def close_download_window(browser):
-    windows = browser.window_handles
-    if len(windows) > 1:
-        browser.switch_to.window(windows[1])
-        browser.close()
-        browser.switch_to.window(windows[0])
-
-
-def get_downloaded_file_name(browser, wait_time=300):
-    browser.execute_script("window.open()")
-    # switch to new tab
-    browser.switch_to.window(browser.window_handles[-1])
-    # navigate to chrome downloads
-    browser.get('chrome://downloads')
-    # define the endTime
-    endTime = time() + wait_time
-    while True:
-        download_percentage_script = ("return document.querySelector('downloads-manager')"
-                                      ".shadowRoot.querySelector('#downloadsList downloads-item')"
-                                      ".shadowRoot.querySelector('#progress').value")
-        download_name_script = ("return document.querySelector('downloads-manager')"
-                                ".shadowRoot.querySelector('#downloadsList downloads-item')"
-                                ".shadowRoot.querySelector('div#content  #file-link').text ")
-        try:
-            # get downloaded percentage
-            downloadPercentage = browser.execute_script(download_percentage_script)
-            # check if downloadPercentage is 100 (otherwise the script will keep waiting)
-            if downloadPercentage == 100:
-                # return the file name once the download is completed
-                return browser.execute_script(download_name_script)
-        except JavascriptException:  # Document already downloaded
-            return browser.execute_script(download_name_script)
-        sleep(1)
-        if time() > endTime:
-            break
-
-
-def set_new_download_name(document):
-    if document.new_name is None or document.new_name and document.number_results > 1:
-        print("prime new name", document.new_name)
-        document.new_name = f'{document.county.prefix}-{document.reception_number}.pdf'
-
-
-def set_download_path_and_name_values(browser, abstract, document):
-    set_new_download_name(document)
-    print("secondary new name", document.new_name)
-    if document.download_value is not None:
-        document.download_path = f'{abstract.document_directory}/{document.download_value}'
-    else:
-        document.download_value = get_downloaded_file_name(browser)
-        close_download_window(browser)
-        document.download_path = f'{abstract.document_directory}/{document.download_value}'
 
 
 def check_for_download_error(browser, windows):
@@ -142,7 +42,7 @@ def wait_for_download(browser, abstract, document):
     while not os.path.exists(document.download_path) and download_wait:
         count += 1
         if count == 100:
-            input(f'Waiting for document "{document.new_name}" to be added into the document directory, '
+            input(f'Waiting for document "{document.target_name}" to be added into the document directory, '
                   f'please press enter to continue...')
         check_browser_windows(browser)
         sleep(2)  # Increase to 2 seconds if still having issues with no such window exception
@@ -176,16 +76,16 @@ def check_file_size(download_path):
 
 def prepare_file_for_download(abstract, document):
     if check_file_size(document.download_path):
-        os.rename(document.download_value, document.new_name)
-        check_download_size(document.new_name, document)
+        os.rename(document.download_value, document.target_name)
+        check_download_size(document.target_name, document)
         return True
-    elif os.path.isfile(f'{abstract.document_directory}/{document.new_name}'):
-        check_download_size(document.new_name, document)
+    elif os.path.isfile(f'{abstract.document_directory}/{document.target_name}'):
+        check_download_size(document.target_name, document)
         return True
     else:
         # raise ValueError("%s isn't a file!" % document.download_path)
         print(f'Expected Download Path: {document.download_path}')
-        print(f'Is File?: {abstract.document_directory}/{document.new_name}')
+        print(f'Is File?: {abstract.document_directory}/{document.target_name}')
         print('Encountered an issue preparing file for download for '
               f'{document.extrapolate_value()}, trying again...')
         medium_nap()
@@ -198,23 +98,21 @@ def rename_download(abstract, document):
             prepare_file_for_download(abstract, document)
     except FileNotFoundError:
         print(f'File not found, please review stock download '
-              f'"{document.download_value}" & new file name "{document.new_name}"')
+              f'"{document.download_value}" & new file name "{document.target_name}"')
         input()
 
 
 def check_for_rename(abstract, document):
-    rename_path = f'{abstract.document_directory}/{document.new_name}'
+    rename_path = f'{abstract.document_directory}/{document.target_name}'
     if os.path.isfile(rename_path):
         os.chdir(abstract.document_directory)
-        check_download_size(document.new_name, document)
+        check_download_size(document.target_name, document)
     else:
         raise ValueError("%s isn't a file!" % rename_path)
 
 
 def update_download(browser, abstract, document):
-    set_download_path_and_name_values(browser, abstract, document)
-    attrs = vars(document)
-    print(', '.join("%s: %s" % item for item in attrs.items()))
+    document.print_attributes()
     wait_for_download(browser, abstract, document)
     naptime()
     rename_download(abstract, document)
