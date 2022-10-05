@@ -10,8 +10,11 @@ from settings.invalid import record_invalid_search
 def handle_single_document(browser, abstract, document, record, execute_download):
     record(browser, abstract, document)
     abstract.report_document_found(document)
+    abstract.check_last_document(document)  # should download be skipped if last document is a duplicate
     if abstract.download and document.image_available and not abstract.review:
         download_document(browser, abstract, document, execute_download)
+    if abstract.download_only is False:
+        abstract.check_length()  # Is this the best placement for this?
 
 
 def handle_multiple_documents(browser, abstract, document, record, execute_download, next_result):
@@ -48,8 +51,6 @@ def search_documents_from_list(browser, abstract, search, open_document, record,
             handle_search_results(browser, abstract, document, record, execute_download, next_result)
         else:
             record_invalid_search(abstract, document)
-        if abstract.download_only is False:
-            abstract.check_length()  # Is this the best placement for this?
 
 
 def close_program(browser, abstract, logout=None):
