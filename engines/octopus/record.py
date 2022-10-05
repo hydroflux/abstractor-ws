@@ -104,4 +104,3 @@ def record_document_fields(browser, abstract, document):
 def record(browser, abstract, document):
     if not abstract.review:
         record_document_fields(browser, abstract, document)
-        abstract.check_last_document(document)
