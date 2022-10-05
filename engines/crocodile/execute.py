@@ -1,15 +1,3 @@
-from project_management.export import export_document
-
-from settings.invalid import record_invalid_search, unable_to_download
-from settings.driver import create_webdriver
-from settings.dataframe_management import (bundle_project, check_length,
-                                      display_document_list, document_found,
-                                      document_value, no_document_found)
-from settings.general_functions import start_timer
-from settings.objects.abstract_dataframe import \
-    abstract_dictionary as dataframe
-from settings.county_variables.general import download, headless
-
 from engines.crocodile.download import download_document
 from engines.crocodile.login import account_login
 from engines.crocodile.logout import logout
@@ -18,6 +6,19 @@ from engines.crocodile.open_document import (create_name_document_list,
                                              next_result, open_document)
 from engines.crocodile.record import record_document
 from engines.crocodile.search import search
+
+from project_management.export import export_document
+
+from settings.county_variables.general import download, headless
+from settings.dataframe_management import (bundle_project, check_length,
+                                           display_document_list,
+                                           document_found, document_value,
+                                           no_document_found)
+from settings.driver import create_webdriver
+from settings.general_functions import start_timer
+from settings.invalid import record_invalid_search, unable_to_download
+from settings.objects.abstract_dataframe import \
+    abstract_dictionary as dataframe
 
 
 def record_single_document(browser, county, target_directory, document_list, document, start_time):

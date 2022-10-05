@@ -1,21 +1,22 @@
-from settings.objects.abstract_dataframe import abstract_dictionary as dataframe
-from settings.invalid import no_document_image, record_invalid_search
-from settings.driver import create_webdriver
-from project_management.export import export_document, export_hyperlinks
-from settings.dataframe_management import (bundle_project, check_length,
-                                      document_downloaded, document_found,
-                                      no_document_downloaded,
-                                      no_document_found)
-from settings.general_functions import start_timer
-from settings.county_variables.general import download, headless
-
 from engines.armadillo.download import download_document
 from engines.armadillo.login import account_login
 from engines.armadillo.logout import logout
 from engines.armadillo.open_document import open_document
-from engines.armadillo.record import build_document_download_information, record
+from engines.armadillo.record import (build_document_download_information,
+                                      record)
 from engines.armadillo.search import search
 from engines.armadillo.transform import transform_document_list
+from project_management.export import export_document, export_hyperlinks
+from settings.county_variables.general import download, headless
+from settings.dataframe_management import (bundle_project, check_length,
+                                           document_downloaded, document_found,
+                                           no_document_downloaded,
+                                           no_document_found)
+from settings.driver import create_webdriver
+from settings.general_functions import start_timer
+from settings.invalid import no_document_image, record_invalid_search
+from settings.objects.abstract_dataframe import \
+    abstract_dictionary as dataframe
 
 
 def record_document(browser, document_list, document, review):
