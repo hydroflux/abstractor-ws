@@ -10,7 +10,7 @@ from settings.general_functions import get_element_text
 
 def access_document_information(browser, abstract, document):
     locate_element_by_id(browser, abstract.county.ids["Document Image"],
-                         "document image", False, document)  # Wait for image to load (doesn't work, need to test with throttling)
+                         "document image", False, document)  # Wait for image to load (doesn't work, test w/ throttling)
     document_information = locate_element_by_id(browser, abstract.county.ids["Document Information"],
                                                 "document information", False, document)
     return document_information
@@ -53,15 +53,15 @@ def access_reception_number(abstract, document, rows):
 def record_book_and_page(abstract, rows):
     book_and_page = check_rows(abstract, rows, abstract.county.titles["Row Titles"]["book_and_page"])
     if book_and_page == 'N/A':
-        record_value(abstract, 'book', '')
-        record_value(abstract, 'page', '')
+        record_value(abstract, 'book', 'N/A')
+        record_value(abstract, 'page', 'N/A')
     else:
         if book_and_page.startswith(abstract.county.other["Abbreviation"]):
             book_and_page = book_and_page[len(abstract.county.other["Abbreviation"]):]
         book, page = book_and_page.replace("/", "").split()
         if book == '0' and page == '0':
-            record_value(abstract, 'book', '')
-            record_value(abstract, 'page', '')
+            record_value(abstract, 'book', 'N/A')
+            record_value(abstract, 'page', 'N/A')
         else:
             record_value(abstract, 'book', book)
             record_value(abstract, 'page', page)
@@ -117,6 +117,14 @@ def record_legal(abstract, rows):
             record_value(abstract, 'legal', combined_legal)
 
 
+def record_document_link(abstract, document):
+    if document.type == 'book_and_page':
+        book, page = document.document_value()
+        record_value(abstract, 'document link', f'{book.zfill(4)}-{page.zfill(4)}')
+    elif document.type == 'document_number':
+        record_value(abstract, 'document link', document.reception_number)
+
+
 def aggregate_document_information(abstract, document, rows):
     access_reception_number(abstract, document, rows)
     record_value(abstract, 'reception number', document.reception_number)
@@ -127,7 +135,8 @@ def aggregate_document_information(abstract, document, rows):
     record_grantee(abstract, rows)
     record_related_documents(abstract, rows)
     record_legal(abstract, rows)
-    record_empty_values(abstract, ['effective date', 'volume', 'document link'])
+    record_document_link(abstract, document)
+    record_empty_values(abstract, ['effective date', 'volume'])
     record_comments(abstract, document)
 
 
