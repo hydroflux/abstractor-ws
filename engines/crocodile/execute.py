@@ -8,7 +8,7 @@ from settings.dataframe_management import (bundle_project, check_length,
 from settings.general_functions import start_timer
 from settings.objects.abstract_dataframe import \
     abstract_dictionary as dataframe
-from settings.settings import download, headless
+from settings.county_variables.general import download, headless
 
 from engines.crocodile.download import download_document
 from engines.crocodile.login import account_login
