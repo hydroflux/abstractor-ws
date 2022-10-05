@@ -7,7 +7,7 @@ from settings.dataframe_management import (bundle_project, check_length,
                                       no_document_downloaded,
                                       no_document_found)
 from settings.general_functions import start_timer
-from settings.settings import download, headless
+from settings.county_variables.general import download, headless
 
 from engines.armadillo.download import download_document
 from engines.armadillo.login import account_login
