@@ -31,12 +31,17 @@ def open_search(browser, abstract, document):
     assert abstract.county.titles["Search"]
 
 
-def access_search_type_tab(browser, document, attribute, type):
-    search_type_tab = get_parent_element(locate_element_by_id(browser, attribute, type, True, document))
-    while search_type_tab is None:
+def access_search_type_tab_child(browser, document, attribute, type):
+    search_type_tab_child = locate_element_by_id(browser, attribute, type, True, document)
+    while search_type_tab_child is None:
         check_for_browser_error(browser)
-        search_type_tab = get_parent_element(locate_element_by_id(browser, attribute, type, True, document))
-    return search_type_tab
+        search_type_tab_child = locate_element_by_id(browser, attribute, type, True, document)
+    return search_type_tab_child
+
+
+def access_search_type_tab(browser, document, attribute, type):
+    search_type_tab_child = access_search_type_tab_child(browser, document, attribute, type)
+    return get_parent_element(search_type_tab_child)
 
 
 def open_tab(browser, document, attribute, type):
