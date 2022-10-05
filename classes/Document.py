@@ -4,7 +4,9 @@ class Document:
                  description_link=None, image_available=True, image_link=None,
                  button_attributes=None, input_attributes=None, search_attributes=None,
                  county=None, start_time=None,
-                 download_value=None, download_path=None, new_name=None, is_duplicate=None):
+                 download_value=None, download_path=None,
+                 target_name=None, target_download_path=None,
+                 is_duplicate=None):
         self.type = type
         self.value = value
         self.year = year
@@ -24,7 +26,8 @@ class Document:
         self.start_time = start_time
         self.download_value = download_value
         self.download_path = download_path
-        self.new_name = new_name
+        self.target_download_path = target_download_path
+        self.target_name = target_name
         self.is_duplicate = is_duplicate
 
     # Take name out of document value
@@ -52,3 +55,8 @@ class Document:
         else:
             print('Unable to identify document type while attempting to "extrapolate document value", please review.')
             return None
+
+    def print_attributes(self):
+        attributes = vars(self)
+        print(f'Document "{self.value}" Attributes:')
+        print('\n'.join("%s: %s" % item for item in attributes.items()))
