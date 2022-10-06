@@ -30,9 +30,9 @@ def record_book_and_page(abstract, book_and_page_text):
     record_value(abstract, 'page', page)
 
 
-def record_effective_date(abstract, effective_date_text):
-    effective_date = date_from_string(effective_date_text.split(' ')[-1])
-    record_value(abstract, 'effective date', effective_date)
+# def record_effective_date(abstract, effective_date_text):
+#     effective_date = date_from_string(effective_date_text.split(' ')[-1])
+#     record_value(abstract, 'effective date', effective_date)
 
 
 def record_recording_date(abstract, recording_date_text):
@@ -49,7 +49,7 @@ def record_indexing_information(browser, abstract, document):
     reception_number_text, book_and_page_text, effective_date_text, recording_date_text = indexing_text
     record_reception_number(abstract, document, reception_number_text)
     record_book_and_page(abstract, book_and_page_text)
-    record_effective_date(abstract, effective_date_text)
+    # record_effective_date(abstract, effective_date_text)
     record_recording_date(abstract, recording_date_text)
 
 
@@ -97,7 +97,7 @@ def record_document_fields(browser, abstract, document):
     record_parties(browser, abstract, document)
     record_legal(browser, abstract, document)
     record_related_documents(browser, abstract, document)
-    record_empty_values(abstract, ['volume', 'document link'])
+    record_empty_values(abstract, ['volume', 'document link', 'effective date'])
     record_comments(abstract, document)
 
 
