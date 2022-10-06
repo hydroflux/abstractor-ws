@@ -5,7 +5,7 @@ class Document:
                  button_attributes=None, input_attributes=None, search_attributes=None,
                  county=None, start_time=None,
                  download_value=None, download_path=None,
-                 target_name=None, target_download_path=None,
+                 target_download_path=None, target_name=None, target_type=None,
                  is_duplicate=None):
         self.type = type
         self.value = value
@@ -28,6 +28,7 @@ class Document:
         self.download_path = download_path
         self.target_download_path = target_download_path
         self.target_name = target_name
+        self.target_type = target_type
         self.is_duplicate = is_duplicate
 
     # Take name out of document value
