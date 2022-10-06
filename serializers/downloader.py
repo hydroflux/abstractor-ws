@@ -21,12 +21,8 @@ def set_new_download_name(document):
             return f'{document.county.prefix}-{book.zfill(4)}-{page.zfill(4)}.pdf'  # used for leopard
         else:
             return f'{document.county.prefix}-{document.reception_number}.pdf'
-    elif document.target_name and document.number_results > 1:
-        if document.target_name.startswith(f'{document.county.prefix}-'):
-            return document.target_name
-        else:
-            # Locate where new name is being set without the county prefix and update across engines
-            return f'{document.county.prefix}-{document.target_name}.pdf'
+    else:
+        return document.target_name
 
 
 def get_downloaded_file_name(browser, wait_time=300):
@@ -85,14 +81,6 @@ def prepare_for_download(browser, abstract, document):
     document.download_path = set_download_path(browser, abstract, document)
     document.target_download_path = f'{abstract.document_directory}/{document.target_name}'
 
-# def build_previous_download_path(abstract, document):
-#     # if document.target_name is None:
-#     #     return f'{abstract.document_directory}/{document.county.prefix}-{document.reception_number}.pdf'
-#     if document.target_name and document.number_results > 1:
-#         return f'{abstract.document_directory}/{document.county.prefix}-{document.target_name}.pdf'
-#     else:
-#         return f'{abstract.document_directory}/{document.target_name}'
-
 
 def is_duplicate(abstract, document, count=0):
     if document.number_results == 1:
@@ -108,9 +96,9 @@ def is_duplicate(abstract, document, count=0):
                 elif reception_number == f'{previous_reception_number}-{str(count)}':
                     count += 1
             if count > 1:
-                abstract.dataframe["Reception Number"][-1] = f'{previous_reception_number}-{str(count - 1)}'
-                document.target_name = f'{document.target_name[:-4]}-{str(count - 1)}.pdf'
-                # document.target_name = f'{document.county.prefix}-{document.reception_number}-{str(count - 1)}.pdf'
+                reception_number_duplicate = f'{previous_reception_number}-{str(count - 1)}'
+                abstract.dataframe["Reception Number"][-1] = reception_number_duplicate
+                document.target_name = f'{document.county.prefix}-{reception_number_duplicate}.pdf'
                 return False
             else:
                 return True
@@ -147,18 +135,17 @@ def previously_downloaded(abstract, document):
     if os.path.exists(document.target_download_path):
         if is_duplicate(abstract, document):
             document.is_duplicate = True
-            abstract.report_document_download(document)  # Add an alternative for 'already downloaded'
+            abstract.report_document_download(document)
             return True
         else:
-            # print statement about duplicate
             return False
     else:
         return False
 
 
-def download_document(browser, abstract, document, execute_download, update=True):
+def download_document(browser, abstract, document, execute_download):
     prepare_for_download(browser, abstract, document)
     if not previously_downloaded(abstract, document):
         execute_download(browser, abstract, document)
-        if update:
-            update_download(browser, abstract, document)
+        # document.print_attributes()
+        update_download(browser, abstract, document)
