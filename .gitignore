@@ -15,10 +15,7 @@ logs/
 ##################
 classes/counties.py
 settings/county_variables
-variables.py
 project_management/export_settings/settings.py
-settings/hyperlink_settings.py
 settings/settings.py
-formatting/excel_export_format.py
 .vscode
 __pycache__
