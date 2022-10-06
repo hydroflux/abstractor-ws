@@ -18,8 +18,10 @@ def set_new_download_name(document):
     if document.target_name is None:
         if document.reception_number[0] == "-":
             book, page = document.document_value()
+            document.target_type = "book_and_page"
             return f'{document.county.prefix}-{book.zfill(4)}-{page.zfill(4)}.pdf'  # used for leopard
         else:
+            document.target_type = "document_number"
             return f'{document.county.prefix}-{document.reception_number}.pdf'
     else:
         return document.target_name
@@ -83,11 +85,12 @@ def prepare_for_download(browser, abstract, document):
 
 
 def is_duplicate(abstract, document, count=0):
+    print("count", count)
     if document.number_results == 1:
         return True
     elif document.result_number > 0:
         document.is_duplicate = False
-        if document.type == "document_number":
+        if document.target_type == "document_number":
             reception_number_column = abstract.dataframe["Reception Number"]
             previous_reception_number = reception_number_column[-1]
             for reception_number in reception_number_column:
@@ -96,13 +99,15 @@ def is_duplicate(abstract, document, count=0):
                 elif reception_number == f'{previous_reception_number}-{str(count)}':
                     count += 1
             if count > 1:
+                print("naming count", count)
                 reception_number_duplicate = f'{previous_reception_number}-{str(count - 1)}'
                 abstract.dataframe["Reception Number"][-1] = reception_number_duplicate
                 document.target_name = f'{document.county.prefix}-{reception_number_duplicate}.pdf'
+                print("target name", document.target_name)
                 return False
             else:
                 return True
-        elif document.type == "book_and_page":
+        elif document.target_type == "book_and_page":
             matching_book_indices = []
             book_column = abstract.dataframe["Book"]
             previous_book = book_column[-1]
@@ -124,8 +129,8 @@ def is_duplicate(abstract, document, count=0):
                     abstract.dataframe["Page"][-1] = f'{previous_page}-{str(count - 1)}'
                     document.target_name = f'{document.target_name[:-4]}-{str(count - 1)}.pdf'
         else:
-            print(f'No duplication check created for document type "{document.type}", please review "downloader" '
-                  f'serializer for details.')
+            print(f'No duplication check created for document target type "{document.target_type}", '
+                  f'please review "downloader" serializer for details.')
             input('Press enter to continue...')
     else:
         return True
