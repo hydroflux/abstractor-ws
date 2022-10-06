@@ -111,12 +111,16 @@ def check_for_rename(abstract, document):
         raise ValueError("%s isn't a file!" % rename_path)
 
 
+def reset_document_download_attributes(document):
+    document.target_name = None
+
+
 def update_download(browser, abstract, document):
-    document.print_attributes()
     wait_for_download(browser, abstract, document)
     naptime()
     rename_download(abstract, document)
     check_for_rename(abstract, document)
     abstract.report_document_download(document)
+    reset_document_download_attributes(document)
     # Without a conditional, no_download will never be thrown???
     # no_download(abstract, document)
