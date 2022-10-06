@@ -1,4 +1,4 @@
-from selenium.common.exceptions import TimeoutException, NoSuchElementException
+from selenium.common.exceptions import TimeoutException, NoSuchElementException, StaleElementReferenceException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
@@ -53,6 +53,8 @@ def locate_element_by_id(locator, id, type, clickable=False, document=None, quic
     except NoSuchElementException:
         if not quick:
             return print_no_such_element_statement(type, document)
+    except StaleElementReferenceException:
+        print(f'StaleElementReferenceException experienced trying to located "{type}", returning NONE...')
 
 
 def locate_element_by_name(locator, name, type, clickable=False, document=None, quick=False):

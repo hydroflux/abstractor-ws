@@ -14,7 +14,7 @@ from settings.county_variables.general import search_errors
 from settings.general_functions import (scroll_to_top,
                                         short_nap)
 from settings.invalid import no_document_image
-from settings.settings import execution_review
+from settings.county_variables.general import execution_review
 
 from engines.eagle.error_handling import check_for_error
 
@@ -108,15 +108,12 @@ def drop_superfluous_information(abstract, string):
 
 
 def access_table_body(document_table, abstract):  # Argument order important in order to work with 'map'
-    # return document_table.find_element_by_tag_name(abstract.county.tags["Index Table"][0])
     return locate_element_by_tag_name(document_table, abstract.county.tags["Index Table"][0],
                                       "document table body", False, quick=True)
 
 
 def access_table_rows(abstract, table_body):
     body_text = table_body.find_elements_by_tag_name(abstract.county.tags["Index Table"][1])
-    # body_text = locate_element_by_tag_name(table_body, abstract.county.tags["Index Table"][1],
-    #                                        "document_table_rows", False, quick=True)
     return body_text
 
 
@@ -158,7 +155,6 @@ def split_reception_field(reception_field):
 
 def set_document_download_values(abstract, document, reception_number):
     document.reception_number = reception_number
-    print("document reception number", document.reception_number)
     document.download_value = f'{document.reception_number}-{abstract.county.other["Stock Download"]}'
 
 
@@ -321,5 +317,4 @@ def record(browser, abstract, document):
             handle_document_image_status(browser, abstract, document)
             record_document_fields(browser, abstract, document)
             record_empty_values(abstract, ['effective date', 'volume', 'document link'])
-            abstract.check_last_document(document)
             review_entry(browser, abstract, document)

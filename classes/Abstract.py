@@ -163,11 +163,18 @@ class Abstract:
 
     def report_document_download(self, document, downloaded=True):
         if downloaded:
-            print(f'Document located at '
-                  f'{document.extrapolate_value()} downloaded'
-                  f'{self.account_for_number_results(document)}, '
-                  f'{self.list_remaining_documents(document)} '
-                  f'{"(" + (self.report_execution_time(document.start_time)) + ")" if self.download_only else ""}')
+            if document.is_duplicate:
+                print(f'Document located at '
+                      f'{document.extrapolate_value()} previously downloaded'
+                      f'{self.account_for_number_results(document)}, '
+                      f'{self.list_remaining_documents(document)} '
+                      f'{"(" + (self.report_execution_time(document.start_time)) + ")" if self.download_only else ""}')
+            else:
+                print(f'Document located at '
+                      f'{document.extrapolate_value()} downloaded'
+                      f'{self.account_for_number_results(document)}, '
+                      f'{self.list_remaining_documents(document)} '
+                      f'{"(" + (self.report_execution_time(document.start_time)) + ")" if self.download_only else ""}')
         else:
             print(f'Unable to download document at '
                   f'{document.extrapolate_value()}'

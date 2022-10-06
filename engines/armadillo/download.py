@@ -12,8 +12,7 @@ from settings.county_variables.armadillo import (add_to_cart_name,
                                                  download_prefix,
                                                  free_download_button_tag)
 from settings.download_management import previously_downloaded, update_download
-from settings.dataframe_management import (create_document_directory,
-                                      extrapolate_document_value)
+from settings.dataframe_management import create_document_directory
 from settings.general_functions import get_direct_link, newline_split, timeout
 from settings.iframe_handling import (access_iframe_by_tag,
                                       switch_to_default_content)
@@ -27,7 +26,7 @@ def locate_download_option(browser, document):
         return download_page
     except TimeoutException:
         print(f'Browser timed out trying to locate download page for '
-              f'{extrapolate_document_value(document)}, please review.')
+              f'{document.extrapolate_value()}, please review.')
         input()
 
 
@@ -51,7 +50,7 @@ def locate_download_content(browser, document):
         return download_content
     except TimeoutException:
         print(f'Browser timed out trying to locate download content for '
-              f'{extrapolate_document_value(document)}, please review.')
+              f'{document.extrapolate_value()}, please review.')
         input()
 
 
@@ -78,7 +77,7 @@ def locate_free_download_button(download_content, document):
         return free_download_button
     except TimeoutException:
         print(f'Browser timed out trying to locate free download button for '
-              f'{extrapolate_document_value(document)}, please review.')
+              f'{document.extrapolate_value()}, please review.')
         input()
 
 
@@ -106,7 +105,7 @@ def locate_add_to_cart_form(browser, document):
         return add_to_cart_form
     except TimeoutException:
         print(f'Browser timed out trying to locate "Add to Cart" form for '
-              f'{extrapolate_document_value(document)}, please review.')
+              f'{document.extrapolate_value()}, please review.')
         input()
 
 
@@ -143,7 +142,7 @@ def check_last_download(dataframe, document, result_number, count=0):
                 count += 1
         if count > 1:
             dataframe["Document Link"][-1] = f'{dataframe["Document Link"][-1]}-{str(count - 1)}'
-            document.new_name = f'{document.new_name[:-4]}-{str(count - 1)}.pdf'
+            document.target_name = f'{document.target_name[:-4]}-{str(count - 1)}.pdf'
         else:
             return True
     else:

@@ -110,14 +110,14 @@ def set_early_document_download_name(document, count):
     value = document.document_value()
     document.download_value = early_download_value
     if count == 0:
-        document.new_name = (f'{document.county.prefix}-'
-                             f'{four_character_padding(value[0])}-'
-                             f'{four_character_padding(value[1])}.pdf')
+        document.target_name = (f'{document.county.prefix}-'
+                                f'{four_character_padding(value[0])}-'
+                                f'{four_character_padding(value[1])}.pdf')
     else:
-        document.new_name = (f'{document.county.prefix}-'
-                             f'{four_character_padding(value[0])}-'
-                             f'{four_character_padding(value[1])}-'
-                             f'{count}.pdf')
+        document.target_name = (f'{document.county.prefix}-'
+                                f'{four_character_padding(value[0])}-'
+                                f'{four_character_padding(value[1])}-'
+                                f'{count}.pdf')
 
 
 def open_download_page(browser, document):
@@ -127,7 +127,7 @@ def open_download_page(browser, document):
 
 
 def download_page(browser, abstract, document, count):
-    prepare_for_download(abstract, document)
+    prepare_for_download(abstract, document)  # isn't going to work anymore as of 09/27/2022
     open_download_page(browser, document)
     browser.execute_script('window.print();')
     naptime()

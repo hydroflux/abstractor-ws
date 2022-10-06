@@ -2,7 +2,7 @@ import os
 from pprint import pprint
 from time import sleep
 from selenium.common.exceptions import StaleElementReferenceException
-from settings.settings import root
+from settings.county_variables.general import root
 
 from selenium.webdriver.common.keys import Keys
 from project_management.timers import short_nap

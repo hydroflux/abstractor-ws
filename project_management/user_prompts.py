@@ -4,7 +4,8 @@ from classes.counties import county_list
 from classes.Document import Document
 from serializers.recorder import title_strip
 
-from settings.settings import root, search_name
+from settings.county_variables.general import root
+from settings.settings import search_name
 
 
 def clear_terminal():
@@ -63,17 +64,17 @@ def request_yes_or_no(prompt):
         return False
 
 
-def request_new_name():
+def request_alternate_search_name():
     return input("Please enter the name you would like to search: \n")
 
 
 def prepare_name_search():
     name = title_strip(search_name)
     if name == '':
-        name = request_new_name()
+        name = request_alternate_search_name()
     while request_yes_or_no(f'The current name to be searched is "{name}", is this correct?') is False:
         clear_terminal()
-        name = request_new_name()
+        name = request_alternate_search_name()
     clear_terminal()
     return Document(type="name", value=name)
 

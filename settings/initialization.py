@@ -1,8 +1,6 @@
 import os
 
 from classes.Abstract import Abstract
-# from classes.Engine import Engine
-
 from classes.counties import county_dictionary
 
 from engines.eagle.transform import transform as transform_eagle
@@ -17,12 +15,16 @@ from engines.rabbit.transform import transform as transform_rabbit
 from project_management.generate_document_list import generate_document_list
 from project_management.user_prompts import get_program_type
 
+from settings.county_variables.general import (abstraction_type, download,
+                                               headless)
 from settings.objects.abstract_dataframe import \
     abstract_dictionary as dataframe
-from settings.settings import (abstraction_type, county_name, download,
-                               end_date, file_name, headless, legal,
-                               search_name, sheet_name, start_date,
-                               target_directory)
+from settings.settings import (county_name, end_date, file_name, quarter,
+                               range, search_name, section, sheet_name,
+                               start_date, target_directory, township)
+
+# from classes.Engine import Engine
+
 
 # def update_engine_attributes(engine):
 #     pass
@@ -56,7 +58,12 @@ def create_abstract_object():
         search_name=search_name,
         start_date=start_date,
         end_date=end_date,
-        legal=legal
+        legal=[
+                section,
+                township,
+                range,
+                quarter
+            ]
     )
 
 

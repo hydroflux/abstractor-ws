@@ -177,9 +177,12 @@ def import_excel_document(file_path, sheet_name):
 
 
 def display_document_list(document_list):
-    print(f'{len(document_list)} documents to be recorded:')
-    for document in range(len(document_list)):
-        print(document_list[document].value)
+    print(f'\n{len(document_list)} documents to be recorded:')
+    for document in document_list:
+        if document.type == 'document_number':
+            print(f'Reception Number: {document.value}')
+        elif document.type == 'book_and_page':
+            print(f'Book: {document.value["Book"]}, Page: {document.value["Page"]}')
     print()
 
 

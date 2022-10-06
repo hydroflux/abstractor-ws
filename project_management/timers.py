@@ -2,7 +2,7 @@ from datetime import datetime
 from random import randint
 from time import sleep
 
-from settings.settings import abstraction_type
+from settings.county_variables.general import abstraction_type
 
 # Timeout / Wait Variables
 timeout = randint(20, 30)

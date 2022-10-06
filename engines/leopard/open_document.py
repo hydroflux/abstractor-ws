@@ -2,26 +2,17 @@ from selenium_utilities.locators import (locate_element_by_id,
                                          locate_element_by_tag_name,
                                          locate_elements_by_class_name,
                                          locate_elements_by_tag_name)
-
 from settings.general_functions import get_element_text, scroll_into_view
 
 # Use the following print statement to identify the best way to manage imports for Django vs the script folder
 print("open_document", __name__)
 
 
-# def check_for_alert(browser, document):
-#     print("Checking for browser alert related to search...")
-#     if handle_alert(browser):
-#         print("Alert located & handled, performing search execution again.")
-#         search(browser, document)
-#         return locate_result_count(browser, document)
-
-
 def count_results(browser, abstract, document):
-    result_count = locate_element_by_id(browser, abstract.county.ids["Results Count"],
-                                        "results count", False, document)
-    # 'check_For_alert' function originally followed the timeout exception in 'locate_result_count' function
-    #  If result count == none, perform a "re-search"
+    result_count = None
+    while result_count is None:
+        result_count = locate_element_by_id(browser, abstract.county.ids["Results Count"],
+                                            "results count", False, document)
     return result_count.text.split(' ')[-1]
 
 
@@ -46,6 +37,8 @@ def verify_document_number(document, cells):
 
 def verify_book_and_page_numbers(document, cells):
     book, page = document.document_value()
+    book = book.zfill(4)
+    page = page.zfill(4)
     if book and page in map(get_element_text, cells):
         return True
 
@@ -67,9 +60,11 @@ def check_result(browser, abstract, document, row):
 
 def count_matching_results(browser, abstract, document):
     result_rows = get_result_rows(browser, abstract, document)
-    for row in result_rows:
-        if not check_result(browser, abstract, document, row):
-            break
+    # remove next line after figuring the issue with count results
+    if result_rows is not None:
+        for row in result_rows:
+            if not check_result(browser, abstract, document, row):
+                break
 
 
 def get_first_row(browser, abstract, document):

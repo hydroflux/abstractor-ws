@@ -2,7 +2,15 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-from serializers.recorder import update_sentence_case_extras, element_title_strip, title_strip, list_to_string, date_from_string
+
+from engines.armadillo.validation import (validate_date,
+                                          validate_reception_number,
+                                          validate_volume_page,
+                                          verify_results_page_loaded)
+
+from serializers.recorder import (date_from_string, element_title_strip,
+                                  list_to_string, title_strip,
+                                  update_sentence_case_extras)
 
 from settings.county_variables.armadillo import (book_and_page_text,
                                                  document_tables_tag,
@@ -13,15 +21,8 @@ from settings.county_variables.armadillo import (book_and_page_text,
                                                  related_types,
                                                  type_and_number_table_id)
 from settings.dataframe_management import multiple_documents_comment
-from settings.general_functions import (
-                                        four_character_padding,
-                                        newline_split, print_list_by_index,
-                                        timeout)
-
-from engines.armadillo.validation import (validate_date,
-                                          validate_reception_number,
-                                          validate_volume_page,
-                                          verify_results_page_loaded)
+from settings.general_functions import (four_character_padding, newline_split,
+                                        print_list_by_index, timeout)
 
 
 def locate_document_type_and_number_table(browser, document):
@@ -273,7 +274,7 @@ def prepare_document_for_download(dataframe, document):
                          f'{four_character_padding(dataframe["Page"][-1])}')
     else:
         document_link = document.reception_number
-    document.new_name = f'{document.county.prefix}-{document_link}.pdf'
+    document.target_name = f'{document.county.prefix}-{document_link}.pdf'
     return document_link
 
 
