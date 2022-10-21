@@ -18,11 +18,12 @@ def clear_input(browser, locator_function, attribute, type, document=None):
     except AttributeError:
         # print(f'Encountered an attribute error attempting to "clear input" for '
         #       f'{document.extrapolate_value()}, please review & press enter to continue...')
+        browser.save_screenshot(f'clear_input_attribute_error_{attribute}_{type}.png')
         print(f'Encountered an attribute error attempting to "clear input" for '
               f'{document.extrapolate_value()}, refreshing the page in order to try and continue.')
         browser.refresh()
         sleep(30)
-        clear_input(browser, locator_function, attribute, type, document=None)
+        clear_input(browser, locator_function, attribute, type, document)
         # consider returning False or none & addressing the error handler
 
 
