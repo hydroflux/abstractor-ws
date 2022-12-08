@@ -240,6 +240,8 @@ def record_notes(abstract, document_tables):
                     abstract.dataframe["Legal"][-1] = f'{abstract.dataframe["Legal"][-1]}\n{notes}'
     except IndexError:
         pass
+    except StaleElementReferenceException:
+        input('Encountered a StaleElementReferenceException, please review and press enter to continue...')
 
 
 def aggregate_document_information(browser, abstract, document_tables, document):
