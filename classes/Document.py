@@ -50,7 +50,7 @@ class Document:
         elif self.type == "volume_and_page":
             return f'Volume: {self.value["Volume"]}, Page: {self.value["Page"]}'
         elif self.type == "document_number":
-            return f'Document number {self.value}'
+            return f'Reception Number {self.value}'
         elif self.type == "name":
             return f'search name "{self.value}"'
         else:
