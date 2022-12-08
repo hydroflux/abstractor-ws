@@ -47,6 +47,11 @@ def get_element_text(element):
     return element.text
 
 
+def access_title_case_text(data):
+    # added .strip() when updating buffalo -- may negatively impact eagle
+    return data.text.strip().title()
+
+
 def handle_alert(browser):
     try:
         alert_present = EC.alert_is_present()

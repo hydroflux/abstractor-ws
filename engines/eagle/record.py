@@ -1,7 +1,7 @@
 from functools import partial
 from selenium.common.exceptions import StaleElementReferenceException
 
-from selenium_utilities.element_interaction import center_element
+from selenium_utilities.element_interaction import access_title_case_text, center_element
 from selenium_utilities.locators import (locate_element_by_id, locate_element_by_tag_name,
                                          locate_elements_by_class_name)
 
@@ -115,10 +115,6 @@ def access_table_body(document_table, abstract):  # Argument order important in 
 def access_table_rows(abstract, table_body):
     body_text = table_body.find_elements_by_tag_name(abstract.county.tags["Index Table"][1])
     return body_text
-
-
-def access_title_case_text(data):
-    return data.text.title()
 
 
 def access_field_body_no_title(field_info):
