@@ -70,6 +70,9 @@ def locate_element_by_name(locator, name, type, clickable=False, document=None, 
     except TimeoutException:
         if not quick:
             return print_timeout_statement(type, document)
+    except NoSuchElementException:
+        if not quick:
+            return print_no_such_element_statement(type, document)
 
 
 def locate_element_by_tag_name(locator, tag_name, type, clickable=False, document=None, quick=False):
@@ -102,6 +105,42 @@ def locate_elements_by_tag_name(locator, tag_name, type, clickable=False, docume
             return print_timeout_statement(type, document)
 
 
+def locate_element_by_xpath(locator, xpath, type, clickable=False, document=None, quick=False):
+    try:
+        if not quick:
+            if clickable:
+                element_present = EC.element_to_be_clickable((By.XPATH, xpath))
+            else:
+                element_present = EC.presence_of_element_located((By.XPATH, xpath))
+            WebDriverWait(locator, timeout).until(element_present)
+        element = locator.find_element_by_xpath(xpath)
+        return element
+    except TimeoutException:
+        if not quick:
+            return print_timeout_statement(type, document)
+    except NoSuchElementException:
+        if not quick:
+            return print_no_such_element_statement(type, document)
+
+
+def locate_elements_by_xpath(locator, xpath, type, clickable=False, document=None, quick=False):
+    try:
+        if not quick:
+            if clickable:
+                elements_present = EC.element_to_be_clickable((By.XPATH, xpath))
+            else:
+                elements_present = EC.presence_of_element_located((By.XPATH, xpath))
+            WebDriverWait(locator, timeout).until(elements_present)
+        elements = locator.find_elements_by_xpath(xpath)
+        return elements
+    except TimeoutException:
+        if not quick:
+            return print_timeout_statement(type, document)
+    except NoSuchElementException:
+        if not quick:
+            return print_no_such_element_statement(type, document)
+
+
 def print_timeout_statement(type, document):
     if document is None:
         print(f'Browser timed out trying to locate "{type}", please review.')
@@ -120,7 +159,8 @@ def print_no_such_element_statement(type, document):
     # return False
 
 
-def locate_element(locator, attribute, type, attribute_type, document=None, clickable=False, quick=False):
+# Fix ordering of document & clickable arguments & parameters across all functions
+def locate_element(locator, attribute_type, attribute, type, clickable=False, document=None, quick=False):
     if attribute_type == "id":
         return locate_element_by_id(locator, attribute, type, clickable, document, quick)
     elif attribute_type == "class":
@@ -133,3 +173,7 @@ def locate_element(locator, attribute, type, attribute_type, document=None, clic
         return locate_element_by_tag_name(locator, attribute, type, clickable, document, quick)
     elif attribute_type == "tags":
         return locate_elements_by_tag_name(locator, attribute, type, clickable, document, quick)
+    elif attribute_type == "xpath":
+        return locate_element_by_xpath(locator, attribute, type, clickable, document, quick)
+    elif attribute_type == "tags":
+        return locate_element_by_xpath(locator, attribute, type, clickable, document, quick)
