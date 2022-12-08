@@ -33,16 +33,21 @@ def update_county_attributes(abstract):
         # SEARCH
         "Search Menu": buffalo.search_page_button_id,
         "Document Search Menu": buffalo.document_search_menu_id,
-        "Search": buffalo.document_search_button_id,
+        "Book & Page Search Menu": buffalo.book_and_page_search_menu_id,
+        "Search": buffalo.search_button_id,
+        # RECORD
+        "Related Documents": buffalo.related_documents_button_class_name,
         # "Clear": buffalo.clear_search_id,
-        "Submit Search": buffalo.document_search_button_id,
         # DOWNLOAD
-        # "Download Button": buffalo.download_button_id
+        "Download Submenu": buffalo.download_submenu_button_id,
+        "Download": buffalo.download_button_xpath
     }
     abstract.county.classes = {
         # SEARCH
         "Search Menu Active": buffalo.search_menu_active_class,
         # OPEN DOCUMENT
+        "Result Link": buffalo.result_link_class_name
+        # RECORD
         # "Validation": buffalo.validation_class_name,
         # "Results Row": buffalo.results_row_class_name,
         # "Result Actions": buffalo.result_actions_class_name,
@@ -61,6 +66,8 @@ def update_county_attributes(abstract):
     abstract.county.ids = {
         # LOGIN
         "Welcome": buffalo.welcome_message_id,
+        # OPEN DOCUMENT
+        "First Result": buffalo.first_result_id,
         # RECORD
         # "Image Container": buffalo.image_container_id,
         # "Document Information": buffalo.document_information_id,
@@ -72,13 +79,19 @@ def update_county_attributes(abstract):
         "Search Menu": buffalo.search_menu_frame_name,
         "Search Input": buffalo.search_input_frame_name,
         "Result": buffalo.result_frame_name,
-        "Result List": buffalo.result_list_frame_name
+        "Result List": buffalo.result_list_frame_name,
+        "Document": buffalo.document_frame_name,
+        "Document Information": buffalo.document_information_frame_name,
+        "Related Documents Menu": buffalo.related_documents_menu_frame_name,
+        "Download Submenu": buffalo.download_submenu_frame_name,
+        "Download": buffalo.download_frame_name,
+        "Captcha": buffalo.captcha_frame_name
     }
     abstract.county.inputs = {  # Consider changing to 'search_inputs'
         # SEARCH
-        "Reception Number": buffalo.document_search_field_class_name,
-        # "Book": buffalo.book_input_id,
-        # "Page": buffalo.page_input_id,
+        "Reception Number": buffalo.document_search_field_xpath,
+        "Book": buffalo.book_search_field_xpath,
+        "Page": buffalo.page_search_field_xpath,
         # "Name": buffalo.name_input_id,
         # "Start Date": buffalo.start_date_id,
         # "End Date": buffalo.end_date_id
@@ -89,6 +102,10 @@ def update_county_attributes(abstract):
         # SEARCH
         "Search Input": buffalo.search_input_header_text,
         # OPEN DOCUMENT
+        "Search Results": buffalo.search_results_header_text,
+        # RECORD
+        "Document Information": buffalo.document_information_header_text,
+        "No Related Documents": buffalo.no_related_documents_message
         # "Currently Searching": buffalo.currently_searching,
         # "No Results": buffalo.no_results_message,
         # "Failed Search": buffalo.failed_search,
@@ -119,6 +136,18 @@ def update_county_attributes(abstract):
         "Disclaimer": buffalo.disclaimer_script,
         # LOGOUT
         "Logout": buffalo.logout_script
+    }
+    abstract.county.xpaths = {
+        # RECORD
+        "Document Type": buffalo.document_type_xpath,
+        "Reception Number": buffalo.reception_number_xpath,
+        "Book": buffalo.book_xpath,
+        "Page": buffalo.page_xpath,
+        "Recording Date": buffalo.recording_date_xpath,
+        "Grantor": buffalo.grantor_xpath,
+        "Grantee": buffalo.grantee_xpath,
+        "Legal": buffalo.legal_xpaths,
+        "Related Documents": buffalo.related_documents_xpaths
     }
     abstract.county.other = {
         # DISCLAIMER
