@@ -10,21 +10,25 @@ def get_field_value(field):
     return field.get_attribute("value").strip()
 
 
-def clear_input(browser, locator_function, attribute, type, document=None):
-    try:
-        while get_field_value(locator_function(browser, attribute, type, True, document)) != '':
-            # add a 'scroll_into_view' or 'center_element' function
-            locator_function(browser, attribute, type, True, document).clear()
-    except AttributeError:
-        # print(f'Encountered an attribute error attempting to "clear input" for '
-        #       f'{document.extrapolate_value()}, please review & press enter to continue...')
-        browser.save_screenshot(f'clear_input_attribute_error_{attribute}_{type}.png')
-        print(f'Encountered an attribute error attempting to "clear input" for '
-              f'{document.extrapolate_value()}, refreshing the page in order to try and continue.')
+def access_input_field(browser, locator_function, attribute, type, document):
+    count = 0
+    while locator_function(browser, attribute, type, True, document) is None:
+        browser.save_screenshot(f'access_input_field_error_{attribute}_{type}.png')
+        count += 1
         browser.refresh()
         sleep(30)
-        clear_input(browser, locator_function, attribute, type, document)
-        # consider returning False or none & addressing the error handler
+        if count == 5:
+            input(f'Unable to access input field for "{document.extrapolate_value()}", '
+                  'please review & press enter to continue...')
+    return locator_function(browser, attribute, type, True, document)
+
+
+def clear_input(browser, locator_function, attribute, type, document=None):
+    input_field = access_input_field(browser, locator_function, attribute, type, document)
+    while get_field_value(input_field) != '':
+        center_element(browser, input_field)
+        input_field.clear()
+        # clear_field_value(browser, input_field, attribute, type, document)
 
 
 # Enter input value should include 'clearing' as part of its functionality
