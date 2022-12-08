@@ -6,6 +6,9 @@ from settings.driver import create_webdriver
 # ADJUST ENGINE PROFILE TO CHANGE DEVELOPMENT SETTING
 from engines.buffalo.login import login
 from engines.buffalo.search import search
+from engines.buffalo.open_document import open_document
+from engines.buffalo.record import record
+from engines.buffalo.download import execute_download
 from engines.buffalo.logout import logout
 
 sys.path.append(".")
@@ -14,6 +17,9 @@ sys.path.append(".")
 def execute_program_functions(browser, abstract, document=None):
     login(browser, abstract)
     search(browser, abstract, document)
+    open_document(browser, abstract, document)
+    record(browser, abstract, document)
+    execute_download(browser, abstract, document)
     if None:
         logout(browser, abstract)
 
