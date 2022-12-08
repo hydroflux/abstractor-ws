@@ -29,8 +29,8 @@ def execute_program(browser, abstract):
 def execute_name_search(browser, abstract):
     login(browser, abstract)
     name_search(browser, abstract)
-    project = export_document(abstract)
-    project.bundle_project(abstract)
+    project = export_document(abstract)  # handled in close_program, need to review
+    project.bundle_project(abstract)  # handled in close_program, need to review
     close_program(browser, abstract)
 
 
