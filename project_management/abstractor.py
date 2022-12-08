@@ -1,6 +1,7 @@
 from project_management.timers import start_program_timer
 from settings.driver import create_webdriver
 
+from engines.buffalo.execute import execute_program as execute_buffalo
 from engines.eagle.execute import execute_name_search as eagle_name_search
 from engines.eagle.execute import execute_program as execute_eagle
 from engines.jaguar.execute import execute_program as execute_jaguar
@@ -20,11 +21,14 @@ from project_management.user_prompts import (add_download_type,
 
 
 def engine_switch(abstract):
-    if abstract.county.engine == 'eagle':
+    if abstract.county.engine == 'buffalo':
+        abstract.headless = False
+        if abstract.program in ["execute", "review", "download"]:
+            return execute_buffalo
+    elif abstract.county.engine == 'eagle':
         abstract.headless = False
         if abstract.program in ["execute", "review", "download"]:
             return execute_eagle
-            # return execute_eagle(abstract)
         elif abstract.program == "name_search":
             return eagle_name_search
             # return eagle_name_search(abstract)
