@@ -1,8 +1,7 @@
 from engines.buffalo.frame_handling import switch_to_main_frame
 
 from selenium_utilities.inputs import enter_input_value
-from selenium_utilities.locators import (locate_element_by_id,
-                                         locate_element_by_name)
+from selenium_utilities.locators import locate_element, locate_element_by_name
 from selenium_utilities.open import assert_window_title, open_url
 
 from settings.general_functions import javascript_script_execution
@@ -27,7 +26,7 @@ def handle_disclaimer(browser, abstract):
 
 def verify_login(browser, abstract):
     switch_to_main_frame(browser, abstract)
-    welcome_message = locate_element_by_id(browser, abstract.county.ids["Welcome"], "welcome message")
+    welcome_message = locate_element(browser, "id", abstract.county.ids["Welcome"], "welcome message")
     if welcome_message.text == abstract.county.messages["Welcome"]:
         print('\nLogin successful, continuing program execution.')
         return True
