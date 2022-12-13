@@ -7,11 +7,19 @@ from engines.buffalo.validation import page_is_loaded
 from selenium_utilities.locators import locate_element
 
 
-def count_results(browser, abstract, document):
-    switch_to_search_result_list_frame(browser, abstract)
+def get_result_links(browser, abstract, document):
     link_elements = locate_element(browser, "classes", abstract.county.classes["Result Link"],
                                    "result links", True, document)
-    document.number_results += len(link_elements[:-1])
+    while link_elements is None:
+        link_elements = locate_element(browser, "classes", abstract.county.classes["Result Link"],
+                                       "result links", True, document)
+    return link_elements
+
+
+def count_results(browser, abstract, document):
+    switch_to_search_result_list_frame(browser, abstract)
+    result_links = get_result_links(browser, abstract, document)
+    document.number_results += len(result_links[:-1])
 
 
 def check_search_results(browser, abstract, document):
