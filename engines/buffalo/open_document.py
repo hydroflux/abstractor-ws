@@ -16,7 +16,7 @@ def count_results(browser, abstract, document):
 
 def check_search_results(browser, abstract, document):
     count_results(browser, abstract, document)
-    if document.number_results == 0 or document.number_results > 1:
+    if document.number_results > 1:
         input(f'Returned {document.number_results} results while searching for '
               f'{document.extrapolate_value()}... Please review application logic for processing '
               f'{document.number_results} results.')
@@ -56,7 +56,7 @@ def process_open_document(browser, abstract, document):
 
 def open_document(browser, abstract, document):
     naptime()
-    if page_is_loaded(browser, abstract, abstract.county.messages["Search Results"]):
+    if page_is_loaded(browser, abstract, abstract.county.messages["Search Results"], document):
         if check_search_results(browser, abstract, document):
             process_open_document(browser, abstract, document)
             return True
