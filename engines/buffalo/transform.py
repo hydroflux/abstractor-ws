@@ -41,7 +41,9 @@ def update_county_attributes(abstract):
         # LOGIN
         "Welcome": buffalo.welcome_message_id,
         # OPEN DOCUMENT
-        "First Result": buffalo.first_result_id
+        "First Result": buffalo.first_result_id,
+        # VALIDATION
+        "No Results": buffalo.no_results_id
     }
     abstract.county.iframes = {
         "Main": buffalo.main_frame_name,
@@ -72,7 +74,9 @@ def update_county_attributes(abstract):
         "Search Results": buffalo.search_results_header_text,
         # RECORD
         "Document Information": buffalo.document_information_header_text,
-        "No Related Documents": buffalo.no_related_documents_message
+        "No Related Documents": buffalo.no_related_documents_message,
+        # VALIDATION
+        "No Results": buffalo.no_results_message
     }
     abstract.county.tags = {
         # VALIDATION
