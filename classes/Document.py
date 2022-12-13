@@ -4,7 +4,8 @@ class Document:
                  description_link=None, image_available=True, image_link=None,
                  button_attributes=None, input_attributes=None, search_attributes=None,
                  county=None, start_time=None,
-                 download_value=None, download_path=None,
+                 download_value=None, alternate_download_value=None,
+                 download_path=None, alternate_download_path=None,
                  target_download_path=None, target_name=None, target_type=None,
                  is_duplicate=None):
         self.type = type
@@ -25,7 +26,9 @@ class Document:
         self.county = county
         self.start_time = start_time
         self.download_value = download_value
+        self.alternate_download_value = alternate_download_value
         self.download_path = download_path
+        self.alternate_download_path = alternate_download_path
         self.target_download_path = target_download_path
         self.target_name = target_name
         self.target_type = target_type
