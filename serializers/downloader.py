@@ -76,11 +76,17 @@ def set_download_path(browser, abstract, document):  # updated 09/27/22
     return f'{abstract.document_directory}/{document.download_value}'
 
 
+def set_alternate_download_path(browser, abstract, document):
+    if document.alternate_download_value:
+        return f'{abstract.document_directory}/{document.alternate_download_value}'
+
+
 def prepare_for_download(browser, abstract, document):
     abstract.document_directory = create_document_directory(abstract.target_directory)
     abstract.document_directory_files = len(os.listdir(abstract.document_directory))
     document.target_name = set_new_download_name(document)
     document.download_path = set_download_path(browser, abstract, document)
+    document.alternate_download_path = set_alternate_download_path(browser, abstract, document)
     document.target_download_path = f'{abstract.document_directory}/{document.target_name}'
 
 

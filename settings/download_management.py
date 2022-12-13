@@ -39,9 +39,10 @@ def check_browser_windows(browser):
 def wait_for_download(browser, abstract, document):
     download_wait = True
     count = 0
-    while not os.path.exists(document.download_path) and download_wait:
+    while (not (os.path.exists(document.download_path) or os.path.exists(document.alternate_download_path))
+            and download_wait):
         count += 1
-        if count == 100:
+        if count == 250:
             input(f'Waiting for document "{document.target_name}" to be added into the document directory, '
                   f'please press enter to continue...')
         check_browser_windows(browser)
@@ -62,13 +63,13 @@ def check_download_size(new_download_name, document):
         print(f'Failed to download document number {document.reception_number}.')
 
 
-def check_file_size(download_path):
-    if os.path.isfile(download_path):
+def check_file_size(path):
+    if os.path.isfile(path):
         return True
     else:
         # long_nap()  # Changed 12/03/21
         medium_nap()
-        if os.path.isfile(download_path):
+        if os.path.isfile(path):
             return True
         else:
             return False
@@ -85,11 +86,18 @@ def prepare_file_for_download(abstract, document):
     else:
         # raise ValueError("%s isn't a file!" % document.download_path)
         print(f'Expected Download Path: {document.download_path}')
+        if document.alternate_download_path:
+            print(f'OR: {document.download_path}')
         print(f'Is File?: {abstract.document_directory}/{document.target_name}')
         print('Encountered an issue preparing file for download for '
               f'{document.extrapolate_value()}, trying again...')
         medium_nap()
         return False
+
+
+def check_for_alternate(document):
+    if os.path.exists(document.alternate_download_path):
+        document.download_path = document.alternate_download_path
 
 
 def rename_download(abstract, document):
@@ -118,6 +126,7 @@ def reset_document_download_attributes(document):
 def update_download(browser, abstract, document):
     wait_for_download(browser, abstract, document)
     naptime()
+    check_for_alternate(document)
     rename_download(abstract, document)
     check_for_rename(abstract, document)
     abstract.report_document_download(document)
