@@ -29,7 +29,9 @@ def update_county_attributes(abstract):
         "Related Documents": buffalo.related_documents_button_class_name,
         # DOWNLOAD
         "Download Submenu": buffalo.download_submenu_button_id,
-        "Download": buffalo.download_button_xpath
+        "Download": buffalo.download_button_xpath,
+        # NAVIGATION
+        "Next Result": buffalo.next_result_button_id
     }
     abstract.county.classes = {
         # SEARCH
@@ -41,7 +43,8 @@ def update_county_attributes(abstract):
         # LOGIN
         "Welcome": buffalo.welcome_message_id,
         # OPEN DOCUMENT
-        "First Result": buffalo.first_result_id,
+        "First Result Link": buffalo.first_result_link_id,
+        "Book And Page First Result": buffalo.book_and_page_first_result_xpath,
         # VALIDATION
         "No Results": buffalo.no_results_id
     }
