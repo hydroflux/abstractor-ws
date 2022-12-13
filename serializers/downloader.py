@@ -85,7 +85,6 @@ def prepare_for_download(browser, abstract, document):
 
 
 def is_duplicate(abstract, document, count=0):
-    print("count", count)
     if document.number_results == 1:
         return True
     elif document.result_number > 0:
