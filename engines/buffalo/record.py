@@ -8,6 +8,7 @@ from selenium_utilities.locators import locate_element
 
 from serializers.recorder import (record_comments, record_empty_values,
                                   record_value)
+from settings.general_functions import four_character_padding
 
 
 def record_document_type(browser, abstract, document):
@@ -19,7 +20,13 @@ def record_document_type(browser, abstract, document):
 
 def set_document_download_values(document, reception_number):
     document.reception_number = reception_number
-    document.download_value = f'{reception_number}.pdf'
+    if document.type == "document_number":
+        document.download_value = f'{reception_number}.pdf'
+    elif document.type == "book_and_page":
+        book, page = document.document_value()
+        document.download_value = f'{four_character_padding(book)}-{four_character_padding(page)}.pdf'
+        document.alternate_download_value = f'{reception_number}.pdf'
+        document.target_name = f'{document.county.prefix}-{reception_number}.pdf'
 
 
 def record_reception_number(browser, abstract, document):
