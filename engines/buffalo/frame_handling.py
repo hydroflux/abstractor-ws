@@ -53,9 +53,9 @@ def switch_to_document_frame(browser, abstract):
 
 def switch_to_document_information_frame(browser, abstract):
     switch_to_document_frame(browser, abstract)
-    document_frame = locate_element_by_name(browser, abstract.county.iframes["Document Information"],
-                                            "document information iframe")
-    browser.switch_to.frame(document_frame)
+    document_information_frame = locate_element_by_name(browser, abstract.county.iframes["Document Information"],
+                                                        "document information iframe")
+    browser.switch_to.frame(document_information_frame)
 
 
 def switch_to_related_documents_menu_frame(browser, abstract):
@@ -63,6 +63,13 @@ def switch_to_related_documents_menu_frame(browser, abstract):
     related_documents_menu_frame = locate_element_by_name(browser, abstract.county.iframes["Related Documents Menu"],
                                                           "related documents menu iframe")
     browser.switch_to.frame(related_documents_menu_frame)
+
+
+def switch_to_document_image_frame(browser, abstract):
+    switch_to_document_frame(browser, abstract)
+    document_image_frame = locate_element_by_name(browser, abstract.county.iframes["Document Image"],
+                                                  "document image iframe")
+    browser.switch_to.frame(document_image_frame)
 
 
 def switch_to_download_submenu_frame(browser, abstract):
