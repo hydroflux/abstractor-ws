@@ -13,12 +13,8 @@ def verify_logout(browser, abstract):
     if not assert_window_title(browser, abstract.county.titles["Home Page"]):
         print('Browser failed to successfully log out user, please review.')
         input()
-    else:
-        return True
 
 
 def logout(browser, abstract):
     log_out_user(browser, abstract)
-    if verify_logout(browser, abstract):
-        browser.quit()
-        exit()
+    verify_logout(browser, abstract)
