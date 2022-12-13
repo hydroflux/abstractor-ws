@@ -38,7 +38,6 @@ def enter_input_value(browser, locator_function, attribute, type, value, documen
     while field_value != value:
         # add a 'scroll_into_view' or 'center_element' function
         if len(field_value) > len(value):
-            print("HERE I AM")
             clear_input(browser, locator_function, attribute, type, document)
         locator_function(browser, attribute, type, True, document).send_keys(Keys.UP + value)
         field_value = get_field_value(locator_function(browser, attribute, type, True, document))
