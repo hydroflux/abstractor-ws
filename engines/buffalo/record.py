@@ -57,17 +57,27 @@ def record_recording_date(browser, abstract, document):
     record_value(abstract, "recording date", recording_date)
 
 
+def string_list_string(string, deliminator):
+    split_string = string.split(deliminator)
+    string_list = []
+    for i in split_string:
+        string_list.append(i.strip())
+    return "\n".join(string_list)
+
+
 def record_grantor(browser, abstract, document):
     grantor_element = locate_element(browser, "xpath", abstract.county.xpaths["Grantor"],
                                      "grantor", False, document)
-    grantor = access_title_case_text(grantor_element)
+    grantor_list_string = access_title_case_text(grantor_element)
+    grantor = string_list_string(grantor_list_string, "\n")
     record_value(abstract, "grantor", grantor)
 
 
 def record_grantee(browser, abstract, document):
     grantee_element = locate_element(browser, "xpath", abstract.county.xpaths["Grantee"],
                                               "grantor", False, document)
-    grantee = access_title_case_text(grantee_element)
+    grantee_list_string = access_title_case_text(grantee_element)
+    grantee = string_list_string(grantee_list_string, "\n")
     record_value(abstract, "grantee", grantee)
 
 
@@ -97,7 +107,8 @@ def record_related_documents(browser, abstract, document):
         element_text = element.text.strip()
         if element_text != abstract.county.messages["No Related Documents"]:
             related_documents_elements.append(element_text)
-    related_documents = "\n".join(related_documents_elements)
+    related_documents_list_string = "\n".join(related_documents_elements)
+    related_documents = string_list_string(related_documents_list_string, "\n")
     record_value(abstract, "related documents", related_documents)
 
 
