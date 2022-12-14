@@ -37,7 +37,8 @@ def update_county_attributes(abstract):
         # SEARCH
         "Search Menu Active": buffalo.search_menu_active_class,
         # OPEN DOCUMENT
-        "Result Link": buffalo.result_link_class_name
+        "Result Link": buffalo.result_link_class_name,
+        "Visited Result Link": buffalo.visited_result_link_class_name
     }
     abstract.county.ids = {
         # LOGIN
