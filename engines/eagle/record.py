@@ -51,7 +51,6 @@ def handle_document_image_status(browser, abstract, document):
     image_container_text = access_image_container(browser, abstract, document)
     if (image_container_text == abstract.county.messages["No Image Available"] or
             image_container_text == abstract.county.messages["Login Error"]):
-        document.image_available = False
         print(f'No document image exists for '
               f'{document.extrapolate_value()}, please review.')
         no_document_image(abstract, document)
