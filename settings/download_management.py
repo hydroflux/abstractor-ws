@@ -97,6 +97,7 @@ def prepare_file_for_download(abstract, document):
 
 def check_for_alternate(document):
     if os.path.exists(document.alternate_download_path):
+        document.download_value = document.alternate_download_value
         document.download_path = document.alternate_download_path
 
 
