@@ -1,9 +1,13 @@
+from selenium.common.exceptions import NoAlertPresentException
+from selenium.webdriver.common.alert import Alert
+
 from engines.buffalo.frame_handling import (switch_to_captcha_frame,
+                                            switch_to_document_image_frame,
                                             switch_to_header_frame,
                                             switch_to_search_menu_frame)
 from project_management.timers import naptime
-
 from selenium_utilities.locators import locate_element
+from settings.invalid import no_document_image
 
 
 def check_header_validation(browser, abstract, validation_text):
@@ -18,7 +22,6 @@ def header_validation(browser, abstract, validation_text):
     if validated:
         return validated
     else:
-        print("SECOND PAGE VALIDATION CHECK")
         # Performs a second check for cases where page load is delayed
         naptime()
         return check_header_validation(browser, abstract, validation_text)
@@ -48,6 +51,30 @@ def check_for_captcha(browser, abstract):
     # start with prints and then switch to input?
     while switch_to_captcha_frame(browser, abstract):
         input("Encountered a captcha while processing abstract, please address and press enter to continue...")
+
+
+def check_for_document_image(browser, abstract, document):
+    switch_to_document_image_frame(browser, abstract)
+    no_document_image_element = locate_element(browser, "id", abstract.county.ids["No Document Image"],
+                                               "no document image", False, document, True)
+    if no_document_image_element is not None:
+        if no_document_image_element.text.strip() == abstract.county.messages["No Document Image"]:
+            no_document_image(abstract, document)
+        else:
+            input("Encountered an unknown document image error, please review and press enter to continue...")
+
+
+def check_for_download_alert(browser, abstract, document, expected_alert):
+    alert = Alert(browser)
+    try:
+        if alert.text == expected_alert:
+            alert.accept()
+            no_document_image(abstract, document)
+            return True
+        else:
+            input("Encountered an unknown alert, please review and press enter to continue...")
+    except NoAlertPresentException:
+        return
 
 
 def page_is_loaded(browser, abstract, validation_text, document=None):
