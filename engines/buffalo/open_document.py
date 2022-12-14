@@ -8,11 +8,11 @@ from selenium_utilities.locators import locate_element
 
 
 def get_result_links(browser, abstract, document):
-    link_elements = locate_element(browser, "classes", abstract.county.classes["Result Link"],
-                                   "result links", True, document)
+    link_elements = locate_element(browser, "classes", abstract.county.classes["Result Link"], "result links",
+                                   True, document, alternate=abstract.county.classes["Visited Result Link"])
     while link_elements is None:
-        link_elements = locate_element(browser, "classes", abstract.county.classes["Result Link"],
-                                       "result links", True, document)
+        link_elements = locate_element(browser, "classes", abstract.county.classes["Result Link"], "result links",
+                                       True, document, alternate=abstract.county.classes["Visited Result Link"])
     return link_elements
 
 
