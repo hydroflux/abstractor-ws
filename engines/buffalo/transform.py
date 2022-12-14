@@ -46,7 +46,8 @@ def update_county_attributes(abstract):
         "First Result Link": buffalo.first_result_link_id,
         "Book And Page First Result": buffalo.book_and_page_first_result_xpath,
         # VALIDATION
-        "No Results": buffalo.no_results_id
+        "No Results": buffalo.no_results_id,
+        "No Document Image": buffalo.no_document_image_id
     }
     abstract.county.iframes = {
         "Main": buffalo.main_frame_name,
@@ -58,6 +59,7 @@ def update_county_attributes(abstract):
         "Document": buffalo.document_frame_name,
         "Document Information": buffalo.document_information_frame_name,
         "Related Documents Menu": buffalo.related_documents_menu_frame_name,
+        "Document Image": buffalo.document_image_frame_name,
         "Download Submenu": buffalo.download_submenu_frame_name,
         "Download": buffalo.download_frame_name,
         "Captcha": buffalo.captcha_frame_name
@@ -79,7 +81,9 @@ def update_county_attributes(abstract):
         "Document Information": buffalo.document_information_header_text,
         "No Related Documents": buffalo.no_related_documents_message,
         # VALIDATION
-        "No Results": buffalo.no_results_message
+        "No Results": buffalo.no_results_message,
+        "No Document Image": buffalo.no_document_image_message,
+        "No Document Image Alert": buffalo.no_document_image_alert
     }
     abstract.county.tags = {
         # VALIDATION
