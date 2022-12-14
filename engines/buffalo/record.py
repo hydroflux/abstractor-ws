@@ -1,7 +1,7 @@
 from engines.buffalo.frame_handling import (
     switch_to_document_information_frame,
     switch_to_related_documents_menu_frame)
-from engines.buffalo.validation import page_is_loaded
+from engines.buffalo.validation import check_for_document_image, page_is_loaded
 
 from selenium_utilities.element_interaction import access_title_case_text
 from selenium_utilities.locators import locate_element
@@ -27,6 +27,7 @@ def set_document_download_values(document, reception_number):
         document.download_value = f'{four_character_padding(book)}-{four_character_padding(page)}.pdf'
         document.alternate_download_value = f'{reception_number}.pdf'
         document.target_name = f'{document.county.prefix}-{reception_number}.pdf'
+        document.target_type = "document_number"
 
 
 def record_reception_number(browser, abstract, document):
@@ -139,3 +140,4 @@ def record(browser, abstract, document):
         if not abstract.review:
             record_document_information(browser, abstract, document)
             record_empty_values(abstract, ['effective date', 'volume', 'document link'])
+            check_for_document_image(browser, abstract, document)
