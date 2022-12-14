@@ -100,23 +100,29 @@ def record_legal(browser, abstract, document):
 
 
 def access_related_documents(browser, abstract, document):
-    switch_to_related_documents_menu_frame(browser, abstract)
-    related_documents_button = locate_element(browser, "classes", abstract.county.buttons["Related Documents"],
-                                              "related documents button", True, document)[1]
-    related_documents_button.click()
+    try:
+        switch_to_related_documents_menu_frame(browser, abstract)
+        related_documents_button = locate_element(browser, "classes", abstract.county.buttons["Related Documents"],
+                                                  "related documents button", True, document)[1]
+        related_documents_button.click()
+        return True
+    except IndexError:
+        return False
 
 
 def record_related_documents(browser, abstract, document):
-    access_related_documents(browser, abstract, document)
-    switch_to_document_information_frame(browser, abstract)
-    related_documents_elements = []
-    for path in abstract.county.xpaths["Related Documents"]:
-        element = locate_element(browser, "xpath", path, "related documents", False, document, True)
-        element_text = element.text.strip()
-        if element_text != abstract.county.messages["No Related Documents"]:
-            related_documents_elements.append(element_text)
-    related_documents_list_string = "\n".join(related_documents_elements)
-    related_documents = string_list_string(related_documents_list_string, "\n")
+    if access_related_documents(browser, abstract, document):
+        switch_to_document_information_frame(browser, abstract)
+        related_documents_elements = []
+        for path in abstract.county.xpaths["Related Documents"]:
+            element = locate_element(browser, "xpath", path, "related documents", False, document, True)
+            element_text = element.text.strip()
+            if element_text != abstract.county.messages["No Related Documents"]:
+                related_documents_elements.append(element_text)
+        related_documents_list_string = "\n".join(related_documents_elements)
+        related_documents = string_list_string(related_documents_list_string, "\n")
+    else:
+        related_documents = ""
     record_value(abstract, "related documents", related_documents)
 
 
