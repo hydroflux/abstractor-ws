@@ -158,4 +158,5 @@ def download_document(browser, abstract, document, execute_download):
     if not previously_downloaded(abstract, document):
         execute_download(browser, abstract, document)
         # document.print_attributes()
-        update_download(browser, abstract, document)
+        if document.image_available:
+            update_download(browser, abstract, document)
