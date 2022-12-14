@@ -1,5 +1,6 @@
 from engines.buffalo.frame_handling import (switch_to_download_frame,
                                             switch_to_download_submenu_frame)
+from engines.buffalo.validation import check_for_download_alert
 
 from project_management.timers import micro_nap
 
@@ -23,4 +24,5 @@ def download_document(browser, abstract, document):
 def execute_download(browser, abstract, document):
     open_download_submenu(browser, abstract, document)
     micro_nap()
-    download_document(browser, abstract, document)
+    if not check_for_download_alert(browser, abstract, document, abstract.county.messages["No Document Image Alert"]):
+        download_document(browser, abstract, document)
