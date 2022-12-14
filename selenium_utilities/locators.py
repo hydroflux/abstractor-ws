@@ -23,7 +23,8 @@ def locate_element_by_class_name(locator, class_name, type, clickable=False, doc
             return print_no_such_element_statement(type, document)
 
 
-def locate_elements_by_class_name(locator, class_name, type, clickable=False, document=None, quick=False):
+def locate_elements_by_class_name(locator, class_name, type, clickable=False, document=None,
+                                  quick=False, alternate=None):
     try:
         if not quick:
             if clickable:
@@ -34,8 +35,22 @@ def locate_elements_by_class_name(locator, class_name, type, clickable=False, do
         elements = locator.find_elements_by_class_name(class_name)
         return elements
     except TimeoutException:
-        if not quick:
-            return print_timeout_statement(type, document)
+        if alternate is not None:
+            try:
+                if clickable:
+                    elements_present = EC.element_to_be_clickable((By.CLASS_NAME, alternate))
+                else:
+                    elements_present = EC.presence_of_element_located((By.CLASS_NAME, alternate))
+                WebDriverWait(locator, timeout).until(elements_present)
+                elements = locator.find_elements_by_class_name(alternate)
+                return elements
+            except TimeoutException:
+                if not quick:
+                    return print_timeout_statement(type, document)
+        else:
+            print("1000")
+            if not quick:
+                return print_timeout_statement(type, document)
 
 
 def locate_element_by_id(locator, id, type, clickable=False, document=None, quick=False):
@@ -160,13 +175,14 @@ def print_no_such_element_statement(type, document):
 
 
 # Fix ordering of document & clickable arguments & parameters across all functions
-def locate_element(locator, attribute_type, attribute, type, clickable=False, document=None, quick=False):
+def locate_element(locator, attribute_type, attribute, type, clickable=False, document=None,
+                   quick=False, alternate=None):
     if attribute_type == "id":
         return locate_element_by_id(locator, attribute, type, clickable, document, quick)
     elif attribute_type == "class":
         return locate_element_by_class_name(locator, attribute, type, clickable, document, quick)
     elif attribute_type == "classes":
-        return locate_elements_by_class_name(locator, attribute, type, clickable, document, quick)
+        return locate_elements_by_class_name(locator, attribute, type, clickable, document, quick, alternate)
     elif attribute_type == "name":
         return locate_element_by_name(locator, attribute, type, clickable, document, quick)
     elif attribute_type == "tag":
