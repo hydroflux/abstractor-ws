@@ -36,24 +36,54 @@ def check_browser_windows(browser):
         check_for_download_error(browser, windows)
 
 
+def check_for_download(browser, abstract, document, download_wait, count):
+    count += 1
+    if count == 250:
+        input(f'Waiting for document "{document.target_name}" to be added into the document directory, '
+              f'please press enter to continue...')
+    check_browser_windows(browser)
+    sleep(2)  # Increase to 2 seconds if still having issues with no such window exception
+    download_wait = False
+    directory_files = os.listdir(abstract.document_directory)
+    for file_name in directory_files:
+        if file_name.endswith('.crdownload'):
+            download_wait = True
+    if len(directory_files) != abstract.document_directory_files + 1:
+        download_wait = True
+    return download_wait
+
+
 def wait_for_download(browser, abstract, document):
     download_wait = True
     count = 0
-    while (not (os.path.exists(document.download_path) or os.path.exists(document.alternate_download_path))
-            and download_wait):
-        count += 1
-        if count == 250:
-            input(f'Waiting for document "{document.target_name}" to be added into the document directory, '
-                  f'please press enter to continue...')
-        check_browser_windows(browser)
-        sleep(2)  # Increase to 2 seconds if still having issues with no such window exception
-        download_wait = False
-        directory_files = os.listdir(abstract.document_directory)
-        for file_name in directory_files:
-            if file_name.endswith('.crdownload'):
-                download_wait = True
-        if len(directory_files) != abstract.document_directory_files + 1:
-            download_wait = True
+    if document.alternate_download_path is not None:
+        while (not (os.path.exists(document.download_path) or os.path.exists(document.alternate_download_path))
+                and download_wait):
+            download_wait = check_for_download(browser, abstract, document, download_wait, count)
+    else:
+        while not os.path.exists(document.download_path) and download_wait:
+            download_wait = check_for_download(browser, abstract, document, download_wait, count)
+
+
+# def wait_for_download(browser, abstract, document):
+#     download_wait = True
+#     count = 0
+#     print("document.alternate", document.alternate_download_path)
+#     while (not (os.path.exists(document.download_path) or os.path.exists(document.alternate_download_path))
+#             and download_wait):
+#         count += 1
+#         if count == 250:
+#             input(f'Waiting for document "{document.target_name}" to be added into the document directory, '
+#                   f'please press enter to continue...')
+#         check_browser_windows(browser)
+#         sleep(2)  # Increase to 2 seconds if still having issues with no such window exception
+#         download_wait = False
+#         directory_files = os.listdir(abstract.document_directory)
+#         for file_name in directory_files:
+#             if file_name.endswith('.crdownload'):
+#                 download_wait = True
+#         if len(directory_files) != abstract.document_directory_files + 1:
+#             download_wait = True
 
 
 def check_download_size(new_download_name, document):
@@ -96,7 +126,7 @@ def prepare_file_for_download(abstract, document):
 
 
 def check_for_alternate(document):
-    if os.path.exists(document.alternate_download_path):
+    if document.alternate_download_path is not None and os.path.exists(document.alternate_download_path):
         document.download_value = document.alternate_download_value
         document.download_path = document.alternate_download_path
 
