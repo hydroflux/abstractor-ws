@@ -62,12 +62,12 @@ def no_document_image(abstract, document):
     document.image_available = False
     last_comment = abstract.dataframe["Comments"][-1]
     no_image_comment = (f'No document image available for '
-                        f'"{document.extrapolate_value()}", please review')
+                        f'{document.extrapolate_value()}, please review')
     print(no_image_comment)
     if last_comment == "":
         abstract.dataframe["Comments"][-1] = no_image_comment
     else:
-        abstract.dataframe["Comments"][-1] = f'{last_comment}; {no_image_comment}'
+        abstract.dataframe["Comments"][-1] = f'{last_comment}; \n\n{no_image_comment}'
 
 
 def no_download(abstract, document):
