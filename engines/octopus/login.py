@@ -7,6 +7,8 @@ from selenium_utilities.locators import (locate_element_by_class_name,
                                          locate_elements_by_class_name)
 from selenium_utilities.open import open_url
 
+# Exact same functionality as "dolphin"
+
 
 def enter_credentials(browser, abstract):
     enter_input_value(browser, locate_element_by_id, abstract.county.credentials[0],
