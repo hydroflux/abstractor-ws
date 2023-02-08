@@ -78,10 +78,10 @@ def record_legal(browser, abstract, document):
     legal_field = locate_element_by_class_name(browser, abstract.county.record["Legal"], "legal", False, document)
     legal = list_to_string(legal_field.text.split('\n')[1:])
     notes = access_notes(browser, abstract, document)
-    if notes == '' or notes == ' ':
+    if notes == legal or notes.strip() == '':
         record_value(abstract, 'legal', legal)
     else:
-        record_value(abstract, 'legal', f'{notes}\n\n{legal}')
+        record_value(abstract, 'legal', f'{notes.strip()}\n\n{legal}')
 
 
 def record_related_documents(browser, abstract, document):
