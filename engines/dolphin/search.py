@@ -3,7 +3,7 @@ from selenium_utilities.locators import (locate_element_by_class_name,
                                          locate_element_by_id)
 from selenium_utilities.open import open_url
 
-# Exact same functionality as "octopus"
+# Exact same functionality as "octopus" & "swordfish"
 
 
 def handle_continuing_collection_search(browser, abstract, document):
@@ -24,11 +24,11 @@ def handle_search_values(browser, abstract, document):
         if document.type == "document_number":
             enter_input_value(browser, locate_element_by_id, abstract.county.inputs["Reception Number"],
                               "reception number input", value, document)
-        # elif document.type == "book_and_page":
-        #     enter_input_value(browser, locate_element_by_id, abstract.county.inputs["Book"],
-        #                       "book input", value[0], document)
-        #     enter_input_value(browser, locate_element_by_id, abstract.county.inputs["Page"],
-        #                       "page input", value[1], document)
+        elif document.type == "book_and_page":
+            enter_input_value(browser, locate_element_by_id, abstract.county.inputs["Book"],
+                              "book input", value[0], document)
+            enter_input_value(browser, locate_element_by_id, abstract.county.inputs["Page"],
+                              "page input", value[1], document)
         else:
             print(f'Abstractor path has not yet been developed to "handle search values" for document type "\
                 {document.type}", please review...')
