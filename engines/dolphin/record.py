@@ -6,6 +6,8 @@ from serializers.recorder import (date_from_string, list_to_string,
                                   title_strip)
 from settings.general_functions import get_direct_children
 
+# Almost identical functionality to "swordfish"
+
 
 def record_document_type(browser, abstract, document):
     document_type_field = locate_element_by_class_name(browser, abstract.county.record["Document Type"],

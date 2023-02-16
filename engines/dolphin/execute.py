@@ -9,6 +9,8 @@ from engines.dolphin.search import search
 
 from serializers.executor import close_program, search_documents_from_list
 
+# Same as "swordfish" except for imports
+
 
 def check_for_document_list(browser, abstract):
     if abstract.program in ['name_search', 'legal']:
@@ -16,7 +18,7 @@ def check_for_document_list(browser, abstract):
         collect(browser, abstract)
 
 
-def execute_legal_search(browser, abstract):
+def execute_program(browser, abstract):
     login(browser, abstract)
     check_for_document_list(browser, abstract)
     search_documents_from_list(

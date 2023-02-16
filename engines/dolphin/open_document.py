@@ -1,7 +1,7 @@
 from engines.dolphin.collect import collect
 from settings.general_functions import javascript_script_execution
 
-# Exact same as "octopus" except for import
+# Exact same as "octopus" & "swordfish" except for import
 
 
 def open_document(browser, abstract, document):

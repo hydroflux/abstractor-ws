@@ -7,7 +7,7 @@ from selenium_utilities.locators import (locate_element_by_class_name,
                                          locate_elements_by_class_name)
 from selenium_utilities.open import open_url
 
-# Exact same functionality as "octopus"
+# Exact same functionality as "octopus" & "swordfish"
 
 
 def enter_credentials(browser, abstract):

@@ -3,7 +3,7 @@ from classes.Document import Document
 from selenium_utilities.locators import (locate_element_by_class_name,
                                          locate_elements_by_class_name)
 
-# Exact same as "octopus"
+# Exact same as "octopus" & "swordfish"
 
 
 def register_number_results(browser, abstract, document):
@@ -44,12 +44,13 @@ def access_result_button(abstract, result, document=None):
 def build_document(abstract, result):
     reception_number = access_result_reception_number(result)
     description_link = access_result_button(abstract, result)
-    return Document("document_number",
-                    reception_number,
-                    county=abstract.county,
-                    description_link=description_link,
-                    number_results=1
-                    )
+    return Document(
+        "document_number",
+        reception_number,
+        county=abstract.county,
+        description_link=description_link,
+        number_results=1
+    )
 
 
 def build_document_list(browser, abstract):
