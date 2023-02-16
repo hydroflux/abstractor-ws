@@ -13,6 +13,7 @@ from engines.mountain_lion.transform import \
 from engines.octopus.transform import transform as transform_octopus
 from engines.platypus.transform import transform as transform_platypus
 from engines.rabbit.transform import transform as transform_rabbit
+from engines.swordfish.transform import transform as transform_swordfish
 
 from project_management.generate_document_list import generate_document_list
 from project_management.user_prompts import get_program_type
@@ -112,6 +113,8 @@ def update_abstract_and_county_attributes(abstract):
         transform_platypus(abstract)
     elif abstract.county.engine == "rabbit":
         transform_rabbit(abstract)
+    elif abstract.county.engine == "swordfish":
+        transform_swordfish(abstract)
 
 
 def create_folder(directory):
