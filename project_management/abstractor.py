@@ -2,8 +2,7 @@ from project_management.timers import start_program_timer
 from settings.driver import create_webdriver
 
 from engines.buffalo.execute import execute_program as execute_buffalo
-from engines.dolphin.execute import \
-    execute_legal_search as execute_dolphin_legal
+from engines.dolphin.execute import execute_program as execute_dolphin
 from engines.eagle.execute import execute_name_search as eagle_name_search
 from engines.eagle.execute import execute_program as execute_eagle
 from engines.jaguar.execute import execute_program as execute_jaguar
@@ -16,6 +15,7 @@ from engines.rabbit.execute import execute_name_search as rabbit_name_search
 from engines.rabbit.execute import execute_program as execute_rabbit
 from engines.rattlesnake.execute import execute_early_document_download
 from engines.rattlesnake.execute import execute_program as execute_rattlesnake
+from engines.swordfish.execute import execute_program as execute_swordfish
 from engines.tiger.execute import execute_program as execute_tiger
 
 from project_management.user_prompts import (add_download_type,
@@ -31,7 +31,7 @@ def engine_switch(abstract):
         if abstract.program in ["execute", "review", "download", "legal"]:
             if abstract.program == "download":
                 abstract.headless = False
-            return execute_dolphin_legal
+            return execute_dolphin
     elif abstract.county.engine == 'eagle':
         abstract.headless = False
         if abstract.program in ["execute", "review", "download"]:
@@ -56,11 +56,6 @@ def engine_switch(abstract):
             if abstract.program == "download":
                 abstract.headless = False
             return execute_platypus_legal
-    elif abstract.county.engine == 'tiger':
-        if abstract.program in ["execute", "review", "download"]:
-            if abstract.program == "download":
-                abstract.headless = False
-            return execute_tiger
     elif abstract.county.engine == 'rabbit':
         if abstract.program in ["execute", "review", "download"]:
             return execute_rabbit
@@ -75,6 +70,16 @@ def engine_switch(abstract):
             if abstract.program == 'execute':
                 add_download_type(abstract)
             return execute_rattlesnake
+    elif abstract.county.engine == 'swordfish':
+        if abstract.program in ["execute", "review", "download", "legal"]:
+            if abstract.program == "download":
+                abstract.headless = False
+            return execute_swordfish
+    elif abstract.county.engine == 'tiger':
+        if abstract.program in ["execute", "review", "download"]:
+            if abstract.program == "download":
+                abstract.headless = False
+            return execute_tiger
     else:
         print(f'"{abstract.county}" does not match available execution options, please review.')
         return False
