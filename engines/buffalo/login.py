@@ -26,10 +26,14 @@ def handle_disclaimer(browser, abstract):
 
 def verify_login(browser, abstract):
     switch_to_main_frame(browser, abstract)
-    welcome_message = locate_element(browser, "id", abstract.county.ids["Welcome"], "welcome message")
-    if welcome_message.text == abstract.county.messages["Welcome"]:
+    welcome_message_element = locate_element(browser, "id", abstract.county.ids["Welcome"], "welcome message")
+    welcome_message_text = welcome_message_element.text
+    if welcome_message_text == abstract.county.messages["Welcome"]:
         print('\nLogin successful, continuing program execution.')
         return True
+    else:
+        print(f'Welcome message "{welcome_message_text}" does not match expected welcome message '
+              f'"{abstract.county.messages["Welcome"]}", please review.')
 
 
 def execute_login_process(browser, abstract):
