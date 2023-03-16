@@ -16,7 +16,7 @@ def create_document_directory(target_directory):
 
 def set_new_download_name(document):
     if document.target_name is None:
-        if document.reception_number[0] == "-":
+        if document.reception_number[0] == "-" or document.reception_number == "N/A":
             book, page = document.document_value()
             document.target_type = "book_and_page"
             return f'{document.county.prefix}-{book.zfill(4)}-{page.zfill(4)}.pdf'  # used for leopard
