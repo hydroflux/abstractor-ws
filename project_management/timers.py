@@ -41,6 +41,18 @@ def stop_timer(start_time):
     return datetime.now() - start_time
 
 
+# def stop_after(action, number_seconds):
+#     fail = time() + number_seconds
+#     while time() < fail:
+#         try:
+#             action
+#             return True
+#         except WebDriverException:
+#             micro_nap()
+#     if time() > fail:
+#         return False
+
+
 def update_user(abstract):
     if abstract.program in ["execute", "review", "download"]:
         if len(abstract.document_list) != 0:
