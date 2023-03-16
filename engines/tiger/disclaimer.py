@@ -5,6 +5,8 @@ from selenium_utilities.locators import locate_element_by_id
 
 from settings.general_functions import javascript_script_execution
 
+#  same as leopard
+
 
 def handle_disclaimer(browser, abstract):
     javascript_script_execution(browser, abstract.county.scripts["Open Search"])
