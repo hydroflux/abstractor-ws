@@ -3,6 +3,8 @@ from classes.Document import Document
 from selenium_utilities.locators import (locate_element_by_class_name,
                                          locate_elements_by_class_name)
 
+# Exact same as "octopus"
+
 
 def register_number_results(browser, abstract, document):
     number_results_container = locate_elements_by_class_name(browser, abstract.county.classes["Result Count Container"],

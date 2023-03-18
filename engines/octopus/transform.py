@@ -20,7 +20,7 @@ def update_county_attributes(abstract):
         "Login Page": octopus.login_page_title,
         "Home Page": octopus.home_page_title,
         # SEARCH
-        "Search Page": octopus.search_page_title,
+        "Search Page": octopus.search_page_title
     }
     abstract.county.buttons = {
         # LOGIN
@@ -33,6 +33,7 @@ def update_county_attributes(abstract):
         # DOWNLOAD
         "Download Prompt": octopus.download_prompt_id,
         "Download": octopus.download_button_id,
+        "Cancel Download": octopus.download_cancel_id,
         # LOGOUT
         "Logout Dropdown": octopus.logout_dropdown_button,
         "Logout": octopus.logout_button_id
@@ -42,22 +43,29 @@ def update_county_attributes(abstract):
         "Redirect Active": octopus.redirect_modal_active_class,
         # OPEN DOCUMENT
         "Result Count Container": octopus.result_count_container_class_name,
-        "Result Row": octopus.result_row_class_name,
+        "Result Row": octopus.result_row_class_name
     }
     abstract.county.ids = {
+        # LOGIN
         "Redirect Modal": octopus.redirect_modal_id,
+        # VALIDATION
+        "No Document Image": octopus.no_document_image_id
     }
     abstract.county.inputs = {  # Consider changing to 'search_inputs'
         # SEARCH
-        # "Reception Number": octopus.reception_number_input_id,
-        # "Book": octopus.book_input_id,
-        # "Page": octopus.page_input_id,
+        "Reception Number": octopus.reception_number_input_id,
+        "Book": octopus.book_input_id,
+        "Page": octopus.page_input_id,
         # "Name": octopus.name_input_id,
         # "Start Date": octopus.start_date_id,
         # "End Date": octopus.end_date_id
         "Section": octopus.section_input_id,
         "Township": octopus.township_input_id,
         "Range": octopus.range_input_id
+    }
+    abstract.county.messages = {
+        # VALIDATION
+        "No Document Image": octopus.no_document_image_message,
     }
     abstract.county.record = {
         "Document Type": octopus.document_type_class_name,

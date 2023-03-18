@@ -1,11 +1,11 @@
 #!/usr/bin/python3
-from engines.octopus.collect import collect
-from engines.octopus.download import execute_download
-from engines.octopus.login import login
-from engines.octopus.logout import logout
-from engines.octopus.open_document import open_document
-from engines.octopus.record import record
-from engines.octopus.search import search
+from engines.dolphin.collect import collect
+from engines.dolphin.download import execute_download
+from engines.dolphin.login import login
+from engines.dolphin.logout import logout
+from engines.dolphin.open_document import open_document
+from engines.dolphin.record import record
+from engines.dolphin.search import search
 
 from serializers.executor import close_program, search_documents_from_list
 

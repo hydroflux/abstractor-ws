@@ -18,6 +18,13 @@ def set_document_download_values(document, reception_number):
     document.download_value = f'{reception_number}.pdf'
 
 
+def set_indexing_text(text_element):
+    indexing_text = text_element.text.split('\n')
+    while not indexing_text[-1].startswith("R"):
+        indexing_text = indexing_text[:-1]
+    return indexing_text
+
+
 def record_reception_number(abstract, document, reception_number_text):
     reception_number = reception_number_text[1:]
     set_document_download_values(document, reception_number)
@@ -25,7 +32,11 @@ def record_reception_number(abstract, document, reception_number_text):
 
 
 def record_book_and_page(abstract, book_and_page_text):
-    _, book, _, page = book_and_page_text.split(' ')
+    if book_and_page_text is not None:
+        _, book, _, page = book_and_page_text.split(' ')
+    else:
+        book = "N/A"
+        page = "N/A"
     record_value(abstract, 'book', book)
     record_value(abstract, 'page', page)
 
@@ -43,10 +54,13 @@ def record_recording_date(abstract, recording_date_text):
 def record_indexing_information(browser, abstract, document):
     indexing_information_container = locate_element_by_id(browser, abstract.county.record["Indexing Information"],
                                                           "indexing information", False, document)
-    indexing_text = indexing_information_container.text.split('\n')
-    if len(indexing_text) == 5:
-        indexing_text = indexing_text[:-1]
-    reception_number_text, book_and_page_text, effective_date_text, recording_date_text = indexing_text
+    indexing_text = set_indexing_text(indexing_information_container)
+    print("indexing text", indexing_text)
+    if len(indexing_text) == 4:
+        reception_number_text, book_and_page_text, effective_date_text, recording_date_text = indexing_text
+    else:
+        reception_number_text, effective_date_text, recording_date_text = indexing_text
+        book_and_page_text = None
     record_reception_number(abstract, document, reception_number_text)
     record_book_and_page(abstract, book_and_page_text)
     record_effective_date(abstract, effective_date_text)

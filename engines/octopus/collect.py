@@ -3,25 +3,27 @@ from classes.Document import Document
 from selenium_utilities.locators import (locate_element_by_class_name,
                                          locate_elements_by_class_name)
 
+# Exact same as "dolphin"
 
-def register_result_count(browser, abstract, document):
-    result_count_container = locate_elements_by_class_name(browser, abstract.county.classes["Result Count Container"],
-                                                           "result count container", False)[1]
-    result_count_text = result_count_container.text.split("\n")[1]
-    result_count = int(result_count_text.split(" ")[-2])
+
+def register_number_results(browser, abstract, document):
+    number_results_container = locate_elements_by_class_name(browser, abstract.county.classes["Result Count Container"],
+                                                             "result count container", False)[1]
+    number_results_text = number_results_container.text.split("\n")[1]
+    number_results = int(number_results_text.split(" ")[-2])
     if document is None:
-        print(f'Collection search returned "{str(result_count)}" results for processing.')
-        abstract.number_search_results = result_count
+        print(f'Collection search returned "{str(number_results)}" results for processing.')
+        abstract.number_search_results = number_results
     else:
-        document.number_results = result_count
+        document.number_results = number_results
 
 
 def count_results(browser, abstract, document):
     # need to create a unified handler rather than calling the function twice
-    if document is not None and document.result_count == 0:
-        register_result_count(browser, abstract, document)
+    if document is not None and document.number_results == 0:
+        register_number_results(browser, abstract, document)
     elif not abstract.number_search_results:
-        register_result_count(browser, abstract, document)
+        register_number_results(browser, abstract, document)
 
 
 def access_result_rows(browser, abstract, document=None):

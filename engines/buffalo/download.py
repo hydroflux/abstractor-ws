@@ -24,5 +24,5 @@ def download_document(browser, abstract, document):
 def execute_download(browser, abstract, document):
     open_download_submenu(browser, abstract, document)
     micro_nap()
-    if not check_for_download_alert(browser, abstract, document, abstract.county.messages["No Document Image Alert"]):
+    if not check_for_download_alert(browser, abstract, document):
         download_document(browser, abstract, document)

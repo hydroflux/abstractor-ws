@@ -3,7 +3,7 @@ from selenium_utilities.locators import (locate_element_by_class_name,
                                          locate_element_by_id)
 from selenium_utilities.open import open_url
 
-# Exact same functionality as "dolphin"
+# Exact same functionality as "octopus"
 
 
 def handle_continuing_collection_search(browser, abstract, document):
