@@ -35,23 +35,43 @@ def update_county_attributes(abstract):
         "Row Titles": tiger.row_titles
     }
     abstract.county.buttons = {
+        # DISCLAIMER
+        "Disclaimer": tiger.disclaimer_button_id,
         # LOGIN
         "Login": tiger.login_button_name,
-        "Disclaimer": tiger.handle_disclaimer_button_id,
+        # "Disclaimer": tiger.handle_disclaimer_button_id,
         # SEARCH
-        "Search": tiger.search_button_id,
+        # "Search": tiger.search_button_id,
+        # SEARCH
+        "Document Search": tiger.document_search_button_id,
+        "Book And Page Search": tiger.book_and_page_search_button_id,
         # OPEN DOCUMENT
         "Result Count": tiger.result_count_button_id,
         # DOWNLOAD
         "Download Submenu": tiger.download_submenu_id,
         "Download": tiger.download_button_id
     }
+    abstract.county.classes = {
+        # DISCLAIMER
+        "Disclaimer Active": tiger.disclaimer_active_class,
+        # OPEN DOCUMENT
+        "Result Rows": tiger.result_rows_class
+    }
     abstract.county.ids = {
+        # DISCLAIMER
+        "Disclaimer": tiger.disclaimer_id,
+        # SEARCH
+        # "Search Navigation": tiger.search_navigation_id,
+        # "Search Tab": tiger.search_tab_id,
         # SEARCH
         "Search Navigation": tiger.search_navigation_id,
-        "Search Tab": tiger.search_tab_id,
+        "Document Search Tab": tiger.document_search_tab_id,
+        "Book And Page Search Tab": tiger.book_and_page_search_tab_id,
         # OPEN DOCUMENT
         "Result Count": tiger.result_count_id,
+        # "Results Table": tiger.results_table_id,
+        # OPEN DOCUMENT
+        "Results Count": tiger.results_count_id,
         "Results Table": tiger.results_table_id,
         # RECORD
         "Document Image": tiger.document_image_id,
@@ -59,13 +79,24 @@ def update_county_attributes(abstract):
     }
     abstract.county.inputs = {  # Consider changing to 'search_inputs'
         # SEARCH
-        "Reception Number": tiger.document_search_field_id
+        "Reception Number": tiger.document_search_field_id,
+        "Book": tiger.book_search_field_id,
+        "Page": tiger.page_search_field_id
+    }
+    abstract.county.messages = {
+        # OPEN DOCUMENT
+        "Counting": tiger.counting_results
     }
     abstract.county.scripts = {
+        # DISCLAIMER
+        "Open Search": tiger.open_script,
         # SEARCH
         "Search": tiger.search_script
     }
     abstract.county.tags = {
+        # OPEN DOCUMENT
+        "Results Table Body": tiger.results_body_tag,
+        "Result Cell": tiger.result_cell_tag,
         # OPEN / RECORD DOCUMENT
         "Body": tiger.results_body_tag,
         "Rows": tiger.first_result_tag,
