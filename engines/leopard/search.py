@@ -56,6 +56,11 @@ def open_search_type_tab(browser, abstract, document):
         open_tab(browser, document, abstract.county.ids["Document Search Tab"], "document search tab")
     elif document.type == "book_and_page":
         open_tab(browser, document, abstract.county.ids["Book And Page Search Tab"], "book and page search tab")
+    else:
+        print(f'Unable to search document type "{document.type}", '
+              f'a new search path needs to be developed in order to continue.\n')
+        print("Please press enter after reviewing the search parameters...")
+        input()
 
 
 def clear_search(browser, abstract, document):
@@ -90,6 +95,11 @@ def execute_search(browser, abstract, document):
     elif document.type == "book_and_page":
         click_button(browser, locate_element_by_id, abstract.county.buttons["Book And Page Search"],
                      "book and page search button", document)  # Execute Search
+    else:
+        print(f'Unable to search document type "{document.type}", '
+              f'a new search path needs to be developed in order to continue.\n')
+        print("Please press enter after reviewing the search parameters...")
+        input()
 
 
 def search(browser, abstract, document):
