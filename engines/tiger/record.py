@@ -59,8 +59,6 @@ def check_rows(abstract, rows, title):
 
 def record_reception_number(abstract, row, document):
     reception_number = check_rows(abstract, row, abstract.county.titles["Row Titles"]["reception_number"])
-    # if document.type == "book_and_page" and document.reception_number == not_applicable:
-    #     reception_number = f'{document.value["Book"].zfill(4)}-{document.value["Page"].zfill(4)}'
     document.reception_number = reception_number
     record_value(abstract, 'reception number', reception_number)
 
