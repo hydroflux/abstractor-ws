@@ -76,16 +76,22 @@ def string_list_string(string, deliminator):
 def record_grantor(browser, abstract, document):
     grantor_element = locate_element(browser, "xpath", abstract.county.xpaths["Grantor"],
                                      "grantor", False, document)
-    grantor_list_string = access_title_case_text(grantor_element)
-    grantor = string_list_string(grantor_list_string, "\n")
+    if grantor_element is not None:
+        grantor_list_string = access_title_case_text(grantor_element)
+        grantor = string_list_string(grantor_list_string, "\n")
+    else:
+        grantor = ""
     record_value(abstract, "grantor", grantor)
 
 
 def record_grantee(browser, abstract, document):
     grantee_element = locate_element(browser, "xpath", abstract.county.xpaths["Grantee"],
-                                              "grantor", False, document)
-    grantee_list_string = access_title_case_text(grantee_element)
-    grantee = string_list_string(grantee_list_string, "\n")
+                                              "grantee", False, document)
+    if grantee_element is not None:
+        grantee_list_string = access_title_case_text(grantee_element)
+        grantee = string_list_string(grantee_list_string, "\n")
+    else:
+        grantee = ""
     record_value(abstract, "grantee", grantee)
 
 

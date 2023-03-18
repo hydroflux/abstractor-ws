@@ -30,6 +30,7 @@ def update_county_attributes(abstract):
         # DOWNLOAD
         "Download Submenu": buffalo.download_submenu_button_id,
         "Download": buffalo.download_button_xpath,
+        "Download Alert": buffalo.download_alert_button_class_name,
         # NAVIGATION
         "Next Result": buffalo.next_result_button_id
     }

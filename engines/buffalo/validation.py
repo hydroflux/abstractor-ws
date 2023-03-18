@@ -1,22 +1,30 @@
-from engines.buffalo.frame_handling import (switch_to_captcha_frame,
-                                            switch_to_document_image_frame,
-                                            switch_to_header_frame,
-                                            switch_to_search_menu_frame)
+from selenium.common.exceptions import StaleElementReferenceException
+
 from project_management.timers import naptime
 from selenium_utilities.locators import locate_element
 from serializers.validator import check_for_alert
 from settings.invalid import no_document_image
 
+from engines.buffalo.frame_handling import (switch_to_captcha_frame,
+                                            switch_to_document_image_frame,
+                                            switch_to_header_frame,
+                                            switch_to_search_menu_frame)
+
 
 def check_header_validation(browser, abstract, validation_text):
-    switch_to_header_frame(browser, abstract)
-    header_text_element = locate_element(browser, "tag", abstract.county.tags["Header Text"],
-                                         "header text")
-    return header_text_element.text.startswith(validation_text)
+    try:
+        switch_to_header_frame(browser, abstract)
+        header_text_element = locate_element(browser, "tag", abstract.county.tags["Header Text"],
+                                             "header text")
+        return header_text_element.text.startswith(validation_text)
+    except StaleElementReferenceException:
+        print("Encountered a stale element reference exception, trying again.")
 
 
 def header_validation(browser, abstract, validation_text):
     validated = check_header_validation(browser, abstract, validation_text)
+    while validated is None:
+        validated = check_header_validation(browser, abstract, validation_text)
     if validated:
         return validated
     else:

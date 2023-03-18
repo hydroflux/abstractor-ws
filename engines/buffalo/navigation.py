@@ -1,10 +1,7 @@
 from selenium.common.exceptions import ElementClickInterceptedException
-
-from project_management.timers import naptime
 from selenium_utilities.locators import locate_element
-from settings.general_functions import scroll_to_top
 
-from engines.buffalo.frame_handling import switch_to_document_frame
+from engines.buffalo.frame_handling import switch_to_main_frame, switch_to_document_frame
 
 
 def get_next_result_button(browser, abstract, document):
@@ -13,22 +10,25 @@ def get_next_result_button(browser, abstract, document):
                           "next result button", True, document)
 
 
-def click_result_button(browser, button):
+def clear_download_alert(browser, abstract, document):
+    switch_to_main_frame(browser, abstract)
+    clear_download_alert_button = locate_element(browser, "class", abstract.county.buttons["Download Alert"],
+                                                 "download alert button", True, document, True)
+    clear_download_alert_button.click()
+
+
+def execute_next_result_click(browser, abstract, document):
     try:
-        scroll_to_top(browser)
-        button.click()
-        # short_nap()  # Nap is necessary, consider lengthening if app breaks at this point
+        next_result_button = get_next_result_button(browser, abstract, document)
+        # handle_click_next_result_button(browser, abstract, document, next_result_button)
+        next_result_button.click()
         return True
     except ElementClickInterceptedException:
-        print("Button click intercepted while trying to view previous / next result, trying again")
-
-
-def handle_click_next_result_button(browser, abstract, document, button):
-    while not click_result_button(browser, button):
-        naptime()
-        button = get_next_result_button(browser, abstract, document)
+        print("Encountered an ElementClickInterceptedException, trying again...")
+        clear_download_alert(browser, abstract, document)
+        return False
 
 
 def next_result(browser, abstract, document):
-    next_result_button = get_next_result_button(browser, abstract, document)
-    handle_click_next_result_button(browser, abstract, document, next_result_button)
+    while not execute_next_result_click(browser, abstract, document):
+        execute_next_result_click(browser, abstract, document)
