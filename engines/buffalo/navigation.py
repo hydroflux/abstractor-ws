@@ -1,4 +1,6 @@
 from selenium.common.exceptions import ElementClickInterceptedException
+
+from project_management.timers import naptime
 from selenium_utilities.locators import locate_element
 
 from engines.buffalo.frame_handling import switch_to_main_frame, switch_to_document_frame
@@ -31,4 +33,5 @@ def execute_next_result_click(browser, abstract, document):
 
 def next_result(browser, abstract, document):
     while not execute_next_result_click(browser, abstract, document):
+        naptime()
         execute_next_result_click(browser, abstract, document)
