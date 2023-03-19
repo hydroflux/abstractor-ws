@@ -77,6 +77,7 @@ def check_for_download_alert(browser, abstract, document):
 
 
 def page_is_loaded(browser, abstract, validation_text, document=None):
+    check_for_captcha(browser, abstract, document)
     if not header_validation(browser, abstract, validation_text):
         if validation_text == abstract.county.messages["Search Results"]:
             if check_for_document_results(browser, abstract, document):
@@ -88,5 +89,4 @@ def page_is_loaded(browser, abstract, validation_text, document=None):
                   f'"{validation_text}", please review webdriver before continuing...')
             input()
     else:
-        check_for_captcha(browser, abstract, document)
         return True
