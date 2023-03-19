@@ -3,7 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-from project_management.timers import timeout
+from project_management.timers import timeout, micro_timeout
 
 
 def locate_element_by_class_name(locator, class_name, type, clickable=False, document=None, quick=False):
@@ -193,3 +193,13 @@ def locate_element(locator, attribute_type, attribute, type, clickable=False, do
         return locate_element_by_xpath(locator, attribute, type, clickable, document, quick)
     elif attribute_type == "tags":
         return locate_element_by_xpath(locator, attribute, type, clickable, document, quick)
+
+
+# ELEMENT IS VISIBLE
+def element_visible_by_id(locator, id):
+    try:
+        element_visible = EC.visibility_of_element_located((By.ID, id))
+        WebDriverWait(locator, micro_timeout).until(element_visible)
+        return True
+    except TimeoutException:
+        return False
