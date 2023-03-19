@@ -33,5 +33,7 @@ def execute_next_result_click(browser, abstract, document):
 
 def next_result(browser, abstract, document):
     while not execute_next_result_click(browser, abstract, document):
+        # Add an alert text fix if naptime does not fix issue
         naptime()
+        # added 03/20/23
         execute_next_result_click(browser, abstract, document)
