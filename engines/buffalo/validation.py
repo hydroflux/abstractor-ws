@@ -52,11 +52,12 @@ def check_for_document_results(browser, abstract, document):
     return no_results_message != abstract.county.messages["No Results"]
 
 
-def check_for_captcha(browser, abstract):
+def check_for_captcha(browser, abstract, document):
     # Loop through a couple times with pauses to see if the captcha is hit early on?
     # start with prints and then switch to input?
     while switch_to_captcha_frame(browser, abstract):
-        input("Encountered a captcha while processing abstract, please address and press enter to continue...")
+        input(f'Encountered a captcha while processing abstract for document {document.extrapolate_value()}, '
+              f'please address and press enter to continue...')
 
 
 def check_for_document_image(browser, abstract, document):
@@ -87,5 +88,5 @@ def page_is_loaded(browser, abstract, validation_text, document=None):
                   f'"{validation_text}", please review webdriver before continuing...')
             input()
     else:
-        check_for_captcha(browser, abstract)
+        check_for_captcha(browser, abstract, document)
         return True
