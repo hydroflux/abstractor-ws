@@ -8,6 +8,7 @@ from settings.county_variables.general import abstraction_type
 timeout = randint(20, 30)
 long_timeout = randint(120, 180)
 short_timeout = randint(5, 10)
+micro_timeout = randint(3, 5)
 
 
 def naptime():
