@@ -46,11 +46,8 @@ def verify_login(browser, abstract):
 
 def login(browser, abstract):
     open_site(browser, abstract)
-    print("1")
     enter_credentials(browser, abstract)
-    print("2")
     verify_login(browser, abstract)
-    print("3")
     handle_disclaimer(browser, abstract)
 
 
