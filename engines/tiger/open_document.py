@@ -72,6 +72,12 @@ def verify_book_and_page_numbers(document, cells):
     page = page.zfill(4)
     if book and page in map(get_element_text, cells):
         return True
+    elif book and f'{page[1:]}A' in map(get_element_text, cells):
+        return True
+    elif book and f'{page[1:]}B' in map(get_element_text, cells):
+        return True
+    elif book and f'{page[1:]}C' in map(get_element_text, cells):
+        return True
 
 
 def verify_result(document, cells):
