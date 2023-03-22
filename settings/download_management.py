@@ -6,6 +6,7 @@ from selenium.common.exceptions import (NoSuchWindowException,
 
 from project_management.timers import medium_nap, naptime
 from settings.general_functions import save_screenshot
+from settings.invalid import no_download
 
 
 def check_for_download_error(browser, windows):
@@ -33,7 +34,9 @@ def check_browser_windows(browser):
     windows = browser.window_handles
     if len(windows) > 1:
         browser.switch_to.window(windows[1])
-        check_for_download_error(browser, windows)
+        if check_for_download_error(browser, windows):
+            print("Error attempting to download document, please review.")
+            return True
 
 
 def check_for_download(browser, abstract, document, download_wait, count):
@@ -41,7 +44,8 @@ def check_for_download(browser, abstract, document, download_wait, count):
     if count == 250:
         input(f'Waiting for document "{document.target_name}" to be added into the document directory, '
               f'please press enter to continue...')
-    check_browser_windows(browser)
+    if check_browser_windows(browser):
+        return None
     sleep(2)  # Increase to 2 seconds if still having issues with no such window exception
     download_wait = False
     directory_files = os.listdir(abstract.document_directory)
@@ -60,9 +64,14 @@ def wait_for_download(browser, abstract, document):
         while (not (os.path.exists(document.download_path) or os.path.exists(document.alternate_download_path))
                 and download_wait):
             download_wait = check_for_download(browser, abstract, document, download_wait, count)
+            if download_wait is None:
+                return False
     else:
         while not os.path.exists(document.download_path) and download_wait:
             download_wait = check_for_download(browser, abstract, document, download_wait, count)
+            if download_wait is None:
+                return False
+    return True
 
 
 # def wait_for_download(browser, abstract, document):
@@ -155,12 +164,16 @@ def reset_document_download_attributes(document):
 
 
 def update_download(browser, abstract, document):
-    wait_for_download(browser, abstract, document)
-    naptime()
-    check_for_alternate(document)
-    rename_download(abstract, document)
-    check_for_rename(abstract, document)
-    abstract.report_document_download(document)
-    reset_document_download_attributes(document)
-    # Without a conditional, no_download will never be thrown???
-    # no_download(abstract, document)
+    if wait_for_download(browser, abstract, document):
+        naptime()
+        check_for_alternate(document)
+        rename_download(abstract, document)
+        check_for_rename(abstract, document)
+        abstract.report_document_download(document)
+        reset_document_download_attributes(document)
+        # Without a conditional, no_download will never be thrown???
+        # no_download(abstract, document)
+    else:
+        print(f'No document image exists for '
+              f'{document.extrapolate_value()}, please review.')
+        no_download(abstract, document)
