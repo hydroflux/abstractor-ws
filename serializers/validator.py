@@ -9,6 +9,6 @@ def check_for_alert(browser, expected_alert):
             alert.accept()
             return True
         else:
-            input("Encountered an unknown alert, please review and press enter to continue...")
+            input(f'Encountered an unknown alert: "{alert.text}", please review and press enter to continue...')
     except NoAlertPresentException:
         return
