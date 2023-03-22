@@ -49,7 +49,10 @@ def update_county_attributes(abstract):
         "Result Count": tiger.result_count_button_id,
         # DOWNLOAD
         "Download Submenu": tiger.download_submenu_id,
-        "Download": tiger.download_button_id
+        "Download": tiger.download_button_id,
+        # NAVIGATION
+        "Next Result": tiger.next_result_id,
+        "Previous Result": tiger.previous_result_id,
     }
     abstract.county.classes = {
         # DISCLAIMER
