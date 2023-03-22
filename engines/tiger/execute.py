@@ -3,6 +3,7 @@ from engines.tiger.transform import transform_document_list
 
 from engines.tiger.download import execute_download
 from engines.tiger.login import login
+from engines.leopard.navigation import next_result
 from engines.tiger.open_document import open_document
 from engines.tiger.record import record
 from engines.tiger.search import search
@@ -22,7 +23,7 @@ def execute_program(browser, abstract):
         open_document,
         record,
         execute_download,
-        next_result=None
+        next_result
     )
     close_program(browser, abstract)
 
