@@ -86,6 +86,17 @@ def record_book_and_page(abstract, row):
             print(f'Encountered unexpected value "{book_page_value}" when trying to record book & page.')
 
 
+def set_download_target_name(abstract, document):
+    if document.reception_number == not_applicable:
+        book = abstract.dataframe["Book"][-1].zfill(4)
+        page = abstract.dataframe["Page"][-1].zfill(4)
+        document.target_name = f'{document.county.prefix}-{book}-{page}.pdf'
+        document.target_type == "book_and_page"
+    else:
+        document.target_name = f'{document.county.prefix}-{document.reception_number}.pdf'
+        document.target_type = "document_number"
+
+
 def record_recording_date(abstract, rows):
     recording_date = check_rows(abstract, rows, abstract.county.titles["Row Titles"]["recording_date"])
     record_value(abstract, 'recording date', recording_date[:10])
@@ -102,6 +113,10 @@ def record_grantor(abstract, rows):
         grantor = check_rows(abstract, rows, abstract.county.titles["Row Titles"]["alt_grantor"])
         if grantor == not_applicable:
             grantor = check_rows(abstract, rows, abstract.county.titles["Row Titles"]["second_alt_grantor"])
+            if grantor == not_applicable:
+                grantor = check_rows(abstract, rows, abstract.county.titles["Row Titles"]["third_alt_grantor"])
+                if grantor == not_applicable:
+                    grantor = check_rows(abstract, rows, abstract.county.titles["Row Titles"]["fourth_alt_grantor"])
     record_value(abstract, 'grantor', grantor.title())
 
 
@@ -111,6 +126,12 @@ def record_grantee(abstract, rows):
         grantee = check_rows(abstract, rows, abstract.county.titles["Row Titles"]["alt_grantee"])
         if grantee == not_applicable:
             grantee = check_rows(abstract, rows, abstract.county.titles["Row Titles"]["second_alt_grantee"])
+            if grantee == not_applicable:
+                grantee = check_rows(abstract, rows, abstract.county.titles["Row Titles"]["third_alt_grantee"])
+                if grantee == not_applicable:
+                    grantee = check_rows(abstract, rows, abstract.county.titles["Row Titles"]["fourth_alt_grantee"])
+                    if grantee == not_applicable:
+                        grantee = check_rows(abstract, rows, abstract.county.titles["Row Titles"]["fifth_alt_grantee"])
     record_value(abstract, 'grantee', grantee.title())
 
 
@@ -133,6 +154,7 @@ def record_legal(abstract, rows):
 def aggregate_document_information(abstract, rows, document):
     record_reception_number(abstract, rows, document)
     record_book_and_page(abstract, rows)
+    set_download_target_name(abstract, document)
     record_recording_date(abstract, rows)
     record_document_type(abstract, rows)
     record_grantor(abstract, rows)
