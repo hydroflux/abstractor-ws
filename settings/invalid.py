@@ -55,7 +55,7 @@ def unable_to_download(abstract, document):
     if last_comment == "":
         abstract.dataframe["Comments"][-1] = unable_to_download
     else:
-        abstract.dataframe["Comments"][-1] = f'{last_comment}; {unable_to_download}'
+        abstract.dataframe["Comments"][-1] = f'{last_comment};\n\n{unable_to_download}'
 
 
 def no_document_image(abstract, document):
@@ -67,7 +67,7 @@ def no_document_image(abstract, document):
     if last_comment == "":
         abstract.dataframe["Comments"][-1] = no_image_comment
     else:
-        abstract.dataframe["Comments"][-1] = f'{last_comment}; \n\n{no_image_comment}'
+        abstract.dataframe["Comments"][-1] = f'{last_comment};\n\n{no_image_comment}'
 
 
 def no_download(abstract, document):
