@@ -82,6 +82,7 @@ def update_county_attributes(abstract):
         # RECORD
         "Document Information": buffalo.document_information_header_text,
         "No Related Documents": buffalo.no_related_documents_message,
+        "Invalid Legal": buffalo.invalid_legal,
         # VALIDATION
         "No Results": buffalo.no_results_message,
         "No Document Image": buffalo.no_document_image_message,
