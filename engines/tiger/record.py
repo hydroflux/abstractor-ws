@@ -121,6 +121,8 @@ def record_grantor(abstract, rows):
                         grantor = check_rows(abstract, rows, abstract.county.titles["Row Titles"]["fifth_alt_grantor"])
                         if grantor == not_applicable:
                             grantor = check_rows(abstract, rows, abstract.county.titles["Row Titles"]["sixth_alt_grantor"])
+                            if grantor == not_applicable:
+                                grantor = check_rows(abstract, rows, abstract.county.titles["Row Titles"]["seventh_alt_grantor"])
     record_value(abstract, 'grantor', grantor.title())
 
 
@@ -140,6 +142,8 @@ def record_grantee(abstract, rows):
                             grantee = check_rows(abstract, rows, abstract.county.titles["Row Titles"]["sixth_alt_grantee"])
                             if grantee == not_applicable:
                                 grantee = check_rows(abstract, rows, abstract.county.titles["Row Titles"]["seventh_alt_grantee"])
+                                if grantee == not_applicable:
+                                    grantee = check_rows(abstract, rows, abstract.county.titles["Row Titles"]["eighth_alt_grantee"])
     record_value(abstract, 'grantee', grantee.title())
 
 
