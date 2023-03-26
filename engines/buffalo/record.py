@@ -96,7 +96,8 @@ def record_grantee(browser, abstract, document):
 
 
 def drop_invalid_legal_description(abstract, legal_elements):
-    if legal_elements[0] == abstract.county.messages["Invalid Legal"]:
+    invalid_legal = abstract.county.messages["Invalid Legal"]
+    if len(legal_elements) > 0 and legal_elements[0] == invalid_legal:
         legal_elements.pop(0)
     return legal_elements
 
