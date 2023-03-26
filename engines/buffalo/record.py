@@ -95,14 +95,10 @@ def record_grantee(browser, abstract, document):
     record_value(abstract, "grantee", grantee)
 
 
-def drop_invalid_legal_description(abstract, legal):
-    invalid_legal = abstract.county.messages["Invalid Legal"]
-    if legal.startswith(invalid_legal):
-        if legal == invalid_legal:
-            legal = ""
-        else:
-            legal = legal[len(invalid_legal):]
-    return legal
+def drop_invalid_legal_description(abstract, legal_elements):
+    if legal_elements[0] == abstract.county.messages["Invalid Legal"]:
+        legal_elements.pop(0)
+    return legal_elements
 
 
 def record_legal(browser, abstract, document):
@@ -111,10 +107,9 @@ def record_legal(browser, abstract, document):
         element = locate_element(browser, "xpath", path, "legal", False, document, True)
         if element is not None and element.text.strip() != "":
             legal_elements.append(element.text.strip())
-    print("legal_elements_list", legal_elements)
-    legal = "\n".join(legal_elements).strip()
-    updated_legal = drop_invalid_legal_description(abstract, legal)
-    record_value(abstract, "legal", updated_legal)
+    updated_legal_elements = drop_invalid_legal_description(abstract, legal_elements)
+    legal = "\n".join(updated_legal_elements).strip()
+    record_value(abstract, "legal", legal)
 
 
 def access_related_documents(browser, abstract, document):
