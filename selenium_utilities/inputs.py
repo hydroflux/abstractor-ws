@@ -46,11 +46,19 @@ def enter_input_value(browser, locator_function, attribute, type, value, documen
 def click_button(browser, locator_function, attribute, type, document=None):
     try:
         button = locator_function(browser, attribute, type, True, document)
-        if button is False:
-            return False
-        else:
-            center_element(browser, button)
-            button.click()
+        # if button is False:
+        #     return False
+        # else:
+        #     center_element(browser, button)
+        #     button.click()
+        while button is False:
+            if document is None:
+                input(f'Unable to locate "{type}" button, please review and press enter to continue.')
+            else:
+                input(f'Unable to locate "{type}" button for {document.extrapolate_value()}, please review and press enter to continue.')
+            button = locator_function(browser, attribute, type, True, document)
+        center_element(browser, button)
+        button.click()
     except ElementClickInterceptedException:  # handles an issue with eagle downloads
         print(f'Element click intercepted while trying to click "{type}" '
               f'attribute "{attribute}", please review and press enter to continue...')
