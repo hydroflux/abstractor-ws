@@ -103,6 +103,8 @@ def locate_element_by_tag_name(locator, tag_name, type, clickable=False, documen
     except TimeoutException:
         if not quick:
             return print_timeout_statement(type, document)
+    except StaleElementReferenceException:
+        print(f'StaleElementReferenceException experienced trying to located "{type}", returning NONE...')
 
 
 def locate_elements_by_tag_name(locator, tag_name, type, clickable=False, document=None, quick=False):
