@@ -107,8 +107,14 @@ def drop_superfluous_information(abstract, string):
 
 
 def access_table_body(document_table, abstract):  # Argument order important in order to work with 'map'
-    return locate_element_by_tag_name(document_table, abstract.county.tags["Index Table"][0],
+    table_body = locate_element_by_tag_name(document_table, abstract.county.tags["Index Table"][0],
                                       "document table body", False, quick=True)
+    while table_body is None:
+        print("Unable to locate TABLE BODY element, trying again.")
+        table_body = locate_element_by_tag_name(document_table, abstract.county.tags["Index Table"][0],
+                                                "document table body", False, quick=True)
+    return table_body
+        
 
 
 def access_table_rows(abstract, table_body):
