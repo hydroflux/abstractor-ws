@@ -6,6 +6,7 @@ from engines.swordfish.logout import logout
 from engines.swordfish.open_document import open_document
 from engines.swordfish.record import record
 from engines.swordfish.search import search
+from engines.swordfish.navigation import next_result
 
 from serializers.executor import close_program, search_documents_from_list
 
@@ -27,6 +28,7 @@ def execute_program(browser, abstract):
         search,
         open_document,
         record,
-        execute_download
+        execute_download,
+        next_result
     )
     close_program(browser, abstract, logout)
