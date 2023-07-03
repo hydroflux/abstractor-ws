@@ -3,7 +3,7 @@ from classes.Document import Document
 from selenium_utilities.locators import (locate_element_by_class_name,
                                          locate_elements_by_class_name)
 
-# Exact same as "octopus" & "dolphin"
+# Similar to "octopus" & "dolphin"
 
 
 def register_number_results(browser, abstract, document):
@@ -70,4 +70,3 @@ def collect(browser, abstract, document=None):
             result = result_rows[document.result_number]
             document.description_link = access_result_button(abstract, result, document)
         return True
-
