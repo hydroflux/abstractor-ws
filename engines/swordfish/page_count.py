@@ -27,4 +27,4 @@ def register_page_count(abstract, document, result_rows):
         page_count = int(page_count_text)
         result_page_count += page_count
     abstract.total_page_count += result_page_count
-    report_page_count(document, result_page_count)
+    report_page_count(abstract, document, result_page_count)
