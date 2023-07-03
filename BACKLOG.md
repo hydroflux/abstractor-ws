@@ -2,9 +2,10 @@
 
 ## General To Do
 
+- [ ] !!!Update "options" at initialization to appear based on what's available rather than all options leading to success or failure after initialization
 - [ ] Change 'county_variables' to config
 - [ ] Continue testing Octopus in headless chrome (use browser.save_screenshot('') to see what current feedback is returning)
-- [ ] - [ ] Build print statements and returns for "NoSuchElementException" in the locators script
+- [ ] Build print statements and returns for "NoSuchElementException" in the locators script
 - [ ] Revert the "quick" flag on the "TimeoutExceptions" in the "locators" script--if its quick it doesn't hit timeout, "."
 - [ ] Add more robust options to "create_output_file" in the "export" script
 - [ ] Consider moving the browser initialization out of the 'abstractor' file and into the 'environment' file??? (appears to be failing on any browser methods)
