@@ -3,6 +3,7 @@
 ## General To Do
 
 - [ ] !!!Update "options" at initialization to appear based on what's available rather than all options leading to success or failure after initialization
+- [ ] !!!!!! DeprecationWarning: find_elements_by_tag_name is deprecated. Please use find_elements(by=By.TAG_NAME, value=name) instead => fix locators for selenium utility functions
 - [ ] Change 'county_variables' to config
 - [ ] Continue testing Octopus in headless chrome (use browser.save_screenshot('') to see what current feedback is returning)
 - [ ] Build print statements and returns for "NoSuchElementException" in the locators script
