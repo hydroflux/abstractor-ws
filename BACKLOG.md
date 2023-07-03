@@ -496,7 +496,9 @@
 - [ ] Figure out a better way to integrate the javascript script execution into the 'tiger' script execution instead of it being placed at the top of 'open_search'
 - [ ] The 'open_search' function call in the 'login' script doesn't work great--might not work with the new placement of the 'javascript' execution => consider adding a flag that will indicate whether the JS execution is executed or not when opening search
 
-## Other To Do
+### Swordfish To Do
+
+- [ ] Use the "page count container" element accessed during collection of the "register_page_count" program type to determine if a recorded date is available for the document search point
 
 ### Documentation To Do
 
