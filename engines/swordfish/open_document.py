@@ -22,4 +22,7 @@ def open_search_result(browser, abstract, document):
 
 def open_document(browser, abstract, document):
     if search_results_page_loaded(browser, abstract, document):
+        if abstract.program == "register_page_count":
+            register_page_count(browser, abstract, document)
         open_search_result(browser, abstract, document)
+
