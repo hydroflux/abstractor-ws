@@ -16,14 +16,12 @@ def open_search_result(browser, abstract, document):
     if not document.description_link or document.result_number > 0:
         if not collect(browser, abstract, document):
             return False
-    javascript_script_execution(browser, document.description_link)
-    return True
-    
+    if abstract.program != "register_page_count":
+        javascript_script_execution(browser, document.description_link)
+        return True
     
 
 def open_document(browser, abstract, document):
     if search_results_page_loaded(browser, document):
-        if abstract.program == "register_page_count":
-            register_page_count(browser, abstract, document)
-        open_search_result(browser, abstract, document)
+        return open_search_result(browser, abstract, document)
 
