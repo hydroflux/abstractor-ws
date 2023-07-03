@@ -1,4 +1,5 @@
 from classes.Document import Document
+from engines.swordfish.page_count import register_page_count
 
 from selenium_utilities.locators import (locate_element, locate_element_by_class_name,
                                          locate_elements_by_class_name)
@@ -60,26 +61,6 @@ def build_document_list(browser, abstract):
         abstract.document_list.append(document)
 
 
-def report_page_count(document, page_count):
-    if document.number_results == 1:
-        print(f'Document located at {document.extrapolate_value()} is {page_count} page(s)')
-    elif document.number_results > 1:
-        print(f'Documents located at {document.extrapolate_value()} are a combined {page_count} page(s)')
-
-
-def register_result_page_count(abstract, document, result_rows):
-    for result in result_rows:
-        # page count container also contains information about the date of the document--
-        # could be useful for determining when to update recording dates
-        page_count_container = locate_element(result, "class", "span1",
-                                              "page count container", False, document=document)
-        page_count_element = locate_element(page_count_container, "tags", "span",
-                                            "page count element", False, document=document)[-1]
-        page_count = page_count_element.text.split(" ")[0]
-        abstract.total_page_count += int(page_count)
-    report_page_count(document, page_count)
-
-
 def collect(browser, abstract, document=None):
     count_results(browser, abstract, document)
     if document.number_results != 0 and abstract.number_search_results != 0:
@@ -89,7 +70,7 @@ def collect(browser, abstract, document=None):
         else:
             result_rows = access_result_rows(browser, abstract, document)
             if document.result_number == 0:
-                register_result_page_count(abstract, document, result_rows)
+                register_page_count(abstract, document, result_rows)
             result = result_rows[document.result_number]
             document.description_link = access_result_button(abstract, result, document)
         return True
