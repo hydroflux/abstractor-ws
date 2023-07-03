@@ -1,11 +1,12 @@
 from engines.swordfish.collect import collect
 from selenium_utilities.locators import locate_element_by_tag_name
 from settings.general_functions import javascript_script_execution
+from engines.swordfish.page_count import register_page_count
 
 # Exact same as "octopus" & "dolphin" except for import
 
 
-def search_results_page_loaded(browser, abstract, document):
+def search_results_page_loaded(browser, document):
     page_header = locate_element_by_tag_name(browser, "h2", "page header", False, document)
     if page_header.text.startswith("Results"):
         return True
@@ -21,7 +22,7 @@ def open_search_result(browser, abstract, document):
     
 
 def open_document(browser, abstract, document):
-    if search_results_page_loaded(browser, abstract, document):
+    if search_results_page_loaded(browser, document):
         if abstract.program == "register_page_count":
             register_page_count(browser, abstract, document)
         open_search_result(browser, abstract, document)
