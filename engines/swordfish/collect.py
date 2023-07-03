@@ -62,9 +62,12 @@ def build_document_list(browser, abstract):
 
 def collect(browser, abstract, document=None):
     count_results(browser, abstract, document)
-    if document is None:
-        build_document_list(browser, abstract)
-    else:
-        result_rows = access_result_rows(browser, abstract, document)
-        result = result_rows[document.result_number]
-        document.description_link = access_result_button(abstract, result, document)
+    if document.number_results != 0 and abstract.number_search_results != 0:
+        if document is None:
+            build_document_list(browser, abstract)
+        else:
+            result_rows = access_result_rows(browser, abstract, document)
+            result = result_rows[document.result_number]
+            document.description_link = access_result_button(abstract, result, document)
+        return True
+
