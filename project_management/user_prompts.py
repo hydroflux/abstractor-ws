@@ -15,21 +15,23 @@ def clear_terminal():
 def get_program_type():
     clear_terminal()
     user_input = input('What would you like to do? \n'
-                       '[1] Execute Program \n'
-                       '[2] Review Output \n'
-                       '[3] Download Documents \n'
-                       '[4] Name Search \n'
-                       '[5] Legal Search \n'
+                       '[1] Execute Program\n'
+                       '[2] Review Output\n'
+                       '[3] Download Documents\n'
+                       '[4] Name Search\n'
+                       '[5] Legal Search\n'
+                       '[6] Register Page Count\n'
                        )
-    while user_input not in ["1", "2", "3", "4", "5"]:
+    while user_input not in ["1", "2", "3", "4", "5", "6"]:
         clear_terminal()
-        print(f'You entered "{user_input}" Please enter 1, 2, 3, 4, or 5:')
-        user_input = input('What would you like to do? \n'
-                           '[1] Execute Program \n'
-                           '[2] Review Output \n'
-                           '[3] Download Documents \n'
-                           '[4] Name Search \n'
-                           '[5] Legal Search \n'
+        print(f'You entered "{user_input}" Please enter 1, 2, 3, 4, 5, or 6:')
+        user_input = input('What would you like to do?\n'
+                           '[1] Execute Program\n'
+                           '[2] Review Output\n'
+                           '[3] Download Documents\n'
+                           '[4] Name Search\n'
+                           '[5] Legal Search\n'
+                           '[6] Register Page Count\n'
                            )
     if user_input == "1":
         program_type = "execute"
@@ -41,6 +43,8 @@ def get_program_type():
         program_type = "name_search"
     elif user_input == "5":
         program_type = "legal"
+    elif user_input == "6":
+        program_type = "register_page_count"
     clear_terminal()
     return program_type
 
