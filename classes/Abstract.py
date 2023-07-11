@@ -8,7 +8,7 @@ class Abstract:
                  document_directory=None, document_list=[], timer=None,
                  search_name=None, start_date=None, end_date=None, legal=None,
                  document_directory_files=None, number_search_results=None,
-                 total_page_count=None):
+                 total_page_count=0):
         self.type = type
         self.county = county
         self.target_directory = target_directory
