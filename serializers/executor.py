@@ -50,7 +50,8 @@ def search_documents_from_list(browser, abstract, search, open_document, record,
         if open_document(browser, abstract, document):
             handle_search_results(browser, abstract, document, record, execute_download, next_result)
         else:
-            record_invalid_search(abstract, document)
+            if abstract.program != "register_page_count":
+                record_invalid_search(abstract, document)
 
 
 def close_program(browser, abstract, logout=None):
