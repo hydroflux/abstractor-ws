@@ -71,7 +71,7 @@ def engine_switch(abstract):
                 add_download_type(abstract)
             return execute_rattlesnake
     elif abstract.county.engine == 'swordfish':
-        if abstract.program in ["execute", "review", "download", "legal"]:
+        if abstract.program in ["execute", "review", "download", "legal", "register_page_count"]:
             if abstract.program == "download":
                 abstract.headless = False
             return execute_swordfish
