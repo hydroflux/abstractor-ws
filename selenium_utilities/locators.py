@@ -177,24 +177,24 @@ def print_no_such_element_statement(type, document):
 
 
 # Fix ordering of document & clickable arguments & parameters across all functions
-def locate_element(locator, attribute_type, attribute, type, clickable=False, document=None,
+def locate_element(locator, attribute_type, attribute, attribute_descriptor, clickable=False, document=None,
                    quick=False, alternate=None):
     if attribute_type == "id":
-        return locate_element_by_id(locator, attribute, type, clickable, document, quick)
+        return locate_element_by_id(locator, attribute, attribute_descriptor, clickable, document, quick)
     elif attribute_type == "class":
-        return locate_element_by_class_name(locator, attribute, type, clickable, document, quick)
+        return locate_element_by_class_name(locator, attribute, attribute_descriptor, clickable, document, quick)
     elif attribute_type == "classes":
-        return locate_elements_by_class_name(locator, attribute, type, clickable, document, quick, alternate)
+        return locate_elements_by_class_name(locator, attribute, attribute_descriptor, clickable, document, quick, alternate)
     elif attribute_type == "name":
-        return locate_element_by_name(locator, attribute, type, clickable, document, quick)
+        return locate_element_by_name(locator, attribute, attribute_descriptor, clickable, document, quick)
     elif attribute_type == "tag":
-        return locate_element_by_tag_name(locator, attribute, type, clickable, document, quick)
+        return locate_element_by_tag_name(locator, attribute, attribute_descriptor, clickable, document, quick)
     elif attribute_type == "tags":
-        return locate_elements_by_tag_name(locator, attribute, type, clickable, document, quick)
+        return locate_elements_by_tag_name(locator, attribute, attribute_descriptor, clickable, document, quick)
     elif attribute_type == "xpath":
-        return locate_element_by_xpath(locator, attribute, type, clickable, document, quick)
+        return locate_element_by_xpath(locator, attribute, attribute_descriptor, clickable, document, quick)
     elif attribute_type == "tags":
-        return locate_element_by_xpath(locator, attribute, type, clickable, document, quick)
+        return locate_element_by_xpath(locator, attribute, attribute_descriptor, clickable, document, quick)
 
 
 # ELEMENT IS VISIBLE
