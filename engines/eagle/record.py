@@ -192,7 +192,8 @@ def record_legal_data(abstract, document_table):
 
 def locate_related_documents_table_rows(abstract, document, document_table):
     try:
-        related_table_rows = document_table.find_elements_by_class_name(
+        related_table_rows = document_table.find_elements(
+            "class_name"
             abstract.county.classes["Related Documents Table"])
         return related_table_rows
     except StaleElementReferenceException:
