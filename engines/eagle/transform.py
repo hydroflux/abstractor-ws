@@ -8,6 +8,7 @@ def update_document_attributes(abstract):
 
 def update_county_attributes(abstract):
     abstract.county.credentials = eagle.credentials  # LOGIN
+    abstract.county.cookies = eagle.cookies_JSON  # COOKIES
     abstract.county.urls = {
         # LOGIN
         "Home Page": eagle.home_page_url,
