@@ -11,7 +11,7 @@ from settings.general_functions import scroll_to_top
 def get_previous_result_button(browser, abstract, document):
     result_buttons = locate_element_by_class_name(browser, abstract.county.classes["Result Buttons"],
                                                   "result buttons", False, document)
-    return result_buttons.find_elements_by_tag_name(abstract.county.tags["Result Button"])[0]
+    return result_buttons.find_elements("tag name", abstract.county.tags["Result Button"])[0]
 
 
 def previous_result(browser, abstract, document):
@@ -24,7 +24,7 @@ def previous_result(browser, abstract, document):
 def get_next_result_button(browser, abstract, document):
     result_buttons = locate_element_by_class_name(browser, abstract.county.classes["Result Buttons"],
                                                   "result buttons", False, document)
-    return result_buttons.find_elements_by_tag_name(abstract.county.tags["Result Button"])[1]
+    return result_buttons.find_elements("tag name", abstract.county.tags["Result Button"])[1]
 
 
 def click_result_button(browser, button):

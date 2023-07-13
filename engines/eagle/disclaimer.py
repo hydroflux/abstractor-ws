@@ -3,7 +3,7 @@ from selenium.common.exceptions import NoSuchElementException
 
 def locate_disclaimer(browser, abstract):
     try:
-        disclaimer = browser.find_element_by_id(abstract.county.buttons["Disclaimer"])
+        disclaimer = browser.find_element("id", abstract.county.buttons["Disclaimer"])
         return disclaimer
     except NoSuchElementException:
         return False

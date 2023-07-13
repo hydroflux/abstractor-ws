@@ -35,7 +35,7 @@ def get_search_status(browser, abstract):
     try:
         search_status_present = EC.presence_of_element_located((By.TAG_NAME, abstract.county.tags["Search Status"]))
         WebDriverWait(browser, timeout).until(search_status_present)
-        search_status = browser.find_element_by_tag_name(abstract.county.tags["Search Status"]).text
+        search_status = browser.find_element("tag name", abstract.county.tags["Search Status"]).text
         return search_status
     except TimeoutException:
         print("Browser timed out trying to get current results.")
@@ -64,7 +64,8 @@ def retry_execute_search(browser, abstract, document, search_status):
         naptime()
         search_status = wait_for_results(browser, abstract)
         count += 1
-        if count == 5:
+        # Changed from 5 on 07/12/2023
+        if count == 3:
             input("Unable to complete search, please review and press enter after making adjustments...")
     return search_status
 

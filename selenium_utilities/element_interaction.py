@@ -39,7 +39,7 @@ def is_active_class(element):
 
 
 def get_parent_element(element):
-    return element.find_element_by_xpath("..")
+    return element.find_element("xpath", "..")
 
 
 # move out of 'general_functions' & update dependencies
