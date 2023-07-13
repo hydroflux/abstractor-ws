@@ -1,6 +1,7 @@
 import json
 
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 
 
@@ -20,6 +21,16 @@ from webdriver_manager.chrome import ChromeDriverManager
 def chrome_webdriver(abstract):
     chromedriver = ChromeDriverManager().install()
     options = webdriver.ChromeOptions()
+    # options = webdriver.chrome.options.Options()
+
+    # Adding argument to disable the AutomationControlled flag 
+    options.add_argument("--disable-blink-features=AutomationControlled")
+    
+    # Exclude the collection of enable-automation switches 
+    options.add_experimental_option("excludeSwitches", ["enable-automation"]) 
+    
+    # Turn-off userAutomationExtension 
+    options.add_experimental_option("useAutomationExtension", False) 
 
     if abstract.headless:
         options.add_argument('--headless')
@@ -55,7 +66,8 @@ def chrome_webdriver(abstract):
     # Added for printing to PDF
     options.add_argument('--kiosk-printing')
 
-    driver = webdriver.Chrome(chromedriver, options=options)
+    # driver = webdriver.Chrome(chromedriver, options=options)
+    driver = webdriver.Chrome(service=ChromeService(chromedriver), options=options)
     driver.maximize_window()
 
     return driver
