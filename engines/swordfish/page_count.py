@@ -14,10 +14,12 @@ def register_result_page_count(abstract, document, result):
 def report_page_count(abstract, document, result_page_count):
     if document.number_results == 1:
         print(f'Document located at {document.extrapolate_value()} is {str(result_page_count)} page(s) '
-              f'({str(abstract.total_page_count)} pages total)')
+              f'-- {str(abstract.total_page_count)} pages total '
+              f'({abstract.list_remaining_documents(document)})')
     elif document.number_results > 1:
         print(f'Documents located at {document.extrapolate_value()} are a combined {str(result_page_count)} page(s) '
-              f'({str(abstract.total_page_count)} pages total)')
+              f'-- {str(abstract.total_page_count)} pages total '
+              f'({abstract.list_remaining_documents(document)})')
 
 
 def register_page_count(abstract, document, result_rows):
