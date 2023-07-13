@@ -35,7 +35,14 @@ def record_reception_number(abstract, document, reception_number_text):
 
 def record_book_and_page(abstract, book_and_page_text):
     if book_and_page_text is not None:
-        _, book, _, page = book_and_page_text.split(' ')
+        book_and_page_list = book_and_page_text.split(' ')
+        if len(book_and_page_list) == 4:
+            _, book, _, page = book_and_page_list
+        else:
+            book_and_page = book_and_page_text.split(' ')[1:]
+            split = book_and_page.index("Page:")
+            book = (" ").join(book_and_page[:split])
+            page = (" ").join(book_and_page[(split + 1):])
     else:
         book = "N/A"
         page = "N/A"
@@ -43,8 +50,9 @@ def record_book_and_page(abstract, book_and_page_text):
     record_value(abstract, 'page', page)
 
 
-def record_effective_date(abstract, effective_date_text):
-    effective_date = date_from_string(effective_date_text.split(' ')[-1])
+def record_effective_date(abstract, effective_date):
+    if effective_date != "":
+        effective_date = date_from_string(effective_date.split(' ')[-1])
     record_value(abstract, 'effective date', effective_date)
 
 
@@ -61,8 +69,12 @@ def record_indexing_information(browser, abstract, document):
     if len(indexing_text) == 4:
         reception_number_text, book_and_page_text, effective_date_text, recording_date_text = indexing_text
     else:
-        reception_number_text, effective_date_text, recording_date_text = indexing_text
-        book_and_page_text = None
+        if indexing_text[1].startswith("B"):
+            reception_number_text, book_and_page_text, recording_date_text = indexing_text
+            effective_date_text = ""
+        else:
+            reception_number_text, effective_date_text, recording_date_text = indexing_text
+            book_and_page_text = None
     record_reception_number(abstract, document, reception_number_text)
     record_book_and_page(abstract, book_and_page_text)
     record_effective_date(abstract, effective_date_text)
