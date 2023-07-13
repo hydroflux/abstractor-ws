@@ -24,17 +24,11 @@ def select_book_value(browser, abstract, document):
         return True
     except NoSuchElementException:
         return False
-    # enter_input_value(browser, locate_element_by_id, abstract.county.inputs["Book"],
-    #                     "book input", book, document)
 
 
 def select_page_value(browser, abstract, document):
     page = document.document_value()[1]
-    # page_selector = Select(
-    #     locate_element(browser, "id", abstract.county.inputs["Page"], "page selector",
-    #                    clickable=True, document=document)
-    # )
-    # page_selector.select_by_visible_text(str(page))
+
     enter_input_value(browser, locate_element_by_id, abstract.county.inputs["Page"],
                       "page input", page, document)
 
