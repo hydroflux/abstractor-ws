@@ -55,7 +55,7 @@ def stop_timer(start_time):
 
 
 def update_user(abstract):
-    if abstract.program in ["execute", "review", "download"]:
+    if abstract.program in ["execute", "review", "download", "register_page_count"]:
         if len(abstract.document_list) != 0:
             return f'{len(abstract.document_list)} documents imported for processing.'
         else:
