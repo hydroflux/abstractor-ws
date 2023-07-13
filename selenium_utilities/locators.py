@@ -14,7 +14,7 @@ def locate_element_by_class_name(locator, class_name, type, clickable=False, doc
             else:
                 element_present = EC.presence_of_element_located((By.CLASS_NAME, class_name))
             WebDriverWait(locator, timeout).until(element_present)
-        element = locator.find_element_by_class_name(class_name)
+        element = locator.find_element("class name", class_name)
         return element
     except TimeoutException:
         return print_timeout_statement(type, document)
@@ -32,7 +32,7 @@ def locate_elements_by_class_name(locator, class_name, type, clickable=False, do
             else:
                 elements_present = EC.presence_of_element_located((By.CLASS_NAME, class_name))
             WebDriverWait(locator, timeout).until(elements_present)
-        elements = locator.find_elements_by_class_name(class_name)
+        elements = locator.find_elements("class name", class_name)
         return elements
     except TimeoutException:
         if alternate is not None:
@@ -42,7 +42,7 @@ def locate_elements_by_class_name(locator, class_name, type, clickable=False, do
                 else:
                     elements_present = EC.presence_of_element_located((By.CLASS_NAME, alternate))
                 WebDriverWait(locator, timeout).until(elements_present)
-                elements = locator.find_elements_by_class_name(alternate)
+                elements = locator.find_elements("class name", alternate)
                 return elements
             except TimeoutException:
                 if not quick:
@@ -61,7 +61,7 @@ def locate_element_by_id(locator, id, type, clickable=False, document=None, quic
             else:
                 element_present = EC.presence_of_element_located((By.ID, id))
             WebDriverWait(locator, timeout).until(element_present)
-        element = locator.find_element_by_id(id)
+        element = locator.find_element("id", id)
         return element
     except TimeoutException:
         return print_timeout_statement(type, document)
@@ -80,7 +80,7 @@ def locate_element_by_name(locator, name, type, clickable=False, document=None, 
             else:
                 element_present = EC.presence_of_element_located((By.NAME, name))
             WebDriverWait(locator, timeout).until(element_present)
-        element = locator.find_element_by_name(name)
+        element = locator.find_element("name", name)
         return element
     except TimeoutException:
         if not quick:
@@ -98,7 +98,7 @@ def locate_element_by_tag_name(locator, tag_name, type, clickable=False, documen
             else:
                 element_present = EC.presence_of_element_located((By.TAG_NAME, tag_name))
             WebDriverWait(locator, timeout).until(element_present)
-        element = locator.find_element_by_tag_name(tag_name)
+        element = locator.find_element("tag name", tag_name)
         return element
     except TimeoutException:
         if not quick:
@@ -115,7 +115,7 @@ def locate_elements_by_tag_name(locator, tag_name, type, clickable=False, docume
             else:
                 elements_present = EC.presence_of_element_located((By.TAG_NAME, tag_name))
             WebDriverWait(locator, timeout).until(elements_present)
-        elements = locator.find_elements_by_tag_name(tag_name)
+        elements = locator.find_elements("tag name", tag_name)
         return elements
     except TimeoutException:
         if not quick:
@@ -130,7 +130,7 @@ def locate_element_by_xpath(locator, xpath, type, clickable=False, document=None
             else:
                 element_present = EC.presence_of_element_located((By.XPATH, xpath))
             WebDriverWait(locator, timeout).until(element_present)
-        element = locator.find_element_by_xpath(xpath)
+        element = locator.find_element("xpath", xpath)
         return element
     except TimeoutException:
         if not quick:
@@ -148,7 +148,7 @@ def locate_elements_by_xpath(locator, xpath, type, clickable=False, document=Non
             else:
                 elements_present = EC.presence_of_element_located((By.XPATH, xpath))
             WebDriverWait(locator, timeout).until(elements_present)
-        elements = locator.find_elements_by_xpath(xpath)
+        elements = locator.find_elements("xpath", xpath)
         return elements
     except TimeoutException:
         if not quick:
