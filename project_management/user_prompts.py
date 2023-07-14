@@ -55,14 +55,16 @@ def user_profile_selection_prompt():
                        '[1] Primary\n'
                        '[2] Secondary\n'
                        '[3] Tertiary\n'
+                       '[4] Quaternary\n'
                       )
-    while user_input not in ["1", "2", "3"]:
+    while user_input not in ["1", "2", "3", "4"]:
         clear_terminal()
-        print(f'You entered "{user_input}" Please enter 1, 2, or 3:')
+        print(f'You entered "{user_input}" Please enter 1, 2, 3, or "4":')
         user_input = input('Which user profile would you like to use? \n'
                        '[1] Primary\n'
                        '[2] Secondary\n'
                        '[3] Tertiary\n'
+                       '[4] Quaternary\n'
                       )
     if user_input == "1":
         profile_selection = 0
@@ -70,6 +72,8 @@ def user_profile_selection_prompt():
         profile_selection = 1
     elif user_input == "3":
         profile_selection = 2
+    elif user_input == "4":
+        profile_selection = 3
     clear_terminal()
     return profile_selection
 
