@@ -49,6 +49,32 @@ def get_program_type():
     return program_type
 
 
+def user_profile_selection_prompt():
+    clear_terminal()
+    user_input = input('Which user profile would you like to use? \n'
+                       '[1] Primary\n'
+                       '[2] Secondary\n'
+                       '[3] Tertiary\n'
+                      )
+    while user_input not in ["1", "2", "3"]:
+        clear_terminal()
+        print(f'You entered "{user_input}" Please enter 1, 2, or 3:')
+        user_input = input('Which user profile would you like to use? \n'
+                       '[1] Primary\n'
+                       '[2] Secondary\n'
+                       '[3] Tertiary\n'
+                      )
+    if user_input == "1":
+        profile_selection = 0
+    elif user_input == "2":
+        profile_selection = 1
+    elif user_input == "3":
+        profile_selection = 2
+    clear_terminal()
+    return profile_selection
+
+
+
 def currently_unavailable(abstract):
     print(f'There has not been a(n) "{abstract.program}" application path developed for '
           f'{abstract.county} to date, please review your inputs and try again.')
