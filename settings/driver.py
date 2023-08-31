@@ -1,7 +1,7 @@
 import json
 
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service as ChromeService
+from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 
 
@@ -20,17 +20,17 @@ from webdriver_manager.chrome import ChromeDriverManager
 # Look into how to change driver preferences mid script -- for download directories
 def chrome_webdriver(abstract):
     chromedriver = ChromeDriverManager().install()
+    service = Service(chromedriver)
     options = webdriver.ChromeOptions()
-    # options = webdriver.chrome.options.Options()
 
-    # Adding argument to disable the AutomationControlled flag 
+    # Adding argument to disable the AutomationControlled flag
     options.add_argument("--disable-blink-features=AutomationControlled")
-    
-    # Exclude the collection of enable-automation switches 
-    options.add_experimental_option("excludeSwitches", ["enable-automation"]) 
-    
-    # Turn-off userAutomationExtension 
-    options.add_experimental_option("useAutomationExtension", False) 
+
+    # Exclude the collection of enable-automation switches
+    options.add_experimental_option("excludeSwitches", ["enable-automation"])
+
+    # Turn-off userAutomationExtension
+    options.add_experimental_option("useAutomationExtension", False)
 
     if abstract.headless:
         options.add_argument('--headless')
@@ -39,13 +39,13 @@ def chrome_webdriver(abstract):
 
     # Settings used for printing directly to PDF
     settings = {
-       "recentDestinations": [{
+        "recentDestinations": [{
             "id": "Save as PDF",
             "origin": "local",
             "account": ""
         }],
-       "selectedDestinationId": "Save as PDF",
-       "version": 2
+        "selectedDestinationId": "Save as PDF",
+        "version": 2
     }
 
     # Needs to be reviewed, but possibly can be used for adblock???
@@ -67,7 +67,8 @@ def chrome_webdriver(abstract):
     options.add_argument('--kiosk-printing')
 
     # driver = webdriver.Chrome(chromedriver, options=options)
-    driver = webdriver.Chrome(service=ChromeService(chromedriver), options=options)
+    driver = webdriver.Chrome(service=service, options=options)
+    # driver = webdriver.Chrome(ChromeDriverManager().install())
     driver.maximize_window()
 
     return driver
