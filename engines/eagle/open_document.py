@@ -58,15 +58,14 @@ def wait_for_results(browser, abstract):
 def retry_execute_search(browser, abstract, document, search_status):
     count = 0
     while search_status == abstract.county.messages["Failed Search"]:
+        count += 1
         print(f'Search failed for {document.extrapolate_value()},'
               f' executing search again.')
+        if count == 3:
+            input("Unable to complete search, please review and press enter after making adjustments...")
         execute_search(browser, abstract, document)
         naptime()
         search_status = wait_for_results(browser, abstract)
-        count += 1
-        # Changed from 5 on 07/12/2023
-        if count == 3:
-            input("Unable to complete search, please review and press enter after making adjustments...")
     return search_status
 
 
@@ -146,4 +145,5 @@ def open_document(browser, abstract, document):
     while not validate_search(browser, abstract, document):
         retry_search(browser, abstract, document)
     if check_search_results(browser, abstract, document):
+        print(f'Opening document located at {document.extrapolate_value()}')
         return handle_document_search(browser, abstract, document)
