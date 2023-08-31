@@ -1,5 +1,6 @@
 from functools import partial
 from selenium.common.exceptions import StaleElementReferenceException
+from engines.eagle.disclaimer import check_for_disclaimer
 
 from selenium_utilities.element_interaction import access_title_case_text, center_element
 from selenium_utilities.locators import (locate_element_by_id, locate_element_by_tag_name,
@@ -45,12 +46,13 @@ def access_pdf_load_status(browser, abstract, document):
 def wait_for_pdf_to_load(browser, abstract, document):
     while access_pdf_load_status(browser, abstract, document).startswith(abstract.county.messages["Loading"]):
         medium_nap()
+        # naptime() <--- consider for testing 07/13/2023
 
 
 def handle_document_image_status(browser, abstract, document):
     image_container_text = access_image_container(browser, abstract, document)
     if (image_container_text == abstract.county.messages["No Image Available"] or
-            image_container_text == abstract.county.messages["Login Error"]):
+       image_container_text == abstract.county.messages["Login Error"]):
         print(f'No document image exists for '
               f'{document.extrapolate_value()}, please review.')
         no_document_image(abstract, document)
@@ -82,17 +84,6 @@ def review_and_open_links(browser, abstract, links):
         handle_information_links(browser, abstract, link)
 
 
-# def get_informational_links(browser, abstract, document, document_information):
-#     try:
-#         informational_links_present = EC.presence_of_element_located((By.CLASS_NAME, information_links_class))
-#         WebDriverWait(browser, timeout).until(informational_links_present)
-#         informational_links = document_information.find_elements_by_class_name(information_links_class)
-#         print("informational_links 3", informational_links)
-#         return informational_links
-#     except TimeoutException:
-#         print(f'Browser timed out while trying to get informational links for {document.extrapolate_value()}.')
-
-
 def display_all_information(browser, abstract, document):
     information_links = locate_elements_by_class_name(browser, abstract.county.classes["Information Links"],
                                                       "information links", False, document)
@@ -108,17 +99,17 @@ def drop_superfluous_information(abstract, string):
 
 def access_table_body(document_table, abstract):  # Argument order important in order to work with 'map'
     table_body = locate_element_by_tag_name(document_table, abstract.county.tags["Index Table"][0],
-                                      "document table body", False, quick=True)
+                                            "document table body", False, quick=True)
     while table_body is None:
         print("Unable to locate TABLE BODY element, trying again.")
         table_body = locate_element_by_tag_name(document_table, abstract.county.tags["Index Table"][0],
                                                 "document table body", False, quick=True)
+        naptime()
     return table_body
-        
 
 
 def access_table_rows(abstract, table_body):
-    body_text = table_body.find_elements_by_tag_name(abstract.county.tags["Index Table"][1])
+    body_text = table_body.find_elements("tag name", abstract.county.tags["Index Table"][1])
     return body_text
 
 
@@ -180,7 +171,7 @@ def record_name_data(abstract, document_table):
 
 def record_legal_data(abstract, document_table):
     table_rows = access_table_rows(abstract, document_table)
-    legal_data = table_rows[1].find_elements_by_tag_name(abstract.county.tags["Index Table"][2])
+    legal_data = table_rows[1].find_elements("tag name", abstract.county.tags["Index Table"][2])
     if legal_data == []:
         record_value(abstract, 'legal', search_errors[2])
     else:
@@ -193,7 +184,7 @@ def record_legal_data(abstract, document_table):
 def locate_related_documents_table_rows(abstract, document, document_table):
     try:
         related_table_rows = document_table.find_elements(
-            "class_name"
+            "class name",
             abstract.county.classes["Related Documents Table"])
         return related_table_rows
     except StaleElementReferenceException:
@@ -313,6 +304,9 @@ def build_document_download_information(browser, abstract, document):
 
 
 def record(browser, abstract, document):
+    print(f'Recording document located at {document.extrapolate_value()}')
+    check_for_disclaimer(browser, abstract)
+    medium_nap()  # Moved from the post-record in order to try and load DOM objects properly
     if not abstract.review:
         if abstract.download_only:
             build_document_download_information(browser, abstract, document)
@@ -322,3 +316,11 @@ def record(browser, abstract, document):
             record_document_fields(browser, abstract, document)
             record_empty_values(abstract, ['effective date', 'volume', 'document link'])
             review_entry(browser, abstract, document)
+            # Adding naptime on 08/11/2023 in order to handle for issues throwing captchas
+            medium_nap()
+            #  ^ if this works then change to combination nap
+            # Other options to try:
+            #  remove 2nd naptime from search
+            #  lengthen single medium nap to 10 - 30 and see if that works above
+            #  try single medium nap from 15 - 30 if it doesn't
+            # works with 2 medium naps @ 10 - 20 seconds--breaks every 10 - 30 documents
