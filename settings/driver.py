@@ -66,9 +66,7 @@ def chrome_webdriver(abstract):
     # Added for printing to PDF
     options.add_argument('--kiosk-printing')
 
-    # driver = webdriver.Chrome(chromedriver, options=options)
     driver = webdriver.Chrome(service=service, options=options)
-    # driver = webdriver.Chrome(ChromeDriverManager().install())
     driver.maximize_window()
 
     return driver
