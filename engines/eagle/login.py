@@ -21,16 +21,16 @@ def open_site(browser, abstract):
 
 
 def enter_credentials(browser, abstract):
-    enter_input_value(browser, locate_element_by_id, abstract.county.credentials[0],
-                      "username input", abstract.county.credentials[1])
-    enter_input_value(browser, locate_element_by_id, abstract.county.credentials[2],
-                      "password input", abstract.county.credentials[3])
+    enter_input_value(browser, locate_element_by_id, abstract.county.ids["Username"],
+                      "username input", abstract.county.credentials[0])
+    enter_input_value(browser, locate_element_by_id, abstract.county.ids["Password"],
+                      "password input", abstract.county.credentials[1])
     click_button(browser, locate_element_by_id, abstract.county.buttons["Login"], "login button")
 
 
 def read_login_message(browser, abstract):
     try:
-        login_message = locate_element_by_id(browser, abstract.county.credentials[5],
+        login_message = locate_element_by_id(browser, abstract.county.ids["Welcome"],
                                              "login message", True)
         return login_message.text
     except StaleElementReferenceException:
@@ -39,7 +39,7 @@ def read_login_message(browser, abstract):
 
 
 def confirm_login(browser, abstract):
-    while read_login_message(browser, abstract) != abstract.county.credentials[4]:
+    while read_login_message(browser, abstract) != abstract.county.credentials[2]:
         micro_nap()
 
 
@@ -57,7 +57,7 @@ def check_login_status(browser, abstract):
     check_for_disclaimer(browser, abstract)
     while browser.current_url == abstract.county.urls["Log Out Redirect"]:
         print('Browser redirected to login screen, checking login status & returning to search.')
-        if read_login_message(browser, abstract) != abstract.county.credentials[4]:
+        if read_login_message(browser, abstract) != abstract.county.credentials[2]:
             print('Browser logged out, attempting to log back in.')
             log_back_in(browser, abstract)
         browser.get(abstract.county.urls["Fallback Search"])
