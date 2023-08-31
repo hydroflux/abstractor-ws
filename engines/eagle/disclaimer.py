@@ -23,3 +23,15 @@ def handle_disclaimer(browser, abstract):
 def check_for_disclaimer(browser, abstract):
     while not handle_disclaimer(browser, abstract):
         input('Disclaimer has not been handled properly, please press enter after resolving.')
+
+
+# def check_for_disclaimer(browser, abstract):
+#     while not handle_disclaimer(browser, abstract):
+#         cookie = browser.get_cookie(abstract.county.other["Disclaimer Cookie"])
+#         print("cookie", cookie)
+#         if cookie == "false":
+#             print('Encountered disclaimer, attempting to resolve...')
+#             browser.delete_cookie(abstract.county.other["Disclaimer Cookie"])
+#             browser.add_cookie({"name": abstract.county.other["Disclaimer Cookie"], "value": "true"})
+#             browser.refresh()
+        # input('Disclaimer has not been handled properly, please press enter after resolving.')
