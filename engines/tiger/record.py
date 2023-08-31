@@ -39,7 +39,7 @@ def get_document_content(browser, abstract, document):
 
 
 def get_row_data(abstract, row):
-    row_data = row.find_elements_by_tag_name(abstract.county.tags["Data"])
+    row_data = row.find_elements("tag name", abstract.county.tags["Data"])
     return get_element_text(row_data[0]), get_element_text(row_data[1])
 
 
