@@ -34,11 +34,20 @@ def execute_search(browser, abstract, document):
                  "execute search button", document)
 
 
-def search(browser, abstract, document):
+def open_search(browser, abstract, document):
+    print(f'Searching for document located at {document.extrapolate_value()}')
     open_url(browser, abstract.county.urls["Search Page"],
              abstract.county.titles["Search Page"], "document search page")
     check_login_status(browser, abstract)
+
+
+def search(browser, abstract, document):
+    open_search(browser, abstract, document)
     if not check_for_error(browser, abstract, document, 'search'):
+        # breaks here 1 time(s)
         clear_search(browser, abstract, document)
+        # Changed to naptime from medium_nap on 07/12/2023
         naptime()  # Consider testing without this nap to see if necessary
         execute_search(browser, abstract, document)
+        # Adding naptime on 07/11/2023 in order to handle for issues throwing captchas
+        naptime()  # Try removing 07/12/2023
