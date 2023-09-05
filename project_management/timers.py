@@ -76,7 +76,7 @@ def update_user(abstract):
 
 def start_program_timer(abstract):
     start_time = start_timer()
-    print(f'\n{abstract.county} - {abstraction_type} started on: \n'
+    print(f'\n{abstract.county} - {abstract.file_name}-{abstraction_type} started on: \n'
           f'{str(start_time.strftime("%B %d, %Y %H:%M:%S"))}\n'
           f'{update_user(abstract)}')
     return start_time
