@@ -6,7 +6,8 @@ from selenium.webdriver.support.wait import WebDriverWait
 
 from project_management.timers import naptime, short_nap, timeout
 
-from selenium_utilities.locators import (locate_element_by_class_name,
+from selenium_utilities.locators import (locate_element,
+                                         locate_element_by_class_name,
                                          locate_elements_by_class_name,
                                          locate_elements_by_tag_name)
 from selenium_utilities.open import open_url
@@ -20,9 +21,11 @@ print("open", __name__)
 
 
 def validate_search(browser, abstract, document):
-    return (abstract.county.messages["Invalid Search"] !=
-            locate_element_by_class_name(browser, abstract.county.classes["Validation"],
-                                         "search validation message", document=document))
+    return (
+        abstract.county.messages["Invalid Search"] != locate_element(browser, "class",
+                                                                     abstract.county.classes["Validation"],
+                                                                     "search validation message", document=document)
+    )
 
 
 def retry_search(browser, abstract, document):
@@ -44,28 +47,33 @@ def get_search_status(browser, abstract):
               'refreshing & trying again.')
         browser.refresh()
         naptime()
-        return None
-
-
-def wait_for_results(browser, abstract):
-    search_status = get_search_status(browser, abstract)
-    while search_status == abstract.county.messages["Currently Searching"] or search_status is None:
-        short_nap()
-        search_status = get_search_status(browser, abstract)
-    return search_status
 
 
 def retry_execute_search(browser, abstract, document, search_status):
     count = 0
-    while search_status == abstract.county.messages["Failed Search"]:
+    while search_status in ["", abstract.county.messages["Failed Search"]]:
         print(f'Search failed for {document.extrapolate_value()},'
               f' executing search again.')
         execute_search(browser, abstract, document)
         naptime()
-        search_status = wait_for_results(browser, abstract)
+        search_status = wait_for_results(browser, abstract, document)
         count += 1
         if count == 5:
             input("Unable to complete search, please review and press enter after making adjustments...")
+    return search_status
+
+
+def wait_for_results(browser, abstract, document):
+    search_status = get_search_status(browser, abstract)
+    while search_status in [abstract.county.messages["Currently Searching"], ""] or search_status is None:
+        # while search_status == abstract.county.messages["Currently Searching"]
+        # or search_status is None or search_status == "":
+        # After encountered stale reference on line 42, gets stuck here because it needs to search again
+        short_nap()
+        if search_status == "":
+            search_status = retry_execute_search(browser, abstract, document, search_status)
+        else:
+            search_status = get_search_status(browser, abstract)
     return search_status
 
 
@@ -93,7 +101,7 @@ def count_results(browser, abstract, document):
 
 
 def handle_result_count(browser, abstract, document):
-    search_status = wait_for_results(browser, abstract)
+    search_status = wait_for_results(browser, abstract, document)
     if search_status == abstract.county.messages["Failed Search"]:
         print(f'Initial search failed, attempting to execute search again for '
               f'{document.extrapolate_value()}')
