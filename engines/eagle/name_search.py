@@ -41,7 +41,7 @@ def search(browser, abstract, document):
 def count_name_results(browser, abstract, document):
     result_rows = get_search_results(browser, abstract, document)
     if result_rows is not False:
-        return int(browser.find_element_by_xpath('/html/body/div[1]/div[2]/div/div[2]/div/div[2]/ul/li[1]/div[2]').text.split(' ')[-3])
+        return int(browser.find_element("xpath", '/html/body/div[1]/div[2]/div/div[2]/div/div[2]/ul/li[1]/div[2]').text.split(' ')[-3])
 
 
 def handle_name_result_count(browser, abstract, document):
@@ -146,7 +146,7 @@ def record_result_page(browser, abstract, document):
 def next_search_results_page(browser, abstract, document):
     # A better idea would be to check the recorded results vs. the result count
     try:
-        next_button = browser.find_element_by_link_text('Next')
+        next_button = browser.find_element("link text", 'Next')
         center_element(browser, next_button)
         next_button.click()
         sleep(10)

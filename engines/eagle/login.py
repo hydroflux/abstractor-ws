@@ -17,20 +17,20 @@ print("login", __name__)
 def open_site(browser, abstract):
     open_url(browser, abstract.county.urls["Home Page"],
              abstract.county.titles["Home Page"], "county site")
-    input("Press enter to login...")
+    # input("Press enter to login...")
 
 
 def enter_credentials(browser, abstract):
-    enter_input_value(browser, locate_element_by_id, abstract.county.credentials[0],
-                      "username input", abstract.county.credentials[1])
-    enter_input_value(browser, locate_element_by_id, abstract.county.credentials[2],
-                      "password input", abstract.county.credentials[3])
+    enter_input_value(browser, locate_element_by_id, abstract.county.ids["Username"],
+                      "username input", abstract.county.credentials[0])
+    enter_input_value(browser, locate_element_by_id, abstract.county.ids["Password"],
+                      "password input", abstract.county.credentials[1])
     click_button(browser, locate_element_by_id, abstract.county.buttons["Login"], "login button")
 
 
 def read_login_message(browser, abstract):
     try:
-        login_message = locate_element_by_id(browser, abstract.county.credentials[5],
+        login_message = locate_element_by_id(browser, abstract.county.ids["Welcome"],
                                              "login message", True)
         return login_message.text
     except StaleElementReferenceException:
@@ -39,7 +39,7 @@ def read_login_message(browser, abstract):
 
 
 def confirm_login(browser, abstract):
-    while read_login_message(browser, abstract) != abstract.county.credentials[4]:
+    while read_login_message(browser, abstract) != abstract.county.credentials[2]:
         micro_nap()
 
 
@@ -54,17 +54,31 @@ def log_back_in(browser, abstract):
 
 
 def check_login_status(browser, abstract):
+    check_for_disclaimer(browser, abstract)
     while browser.current_url == abstract.county.urls["Log Out Redirect"]:
         print('Browser redirected to login screen, checking login status & returning to search.')
-        if read_login_message(browser, abstract) != abstract.county.credentials[4]:
+        if read_login_message(browser, abstract) != abstract.county.credentials[2]:
             print('Browser logged out, attempting to log back in.')
             log_back_in(browser, abstract)
         browser.get(abstract.county.urls["Fallback Search"])
 
 
+def add_cookies_to_browser(browser, abstract):
+    cookies_JSON = abstract.county.cookies
+    for key, value in cookies_JSON.items():
+        cookie = {"name": key, "value": value}
+        browser.add_cookie(cookie)
+
+
+def update_browser_with_cookies(browser, abstract):
+    add_cookies_to_browser(browser, abstract)
+    browser.refresh()
+
+
 def execute_login_process(browser, abstract):
     open_site(browser, abstract)
-    check_for_disclaimer(browser, abstract)
+    update_browser_with_cookies(browser, abstract)
+    # check_for_disclaimer(browser, abstract)
     click_button(browser, locate_element_by_class_name, abstract.county.classes["Login Prompt"],
                  abstract.county.buttons["Login"], "login button prompt")
     enter_credentials(browser, abstract)

@@ -1,4 +1,11 @@
+from project_management.user_prompts import user_profile_selection_prompt
 import settings.county_variables.eagle as eagle
+
+
+def get_user_profile_credentials():
+    profile = user_profile_selection_prompt()
+    print(f'Executing program using Profile #{profile + 1}:')
+    return eagle.credentials[profile]
 
 
 def update_document_attributes(abstract):
@@ -7,7 +14,8 @@ def update_document_attributes(abstract):
 
 
 def update_county_attributes(abstract):
-    abstract.county.credentials = eagle.credentials  # LOGIN
+    abstract.county.credentials = get_user_profile_credentials()
+    abstract.county.cookies = eagle.cookies_JSON  # COOKIES
     abstract.county.urls = {
         # LOGIN
         "Home Page": eagle.home_page_url,
@@ -55,6 +63,10 @@ def update_county_attributes(abstract):
         "Error Message": eagle.error_message_class
     }
     abstract.county.ids = {
+        # LOGIN
+        "Username": eagle.user_id,
+        "Password": eagle.password_id,
+        "Welcome": eagle.welcome_message_id,
         # RECORD
         "Image Container": eagle.image_container_id,
         "Document Information": eagle.document_information_id,
@@ -70,8 +82,6 @@ def update_county_attributes(abstract):
         "End Date": eagle.end_date_id
     }
     abstract.county.messages = {
-        # LOGIN
-        "Welcome": eagle.welcome_message,  # Not used
         # OPEN DOCUMENT
         "Currently Searching": eagle.currently_searching,
         "No Results": eagle.no_results_message,
@@ -98,6 +108,7 @@ def update_county_attributes(abstract):
     abstract.county.other = {
         # DISCLAIMER
         "Inaccessible": eagle.inaccessible,
+        "Disclaimer Cookie": eagle.disclaimer_cookie,
         # RECORD
         "Missing Values": eagle.missing_values,
         "Stock Download": eagle.stock_download_suffix

@@ -40,6 +40,8 @@ def update_county_attributes(abstract):
     abstract.county.classes = {
         # LOGIN
         "Redirect Active": swordfish.redirect_modal_active_class,
+        # PAGE COUNT
+        "Page Count": swordfish.page_count_container_class,
         # OPEN DOCUMENT
         "Result Count Container": swordfish.result_count_container_class_name,
         "Result Row": swordfish.result_row_class_name
@@ -61,6 +63,10 @@ def update_county_attributes(abstract):
         "Section": swordfish.section_input_id,
         "Township": swordfish.township_input_id,
         "Range": swordfish.range_input_id
+    }
+    abstract.county.tags = {
+        # PAGE COUNT
+        "Page Count": swordfish.page_count_element_tag
     }
     abstract.county.messages = {
         # VALIDATION

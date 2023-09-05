@@ -1,4 +1,5 @@
 from selenium.common.exceptions import TimeoutException
+from engines.eagle.disclaimer import check_for_disclaimer
 
 from selenium_utilities.element_interaction import center_element
 from selenium_utilities.inputs import click_button
@@ -38,6 +39,8 @@ def switch_into_frame(browser, abstract, document):
 
 def access_pdf_viewer(browser, abstract, document):
     while not switch_into_frame(browser, abstract, document):
+        # Is this function necessary with the 'check_for_disclaimer' function call at the top of the 'record' script?
+        check_for_disclaimer(browser, abstract)
         print('Browser failed to access PDF viewer, refreshing and trying again...')
         browser.refresh()
         naptime()

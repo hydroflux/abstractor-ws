@@ -54,7 +54,7 @@ def check_for_download(browser, abstract, document, download_wait, count):
             download_wait = True
     if len(directory_files) != abstract.document_directory_files + 1:
         download_wait = True
-    return download_wait
+    return download_wait, count
 
 
 def wait_for_download(browser, abstract, document):
@@ -63,12 +63,12 @@ def wait_for_download(browser, abstract, document):
     if document.alternate_download_path is not None:
         while (not (os.path.exists(document.download_path) or os.path.exists(document.alternate_download_path))
                 and download_wait):
-            download_wait = check_for_download(browser, abstract, document, download_wait, count)
+            download_wait, count = check_for_download(browser, abstract, document, download_wait, count)
             if download_wait is None:
                 return False
     else:
         while not os.path.exists(document.download_path) and download_wait:
-            download_wait = check_for_download(browser, abstract, document, download_wait, count)
+            download_wait, count = check_for_download(browser, abstract, document, download_wait, count)
             if download_wait is None:
                 return False
     return True

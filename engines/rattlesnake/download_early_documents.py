@@ -90,7 +90,7 @@ def check_document_image_page(browser):
 
 def go_to_page(browser, document, page_value):
     page_selector = Select(locate_element(browser, document.search_attributes["Page Selector Id"],
-                           "page selector", True, document))
+                           "page selector", clickable=True, document=document))
     page_selector.select_by_value(str(page_value))
 
 

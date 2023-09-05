@@ -1,9 +1,10 @@
 from classes.Document import Document
+from engines.swordfish.page_count import register_page_count
 
-from selenium_utilities.locators import (locate_element_by_class_name,
+from selenium_utilities.locators import (locate_element, locate_element_by_class_name,
                                          locate_elements_by_class_name)
 
-# Exact same as "octopus" & "dolphin"
+# Similar to "octopus" & "dolphin"
 
 
 def register_number_results(browser, abstract, document):
@@ -62,9 +63,14 @@ def build_document_list(browser, abstract):
 
 def collect(browser, abstract, document=None):
     count_results(browser, abstract, document)
-    if document is None:
-        build_document_list(browser, abstract)
-    else:
-        result_rows = access_result_rows(browser, abstract, document)
-        result = result_rows[document.result_number]
-        document.description_link = access_result_button(abstract, result, document)
+    if document.number_results != 0 and abstract.number_search_results != 0:
+        if document is None:
+            # Consider adding function for counting # of pages for "legal" program searches
+            build_document_list(browser, abstract)
+        else:
+            result_rows = access_result_rows(browser, abstract, document)
+            if document.result_number == 0:
+                register_page_count(abstract, document, result_rows)
+            result = result_rows[document.result_number]
+            document.description_link = access_result_button(abstract, result, document)
+        return True

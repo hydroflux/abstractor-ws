@@ -27,11 +27,42 @@ def short_nap():
 
 
 def medium_nap():
-    sleep(randint(10, 20))
+    # sleep(randint(10, 20))
+    sleep(randint(15, 30))
 
 
 def long_nap():
     sleep(randint(30, 45))
+
+
+def combination_nap(naps):
+    for nap in naps:
+        if nap == "micro_nap":
+            micro_nap()
+        elif nap == "short_nap":
+            short_nap()
+        elif nap == "naptime":
+            naptime()
+        elif nap == "medium_nap":
+            medium_nap()
+        elif nap == "long_nap":
+            long_nap()
+
+
+def nap(type=None):
+    if type is None:
+        naptime()
+    else:
+        if type == "micro":
+            micro_nap()
+        elif type == "short":
+            short_nap()
+        elif type == "naptime":
+            naptime()
+        elif type == "medium":
+            medium_nap()
+        elif type == "long":
+            long_nap()
 
 
 def start_timer():
@@ -55,7 +86,7 @@ def stop_timer(start_time):
 
 
 def update_user(abstract):
-    if abstract.program in ["execute", "review", "download"]:
+    if abstract.program in ["execute", "review", "download", "register_page_count"]:
         if len(abstract.document_list) != 0:
             return f'{len(abstract.document_list)} documents imported for processing.'
         else:

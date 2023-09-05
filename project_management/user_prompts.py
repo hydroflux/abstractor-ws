@@ -15,21 +15,23 @@ def clear_terminal():
 def get_program_type():
     clear_terminal()
     user_input = input('What would you like to do? \n'
-                       '[1] Execute Program \n'
-                       '[2] Review Output \n'
-                       '[3] Download Documents \n'
-                       '[4] Name Search \n'
-                       '[5] Legal Search \n'
+                       '[1] Execute Program\n'
+                       '[2] Review Output\n'
+                       '[3] Download Documents\n'
+                       '[4] Name Search\n'
+                       '[5] Legal Search\n'
+                       '[6] Register Page Count\n'
                        )
-    while user_input not in ["1", "2", "3", "4", "5"]:
+    while user_input not in ["1", "2", "3", "4", "5", "6"]:
         clear_terminal()
-        print(f'You entered "{user_input}" Please enter 1, 2, 3, 4, or 5:')
-        user_input = input('What would you like to do? \n'
-                           '[1] Execute Program \n'
-                           '[2] Review Output \n'
-                           '[3] Download Documents \n'
-                           '[4] Name Search \n'
-                           '[5] Legal Search \n'
+        print(f'You entered "{user_input}" Please enter 1, 2, 3, 4, 5, or 6:')
+        user_input = input('What would you like to do?\n'
+                           '[1] Execute Program\n'
+                           '[2] Review Output\n'
+                           '[3] Download Documents\n'
+                           '[4] Name Search\n'
+                           '[5] Legal Search\n'
+                           '[6] Register Page Count\n'
                            )
     if user_input == "1":
         program_type = "execute"
@@ -41,8 +43,40 @@ def get_program_type():
         program_type = "name_search"
     elif user_input == "5":
         program_type = "legal"
+    elif user_input == "6":
+        program_type = "register_page_count"
     clear_terminal()
     return program_type
+
+
+def user_profile_selection_prompt():
+    clear_terminal()
+    user_input = input('Which user profile would you like to use? \n'
+                       '[1] Primary\n'
+                       '[2] Secondary\n'
+                       '[3] Tertiary\n'
+                       '[4] Quaternary\n'
+                      )
+    while user_input not in ["1", "2", "3", "4"]:
+        clear_terminal()
+        print(f'You entered "{user_input}" Please enter 1, 2, 3, or "4":')
+        user_input = input('Which user profile would you like to use? \n'
+                       '[1] Primary\n'
+                       '[2] Secondary\n'
+                       '[3] Tertiary\n'
+                       '[4] Quaternary\n'
+                      )
+    if user_input == "1":
+        profile_selection = 0
+    elif user_input == "2":
+        profile_selection = 1
+    elif user_input == "3":
+        profile_selection = 2
+    elif user_input == "4":
+        profile_selection = 3
+    clear_terminal()
+    return profile_selection
+
 
 
 def currently_unavailable(abstract):

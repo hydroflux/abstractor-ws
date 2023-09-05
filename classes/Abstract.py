@@ -7,7 +7,8 @@ class Abstract:
                  review=False, download_only=False, download_type=None,
                  document_directory=None, document_list=[], timer=None,
                  search_name=None, start_date=None, end_date=None, legal=None,
-                 document_directory_files=None, number_search_results=None):
+                 document_directory_files=None, number_search_results=None,
+                 total_page_count=0):
         self.type = type
         self.county = county
         self.target_directory = target_directory
@@ -28,6 +29,7 @@ class Abstract:
         self.legal = legal
         self.document_directory_files = document_directory_files
         self.number_search_results = number_search_results
+        self.total_page_count = total_page_count
 
     def drop_last_entry(self):
         self.dataframe["Grantor"].pop()

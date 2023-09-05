@@ -41,7 +41,7 @@ def get_element_text(element):
 
 
 def scroll_to_top(browser):
-    body_element = browser.find_element_by_tag_name("body")
+    body_element = browser.find_element("tag name", "body")
     scroll_into_view(browser, body_element)
 
 
@@ -67,7 +67,7 @@ def zipped_list(list1, list2):
 
 
 def get_direct_children(element):
-    return element.find_elements_by_xpath("./*")
+    return element.find_elements("xpath", "./*")
 
 
 def newline_split(string):

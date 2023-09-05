@@ -2,9 +2,11 @@
 
 ## General To Do
 
+- [ ] !!!Update "options" at initialization to appear based on what's available rather than all options leading to success or failure after initialization
+- [ ] !!!!!! DeprecationWarning: find_elements_by_tag_name is deprecated. Please use find_elements(by=By.TAG_NAME, value=name) instead => fix locators for selenium utility functions
 - [ ] Change 'county_variables' to config
 - [ ] Continue testing Octopus in headless chrome (use browser.save_screenshot('') to see what current feedback is returning)
-- [ ] - [ ] Build print statements and returns for "NoSuchElementException" in the locators script
+- [ ] Build print statements and returns for "NoSuchElementException" in the locators script
 - [ ] Revert the "quick" flag on the "TimeoutExceptions" in the "locators" script--if its quick it doesn't hit timeout, "."
 - [ ] Add more robust options to "create_output_file" in the "export" script
 - [ ] Consider moving the browser initialization out of the 'abstractor' file and into the 'environment' file??? (appears to be failing on any browser methods)
@@ -494,7 +496,9 @@
 - [ ] Figure out a better way to integrate the javascript script execution into the 'tiger' script execution instead of it being placed at the top of 'open_search'
 - [ ] The 'open_search' function call in the 'login' script doesn't work great--might not work with the new placement of the 'javascript' execution => consider adding a flag that will indicate whether the JS execution is executed or not when opening search
 
-## Other To Do
+### Swordfish To Do
+
+- [ ] Use the "page count container" element accessed during collection of the "register_page_count" program type to determine if a recorded date is available for the document search point
 
 ### Documentation To Do
 

@@ -14,7 +14,7 @@ def locate_element_by_class_name(locator, class_name, type, clickable=False, doc
             else:
                 element_present = EC.presence_of_element_located((By.CLASS_NAME, class_name))
             WebDriverWait(locator, timeout).until(element_present)
-        element = locator.find_element_by_class_name(class_name)
+        element = locator.find_element("class name", class_name)
         return element
     except TimeoutException:
         return print_timeout_statement(type, document)
@@ -32,7 +32,7 @@ def locate_elements_by_class_name(locator, class_name, type, clickable=False, do
             else:
                 elements_present = EC.presence_of_element_located((By.CLASS_NAME, class_name))
             WebDriverWait(locator, timeout).until(elements_present)
-        elements = locator.find_elements_by_class_name(class_name)
+        elements = locator.find_elements("class name", class_name)
         return elements
     except TimeoutException:
         if alternate is not None:
@@ -42,7 +42,7 @@ def locate_elements_by_class_name(locator, class_name, type, clickable=False, do
                 else:
                     elements_present = EC.presence_of_element_located((By.CLASS_NAME, alternate))
                 WebDriverWait(locator, timeout).until(elements_present)
-                elements = locator.find_elements_by_class_name(alternate)
+                elements = locator.find_elements("class name", alternate)
                 return elements
             except TimeoutException:
                 if not quick:
@@ -61,7 +61,7 @@ def locate_element_by_id(locator, id, type, clickable=False, document=None, quic
             else:
                 element_present = EC.presence_of_element_located((By.ID, id))
             WebDriverWait(locator, timeout).until(element_present)
-        element = locator.find_element_by_id(id)
+        element = locator.find_element("id", id)
         return element
     except TimeoutException:
         return print_timeout_statement(type, document)
@@ -80,7 +80,7 @@ def locate_element_by_name(locator, name, type, clickable=False, document=None, 
             else:
                 element_present = EC.presence_of_element_located((By.NAME, name))
             WebDriverWait(locator, timeout).until(element_present)
-        element = locator.find_element_by_name(name)
+        element = locator.find_element("name", name)
         return element
     except TimeoutException:
         if not quick:
@@ -98,11 +98,13 @@ def locate_element_by_tag_name(locator, tag_name, type, clickable=False, documen
             else:
                 element_present = EC.presence_of_element_located((By.TAG_NAME, tag_name))
             WebDriverWait(locator, timeout).until(element_present)
-        element = locator.find_element_by_tag_name(tag_name)
+        element = locator.find_element("tag name", tag_name)
         return element
     except TimeoutException:
         if not quick:
             return print_timeout_statement(type, document)
+    except StaleElementReferenceException:
+        print(f'StaleElementReferenceException experienced trying to located "{type}", returning NONE...')
 
 
 def locate_elements_by_tag_name(locator, tag_name, type, clickable=False, document=None, quick=False):
@@ -113,7 +115,7 @@ def locate_elements_by_tag_name(locator, tag_name, type, clickable=False, docume
             else:
                 elements_present = EC.presence_of_element_located((By.TAG_NAME, tag_name))
             WebDriverWait(locator, timeout).until(elements_present)
-        elements = locator.find_elements_by_tag_name(tag_name)
+        elements = locator.find_elements("tag name", tag_name)
         return elements
     except TimeoutException:
         if not quick:
@@ -128,7 +130,7 @@ def locate_element_by_xpath(locator, xpath, type, clickable=False, document=None
             else:
                 element_present = EC.presence_of_element_located((By.XPATH, xpath))
             WebDriverWait(locator, timeout).until(element_present)
-        element = locator.find_element_by_xpath(xpath)
+        element = locator.find_element("xpath", xpath)
         return element
     except TimeoutException:
         if not quick:
@@ -146,7 +148,7 @@ def locate_elements_by_xpath(locator, xpath, type, clickable=False, document=Non
             else:
                 elements_present = EC.presence_of_element_located((By.XPATH, xpath))
             WebDriverWait(locator, timeout).until(elements_present)
-        elements = locator.find_elements_by_xpath(xpath)
+        elements = locator.find_elements("xpath", xpath)
         return elements
     except TimeoutException:
         if not quick:
@@ -175,24 +177,24 @@ def print_no_such_element_statement(type, document):
 
 
 # Fix ordering of document & clickable arguments & parameters across all functions
-def locate_element(locator, attribute_type, attribute, type, clickable=False, document=None,
+def locate_element(locator, attribute_type, attribute, attribute_descriptor, clickable=False, document=None,
                    quick=False, alternate=None):
     if attribute_type == "id":
-        return locate_element_by_id(locator, attribute, type, clickable, document, quick)
+        return locate_element_by_id(locator, attribute, attribute_descriptor, clickable, document, quick)
     elif attribute_type == "class":
-        return locate_element_by_class_name(locator, attribute, type, clickable, document, quick)
+        return locate_element_by_class_name(locator, attribute, attribute_descriptor, clickable, document, quick)
     elif attribute_type == "classes":
-        return locate_elements_by_class_name(locator, attribute, type, clickable, document, quick, alternate)
+        return locate_elements_by_class_name(locator, attribute, attribute_descriptor, clickable, document, quick, alternate)
     elif attribute_type == "name":
-        return locate_element_by_name(locator, attribute, type, clickable, document, quick)
+        return locate_element_by_name(locator, attribute, attribute_descriptor, clickable, document, quick)
     elif attribute_type == "tag":
-        return locate_element_by_tag_name(locator, attribute, type, clickable, document, quick)
+        return locate_element_by_tag_name(locator, attribute, attribute_descriptor, clickable, document, quick)
     elif attribute_type == "tags":
-        return locate_elements_by_tag_name(locator, attribute, type, clickable, document, quick)
+        return locate_elements_by_tag_name(locator, attribute, attribute_descriptor, clickable, document, quick)
     elif attribute_type == "xpath":
-        return locate_element_by_xpath(locator, attribute, type, clickable, document, quick)
+        return locate_element_by_xpath(locator, attribute, attribute_descriptor, clickable, document, quick)
     elif attribute_type == "tags":
-        return locate_element_by_xpath(locator, attribute, type, clickable, document, quick)
+        return locate_element_by_xpath(locator, attribute, attribute_descriptor, clickable, document, quick)
 
 
 # ELEMENT IS VISIBLE
