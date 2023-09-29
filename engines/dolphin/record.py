@@ -44,7 +44,10 @@ def record_book_and_page(abstract, book_and_page_text):
 
 
 def record_effective_date(abstract, effective_date_text):
-    effective_date = date_from_string(effective_date_text.split(' ')[-1])
+    if effective_date_text is not None:
+        effective_date = date_from_string(effective_date_text.split(' ')[-1])
+    else:
+        effective_date = ""
     record_value(abstract, 'effective date', effective_date)
 
 
@@ -61,8 +64,13 @@ def record_indexing_information(browser, abstract, document):
     if len(indexing_text) == 4:
         reception_number_text, book_and_page_text, effective_date_text, recording_date_text = indexing_text
     else:
-        reception_number_text, effective_date_text, recording_date_text = indexing_text
-        book_and_page_text = None
+        if len(indexing_text) == 2 and indexing_text[1].startswith("R"):
+            reception_number_text, recording_date_text = indexing_text
+            book_and_page_text = None
+            effective_date_text = None
+        else:
+            reception_number_text, effective_date_text, recording_date_text = indexing_text
+            book_and_page_text = None
     record_reception_number(abstract, document, reception_number_text)
     record_book_and_page(abstract, book_and_page_text)
     record_effective_date(abstract, effective_date_text)
