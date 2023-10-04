@@ -83,9 +83,9 @@ def update_county_attributes(abstract):
     }
     abstract.county.messages = {
         # OPEN DOCUMENT
-        "Currently Searching": eagle.currently_searching,
+        "Currently Searching": eagle.currently_searching_message,
         "No Results": eagle.no_results_message,
-        "Failed Search": eagle.failed_search,
+        "Failed Search": eagle.failed_search_message,
         "Invalid Search": eagle.invalid_search_message,
         # RECORD
         "No Image Available": eagle.no_image_message,
