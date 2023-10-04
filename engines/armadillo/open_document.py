@@ -1,93 +1,142 @@
-from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import (StaleElementReferenceException,
+                                        TimeoutException)
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.wait import WebDriverWait
 
-from selenium_utilities.locators import (locate_element_by_class_name,
-                                         locate_element_by_id,
-                                         locate_element_by_tag_name,
-                                         locate_elements_by_class_name)
-from settings.county_variables.armadillo import (link_tag,
-                                                 multiple_results_message,
-                                                 number_results_class,
-                                                 result_class_names,
-                                                 search_results_id,
-                                                 single_result_message)
+from project_management.timers import naptime, short_nap, timeout
+
+from selenium_utilities.locators import (locate_element,
+                                         locate_element_by_class_name,
+                                         locate_elements_by_class_name,
+                                         locate_elements_by_tag_name)
+from selenium_utilities.open import open_url
+
 from settings.general_functions import get_direct_link
 
-from engines.armadillo.validation import (validate_result,
-                                          verify_results_loaded,
-                                          verify_search_results_page_loaded)
+from engines.armadillo.search import execute_search, search
 
 
-def count_results(browser, document):
-    result_count = locate_element_by_class_name(browser, number_results_class, "number results", document=document)
-    if result_count.text == single_result_message:
-        document.number_results += 1
-    elif result_count.text.endswith(multiple_results_message):
-        document.number_results += int(result_count.text[:-len(multiple_results_message)])
-        print(f'{document.number_results} documents returned while searching {document.extrapolate_value()}.')
-    else:
-        print(f'Browser unable to determine results for '
-              f'{document.extrapolate_value()}, please review.')
-        print("Please press enter after reviewing the search results...")
-        input()
+def validate_search(browser, abstract, document):
+    return (
+        abstract.county.messages["Invalid Search"] != locate_element(browser, "class",
+                                                                     abstract.county.classes["Validation"],
+                                                                     "search validation message", document=document)
+    )
 
 
-def determine_results_class(result_number):
-    return result_class_names[result_number % 2]
+def retry_search(browser, abstract, document):
+    browser.refresh()
+    naptime()
+    search(browser, abstract, document)
 
 
-def get_results(browser, document, result_number):
-    search_results_table = locate_element_by_id(browser, search_results_id,
-                                                "search results table", document=document)
-    results_class = determine_results_class(result_number)
-    return locate_elements_by_class_name(search_results_table, results_class,
-                                         "search results", True, document=document)
-
-
-def access_result(browser, document, result_number):
-    results = get_results(browser, document, result_number)
-    return results[int(result_number/2)]
-
-
-def access_result_link(document, result):
-    result_link_element = locate_element_by_tag_name(result, link_tag, "result link", True, document)
-    return get_direct_link(result_link_element)
-
-
-# Does this need a try / exception to function properly?
-def open_result_link(browser, document, result):
+def get_search_status(browser, abstract):
     try:
-        document_link = access_result_link(document, result)
-        document.description_link = document_link
-        browser.get(document.description_link)
-        return True
+        search_status_present = EC.presence_of_element_located((By.TAG_NAME, abstract.county.tags["Search Status"]))
+        WebDriverWait(browser, timeout).until(search_status_present)
+        search_status = browser.find_element("tag name", abstract.county.tags["Search Status"]).text
+        return search_status
     except TimeoutException:
-        print(f'Browser timed out trying to open result link for '
-              f'{document.extrapolate_value()}, please review.')
-        input()
-        return False
+        print("Browser timed out trying to get current results.")
+    except StaleElementReferenceException:
+        print('Encountered a stale element reference exception trying to determine search status, '
+              'refreshing & trying again.')
+        browser.refresh()
+        naptime()
 
 
-def open_result(browser, document, result_number):
-    result = access_result(browser, document, result_number)
-    result_text = result.text.split('\n')
-    if validate_result(result_text, document):
-        return open_result_link(browser, document, result)
+def retry_execute_search(browser, abstract, document, search_status):
+    count = 0
+    while search_status in ["", abstract.county.messages["Failed Search"]]:
+        print(f'Search failed for {document.extrapolate_value()},'
+              f' executing search again.')
+        if count == 3:
+            input("Unable to complete search, please review and press enter after making adjustments...")
+        execute_search(browser, abstract, document)
+        naptime()
+        search_status = wait_for_results(browser, abstract)
+    return search_status
+
+
+def wait_for_results(browser, abstract, document):
+    search_status = get_search_status(browser, abstract)
+    while search_status in [abstract.county.messages["Currently Searching"], ""] or search_status is None:
+        short_nap()
+        if search_status == "":
+            search_status = retry_execute_search(browser, abstract, document, search_status)
+        else:
+            search_status = get_search_status(browser, abstract)
+    return search_status
+
+
+def get_search_results(browser, abstract, document):
+    result_rows = locate_elements_by_class_name(browser, abstract.county.classes["Results Row"],
+                                                "search results", True, document=document)
+    while result_rows is None:
+        retry_search(browser, abstract, document)
+        result_rows = locate_elements_by_class_name(browser, abstract.county.classes["Results Row"],
+                                                    "search results", True, document=document)
+    return result_rows
+
+
+def count_results(browser, abstract, document):
+    result_rows = get_search_results(browser, abstract, document)
+    if result_rows is not False:
+        document.number_results += len(result_rows)
+
+
+def handle_result_count(browser, abstract, document):
+    search_status = wait_for_results(browser, abstract, document)
+    if search_status == abstract.county.messages["Failed Search"]:
+        print(f'Initial search failed, attempting to execute search again for '
+              f'{document.extrapolate_value()}')
+        search_status = retry_execute_search(browser, abstract, document, search_status)
+    if search_status == abstract.county.messages["No Results"]:
+        print(f'No results located at {document.extrapolate_value()}, please review.')
     else:
-        return False
+        count_results(browser, abstract, document)
 
 
-def handle_document_search(browser, document, result_number):
+def check_search_results(browser, abstract, document):
+    handle_result_count(browser, abstract, document)
     if document.number_results == 0:
         return False
     else:
-        return open_result(browser, document, result_number)
+        if document.number_results > 1:
+            print(f'{document.number_results} documents returned while searching '
+                  f'{document.extrapolate_value()}.')
+        return True
 
 
-def open_document(browser, document, result_number=0):
-    verify_search_results_page_loaded(browser, document)
-    if verify_results_loaded(browser, document):
-        if result_number == 0:
-            count_results(browser, document)
-        return handle_document_search(browser, document, result_number)
-    else:
-        return False
+def get_document_link(abstract, result, document):
+    result_actions_list = locate_element_by_class_name(result, abstract.county.classes["Result Actions"],
+                                                       "search results actions list", document=document)
+    return locate_elements_by_tag_name(result_actions_list, abstract.county.tags["Result Actions"],
+                                       "search actions", document=document)[1]
+
+
+def open_document_description(browser, abstract, document, result):
+    document_link = get_document_link(abstract, result, document)
+    document.description_link = get_direct_link(document_link)
+    open_url(browser, document.description_link, abstract.county.titles["Document Description"],
+             "document description", document)
+
+
+def handle_document_search(browser, abstract, document):
+    try:
+        first_result = get_search_results(browser, abstract, document)[0]
+        open_document_description(browser, abstract, document, first_result)
+        short_nap()  # W/O nap pdf fails to load properly on first try
+        return True
+    except StaleElementReferenceException:
+        print(f'Encountered a stale element exception while trying to open '
+              f'{document.extrapolate_value()}, trying again.')
+
+
+def open_document(browser, abstract, document):
+    while not validate_search(browser, abstract, document):
+        retry_search(browser, abstract, document)
+    if check_search_results(browser, abstract, document):
+        print(f'Opening document located at {document.extrapolate_value()}')
+        return handle_document_search(browser, abstract, document)
