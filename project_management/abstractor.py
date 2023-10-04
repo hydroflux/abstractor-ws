@@ -1,6 +1,8 @@
 from project_management.timers import start_program_timer
 from settings.driver import create_webdriver
 
+from engines.armadillo.execute import execute_program as execute_armadillo
+from engines.armadillo.execute import execute_name_search as armadillo_name_search
 from engines.buffalo.execute import execute_program as execute_buffalo
 from engines.dolphin.execute import execute_program as execute_dolphin
 from engines.eagle.execute import execute_name_search as eagle_name_search
@@ -23,7 +25,13 @@ from project_management.user_prompts import (add_download_type,
 
 
 def engine_switch(abstract):
-    if abstract.county.engine == 'buffalo':
+    if abstract.county.engine == 'armadillo':
+        abstract.headless = False
+        if abstract.program in ["execute", "review", "download"]:
+            return execute_armadillo
+        elif abstract.program == "name_search":
+            return armadillo_name_search
+    elif abstract.county.engine == 'buffalo':
         abstract.headless = False
         if abstract.program in ["execute", "review", "download"]:
             return execute_buffalo

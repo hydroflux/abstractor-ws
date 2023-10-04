@@ -3,6 +3,7 @@ import os
 from classes.Abstract import Abstract
 from classes.counties import county_dictionary
 
+from engines.armadillo.transform import transform as transform_armadillo
 from engines.buffalo.transform import transform as transform_buffalo
 from engines.dolphin.transform import transform as transform_dolphin
 from engines.eagle.transform import transform as transform_eagle
@@ -95,7 +96,9 @@ def handle_program_type(abstract):
 
 
 def update_abstract_and_county_attributes(abstract):
-    if abstract.county.engine == "buffalo":
+    if abstract.county.engine == "armadillo":
+        transform_armadillo(abstract)
+    elif abstract.county.engine == "buffalo":
         transform_buffalo(abstract)
     elif abstract.county.engine == "dolphin":
         transform_dolphin(abstract)
