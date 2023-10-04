@@ -1,158 +1,54 @@
-import os
-
 from selenium.common.exceptions import TimeoutException
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.wait import WebDriverWait
+from engines.eagle.disclaimer import check_for_disclaimer
+
 from selenium_utilities.element_interaction import center_element
+from selenium_utilities.inputs import click_button
+from selenium_utilities.locators import (locate_element_by_class_name,
+                                         locate_element_by_id)
 
-from settings.county_variables.armadillo import (add_to_cart_name,
-                                                 download_content_id,
-                                                 download_page_class_name,
-                                                 download_prefix,
-                                                 free_download_button_tag)
-from settings.download_management import previously_downloaded, update_download
-from settings.dataframe_management import create_document_directory
-from settings.general_functions import get_direct_link, newline_split, timeout
-from settings.iframe_handling import (access_iframe_by_tag,
-                                      switch_to_default_content)
+from project_management.timers import naptime
+
+from settings.iframe_handling import switch_to_default_content
 
 
-def locate_download_option(browser, document):
+def center_purchase_button(browser, abstract, document):
+    purchase_button = locate_element_by_class_name(browser, abstract.county.classes["Purchase Button"],
+                                                   "purchase button", clickable=True, document=document)
+    center_element(browser, purchase_button)
+
+
+def switch_into_frame(browser, abstract, document):
     try:
-        download_page_present = EC.element_to_be_clickable((By.CLASS_NAME, download_page_class_name))
-        WebDriverWait(browser, timeout).until(download_page_present)
-        download_page = browser.find_element_by_class_name(download_page_class_name)
-        return download_page
-    except TimeoutException:
-        print(f'Browser timed out trying to locate download page for '
-              f'{document.extrapolate_value()}, please review.')
-        input()
-
-
-def open_download(browser, document):
-    download_option = locate_download_option(browser, document)
-    download_option_link = get_direct_link(download_option)
-    browser.get(download_option_link)
-
-
-def switch_to_download_frame(browser, document):
-    switch_to_default_content(browser)
-    download_frame = access_iframe_by_tag(browser)
-    browser.switch_to.frame(download_frame)
-
-
-def locate_download_content(browser, document):
-    try:
-        download_content_present = EC.presence_of_element_located((By.ID, download_content_id))
-        WebDriverWait(browser, timeout).until(download_content_present)
-        download_content = browser.find_element_by_id(download_content_id)
-        return download_content
-    except TimeoutException:
-        print(f'Browser timed out trying to locate download content for '
-              f'{document.extrapolate_value()}, please review.')
-        input()
-
-
-def access_download_content(browser, document):
-    switch_to_download_frame(browser, document)
-    return locate_download_content(browser, document)
-
-
-def access_listed_download_name(download_content):
-    return newline_split(download_content.text)[0]
-
-
-# def verify_download(browser, document):
-#     download_content = access_download_content(browser, document)
-#     listed_download_name = access_listed_download_name(download_content)
-#     return validate_download_link(document, listed_download_name)
-
-
-def locate_free_download_button(download_content, document):
-    try:
-        free_download_button_present = EC.element_to_be_clickable((By.TAG_NAME, free_download_button_tag))
-        WebDriverWait(download_content, timeout).until(free_download_button_present)
-        free_download_button = download_content.find_element_by_tag_name(free_download_button_tag)
-        return free_download_button
-    except TimeoutException:
-        print(f'Browser timed out trying to locate free download button for '
-              f'{document.extrapolate_value()}, please review.')
-        input()
-
-
-def access_free_download_button(download_content, document):
-    free_download_button = locate_free_download_button(download_content, document)
-    return get_direct_link(free_download_button)
-
-
-def build_stock_download(document):
-    document.download_value = f'{download_prefix}{document.download_value}.pdf'
-
-
-def free_download(browser, document):
-    download_content = access_download_content(browser, document)
-    free_download_link = access_free_download_button(download_content, document)
-    switch_to_default_content(browser)
-    browser.get(free_download_link)
-
-
-def locate_add_to_cart_form(browser, document):
-    try:
-        add_to_cart_form_present = EC.presence_of_element_located((By.NAME, add_to_cart_name))
-        WebDriverWait(browser, timeout).until(add_to_cart_form_present)
-        add_to_cart_form = browser.find_element_by_name(add_to_cart_name)
-        return add_to_cart_form
-    except TimeoutException:
-        print(f'Browser timed out trying to locate "Add to Cart" form for '
-              f'{document.extrapolate_value()}, please review.')
-        input()
-
-
-def add_to_cart(browser, document):
-    add_to_cart_form = locate_add_to_cart_form(browser, document)
-    center_element(browser, add_to_cart_form)
-    add_to_cart_form.submit()
-    return True
-
-
-def execute_download(browser, document_directory, document):
-    number_files = len(os.listdir(document_directory))
-    build_stock_download(document)
-    if document.download_type == 'free':
-        open_download(browser, document)
-        switch_to_default_content(browser)
-        free_download(browser, document)
-    elif document.download_type == 'paid':
-        open_download(browser, document)
-    return update_download(
-            browser,
-            document_directory,
-            document,
-            number_files
-            )
-
-
-def check_last_download(dataframe, document, result_number, count=0):
-    if result_number > 0:
-        for element in dataframe["Document Link"]:
-            if element == dataframe["Document Link"][-1]:
-                count += 1
-            elif element == f'{dataframe["Document Link"][-1]}-{str(count)}':
-                count += 1
-        if count > 1:
-            dataframe["Document Link"][-1] = f'{dataframe["Document Link"][-1]}-{str(count - 1)}'
-            document.target_name = f'{document.target_name[:-4]}-{str(count - 1)}.pdf'
-        else:
-            return True
-    else:
+        pdf_viewer = locate_element_by_class_name(browser, abstract.county.classes["PDF Viewer"], "pdf viewer")
+        if not pdf_viewer:
+            # print('Unable to locate PDF viewer, trying again.')
+            # print(f'PDF Viewer: {pdf_viewer}')
+            # print(f'Reception Number: {document.reception_number}')
+            # print(f'Download Value: {document.download_value}')
+            return pdf_viewer
+        center_purchase_button(browser, abstract, document)
+        browser.switch_to.frame(pdf_viewer)
         return True
+    except TimeoutException:
+        print("Browser timed out while trying to access the pdf viewer, refreshing the page to try again.")
+        return False
 
 
-def download_document(browser, target_directory, dataframe, document, result_number):
-    document_directory = create_document_directory(target_directory)
-    if previously_downloaded(document_directory, document):
-        if check_last_download(dataframe, document, result_number):
-            return True
-    # if verify_download(browser, document):
-    return execute_download(browser, document_directory, document)
+def access_pdf_viewer(browser, abstract, document):
+    while not switch_into_frame(browser, abstract, document):
+        # Is this function necessary with the 'check_for_disclaimer' function call at the top of the 'record' script?
+        check_for_disclaimer(browser, abstract)
+        print('Browser failed to access PDF viewer, refreshing and trying again...')
+        browser.refresh()
+        naptime()
+
+
+def execute_download(browser, abstract, document):
+    access_pdf_viewer(browser, abstract, document)
+    while click_button(browser, locate_element_by_id,
+                       abstract.county.buttons["Download Button"],
+                       "download button", document) is False:
+        print('Browser failed to access document image, refreshing and trying again...')
+        browser.refresh()
+        access_pdf_viewer(browser, abstract, document)
+    switch_to_default_content(browser)
