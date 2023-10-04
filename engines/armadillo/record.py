@@ -1,302 +1,314 @@
-from selenium.common.exceptions import TimeoutException
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.wait import WebDriverWait
+from functools import partial
+from selenium.common.exceptions import StaleElementReferenceException
+from engines.armadillo.disclaimer import check_for_disclaimer
 
-from engines.armadillo.validation import (validate_date,
-                                          validate_reception_number,
-                                          validate_volume_page,
-                                          verify_results_page_loaded)
+from selenium_utilities.element_interaction import access_title_case_text, center_element
+from selenium_utilities.locators import (locate_element_by_id, locate_element_by_tag_name,
+                                         locate_elements_by_class_name)
 
-from serializers.recorder import (date_from_string, element_title_strip,
-                                  list_to_string, title_strip,
-                                  update_sentence_case_extras)
+from project_management.timers import medium_nap, naptime
 
-from settings.county_variables.armadillo import (book_and_page_text,
-                                                 document_tables_tag,
-                                                 legal_text, legal_update,
-                                                 parties_midpoint_text,
-                                                 reception_number_prefix,
-                                                 related_documents_text,
-                                                 related_types,
-                                                 type_and_number_table_id)
-from settings.dataframe_management import multiple_documents_comment
-from settings.general_functions import (four_character_padding, newline_split,
-                                        print_list_by_index, timeout)
+from serializers.recorder import (record_comments, record_empty_values,
+                                  record_value)
+
+from settings.county_variables.general import search_errors
+from settings.general_functions import (scroll_to_top,
+                                        short_nap)
+from settings.invalid import no_document_image
+from settings.county_variables.general import execution_review
+
+from engines.armadillo.error_handling import check_for_error
 
 
-def locate_document_type_and_number_table(browser, document):
-    try:
-        type_and_number_table_present = EC.presence_of_element_located((By.ID, type_and_number_table_id))
-        WebDriverWait(browser, timeout).until(type_and_number_table_present)
-        type_and_number_table = browser.find_element_by_id(type_and_number_table_id)
-        return type_and_number_table
-    except TimeoutException:
-        print(f'Browser timed out trying to access document type and number table for '
+def access_image_container(browser, abstract, document):
+    image_container = locate_element_by_id(browser, abstract.county.ids["Image Container"],
+                                           "image container", False, document)
+    while image_container is None:
+        check_for_error(browser, abstract, document)
+        image_container = locate_element_by_id(browser, abstract.county.ids["Image Container"],
+                                               "image container", False, document)
+    return image_container.text
+
+
+def access_pdf_load_status(browser, abstract, document):
+    loading_status_element = locate_element_by_id(browser, abstract.county.ids["PDF Viewer Load Marker"],
+                                                  "PDF Viewer load status", False, document)
+    while loading_status_element is None:
+        check_for_error(browser, abstract, document)
+        loading_status_element = locate_element_by_id(browser, abstract.county.ids["PDF Viewer Load Marker"],
+                                                      "PDF Viewer load status", False, document)
+    return loading_status_element.text
+
+
+def wait_for_pdf_to_load(browser, abstract, document):
+    while access_pdf_load_status(browser, abstract, document).startswith(abstract.county.messages["Loading"]):
+        medium_nap()
+        # naptime() <--- consider for testing 07/13/2023
+
+
+def handle_document_image_status(browser, abstract, document):
+    image_container_text = access_image_container(browser, abstract, document)
+    if (image_container_text == abstract.county.messages["No Image Available"] or
+       image_container_text == abstract.county.messages["Login Error"]):
+        print(f'No document image exists for '
               f'{document.extrapolate_value()}, please review.')
-        input()
-
-
-def access_table_information(table):
-    return newline_split(element_title_strip(table))
-
-
-def get_document_type_and_number_field(browser, document):
-    type_and_number_table = locate_document_type_and_number_table(browser, document)
-    return access_table_information(type_and_number_table)
-
-
-def handle_document_type_and_number_text(document, document_type_and_number_text):
-    type_and_number_pieces = document_type_and_number_text.split(' - ')
-    if len(type_and_number_pieces) == 2:
-        return type_and_number_pieces
-    elif len(type_and_number_pieces) == 3:
-        return (' - ').join(type_and_number_pieces[:2]), type_and_number_pieces[2]
+        no_document_image(abstract, document)
+        medium_nap()
+        return False
     else:
-        print(f'Browser is unable to parse document type and number for '
-              f'{document.extrapolate_value()}, please review: \n'
-              f'{print_list_by_index(type_and_number_pieces)}')
-        input()
-
-
-def handle_document_validation(document, reception_number=None, volume=None, page=None):
-    if document.type == 'document_number' and reception_number is not None:
-        return validate_reception_number(document, reception_number)
-    elif document.type == 'volume_and_page' and reception_number is None:
-        return validate_volume_page(document, volume, page)
-    else:
+        wait_for_pdf_to_load(browser, abstract, document)
         return True
 
 
-def access_document_type_and_number(document, document_type_and_number_text):
-    if handle_document_validation(document, reception_number=document_type_and_number_text):
-        return handle_document_type_and_number_text(document, document_type_and_number_text)
-    else:
-        print(f'Browser failed to validate reception number for '
-              f'{document.extrapolate_value()} instead finding '
-              f'"{document_type_and_number_text}", please review before continuing...')
-        input()
+def open_informational_link(browser, link):  # needs to be updated to work on a smaller screen
+    center_element(browser, link)
+    link.click()
 
 
-def access_download_value(document, reception_number):
-    document.download_value = reception_number[len(reception_number_prefix):].replace('-', '_')
-
-
-def access_reception_number(reception_number):
-    return reception_number[len(reception_number_prefix):]
-
-
-def update_reception_number(document, reception_number):
-    if reception_number.startswith(reception_number_prefix) and handle_document_validation(document, reception_number):
-        access_download_value(document, reception_number)
-        reception_number = access_reception_number(reception_number)
-        return reception_number
-    else:
-        print(f'Reception number "{reception_number}" does not match the expected result format for '
-              f'{document.extrapolate_value()}, please review...')
-        input()
-        return reception_number
-
-
-def handle_reception_number(dataframe, document, reception_number):
-    reception_number = update_reception_number(document, reception_number)
-    document.reception_number = reception_number
-    dataframe['Reception Number'].append(reception_number)
-
-
-def record_document_type_and_number(browser, dataframe, document):
-    document_type_and_number_field = get_document_type_and_number_field(
-        browser, document)
-    document_type, reception_number = access_document_type_and_number(
-        document, document_type_and_number_field[0])
-    dataframe['Document Type'].append(update_sentence_case_extras(document_type))
-    handle_reception_number(dataframe, document, reception_number)
-
-
-def locate_document_information_tables(browser, document):
+def handle_information_links(browser, abstract, link):
     try:
-        information_tables_present = EC.presence_of_element_located((By.TAG_NAME, document_tables_tag))
-        WebDriverWait(browser, timeout).until(information_tables_present)
-        information_tables = browser.find_elements_by_tag_name(document_tables_tag)
-        return information_tables
-    except TimeoutException:
-        print(f'Browser timed out trying to get document information tables for '
-              f'{document.extrapolate_value()}, please review.')
+        while link.text == abstract.county.messages["More Information"]:
+            open_informational_link(browser, link)
+            short_nap()
+    except StaleElementReferenceException:
+        print('Encountered StaleElementReferenceException '
+              'while handling information links, please review.')
         input()
 
 
-def access_date(date_text, document, type):
-    if validate_date(date_text):
-        return date_from_string(date_text)
+def review_and_open_links(browser, abstract, links):
+    for link in links:
+        handle_information_links(browser, abstract, link)
+
+
+def display_all_information(browser, abstract, document):
+    information_links = locate_elements_by_class_name(browser, abstract.county.classes["Information Links"],
+                                                      "information links", False, document)
+    review_and_open_links(browser, abstract, information_links)
+
+
+def drop_superfluous_information(abstract, string):
+    if string.endswith(abstract.county.messages["Less Information"]):
+        return string[:-(len(abstract.county.messages["Less Information"]) + 1)]
     else:
-        print(f'Browser failed to validate {type} date for '
-              f'{document.extrapolate_value()} instead finding '
-              f'"{date_text}", recording an empty string instead.')
-        return ''
+        return string
 
 
-def record_date(row, dataframe, document, type):
-    date = access_date(title_strip(row), document, type)
-    dataframe[f'{type.title()} Date'].append(date)
+def access_table_body(document_table, abstract):  # Argument order important in order to work with 'map'
+    table_body = locate_element_by_tag_name(document_table, abstract.county.tags["Index Table"][0],
+                                            "document table body", False, quick=True)
+    while table_body is None:
+        print("Unable to locate TABLE BODY element, trying again.")
+        table_body = locate_element_by_tag_name(document_table, abstract.county.tags["Index Table"][0],
+                                                "document table body", False, quick=True)
+        naptime()
+    return table_body
 
 
-# Should this be 'access' instead of 'get'?
-def get_book_volume_page_field(document_table):
-    return document_table[document_table.index(book_and_page_text) + 1]
+def access_table_rows(abstract, table_body):
+    body_text = table_body.find_elements("tag name", abstract.county.tags["Index Table"][1])
+    return body_text
 
 
-def access_book_volume_page(document_table):
-    book_volume_page_field = get_book_volume_page_field(document_table)
-    return (
-        book_volume_page_field.split(' ')[0],
-        book_volume_page_field.split(' ')[2],
-        book_volume_page_field.split(' ')[4]
-        )
+def access_field_body_no_title(field_info):
+    return "\n".join(field_info.text.split("\n")[1:])
 
 
-def handle_book_volume_page(document_table, document):
-    book, volume, page = access_book_volume_page(document_table)
-    if handle_document_validation(document, volume=volume, page=page):
-        return book, volume, page
+def access_field_body(field_info):
+    return "\n".join(field_info.text.split("\n")[1:]).title()
+
+
+def access_indexing_information(abstract, document_table):
+    table_body = access_table_body(document_table, abstract)
+    table_rows = access_table_rows(abstract, table_body)
+    return map(access_field_body, table_rows)
+
+
+def record_document_type(abstract, document_table):
+    document_type = access_title_case_text(document_table)
+    record_value(abstract, 'document type', document_type)
+
+
+# def split_reception_field(reception_field):
+#     if "Book" in reception_field and "Page" in reception_field:
+#         reception_fields = reception_field.split("\n")
+#         reception_number = reception_fields[0]
+#         book = reception_fields[2]
+#         page = reception_fields[4]
+#     else:
+#         reception_number = reception_field
+#         book = search_errors[2]
+#         page = search_errors[2]
+#     return reception_number, book, page
+
+
+def set_document_download_values(abstract, document, reception_number):
+    document.reception_number = reception_number
+    document.download_value = f'{document.reception_number}-{abstract.county.other["Stock Download"]}'
+
+
+def record_indexing_data(abstract, document_table, document):
+    reception_number_recording_date_field, _ = access_indexing_information(abstract, document_table)
+    reception_number, _, recording_date = reception_number_recording_date_field.split('\n')
+    # reception_number, book, page = split_reception_field(reception_field)
+    # reception_number = reception_number.split('\n')[0]
+    set_document_download_values(abstract, document, reception_number)
+    record_value(abstract, 'reception number', reception_number)
+    record_value(abstract, 'recording date', recording_date[:10])
+
+
+def record_book_volume_page(abstract, document_table):
+    book_volume_page_field = document_table.text.split('\n')[1]
+    book, volume, page = book_volume_page_field.split(' ')
+    record_value(abstract, 'book', book)
+    record_value(abstract, 'volume', volume)
+    record_value(abstract, 'page', page)
+
+
+def record_effective_date(abstract, document_table):
+    effective_date_field = document_table.text
+    effective_date = effective_date_field.split("\n")[1]
+    record_value(abstract, 'effective date', effective_date[:10])
+
+
+def record_name_data(abstract, document_table):
+    grantor_text, grantee_text = access_indexing_information(abstract, document_table)
+    grantor = drop_superfluous_information(abstract, grantor_text)
+    grantee = drop_superfluous_information(abstract, grantee_text)
+    record_value(abstract, 'grantor', grantor)
+    record_value(abstract, 'grantee', grantee)
+
+
+def record_legal_data(abstract, document_table):
+    if document_table.text.startswith("Legal"):
+        table_rows = access_table_rows(abstract, document_table)
+        legal_data = table_rows[1].find_elements("tag name", abstract.county.tags["Index Table"][2])
+        if legal_data == []:
+            record_value(abstract, 'legal', search_errors[2])
+        else:
+            legal = legal_data[-1].text
+            if legal.endswith(search_errors[4]):
+                legal = legal.strip()  # Running along with test 1
     else:
-        print(f'Browser failed to validate volume & page for '
-              f'{document.extrapolate_value()}, instead finding '
-              f'"Book: {book}, Volume: {volume}, Page: {page}", '
-              f'please review before continuing...')
-        input()
-        return book, volume, page
+        legal = ""
+    record_value(abstract, 'legal', drop_superfluous_information(abstract, legal))
 
 
-def record_book_volume_page(document_table, dataframe, document):
-    book, volume, page = handle_book_volume_page(document_table, document)
-    dataframe["Book"].append(book)
-    dataframe["Volume"].append(volume)
-    dataframe["Page"].append(page)
+def locate_related_documents_table_rows(abstract, document, document_table):
+    try:
+        related_table_rows = document_table.find_elements(
+            "class name",
+            abstract.county.classes["Related Documents Table"])
+        return related_table_rows
+    except StaleElementReferenceException:
+        print(f'Browser encountered StaleElementReferenceException trying to '
+              f'located related documents table rows for '
+              f'{document.extrapolate_value()}, trying again.')
+        return False
 
 
-def record_indexing_information(document_table, dataframe, document):
-    record_date(document_table[3], dataframe, document, "recording")
-    record_date(document_table[-1], dataframe, document, "effective")
-    # recording_date = access_date(title_strip(document_table[3]), document, "recording")
-    # document_date = access_date(title_strip(document_table[-1]), document, "document")
-    # dataframe['Recording Date'].append(recording_date)
-    # dataframe["Document Date"].append(document_date)
-    record_book_volume_page(document_table, dataframe, document)
-    # book, page = access_book_and_page(document_table)
-    # dataframe["Book"].append(book)
-    # dataframe["Page"].append(page)
+def get_related_documents_table_rows(browser, abstract, document_table, document):
+    center_element(browser, document_table)
+    related_documents_table_rows = locate_related_documents_table_rows(abstract, document, document_table)
+    while related_documents_table_rows is False:
+        print(f'Unable to locate the "Related Documents Table" rows for '
+              f'{document.extrapolate_value()}, trying again...')
+        naptime()
+        related_documents_table_rows = locate_related_documents_table_rows(abstract, document, document_table)
+    return related_documents_table_rows
 
 
-def get_parties_midpoint(document_table):
-    return document_table.index(parties_midpoint_text)
+def record_related_documents(browser, abstract, document_table, document):
+    # If none then ... ? conditional -- need to test with some print statements to see general feedback first
+    related_table_rows = get_related_documents_table_rows(browser, abstract, document_table, document)
+    related_documents_info = list(map(partial(access_table_body, abstract=abstract), related_table_rows))
+    related_document_list = list(map(access_title_case_text, related_documents_info))
+    # related_documents_info = list(map(access_table_body, related_table_rows))
+    # related_document_list = list(map(access_title_case_text, related_documents_info))
+    related_documents = "\n".join(related_document_list)
+    record_value(abstract, 'related documents', drop_superfluous_information(abstract, related_documents))
+    # dataframe["Related Documents"].append(drop_superfluous_information(related_documents))
 
 
-def access_parties_information(document_table):
-    parties_midpoint = get_parties_midpoint(document_table)
-    grantor = list(map(title_strip, (document_table[1:parties_midpoint])))
-    grantee = list(map(title_strip, (document_table[(parties_midpoint + 1):])))
-    return update_sentence_case_extras(list_to_string(grantor)), update_sentence_case_extras(list_to_string(grantee))
+def record_notes(abstract, document_tables):
+    try:
+        notes = access_field_body_no_title(document_tables[5])
+        if notes == search_errors[3] or notes == search_errors[4] or notes == search_errors[5]:
+            pass
+        elif notes.startswith(search_errors[3]) or notes.endswith(search_errors[3]):
+            pass
+        else:
+            if notes.strip() != "":
+                notes = f'Notes: {notes}'
+                if abstract.dataframe["Legal"][-1] == "":
+                    abstract.dataframe["Legal"][-1] = notes
+                else:
+                    abstract.dataframe["Legal"][-1] = f'{abstract.dataframe["Legal"][-1]}\n{notes}'
+    except IndexError:
+        pass
+    except StaleElementReferenceException:
+        input('Encountered a StaleElementReferenceException, please review and press enter to continue...')
 
 
-def record_parties_information(document_table, dataframe):
-    grantor, grantee = access_parties_information(document_table)
-    dataframe['Grantor'].append(grantor)
-    dataframe['Grantee'].append(grantee)
+def aggregate_document_information(browser, abstract, document_tables, document):
+    record_document_type(abstract, document_tables[0])
+    record_indexing_data(abstract, document_tables[1], document)
+    record_book_volume_page(abstract, document_tables[2])
+    record_effective_date(abstract, document_tables[3])
+    record_name_data(abstract, document_tables[4])
+    record_legal_data(abstract, document_tables[5])
+    record_related_documents(browser, abstract, document_tables[-2], document)
+    record_notes(abstract, document_tables)
 
 
-def get_related_document_fields(document_table):
-    return document_table[document_table.index(related_documents_text) + 1:]
+def access_document_tables(browser, abstract, document):
+    document_information = locate_element_by_id(browser, abstract.county.ids["Document Information"],
+                                                "document information", False, document)
+    return locate_elements_by_class_name(document_information, abstract.county.classes["Document Table"],
+                                         "document information tables", False, document)
 
 
-def build_related_documents(related_string):
-    related_document_array = []
-    index = 0
-    for element in related_string.split('  '):
-        if element != '' and element != ' ':
-            related_document_array.append(f'{related_types[index]}: {element}')
-        index += 1
-    return (', ').join(related_document_array)
+def record_document_fields(browser, abstract, document):
+    document_tables = access_document_tables(browser, abstract, document)
+    display_all_information(browser, abstract, document)
+    aggregate_document_information(browser, abstract, document_tables, document)
+    scroll_to_top(browser)
 
 
-def access_related_documents(related_documents_fields):
-    return list_to_string(list(map(build_related_documents, related_documents_fields)))
+def review_entry(browser, abstract, document):
+    while (abstract.dataframe["Grantor"][-1] == abstract.county.other["Missing Values"][0] and
+           abstract.dataframe["Grantee"][-1] == abstract.county.other["Missing Values"][0] and
+           abstract.dataframe["Related Documents"][-1] == abstract.county.other["Missing Values"][1] or
+           document.reception_number.strip() == ''):
+        print("Recording of last document was processed incorrectly, attempting to record again.")
+        re_record_document_fields(browser, abstract, document)
 
 
-def record_related_documents(document_table, dataframe):
-    related_documents_fields = get_related_document_fields(document_table)
-    related_documents = access_related_documents(related_documents_fields)
-    dataframe['Related Documents'].append(related_documents)
+def re_record_document_fields(browser, abstract, document):
+    abstract.drop_last_entry()
+    browser.refresh()
+    record_comments(abstract, document)
+    record_empty_values(abstract, ['document link'])
+    medium_nap()
+    record_document_fields(browser, abstract, document)
 
 
-def legal_updates(legal, i=0):
-    while i < len(legal_text):
-        legal = legal.replace(legal_text[i], legal_update[i])
-        i += 1
-    return legal
+# def access_download_information(browser, abstract, document):
+#     handle_document_image_status(browser, abstract, document)
+#     document_tables = access_document_tables(browser, abstract, document)
+#     reception_field, _ = access_indexing_information(abstract, document_tables[1])
+#     reception_number, _, _ = split_reception_field(reception_field)
+#     set_document_download_values(abstract, document, reception_number)
 
 
-def access_legal(legal_row):
-    return legal_updates(legal_row.split('  ')[0])
-
-
-def aggregate_legal_description(document_table):
-    return list_to_string(list(map(access_legal, (document_table[1:]))))
-
-
-def record_legal(document_table, dataframe):
-    legal = aggregate_legal_description(document_table)
-    dataframe['Legal'].append(legal)
-
-
-def indexing_table(document_tables):
-    return newline_split(document_tables[1].text)
-
-
-def aggregate_document_table_information(browser, dataframe, document):
-    document_tables = locate_document_information_tables(browser, document)
-    record_indexing_information(indexing_table(document_tables), dataframe, document)
-    record_parties_information(access_table_information(document_tables[3]), dataframe)
-    record_related_documents(newline_split(document_tables[6].text), dataframe)
-    record_legal(newline_split(document_tables[8].text), dataframe)
-
-
-def record_comments(dataframe, document):
-    if document.number_results == 1:
-        dataframe['Comments'].append('')
-    elif document.number_results > 1:
-        dataframe["Comments"].append(multiple_documents_comment(document))
-
-
-def prepare_document_for_download(dataframe, document):
-    if document.reception_number.find('-') == -1:
-        document_link = (f'{dataframe["Book"][-1]}-'
-                         f'{four_character_padding(dataframe["Volume"][-1])}-'
-                         f'{four_character_padding(dataframe["Page"][-1])}')
-    else:
-        document_link = document.reception_number
-    document.target_name = f'{document.county.prefix}-{document_link}.pdf'
-    return document_link
-
-
-def record_document_link(dataframe, document):
-    document_link = prepare_document_for_download(dataframe, document)
-    dataframe["Document Link"].append(document_link)
-
-
-def build_document_download_information(browser, dataframe, document):
-    record_document_type_and_number(browser, dataframe, document)
-    document_tables = locate_document_information_tables(browser, document)
-    record_book_volume_page(indexing_table(document_tables), dataframe, document)
-    prepare_document_for_download(dataframe, document)
-
-
-def record_document_fields(browser, dataframe, document):
-    record_document_type_and_number(browser, dataframe, document)
-    aggregate_document_table_information(browser, dataframe, document)
-    record_comments(dataframe, document)
-    record_document_link(dataframe, document)
-
-
-def record(browser, dataframe, document):
-    verify_results_page_loaded(browser, document)
-    record_document_fields(browser, dataframe, document)
+def record(browser, abstract, document):
+    print(f'Recording document located at {document.extrapolate_value()}')
+    check_for_disclaimer(browser, abstract)
+    medium_nap()  # Moved from the post-record in order to try and load DOM objects properly
+    if not abstract.review:
+        record_comments(abstract, document)  # Before 'handle_document_image_status' to check for multiple documents
+        handle_document_image_status(browser, abstract, document)
+        record_document_fields(browser, abstract, document)
+        record_empty_values(abstract, ['document link'])
+        review_entry(browser, abstract, document)
+        # medium_nap()
