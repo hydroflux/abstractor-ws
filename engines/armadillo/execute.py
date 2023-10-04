@@ -1,150 +1,34 @@
-from engines.armadillo.download import download_document
-from engines.armadillo.login import account_login
-from engines.armadillo.logout import logout
+#!/usr/bin/python3
+from engines.armadillo.name_search import name_search
+from project_management.export import export_document
+from serializers.executor import close_program, search_documents_from_list
+
+from engines.armadillo.download import execute_download
+from engines.armadillo.login import login
+from engines.armadillo.navigation import next_result
 from engines.armadillo.open_document import open_document
-from engines.armadillo.record import (build_document_download_information,
-                                      record)
+from engines.armadillo.record import record
 from engines.armadillo.search import search
-from engines.armadillo.transform import transform_document_list
-from project_management.export import export_document, export_hyperlinks
-from settings.county_variables.general import download, headless
-from settings.dataframe_management import (bundle_project, check_length,
-                                           document_downloaded, document_found,
-                                           no_document_downloaded,
-                                           no_document_found)
-from settings.driver import create_webdriver
-from settings.general_functions import start_timer
-from settings.invalid import no_document_image, record_invalid_search
-from settings.objects.abstract_dataframe import \
-    abstract_dictionary as dataframe
 
 
-def record_document(browser, document_list, document, review):
-    record(browser, dataframe, document)
-    document_found(document_list, document, review)
-
-
-def download_recorded_document(browser, target_directory, dataframe, document_list,
-                               document, download_only, result_number):
-    if not download_document(
-        browser,
-        target_directory,
-        dataframe,
-        document,
-        result_number
-    ):
-        no_document_image(abstract, document)
-        no_document_downloaded(document_list, document, download_only)
-    else:
-        document_downloaded(document_list, document, download_only)
-
-
-def handle_single_document(browser, target_directory, document_list, document, review, download_only, result_number=0):
-    if not download_only:
-        record_document(
-            browser,
-            document_list,
-            document,
-            review
-        )
-    else:
-        build_document_download_information(
-            browser,
-            dataframe,
-            document)
-    if download and not review or download_only:
-        download_recorded_document(
-            browser,
-            target_directory,
-            dataframe,
-            document_list,
-            document,
-            download_only,
-            result_number
-        )
-
-
-def handle_multiple_documents(browser, target_directory, document_list, document, review, download_only):
-    for result_number in range(1, document.number_results):
-        search(browser, document)
-        if open_document(browser, document, result_number):
-            handle_single_document(
-                browser,
-                target_directory,
-                document_list,
-                document,
-                review,
-                download_only,
-                result_number
-            )
-
-
-def handle_search_results(browser, target_directory, document_list, document, review, download_only):
-    handle_single_document(
-        browser,
-        target_directory,
-        document_list,
-        document,
-        review,
-        download_only
-    )
-    if document.number_results > 1:
-        handle_multiple_documents(
-            browser,
-            target_directory,
-            document_list,
-            document,
-            review,
-            download_only
-        )
-
-
-def handle_bad_search(dataframe, document_list, document, review, download_only):
-    if not download_only:
-        record_invalid_search(dataframe, document)
-    no_document_found(document_list, document, review)
-
-
-def search_documents_from_list(browser, target_directory, document_list, review, download_only):
-    for document in document_list:
-        document.start_time = start_timer()
-        search(browser, document)
-        if open_document(browser, document):
-            handle_search_results(
-                browser,
-                target_directory,
-                document_list,
-                document,
-                review,
-                download_only
-            )
-        else:
-            handle_bad_search(dataframe, document_list, document, review, download_only)
-        check_length(dataframe)
-    return dataframe
-
-
-def process_dataframe(county, target_directory, file_name, review, download_only):
-    if not review:
-        if not download_only:
-            check_length(dataframe)
-            abstraction_file = export_document(county, target_directory, file_name, dataframe)
-        else:
-            abstraction_file = export_hyperlinks(county, target_directory, file_name, dataframe)
-        bundle_project(target_directory, abstraction_file)
-
-
-def execute_program(county, target_directory, document_list, file_name, review=False, download_only=False):
-    browser = create_webdriver(target_directory, headless)
-    transform_document_list(document_list, county)
-    account_login(browser)
+# Identical to 'leopard', 'jaguar', 'rattlesnake', & 'tiger' execute_program
+def execute_program(browser, abstract):
+    login(browser, abstract)
     search_documents_from_list(
-            browser,
-            target_directory,
-            document_list,
-            review,
-            download_only
-        )
-    process_dataframe(county, target_directory, file_name, review, download_only)
-    logout(browser)
-    browser.close()
+        browser,
+        abstract,
+        search,
+        open_document,
+        record,
+        execute_download,
+        next_result
+    )
+    close_program(browser, abstract)
+
+
+def execute_name_search(browser, abstract):
+    login(browser, abstract)
+    name_search(browser, abstract)
+    project = export_document(abstract)  # handled in close_program, need to review
+    project.bundle_project(abstract)  # handled in close_program, need to review
+    close_program(browser, abstract)
