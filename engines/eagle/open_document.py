@@ -58,7 +58,7 @@ def retry_execute_search(browser, abstract, document, search_status):
             input("Unable to complete search, please review and press enter after making adjustments...")
         execute_search(browser, abstract, document)
         naptime()
-        search_status = wait_for_results(browser, abstract)
+        search_status = wait_for_results(browser, abstract, document)
     return search_status
 
 
