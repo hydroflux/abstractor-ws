@@ -5,7 +5,7 @@ from selenium_utilities.locators import (locate_element, locate_element_by_class
 from selenium_utilities.open import open_url
 from selenium.common.exceptions import NoSuchElementException
 
-# Similar functionality as "octopus" & "dolphin"
+# Similar code functionality in "dolphin", "manta_ray", "octopus" & "swordfish"
 
 
 def handle_continuing_collection_search(browser, abstract, document):

@@ -10,7 +10,7 @@ from engines.swordfish.navigation import next_result
 
 from serializers.executor import close_program, search_documents_from_list
 
-# Same as "dolphin" except for imports
+# Same code functionality in "dolphin", "manta_ray", & "swordfish" (except for imports)
 
 
 def check_for_document_list(browser, abstract):

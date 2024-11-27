@@ -4,7 +4,7 @@ from engines.swordfish.page_count import register_page_count
 from selenium_utilities.locators import (locate_element, locate_element_by_class_name,
                                          locate_elements_by_class_name)
 
-# Similar to "octopus" & "dolphin"
+# Similar functionality in "dolphin", "manta_ray", "octopus" & "swordfish"
 
 
 def register_number_results(browser, abstract, document):

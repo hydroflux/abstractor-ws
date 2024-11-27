@@ -3,7 +3,7 @@ from selenium_utilities.locators import locate_element_by_id
 
 from engines.dolphin.validation import check_for_document_image
 
-# Exact same as "octopus" & "dolphin"
+# Exact same code functionality in "dolphin", "manta_ray", "octopus" & "swordfish"
 
 
 def execute_download(browser, abstract, document):

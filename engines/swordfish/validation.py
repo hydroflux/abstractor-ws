@@ -2,7 +2,7 @@ from project_management.timers import short_nap
 from selenium_utilities.locators import locate_element
 from settings.invalid import no_document_image
 
-# same as "octopus" & "dolphin", similar to "buffalo"
+# Exact same functionality in "dolphin", "manta_ray", "octopus", & "swordfish"; Similar to "buffalo"
 
 
 def check_for_document_image(browser, abstract, document):

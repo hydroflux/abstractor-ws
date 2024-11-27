@@ -2,7 +2,7 @@ from engines.swordfish.collect import collect
 from selenium_utilities.locators import locate_element_by_tag_name
 from settings.general_functions import javascript_script_execution
 
-# Similar to "octopus" & "dolphin" except for import
+# Similar functionality in "dolphin", "manta_ray", "octopus" & "swordfish" except for import
 
 
 def search_results_page_loaded(browser, document):
