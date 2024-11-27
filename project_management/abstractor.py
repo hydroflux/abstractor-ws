@@ -9,6 +9,7 @@ from engines.eagle.execute import execute_name_search as eagle_name_search
 from engines.eagle.execute import execute_program as execute_eagle
 from engines.jaguar.execute import execute_program as execute_jaguar
 from engines.leopard.execute import execute_program as execute_leopard
+from engines.manta_ray.execute import execute_program as execute_manta_ray
 from engines.octopus.execute import \
     execute_legal_search as execute_octopus_legal
 from engines.platypus.execute import \
@@ -54,6 +55,11 @@ def engine_switch(abstract):
             if abstract.program == "download":
                 abstract.headless = False
             return execute_leopard
+    elif abstract.county.engine == 'manta_ray':
+        if abstract.program in ["execute", "review", "download", "legal", "register_page_count"]:
+            if abstract.program == "download":
+                abstract.headless = False
+            return execute_manta_ray
     elif abstract.county.engine == 'octopus':
         if abstract.program in ["execute", "review", "download", "legal"]:
             if abstract.program == "download":

@@ -11,6 +11,7 @@ from engines.jaguar.transform import transform as transform_jaguar
 from engines.leopard.transform import transform as transform_leopard
 from engines.mountain_lion.transform import \
     transform as transform_mountain_lion
+from engines.manta_ray.transform import transform as transform_manta_ray
 from engines.octopus.transform import transform as transform_octopus
 from engines.platypus.transform import transform as transform_platypus
 from engines.rabbit.transform import transform as transform_rabbit
@@ -110,6 +111,8 @@ def update_abstract_and_county_attributes(abstract):
         transform_leopard(abstract)
     elif abstract.county.engine == "mountain_lion":
         transform_mountain_lion(abstract)
+    elif abstract.county.engine == "manta_ray":
+        transform_manta_ray(abstract)
     elif abstract.county.engine == "octopus":
         transform_octopus(abstract)
     elif abstract.county.engine == "platypus":
