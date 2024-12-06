@@ -10,7 +10,7 @@ from selenium_utilities.locators import (locate_element, locate_element_by_class
 def register_number_results(browser, abstract, document):
     number_results_container = locate_elements_by_class_name(browser, abstract.county.classes["Result Count Container"],
                                                              "result count container", False)[1]
-    number_results_text = number_results_container.text.split("\n")[2]
+    number_results_text = number_results_container.text.split("\n")[1]
     number_results = int(number_results_text.split(" ")[-2])
     if document is None:
         print(f'Collection search returned "{str(number_results)}" results for processing.')
@@ -63,7 +63,7 @@ def build_document_list(browser, abstract):
 
 def collect(browser, abstract, document=None):
     count_results(browser, abstract, document)
-    if document.number_results != 0 and abstract.number_search_results != 0:
+    if abstract.number_search_results != 0 or document.number_results != 0 and abstract.number_search_results != 0:
         if document is None:
             # Consider adding function for counting # of pages for "legal" program searches
             build_document_list(browser, abstract)
