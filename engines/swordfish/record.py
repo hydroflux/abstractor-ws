@@ -6,7 +6,7 @@ from serializers.recorder import (date_from_string, list_to_string,
                                   title_strip)
 from settings.general_functions import get_direct_children
 
-# Almost identical code functionality to "dolphin"; exact code functionality in "manta_ray" & "swordfish"
+# Similar code functionality in "dolphin",  "manta_ray", & "swordfish"
 
 
 def record_document_type(browser, abstract, document):

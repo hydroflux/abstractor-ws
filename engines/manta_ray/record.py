@@ -6,18 +6,13 @@ from serializers.recorder import (date_from_string, list_to_string,
                                   title_strip)
 from settings.general_functions import get_direct_children
 
-# Almost identical code functionality to "dolphin"; exact code functionality in "manta_ray" & "swordfish"
+# Similar code functionality in "dolphin",  "manta_ray", & "swordfish"
 
 
 def record_document_type(browser, abstract, document):
     document_type_field = locate_element_by_class_name(browser, abstract.county.record["Document Type"],
                                                        "document type", False, document)
     record_value(abstract, 'document type', document_type_field.text.title())
-
-
-def set_document_download_values(document, reception_number):
-    document.reception_number = reception_number
-    document.download_value = f'{reception_number}.pdf'
 
 
 def set_indexing_text(text_element):
@@ -27,58 +22,62 @@ def set_indexing_text(text_element):
     return indexing_text
 
 
-def record_reception_number(abstract, document, reception_number_text):
-    reception_number = reception_number_text[1:]
-    set_document_download_values(document, reception_number)
-    record_value(abstract, 'reception number', reception_number)
-
-
-def record_book_and_page(abstract, book_and_page_text):
-    if book_and_page_text is not None:
-        book_and_page_list = book_and_page_text.split(' ')
-        if len(book_and_page_list) == 4:
-            _, book, _, page = book_and_page_list
-        else:
-            book_and_page = book_and_page_text.split(' ')[1:]
-            split = book_and_page.index("Page:")
-            book = (" ").join(book_and_page[:split])
-            page = (" ").join(book_and_page[(split + 1):])
-    else:
-        book = "N/A"
-        page = "N/A"
+def record_book(abstract, book_text):
+    book = book_text.split(' ')[1]
     record_value(abstract, 'book', book)
+
+
+def record_page(abstract, page_text):
+    page = page_text.split(' ')[1]
     record_value(abstract, 'page', page)
 
 
-def record_effective_date(abstract, effective_date):
-    if effective_date != "":
-        effective_date = date_from_string(effective_date.split(' ')[-1])
+def record_effective_date(abstract, effective_date_text):
+    if effective_date_text != "":
+        effective_date = date_from_string(effective_date_text.split(' ')[-1])
     record_value(abstract, 'effective date', effective_date)
 
 
 def record_recording_date(abstract, recording_date_text):
     recording_date = date_from_string(recording_date_text.split(' ')[2])
     record_value(abstract, 'recording date', recording_date)
+    return recording_date
+
+
+def set_document_download_values(document, reception_number, document_link):
+    document.reception_number = reception_number
+    document.download_value = f'{reception_number}.pdf'
+    document.target_name = f'{document.county.prefix}-{document_link}.pdf'
+
+
+def record_reception_number(abstract, document, reception_number_text, recording_date):
+    reception_number = reception_number_text[1:]
+    document_link = f'{recording_date[-4:]}-{reception_number}'
+    set_document_download_values(document, reception_number, document_link)
+    record_value(abstract, 'reception number', reception_number)
+    record_value(abstract, 'document link', document_link)
 
 
 def record_indexing_information(browser, abstract, document):
     indexing_information_container = locate_element_by_id(browser, abstract.county.record["Indexing Information"],
                                                           "indexing information", False, document)
     indexing_text = set_indexing_text(indexing_information_container)
-    print("indexing text", indexing_text)
-    if len(indexing_text) == 4:
-        reception_number_text, book_and_page_text, effective_date_text, recording_date_text = indexing_text
+    if len(indexing_text) == 5:
+        reception_number_text, book_text, page_text, effective_date_text, recording_date_text = indexing_text
+        # else:
+        #     if indexing_text[1].startswith("B"):
+        #         reception_number_text, book_and_page_text, recording_date_text = indexing_text
+        #         effective_date_text = ""
+        #     else:
+        #         reception_number_text, effective_date_text, recording_date_text = indexing_text
+        #         book_and_page_text = None
+        record_book(abstract, book_text)
+        record_page(abstract, page_text)
+        record_effective_date(abstract, effective_date_text)
+        recording_date = record_recording_date(abstract, recording_date_text)
+        record_reception_number(abstract, document, reception_number_text, recording_date)
     else:
-        if indexing_text[1].startswith("B"):
-            reception_number_text, book_and_page_text, recording_date_text = indexing_text
-            effective_date_text = ""
-        else:
-            reception_number_text, effective_date_text, recording_date_text = indexing_text
-            book_and_page_text = None
-    record_reception_number(abstract, document, reception_number_text)
-    record_book_and_page(abstract, book_and_page_text)
-    record_effective_date(abstract, effective_date_text)
-    record_recording_date(abstract, recording_date_text)
+        input('Unexpected result while parsing indexing information, please review and update accordingly...')
 
 
 def record_parties(browser, abstract, document):
@@ -125,7 +124,7 @@ def record_document_fields(browser, abstract, document):
     record_parties(browser, abstract, document)
     record_legal(browser, abstract, document)
     record_related_documents(browser, abstract, document)
-    record_empty_values(abstract, ['volume', 'document link'])
+    record_empty_values(abstract, ['volume'])
     record_comments(abstract, document)
 
 
