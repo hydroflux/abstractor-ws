@@ -1,5 +1,6 @@
 from selenium.common.exceptions import ElementClickInterceptedException
 from selenium.webdriver.common.keys import Keys
+from project_management.timers import timeout
 
 from time import sleep
 
@@ -43,9 +44,9 @@ def enter_input_value(browser, locator_function, attribute, type, value, documen
         field_value = get_field_value(locator_function(browser, attribute, type, True, document))
 
 
-def click_button(browser, locator_function, attribute, type, document=None):
+def click_button(browser, locator_function, attribute, type, document=None, quick=False):
     try:
-        button = locator_function(browser, attribute, type, True, document)
+        button = locator_function(browser, attribute, type, True, document, quick)
         # if button is False:
         #     return False
         # else:
@@ -57,7 +58,7 @@ def click_button(browser, locator_function, attribute, type, document=None):
             else:
                 input(f'Unable to locate "{type}" button for {document.extrapolate_value()}, '
                       f'please review and press enter to continue.')
-            button = locator_function(browser, attribute, type, True, document)
+            button = locator_function(browser, attribute, type, True, document, quick)
         center_element(browser, button)
         button.click()
     except ElementClickInterceptedException:  # handles an issue with eagle downloads
