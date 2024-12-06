@@ -29,6 +29,8 @@ def update_county_attributes(abstract):
         "Search": manta_ray.search_button_class_name,
         # OPEN DOCUMENT
         "Open Document": manta_ray.open_document_button_class_name,
+        "View Document": manta_ray.view_document_button_id,
+        "Purchase Document": manta_ray.purchase_document_button_id,
         # DOWNLOAD
         "Download Prompt": manta_ray.download_prompt_id,
         "Download": manta_ray.download_button_id,
