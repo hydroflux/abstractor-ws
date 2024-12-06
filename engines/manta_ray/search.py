@@ -1,7 +1,7 @@
 from selenium.webdriver.support.ui import Select
 from selenium_utilities.inputs import click_button, enter_input_value
-from selenium_utilities.locators import (locate_element, locate_element_by_class_name,
-                                         locate_element_by_id)
+from selenium_utilities.locators import (locate_element_by_class_name,
+                                         locate_element_by_id, select_dropdown_option_by_value)
 from selenium_utilities.open import open_url
 from selenium.common.exceptions import NoSuchElementException
 
@@ -15,12 +15,9 @@ def handle_continuing_collection_search(browser, abstract, document):
 
 def handle_search_values(browser, abstract, document):
     if abstract.program == "legal":
-        enter_input_value(browser, locate_element_by_id, abstract.county.inputs["Section"],
-                          "section input", abstract.legal[0])
-        enter_input_value(browser, locate_element_by_id, abstract.county.inputs["Township"],
-                          "township input", abstract.legal[1])
-        enter_input_value(browser, locate_element_by_id, abstract.county.inputs["Range"],
-                          "range input", abstract.legal[2])
+        select_dropdown_option_by_value(browser, "id", abstract.county.inputs["Section"], "section input", abstract.legal[0])
+        select_dropdown_option_by_value(browser, "id", abstract.county.inputs["Township"], "township input", f'T{abstract.legal[1]}')
+        select_dropdown_option_by_value(browser, "id", abstract.county.inputs["Range"], "range input", f'R{abstract.legal[2]}')
     else:
         value = document.document_value()
         if document.type == "document_number":
@@ -48,5 +45,5 @@ def search(browser, abstract, document=None):
         handle_continuing_collection_search(browser, abstract, document)
     else:
         open_url(browser, abstract.county.urls["Search Page"],
-                 abstract.county.titles["Search Page"], "search page")
+                    abstract.county.titles["Search Page"], "search page")
         execute_search(browser, abstract, document)
