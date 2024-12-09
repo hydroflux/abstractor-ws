@@ -8,6 +8,7 @@ from engines.buffalo.transform import transform as transform_buffalo
 from engines.dolphin.transform import transform as transform_dolphin
 from engines.eagle.transform import transform as transform_eagle
 from engines.jaguar.transform import transform as transform_jaguar
+from engines.komodo.transform import transform as transform_komodo
 from engines.leopard.transform import transform as transform_leopard
 from engines.mountain_lion.transform import \
     transform as transform_mountain_lion
@@ -107,6 +108,8 @@ def update_abstract_and_county_attributes(abstract):
         transform_eagle(abstract)
     elif abstract.county.engine == "jaguar":
         transform_jaguar(abstract)
+    elif abstract.county.engine == "komodo":
+        transform_komodo(abstract)
     elif abstract.county.engine == "leopard":
         transform_leopard(abstract)
     elif abstract.county.engine == "mountain_lion":
