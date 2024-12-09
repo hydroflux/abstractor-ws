@@ -8,6 +8,7 @@ from engines.dolphin.execute import execute_program as execute_dolphin
 from engines.eagle.execute import execute_name_search as eagle_name_search
 from engines.eagle.execute import execute_program as execute_eagle
 from engines.jaguar.execute import execute_program as execute_jaguar
+from engines.komodo.execute import execute_program as execute_komodo
 from engines.leopard.execute import execute_program as execute_leopard
 from engines.manta_ray.execute import execute_program as execute_manta_ray
 from engines.octopus.execute import \
@@ -50,6 +51,9 @@ def engine_switch(abstract):
     elif abstract.county.engine == 'jaguar':
         if abstract.program in ["execute", "review", "download"]:
             return execute_jaguar
+    elif abstract.county.engine == 'komodo':
+        if abstract.program in ["name_search"]:
+            return execute_komodo
     elif abstract.county.engine == 'leopard':
         if abstract.program in ["execute", "review", "download"]:
             if abstract.program == "download":
