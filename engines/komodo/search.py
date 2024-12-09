@@ -15,17 +15,17 @@ def perform_name_search(browser, abstract):
 
 
 def execute_search(browser, abstract, document):
-    value = document.document_value()
-    enter_input_value(browser, locate_element_by_css_selector, abstract.county.inputs["Search Input"],
-                      "search value input", value, document)
-    click_button(browser, locate_element_by_class_name, abstract.county.buttons["Search"],
-                 "execute search button", document)
+    if abstract.program == "name_search" and not abstract.number_search_results:
+        perform_name_search(browser, abstract)
+    else:
+        value = document.document_value()
+        enter_input_value(browser, locate_element_by_css_selector, abstract.county.inputs["Search Input"],
+                        "search value input", value, document)
+        click_button(browser, locate_element_by_class_name, abstract.county.buttons["Search"],
+                    "execute search button", document)
 
 
 def search(browser, abstract, document=None):
     open_url(browser, abstract.county.urls["Search Page"],
                 abstract.county.titles["Search Page"], "search page")
-    if abstract.program == "name_search" and not abstract.number_search_results:
-        perform_name_search(browser, abstract)
-    else:
-        execute_search(browser, abstract, document)
+    execute_search(browser, abstract, document)
