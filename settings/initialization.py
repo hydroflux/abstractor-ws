@@ -29,6 +29,8 @@ from settings.settings import (county_name, end_date, file_name, quarter,
                                range, search_name, section, sheet_name,
                                start_date, target_directory, township)
 
+from dateutil import parser
+
 # from classes.Engine import Engine
 
 
@@ -51,6 +53,26 @@ def access_county_instance(county_name):
     return county_instance
 
 
+def convert_to_mmddyyyy(date_str: str) -> str:
+    """
+    Convert any date string format to "MM/DD/YYYY".
+
+    Args:
+        date_str (str): The date string to convert.
+
+    Returns:
+        str: The date string in "MM/DD/YYYY" format.
+    """
+    try:
+        # Parse the date string to a datetime object
+        date_obj = parser.parse(date_str)
+        # Format the datetime object to "MM/DD/YYYY"
+        return date_obj.strftime("%m/%d/%Y")
+    except (ValueError, parser.ParserError) as e:
+        print(f"Error parsing date string '{date_str}': {e}")
+        return None
+
+
 def create_abstract_object():
     return Abstract(
         type=abstraction_type,
@@ -62,8 +84,8 @@ def create_abstract_object():
         download=download,
         dataframe=dataframe,
         search_name=search_name,
-        start_date=start_date,
-        end_date=end_date,
+        start_date=convert_to_mmddyyyy(start_date),
+        end_date=convert_to_mmddyyyy(end_date),
         legal=[
                 section,
                 township,
