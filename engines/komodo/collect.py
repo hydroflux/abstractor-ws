@@ -9,6 +9,7 @@ This module contains functions to:
 - Process search results across multiple pages.
 - Store the collected search results in the Abstract instance.
 - Verify the final search results by comparing the expected and actual number of results.
+- Set the "Results Per Page" to the highest available option.
 
 The functions in this module interact with web elements using Selenium WebDriver
 and perform actions such as clicking buttons and locating elements by various selectors.
@@ -28,6 +29,7 @@ from classes.Document import Document  # For Document class to represent individ
 from selenium_utilities.inputs import click_button  # For clicking buttons using Selenium
 from selenium_utilities.locators import (  # For locating elements using various selectors
     locate_element_by_class_name,
+    locate_elements_by_class_name,
     locate_elements_by_css_selector,
     locate_element_by_css_selector,
     locate_element_by_tag_name
@@ -60,6 +62,55 @@ def count_total_search_results(browser: WebDriver, abstract: Abstract) -> Option
     except Exception as e:
         print(f"Error getting total search results: {e}")
     return None
+
+
+def locate_results_per_page_dropdown(browser: WebDriver, abstract: Abstract) -> Optional[WebElement]:
+    """
+    Locate the "Results Per Page" dropdown container.
+
+    Args:
+        browser (WebDriver): The WebDriver instance.
+        abstract (Abstract): The abstract information.
+
+    Returns:
+        Optional[WebElement]: The located dropdown container element, or None if not found.
+    """
+    dropdown_containers = locate_elements_by_class_name(browser, abstract.county.classes["Results Per Page Container"], "sort dropdown containers")
+    for container in dropdown_containers:
+        label_element = locate_element_by_class_name(container, abstract.county.classes["Results Per Page Label"], "sort dropdown label")
+        if label_element and label_element.text == "Results Per Page:":
+            return container
+    return None
+
+
+def click_highest_option(dropdown_container: WebElement, abstract: Abstract) -> None:
+    """
+    Click on the highest available option in the dropdown menu.
+
+    Args:
+        dropdown_container (WebElement): The located dropdown container element.
+        abstract (Abstract): The abstract information.
+    """
+    options_container = locate_element_by_class_name(dropdown_container, abstract.county.classes["Results Per Page Dropdown"], "dropdown options container")
+    if options_container:
+        options = locate_elements_by_class_name(options_container, abstract.county.classes["Results Per Page Options"], "dropdown options", clickable=True)
+        if options:
+            highest_option = options[-1]  # Assuming the highest option is the last one in the list
+            highest_option.click()
+
+
+def set_results_per_page_to_highest(browser: WebDriver, abstract: Abstract) -> None:
+    """
+    Set the "Results Per Page" to the highest available option.
+
+    Args:
+        browser (WebDriver): The WebDriver instance.
+        abstract (Abstract): The abstract information.
+    """
+    dropdown_container = locate_results_per_page_dropdown(browser, abstract)
+    if dropdown_container:
+        click_button(dropdown_container, locate_element_by_class_name, abstract.county.classes["Results Per Page Button"], "dropdown button", quick=True)
+        click_highest_option(dropdown_container, abstract)
 
 
 def get_total_pages(browser: WebDriver, abstract: Abstract) -> Optional[int]:
@@ -255,6 +306,7 @@ def collect(browser: WebDriver, abstract: Abstract) -> None:
     """
     count_total_search_results(browser, abstract)
     if abstract.number_search_results > 50:
+        set_results_per_page_to_highest(browser, abstract)
         process_search_result_pages(browser, abstract)
     else:
         process_search_results(browser, abstract)
