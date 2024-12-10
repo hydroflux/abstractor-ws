@@ -1,5 +1,3 @@
-
-
 from typing import Optional
 from selenium.webdriver.remote.webdriver import WebDriver
 import re
@@ -17,7 +15,7 @@ def count_total_search_results(browser: WebDriver, abstract: Abstract) -> Option
 
     Args:
         browser (WebDriver): The WebDriver instance.
-        abstract (dict): The abstract information.
+        abstract (Abstract): The abstract information.
 
     Returns:
         Optional[int]: The total number of search results, or None if not found.
@@ -45,6 +43,7 @@ def get_total_pages(browser: WebDriver, abstract: Abstract) -> Optional[int]:
 
     Args:
         browser (WebDriver): The WebDriver instance.
+        abstract (Abstract): The abstract information.
 
     Returns:
         Optional[int]: The total number of pages, or None if not found.
@@ -64,10 +63,21 @@ def get_total_pages(browser: WebDriver, abstract: Abstract) -> Optional[int]:
     return None
 
 
-def get_results_table(browser: WebDriver, abstract: Abstract):
+def get_results_table(browser: WebDriver, abstract: Abstract) -> Optional[WebElement]:
+    """
+    Get the search results table.
+
+    Args:
+        browser (WebDriver): The WebDriver instance.
+        abstract (Abstract): The abstract information.
+
+    Returns:
+        Optional[WebElement]: The search results table element, or None if not found.
+    """
     search_results = locate_element_by_class_name(browser, abstract.county.classes["Search Results"], "search results")
     if search_results:
         return locate_element_by_tag_name(search_results, abstract.county.tags["Search Results Table"], "search results table")
+    return None
 
 
 def access_result_reception_number(abstract: Abstract, result: WebElement) -> Optional[str]:
@@ -75,6 +85,7 @@ def access_result_reception_number(abstract: Abstract, result: WebElement) -> Op
     Access the reception number from the result row.
 
     Args:
+        abstract (Abstract): The abstract information.
         result (WebElement): The result row element.
 
     Returns:
@@ -94,6 +105,7 @@ def access_result_description_link(abstract: Abstract, result: WebElement) -> Op
     Access the description link from the result row.
 
     Args:
+        abstract (Abstract): The abstract information.
         result (WebElement): The result row element.
 
     Returns:
@@ -108,7 +120,7 @@ def access_result_description_link(abstract: Abstract, result: WebElement) -> Op
             if match:
                 unique_id = match.group(1)
                 # Construct the URL using the extracted unique identifier
-                description_link = f"""{abstract.county.urls["Search Result Base Url"]}{unique_id}"""
+                description_link = f"{abstract.county.urls['Search Result Base Url']}{unique_id}"
                 return description_link
     except Exception as e:
         print(f"Error accessing description link: {e}")
@@ -120,17 +132,14 @@ def build_document(abstract: Abstract, result: WebElement) -> Document:
     Build a Document instance using the reception number and description link.
 
     Args:
-        abstract (dict): The abstract information.
-        reception_number (str): The reception number.
-        description_link (Optional[str]): The description link.
+        abstract (Abstract): The abstract information.
+        result (WebElement): The result row element.
 
     Returns:
         Document: The built Document instance.
     """
     reception_number = access_result_reception_number(abstract, result)
-    print("reception_number", reception_number)
     description_link = access_result_description_link(abstract, result)
-    print("description_link", description_link)
     return Document(
         type="document_number",
         value=reception_number,
@@ -141,31 +150,51 @@ def build_document(abstract: Abstract, result: WebElement) -> Document:
     )
 
 
+def process_search_result(abstract: Abstract, result: WebElement) -> None:
+    """
+    Process a single search result.
+
+    Args:
+        abstract (Abstract): The abstract information.
+        result (WebElement): The result row element.
+    """
+    reception_number = access_result_reception_number(result)
+    if reception_number:
+        document = build_document(abstract, result)
+        document.print_attributes()
+        # Add the document to the document_list array on the abstract object instance
+        abstract.document_list.append(document)
+
+
 def process_search_results(browser: WebDriver, abstract: Abstract) -> None:
     """
     Process all search results in the table.
 
     Args:
-        search_results_table (WebElement): The search results table element.
-        abstract (dict): The abstract information.
-        document (Optional[dict], optional): The document information. Defaults to None.
+        browser (WebDriver): The WebDriver instance.
+        abstract (Abstract): The abstract information.
     """
     search_results_table = get_results_table(browser, abstract)
-    results = locate_elements_by_css_selector(search_results_table, "tr", "search result rows")
-    for result in results:
-        # Process each search result
-        document = build_document(abstract, result)
-        # Add the document to the document_list array on the abstract object instance
-        abstract.document_list.append(document)
+    if search_results_table:
+        # Process the search results on the current page
+        results = locate_elements_by_css_selector(search_results_table, "tr", "search result rows")
+        for result in results:
+            # Process each search result
+            process_search_result(abstract, result)
 
 
-def process_search_result_pages(browser, abstract):
+def process_search_result_pages(browser: WebDriver, abstract: Abstract) -> None:
+    """
+    Process search results across multiple pages.
+
+    Args:
+        browser (WebDriver): The WebDriver instance.
+        abstract (Abstract): The abstract information.
+    """
     total_pages = get_total_pages(browser, abstract)
     for page in range(1, total_pages + 1):
         # Process each page of search results
         print(f"Processing page {page} of {total_pages}...")
-        # Process the search results on the current page
-        process_search_results(browser, abstract)
         # Check if the current page is the last page
         if page < total_pages:
             click_button(browser, locate_element_by_css_selector, abstract.county.tags["Next Page"], "next page button")
@@ -183,12 +212,13 @@ def collect(browser: WebDriver, abstract: Abstract) -> None:
 
     Args:
         browser (WebDriver): The WebDriver instance.
-        abstract (dict): The abstract information.
-        document (Optional[dict], optional): The document information. Defaults to None.
+        abstract (Abstract): The abstract information.
     """
     count_total_search_results(browser, abstract)
     if abstract.number_search_results > 50:
         process_search_result_pages(browser, abstract)
     else:
-        process_search_results(browser, abstract)
+        search_results_table = get_results_table(browser, abstract)
+        if search_results_table:
+            process_search_results(abstract, search_results_table)
     print("Search results collected.")
