@@ -1,12 +1,37 @@
-from typing import Optional
-from selenium.webdriver.remote.webdriver import WebDriver
-import re
-from selenium.webdriver.remote.webelement import WebElement
+"""
+Module to collect search results from a web page using Selenium.
 
-from classes.Abstract import Abstract
-from classes.Document import Document
-from selenium_utilities.inputs import click_button
-from selenium_utilities.locators import locate_element_by_class_name, locate_elements_by_css_selector, locate_element_by_css_selector, locate_element_by_tag_name
+This module contains functions to:
+- Count the total number of search results.
+- Get the total number of pages from the pagination.
+- Access search result details such as reception number and description link.
+- Build Document instances from search results.
+- Process search results across multiple pages.
+- Store the collected search results in the Abstract instance.
+- Verify the final search results by comparing the expected and actual number of results.
+
+The functions in this module interact with web elements using Selenium WebDriver
+and perform actions such as clicking buttons and locating elements by various selectors.
+"""
+
+# Library Import(s)
+from typing import Optional  # Library to provide hints about the types used in the source code
+import re  # Library to provide support for regular expressions
+
+# Selenium Import(s)
+from selenium.webdriver.remote.webdriver import WebDriver  # WebDriver instance for browser interactions
+from selenium.webdriver.remote.webelement import WebElement  # WebElement instance for web element interactions
+
+# Local Import(s)
+from classes.Abstract import Abstract  # For Abstract class to store collected data
+from classes.Document import Document  # For Document class to represent individual documents
+from selenium_utilities.inputs import click_button  # For clicking buttons using Selenium
+from selenium_utilities.locators import (  # For locating elements using various selectors
+    locate_element_by_class_name,
+    locate_elements_by_css_selector,
+    locate_element_by_css_selector,
+    locate_element_by_tag_name
+)
 
 
 def count_total_search_results(browser: WebDriver, abstract: Abstract) -> Optional[int]:
@@ -80,13 +105,13 @@ def get_results_table(browser: WebDriver, abstract: Abstract) -> Optional[WebEle
     return None
 
 
-def access_result_reception_number(abstract: Abstract, result: WebElement) -> Optional[str]:
+def access_result_reception_number(result: WebElement, abstract: Abstract) -> Optional[str]:
     """
     Access the reception number from the result row.
 
     Args:
-        abstract (Abstract): The abstract information.
         result (WebElement): The result row element.
+        abstract (Abstract): The abstract information.
 
     Returns:
         Optional[str]: The reception number, or None if not found.
@@ -100,13 +125,13 @@ def access_result_reception_number(abstract: Abstract, result: WebElement) -> Op
     return None
 
 
-def access_result_description_link(abstract: Abstract, result: WebElement) -> Optional[str]:
+def access_result_description_link(result: WebElement, abstract: Abstract) -> Optional[str]:
     """
     Access the description link from the result row.
 
     Args:
-        abstract (Abstract): The abstract information.
         result (WebElement): The result row element.
+        abstract (Abstract): The abstract information.
 
     Returns:
         Optional[str]: The description link, or None if not found.
@@ -127,19 +152,19 @@ def access_result_description_link(abstract: Abstract, result: WebElement) -> Op
     return None
 
 
-def build_document(abstract: Abstract, result: WebElement) -> Document:
+def build_document(result: WebElement, abstract: Abstract) -> Document:
     """
     Build a Document instance using the reception number and description link.
 
     Args:
-        abstract (Abstract): The abstract information.
         result (WebElement): The result row element.
+        abstract (Abstract): The abstract information.
 
     Returns:
         Document: The built Document instance.
     """
-    reception_number = access_result_reception_number(abstract, result)
-    description_link = access_result_description_link(abstract, result)
+    reception_number = access_result_reception_number(result, abstract)
+    description_link = access_result_description_link(result, abstract)
     return Document(
         type="document_number",
         value=reception_number,
@@ -150,20 +175,34 @@ def build_document(abstract: Abstract, result: WebElement) -> Document:
     )
 
 
-def process_search_result(abstract: Abstract, result: WebElement) -> None:
+def process_search_result(result: WebElement, abstract: Abstract) -> None:
     """
     Process a single search result.
 
     Args:
-        abstract (Abstract): The abstract information.
         result (WebElement): The result row element.
+        abstract (Abstract): The abstract information.
     """
-    reception_number = access_result_reception_number(result)
+    reception_number = access_result_reception_number(result, abstract)
     if reception_number:
-        document = build_document(abstract, result)
-        document.print_attributes()
+        document = build_document(result, abstract)
         # Add the document to the document_list array on the abstract object instance
         abstract.document_list.append(document)
+
+
+def verify_final_search_results(abstract: Abstract) -> None:
+    """
+    Verify the final search results by comparing the expected and actual number of results.
+
+    Args:
+        abstract (Abstract): The abstract information containing the document list and expected number of search results.
+    """
+    actual_results = len(abstract.document_list)
+    expected_results = abstract.number_search_results
+    if actual_results == expected_results:
+        print(f"Located {actual_results} of {expected_results} search results.")
+    else:
+        input(f"Expected {expected_results} search results, but located {actual_results}. Please review and press enter to continue.")
 
 
 def process_search_results(browser: WebDriver, abstract: Abstract) -> None:
@@ -180,7 +219,9 @@ def process_search_results(browser: WebDriver, abstract: Abstract) -> None:
         results = locate_elements_by_css_selector(search_results_table, "tr", "search result rows")
         for result in results:
             # Process each search result
-            process_search_result(abstract, result)
+            process_search_result(result, abstract)
+    else:
+        print("No search results table found.")
 
 
 def process_search_result_pages(browser: WebDriver, abstract: Abstract) -> None:
@@ -195,15 +236,13 @@ def process_search_result_pages(browser: WebDriver, abstract: Abstract) -> None:
     for page in range(1, total_pages + 1):
         # Process each page of search results
         print(f"Processing page {page} of {total_pages}...")
+        process_search_results(browser, abstract)
         # Check if the current page is the last page
         if page < total_pages:
             click_button(browser, locate_element_by_css_selector, abstract.county.tags["Next Page"], "next page button")
         else:
             print("Reached the last page of search results.")
-            if len(abstract.document_list) == abstract.number_search_results:
-                print(f"Located {len(abstract.document_list)} of {abstract.number_search_results} search results.")
-            else:
-                input(f"Expected {abstract.number_search_results} search results, but located {len(abstract.document_list)}.")
+            verify_final_search_results(abstract)
 
 
 def collect(browser: WebDriver, abstract: Abstract) -> None:
@@ -218,7 +257,5 @@ def collect(browser: WebDriver, abstract: Abstract) -> None:
     if abstract.number_search_results > 50:
         process_search_result_pages(browser, abstract)
     else:
-        search_results_table = get_results_table(browser, abstract)
-        if search_results_table:
-            process_search_results(abstract, search_results_table)
-    print("Search results collected.")
+        process_search_results(browser, abstract)
+        verify_final_search_results(abstract)
