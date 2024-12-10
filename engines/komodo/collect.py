@@ -239,6 +239,10 @@ def process_search_result(result: WebElement, abstract: Abstract) -> None:
         document = build_document(result, abstract)
         # Add the document to the document_list array on the abstract object instance
         abstract.document_list.append(document)
+        print(f"Added document {len(abstract.document_list)} of {abstract.number_search_results} "
+              f"with reception number {reception_number} to the document list.")
+    else:
+        input("Unable to locate reception number for search result. Please review and press enter to continue.")
 
 
 def verify_final_search_results(abstract: Abstract) -> None:
