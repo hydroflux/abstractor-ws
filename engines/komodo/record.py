@@ -163,12 +163,12 @@ def record_legal(browser, abstract, document):
             row_descriptions = []
             cells = locate_elements_by_tag_name(row, abstract.county.record["Legal Row Data"], "legal table cells")
             for i, cell in enumerate(cells):
-                if cell.text != "N/A":
+                if cell.text != "N/A" and cell.text != "SEE RECORD":
                     row_descriptions.append(f"{headers[i]}: {cell.text}")
             if row_descriptions:
                 legal_descriptions.append(", ".join(row_descriptions))
         legal_description = "\n".join(legal_descriptions)
-        record_value(abstract, 'legal description', legal_description)
+        record_value(abstract, 'legal', legal_description)
     else:
         input("No legal description found. Please review and press enter to continue.")
 
