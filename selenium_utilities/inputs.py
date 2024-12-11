@@ -1,12 +1,15 @@
 from selenium.common.exceptions import ElementClickInterceptedException
+from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.common.keys import Keys
-from project_management.timers import timeout
+from selenium.webdriver.common.action_chains import ActionChains
 
 from time import sleep
 
 from selenium_utilities.element_interaction import center_element
+from settings.initialization import convert_to_mmddyyyy
 
 
+# Similar code is used in element_interaction.py and locators.py (but not cleaned up) - consider removing from here
 def get_field_value(field):
     return field.get_attribute("value").strip()
 
@@ -32,25 +35,40 @@ def clear_input(browser, locator_function, attribute, type, document=None):
         # clear_field_value(browser, input_field, attribute, type, document)
 
 
-# Enter input value should include 'clearing' as part of its functionality
-# => get rid of 'clear_search' functions altogether by simply clearing any input before updating
 def enter_input_value(browser, locator_function, attribute, type, value, document=None):
     field_value = get_field_value(locator_function(browser, attribute, type, True, document))
     while field_value != value:
         # add a 'scroll_into_view' or 'center_element' function
-        if len(field_value) > len(value):
+        if len(field_value) != len(value):
             clear_input(browser, locator_function, attribute, type, document)
         locator_function(browser, attribute, type, True, document).send_keys(Keys.UP + value)
         field_value = get_field_value(locator_function(browser, attribute, type, True, document))
 
 
-def click_button(browser, locator_function, attribute, type, document=None, quick=False):
+def click_elsewhere(browser):
+    ActionChains(browser).move_by_offset(10, 10).click().perform()
+
+
+def enter_datepicker_value(browser, locator_function, attribute, type, value, document=None):
+    field_value = get_field_value(locator_function(browser, attribute, type, True, document))
+    converted_field_value = convert_to_mmddyyyy(field_value)
+    while converted_field_value != value:
+        # add a 'scroll_into_view' or 'center_element' function
+        field_input = locator_function(browser, attribute, type, True, document)
+        field_input.send_keys(Keys.END + Keys.SHIFT + Keys.UP)
+        field_input.send_keys(value)
+        click_elsewhere(browser)
+        field_value = get_field_value(locator_function(browser, attribute, type, True, document))
+        converted_field_value = convert_to_mmddyyyy(field_value)
+
+
+def click_button(locator, locator_function, attribute, type, document=None, quick=False):
     try:
-        button = locator_function(browser, attribute, type, True, document, quick)
+        button = locator_function(locator, attribute, type, True, document, quick)
         # if button is False:
         #     return False
         # else:
-        #     center_element(browser, button)
+        #     center_element(locator, button)
         #     button.click()
         while button is False:
             if document is None:
@@ -58,8 +76,9 @@ def click_button(browser, locator_function, attribute, type, document=None, quic
             else:
                 input(f'Unable to locate "{type}" button for {document.extrapolate_value()}, '
                       f'please review and press enter to continue.')
-            button = locator_function(browser, attribute, type, True, document, quick)
-        center_element(browser, button)
+            button = locator_function(locator, attribute, type, True, document, quick)
+        if not isinstance(locator, WebElement):
+            center_element(locator, button)
         button.click()
     except ElementClickInterceptedException:  # handles an issue with eagle downloads
         print(f'Element click intercepted while trying to click "{type}" '
