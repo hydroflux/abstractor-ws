@@ -80,7 +80,7 @@ def locate_element_by_class_name(locator, class_name, type, clickable=False, doc
 
 
 def locate_elements_by_class_name(locator, class_name, type, clickable=False, document=None,
-                                  quick=False, alternate=None):
+                                  quick=False, alternate=None, timeout=timeout):
     try:
         if not quick:
             if clickable:
@@ -212,6 +212,74 @@ def locate_elements_by_xpath(locator, xpath, type, clickable=False, document=Non
     except NoSuchElementException:
         if not quick:
             return print_no_such_element_statement(type, document)
+        
+
+def locate_element_by_css_selector(locator: Union[WebDriver, WebElement], css_selector: str, type: str, clickable: bool = False, document: Optional[dict] = None, quick: bool = False) -> Optional[WebElement]:
+    """
+    Locate an element by CSS selector.
+
+    Args:
+        locator (Union[WebDriver, WebElement]): The WebDriver or WebElement instance to use for locating the element.
+        css_selector (str): The CSS selector of the element to locate.
+        type (str): The type of the element (for logging purposes).
+        clickable (bool, optional): Whether the element should be clickable. Defaults to False.
+        document (Optional[dict], optional): The document information (for logging purposes). Defaults to None.
+        quick (bool, optional): Whether to perform a quick search without waiting. Defaults to False.
+
+    Returns:
+        Optional[WebElement]: The located WebElement, or None if not found.
+    """
+    try:
+        if not quick:
+            if clickable:
+                element_present = EC.element_to_be_clickable((By.CSS_SELECTOR, css_selector))
+            else:
+                element_present = EC.presence_of_element_located((By.CSS_SELECTOR, css_selector))
+            WebDriverWait(locator, timeout).until(element_present)
+        element = locator.find_element(By.CSS_SELECTOR, css_selector)
+        return element
+    except TimeoutException:
+        return print_timeout_statement(type, document)
+    except NoSuchElementException:
+        if not quick:
+            return print_no_such_element_statement(type, document)
+    except StaleElementReferenceException:
+        print(f'StaleElementReferenceException experienced trying to locate "{type}", returning NONE...')
+        return None
+        
+
+def locate_elements_by_css_selector(locator: Union[WebDriver, WebElement], css_selector: str, type: str, clickable: bool = False, document: Optional[dict] = None, quick: bool = False) -> Optional[List[WebElement]]:
+    """
+    Locate multiple elements by CSS selector.
+
+    Args:
+        locator (Union[WebDriver, WebElement]): The WebDriver or WebElement instance to use for locating the elements.
+        css_selector (str): The CSS selector of the elements to locate.
+        type (str): The type of the elements (for logging purposes).
+        clickable (bool, optional): Whether the elements should be clickable. Defaults to False.
+        document (Optional[dict], optional): The document information (for logging purposes). Defaults to None.
+        quick (bool, optional): Whether to perform a quick search without waiting. Defaults to False.
+
+    Returns:
+        Optional[List[WebElement]]: The list of located WebElements, or None if not found.
+    """
+    try:
+        if not quick:
+            if clickable:
+                elements_present = EC.element_to_be_clickable((By.CSS_SELECTOR, css_selector))
+            else:
+                elements_present = EC.presence_of_all_elements_located((By.CSS_SELECTOR, css_selector))
+            WebDriverWait(locator, timeout).until(elements_present)
+        elements = locator.find_elements(By.CSS_SELECTOR, css_selector)
+        return elements
+    except TimeoutException:
+        return print_timeout_statement(type, document)
+    except NoSuchElementException:
+        if not quick:
+            return print_no_such_element_statement(type, document)
+    except StaleElementReferenceException:
+        print(f'StaleElementReferenceException experienced trying to locate "{type}", returning NONE...')
+        return None
 
 
 def get_element_value(element: WebElement) -> str:
