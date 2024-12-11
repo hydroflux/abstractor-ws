@@ -3,7 +3,6 @@ Module to collect search results from a web page using Selenium.
 
 This module contains functions to:
 - Count the total number of search results.
-- Get the total number of pages from the pagination.
 - Access search result details such as reception number and description link.
 - Build Document instances from search results.
 - Process search results across multiple pages.
@@ -113,30 +112,31 @@ def set_results_per_page_to_highest(browser: WebDriver, abstract: Abstract) -> N
         click_highest_option(dropdown_container, abstract)
 
 
-def get_total_pages(browser: WebDriver, abstract: Abstract) -> Optional[int]:
-    """
-    Get the total number of pages from the pagination.
+# This entire function can be supplanted by a "next result" function and then by dividing the total results by 250
+# def get_total_pages(browser: WebDriver, abstract: Abstract) -> Optional[int]:
+#     """
+#     Get the total number of pages from the pagination.
 
-    Args:
-        browser (WebDriver): The WebDriver instance.
-        abstract (Abstract): The abstract information.
+#     Args:
+#         browser (WebDriver): The WebDriver instance.
+#         abstract (Abstract): The abstract information.
 
-    Returns:
-        Optional[int]: The total number of pages, or None if not found.
-    """
-    try:
-        # Locate the pagination buttons
-        pagination_buttons = locate_elements_by_css_selector(browser, abstract.county.tags["Pagination"], "pagination buttons")
-        if pagination_buttons:
-            # Extract the page numbers and find the maximum value
-            page_numbers = [int(button.get_attribute("value")) for button in pagination_buttons if button.get_attribute("value").isdigit()]
-            if page_numbers:
-                total_pages = max(page_numbers)
-                print(f'Total number of pages: {total_pages}')
-                return total_pages
-    except Exception as e:
-        print(f"Error getting total number of pages: {e}")
-    return None
+#     Returns:
+#         Optional[int]: The total number of pages, or None if not found.
+#     """
+#     try:
+#         # Locate the pagination buttons
+#         pagination_buttons = locate_elements_by_css_selector(browser, abstract.county.tags["Pagination"], "pagination buttons")
+#         if pagination_buttons:
+#             # Extract the page numbers and find the maximum value
+#             page_numbers = [int(button.get_attribute("value")) for button in pagination_buttons if button.get_attribute("value").isdigit()]
+#             if page_numbers:
+#                 total_pages = max(page_numbers)
+#                 print(f'Total number of pages: {total_pages}')
+#                 return total_pages
+#     except Exception as e:
+#         print(f"Error getting total number of pages: {e}")
+#     return None
 
 
 def get_results_table(browser: WebDriver, abstract: Abstract) -> Optional[WebElement]:
@@ -287,7 +287,7 @@ def process_search_result_pages(browser: WebDriver, abstract: Abstract) -> None:
         browser (WebDriver): The WebDriver instance.
         abstract (Abstract): The abstract information.
     """
-    total_pages = get_total_pages(browser, abstract)
+    total_pages = round(abstract.number_search_results/250)
     for page in range(1, total_pages + 1):
         # Process each page of search results
         print(f"Processing page {page} of {total_pages}...")
