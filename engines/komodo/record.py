@@ -8,22 +8,65 @@ This module contains functions to:
 - Record all document fields.
 - Record the document information if not in review mode.
 
+Functions:
+    - wait_for_page_to_load(browser: WebDriver, abstract: Abstract, document: Document) -> None:
+        -- Wait for the page to load by checking for the presence of the indexing information container.
+    - click_show_elements(browser: WebDriver, abstract: Abstract, document: Document) -> None:
+        -- Click on elements that match the specified criteria if their text starts with the specified text.
+    - record_indexing_information(browser: WebDriver, abstract: Abstract, document: Document) -> None:
+        -- Record the indexing information from the web page.
+    - record_document_type(browser: WebDriver, abstract: Abstract, document: Document) -> None:
+        -- Record the document type from the web page.
+    - record_parties(browser: WebDriver, abstract: Abstract, document: Document) -> None:
+        -- Record the parties (Grantor and Grantee) from the web page.
+    - record_related_documents(browser: WebDriver, abstract: Abstract, document: Document) -> None:
+        -- Record the related documents (Marginal References) from the web page.
+    - record_legal(browser: WebDriver, abstract: Abstract, document: Document) -> None:
+        -- Record the legal description from the web page.
+    - record_document_fields(browser: WebDriver, abstract: Abstract, document: Document) -> None:
+        -- Record the document fields from the web page.
+    - record(browser: WebDriver, abstract: Abstract, document: Document) -> None:
+        -- Record the document information if not in review mode.
+
 The functions in this module interact with web elements using Selenium WebDriver
 and perform actions such as locating elements, clicking buttons, and recording values.
+
+Imports:
+    - Standard Library:
+        - import time: For handling timing functionality.
+    - Selenium:
+        - from selenium.webdriver.remote.webdriver: For WebDriver interactions.
+    - Local:
+        - from project_management.timers: For handling short naps.
+        - from selenium_utilities.element_interaction: For centering elements.
+        - from selenium_utilities.locators: For locating elements.
+        - from serializers.recorder: For recording values.
+        - from classes.Abstract: For Abstract class to store collected data.
+        - from classes.Document: For Document class to represent individual documents.
+        - from settings.county_variables: For county-specific variables.
+
+Usage:
+    These functions are designed to be used with Selenium WebDriver to automate the process of recording document information from a web page.
+    They provide robust handling of common issues such as waiting for elements to load and ensuring elements are clickable,
+    making it easier to write reliable web automation scripts.
 """
 
 # Library Import(s)
-import time  # For handling timing functionality
+import time
 
 # Selenium Import(s)
-from selenium.webdriver.remote.webdriver import WebDriver  # For WebDriver interactions
+from selenium.webdriver.remote.webdriver import WebDriver
 
 # Local Import(s)
-from project_management.timers import short_nap  # For handling short naps
-from selenium_utilities.locators import locate_element_by_class_name, locate_element_by_tag_name, locate_elements_by_class_name, locate_elements_by_tag_name  # For locating elements
-from serializers.recorder import record_comments, record_empty_values, record_value  # For recording values
-from classes.Abstract import Abstract  # For Abstract class to store collected data
-from classes.Document import Document  # For Document class to represent individual documents
+from project_management.timers import short_nap
+from selenium_utilities.element_interaction import center_element
+from selenium_utilities.locators import (locate_element_by_class_name, locate_element_by_tag_name,
+                                         locate_elements_by_class_name, locate_elements_by_tag_name)
+from serializers.recorder import record_comments, record_empty_values, record_value
+
+# Class Import(s)
+from classes.Abstract import Abstract
+from classes.Document import Document
 
 
 def wait_for_page_to_load(browser: WebDriver, abstract: Abstract, document: Document) -> None:
@@ -55,6 +98,7 @@ def wait_for_page_to_load(browser: WebDriver, abstract: Abstract, document: Docu
 def click_show_elements(browser: WebDriver, abstract: Abstract, document: Document) -> None:
     """
     Click on elements that match the specified criteria if their text starts with the specified text.
+    After each element is clicked, confirm that each element starts with the "Hide Element Text" before continuing.
 
     Args:
         browser (WebDriver): The WebDriver instance.
@@ -68,9 +112,12 @@ def click_show_elements(browser: WebDriver, abstract: Abstract, document: Docume
             break
         clicked = False
         for element in show_elements:
+            center_element(browser, element)
             if element.text.startswith(abstract.county.record["Show Element Text"]):
                 element.click()
                 clicked = True
+                while not element.text.startswith(abstract.county.record["Hide Element Text"]):
+                    pass
         if not clicked:
             break
 
@@ -179,13 +226,19 @@ def record_related_documents(browser: WebDriver, abstract: Abstract, document: D
                                                                 "related documents container", False, document)[1]
     related_documents = []
     if related_documents_container:
-        if "No marginal references found." in related_documents_container.text:
+        if abstract.county.record["No Related Documents"] in related_documents_container.text:
             record_value(abstract, 'related documents', "")
         else:
             related_document_items = locate_elements_by_class_name(related_documents_container, abstract.county.record["Related Documents"],
                                                                    "related document items", False, document)
             for item in related_document_items:
-                related_documents.append(item.text)
+                instrument_number = locate_element_by_class_name(item, abstract.county.record["Related Reception Number"],
+                                                                 "related instrument", document=document).text
+                document_type = locate_element_by_class_name(item, abstract.county.record["Related Document Type"],
+                                                             "related document type", document=document).text
+                recording_date = locate_element_by_class_name(item, abstract.county.record["Related Recording Date"],
+                                                              "related recording date", document=document).text
+                related_documents.append(f"{instrument_number}, Document Type: {document_type}, Recording Date: {recording_date}")
             record_value(abstract, 'related documents', "\n".join(related_documents))
     else:
         input("No related documents found. Please review and press enter to continue.")

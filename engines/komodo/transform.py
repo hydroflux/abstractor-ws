@@ -61,6 +61,7 @@ def update_county_attributes(abstract):
     abstract.county.record = {
         "Show All Elements": komodo.show_all_elements_class_name,
         "Show Element Text": komodo.show_element_text,
+        "Hide Element Text": komodo.hide_element_text,
         "Document Type": komodo.document_type_class_name,
         "Indexing Information": komodo.indexing_information_class_name,
         "Indexing Items": komodo.indexing_items_class_name,
@@ -76,6 +77,10 @@ def update_county_attributes(abstract):
         "Grantor Text": komodo.party_item_grantor_text,
         "Grantee Text": komodo.party_item_grantee_text,
         "Related Documents": komodo.related_documents_class_name,
+        "No Related Documents": komodo.no_related_documents_text,
+        "Related Reception Number": komodo.related_reception_number_class_name,
+        "Related Document Type": komodo.related_document_type_class_name,
+        "Related Recording Date": komodo.related_recording_date_class_name,
         "No Legal Information Found": komodo.no_legal_information_text,
         "Legal Table": komodo.legal_table_class_name,
         "Legal Table Header": komodo.legal_table_headers_tag_name,
