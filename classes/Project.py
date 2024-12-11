@@ -40,6 +40,14 @@ class Project:
         self.legal = legal
         self.project_folder = project_folder
 
+    def create_target_directory(self):
+        try:
+            if not os.path.exists(self.target_directory):
+                os.makedirs(self.target_directory)
+            os.chdir(self.target_directory)
+        except OSError:
+            print('Error: Creating directory ' + self.target_directory)
+
     def create_project_folder(self):
         self.project_folder = f'{self.target_directory}/{self.output_file[:-5]}'
         try:
@@ -49,7 +57,6 @@ class Project:
             print('Error: Creating directory ' + self.project_folder)
 
     def bundle_project(self, abstract):
-        os.chdir(self.target_directory)
         self.create_project_folder()
         # Move Output File into Project Folder
         shutil.move(f'{self.target_directory}/{self.output_file}', self.project_folder)
