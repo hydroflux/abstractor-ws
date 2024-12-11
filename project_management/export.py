@@ -80,7 +80,6 @@ def format_xlsx_document(project):
 
 
 def initialize_project(abstract):
-    os.chdir(abstract.target_directory)
     project = Project(
         type=abstract.type,
         county=abstract.county,
@@ -89,6 +88,7 @@ def initialize_project(abstract):
         output_file=create_output_file(abstract),
         sheet_name=abstract.type.upper()
     )
+    project.create_target_directory()
     set_project_attributes(project)
     format_xlsx_document(project)
     return project
