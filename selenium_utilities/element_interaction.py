@@ -14,9 +14,8 @@ def center_element(browser, element):
         scroll_y_by = desired_y - current_y
         browser.execute_script("window.scrollBy(0, arguments[0]);", scroll_y_by)
     except StaleElementReferenceException:
-        print('Browser encountered a StaleElementReferenceException while trying to center '
+        input('Browser encountered a StaleElementReferenceException while trying to center '
               'element, please review and press enter to continue...')
-        input()
 
 
 def get_element_onclick(element):
@@ -25,6 +24,28 @@ def get_element_onclick(element):
 
 def get_element_class(element):
     return element.get_attribute("class")
+
+
+# Similar code is used in inputs.py and locators.py (but not cleaned up) - consider removing from here
+
+# def get_element_value(element) -> str:
+#     """
+#     Returns the value of a given element.
+
+#     Args:
+#         element (WebElement): The element to get the value from.
+
+#     Returns:
+#         str: The value of the element.
+#     """
+#     # logging.info("Getting element value...")
+#     attribute = element.get_attribute("value")
+#     if attribute is not None:
+#         # logging.info("Element value retrieved successfully.")
+#         return attribute.strip()
+#     else:
+#         # logging.info(f"""Element "{element}" has no value attribute, returning text.""")
+#         return element.text
 
 
 # def check_active_class(element):
