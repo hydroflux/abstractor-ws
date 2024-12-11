@@ -1,10 +1,29 @@
-from project_management.timers import short_nap
-from selenium_utilities.locators import locate_element_by_class_name, locate_element_by_tag_name, locate_elements_by_class_name, locate_elements_by_tag_name
-from serializers.recorder import record_comments, record_empty_values, record_value
-import time
-from selenium.webdriver.remote.webdriver import WebDriver
-from classes.Abstract import Abstract
-from classes.Document import Document
+"""
+Module to record document information from a web page using Selenium.
+
+This module contains functions to:
+- Wait for the page to load.
+- Click on elements that match specified criteria.
+- Record indexing information, document type, parties, related documents, and legal descriptions.
+- Record all document fields.
+- Record the document information if not in review mode.
+
+The functions in this module interact with web elements using Selenium WebDriver
+and perform actions such as locating elements, clicking buttons, and recording values.
+"""
+
+# Library Import(s)
+import time  # For handling timing functionality
+
+# Selenium Import(s)
+from selenium.webdriver.remote.webdriver import WebDriver  # For WebDriver interactions
+
+# Local Import(s)
+from project_management.timers import short_nap  # For handling short naps
+from selenium_utilities.locators import locate_element_by_class_name, locate_element_by_tag_name, locate_elements_by_class_name, locate_elements_by_tag_name  # For locating elements
+from serializers.recorder import record_comments, record_empty_values, record_value  # For recording values
+from classes.Abstract import Abstract  # For Abstract class to store collected data
+from classes.Document import Document  # For Document class to represent individual documents
 
 
 def wait_for_page_to_load(browser: WebDriver, abstract: Abstract, document: Document) -> None:
@@ -33,7 +52,7 @@ def wait_for_page_to_load(browser: WebDriver, abstract: Abstract, document: Docu
             input("The page did not load after 2 minutes. Please review and press enter to continue.")
 
 
-def click_show_elements(browser, abstract, document):
+def click_show_elements(browser: WebDriver, abstract: Abstract, document: Document) -> None:
     """
     Click on elements that match the specified criteria if their text starts with the specified text.
 
@@ -56,7 +75,7 @@ def click_show_elements(browser, abstract, document):
             break
 
 
-def record_indexing_information(browser, abstract, document):
+def record_indexing_information(browser: WebDriver, abstract: Abstract, document: Document) -> None:
     """
     Record the indexing information from the web page.
 
@@ -95,7 +114,7 @@ def record_indexing_information(browser, abstract, document):
             input("Unexpected indexing information item. Please review and press enter to continue.")
 
 
-def record_document_type(browser, abstract, document):
+def record_document_type(browser: WebDriver, abstract: Abstract, document: Document) -> None:
     """
     Record the document type from the web page.
 
@@ -110,7 +129,7 @@ def record_document_type(browser, abstract, document):
     record_value(abstract, 'document type', document_type)
 
 
-def record_parties(browser, abstract, document):
+def record_parties(browser: WebDriver, abstract: Abstract, document: Document) -> None:
     """
     Record the parties (Grantor and Grantee) from the web page.
 
@@ -147,7 +166,7 @@ def record_parties(browser, abstract, document):
         input("No parties found. Please review and press enter to continue.")
 
 
-def record_related_documents(browser, abstract, document):
+def record_related_documents(browser: WebDriver, abstract: Abstract, document: Document) -> None:
     """
     Record the related documents (Marginal References) from the web page.
 
@@ -172,7 +191,7 @@ def record_related_documents(browser, abstract, document):
         input("No related documents found. Please review and press enter to continue.")
 
 
-def record_legal(browser, abstract, document):
+def record_legal(browser: WebDriver, abstract: Abstract, document: Document) -> None:
     """
     Record the legal description from the web page.
 
@@ -207,7 +226,7 @@ def record_legal(browser, abstract, document):
         input("No legal description found. Please review and press enter to continue.")
 
 
-def record_document_fields(browser, abstract, document):
+def record_document_fields(browser: WebDriver, abstract: Abstract, document: Document) -> None:
     """
     Record the document fields from the web page.
 
@@ -225,7 +244,7 @@ def record_document_fields(browser, abstract, document):
     record_comments(abstract, document)
 
 
-def record(browser, abstract, document):
+def record(browser: WebDriver, abstract: Abstract, document: Document) -> None:
     """
     Record the document information if not in review mode.
 
