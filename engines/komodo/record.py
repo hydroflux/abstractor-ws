@@ -1,5 +1,36 @@
+from project_management.timers import short_nap
 from selenium_utilities.locators import locate_element_by_class_name, locate_element_by_tag_name, locate_elements_by_class_name, locate_elements_by_tag_name
 from serializers.recorder import record_comments, record_empty_values, record_value
+import time
+from selenium.webdriver.remote.webdriver import WebDriver
+from classes.Abstract import Abstract
+from classes.Document import Document
+
+
+def wait_for_page_to_load(browser: WebDriver, abstract: Abstract, document: Document) -> None:
+    """
+    Wait for the page to load by checking for the presence of the indexing information container.
+    If the page does not load within 30 seconds, refresh the browser and reset the timer.
+    If the page does not load after 2 minutes (4 attempts), prompt the user to review.
+
+    Args:
+        browser (WebDriver): The WebDriver instance.
+        abstract (Abstract): The abstract information.
+        document (Document): The document information.
+    """
+    count = 0
+    start_time = time.time()
+    while True:
+        document_present = locate_element_by_class_name(browser, abstract.county.record["Indexing Information"], "indexing information", quick=True, document=document)
+        if document_present is not None:
+            break
+        if time.time() - start_time > 30:
+            print("Page did not load within 30 seconds. Refreshing the browser...")
+            browser.refresh()
+            start_time = time.time()  # Reset the start time after refreshing
+            count += 1
+        if count == 4:
+            input("The page did not load after 2 minutes. Please review and press enter to continue.")
 
 
 def click_show_elements(browser, abstract, document):
@@ -154,6 +185,9 @@ def record_legal(browser, abstract, document):
                                                     "legal container", False, document)[2]
     legal_descriptions = []
     if legal_container:
+        if legal_container.text == abstract.county.record["No Legal Information Found"]:
+            record_value(abstract, 'legal', "")
+            return
         table = locate_element_by_class_name(legal_container, abstract.county.record["Legal Table"], "legal table", False, document)
         headers = [header.text for header in locate_elements_by_tag_name(table, abstract.county.record["Legal Table Header"],
                                                                          "legal table headers", False, document)]
@@ -187,7 +221,7 @@ def record_document_fields(browser, abstract, document):
     record_parties(browser, abstract, document)
     record_related_documents(browser, abstract, document)
     record_legal(browser, abstract, document)
-    record_empty_values(abstract, ['effective date', 'volume'])
+    record_empty_values(abstract, ['volume', 'document link', 'effective date'])
     record_comments(abstract, document)
 
 
@@ -200,6 +234,8 @@ def record(browser, abstract, document):
         abstract (Abstract): The abstract information.
         document (Document): The document information.
     """
+    wait_for_page_to_load(browser, abstract, document)
     if not abstract.review:
         click_show_elements(browser, abstract, document)
+        short_nap()
         record_document_fields(browser, abstract, document)
