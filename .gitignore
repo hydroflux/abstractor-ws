@@ -15,7 +15,7 @@ logs/
 ##################
 classes/counties.py
 settings/county_variables
-project_management/export_settings/settings.py
+project_management/export_settings/authorship.py
 settings/settings.py
 .vscode
 __pycache__
