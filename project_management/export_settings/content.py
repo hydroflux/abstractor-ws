@@ -23,17 +23,17 @@ def write_title_content(project):
         content['scope'] = f'{project.legal}\n'
     project.worksheet.write_rich_string(
         'A1',
-        project.font_formats['large'], content['type'],
-        project.font_formats['large'], content['user'],
-        project.font_formats['small'], content['scope'],
-        project.font_formats['small'], content['county'],
-        project.font_formats['small'], range_message,
-        project.font_formats['header']
+        project.text_formats['large'], content['type'],
+        project.text_formats['large'], content['user'],
+        project.text_formats['small'], content['scope'],
+        project.text_formats['small'], content['county'],
+        project.text_formats['small'], range_message,
+        project.text_formats['header']
     )
 
 
 def add_title_row(project):
-    set_title_format(project, project.font_formats['header'])
+    set_title_format(project, project.text_formats['header'])
     write_title_content(project)
 
 
@@ -101,7 +101,7 @@ def set_worksheet_border(project, font_format):
 
 
 def set_dataframe_format(project):
-    body_format = project.font_formats['body']
+    body_format = project.text_formats['body']
     for column_format in project.worksheet_properties['column_formats']:
         if column_format.column_name in project.dataframe.columns:
             col_idx = project.dataframe.columns.get_loc(column_format.column_name)  # Get the 0-based index of the column
@@ -129,11 +129,11 @@ def add_filter(project):
 
 def add_content(project):
     add_title_row(project)
-    add_limitations(project, project.font_formats['limitations'])
-    add_disclaimer(project, project.font_formats['disclaimer'])
-    add_dataframe_headers(project, project.font_formats['datatype'])
-    set_worksheet_border(project, project.font_formats['border'])
+    add_limitations(project, project.text_formats['limitations'])
+    add_disclaimer(project, project.text_formats['disclaimer'])
+    add_dataframe_headers(project, project.text_formats['datatype'])
+    set_worksheet_border(project, project.text_formats['border'])
     set_dataframe_format(project)
-    add_footer_row(project, project.font_formats['footer'])
+    add_footer_row(project, project.text_formats['footer'])
     add_filter(project)
     # add_watermark(project)
