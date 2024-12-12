@@ -14,8 +14,8 @@ class Project:
     text_formats = text_formats
     worksheet_properties = worksheet_properties
 
-    def __init__(self, type, county, target_directory, dataframe,
-                 output_file, sheet_name,
+    def __init__(self, type, county, target_directory, abstract,
+                 dataframe,output_file, sheet_name,
                  writer=None, font_formats=None, workbook=None, worksheet=None,
                  number_columns=None, last_column=None, last_row=None, footer_row=None,
                  worksheet_range=None,
@@ -24,6 +24,7 @@ class Project:
         self.type = type
         self.county = county
         self.target_directory = target_directory
+        self.abstract = abstract
         self.dataframe = dataframe
         self.output_file = output_file
         self.sheet_name = sheet_name
@@ -56,10 +57,10 @@ class Project:
         except OSError:
             print('Error: Creating directory ' + self.project_folder)
 
-    def bundle_project(self, abstract):
+    def bundle_project(self):
         self.create_project_folder()
         # Move Output File into Project Folder
         shutil.move(f'{self.target_directory}/{self.output_file}', self.project_folder)
         # Move Downloaded Documents
-        if abstract.download:
+        if self.abstract.download:
             shutil.move(f'{self.target_directory}/Documents', self.project_folder)
