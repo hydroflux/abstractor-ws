@@ -1,5 +1,6 @@
 import os
 from pandas import DataFrame, ExcelWriter
+from classes.ColumnFormat import ColumnFormat
 
 from classes.Project import Project
 
@@ -7,6 +8,41 @@ from project_management.export_settings.conditional_formatting import add_condit
 from project_management.export_settings.content import add_content, number_to_letter
 from project_management.export_settings.font_formats import generate_font_formats
 from project_management.export_settings.hyperlinks import add_hyperlink_sheet
+
+
+def drop_empty_columns(project):
+    """
+    Drop columns from the dataframe if they contain only empty strings.
+
+    Args:
+        project (Project): The project instance containing the worksheet and dataframe.
+    """
+    columns_to_drop = []
+    if project.dataframe["Volume"].str.strip().eq("").all():
+        columns_to_drop.append("Volume")
+        column_formats = project.worksheet_properties['column_formats']
+        project.worksheet_properties['column_formats'] = [cf for cf in column_formats if cf.column_name != "Volume"]
+    if project.dataframe["Document Link"].str.strip().eq("").all():
+        columns_to_drop.append("Document Link")
+        column_formats = project.worksheet_properties['column_formats']
+        project.worksheet_properties['column_formats'] = [cf for cf in column_formats if cf.column_name != "Document Link"]
+
+    # Drop columns from the dataframe
+    project.dataframe.drop(columns=columns_to_drop, inplace=True)
+    if len(columns_to_drop) == 2:
+        project.worksheet_properties['datatype_content']['primary_datatype_columns'] = [*range(0, 8), *range(12, 16)]
+        project.worksheet_properties['datatype_content']['secondary_datatype_columns'] = [*range(8, 12)]
+        project.worksheet_properties['datatype_content']['custom_datatype_column'] = 8
+        project.worksheet_properties['conditional_formats']['no_record_format']['criteria'] = '=LEFT($P5, 19)="No document located"'
+        project.worksheet_properties['conditional_formats']['multi_documents_format']['criteria'] = '=LEFT($P5, 26)="Multiple documents located"'
+        project.worksheet_properties['conditional_formats']['no_image_format']['criteria'] = '=LEFT($P5, 27)="No document image available"'
+    elif len(columns_to_drop) == 1:
+        project.worksheet_properties['datatype_content']['primary_datatype_columns'] = [*range(0, 9), *range(13, 17)]
+        project.worksheet_properties['datatype_content']['secondary_datatype_columns'] = [*range(9, 13)]
+        project.worksheet_properties['datatype_content']['custom_datatype_column'] = 9
+        project.worksheet_properties['conditional_formats']['no_record_format']['criteria'] = '=LEFT($Q5, 19)="No document located"'
+        project.worksheet_properties['conditional_formats']['multi_documents_format']['criteria'] = '=LEFT($Q5, 26)="Multiple documents located"'
+        project.worksheet_properties['conditional_formats']['no_image_format']['criteria'] = '=LEFT($Q5, 27)="No document image available"'
 
 
 def update_dataframe(project):
@@ -89,6 +125,7 @@ def initialize_project(abstract):
         sheet_name=abstract.type.upper()
     )
     project.create_target_directory()
+    drop_empty_columns(project)  # Drop empty columns before adding content and formatting
     set_project_attributes(project)
     format_xlsx_document(project)
     return project

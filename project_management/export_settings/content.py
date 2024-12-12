@@ -1,3 +1,6 @@
+from settings.initialization import convert_to_long_form
+
+
 def number_to_letter(number):
     return chr(ord('@') + (number))
 
@@ -8,7 +11,7 @@ def set_title_format(project, font_format):
 
 
 def create_range_message(dataframe, content):
-    return f'From {content["start_date"]} to {content["end_date"]} \n ({content["order"]})'
+    return f'From {convert_to_long_form(content["start_date"])} to {convert_to_long_form((content["end_date"]))} \n ({content["order"]})'
 
 
 def write_title_content(project):
@@ -99,8 +102,12 @@ def set_worksheet_border(project, font_format):
 
 def set_dataframe_format(project):
     body_format = project.font_formats['body']
-    for column in project.worksheet_properties['column_formats']:
-        project.worksheet.set_column(column.column_range, column.width, body_format)
+    for column_format in project.worksheet_properties['column_formats']:
+        if column_format.column_name in project.dataframe.columns:
+            col_idx = project.dataframe.columns.get_loc(column_format.column_name)  # Get the 0-based index of the column
+            col_letter = number_to_letter(col_idx + 1)  # Convert to 1-based index and then to letter
+            column_range = f'{col_letter}:{col_letter}'
+            project.worksheet.set_column(column_range, column_format.width, body_format)
 
 
 def add_footer_row(project, font_format):
