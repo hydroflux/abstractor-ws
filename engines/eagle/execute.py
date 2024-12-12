@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 from engines.eagle.name_search import name_search
-from project_management.export import export_document
 from serializers.executor import close_program, search_documents_from_list
 
 from engines.eagle.download import execute_download
@@ -29,19 +28,4 @@ def execute_program(browser, abstract):
 def execute_name_search(browser, abstract):
     login(browser, abstract)
     name_search(browser, abstract)
-    project = export_document(abstract)  # handled in close_program, need to review
-    project.bundle_project(abstract)  # handled in close_program, need to review
     close_program(browser, abstract)
-
-
-# def execute_web_program(client, legal, upload_file):
-#     sheet_name = 'Documents'
-#     download = False
-#     file_name = upload_file
-#     target_directory = web_directory
-#     headless = False
-#     browser = create_webdriver(target_directory, headless)
-#     account_login(browser)
-#     dataframe = create_abstraction(browser, target_directory, file_name, sheet_name, download)
-#     browser.close()
-#     return abstract_dictionary

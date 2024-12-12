@@ -1,3 +1,5 @@
+# -- whole engine needs rework --
+
 from engines.crocodile.download import download_document
 from engines.crocodile.login import account_login
 from engines.crocodile.logout import logout
@@ -20,6 +22,7 @@ from settings.invalid import record_invalid_search, unable_to_download
 from settings.objects.abstract_dataframe import \
     abstract_dictionary as dataframe
 
+# -- whole engine needs rework --
 
 def record_single_document(browser, county, target_directory, document_list, document, start_time):
     record_document(browser, county, dataframe, document)
@@ -62,7 +65,7 @@ def execute_program(county, target_directory, document_list, file_name):
     dataframe = search_documents_from_list(browser, county, target_directory, document_list)
     logout(browser)
     abstraction = export_document(county, target_directory, file_name, dataframe)
-    bundle_project(target_directory, abstraction)
+    # bundle_project(target_directory, abstraction) # no longer a function
     browser.close()
 
 
@@ -79,10 +82,12 @@ def execute_name_search(county, target_directory, search_name):
     dataframe = perform_name_search(browser, county, target_directory, search_name)
     logout(browser)
     abstraction = export_document(county, target_directory, document_value(search_name), dataframe)
-    bundle_project(target_directory, abstraction)
+    # bundle_project(target_directory, abstraction) # no longer a function
     # sleep(8)  #  <-- use for demo
     browser.close()
 
 
 def execute_review():
     pass
+
+# -- whole engine needs rework --

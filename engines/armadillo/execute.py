@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 from engines.armadillo.name_search import name_search
-from project_management.export import export_document
 from serializers.executor import close_program, search_documents_from_list
 
 from engines.armadillo.download import execute_download
@@ -29,6 +28,4 @@ def execute_program(browser, abstract):
 def execute_name_search(browser, abstract):
     login(browser, abstract)
     name_search(browser, abstract)
-    project = export_document(abstract)  # handled in close_program, need to review
-    project.bundle_project(abstract)  # handled in close_program, need to review
     close_program(browser, abstract)

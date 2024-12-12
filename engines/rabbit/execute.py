@@ -6,8 +6,6 @@ from engines.rabbit.open_document import open_document
 from engines.rabbit.record import record
 from engines.rabbit.search import search
 
-from project_management.export import export_document
-
 from serializers.executor import close_program, search_documents_from_list
 
 from settings.driver import create_webdriver
@@ -32,6 +30,4 @@ def execute_name_search(abstract):
     browser = create_webdriver(abstract)
     login(browser, abstract)
     name_search(browser, abstract)
-    project = export_document(abstract)
-    project.bundle_project(abstract)
     close_program(browser, abstract)

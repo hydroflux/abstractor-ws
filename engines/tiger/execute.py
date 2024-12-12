@@ -26,17 +26,3 @@ def execute_program(browser, abstract):
         next_result
     )
     close_program(browser, abstract)
-
-
-# def execute_web_program(county, client, legal, upload_file):
-#     county = get_county_data(county)
-#     sheet_name = 'Documents'
-#     file_name = upload_file
-#     target_directory = web_directory
-#     browser = create_webdriver(target_directory, False)
-#     account_login(browser)
-#     search_documents_from_list(browser, abstract)
-#     export_document(target_directory, file_name, dataframe, client, legal)
-#     bundle_project(target_directory, file_name)
-#     browser.close()
-#     return dataframe
