@@ -233,12 +233,12 @@ def record_related_documents(browser: WebDriver, abstract: Abstract, document: D
                                                                    "related document items", False, document)
             for item in related_document_items:
                 instrument_number = locate_element_by_class_name(item, abstract.county.record["Related Reception Number"],
-                                                                 "related instrument", document=document).text
+                                                                 "related instrument", document=document).text.split(" ")[-1]
                 document_type = locate_element_by_class_name(item, abstract.county.record["Related Document Type"],
                                                              "related document type", document=document).text
                 recording_date = locate_element_by_class_name(item, abstract.county.record["Related Recording Date"],
                                                               "related recording date", document=document).text
-                related_documents.append(f"{instrument_number}, Document Type: {document_type}, Recording Date: {recording_date}")
+                related_documents.append(f"Rec Num: {instrument_number}, Doc Type: {document_type}, Record Date: {recording_date}")
             record_value(abstract, 'related documents', "\n".join(related_documents))
     else:
         input("No related documents found. Please review and press enter to continue.")
