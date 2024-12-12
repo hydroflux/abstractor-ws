@@ -238,7 +238,7 @@ def record_related_documents(browser: WebDriver, abstract: Abstract, document: D
                                                              "related document type", document=document).text
                 recording_date = locate_element_by_class_name(item, abstract.county.record["Related Recording Date"],
                                                               "related recording date", document=document).text
-                related_documents.append(f"Rec Num: {instrument_number}, Doc Type: {document_type}, Record Date: {recording_date}")
+                related_documents.append(f"Inst #: {instrument_number}, Doc Type: {document_type.title()}, Record Date: {recording_date}")
             record_value(abstract, 'related documents', "\n".join(related_documents))
     else:
         input("No related documents found. Please review and press enter to continue.")
@@ -270,7 +270,7 @@ def record_legal(browser: WebDriver, abstract: Abstract, document: Document) -> 
             cells = locate_elements_by_tag_name(row, abstract.county.record["Legal Row Data"], "legal table cells")
             for i, cell in enumerate(cells):
                 if cell.text != "N/A" and cell.text != "SEE RECORD":
-                    row_descriptions.append(f"{headers[i]}: {cell.text}")
+                    row_descriptions.append(f"{headers[i]}: {cell.text.title()}")
             if row_descriptions:
                 legal_descriptions.append(", ".join(row_descriptions))
         legal_description = "\n".join(legal_descriptions)
