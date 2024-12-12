@@ -30,6 +30,7 @@ from settings.settings import (county_name, end_date, file_name, quarter,
                                start_date, target_directory, township)
 
 from dateutil import parser
+from datetime import datetime
 
 # from classes.Engine import Engine
 
@@ -69,6 +70,26 @@ def convert_to_mmddyyyy(date_str: str) -> str:
         # Format the datetime object to "MM/DD/YYYY"
         return date_obj.strftime("%m/%d/%Y")
     except (ValueError, parser.ParserError) as e:
+        print(f"Error parsing date string '{date_str}': {e}")
+        return None
+
+
+def convert_to_long_form(date_str: str) -> str:
+    """
+    Convert a date string from "MM/DD/YYYY" format to long form (e.g., "November 01, 2024").
+
+    Args:
+        date_str (str): The date string in "MM/DD/YYYY" format to convert.
+
+    Returns:
+        str: The date string in long form.
+    """
+    try:
+        # Parse the date string to a datetime object
+        date_obj = datetime.strptime(date_str, "%m/%d/%Y")
+        # Format the datetime object to long form
+        return date_obj.strftime("%B %d, %Y")
+    except ValueError as e:
         print(f"Error parsing date string '{date_str}': {e}")
         return None
 
