@@ -1,4 +1,4 @@
 class ColumnFormat:
-    def __init__(self, column_range, width):
-        self.column_range = column_range
+    def __init__(self, column_name, width):
+        self.column_name = column_name
         self.width = width
