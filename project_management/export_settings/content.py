@@ -92,8 +92,8 @@ def add_dataframe_headers(project, font_format):
 
 
 def set_worksheet_border(project, font_format):
-    border_format_1 = project.worksheet_properties['conditional_formats']['border_format_1']
-    border_format_2 = project.worksheet_properties['conditional_formats']['border_format_2']
+    border_format_1 = project.conditional_formats['border_format_1']
+    border_format_2 = project.conditional_formats['border_format_2']
     border_format_1['format'] = font_format
     border_format_2['format'] = font_format
     project.worksheet.conditional_format(project.worksheet_range, border_format_1)
