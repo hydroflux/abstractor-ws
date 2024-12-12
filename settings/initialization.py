@@ -94,6 +94,7 @@ def convert_to_long_form(date_str: str) -> str:
         return None
 
 
+# Some of these assignments could be handled on the "Abstract" class rather than here since they're static attributes
 def create_abstract_object():
     return Abstract(
         type=abstraction_type,

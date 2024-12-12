@@ -1,6 +1,6 @@
+from classes.Project import Project
 from serializers.downloader import download_document
 
-from project_management.export import export_document
 from project_management.timers import nap, start_timer
 
 # from settings.driver import create_webdriver
@@ -60,8 +60,8 @@ def close_program(browser, abstract, logout=None):
     if logout is not None:
         logout(browser, abstract)
     if not abstract.download_only and not abstract.review:
-        project = export_document(abstract)
-        project.bundle_project(abstract)
+        project = Project(abstract)
+        project.bundle_project()
     browser.close()
 
 
