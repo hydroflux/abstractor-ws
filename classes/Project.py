@@ -151,10 +151,6 @@ class Project:
         print(self.dataframe)
 
     def add_column(self, dataframe, current_position, column):
-        print("dataframe", dataframe.columns)
-        print("current_position", current_position)
-        print("column", column.title)
-        print("column", column.position)
         dataframe.insert(current_position, column.title, '')
 
     def add_breakpoints(self):
