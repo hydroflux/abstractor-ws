@@ -1,3 +1,5 @@
+from engines.komodo.collect import collect
+from project_management.timers import wait_for_page
 from selenium_utilities.inputs import click_button, enter_input_value, enter_datepicker_value
 from selenium_utilities.locators import locate_element_by_class_name, locate_element_by_css_selector
 from selenium_utilities.open import open_url
@@ -12,17 +14,32 @@ def perform_name_search(browser, abstract):
                       "search end date input", abstract.end_date, document=None)
     click_button(browser, locate_element_by_class_name, abstract.county.buttons["Search"],
                  "execute search button", document=None)
+    return True
+
+
+def perform_document_search(browser, abstract, document):
+    open_url(browser, abstract.county.urls["Search Page"],
+            abstract.county.titles["Search Page"], "search page")
+    value = document.document_value()
+    enter_input_value(browser, locate_element_by_css_selector, abstract.county.inputs["Search Input"],
+                    "search value input", value, document)
+    click_button(browser, locate_element_by_class_name, abstract.county.buttons["Search"],
+                "execute search button", document)
+    return True
+
+
+def handle_search(browser, abstract, document=None):
+    if abstract.program == "name_search" and not abstract.number_search_results:
+        return perform_name_search(browser, abstract)
+    else:
+        return perform_document_search(browser, abstract, document)
 
 
 def search(browser, abstract, document=None):
-    if abstract.program == "name_search":
-        if not abstract.number_search_results:
-            perform_name_search(browser, abstract)
-    else:
-        open_url(browser, abstract.county.urls["Search Page"],
-                abstract.county.titles["Search Page"], "search page")
-        value = document.document_value()
-        enter_input_value(browser, locate_element_by_css_selector, abstract.county.inputs["Search Input"],
-                        "search value input", value, document)
-        click_button(browser, locate_element_by_class_name, abstract.county.buttons["Search"],
-                    "execute search button", document)
+    while True:
+        collect_results = handle_search(browser, abstract, document)
+        if collect_results and wait_for_page(browser, abstract.county.titles["Loading"], abstract.county.titles["Search Results Page"]):
+            collect(browser, abstract, document)
+            break
+        else:
+            break
