@@ -1,12 +1,58 @@
+"""
+This module provides functions to transform and update attributes for the Komodo engine.
+It includes functions to update document attributes and county-specific attributes.
+
+Functions:
+    - update_document_attributes(abstract: Abstract) -> None:
+        -- Updates the document attributes with the county information from the abstract.
+    - update_county_attributes(abstract: Abstract) -> None:
+        -- Updates the county-specific attributes in the abstract.
+    - transform(abstract: Abstract) -> None:
+        -- Transforms the abstract by updating document and county-specific attributes.
+
+The functions in this module interact with the abstract object to update its attributes based on the county-specific variables.
+
+Imports:
+    - Local:
+        - import settings.county_variables.komodo: For county-specific variables.
+        - from classes.Abstract: For Abstract class to store collected data.
+    - Standard Library:
+        - from typing: For type hints.
+
+Usage:
+    These functions are designed to be used to transform and update attributes in the abstract object for the Komodo engine.
+    They provide robust handling of updating document and county-specific attributes,
+    making it easier to manage and process the abstract data.
+"""
+
+# Local Import(s)
 import settings.county_variables.komodo as komodo
 
+# Standard Library Import(s)
+from typing import Any
 
-def update_document_attributes(abstract):
+# Class Import(s)
+from classes.Abstract import Abstract
+
+
+def update_document_attributes(abstract: Abstract) -> None:
+    """
+    Updates the document attributes with the county information from the abstract.
+
+    Args:
+        abstract (Abstract): The abstract object containing document and county information.
+    """
     for document in abstract.document_list:
         document.county = abstract.county
 
 
-def update_county_attributes(abstract):
+def update_county_attributes(abstract: Abstract) -> None:
+    """
+    Updates the county-specific attributes in the abstract.
+
+    Args:
+        abstract (Abstract): The abstract object containing county information.
+    """
     abstract.county.credentials = komodo.credentials  # LOGIN
     abstract.county.urls = {
         # LOGIN
@@ -98,6 +144,12 @@ def update_county_attributes(abstract):
     }
 
 
-def transform(abstract):
+def transform(abstract: Abstract) -> None:
+    """
+    Transforms the abstract by updating document and county-specific attributes.
+
+    Args:
+        abstract (Abstract): The abstract object containing document and county information.
+    """
     update_document_attributes(abstract)
     update_county_attributes(abstract)
