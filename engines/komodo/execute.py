@@ -20,7 +20,7 @@ Imports:
         - from engines.komodo.search: For performing searches.
         - from serializers.executor: For closing the program and searching documents from a list.
     - Class:
-        - None
+        - from classes.Abstract: For Abstract class to store collected data.
 
 Usage:
     These functions are designed to be used with Selenium WebDriver to automate the main program execution for the Komodo engine.
@@ -53,7 +53,7 @@ def check_for_document_list(browser: WebDriver, abstract: Abstract) -> None:
 
     Args:
         browser (WebDriver): The WebDriver instance used to interact with the browser.
-        abstract (Any): The abstract object containing program type and other information.
+        abstract (Abstract): The abstract object containing program type and other information.
     """
     if abstract.program in ['name_search', 'legal']:
         search(browser, abstract)
@@ -65,7 +65,7 @@ def execute_program(browser: WebDriver, abstract: Abstract) -> None:
 
     Args:
         browser (WebDriver): The WebDriver instance used to interact with the browser.
-        abstract (Any): The abstract object containing program type and other information.
+        abstract (Abstract): The abstract object containing program type and other information.
     """
     login(browser, abstract)
     check_for_document_list(browser, abstract)

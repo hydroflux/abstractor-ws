@@ -41,9 +41,10 @@ Imports:
         - from selenium_utilities.element_interaction: For centering elements.
         - from selenium_utilities.locators: For locating elements.
         - from serializers.recorder: For recording values.
+        - from settings.county_variables: For county-specific variables.
+    - Class:
         - from classes.Abstract: For Abstract class to store collected data.
         - from classes.Document: For Document class to represent individual documents.
-        - from settings.county_variables: For county-specific variables.
 
 Usage:
     These functions are designed to be used with Selenium WebDriver to automate the process of recording document information from a web page.
@@ -76,7 +77,7 @@ def wait_for_page_to_load(browser: WebDriver, abstract: Abstract, document: Docu
     If the page does not load after 2 minutes (4 attempts), prompt the user to review.
 
     Args:
-        browser (WebDriver): The WebDriver instance.
+        browser (WebDriver): The WebDriver instance used to interact with the browser.
         abstract (Abstract): The abstract information.
         document (Document): The document information.
     """
@@ -101,7 +102,7 @@ def click_show_elements(browser: WebDriver, abstract: Abstract, document: Docume
     After each element is clicked, confirm that each element starts with the "Hide Element Text" before continuing.
 
     Args:
-        browser (WebDriver): The WebDriver instance.
+        browser (WebDriver): The WebDriver instance used to interact with the browser.
         abstract (Abstract): The abstract information.
         document (Document): The document information.
     """
@@ -127,7 +128,7 @@ def record_indexing_information(browser: WebDriver, abstract: Abstract, document
     Record the indexing information from the web page.
 
     Args:
-        browser (WebDriver): The WebDriver instance.
+        browser (WebDriver): The WebDriver instance used to interact with the browser.
         abstract (Abstract): The abstract information.
         document (Document): The document information.
     """
@@ -166,7 +167,7 @@ def record_document_type(browser: WebDriver, abstract: Abstract, document: Docum
     Record the document type from the web page.
 
     Args:
-        browser (WebDriver): The WebDriver instance.
+        browser (WebDriver): The WebDriver instance used to interact with the browser.
         abstract (Abstract): The abstract information.
         document (Document): The document information.
     """
@@ -181,7 +182,7 @@ def record_parties(browser: WebDriver, abstract: Abstract, document: Document) -
     Record the parties (Grantor and Grantee) from the web page.
 
     Args:
-        browser (WebDriver): The WebDriver instance.
+        browser (WebDriver): The WebDriver instance used to interact with the browser.
         abstract (Abstract): The abstract information.
         document (Document): The document information.
     """
@@ -222,7 +223,7 @@ def record_related_documents(browser: WebDriver, abstract: Abstract, document: D
     Record the related documents (Marginal References) from the web page.
 
     Args:
-        browser (WebDriver): The WebDriver instance.
+        browser (WebDriver): The WebDriver instance used to interact with the browser.
         abstract (Abstract): The abstract information.
         document (Document): The document information.
     """
@@ -253,7 +254,7 @@ def record_legal(browser: WebDriver, abstract: Abstract, document: Document) -> 
     Record the legal description from the web page.
 
     Args:
-        browser (WebDriver): The WebDriver instance.
+        browser (WebDriver): The WebDriver instance used to interact with the browser.
         abstract (Abstract): The abstract information.
         document (Document): The document information.
     """
@@ -288,7 +289,7 @@ def record_document_fields(browser: WebDriver, abstract: Abstract, document: Doc
     Record the document fields from the web page.
 
     Args:
-        browser (WebDriver): The WebDriver instance.
+        browser (WebDriver): The WebDriver instance used to interact with the browser.
         abstract (Abstract): The abstract information.
         document (Document): The document information.
     """
@@ -306,8 +307,8 @@ def record(browser: WebDriver, abstract: Abstract, document: Document) -> None:
     Record the document information if not in review mode.
 
     Args:
-        browser (WebDriver): The WebDriver instance.
-        abstract (Abstract): The abstract information.
+        browser (WebDriver): The WebDriver instance used to interact with the browser.
+        abstract (Abstract): The abstract information. 
         document (Document): The document information.
     """
     wait_for_page_to_load(browser, abstract, document)

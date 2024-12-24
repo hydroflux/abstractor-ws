@@ -16,8 +16,9 @@ Imports:
         - from selenium.webdriver.remote.webdriver: For WebDriver interactions.
     - Local:
         - from selenium_utilities.open: For opening URLs.
-    - Standard Library:
-        - from typing: For type hints.
+    - Class:
+        - from classes.Abstract: For Abstract class to store collected data.
+        - from classes.Document: For Document class to represent individual documents.
 
 Usage:
     These functions are designed to be used with Selenium WebDriver to automate the process of opening documents for the Komodo engine.
@@ -31,17 +32,19 @@ from selenium.webdriver.remote.webdriver import WebDriver
 # Local Import(s)
 from selenium_utilities.open import open_url
 
-# Standard Library Import(s)
-from typing import Any
+# Class Import(s)
+from classes.Abstract import Abstract
+from classes.Document import Document
 
-def next_result(browser: WebDriver, abstract: Any, document: Any) -> bool:
+
+def next_result(browser: WebDriver, abstract: Abstract, document: Document) -> bool:
     """
     Processes the next result and opens the corresponding document.
 
     Args:
         browser (WebDriver): The WebDriver instance used to interact with the browser.
-        abstract (Any): The abstract object containing program type and other information.
-        document (Any): The document object containing result information.
+        abstract (Abstract): The abstract object containing program type and other information.
+        document (Document): The document object containing result information.
 
     Returns:
         bool: True if the document was opened successfully, False otherwise.
@@ -50,14 +53,14 @@ def next_result(browser: WebDriver, abstract: Any, document: Any) -> bool:
     return open_document(browser, abstract, document)
 
 
-def open_document(browser: WebDriver, abstract: Any, document: Any) -> bool:
+def open_document(browser: WebDriver, abstract: Abstract, document: Document) -> bool:
     """
     Opens a specific document based on the program type.
 
     Args:
         browser (WebDriver): The WebDriver instance used to interact with the browser.
-        abstract (Any): The abstract object containing program type and other information.
-        document (Any): The document object containing document-specific information.
+        abstract (Abstract): The abstract object containing program type and other information.
+        document (Document): The document object containing document-specific information.
 
     Returns:
         bool: True if the document was opened successfully, False otherwise.

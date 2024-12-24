@@ -45,7 +45,7 @@ def create_document_download_value(browser: WebDriver, abstract: Abstract) -> Op
 
     Args:
         browser (WebDriver): The WebDriver instance used to interact with the browser.
-        abstract (Any): The abstract object containing county-specific information.
+        abstract (Abstract): The abstract object containing county-specific information.
 
     Returns:
         Optional[str]: The created document download value, or None if an error occurred.
@@ -77,8 +77,8 @@ def execute_download(browser: WebDriver, abstract: Abstract, document: Document)
 
     Args:
         browser (WebDriver): The WebDriver instance used to interact with the browser.
-        abstract (Any): The abstract object containing county-specific information.
-        document (Any): The document object to be downloaded.
+        abstract (Abstract): The abstract object containing county-specific information.
+        document (Document): The document object to be downloaded.
     """
     click_button(browser, locate_element_by_css_selector, abstract.county.buttons["Purchase Window"], "purchase window", document)
     click_button(browser, locate_element_by_css_selector, abstract.county.buttons["Purchase"], "purchase button", document)

@@ -19,7 +19,7 @@ Imports:
         - from selenium_utilities.locators: For locating elements.
         - from selenium_utilities.open: For opening URLs.
     - Class:
-        - from classes import Abstract: For the abstract class object.
+        - from classes.Abstract: For Abstract class to store collected data.
 
 Usage:
     These functions are designed to be used with Selenium WebDriver to automate the login process for the Komodo engine.
@@ -36,7 +36,7 @@ from selenium_utilities.locators import locate_element_by_class_name, locate_ele
 from selenium_utilities.open import open_url
 
 # Class Import(s)
-from classes import Abstract
+from classes.Abstract import Abstract
 
 
 def enter_credentials(browser: WebDriver, abstract: Abstract) -> None:
@@ -45,7 +45,7 @@ def enter_credentials(browser: WebDriver, abstract: Abstract) -> None:
 
     Args:
         browser (WebDriver): The WebDriver instance used to interact with the browser.
-        abstract (Any): The abstract object containing user credentials and other information.
+        abstract (Abstract): The abstract object containing user credentials and other information.
     """
     enter_input_value(browser, locate_element_by_id, abstract.county.credentials[0],
                       "username input", abstract.county.credentials[1])
@@ -60,7 +60,7 @@ def login(browser: WebDriver, abstract: Abstract) -> None:
 
     Args:
         browser (WebDriver): The WebDriver instance used to interact with the browser.
-        abstract (Any): The abstract object containing user credentials and other information.
+        abstract (Abstract): The abstract object containing user credentials and other information.
     """
     open_url(browser, abstract.county.urls["Login Page"],
              abstract.county.titles["Login Page"], "county site")

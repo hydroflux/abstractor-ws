@@ -52,6 +52,7 @@ from selenium_utilities.locators import (
 from classes.Abstract import Abstract
 from classes.Document import Document
 
+
 def count_total_search_results(browser: WebDriver, abstract: Abstract) -> Optional[int]:
     """
     Count the total number of search results.

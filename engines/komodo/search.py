@@ -24,8 +24,9 @@ Imports:
         - from selenium_utilities.inputs: For clicking buttons and entering input values.
         - from selenium_utilities.locators: For locating elements.
         - from selenium_utilities.open: For opening URLs.
-    - Standard Library:
-        - from typing: For type hints.
+    - Class:
+        - from classes.Abstract: For Abstract class to store collected data.
+        - from classes.Document: For Document class to represent individual documents.
 
 Usage:
     These functions are designed to be used with Selenium WebDriver to automate the search process for the Komodo engine.
@@ -43,16 +44,18 @@ from selenium_utilities.inputs import click_button, enter_input_value, enter_dat
 from selenium_utilities.locators import locate_element_by_class_name, locate_element_by_css_selector
 from selenium_utilities.open import open_url
 
-# Standard Library Import(s)
-from typing import Any
+# Class Import(s)
+from classes.Abstract import Abstract
+from classes.Document import Document
 
-def perform_name_search(browser: WebDriver, abstract: Any) -> None:
+
+def perform_name_search(browser: WebDriver, abstract: Abstract) -> None:
     """
     Performs a name search by entering the search criteria and executing the search.
 
     Args:
         browser (WebDriver): The WebDriver instance used to interact with the browser.
-        abstract (Any): The abstract object containing search criteria and other information.
+        abstract (Abstract): The abstract object containing search criteria and other information.
     """
     enter_input_value(browser, locate_element_by_css_selector, abstract.county.inputs["Search Input"],
                       "search value input", abstract.search_name, document=None)
@@ -64,14 +67,14 @@ def perform_name_search(browser: WebDriver, abstract: Any) -> None:
                  "execute search button", document=None)
 
 
-def perform_document_search(browser: WebDriver, abstract: Any, document: Any) -> None:
+def perform_document_search(browser: WebDriver, abstract: Abstract, document: Document) -> None:
     """
     Performs a document search by entering the search criteria and executing the search.
 
     Args:
         browser (WebDriver): The WebDriver instance used to interact with the browser.
-        abstract (Any): The abstract object containing search criteria and other information.
-        document (Any): The document object containing document-specific information.
+        abstract (Abstract): The abstract object containing search criteria and other information.
+        document (Document, optional): The document object containing document-specific information.
     """
     open_url(browser, abstract.county.urls["Search Page"],
              abstract.county.titles["Search Page"], "search page")
@@ -82,14 +85,14 @@ def perform_document_search(browser: WebDriver, abstract: Any, document: Any) ->
                  "execute search button", document)
 
 
-def handle_search(browser: WebDriver, abstract: Any, document: Any = None) -> bool:
+def handle_search(browser: WebDriver, abstract: Abstract, document: Document = None) -> bool:
     """
     Determines the type of search to perform and executes it.
 
     Args:
         browser (WebDriver): The WebDriver instance used to interact with the browser.
-        abstract (Any): The abstract object containing search criteria and other information.
-        document (Any, optional): The document object containing document-specific information. Defaults to None.
+        abstract (Abstract): The abstract object containing search criteria and other information.
+        document (Document, optional): The document object containing document-specific information. Defaults to None.
 
     Returns:
         bool: True if the search was performed successfully, False otherwise.
@@ -102,14 +105,14 @@ def handle_search(browser: WebDriver, abstract: Any, document: Any = None) -> bo
         return True
 
 
-def search(browser: WebDriver, abstract: Any, document: Any = None) -> None:
+def search(browser: WebDriver, abstract: Abstract, document: Document = None) -> None:
     """
     Handles the search process and collects results if the search is successful.
 
     Args:
         browser (WebDriver): The WebDriver instance used to interact with the browser.
-        abstract (Any): The abstract object containing search criteria and other information.
-        document (Any, optional): The document object containing document-specific information. Defaults to None.
+        abstract (Abstract): The abstract object containing search criteria and other information.
+        document (Document, optional): The document object containing document-specific information. Defaults to None.
     """
     while True:
         collect_results = handle_search(browser, abstract, document)

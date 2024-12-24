@@ -16,8 +16,8 @@ Imports:
     - Local:
         - import settings.county_variables.komodo: For county-specific variables.
         - from classes.Abstract: For Abstract class to store collected data.
-    - Standard Library:
-        - from typing: For type hints.
+    - Class:
+        - from classes.Abstract: For Abstract class to store collected data.
 
 Usage:
     These functions are designed to be used to transform and update attributes in the abstract object for the Komodo engine.
@@ -27,9 +27,6 @@ Usage:
 
 # Local Import(s)
 import settings.county_variables.komodo as komodo
-
-# Standard Library Import(s)
-from typing import Any
 
 # Class Import(s)
 from classes.Abstract import Abstract
