@@ -16,6 +16,7 @@ and perform actions such as clicking buttons and locating elements by various se
 
 # Library Import(s)
 from typing import Optional  # Library to provide hints about the types used in the source code
+import math  # Library to provide mathematical functions
 import re  # Library to provide support for regular expressions
 
 # Selenium Import(s)
@@ -55,11 +56,16 @@ def count_total_search_results(browser: WebDriver, abstract: Abstract) -> Option
             match = re.search(r'of\s+([\d,]+)\s+results', results_text)
             if match:
                 total_results = int(match.group(1).replace(',', ''))
-                abstract.number_search_results = total_results
-                print(f'Collection search returned "{total_results}" results for processing.')
+                # Update abstract.number_search_results across the board as an integer in order to clean up next part
+                if abstract.number_search_results is None:
+                    abstract.number_search_results = total_results
+                else:
+                    abstract.number_search_results += total_results
+                if total_results > 2:
+                    print(f'Search returned "{str(total_results)}" results for processing.')
                 return total_results
     except Exception as e:
-        print(f"Error getting total search results: {e}")
+        input(f"Error getting total search results: {e}")
     return None
 
 
@@ -110,33 +116,6 @@ def set_results_per_page_to_highest(browser: WebDriver, abstract: Abstract) -> N
     if dropdown_container:
         click_button(dropdown_container, locate_element_by_class_name, abstract.county.classes["Results Per Page Button"], "dropdown button", quick=True)
         click_highest_option(dropdown_container, abstract)
-
-
-# This entire function can be supplanted by a "next result" function and then by dividing the total results by 250
-# def get_total_pages(browser: WebDriver, abstract: Abstract) -> Optional[int]:
-#     """
-#     Get the total number of pages from the pagination.
-
-#     Args:
-#         browser (WebDriver): The WebDriver instance.
-#         abstract (Abstract): The abstract information.
-
-#     Returns:
-#         Optional[int]: The total number of pages, or None if not found.
-#     """
-#     try:
-#         # Locate the pagination buttons
-#         pagination_buttons = locate_elements_by_css_selector(browser, abstract.county.tags["Pagination"], "pagination buttons")
-#         if pagination_buttons:
-#             # Extract the page numbers and find the maximum value
-#             page_numbers = [int(button.get_attribute("value")) for button in pagination_buttons if button.get_attribute("value").isdigit()]
-#             if page_numbers:
-#                 total_pages = max(page_numbers)
-#                 print(f'Total number of pages: {total_pages}')
-#                 return total_pages
-#     except Exception as e:
-#         print(f"Error getting total number of pages: {e}")
-#     return None
 
 
 def get_results_table(browser: WebDriver, abstract: Abstract) -> Optional[WebElement]:
@@ -203,7 +182,7 @@ def access_result_description_link(result: WebElement, abstract: Abstract) -> Op
     return None
 
 
-def build_document(result: WebElement, abstract: Abstract) -> Document:
+def build_document(abstract: Abstract, reception_number: str, description_link: str) -> Document:
     """
     Build a Document instance using the reception number and description link.
 
@@ -214,8 +193,6 @@ def build_document(result: WebElement, abstract: Abstract) -> Document:
     Returns:
         Document: The built Document instance.
     """
-    reception_number = access_result_reception_number(result, abstract)
-    description_link = access_result_description_link(result, abstract)
     return Document(
         type="document_number",
         value=reception_number,
@@ -226,7 +203,7 @@ def build_document(result: WebElement, abstract: Abstract) -> Document:
     )
 
 
-def process_search_result(result: WebElement, abstract: Abstract) -> None:
+def process_search_result(result: WebElement, abstract: Abstract, document=None) -> None:
     """
     Process a single search result.
 
@@ -236,11 +213,21 @@ def process_search_result(result: WebElement, abstract: Abstract) -> None:
     """
     reception_number = access_result_reception_number(result, abstract)
     if reception_number:
-        document = build_document(result, abstract)
-        # Add the document to the document_list array on the abstract object instance
-        abstract.document_list.append(document)
-        print(f"Added document {len(abstract.document_list)} of {abstract.number_search_results} "
-              f"with reception number {reception_number} to the document list.")
+        description_link = access_result_description_link(result, abstract)
+        if abstract.program == "name_search":
+            document = build_document(abstract, reception_number, description_link)
+            # Add the document to the document_list array on the abstract object instance
+            abstract.document_list.append(document)
+            print(f"Added document {len(abstract.document_list)} of {abstract.number_search_results} "
+                  f"with reception number {reception_number} to the document list.")
+        elif abstract.program in ["execute", "review"]:
+            if reception_number == document.value:
+                document.reception_number = reception_number
+                document.result_links.append(description_link)
+            else:
+                input(f"Reception number '{reception_number}' does not match document value '{document.value}' number. Please review and press enter to continue.")
+        else:
+            input(f"No processing function for program type '{abstract.program}'. Please review and press enter to continue.")
     else:
         input("Unable to locate reception number for search result. Please review and press enter to continue.")
 
@@ -260,7 +247,7 @@ def verify_final_search_results(abstract: Abstract) -> None:
         input(f"Expected {expected_results} search results, but located {actual_results}. Please review and press enter to continue.")
 
 
-def process_search_results(browser: WebDriver, abstract: Abstract) -> None:
+def process_search_results(browser: WebDriver, abstract: Abstract, document=None) -> None:
     """
     Process all search results in the table.
 
@@ -274,9 +261,9 @@ def process_search_results(browser: WebDriver, abstract: Abstract) -> None:
         results = locate_elements_by_css_selector(search_results_table, "tr", "search result rows")
         for result in results:
             # Process each search result
-            process_search_result(result, abstract)
+            process_search_result(result, abstract, document)
     else:
-        print("No search results table found.")
+        input("No search results table found.")
 
 
 def process_search_result_pages(browser: WebDriver, abstract: Abstract) -> None:
@@ -287,7 +274,7 @@ def process_search_result_pages(browser: WebDriver, abstract: Abstract) -> None:
         browser (WebDriver): The WebDriver instance.
         abstract (Abstract): The abstract information.
     """
-    total_pages = round(abstract.number_search_results/250)
+    total_pages = math.ceil(abstract.number_search_results/250)
     for page in range(1, total_pages + 1):
         # Process each page of search results
         print(f"Processing page {page} of {total_pages}...")
@@ -300,7 +287,7 @@ def process_search_result_pages(browser: WebDriver, abstract: Abstract) -> None:
             verify_final_search_results(abstract)
 
 
-def collect(browser: WebDriver, abstract: Abstract) -> None:
+def collect(browser: WebDriver, abstract: Abstract, document=None) -> None:
     """
     Collect search results from all pages.
 
@@ -308,10 +295,15 @@ def collect(browser: WebDriver, abstract: Abstract) -> None:
         browser (WebDriver): The WebDriver instance.
         abstract (Abstract): The abstract information.
     """
-    count_total_search_results(browser, abstract)
-    if abstract.number_search_results > 50:
-        set_results_per_page_to_highest(browser, abstract)
-        process_search_result_pages(browser, abstract)
-    else:
-        process_search_results(browser, abstract)
-        verify_final_search_results(abstract)
+    if abstract.program == "name_search" and abstract.number_search_results is None:
+        total_results = count_total_search_results(browser, abstract)
+        if abstract.number_search_results > 50:
+            set_results_per_page_to_highest(browser, abstract)
+            process_search_result_pages(browser, abstract)
+        else:
+            process_search_results(browser, abstract)
+            verify_final_search_results(abstract)
+    elif abstract.program in ["execute", "review"]:
+        total_results = count_total_search_results(browser, abstract)
+        document.number_results = total_results
+        process_search_results(browser, abstract, document)
