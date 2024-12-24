@@ -81,15 +81,11 @@ def wait_for_page(browser, loading_title, loaded_title, timeout=5):
     """
     start_time = time()
     while True:
-        print("browser.title", browser.title)
-        print("loading_title", loading_title)
-        print("loaded_title", loaded_title)
         if browser.title == loading_title:
             sleep(1)
             if time() - start_time > timeout:
                 return False
         elif browser.title == loaded_title:
-            print("here")
             return True
 
 
