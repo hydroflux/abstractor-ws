@@ -178,8 +178,26 @@ def create_folder(directory):
         print('Error: Creating directory ' + directory)
 
 
+def check_dates(abstract):
+    if abstract.start_date is None:
+        return True
+    elif abstract.start_date > convert_to_mmddyyyy(datetime.today().strftime("%m/%d/%Y")):
+        print("The start date is after today's date, please check the dates and try again.")
+    elif abstract.end_date is None:
+        return True
+    elif abstract.start_date > abstract.end_date:
+        print("The start date is after the end date, please check the dates and try again.")
+    elif abstract.end_date > convert_to_mmddyyyy(datetime.today().strftime("%m/%d/%Y")):
+        print("The end date is after today's date, please check the dates and try again.")
+    else:
+        return True
+
+
 def initialize_abstraction():
     abstract = create_abstract_object()
-    handle_program_type(abstract)
-    update_abstract_and_county_attributes(abstract)
-    return abstract
+    if check_dates(abstract):
+        handle_program_type(abstract)
+        update_abstract_and_county_attributes(abstract)
+        return abstract
+    else:
+        quit()
