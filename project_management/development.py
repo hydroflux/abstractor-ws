@@ -16,7 +16,7 @@ sys.path.append(".")
 
 def execute_program_functions(browser, abstract, document=None):
     login(browser, abstract)
-    search(browser, abstract, document)
+    search(browser, abstract)
     open_document(browser, abstract, document)
     record(browser, abstract, document)
     execute_download(browser, abstract, document)
