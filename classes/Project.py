@@ -195,6 +195,7 @@ class Project:
             'limitations': self.workbook.add_format(self.text_formats['limitations']),
             'disclaimer': self.workbook.add_format(self.text_formats['disclaimer']),
             'footer': self.workbook.add_format(self.text_formats['footer']),
+            'hyperlink': self.workbook.add_format(self.text_formats['hyperlink']),
             'no_record': self.workbook.add_format(self.text_formats['no_record']),
             'multiple_documents': self.workbook.add_format(self.text_formats['multiple_documents']),
             'no_image': self.workbook.add_format(self.text_formats['no_image']),
@@ -229,7 +230,7 @@ class Project:
         """
         add_content(self)
         add_conditional_formatting(self)
-        add_hyperlink_sheet(self.abstract, self)
+        add_hyperlink_sheet(self)
         self.workbook.close()
 
     def bundle_project(self):
