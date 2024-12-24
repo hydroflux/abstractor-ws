@@ -18,8 +18,8 @@ Imports:
         - from selenium_utilities.inputs: For clicking buttons and entering input values.
         - from selenium_utilities.locators: For locating elements.
         - from selenium_utilities.open: For opening URLs.
-    - Standard Library:
-        - from typing: For type hints.
+    - Class:
+        - from classes import Abstract: For the abstract class object.
 
 Usage:
     These functions are designed to be used with Selenium WebDriver to automate the login process for the Komodo engine.
@@ -35,10 +35,11 @@ from selenium_utilities.inputs import click_button, enter_input_value
 from selenium_utilities.locators import locate_element_by_class_name, locate_element_by_id
 from selenium_utilities.open import open_url
 
-# Standard Library Import(s)
-from typing import Any
+# Class Import(s)
+from classes import Abstract
 
-def enter_credentials(browser: WebDriver, abstract: Any) -> None:
+
+def enter_credentials(browser: WebDriver, abstract: Abstract) -> None:
     """
     Enters the user credentials into the login form.
 
@@ -53,7 +54,7 @@ def enter_credentials(browser: WebDriver, abstract: Any) -> None:
     click_button(browser, locate_element_by_class_name, abstract.county.buttons["Login"], "login button")
 
 
-def login(browser: WebDriver, abstract: Any) -> None:
+def login(browser: WebDriver, abstract: Abstract) -> None:
     """
     Opens the login page and enters the user credentials to perform the login action.
 
