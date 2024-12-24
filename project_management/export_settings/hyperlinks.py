@@ -56,12 +56,12 @@ def create_hyperlink_sheet(project):
     return hyperlink_sheet
 
 
-def add_hyperlink_sheet(abstract, project):
-    if abstract.download:
-        hyperlink_format = project.workbook.add_format(project.text_formats['hyperlink'])
+def add_hyperlink_sheet(project):
+    if project.abstract.download:
+        hyperlink_format = project.text_formats['hyperlink']  # Use the existing Format object directly
         hyperlink_sheet = create_hyperlink_sheet(project)
-        write_temporary_hyperlinks(abstract.document_directory, hyperlink_sheet, hyperlink_format)
-        os.chdir(abstract.target_directory)  # Is this necessary?
+        write_temporary_hyperlinks(project.abstract.document_directory, hyperlink_sheet, hyperlink_format)
+        # os.chdir(project.abstract.target_directory)  # Is this necessary?
 
 
 # def export_hyperlinks(abstract):
