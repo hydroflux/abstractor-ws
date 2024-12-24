@@ -1,6 +1,6 @@
 class Document:
     def __init__(self, type, value, year=None, recording_date=None, index_number=None,
-                 number_results=0, multiple_results=None, result_number=0, reception_number=None,
+                 number_results=0, result_links = [], multiple_results=None, result_number=0, reception_number=None,
                  description_link=None, image_available=True, image_link=None,
                  button_attributes=None, input_attributes=None, search_attributes=None,
                  county=None, start_time=None,
@@ -14,6 +14,7 @@ class Document:
         self.recording_date = recording_date
         self.index_number = index_number
         self.number_results = number_results
+        self.result_links = result_links
         self.multiple_results = multiple_results
         self.result_number = result_number
         self.reception_number = reception_number
