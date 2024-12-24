@@ -1,6 +1,6 @@
 from datetime import datetime
 from random import randint
-from time import sleep
+from time import sleep, time
 
 from settings.county_variables.general import abstraction_type
 
@@ -63,6 +63,34 @@ def nap(type=None):
             medium_nap()
         elif type == "long":
             long_nap()
+            
+
+def wait_for_page(browser, loading_title, loaded_title, timeout=5):
+    """
+    Waits for the search results page to load by checking the browser title.
+    If the title indicates that the page is still loading, it waits up to 5 seconds before checking again.
+
+    Args:
+        browser (WebDriver): The WebDriver instance.
+        loading_title (str): The title of the page when it is still loading.
+        loaded_title (str): The title of the page when it is loaded.
+        timeout (int, optional): The maximum time to wait in seconds. Defaults to 5.
+
+    Returns:
+        bool: True if the page loaded successfully, False if the timeout was reached.
+    """
+    start_time = time()
+    while True:
+        print("browser.title", browser.title)
+        print("loading_title", loading_title)
+        print("loaded_title", loaded_title)
+        if browser.title == loading_title:
+            sleep(1)
+            if time() - start_time > timeout:
+                return False
+        elif browser.title == loaded_title:
+            print("here")
+            return True
 
 
 def start_timer():
