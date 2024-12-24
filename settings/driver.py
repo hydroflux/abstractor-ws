@@ -1,8 +1,9 @@
 import json
-
+import os
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
+from selenium.common.exceptions import WebDriverException
 
 
 # # helper to edit 'Preferences' file inside Chrome profile directory.
@@ -66,11 +67,13 @@ def chrome_webdriver(abstract):
     # Added for printing to PDF
     options.add_argument('--kiosk-printing')
 
-    driver = webdriver.Chrome(service=service, options=options)
-    driver.maximize_window()
-
-    return driver
-
+    try:
+        driver = webdriver.Chrome(service=service, options=options)
+        driver.maximize_window()
+        return driver
+    except WebDriverException as e:
+        print(f"Failed to start ChromeDriver service: {e}")
+        raise
 
 def enable_download_in_headless_chrome(browser, abstract):
     document_directory = f'{abstract.target_directory}/Documents'
@@ -91,7 +94,11 @@ def enable_download_in_headless_chrome(browser, abstract):
 
 
 def create_webdriver(abstract):
-    browser = chrome_webdriver(abstract)
-    if abstract.headless:
-        enable_download_in_headless_chrome(browser, abstract)
-    return browser
+    try:
+        browser = chrome_webdriver(abstract)
+        if abstract.headless:
+            enable_download_in_headless_chrome(browser, abstract)
+        return browser
+    except KeyboardInterrupt:
+        print("Script interrupted by user. Exiting...")
+        exit(0)
