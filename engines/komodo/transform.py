@@ -95,12 +95,16 @@ def update_county_attributes(abstract: Abstract) -> None:
         "Results Per Page Button": komodo.results_per_page_button_class_name,
         "Results Per Page Dropdown": komodo.results_per_page_dropdown_class_name,
         "Results Per Page Options": komodo.results_per_page_options_class_name,
+        # DOWNLOAD
+        "Document Image Section": komodo.document_image_section_class_name
     }
     abstract.county.inputs = {  # Consider changing to 'search_inputs'
         # SEARCH
         "Search Input": komodo.search_input_css_selector,
         "Start Date": komodo.start_date_input_css_selector,
-        "End Date": komodo.end_date_input_css_selector
+        "End Date": komodo.end_date_input_css_selector,
+        # DOWNLOAD
+        "Stock Download Suffix": komodo.stock_download_suffix
     }
     abstract.county.tags = {
         # COLLECT
@@ -109,7 +113,11 @@ def update_county_attributes(abstract: Abstract) -> None:
         "Search Results Table": komodo.search_results_table_tag,
         "Reception Number Column": komodo.reception_number_column_css_selector,
         "Result Checkbox": komodo.result_checkbox_css_selector,
-        "Next Page": komodo.search_results_next_page_button_css_selector
+        "Next Page": komodo.search_results_next_page_button_css_selector,
+        # DOWNLOAD
+        "Document Image": komodo.document_image_element_tag,
+        "Document Image Attribute": komodo.document_image_attribute,
+        "Order ID": komodo.order_id_element_css_selector
     }
     abstract.county.record = {
         "Show All Elements": komodo.show_all_elements_class_name,
