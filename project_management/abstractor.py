@@ -52,7 +52,7 @@ def engine_switch(abstract):
         if abstract.program in ["execute", "review", "download"]:
             return execute_jaguar
     elif abstract.county.engine == 'komodo':
-        if abstract.program in ["name_search"]:
+        if abstract.program in ["execute", "review", "name_search"]:
             return execute_komodo
     elif abstract.county.engine == 'leopard':
         if abstract.program in ["execute", "review", "download"]:
