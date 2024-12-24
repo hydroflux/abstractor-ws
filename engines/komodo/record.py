@@ -190,6 +190,10 @@ def record_parties(browser: WebDriver, abstract: Abstract, document: Document) -
     grantors = []
     grantees = []
     if parties_container:
+        if parties_container.text == abstract.county.record["No Parties Found"]:
+            record_value(abstract, 'grantor', "")
+            record_value(abstract, 'grantee', "")
+            return
         party_items_container = locate_element_by_class_name(parties_container, abstract.county.record["Parties"],
                                                              "party items container", False, document)
         text_elements = locate_elements_by_class_name(party_items_container, abstract.county.record["Party Item Text"],

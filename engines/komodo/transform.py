@@ -124,6 +124,7 @@ def update_county_attributes(abstract: Abstract) -> None:
         "Number Pages Text": komodo.number_pages_text,
         "Recording Date Text": komodo.recording_date_text,
         "Additional Information": komodo.parties_related_documents_and_legal_class_name,
+        "No Parties Found": komodo.no_parties_found_text,
         "Parties": komodo.parties_class_name,
         "Party Item Label": komodo.party_item_label_class_name,
         "Party Item Text": komodo.party_item_text_class_name,
