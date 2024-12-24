@@ -122,6 +122,9 @@ def prepare_file_for_download(abstract, document):
     elif os.path.isfile(f'{abstract.document_directory}/{document.target_name}'):
         check_download_size(document.target_name, document)
         return True
+    elif check_file_size(document.target_download_path):
+        check_download_size(document.target_name, document)
+        return True
     else:
         # raise ValueError("%s isn't a file!" % document.download_path)
         print(f'Expected Download Path: {document.download_path}')
@@ -143,6 +146,7 @@ def check_for_alternate(document):
 def rename_download(abstract, document):
     try:
         while not prepare_file_for_download(abstract, document):
+            print("hey hey hey")
             prepare_file_for_download(abstract, document)
     except FileNotFoundError:
         print(f'File not found, please review stock download '
@@ -165,7 +169,7 @@ def reset_document_download_attributes(document):
 
 def update_download(browser, abstract, document):
     if wait_for_download(browser, abstract, document):
-        naptime()
+        # naptime() Commented out 12/23/24
         check_for_alternate(document)
         rename_download(abstract, document)
         check_for_rename(abstract, document)
