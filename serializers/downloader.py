@@ -1,8 +1,9 @@
 import os
-from time import time, sleep
+from time import time
 
 from selenium.common.exceptions import JavascriptException
 
+from project_management.timers import short_nap
 from settings.download_management import update_download
 from settings.initialization import create_folder
 
@@ -27,66 +28,17 @@ def set_new_download_name(document):
         return document.target_name
 
 
-def get_downloaded_file_name(browser, wait_time=300):
-    browser.execute_script("window.open()")
-    # switch to new tab
-    browser.switch_to.window(browser.window_handles[-1])
-    # navigate to chrome downloads
-    browser.get('chrome://downloads')
-    # define the endTime
-    endTime = time() + wait_time
-    while True:
-        download_percentage_script = ("return document.querySelector('downloads-manager')"
-                                      ".shadowRoot.querySelector('#downloadsList downloads-item')"
-                                      ".shadowRoot.querySelector('#progress').value")
-        download_name_script = ("return document.querySelector('downloads-manager')"
-                                ".shadowRoot.querySelector('#downloadsList downloads-item')"
-                                ".shadowRoot.querySelector('div#content  #file-link').text ")
-        try:
-            # get downloaded percentage
-            downloadPercentage = browser.execute_script(download_percentage_script)
-            # check if downloadPercentage is 100 (otherwise the script will keep waiting)
-            if downloadPercentage == 100:
-                # return the file name once the download is completed
-                return browser.execute_script(download_name_script)
-        except JavascriptException:  # Document already downloaded
-            return browser.execute_script(download_name_script)
-        sleep(1)
-        if time() > endTime:
-            break
-
-
-# Could be a more generalized function imported into serializer
-def close_download_window(browser):
-    windows = browser.window_handles
-    if len(windows) > 1:
-        browser.switch_to.window(windows[1])
-        browser.close()
-        browser.switch_to.window(windows[0])
-
-
-def set_downloaded_file_value(browser, document):  # updated 09/27/22
-    if document.download_value is None:
-        document.download_value = get_downloaded_file_name(browser)
-        close_download_window(browser)
-
-
-def set_download_path(browser, abstract, document):  # updated 09/27/22
-    set_downloaded_file_value(browser, document)
-    return f'{abstract.document_directory}/{document.download_value}'
-
-
-def set_alternate_download_path(browser, abstract, document):
+def set_alternate_download_path(abstract, document):
     if document.alternate_download_value:
         return f'{abstract.document_directory}/{document.alternate_download_value}'
 
 
-def prepare_for_download(browser, abstract, document):
+def prepare_for_download(abstract, document):
     abstract.document_directory = create_document_directory(abstract.target_directory)
     abstract.document_directory_files = len(os.listdir(abstract.document_directory))
     document.target_name = set_new_download_name(document)
-    document.download_path = set_download_path(browser, abstract, document)
-    document.alternate_download_path = set_alternate_download_path(browser, abstract, document)
+    # document.download_path = set_download_path(browser, abstract, document)
+    document.alternate_download_path = set_alternate_download_path(abstract, document)
     document.target_download_path = f'{abstract.document_directory}/{document.target_name}'
 
 
@@ -153,10 +105,80 @@ def previously_downloaded(abstract, document):
         return False
 
 
+def get_downloaded_file_name(browser, wait_time=300):
+    short_nap()
+    browser.execute_script("window.open()")
+    # switch to new tab
+    browser.switch_to.window(browser.window_handles[-1])
+    # navigate to chrome downloads
+    browser.get('chrome://downloads')
+    # define the endTime
+    endTime = time() + wait_time
+    while True:
+        download_percentage_script = ("var manager = document.querySelector('downloads-manager');"
+                                      "if (manager) {"
+                                      "  var item = manager.shadowRoot.querySelector('#downloadsList downloads-item');"
+                                      "  if (item) {"
+                                      "    var progress = item.shadowRoot.querySelector('#progress');"
+                                      "    if (progress) { return progress.value; }"
+                                      "  }"
+                                      "}"
+                                      "return null;")
+        download_name_script = ("var manager = document.querySelector('downloads-manager');"
+                                "if (manager) {"
+                                "  var item = manager.shadowRoot.querySelector('#downloadsList downloads-item');"
+                                "  if (item) {"
+                                "    var link = item.shadowRoot.querySelector('div#content #file-link');"
+                                "    if (link) { return link.text; }"
+                                "  }"
+                                "}"
+                                "return null;")
+        try:
+            # get downloaded percentage
+            downloadPercentage = browser.execute_script(download_percentage_script)
+            # check if downloadPercentage is 100 (otherwise the script will keep waiting)
+            if downloadPercentage == 100:
+                # return the file name once the download is completed
+                downloadName = browser.execute_script(download_name_script)
+                return downloadName
+            # Check if the download is already completed
+            downloadName = browser.execute_script(download_name_script)
+            if downloadName:
+                return downloadName
+        except JavascriptException as e:  # Handle JavascriptException
+            print(f"JavascriptException: {e}")
+            downloadName = browser.execute_script(download_name_script)
+            return downloadName
+        short_nap()
+        if time() > endTime:
+            break
+    return None
+
+
+# Could be a more generalized function imported into serializer
+def close_download_window(browser):
+    windows = browser.window_handles
+    if len(windows) > 1:
+        browser.switch_to.window(windows[1])
+        browser.close()
+        browser.switch_to.window(windows[0])
+
+
+def set_downloaded_file_value(browser, document):
+    if document.download_value is None:
+        document.download_value = get_downloaded_file_name(browser)
+        close_download_window(browser)
+
+
+def set_download_path(browser, abstract, document):
+    set_downloaded_file_value(browser, document)
+    return f'{abstract.document_directory}/{document.download_value}'
+
+
 def download_document(browser, abstract, document, execute_download):
-    prepare_for_download(browser, abstract, document)
+    prepare_for_download(abstract, document)
     if not previously_downloaded(abstract, document):
         execute_download(browser, abstract, document)
-        # document.print_attributes()
+        document.download_path = set_download_path(browser, abstract, document)
         if document.image_available:
             update_download(browser, abstract, document)
