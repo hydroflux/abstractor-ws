@@ -12,22 +12,35 @@ This module contains functions to:
 
 The functions in this module interact with web elements using Selenium WebDriver
 and perform actions such as clicking buttons and locating elements by various selectors.
+
+Imports:
+    - Standard Library:
+        - from typing: For type hints.
+        - import math: For mathematical functions.
+        - import re: For regular expressions.
+    - Selenium:
+        - from selenium.webdriver.remote.webdriver: For WebDriver interactions.
+        - from selenium.webdriver.remote.webelement: For WebElement interactions.
+    - Local:
+        - from selenium_utilities.inputs: For clicking buttons using Selenium.
+        - from selenium_utilities.locators: For locating elements using various selectors.
+    - Class:
+        - from classes.Abstract: For Abstract class to store collected data.
+        - from classes.Document: For Document class to store document information.
 """
 
-# Library Import(s)
-from typing import Optional  # Library to provide hints about the types used in the source code
-import math  # Library to provide mathematical functions
-import re  # Library to provide support for regular expressions
+# Standard Library Import(s)
+from typing import Optional
+import math
+import re
 
 # Selenium Import(s)
-from selenium.webdriver.remote.webdriver import WebDriver  # WebDriver instance for browser interactions
-from selenium.webdriver.remote.webelement import WebElement  # WebElement instance for web element interactions
+from selenium.webdriver.remote.webdriver import WebDriver
+from selenium.webdriver.remote.webelement import WebElement
 
 # Local Import(s)
-from classes.Abstract import Abstract  # For Abstract class to store collected data
-from classes.Document import Document  # For Document class to represent individual documents
-from selenium_utilities.inputs import click_button  # For clicking buttons using Selenium
-from selenium_utilities.locators import (  # For locating elements using various selectors
+from selenium_utilities.inputs import click_button
+from selenium_utilities.locators import (
     locate_element_by_class_name,
     locate_elements_by_class_name,
     locate_elements_by_css_selector,
@@ -35,6 +48,9 @@ from selenium_utilities.locators import (  # For locating elements using various
     locate_element_by_tag_name
 )
 
+# Class Import(s)
+from classes.Abstract import Abstract
+from classes.Document import Document
 
 def count_total_search_results(browser: WebDriver, abstract: Abstract) -> Optional[int]:
     """
@@ -48,15 +64,12 @@ def count_total_search_results(browser: WebDriver, abstract: Abstract) -> Option
         Optional[int]: The total number of search results, or None if not found.
     """
     try:
-        # Locate the element containing the search result totals
         results_summary_element = locate_element_by_css_selector(browser, abstract.county.tags["Total Results"], "results summary")
         if results_summary_element:
-            # Extract the number from the text using a regular expression
             results_text = results_summary_element.text
             match = re.search(r'of\s+([\d,]+)\s+results', results_text)
             if match:
                 total_results = int(match.group(1).replace(',', ''))
-                # Update abstract.number_search_results across the board as an integer in order to clean up next part
                 if abstract.number_search_results is None:
                     abstract.number_search_results = total_results
                 else:
@@ -167,14 +180,12 @@ def access_result_description_link(result: WebElement, abstract: Abstract) -> Op
         Optional[str]: The description link, or None if not found.
     """
     try:
-        # Extract the unique identifier from the checkbox input element's id attribute
         checkbox_element = locate_element_by_css_selector(result, abstract.county.tags["Result Checkbox"], "result checkbox")
         if checkbox_element:
             checkbox_id = checkbox_element.get_attribute("id")
             match = re.search(r'table-checkbox-(\d+)', checkbox_id)
             if match:
                 unique_id = match.group(1)
-                # Construct the URL using the extracted unique identifier
                 description_link = f"{abstract.county.urls['Search Result Base Url']}{unique_id}"
                 return description_link
     except Exception as e:
@@ -187,8 +198,9 @@ def build_document(abstract: Abstract, reception_number: str, description_link: 
     Build a Document instance using the reception number and description link.
 
     Args:
-        result (WebElement): The result row element.
         abstract (Abstract): The abstract information.
+        reception_number (str): The reception number.
+        description_link (str): The description link.
 
     Returns:
         Document: The built Document instance.
@@ -203,20 +215,20 @@ def build_document(abstract: Abstract, reception_number: str, description_link: 
     )
 
 
-def process_search_result(result: WebElement, abstract: Abstract, document=None) -> None:
+def process_search_result(result: WebElement, abstract: Abstract, document: Optional[Document] = None) -> None:
     """
     Process a single search result.
 
     Args:
         result (WebElement): The result row element.
         abstract (Abstract): The abstract information.
+        document (Optional[Document]): The document object, if applicable.
     """
     reception_number = access_result_reception_number(result, abstract)
     if reception_number:
         description_link = access_result_description_link(result, abstract)
         if abstract.program == "name_search":
             document = build_document(abstract, reception_number, description_link)
-            # Add the document to the document_list array on the abstract object instance
             abstract.document_list.append(document)
             print(f"Added document {len(abstract.document_list)} of {abstract.number_search_results} "
                   f"with reception number {reception_number} to the document list.")
@@ -247,20 +259,19 @@ def verify_final_search_results(abstract: Abstract) -> None:
         input(f"Expected {expected_results} search results, but located {actual_results}. Please review and press enter to continue.")
 
 
-def process_search_results(browser: WebDriver, abstract: Abstract, document=None) -> None:
+def process_search_results(browser: WebDriver, abstract: Abstract, document: Optional[Document] = None) -> None:
     """
     Process all search results in the table.
 
     Args:
         browser (WebDriver): The WebDriver instance.
         abstract (Abstract): The abstract information.
+        document (Optional[Document]): The document object, if applicable.
     """
     search_results_table = get_results_table(browser, abstract)
     if search_results_table:
-        # Process the search results on the current page
         results = locate_elements_by_css_selector(search_results_table, "tr", "search result rows")
         for result in results:
-            # Process each search result
             process_search_result(result, abstract, document)
     else:
         input("No search results table found.")
@@ -274,12 +285,10 @@ def process_search_result_pages(browser: WebDriver, abstract: Abstract) -> None:
         browser (WebDriver): The WebDriver instance.
         abstract (Abstract): The abstract information.
     """
-    total_pages = math.ceil(abstract.number_search_results/250)
+    total_pages = math.ceil(abstract.number_search_results / 250)
     for page in range(1, total_pages + 1):
-        # Process each page of search results
         print(f"Processing page {page} of {total_pages}...")
         process_search_results(browser, abstract)
-        # Check if the current page is the last page
         if page < total_pages:
             click_button(browser, locate_element_by_css_selector, abstract.county.tags["Next Page"], "next page button")
         else:
@@ -287,13 +296,14 @@ def process_search_result_pages(browser: WebDriver, abstract: Abstract) -> None:
             verify_final_search_results(abstract)
 
 
-def collect(browser: WebDriver, abstract: Abstract, document=None) -> None:
+def collect(browser: WebDriver, abstract: Abstract, document: Optional[Document] = None) -> None:
     """
     Collect search results from all pages.
 
     Args:
         browser (WebDriver): The WebDriver instance.
         abstract (Abstract): The abstract information.
+        document (Optional[Document]): The document object, if applicable.
     """
     if abstract.program == "name_search" and abstract.number_search_results is None:
         total_results = count_total_search_results(browser, abstract)
