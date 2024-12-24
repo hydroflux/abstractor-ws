@@ -23,6 +23,9 @@ def update_county_attributes(abstract):
         "Login Page": komodo.login_page_title,
         # SEARCH
         "Search Page": komodo.search_page_title,
+        # COLLECT
+        "Loading": komodo.loading_page_title,
+        "Search Results Page": komodo.search_results_page_title,
         # OPEN DOCUMENT
         "Search Result Page": komodo.search_result_page_title,
         # LOGOUT
@@ -33,6 +36,10 @@ def update_county_attributes(abstract):
         "Login": komodo.login_button_class_name,
         # SEARCH
         "Search": komodo.search_button_class_name,
+        # DOWNLOAD
+        "Purchase Window": komodo.purchase_window_button_css_selector,
+        "Purchase": komodo.purchase_button_css_selector,
+        "Download": komodo.download_button_css_selector
     }
     abstract.county.classes = {
         # COLLECT
