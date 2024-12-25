@@ -186,6 +186,12 @@ class Abstract:
 
     def stop_program_timer(self):
         print(f'Total Run Time: {self.report_execution_time(self.timer)}')
+    
+    def __getitem__(self, key):
+        return getattr(self, key)
+
+    def __setitem__(self, key, value):
+        setattr(self, key, value)
 
 
 # - [ ] Put general button_ids on the 'abstract' class (login, logout, etc.)
