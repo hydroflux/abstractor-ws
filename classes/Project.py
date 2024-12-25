@@ -1,15 +1,17 @@
+from datetime import date
 import os
 import shutil
 from pandas import DataFrame, ExcelWriter
 
 from project_management.export_settings.content import number_to_letter
 from project_management.export_settings.worksheet_properties import worksheet_properties
-from project_management.export_settings.authorship import authorship, disclaimer
+from project_management.export_settings.authorship import authorship, disclaimers
 from project_management.export_settings.conditional_formatting import add_conditional_formatting
 from project_management.export_settings.content import add_content, number_to_letter
 from project_management.export_settings.hyperlinks import add_hyperlink_sheet
 
 from settings.county_variables.general import abstraction_type
+from settings.initialization import convert_to_yyyymmdd
 from settings.settings import (client, document_order, prospect,
                                quarter, section, township, range as legal_range)
 
@@ -26,7 +28,6 @@ class ColumnFormat:
 class Project:
     # Static Class Variables
     authorship = authorship
-    disclaimer = disclaimer
     client_information = f'{client} - {prospect}'
     worksheet_properties = worksheet_properties
     text_formats = worksheet_properties["text_formats"]
@@ -34,6 +35,7 @@ class Project:
 
     def __init__(self, abstract):
         self.abstract = abstract
+        self.disclaimer = self.set_disclaimer_type()
         self.type = abstract.type
         self.county = abstract.county
         self.target_directory = abstract.target_directory
@@ -85,9 +87,40 @@ class Project:
         # Format the Excel document
         self.format_xlsx_document()
     
+    
+    def set_disclaimer_type(self):
+        if self.abstract.program == "name_search":
+            return disclaimers["name_search"]
+        elif self.abstract.program == "legal":
+            return disclaimers["legal"]
+        else:
+            return disclaimers["base"]
+
+
     def create_output_file(self):
-        abstraction_export = '-'.join(self.abstract.type.upper().split(' '))
-        return f'{self.abstract.file_name.upper()}-{abstraction_export}.xlsx'
+        abstract = self.abstract
+        if abstract.program == "name_search":
+            search_name = abstract.search_name
+            if search_name is None:
+                search_name = 'All Documents'
+            else:
+                search_name = search_name.title()
+            start_date = abstract.start_date
+            end_date = abstract.end_date
+            if start_date is None and end_date is None:
+                file = f'{search_name} (Earliest - Present)'
+            elif start_date is None:
+                file = f'{search_name} (Earliest - {convert_to_yyyymmdd(end_date)})'
+            elif end_date is None:
+                file = f'{search_name} ({convert_to_yyyymmdd(start_date)} - Present)'
+            else:
+                file = f'{search_name} ({convert_to_yyyymmdd(start_date)} - {convert_to_yyyymmdd(end_date)})'
+            output_file = f'{abstract.county} - {file} ({convert_to_yyyymmdd(date.today())}).xlsx'
+            return output_file
+        else:
+            abstraction_export = '-'.join(abstract.type.upper().split(' '))
+            file = f'{abstract.file_name}-{abstraction_export}'
+            return f'{file} ({convert_to_yyyymmdd(date.today())}).xlsx'
 
     def create_target_directory(self):
         try:
