@@ -16,7 +16,7 @@ def delete_existing_chromedriver():
         subprocess.run(["rm", "-rf", chromedriver_dir], check=True)
         print("Deleted existing ChromeDriver.")
 
-# Look into how to change driver preferences mid script -- for download directories
+
 def chrome_webdriver(abstract, retries=3, delay=5):
     print("Starting ChromeDriver setup...")
     delete_existing_chromedriver()
@@ -25,17 +25,31 @@ def chrome_webdriver(abstract, retries=3, delay=5):
     service = Service(chromedriver)
     options = webdriver.ChromeOptions()
 
-    # Adding argument to disable the AutomationControlled flag
+    # Disable the AutomationControlled flag to avoid detection by websites
     options.add_argument("--disable-blink-features=AutomationControlled")
-    # Bypass OS Security Model
+    # Bypass OS security model (useful in Docker containers)
     options.add_argument('--no-sandbox')
-    # Added for printing to PDF
+    # Enable kiosk printing mode (useful for printing to PDF)
     options.add_argument('--kiosk-printing')
+    # Disable GPU hardware acceleration (useful in headless mode)
+    options.add_argument('--disable-gpu')
+    # Set the default window size
+    options.add_argument('window-size=1920x1080')
+    # Disable browser extensions
+    options.add_argument('--disable-extensions')
+    # Disable /dev/shm usage (useful in Docker containers)
+    options.add_argument('--disable-dev-shm-usage')
+    # Enable logging for debugging
+    options.add_argument("--enable-logging")
+    options.add_argument("--v=1")
+    
 
+    # Set headless mode if enabled
     if abstract.headless:
         options.add_argument('--headless')
         print("Running in headless mode.")
         # options.add_argument('start-maximized') # Maximize Viewport
+
 
     # Settings used for printing directly to PDF
     settings = {
@@ -47,23 +61,30 @@ def chrome_webdriver(abstract, retries=3, delay=5):
         "selectedDestinationId": "Save as PDF",
         "version": 2
     }
-
-    # Needs to be reviewed, but possibly can be used for adblock???
-    # options.add_extension(‘Users/Desktop/Python Scripting/crx_files/adblock_plus_3_8_4_0.crx’)
     
     prefs = {
-        # Setting Default Directory Doesn't work when using JSON.dumps
+        # Set the default directory for saving files
         'savefile.default_directory': f'{abstract.target_directory}/Documents',
+        # Set the default directory for downloads
         "download.default_directory": f'{abstract.target_directory}/Documents',
+        # Disable the download prompt
         "download.prompt_for_download": False,
+        # Ensure PDFs are opened externally
         "plugins.always_open_pdf_externally": True,
-        # Added for printing to PDF
-        "printing.print_preview_sticky_settings.appState": json.dumps(settings)
+        # Set the print preview settings for saving as PDF
+        "printing.print_preview_sticky_settings.appState": json.dumps(settings),
+        # Disable password manager
+        "credentials_enable_service": False,
+        "profile.password_manager_enabled": False,
+        # Disable browser notifications
+        "profile.default_content_setting_values.notifications": 2,
+        # Allow automatic downloads
+        "profile.default_content_setting_values.automatic_downloads": 1
     }
 
     # Add the preferences to the options
     options.add_experimental_option("prefs", prefs)
-    # Turn-off userAutomationExtension
+    # Turn off the automation extension
     options.add_experimental_option("useAutomationExtension", False)
     # Exclude the collection of enable-automation switches
     options.add_experimental_option("excludeSwitches", ["enable-automation"])
