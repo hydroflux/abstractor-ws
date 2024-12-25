@@ -64,19 +64,21 @@ def enter_datepicker_value(browser, locator_function, attribute, type, value, do
 
 def click_button(locator, locator_function, attribute, type, document=None, quick=False):
     try:
+        attempts = 0
         button = locator_function(locator, attribute, type, True, document, quick)
-        # if button is False:
-        #     return False
-        # else:
-        #     center_element(locator, button)
-        #     button.click()
-        while button is False:
+        while button is False and attempts < 3:
+            attempts += 1
+            print(f'Unable to locate "{type}" button, trying again ({attempts} of 4)...')
+            button = locator_function(locator, attribute, type, True, document, quick)
+
+        if button is False:
             if document is None:
                 input(f'Unable to locate "{type}" button, please review and press enter to continue.')
             else:
                 input(f'Unable to locate "{type}" button for {document.extrapolate_value()}, '
                       f'please review and press enter to continue.')
             button = locator_function(locator, attribute, type, True, document, quick)
+
         if not isinstance(locator, WebElement):
             center_element(locator, button)
         button.click()
