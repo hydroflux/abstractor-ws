@@ -1,4 +1,5 @@
 import os
+from typing import Literal, Optional, Union
 
 from classes.Abstract import Abstract
 from classes.counties import county_dictionary
@@ -30,7 +31,7 @@ from settings.settings import (county_name, end_date, file_name, quarter,
                                start_date, target_directory, township)
 
 from dateutil import parser
-from datetime import datetime
+from datetime import datetime, date
 
 # from classes.Engine import Engine
 
@@ -54,23 +55,30 @@ def access_county_instance(county_name):
     return county_instance
 
 
-def convert_to_mmddyyyy(date_str: str) -> str:
+def convert_to_yyyymmdd(date_input) -> str:
     """
-    Convert any date string format to "MM/DD/YYYY".
+    Convert any date string format or date object to "YYYY,MM,DD".
 
     Args:
-        date_str (str): The date string to convert.
+        date_input (Union[str, date]): The date string or date object to convert.
 
     Returns:
-        str: The date string in "MM/DD/YYYY" format.
+        str: The date string in "YYYY,MM,DD" format.
     """
     try:
-        # Parse the date string to a datetime object
-        date_obj = parser.parse(date_str)
-        # Format the datetime object to "MM/DD/YYYY"
-        return date_obj.strftime("%m/%d/%Y")
+        if isinstance(date_input, str):
+            # Parse the date string to a datetime object
+            date_obj = parser.parse(date_input)
+        elif isinstance(date_input, date):
+            # Use the date object directly
+            date_obj = date_input
+        else:
+            raise ValueError("Invalid date input type. Must be a string or date object.")
+        
+        # Format the datetime object to "YYYY,MM,DD"
+        return date_obj.strftime("%Y,%m,%d")
     except (ValueError, parser.ParserError) as e:
-        print(f"Error parsing date string '{date_str}': {e}")
+        print(f"Error parsing date input '{date_input}': {e}")
         return None
 
 
@@ -106,8 +114,8 @@ def create_abstract_object():
         download=download,
         dataframe=dataframe,
         search_name=search_name,
-        start_date=convert_to_mmddyyyy(start_date),
-        end_date=convert_to_mmddyyyy(end_date),
+        start_date=start_date,
+        end_date=end_date,
         legal=[
                 section,
                 township,
@@ -170,6 +178,7 @@ def update_abstract_and_county_attributes(abstract):
         transform_swordfish(abstract)
 
 
+# Create folder is also a method that could be handled on the "Abstract" class; please review
 def create_folder(directory):
     try:
         if not os.path.exists(directory):
@@ -178,19 +187,87 @@ def create_folder(directory):
         print('Error: Creating directory ' + directory)
 
 
-def check_dates(abstract):
-    if abstract.start_date is None:
+def is_valid_date(date_str: str) -> bool:
+    """
+    Check if the given date string is valid.
+
+    Args:
+        date_str (str): The date string to check.
+
+    Returns:
+        bool: True if the date string is valid, False otherwise.
+    """
+    try:
+        datetime.strptime(date_str, "%m/%d/%Y")
         return True
-    elif abstract.start_date > convert_to_mmddyyyy(datetime.today().strftime("%m/%d/%Y")):
-        print("The start date is after today's date, please check the dates and try again.")
-    elif abstract.end_date is None:
-        return True
-    elif abstract.start_date > abstract.end_date:
-        print("The start date is after the end date, please check the dates and try again.")
-    elif abstract.end_date > convert_to_mmddyyyy(datetime.today().strftime("%m/%d/%Y")):
-        print("The end date is after today's date, please check the dates and try again.")
+    except ValueError:
+        return False
+
+
+def convert_to_mmddyyyy(date_input: Union[str, date]) -> str:
+    """
+    Convert any date string format or date object to "MM/DD/YYYY".
+
+    Args:
+        date_input (Union[str, date]): The date string or date object to convert.
+
+    Returns:
+        str: The date string in "MM/DD/YYYY" format.
+    """
+    if isinstance(date_input, str):
+        date_obj = datetime.strptime(date_input, "%m/%d/%Y")
+    elif isinstance(date_input, date):
+        date_obj = date_input
     else:
+        raise ValueError("Invalid date input type. Must be a string or date object.")
+    return date_obj.strftime("%m/%d/%Y")
+
+
+def valid_initial_date(abstract: Abstract, date_attr: str) -> Optional[Literal[True]]:
+    """
+    Validate the initial date in the abstract.
+
+    Args:
+        abstract (Abstract): The abstract object to validate.
+        date_attr (str): The date attribute to validate.
+
+    Returns:
+        Optional[Literal[True]]: True if the date is valid or None if invalid.
+    """
+    date_value = abstract[date_attr]
+    if date_value is None:
         return True
+    elif not is_valid_date(date_value):
+        print(f"The {date_attr} is invalid, please check the date and try again.")
+    else:
+        abstract[date_attr] = convert_to_mmddyyyy(date_value)
+        return True
+
+
+def check_dates(abstract: dict) -> Optional[Literal[True]]:
+    """
+    Check the validity of start and end dates in the abstract.
+
+    Args:
+        abstract (dict): The abstract dictionary containing date attributes.
+
+    Returns:
+        Optional[Literal[True]]: True if the dates are valid or None if invalid.
+    """
+    today = convert_to_mmddyyyy(date.today())
+    if valid_initial_date(abstract, "start_date") and valid_initial_date(abstract, "end_date"):
+        start_date = abstract["start_date"]
+        end_date = abstract["end_date"]
+        if start_date is None and end_date is None:
+            return True
+        elif start_date and start_date > today:
+            print("The start date is after today's date, please check the dates and try again.")
+        elif end_date and end_date > today:
+            print("The end date is after today's date, please check the dates and try again.")
+        elif start_date and end_date and start_date > end_date:
+            print("The start date is after the end date, please check the dates and try again.")
+        else:
+            return True
 
 
 def initialize_abstraction():
