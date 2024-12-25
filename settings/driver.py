@@ -1,14 +1,69 @@
-import subprocess
+"""
+This module provides functionality for setting up and managing a Chrome WebDriver instance.
+It includes functions to delete existing ChromeDriver installations, configure Chrome options,
+and create a WebDriver instance with specified preferences and settings.
+
+Functions:
+    - delete_existing_chromedriver() -> None:
+        -- Deletes the existing ChromeDriver installation.
+    - chrome_webdriver(abstract: Abstract, retries: int = 3, delay: int = 5) -> webdriver.Chrome:
+        -- Sets up and returns a Chrome WebDriver instance with specified options and preferences.
+    - enable_download_in_headless_chrome(browser: webdriver.Chrome, abstract: Abstract) -> None:
+        -- Enables download functionality in headless Chrome mode.
+    - create_webdriver(abstract: Abstract) -> webdriver.Chrome:
+        -- Creates and returns a Chrome WebDriver instance, enabling download in headless mode if specified.
+
+The functions in this module interact with web elements using Selenium WebDriver
+and perform actions such as locating elements, clicking buttons, and entering values.
+
+Imports:
+    - Standard Library:
+        - import json: For handling JSON data.
+        - import os: For interacting with the operating system.
+        - import subprocess: For running subprocesses.
+        - from time import sleep: For adding delays between retries.
+    - Selenium:
+        - from selenium import webdriver: For WebDriver interactions.
+        - from selenium.common.exceptions import WebDriverException: For handling WebDriver exceptions.
+        - from selenium.webdriver.chrome.service import Service: For managing the ChromeDriver service.
+    - WebDriver Manager:
+        - from webdriver_manager.chrome import ChromeDriverManager: For managing ChromeDriver installations.
+        - from webdriver_manager.core.os_manager import ChromeType: For specifying the type of ChromeDriver.
+    - Class:
+        - from classes.Abstract import Abstract: For Abstract class to store collected data.
+
+Usage:
+    These functions are designed to be used with Selenium WebDriver to automate the setup and management of ChromeDriver.
+    They provide robust handling of common issues such as ensuring a fresh installation of ChromeDriver and configuring
+    browser options, making it easier to write reliable web automation scripts.
+"""
+
+# Standard Library Import(s)
 import json
 import os
+import subprocess
 from time import sleep
+
+# Selenium Import(s)
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
 from selenium.common.exceptions import WebDriverException
+from selenium.webdriver.chrome.service import Service
+
+# WebDriver Manager Import(s)
+from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.core.os_manager import ChromeType
 
-def delete_existing_chromedriver():
+# Class Import(s)
+from classes.Abstract import Abstract
+
+
+def delete_existing_chromedriver() -> None:
+    """
+    Deletes the existing ChromeDriver installation.
+
+    This function locates the current ChromeDriver installation directory and deletes it
+    to ensure a fresh installation of ChromeDriver.
+    """
     chromedriver_path = ChromeDriverManager(chrome_type=ChromeType.GOOGLE).install()
     chromedriver_dir = os.path.dirname(chromedriver_path)
     if os.path.exists(chromedriver_dir):
@@ -17,7 +72,18 @@ def delete_existing_chromedriver():
         print("Deleted existing ChromeDriver.")
 
 
-def chrome_webdriver(abstract, retries=3, delay=5):
+def chrome_webdriver(abstract: Abstract, retries: int = 3, delay: int = 5) -> webdriver.Chrome:
+    """
+    Sets up and returns a Chrome WebDriver instance with specified options and preferences.
+
+    Args:
+        abstract (Abstract): The abstract object containing configuration details.
+        retries (int, optional): The number of retry attempts if ChromeDriver fails to start. Defaults to 3.
+        delay (int, optional): The delay between retry attempts in seconds. Defaults to 5.
+
+    Returns:
+        webdriver.Chrome: The configured Chrome WebDriver instance.
+    """
     print("Starting ChromeDriver setup...")
     delete_existing_chromedriver()
     chromedriver = ChromeDriverManager().install()
@@ -107,7 +173,15 @@ def chrome_webdriver(abstract, retries=3, delay=5):
                 print("Exceeded maximum retries. Raising exception.")
                 raise
 
-def enable_download_in_headless_chrome(browser, abstract):
+
+def enable_download_in_headless_chrome(browser: webdriver.Chrome, abstract: Abstract) -> None:
+    """
+    Enables download functionality in headless Chrome mode.
+
+    Args:
+        browser (webdriver.Chrome): The Chrome WebDriver instance.
+        abstract (Abstract): The abstract object containing configuration details.
+    """
     document_directory = f'{abstract.target_directory}/Documents'
     print(f"""Enabling download in headless Chrome. Download directory: "{document_directory}" """)
 
@@ -127,7 +201,16 @@ def enable_download_in_headless_chrome(browser, abstract):
     print("Download behavior set in headless Chrome.")
 
 
-def create_webdriver(abstract):
+def create_webdriver(abstract: Abstract) -> webdriver.Chrome:
+    """
+    Creates and returns a Chrome WebDriver instance, enabling download in headless mode if specified.
+
+    Args:
+        abstract (Abstract): The abstract object containing configuration details.
+
+    Returns:
+        webdriver.Chrome: The configured Chrome WebDriver instance.
+    """
     try:
         print("Creating WebDriver...")
         browser = chrome_webdriver(abstract)
