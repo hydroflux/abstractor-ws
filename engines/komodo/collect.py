@@ -164,6 +164,8 @@ def access_result_reception_number(result: WebElement, abstract: Abstract) -> Op
         reception_number_element = locate_element_by_css_selector(result, abstract.county.tags["Reception Number Column"], "reception number")
         if reception_number_element:
             return reception_number_element.text
+        else:
+            print("Reception number element not found to access result reception number.")
     except Exception as e:
         print(f"Error accessing reception number: {e}")
     return None
@@ -189,6 +191,8 @@ def access_result_description_link(result: WebElement, abstract: Abstract) -> Op
                 unique_id = match.group(1)
                 description_link = f"{abstract.county.urls['Search Result Base Url']}{unique_id}"
                 return description_link
+        else:
+            print("Checkbox element not found to access result description link.")
     except Exception as e:
         print(f"Error accessing description link: {e}")
     return None
