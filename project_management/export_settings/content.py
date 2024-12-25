@@ -45,7 +45,7 @@ def add_limitations(project, font_format):
 
 
 def add_disclaimer(project, font_format):
-    disclaimer_message = f'{project.disclaimer[0]}{project.county}{project.disclaimer[1]}'
+    disclaimer_message = f'{project.disclaimer[0]}{project.county}{project.disclaimer[1]}{project.disclaimer[2]}{project.disclaimer[3]}'
     project.worksheet.set_row(2, project.worksheet_properties['disclaimer_height'])
     project.worksheet.merge_range(f'A3:{project.last_column}3', disclaimer_message, font_format)
 
