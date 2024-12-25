@@ -65,16 +65,16 @@ def nap(type=None):
             long_nap()
             
 
-def wait_for_page(browser, loading_title, loaded_title, timeout=20):
+def wait_for_page(browser, loading_title, loaded_title, timeout=30):
     """
     Waits for the search results page to load by checking the browser title.
-    If the title indicates that the page is still loading, it waits up to 20 seconds before checking again.
+    If the title indicates that the page is still loading, it waits up to 30 seconds before checking again.
 
     Args:
         browser (WebDriver): The WebDriver instance.
         loading_title (str): The title of the page when it is still loading.
         loaded_title (str): The title of the page when it is loaded.
-        timeout (int, optional): The maximum time to wait in seconds. Defaults to 20.
+        timeout (int, optional): The maximum time to wait in seconds. Defaults to 30.
 
     Returns:
         bool: True if the page loaded successfully, False if the timeout was reached.
