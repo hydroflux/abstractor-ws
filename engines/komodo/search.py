@@ -116,7 +116,10 @@ def search(browser: WebDriver, abstract: Abstract, document: Document = None) ->
     """
     while True:
         collect_results = handle_search(browser, abstract, document)
-        if collect_results and wait_for_page(browser, abstract.county.titles["Loading"], abstract.county.titles["Search Results Page"]):
+        page_loaded = wait_for_page(browser, abstract.county.titles["Loading"], abstract.county.titles["Search Results Page"])
+        if not page_loaded:
+            continue
+        elif collect_results and page_loaded:
             collect(browser, abstract, document)
             break
         else:
