@@ -39,3 +39,20 @@ class County:
             return f'{self.county_name} Parish, {self.state}'
         else:
             return f'{self.county_name} County, {self.state}'
+
+    def shorthand_name(self):
+        """
+        Returns the full shorthand name of the county.
+
+        This method provides a shorthand representation of the county's name,
+        including the county name and state prefix. For counties in Louisiana,
+        it uses "Parish" instead of "County".
+
+        Returns:
+            str: The shorthand name of the county in the format "{county_name} County, {state_prefix}"
+                or "{county_name} Parish, {state_prefix}" for Louisiana.
+        """
+        if self.state_prefix == "LA":
+            return f'{self.county_name} Parish, {self.state_prefix}'
+        else:
+            return f'{self.county_name} County, {self.state_prefix}'
