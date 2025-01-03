@@ -254,10 +254,15 @@ def check_dates(abstract: dict) -> Optional[Literal[True]]:
     Returns:
         Optional[Literal[True]]: True if the dates are valid or None if invalid.
     """
-    today = convert_to_mmddyyyy(date.today())
+    today = date.today()
     if valid_initial_date(abstract, "start_date") and valid_initial_date(abstract, "end_date"):
-        start_date = abstract["start_date"]
-        end_date = abstract["end_date"]
+        start_date_str = abstract["start_date"]
+        end_date_str = abstract["end_date"]
+        
+        # Convert date strings to datetime objects
+        start_date = datetime.strptime(start_date_str, "%m/%d/%Y").date() if start_date_str else None
+        end_date = datetime.strptime(end_date_str, "%m/%d/%Y").date() if end_date_str else None
+        
         if start_date is None and end_date is None:
             return True
         elif start_date and start_date > today:
