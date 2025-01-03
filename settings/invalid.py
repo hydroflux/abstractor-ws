@@ -8,13 +8,13 @@ def add_bad_search_key_values(dataframe, document):
     if document.type == "document_number":
         document_number = document.document_value()
         dataframe["Book"].append(search_errors[2])
-        dataframe["Volume"].append(search_errors[2])
+        dataframe["Volume"].append("")
         dataframe["Page"].append(search_errors[2])
         dataframe["Reception Number"].append(document_number)
     elif document.type == "book_and_page":
         book, page = document.document_value()
         dataframe["Book"].append(book)
-        dataframe["Volume"].append(search_errors[2])
+        dataframe["Volume"].append("")
         dataframe["Page"].append(page)
         dataframe["Reception Number"].append(search_errors[2])
     elif document.type == "volume_and_page":
