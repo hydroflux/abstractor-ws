@@ -101,7 +101,7 @@ class Project:
         abstract = self.abstract
         if abstract.program == "name_search":
             search_name = abstract.search_name
-            if search_name is None:
+            if search_name is None or search_name == "":
                 search_name = 'All Documents'
             else:
                 search_name = search_name.title()
@@ -115,7 +115,7 @@ class Project:
                 file = f'{search_name} ({convert_to_yyyymmdd(start_date)} - Present)'
             else:
                 file = f'{search_name} ({convert_to_yyyymmdd(start_date)} - {convert_to_yyyymmdd(end_date)})'
-            output_file = f'{abstract.county} - {file} ({convert_to_yyyymmdd(date.today())}).xlsx'
+            output_file = f'{abstract.county.shorthand_name()} - {file} ({convert_to_yyyymmdd(date.today())}).xlsx'
             return output_file
         else:
             abstraction_export = '-'.join(abstract.type.upper().split(' '))
